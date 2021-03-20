@@ -1,0 +1,3 @@
+const HOME_SCREEN_CATEGORY_EXAMPLE = [
+
+];
