@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-
 class IconBtnWithCounterType3 extends StatelessWidget {
   const IconBtnWithCounterType3({
     Key key,
