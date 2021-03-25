@@ -11,15 +11,14 @@ class FuntionListSale extends StatefulWidget {
 
 class _FuntionListSaleState extends State<FuntionListSale> {
   List<Map<String, dynamic>> categories = [
-    {"icon": "assets/icons/flash_icon.svg", "text": "Flash Deal"},
-    {"icon": "assets/icons/bill_icon.svg", "text": "Bill"},
-    {"icon": "assets/icons/gameicon.svg", "text": "Game"},
-    {"icon": "assets/icons/gift_icon.svg", "text": "Daily Gift"},
-    {"icon": "assets/icons/discover.svg", "text": "More"},
-    {"icon": "assets/icons/gift_icon.svg", "text": "Daily Gift"},
-    {"icon": "assets/icons/discover.svg", "text": "More"},
-    {"icon": "assets/icons/gift_icon.svg", "text": "Daily Gift"},
-    {"icon": "assets/icons/discover.svg", "text": "More"},
+    {"icon": "assets/icons/flash_icon.svg", "text": "Báo cáo"},
+    {"icon": "assets/icons/bill_icon.svg", "text": "Đơn hàng" , "numOfitem": 40},
+    {"icon": "assets/icons/gift_icon.svg", "text": "Các ưu đãi"},
+    // {"icon": "assets/icons/discover.svg", "text": "More"},
+    // {"icon": "assets/icons/gift_icon.svg", "text": "Daily Gift"},
+    // {"icon": "assets/icons/discover.svg", "text": "More"},
+    // {"icon": "assets/icons/gift_icon.svg", "text": "Daily Gift"},
+    // {"icon": "assets/icons/discover.svg", "text": "More"},
   ];
 
   @override
@@ -28,9 +27,9 @@ class _FuntionListSaleState extends State<FuntionListSale> {
       width: MediaQuery.of(context).size.width / 1.1,
       height: 180,
       decoration: BoxDecoration(
-          color: kSecondaryColor.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.black12)),
+          color: Colors.white,
+          border: Border.all(color: SahaBorderColor),
+          borderRadius: BorderRadius.all(Radius.circular(9))),
       child: Column(
         children: [
           Padding(
@@ -59,7 +58,7 @@ class _FuntionListSaleState extends State<FuntionListSale> {
                             width: 20,
                           ),
                           Text(
-                            "Hiếu",
+                            "Hiếu Store",
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
@@ -92,6 +91,7 @@ class _FuntionListSaleState extends State<FuntionListSale> {
                 (index) => FuntionCard(
                   icon: categories[index]["icon"],
                   text: categories[index]["text"],
+                  numOfitem: categories[index]["numOfitem"],
                   press: () {},
                 ),
               ),
@@ -108,11 +108,12 @@ class FuntionCard extends StatelessWidget {
     Key key,
     @required this.icon,
     @required this.text,
-    @required this.press,
+    @required this.press, this.numOfitem,
   }) : super(key: key);
 
   final String icon, text;
   final GestureTapCallback press;
+  final int numOfitem;
 
   @override
   Widget build(BuildContext context) {
@@ -120,32 +121,70 @@ class FuntionCard extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: press,
-        child: SizedBox(
-          width: 80,
-          child: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.all(15),
-                height: 55,
-                width: 55,
-                decoration: BoxDecoration(
-                  color: Color(0xFFFFECDF),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: SvgPicture.asset(icon),
-              ),
-              SizedBox(height: 5),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+        child: Stack(
+          children: [
+            SizedBox(
+              width: 80,
+              child: Column(
                 children: [
-                  Text(
-                    text,
-                    textAlign: TextAlign.center,
+                  Container(
+                    padding: EdgeInsets.all(15),
+                    height: 55,
+                    width: 55,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: LinearGradient(
+                          colors: [SahaPrimaryColor, SahaPrimaryLightColor],
+                          begin: const FractionalOffset(0.0, 0.0),
+                          end: const FractionalOffset(0.5, 0.0),
+                          stops: [0.0, 1.0],
+                          tileMode: TileMode.clamp),
+                    ),
+                    child: SvgPicture.asset(
+                      icon,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        text,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+
+            if (numOfitem != null && numOfitem != 0)
+              Positioned(
+                top: -1,
+                right: 5,
+                child: Container(
+                  height: 17,
+                  width: 17,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFFF4848),
+                    shape: BoxShape.circle,
+                    border: Border.all(width: 1.5, color: Colors.white),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "$numOfitem",
+                      style: TextStyle(
+                        fontSize: 10,
+                        height: 1,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              )
+          ],
         ),
       ),
     );

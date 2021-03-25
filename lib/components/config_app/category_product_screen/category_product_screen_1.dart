@@ -30,7 +30,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                 height: 40,
                 width: MediaQuery.of(context).size.width * 0.7,
                 decoration: BoxDecoration(
-                  color: kSecondaryColor.withOpacity(0.1),
+                  color: SahaSecondaryColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: TextField(

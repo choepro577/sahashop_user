@@ -10,7 +10,7 @@ class PopularProducts extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),
-          child: SectionTitle(title: "Popular Products", press: () {}),
+          child: SectionTitle(title: "Sản phẩm bán chạy", press: () {}),
         ),
         SizedBox(height: 20),
         SingleChildScrollView(

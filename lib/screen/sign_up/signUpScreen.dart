@@ -90,7 +90,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.grey[600]),
               ),
-              SahashopTextField(
+              SahaTextField(
                 controller: textEditingControllerPhoneShop,
                 onChanged: (value) {},
                 validator: (value) {
@@ -105,7 +105,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 hintText: "Nhập số điện thoại",
                 icon: Icon(Icons.lock),
               ),
-              SahashopTextField(
+              SahaTextField(
                 controller: textEditingControllerPass,
                 onChanged: (value) {},
                 validator: (value) {
@@ -120,7 +120,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 hintText: "Đặt mật khẩu",
                 icon: Icon(Icons.lock),
               ),
-              SahashopTextField(
+              SahaTextField(
                 onChanged: (value) {},
                 validator: (value) {
                   if (value.length < 6) {

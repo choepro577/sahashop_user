@@ -13,6 +13,7 @@ class BannerType2 extends StatefulWidget {
   BannerType2({this.imgList, this.height});
 }
 
+
 class _BannerType2State extends State<BannerType2> {
   int _current = 0;
   double height;

@@ -28,12 +28,12 @@ class BaseServiceOnline {
   }
 
   Exception handleError(Exception error) {
-    print("zzzzz");
     var errorDescription = 'null';
     var statusCode = -1;
     if (error is DioError) {
       var dioError = error;
       switch (dioError.type) {
+
         case DioErrorType.CANCEL:
           errorDescription = 'Request to API server was cancelled';
           break;

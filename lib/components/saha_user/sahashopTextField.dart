@@ -2,7 +2,7 @@ import 'package:sahashop_user/const/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SahashopTextField extends StatelessWidget {
+class SahaTextField extends StatelessWidget {
   String labelText;
   Icon icon;
   TextEditingController controller;
@@ -12,7 +12,7 @@ class SahashopTextField extends StatelessWidget {
   TextInputType textInputType;
   String hintText;
 
-  SahashopTextField({
+  SahaTextField({
     this.labelText,
     this.controller,
     this.icon,
@@ -27,7 +27,7 @@ class SahashopTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
       child: TextFormField(
         validator: validator,
         keyboardType: textInputType,
@@ -36,12 +36,13 @@ class SahashopTextField extends StatelessWidget {
         controller: controller,
         decoration: new InputDecoration(
             border: new OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(30)),),
+              borderRadius: BorderRadius.all(Radius.circular(15)),),
             labelText: labelText,
             hintText: hintText,
-            suffixIcon: icon,
+            suffixIcon: obscureText == true && icon != null ? icon : null,
             floatingLabelBehavior: FloatingLabelBehavior.always,
-            suffixStyle: const TextStyle(color: bmColors)),
+            suffixStyle: const TextStyle(color: bmColors)
+        ),
       ),
     );
   }

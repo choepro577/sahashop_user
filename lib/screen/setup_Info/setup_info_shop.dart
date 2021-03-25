@@ -100,7 +100,7 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.grey[600]),
               ),
-              SahashopTextField(
+              SahaTextField(
                 controller: textEditingControllerNameShop,
                 onChanged: (value) {},
                 validator: (value) {
@@ -115,7 +115,7 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
                 hintText: "Nhập tên cửa hàng",
                 icon: Icon(Icons.lock),
               ),
-              SahashopTextField(
+              SahaTextField(
                 controller: textEditingControllerAddress,
                 onChanged: (value) {},
                 validator: (value) {

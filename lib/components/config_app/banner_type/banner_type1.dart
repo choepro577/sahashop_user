@@ -22,7 +22,7 @@ class _BannerType1State extends State<BannerType1> {
       width: MediaQuery.of(context).size.width / 1.1,
       height: 180,
       decoration: BoxDecoration(
-          color: kSecondaryColor.withOpacity(0.1),
+          color: SahaSecondaryColor.withOpacity(0.1),
           borderRadius: BorderRadius.circular(15),
           border: Border.all(color: Colors.black12)),
       child: Column(

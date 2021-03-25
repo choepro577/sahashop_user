@@ -83,7 +83,7 @@ class _SignInState extends State<LoginScreen> {
                 "Sign in with your email and password \n       or continue with social media",
                 style: TextStyle(color: Colors.grey[600]),
               ),
-              SahashopTextField(
+              SahaTextField(
                 controller: textEditingControllerPhoneShop,
                 onChanged: (value) {},
                 // validator: (value) {
@@ -104,7 +104,7 @@ class _SignInState extends State<LoginScreen> {
                 hintText: "Enter your email",
                 icon: Icon(Icons.email),
               ),
-              SahashopTextField(
+              SahaTextField(
                 controller: textEditingControllerPass,
                 onChanged: (value) {},
                 validator: (value) {

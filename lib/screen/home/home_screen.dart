@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sahashop_user/components/saha_user/iconButton/iconbtn_counter.dart';
 import 'package:sahashop_user/components/saha_user/search/seach_field.dart';
+import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/screen/config_app/config_screen.dart';
 
 import 'component_home/catagorys.dart';
@@ -16,7 +17,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   var selectedItem = 0;
   List screen = [
     Home(),
@@ -27,23 +27,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        bottomNavigationBar: CurvedNavigationBar(
-          height: 55,
-          backgroundColor: Colors.transparent,
-          items: <Widget>[
-            Icon(Icons.add, size: 30),
-            Icon(Icons.settings, size: 30),
-            Icon(Icons.list, size: 30),
-            Icon(Icons.compare_arrows, size: 30),
-          ],
-          onTap: (currentIndex) {
-            setState(() {
-              selectedItem = currentIndex;
-            });
-          },
-        ),
-        body: screen[selectedItem]
-      ),
+          bottomNavigationBar: CurvedNavigationBar(
+            height: 55,
+            backgroundColor: Colors.transparent,
+            items: <Widget>[
+              Icon(Icons.add, size: 30),
+              Icon(Icons.settings, size: 30),
+              Icon(Icons.list, size: 30),
+              Icon(Icons.compare_arrows, size: 30),
+            ],
+            onTap: (currentIndex) {
+              setState(() {
+                selectedItem = currentIndex;
+              });
+            },
+          ),
+          body: screen[selectedItem]),
     );
   }
 }
@@ -53,44 +52,62 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return SingleChildScrollView(
-      child: Column(
+      child: Stack(
         children: [
-          SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SearchField(),
-                IconBtnWithCounter(
-                  svgSrc: "assets/icons/cart_icon.svg",
-                  press: () {},
-                ),
-                IconBtnWithCounter(
-                  svgSrc: "assets/icons/bell.svg",
-                  numOfitem: 3,
-                  press: () {},
-                ),
-              ],
+          Container(
+            height: 200,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [SahaPrimaryColor, SahaPrimaryLightColor],
+                  begin: const FractionalOffset(0.0, 0.0),
+                  end: const FractionalOffset(0.5, 0.0),
+                  stops: [0.0, 1.0],
+                  tileMode: TileMode.clamp),
             ),
           ),
-          SizedBox(
-            height: 20,
-          ),
-          FuntionListSale(),
-          Categories(),
-          SpecialOffers(),
-          PopularProducts(),
-          SizedBox(
-            height: 20,
+          Column(
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Container(
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SearchField(),
+                      IconBtnWithCounter(
+                        svgSrc: "assets/icons/cart_icon.svg",
+                        press: () {},
+                      ),
+                      IconBtnWithCounter(
+                        svgSrc: "assets/icons/bell.svg",
+                        numOfitem: 3,
+                        press: () {},
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              FuntionListSale(),
+              Categories(),
+              SpecialOffers(),
+              PopularProducts(),
+              SizedBox(
+                height: 20,
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 }
-
-
-

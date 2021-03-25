@@ -1,10 +1,16 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:sahashop_user/const/constant.dart';
+import 'package:sahashop_user/screen/config_app/config_screen.dart';
+import 'package:sahashop_user/screen/home/component_home/section_title.dart';
+import 'package:sahashop_user/screen/inventory/inventory_screen.dart';
 
 class Categories extends StatelessWidget {
 
   final List<Map<String, dynamic>> categories = [
-    {"icon": "assets/icons/flash_icon.svg", "text": "Flash Deal"},
+    {"icon": "assets/icons/flash_icon.svg", "text": "Chỉnh sửa mặt hàng"},
     {"icon": "assets/icons/bill_icon.svg", "text": "Bill"},
     {"icon": "assets/icons/gameicon.svg", "text": "Game"},
     {"icon": "assets/icons/gift_icon.svg", "text": "Daily Gift"},
@@ -17,23 +23,38 @@ class Categories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(20),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: List.generate(
-            categories.length,
-                (index) => CategoryCard(
-              icon: categories[index]["icon"],
-              text: categories[index]["text"],
-              press: () {},
-            ),
-          ),
+    return Column(
+      children: [Padding(
+        padding: EdgeInsets.all(20),
+        child: SectionTitle(
+          title: "Cài đặt cửa hàng",
+          press: () {},
         ),
       ),
+        Padding(
+          padding: EdgeInsets.only(left: 20,right: 20),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CategoryCard(
+                  icon: 'assets/icons/flash_icon.svg',
+                  text: 'Chỉnh sửa mặt hàng',
+                  press: () {
+                    Get.to(InventoryScreen());
+                  },
+                ),
+                CategoryCard(
+                  icon: 'assets/icons/gift_icon.svg',
+                  text: 'Chỉnh sửa giao diện',
+                  press: () {
+                    Get.to(ConfigScreen());
+                  },
+                ),
+              ]
+          ),
+        ),
+      ],
     );
   }
 }
@@ -56,7 +77,7 @@ class CategoryCard extends StatelessWidget {
       child: GestureDetector(
         onTap: press,
         child: SizedBox(
-          width: 55,
+          width: 150,
           child: Column(
             children: [
               Container(
@@ -64,10 +85,15 @@ class CategoryCard extends StatelessWidget {
                 height: 55,
                 width: 55,
                 decoration: BoxDecoration(
-                  color: Color(0xFFFFECDF),
                   borderRadius: BorderRadius.circular(10),
+                  gradient: LinearGradient(
+                      colors: [SahaPrimaryColor, SahaPrimaryLightColor],
+                      begin: const FractionalOffset(0.0, 0.0),
+                      end: const FractionalOffset(0.5, 0.0),
+                      stops: [0.0, 1.0],
+                      tileMode: TileMode.clamp),
                 ),
-                child: SvgPicture.asset(icon),
+                child: SvgPicture.asset(icon, color: Colors.white,),
               ),
               SizedBox(height: 5),
               Text(text, textAlign: TextAlign.center)
