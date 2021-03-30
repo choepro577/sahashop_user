@@ -1,9 +1,6 @@
 import 'package:get/get.dart';
-import 'package:sahashop_user/const/const_database.dart';
-import 'package:sahashop_user/data/remote/remote_manager.dart';
+import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/utils/user_info.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 
 class LoginController extends GetxController {
   var stateLogin = "".obs;
@@ -11,13 +8,12 @@ class LoginController extends GetxController {
   Future<bool> onLogin({String shopPhone, String password}) async {
     logging.value = true;
     try {
-      var loginData =
-      await RemoteManager.authService.login(shopPhone: shopPhone, pass: password);
+      var loginData = await RepositoryManager.loginRepository
+          .login(phone: shopPhone, pass: password);
 
-      UserInfo().dataLogin = loginData;
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('tokenLogin', loginData.token);
-      print("aaaaa" + prefs.getString(USER_TOKEN));
+
+      await UserInfo().setToken(loginData.token);
+
 
       logging.value = false;
       stateLogin.value = "success";

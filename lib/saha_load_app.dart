@@ -1,25 +1,21 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sahashop_user/screen/home/home_screen.dart';
 import 'package:sahashop_user/screen/login/loginScreen.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
+import 'data/remote/saha_service_manager.dart';
 
-class SahaMainScreen extends StatefulWidget {
+class SahaLoadAppController extends GetxController {
   @override
-  State<StatefulWidget> createState() {
-    return SahaMainScreenState();
-  }
-}
-
-class SahaMainScreenState extends State<SahaMainScreen> {
-  @override
-  void initState() {
-    super.initState();
-    checkUser();
+  void onInit() {
+    super.onInit();
+    SahaServiceManager.initialize();
+    checkLogin();
   }
 
-  Future<Timer> checkUser() async {
+  Future<Timer> checkLogin() async {
     await Future.delayed(Duration(seconds: 1));
     if (await UserInfo().hasLogged()) {
       hasLogged();
@@ -29,21 +25,25 @@ class SahaMainScreenState extends State<SahaMainScreen> {
   }
 
   hasLogged() {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
+    Navigator.of(Get.context).pushReplacement(MaterialPageRoute(
         settings: RouteSettings(name: '/home'),
         builder: (context) {
           return HomeScreen();
         }));
   }
 
-
   noLogin() {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
+    Navigator.of(Get.context).pushReplacement(MaterialPageRoute(
         settings: RouteSettings(name: '/navigation'),
         builder: (context) {
           return LoginScreen();
         }));
   }
+}
+
+class SahaMainScreen extends StatelessWidget {
+
+  final controller = Get.put(SahaLoadAppController());
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,6 @@ class SahaMainScreenState extends State<SahaMainScreen> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -67,11 +66,10 @@ class SahaMainScreenState extends State<SahaMainScreen> {
               SizedBox(
                 height: 30,
               ),
-              Text("SahaShop",
-                style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold
-                ),)
+              Text(
+                "SahaShop",
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+              )
             ],
           ),
         ),

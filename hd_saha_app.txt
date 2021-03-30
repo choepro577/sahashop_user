@@ -3,6 +3,8 @@ Framework • revision 4d7946a68d (2 days ago) • 2021-03-18 17:24:33 -0700
 Engine • revision 3459eb2436
 Tools • Dart 2.12.2
 
+# generate code
+flutter pub run build_runner build
 
  export ANDROID_HOME=$HOME/Android/Sdk
 

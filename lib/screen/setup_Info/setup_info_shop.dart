@@ -5,7 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/dialog/dialog.dart';
 import 'package:sahashop_user/components/saha_user/sahashopTextField.dart';
-import 'package:sahashop_user/data/remote/createShop/model/listTypeShop_respones.dart';
+import 'package:sahashop_user/data/remote/response/store/type_store_respones.dart';
 import 'package:sahashop_user/helper/keyboard.dart';
 import 'package:sahashop_user/screen/home/home_screen.dart';
 import 'package:sahashop_user/screen/sign_up/signUpScreen_controller.dart';

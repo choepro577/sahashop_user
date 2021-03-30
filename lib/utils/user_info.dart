@@ -1,16 +1,12 @@
 
-
-import 'package:sahashop_user/const/const_database.dart';
-import 'package:sahashop_user/data/remote/auth/model/login_response.dart';
-import 'package:sahashop_user/data/remote/auth/model/register_response.dart';
-import 'package:sahashop_user/data/remote/createShop/model/createShop_respont.dart';
-import 'package:sahashop_user/data/remote/createShop/model/listTypeShop_respones.dart';
+import 'package:sahashop_user/const/const_database_shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserInfo {
   static final UserInfo _singleton = UserInfo._internal();
 
   String token;
+  int currentIdStore;
 
   factory UserInfo() {
     return _singleton;
@@ -18,10 +14,16 @@ class UserInfo {
 
   UserInfo._internal();
 
-  DataLogin dataLogin;
-  DataRegister dataRegister;
-  List<DataTypeShop> dataTypeShop;
-  DataCreateShop dataCreateShop;
+  void setCurrentIdStore() {
+    this.currentIdStore = currentIdStore;
+  }
+
+
+  Future<void> setToken(String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(USER_TOKEN, token);
+    this.token = token;
+  }
 
   Future<bool> hasLogged() async {
       SharedPreferences prefs = await SharedPreferences.getInstance();

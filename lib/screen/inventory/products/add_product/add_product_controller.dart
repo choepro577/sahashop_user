@@ -1,25 +1,23 @@
 import 'package:get/get.dart';
-import 'package:sahashop_user/data/remote/product/model/product_request.dart';
-import 'package:sahashop_user/data/remote/remote_manager.dart';
+import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
+import 'package:sahashop_user/data/repository/product/product_request.dart';
+import 'package:sahashop_user/data/repository/repository_manager.dart';
 
 class AddProductController extends GetxController {
   ProductRequest productRequest = new ProductRequest();
   var isLoadingAdd = false.obs;
 
-
-  Future<bool> createProduct() async {
+  Future<void> createProduct() async {
     isLoadingAdd.value = true;
     try {
-      var data = await RemoteManager.productService.create(productRequest:productRequest);
+      var data =
+          await RepositoryManager.productRepository.create(productRequest);
 
-      print(data);
 
       return true;
     } catch (err) {
-
-      return false;
+      SahaAlert.showError(message: err.toString());
     }
     isLoadingAdd.value = false;
   }
-
 }

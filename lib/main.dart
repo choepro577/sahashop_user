@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'screen/saha_main/saha_main.dart';
+
+import 'saha_load_app.dart';
+
 
 void main() {
   runApp(MyApp());
