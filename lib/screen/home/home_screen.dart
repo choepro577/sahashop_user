@@ -1,13 +1,16 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/iconButton/iconbtn_counter.dart';
 import 'package:sahashop_user/components/saha_user/search/seach_field.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/screen/config_app/config_screen.dart';
+import 'package:sahashop_user/screen/home/home_controller.dart';
 
 import 'component_home/catagorys.dart';
 import 'component_home/funtionList.dart';
+import 'component_home/head_home.dart';
 import 'component_home/popular_products.dart';
 import 'component_home/special_offers.dart';
 
@@ -18,6 +21,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var selectedItem = 0;
+
+  final HomeController homeController = Get.put(HomeController());
+
+
   List screen = [
     Home(),
     ConfigScreen(),
@@ -52,57 +59,21 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return SingleChildScrollView(
-      child: Stack(
+      child: Column(
         children: [
-          Container(
-            height: 200,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [SahaPrimaryColor, SahaPrimaryLightColor],
-                  begin: const FractionalOffset(0.0, 0.0),
-                  end: const FractionalOffset(0.5, 0.0),
-                  stops: [0.0, 1.0],
-                  tileMode: TileMode.clamp),
-            ),
-          ),
-          Column(
+          HeadHome(),
+          Stack(
             children: [
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Container(
-                  padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SearchField(),
-                      IconBtnWithCounter(
-                        svgSrc: "assets/icons/cart_icon.svg",
-                        press: () {},
-                      ),
-                      IconBtnWithCounter(
-                        svgSrc: "assets/icons/bell.svg",
-                        numOfitem: 3,
-                        press: () {},
-                      ),
-                    ],
+
+              Column(
+                children: [
+                  Categories(),
+                  SpecialOffers(),
+                  PopularProducts(),
+                  SizedBox(
+                    height: 20,
                   ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              FuntionListSale(),
-              Categories(),
-              SpecialOffers(),
-              PopularProducts(),
-              SizedBox(
-                height: 20,
+                ],
               ),
             ],
           ),

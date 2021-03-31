@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sahashop_user/components/config_app/banner_type/banner_typy2.dart';
-import 'package:sahashop_user/components/config_app/screen_home/home_screen_1.dart';
 import 'package:sahashop_user/components/config_app/search_bar_type/searchBarType1.dart';
 import 'package:sahashop_user/components/config_app/search_bar_type/searchBarType2.dart';
 import 'package:sahashop_user/components/config_app/search_bar_type/search_bar_type3.dart';

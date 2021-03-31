@@ -10,7 +10,6 @@ import 'package:sahashop_user/screen/inventory/inventory_screen.dart';
 class Categories extends StatelessWidget {
 
   final List<Map<String, dynamic>> categories = [
-    {"icon": "assets/icons/flash_icon.svg", "text": "Chỉnh sửa mặt hàng"},
     {"icon": "assets/icons/bill_icon.svg", "text": "Bill"},
     {"icon": "assets/icons/gameicon.svg", "text": "Game"},
     {"icon": "assets/icons/gift_icon.svg", "text": "Daily Gift"},
@@ -31,44 +30,40 @@ class Categories extends StatelessWidget {
           press: () {},
         ),
       ),
-        Padding(
-          padding: EdgeInsets.only(left: 20,right: 20),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
           child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CategoryCard(
-                  icon: 'assets/icons/flash_icon.svg',
-                  text: 'Chỉnh sửa mặt hàng',
-                  press: () {
-                    Get.to(InventoryScreen());
-                  },
-                ),
-                CategoryCard(
-                  icon: 'assets/icons/gift_icon.svg',
-                  text: 'Chỉnh sửa giao diện',
-                  press: () {
-                    Get.to(ConfigScreen());
-                  },
-                ),
-              ]
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(
+              categories.length,
+                  (index) => FuntionCard(
+                icon: categories[index]["icon"],
+                text: categories[index]["text"],
+                numOfitem: categories[index]["numOfitem"],
+                press: () {},
+              ),
+            ),
           ),
         ),
+
       ],
     );
   }
 }
 
-class CategoryCard extends StatelessWidget {
-  const CategoryCard({
+class FuntionCard extends StatelessWidget {
+  const FuntionCard({
     Key key,
     @required this.icon,
     @required this.text,
     @required this.press,
+    this.numOfitem,
   }) : super(key: key);
 
   final String icon, text;
   final GestureTapCallback press;
+  final int numOfitem;
 
   @override
   Widget build(BuildContext context) {
@@ -76,31 +71,72 @@ class CategoryCard extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: press,
-        child: SizedBox(
-          width: 150,
-          child: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.all(15),
-                height: 55,
-                width: 55,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  gradient: LinearGradient(
-                      colors: [SahaPrimaryColor, SahaPrimaryLightColor],
-                      begin: const FractionalOffset(0.0, 0.0),
-                      end: const FractionalOffset(0.5, 0.0),
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
-                ),
-                child: SvgPicture.asset(icon, color: Colors.white,),
+        child: Stack(
+          children: [
+            SizedBox(
+              width: 80,
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(15),
+                    height: 55,
+                    width: 55,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: LinearGradient(
+                          colors: [SahaPrimaryColor, SahaPrimaryLightColor],
+                          begin: const FractionalOffset(0.0, 0.0),
+                          end: const FractionalOffset(0.5, 0.0),
+                          stops: [0.0, 1.0],
+                          tileMode: TileMode.clamp),
+                    ),
+                    child: SvgPicture.asset(
+                      icon,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        text,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              SizedBox(height: 5),
-              Text(text, textAlign: TextAlign.center)
-            ],
-          ),
+            ),
+            if (numOfitem != null && numOfitem != 0)
+              Positioned(
+                top: -1,
+                right: 5,
+                child: Container(
+                  height: 17,
+                  width: 17,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFFF4848),
+                    shape: BoxShape.circle,
+                    border: Border.all(width: 1.5, color: Colors.white),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "$numOfitem",
+                      style: TextStyle(
+                        fontSize: 10,
+                        height: 1,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              )
+          ],
         ),
       ),
     );
   }
 }
+
