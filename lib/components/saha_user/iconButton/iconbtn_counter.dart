@@ -21,11 +21,12 @@ class IconBtnWithCounter extends StatelessWidget {
       borderRadius: BorderRadius.circular(100),
       onTap: press,
       child: Stack(
+        overflow: Overflow.visible,
         children: [
           Container(
             padding: EdgeInsets.all(12),
-            height: 46,
-            width: 46,
+            height: 44,
+            width: 44,
             decoration: BoxDecoration(
               color: SahaSecondaryColor.withOpacity(0.1),
               shape: BoxShape.circle,

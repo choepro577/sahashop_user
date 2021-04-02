@@ -22,7 +22,7 @@ var UIDataConfig = [
     ChildConfig(name: "Thanh tìm kiếm", editWidget: SearchBarConfig()),
     ChildConfig(name: "Kiểu banner ", editWidget: BoxPionConfig()),
   ]),
-  ParentConfig(name: "Body App", icon: "home.svg", listChildConfig: [
+  ParentConfig(name: "Màn hình trang chủ", icon: "home.svg", listChildConfig: [
     ChildConfig(
         name: "Mời chọn kiểu giao diện", editWidget: HomeScreenConfig()),
   ]),
