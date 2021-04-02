@@ -19,6 +19,7 @@ class IconBtnWithCounterType3 extends StatelessWidget {
     return InkWell(
       onTap: press,
       child: Stack(
+        overflow: Overflow.visible,
         children: [
           Container(
             padding: EdgeInsets.all(15),

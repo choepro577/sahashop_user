@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-
 class IconBtnWithCounterType2 extends StatelessWidget {
   const IconBtnWithCounterType2({
     Key key,
@@ -20,6 +19,7 @@ class IconBtnWithCounterType2 extends StatelessWidget {
     return InkWell(
       onTap: press,
       child: Stack(
+        overflow: Overflow.visible,
         children: [
           Container(
             padding: EdgeInsets.all(12),

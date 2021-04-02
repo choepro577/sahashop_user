@@ -14,7 +14,6 @@ class BannerType3 extends StatefulWidget {
 }
 
 class _BannerType3State extends State<BannerType3> {
-
   double height;
   List<String> imgList;
 
@@ -28,8 +27,8 @@ class _BannerType3State extends State<BannerType3> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(children: [
+    return Column(
+      children: [
         CarouselSlider(
           items: imgList
               .map((item) => Container(
@@ -77,12 +76,11 @@ class _BannerType3State extends State<BannerType3> {
             height: height,
             aspectRatio: 2.0,
             enlargeCenterPage: true,
-            enableInfiniteScroll: false,
-            initialPage: 2,
+            scrollDirection: Axis.vertical,
             autoPlay: true,
           ),
         ),
-      ]),
+      ],
     );
   }
 }

@@ -6,6 +6,7 @@ import '../fakedevicepixelratio.dart';
 class CarouselSelect extends StatefulWidget {
   final List<Widget> listWidget;
   final Function onChange;
+  final Function onSelected;
   final int indexSelected;
   final int initPage;
   final double height;
@@ -16,7 +17,8 @@ class CarouselSelect extends StatefulWidget {
       this.onChange,
       this.indexSelected,
       this.initPage,
-      this.height})
+      this.height,
+      this.onSelected})
       : super(key: key);
 
   @override
@@ -94,6 +96,7 @@ class _CarouselSelectState extends State<CarouselSelect> {
           onSelected: (bool value) {
             indexSelected = page;
             setState(() {});
+            widget.onSelected(indexSelected);
           },
         ),
       ],

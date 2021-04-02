@@ -3,18 +3,17 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class BannerType4 extends StatefulWidget {
+class BannerType2 extends StatefulWidget {
   @override
-  _BannerType4State createState() => _BannerType4State();
+  _BannerType2State createState() => _BannerType2State();
 
   final List<String> imgList;
   final double height;
 
-  BannerType4({this.imgList, this.height});
+  BannerType2({this.imgList, this.height});
 }
 
-class _BannerType4State extends State<BannerType4> {
-
+class _BannerType2State extends State<BannerType2> {
   double height;
   List<String> imgList;
 
@@ -28,8 +27,8 @@ class _BannerType4State extends State<BannerType4> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(children: [
+    return Column(
+      children: [
         CarouselSlider(
           items: imgList
               .map((item) => Container(
@@ -77,11 +76,12 @@ class _BannerType4State extends State<BannerType4> {
             height: height,
             aspectRatio: 2.0,
             enlargeCenterPage: true,
-            scrollDirection: Axis.vertical,
+            enableInfiniteScroll: false,
+            initialPage: 2,
             autoPlay: true,
           ),
         ),
-      ]),
+      ],
     );
   }
 }
