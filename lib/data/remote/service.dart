@@ -20,7 +20,7 @@ abstract class SahaService {
   @POST("register")
   Future<RegisterResponse> register(@Body() Map<String, dynamic> body);
 
-  @POST("register")
+  @POST("login")
   Future<LoginResponse> login(@Body() Map<String, dynamic> body);
 
   @GET("store")

@@ -11,7 +11,7 @@ class ProductRepository {
     try {
       var res = await SahaServiceManager()
           .service
-          .createProduct(UserInfo().currentIdStore, productRequest.toJson());
+          .createProduct(UserInfo().getCurrentIdStore(), productRequest.toJson());
       return res.data;
     } catch (err) {
       handleError(err);

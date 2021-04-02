@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
+
+import 'package:get/get.dart' as get2;
+import 'package:sahashop_user/components/saha_user/dialog/dialog.dart';
+import 'package:sahashop_user/screen/login/loginScreen.dart';
 import 'package:sahashop_user/utils/msg_code.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
@@ -7,13 +10,12 @@ import 'package:sahashop_user/utils/user_info.dart';
 /// token, device code before perform any request
 ///
 class AuthInterceptor extends InterceptorsWrapper {
-
   AuthInterceptor();
 
   @override
   Future onRequest(RequestOptions options) {
-    if (UserInfo().token != null) {
-      options.headers.putIfAbsent("token", () => UserInfo().token);
+    if (UserInfo().getToken() != null) {
+      options.headers.putIfAbsent("token", () => UserInfo().getToken());
     }
 
     return super.onRequest(options);
@@ -21,7 +23,6 @@ class AuthInterceptor extends InterceptorsWrapper {
 
   @override
   Future onError(DioError error) {
-
     if (error is DioError) {
       var dioError = error;
       switch (dioError.type) {
@@ -58,8 +59,17 @@ class AuthInterceptor extends InterceptorsWrapper {
 
   @override
   Future onResponse(Response response) async {
-
     print('Response: ${response.data}');
+
+    if (response.data["code"] == 401) {
+      UserInfo().setToken(null);
+      SahaDialogApp.showDialogOneButton(
+          mess: "Hết phiên đăng nhập mời đăng nhập lại",
+          barrierDismissible: false,
+          onClose: () {
+            get2.Get.offAll(() => LoginScreen());
+          });
+    }
 
     if (response.statusCode != 200 && response.data["success"] == false) {
       return super.onError(DioError(

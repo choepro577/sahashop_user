@@ -1,17 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 import 'package:sahashop_user/const/constant.dart';
-import 'package:sahashop_user/screen/config_app/config_screen.dart';
-import 'package:sahashop_user/screen/home/component_home/section_title.dart';
-import 'package:sahashop_user/screen/inventory/inventory_screen.dart';
+import 'package:sahashop_user/screen/home/widget/section_title.dart';
+
 
 class Categories extends StatelessWidget {
 
   final List<Map<String, dynamic>> categories = [
     {"icon": "assets/icons/bill_icon.svg", "text": "Bill"},
-    {"icon": "assets/icons/gameicon.svg", "text": "Game"},
+    {"icon": "assets/icons/gift_icon.svg", "text": "Game"},
     {"icon": "assets/icons/gift_icon.svg", "text": "Daily Gift"},
     {"icon": "assets/icons/discover.svg", "text": "More"},
     {"icon": "assets/icons/gift_icon.svg", "text": "Daily Gift"},

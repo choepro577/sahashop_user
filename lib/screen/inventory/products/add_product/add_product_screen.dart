@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/saha_user/loading/loading.dart';
+import 'package:sahashop_user/components/saha_user/loading/loading_full_screen.dart';
 import 'package:sahashop_user/components/saha_user/sahashopTextField.dart';
 import 'package:sahashop_user/screen/inventory/products/add_product/add_product_controller.dart';
 

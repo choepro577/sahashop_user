@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/screen/config_app/config_screen.dart';
+import 'package:sahashop_user/screen/home/choose_store/choose_store.dart';
 import 'package:sahashop_user/screen/inventory/inventory_screen.dart';
 
 import '../home_controller.dart';
@@ -45,45 +46,61 @@ class HeadHome extends StatelessWidget {
                   ),
                 ),
               ),
-              Center(child: Text("Dr Hoang Store")),
-              Obx(() =>  !homeController.isExpansion.value
-                        ? Container()
-                        : Hero(tag: "switch", child: buttonExpansion(true),)
-                  )
+              Obx(() => Center(
+                  child: Text(homeController?.storeCurrent?.value?.name == null
+                      ? "Xin chào"
+                      : homeController.storeCurrent.value.name,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20
+                  ),
+                  ))),
+              Obx(() => !homeController.isExpansion.value
+                  ? Container()
+                  : Hero(
+                      tag: "switch",
+                      child: buttonExpansion(true),
+                    ))
             ],
           ),
         ),
-
         Obx(() => AnimatedContainer(
               width: double.infinity,
-              height: homeController.isExpansion.value ? 0 : 160,
+              height: homeController.isExpansion.value ? 0 : 300,
               duration: Duration(milliseconds: 500),
               curve: Curves.easeInQuad,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 20,right: 20),
-                      child: Row(
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CategoryCard(
+                            ItemStoreView(
+                              icon: 'assets/icons/flash_icon.svg',
+                              text: 'Chọn cửa hàng',
+                              press: () {
+                                Get.to(ChooseStoreScreen());
+                              },
+                            ),
+                            ItemStoreView(
                               icon: 'assets/icons/flash_icon.svg',
                               text: 'Chỉnh sửa mặt hàng',
                               press: () {
                                 Get.to(InventoryScreen());
                               },
                             ),
-                            CategoryCard(
+                            ItemStoreView(
                               icon: 'assets/icons/gift_icon.svg',
                               text: 'Chỉnh sửa giao diện',
                               press: () {
                                 Get.to(ConfigScreen());
                               },
                             ),
-                          ]
-                      ),
+                          ]),
                     ),
                     SizedBox(
                       height: 20,
@@ -92,14 +109,16 @@ class HeadHome extends StatelessWidget {
                       alignment: Alignment.center,
                       children: [
                         Divider(),
-                        Hero(tag: "switch", child: buttonExpansion(false),)
+                        Hero(
+                          tag: "switch",
+                          child: buttonExpansion(false),
+                        )
                       ],
                     )
                   ],
                 ),
               ),
             )),
-
       ],
     );
   }
@@ -122,9 +141,8 @@ class HeadHome extends StatelessWidget {
   }
 }
 
-
-class CategoryCard extends StatelessWidget {
-  const CategoryCard({
+class ItemStoreView extends StatelessWidget {
+  const ItemStoreView({
     Key key,
     @required this.icon,
     @required this.text,
@@ -137,31 +155,38 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: GestureDetector(
-        onTap: press,
-        child: SizedBox(
-          width: 150,
-          child: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.all(15),
-                height: 55,
-                width: 55,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  gradient: LinearGradient(
-                      colors: [SahaPrimaryColor, SahaPrimaryLightColor],
-                      begin: const FractionalOffset(0.0, 0.0),
-                      end: const FractionalOffset(0.5, 0.0),
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
+      padding: const EdgeInsets.only(top: 8),
+      child: Card(
+        child: MaterialButton(
+          onPressed: press,
+          child: SizedBox(
+            height: 50,
+            child: Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(15),
+                  height: 55,
+                  width: 55,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient: LinearGradient(
+                        colors: [SahaPrimaryColor, SahaPrimaryLightColor],
+                        begin: const FractionalOffset(0.0, 0.0),
+                        end: const FractionalOffset(0.5, 0.0),
+                        stops: [0.0, 1.0],
+                        tileMode: TileMode.clamp),
+                  ),
+                  child: SvgPicture.asset(
+                    icon,
+                    color: Colors.white,
+                  ),
                 ),
-                child: SvgPicture.asset(icon, color: Colors.white,),
-              ),
-              SizedBox(height: 5),
-              Text(text, textAlign: TextAlign.center)
-            ],
+                SizedBox(width: 10),
+                Text(text, textAlign: TextAlign.center),
+                Spacer(),
+                Icon(Icons.arrow_forward_ios_rounded)
+              ],
+            ),
           ),
         ),
       ),

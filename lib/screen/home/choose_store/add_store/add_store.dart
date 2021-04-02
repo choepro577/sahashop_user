@@ -10,19 +10,19 @@ import 'package:sahashop_user/helper/keyboard.dart';
 import 'package:sahashop_user/screen/home/home_screen.dart';
 import 'package:sahashop_user/screen/sign_up/signUpScreen_controller.dart';
 
+import 'add_store_controller.dart';
 
-import 'setup_info_shop_controller.dart';
 
-class SetUpInfoShop extends StatefulWidget {
+class AddStore extends StatefulWidget {
   @override
-  _SetUpInfoShopState createState() => _SetUpInfoShopState();
+  _AddStoreState createState() => _AddStoreState();
 }
 
-class _SetUpInfoShopState extends State<SetUpInfoShop> {
+class _AddStoreState extends State<AddStore> {
   TextEditingController textEditingControllerNameShop = new TextEditingController();
   TextEditingController textEditingControllerAddress = new TextEditingController();
 
-  SetUpInfoShopController setUpInfoShopController = SetUpInfoShopController();
+  AddStoreController addStoreController = AddStoreController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -38,21 +38,21 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setUpInfoShopController.getAllShopType();
+    addStoreController.getAllShopType();
   }
 
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    sub ??= setUpInfoShopController.stateCreate.listen((state) {
+    sub ??= addStoreController.stateCreate.listen((state) {
       if (state != "success") {
         SahaDialogApp.showDialogError(context: context,errorMess: state);
         EasyLoading.dismiss();
       }
 
       if (state == "success") {
-        Get.offAll(HomeScreen());
+        Navigator.pop(context,"added");
         EasyLoading.dismiss();
       }
     });
@@ -70,7 +70,7 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
           },
         ),
         title: Text(
-          "Sign In",
+          "Thêm cửa hàng",
           style: TextStyle(color: Colors.grey[600]),
         ),
         backgroundColor: Colors.transparent,
@@ -130,14 +130,14 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
                 hintText: "Nhập địa chỉ cửa hàng",
                 icon: Icon(Icons.lock),
               ),
-              GetX<SetUpInfoShopController>(
+              GetX<AddStoreController>(
                 builder: (_) => DropdownButton<Map<String, String>>(
                   focusColor: Colors.white,
                   value: chooseDropDownValue,
                   //elevation: 5,
                   style: TextStyle(color: Colors.white),
                   iconEnabledColor: Colors.black,
-                  items: setUpInfoShopController.mapTypeShop
+                  items: addStoreController.mapTypeShop
                       .map<DropdownMenuItem<Map<String, String>>>((Map<String, String> value) {
                     return DropdownMenuItem<Map<String, String>>(
                       value: value,
@@ -168,7 +168,7 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
                     KeyboardUtil.hideKeyboard(context);
-                    setUpInfoShopController.createShop(textEditingControllerNameShop.text,
+                    addStoreController.createShop(textEditingControllerNameShop.text,
                         textEditingControllerAddress.text,
                         _chosenValue,
                         textEditingControllerNameShop.text + signUpController.shopPhones.toString());

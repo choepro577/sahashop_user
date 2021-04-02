@@ -36,7 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.didChangeDependencies();
     sub ??= signUpController.stateSignUp.listen((state) {
       if (state != "success") {
-        DialogApp.showDialogError(context: context,errorMess: state);
+        SahaDialogApp.showDialogError(context: context,errorMess: state);
         EasyLoading.dismiss();
       }
 

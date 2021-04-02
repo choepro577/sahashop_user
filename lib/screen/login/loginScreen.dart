@@ -36,7 +36,7 @@ class _SignInState extends State<LoginScreen> {
     super.didChangeDependencies();
     sub ??= loginController.stateLogin.listen((state) {
       if (state != "success") {
-        DialogApp.showDialogError(context: context, errorMess: state);
+        SahaDialogApp.showDialogError(context: context, errorMess: state);
         //Get.to(HomeScreen());
         EasyLoading.dismiss();
       }

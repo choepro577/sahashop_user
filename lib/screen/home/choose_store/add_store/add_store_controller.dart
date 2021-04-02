@@ -3,7 +3,7 @@ import 'package:sahashop_user/data/remote/response/store/type_store_respones.dar
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
-class SetUpInfoShopController extends GetxController {
+class AddStoreController extends GetxController {
   var stateCreate = "".obs;
   var creating = false.obs;
   var listNameShop = RxList<String>();

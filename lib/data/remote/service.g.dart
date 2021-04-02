@@ -42,7 +42,7 @@ class _SahaService implements SahaService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>('register',
+    final _result = await _dio.request<Map<String, dynamic>>('login',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',

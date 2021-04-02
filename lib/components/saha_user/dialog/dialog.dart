@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class DialogApp {
+class SahaDialogApp {
 
-  static void showDialogOneButton({BuildContext context, String mess}) {
+  static void showDialogOneButton({String mess, bool barrierDismissible = true,
+  Function onClose
+  }) {
     // flutter defined function
     showDialog(
-      context: context,
+      barrierDismissible: barrierDismissible,
+      context: Get.context,
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Thành công!"),
+
           content: new Text(mess == null ? "Gửi yêu cầu bài hát mới thành công!" : mess),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
@@ -17,6 +22,7 @@ class DialogApp {
               child: new Text("Close"),
               onPressed: () {
                 Navigator.of(context).pop();
+                onClose();
               },
             ),
           ],
