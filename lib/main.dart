@@ -4,7 +4,6 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 import 'saha_load_app.dart';
 
-
 void main() {
   runApp(MyApp());
 }
