@@ -28,12 +28,12 @@ class HomeController extends GetxController {
             .first;
 
         if (store != null) {
-          storeCurrent.value = store;
+          setNewStoreCurrent(store);
         } else {
           setNewStoreCurrent(list[0]);
         }
       }
-      if (UserInfo().getCurrentIdStore() == null && list.length > 0) {
+     else if (UserInfo().getCurrentIdStore() == null && list.length > 0) {
         setNewStoreCurrent(list[0]);
       } else {
         storeCurrent = null;
