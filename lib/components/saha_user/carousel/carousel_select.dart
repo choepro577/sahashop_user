@@ -44,10 +44,12 @@ class _CarouselSelectState extends State<CarouselSelect> {
       children: [
         CarouselSlider(
             items: widget.listWidget
-                .map((e) => IgnorePointer(
-                      child: FakeDevicePixelRatio(
-                        child: e,
-                        fakeDevicePixelRatio: 1.74,
+                .map((e) => Card(
+                      child: IgnorePointer(
+                        child: FakeDevicePixelRatio(
+                          child: e,
+                          fakeDevicePixelRatio: 1.2,
+                        ),
                       ),
                     ))
                 .toList(),

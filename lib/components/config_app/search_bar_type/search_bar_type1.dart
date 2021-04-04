@@ -12,32 +12,34 @@ class SearchBarType1 extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Flexible(
-          flex: 7,
+        SizedBox(
+          width: 20,
+        ),
+        Expanded(
           child: SearchField(
             onSearch: (text) {
               HandleSearchBar.onSearch(text);
             },
           ),
         ),
-        Flexible(
-          flex: 4,
-          child: Row(
-            children: [
-              IconBtnWithCounter(
-                svgSrc: "assets/icons/cart_icon.svg",
-                press: () {},
-              ),
-              IconBtnWithCounter(
-                svgSrc: "assets/icons/bell.svg",
-                numOfitem: 3,
-                press: () {},
-              ),
-            ],
-          ),
-        )
+        Row(
+          children: [
+            IconBtnWithCounter(
+              svgSrc: "assets/icons/cart_icon.svg",
+              press: () {},
+            ),
+            IconBtnWithCounter(
+              svgSrc: "assets/icons/bell.svg",
+              numOfitem: 3,
+              press: () {},
+            ),
+          ],
+        ),
+        SizedBox(
+          width: 20,
+        ),
       ],
     );
   }

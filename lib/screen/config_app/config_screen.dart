@@ -29,8 +29,13 @@ class _ConfigScreenState extends State<ConfigScreen> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return GetBuilder(
-      builder: (controller) => SafeArea(
-        child: Row(
+      builder: (controller) => Scaffold(
+        backgroundColor: Colors.grey[100],
+        appBar: AppBar(
+          title: Text("Chỉnh sửa giao diện"),
+        ),
+        body: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +54,6 @@ class _ConfigScreenState extends State<ConfigScreen> {
               ],
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height,
               child: SingleChildScrollView(
                 child: Column(
                   children: [

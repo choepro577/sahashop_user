@@ -19,16 +19,14 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
-      builder: (controller) => Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                height: 40,
-                width: MediaQuery.of(context).size.width * 0.7,
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Container(
                 decoration: BoxDecoration(
                   color: SahaSecondaryColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(15),
@@ -45,87 +43,77 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                       prefixIcon: Icon(Icons.search)),
                 ),
               ),
-              IconBtnWithCounter(
-                svgSrc: "assets/icons/cart_icon.svg",
-                numOfitem: 1,
-                press: () {},
-              ),
-            ],
-          ),
-        ),
-        body: Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.22,
-                    color: Colors.grey[200],
-                    child: ListView.builder(
-                        itemCount: uiDataCategoryProduct.length,
-                        itemBuilder: (context, index) {
-                          return buildItem(index: index);
-                        }),
-                  ),
-                ),
-              ],
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                      height: 30,
-                      width: MediaQuery.of(context).size.width * 0.78,
-                      decoration: BoxDecoration(color: Colors.black12),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            uiDataCategoryProduct[indexSelected].name,
-                            style: TextStyle(
-                              fontSize: 17,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    ),
-                    uiDataCategoryProduct[indexSelected].listChildConfig ==
-                                null ||
-                            uiDataCategoryProduct[indexSelected]
-                                    .listChildConfig
-                                    .length ==
-                                0
-                        ? Container(
-                            height: 5,
-                          )
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: uiDataCategoryProduct[indexSelected]
-                                .listChildConfig
-                                .map(
-                                  (e) => e.editWidget == null
-                                      ? Container()
-                                      : Column(
-                                          children: [
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                            e.editWidget
-                                          ],
-                                        ),
-                                )
-                                .toList(),
-                          )
-                  ],
-                ),
-              ),
+            IconBtnWithCounter(
+              svgSrc: "assets/icons/cart_icon.svg",
+              numOfitem: 1,
+              press: () {},
             ),
           ],
         ),
+      ),
+      body: Row(
+        children: [
+          Container(
+            width: 70,
+            color: Colors.grey[200],
+            child: ListView.builder(
+                itemCount: uiDataCategoryProduct.length,
+                itemBuilder: (context, index) {
+                  return buildItem(index: index);
+                }),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(color: Colors.black12),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          uiDataCategoryProduct[indexSelected].name,
+                          style: TextStyle(
+                            fontSize: 17,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                  uiDataCategoryProduct[indexSelected].listChildConfig ==
+                              null ||
+                          uiDataCategoryProduct[indexSelected]
+                                  .listChildConfig
+                                  .length ==
+                              0
+                      ? Container(
+                          height: 5,
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: uiDataCategoryProduct[indexSelected]
+                              .listChildConfig
+                              .map(
+                                (e) => e.editWidget == null
+                                    ? Container()
+                                    : Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                          e.editWidget
+                                        ],
+                                      ),
+                              )
+                              .toList(),
+                        )
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -10,7 +10,7 @@ class HomeScreenConfig extends StatelessWidget {
       children: [
         CarouselSelect(
           listWidget: LIST_WIDGET_HOME_SCREEN,
-          height: Get.height * 0.8,
+          height: Get.height * 0.6,
           indexSelected: 1,
           initPage: 1,
         )
