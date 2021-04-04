@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:sahashop_user/const/constant.dart';
 
 class SelectProductImages extends StatelessWidget {
   SelectImageController selectImageController = new SelectImageController();
@@ -34,7 +35,10 @@ class SelectProductImages extends StatelessWidget {
         child: Container(
           height: 100,
           width: 100,
-          color: Colors.blueGrey,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              border: Border.all(color: SahaPrimaryColor,width: 3)
+          ),
           child: Center(
             child: Icon(Icons.camera_alt_outlined),
           ),

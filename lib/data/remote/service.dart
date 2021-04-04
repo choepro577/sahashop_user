@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:sahashop_user/data/remote/response/auth/login_response.dart';
 
 import 'response/auth/register_response.dart';
+import 'response/category/all_category_response.dart';
+import 'response/category/create_category_response.dart';
 import 'response/product/product_response.dart';
 import 'response/store/all_store_response.dart';
 import 'response/store/create_store_response.dart';
@@ -11,11 +15,9 @@ import 'response/store/type_store_respones.dart';
 part 'service.g.dart';
 
 @RestApi(baseUrl: "https://sahavi.vn/api/public/api/")
-
 abstract class SahaService {
   /// Retrofit factory
-  factory SahaService(Dio dio) =>
-      _SahaService(dio);
+  factory SahaService(Dio dio) => _SahaService(dio);
 
   @POST("register")
   Future<RegisterResponse> register(@Body() Map<String, dynamic> body);
@@ -30,10 +32,17 @@ abstract class SahaService {
   Future<CreateShopResponse> createStore(@Body() Map<String, dynamic> body);
 
   @POST("store/{idStore}/products")
-  Future<ProductResponse> createProduct(@Path() int idStore, @Body() Map<String, dynamic> body);
+  Future<ProductResponse> createProduct(
+      @Path() int idStore, @Body() Map<String, dynamic> body);
 
   @GET("type_of_store")
   Future<TypeShopResponse> getAllTypeOfStore();
 
+  @POST("store/{idStore}/categories")
+  @FormUrlEncoded()
+  Future<CreateCategoryResponse> createCategory(@Path() int idStore,
+      @Body() Map<String, dynamic> body);
 
+  @GET("store/{idStore}/categories")
+  Future<AllCategoryResponse> getAllCategory(@Path() int idStore);
 }
