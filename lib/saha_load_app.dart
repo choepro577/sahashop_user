@@ -7,43 +7,41 @@ import 'package:sahashop_user/utils/user_info.dart';
 
 import 'data/remote/saha_service_manager.dart';
 
-class SahaLoadAppController extends GetxController {
+class SahaMainScreen extends StatefulWidget {
   @override
-  void onInit() {
-    super.onInit();
-    SahaServiceManager.initialize();
-    checkLogin();
+  _SahaMainScreenState createState() => _SahaMainScreenState();
+}
+
+class _SahaMainScreenState extends State<SahaMainScreen> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loadInit(context);
   }
 
-  Future<Timer> checkLogin() async {
+  void loadInit(BuildContext context) {
+    SahaServiceManager.initialize();
+    checkLogin(context);
+  }
+
+  Future<void> checkLogin(BuildContext context) async {
     await Future.delayed(Duration(seconds: 1));
     if (await UserInfo().hasLogged()) {
-      hasLogged();
+      hasLogged(context);
     } else {
-      noLogin();
+      noLogin(context);
     }
   }
 
-  hasLogged() {
-    Navigator.of(Get.context).pushReplacement(MaterialPageRoute(
-        settings: RouteSettings(name: '/home'),
-        builder: (context) {
-          return HomeScreen();
-        }));
+  hasLogged(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => HomeScreen()));
   }
 
-  noLogin() {
-    Navigator.of(Get.context).pushReplacement(MaterialPageRoute(
-        settings: RouteSettings(name: '/navigation'),
-        builder: (context) {
-          return LoginScreen();
-        }));
+  noLogin(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => LoginScreen()));
   }
-}
-
-class SahaMainScreen extends StatelessWidget {
-
-  final controller = Get.put(SahaLoadAppController());
 
   @override
   Widget build(BuildContext context) {
@@ -58,18 +56,16 @@ class SahaMainScreen extends StatelessWidget {
             children: <Widget>[
               Image.asset(
                 "assets/icon.png",
-                height: 100,
-                width: 100,
                 fit: BoxFit.cover,
                 alignment: Alignment.center,
               ),
               SizedBox(
                 height: 30,
               ),
-              Text(
-                "SahaShop",
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-              )
+              // Text(
+              //   "SahaShop",
+              //   style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+              // )
             ],
           ),
         ),

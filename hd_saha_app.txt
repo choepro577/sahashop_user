@@ -13,3 +13,5 @@ flutter pub run build_runner build
  export ANDROID_SDK_ROOT=/Users/hoangdr/Library/Android/sdk
 
 export PATH="$PATH:$HOME/flutter/bin"
+
+flutter build apk --split-per-abi
