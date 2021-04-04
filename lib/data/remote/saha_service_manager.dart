@@ -16,7 +16,6 @@ class SahaServiceManager {
 
   SahaServiceManager._internal();
 
-
   /// Service getter
   SahaService get service => _service;
 
@@ -40,14 +39,16 @@ class SahaServiceManager {
 
     final options = BaseOptions(receiveTimeout: 15000);
     dioClient = Dio(options)
-      ..interceptors.add(PrettyDioLogger(
-          requestHeader: true,
-          requestBody: true,
-          responseBody: false,
-          responseHeader: false,
-          error: false,
-          compact: false,
-          maxWidth: 90))
+      // ..interceptors
+      //     // .add(
+      //     // PrettyDioLogger(
+      //     // requestHeader: true,
+      //     // requestBody: true,
+      //     // responseBody: false,
+      //     // responseHeader: false,
+      //     // error: false,
+      //     // compact: false,
+      //     // maxWidth: 90))
       ..interceptors.add(AuthInterceptor())
       ..interceptors;
 

@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SahaAlert {
-
-  static void showError(
-      {String message = "", String title = "Saha", }) {
+  static void showError({
+    String message = "",
+    String title = "Saha",
+  }) {
     showFlash(
       context: Get.context,
       builder: (_, controller) {
@@ -33,7 +34,6 @@ class SahaAlert {
                 onPressed: () => controller.dismiss(),
                 child: Text('DISMISS'),
               ),
-
             ),
           ),
         );
@@ -41,7 +41,43 @@ class SahaAlert {
     );
   }
 
-  static  void showBasicsFlash(String message, {
+  static void showSuccess({
+    String message = "",
+    String title = "Saha",
+  }) {
+    showFlash(
+      duration: Duration(milliseconds: 1000),
+      context: Get.context,
+      builder: (_, controller) {
+        return Flash(
+          controller: controller,
+          borderRadius: BorderRadius.circular(8.0),
+          borderColor: Colors.blue,
+          boxShadows: kElevationToShadow[8],
+          backgroundGradient: RadialGradient(
+            colors: [Colors.amber, Colors.green],
+            center: Alignment.topLeft,
+            radius: 2,
+          ),
+          onTap: () => controller.dismiss(),
+          forwardAnimationCurve: Curves.easeInCirc,
+          reverseAnimationCurve: Curves.bounceIn,
+          child: DefaultTextStyle(
+            style: TextStyle(color: Colors.white),
+            child: FlashBar(
+              title: Text('$title'),
+              message: Text('$message'),
+              leftBarIndicatorColor: Colors.green,
+              icon: Icon(Icons.info_outline),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  static void showBasicsFlash(
+    String message, {
     Duration duration,
     flashStyle = FlashStyle.floating,
   }) {
@@ -190,7 +226,7 @@ class SahaAlert {
     );
   }
 
-  static  void showCenterFlash({
+  static void showCenterFlash({
     FlashPosition position,
     FlashStyle style,
     Alignment alignment,
@@ -247,5 +283,4 @@ class SahaAlert {
           );
         });
   }
-
 }

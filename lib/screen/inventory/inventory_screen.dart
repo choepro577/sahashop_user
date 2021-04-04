@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'categories/category_screen.dart';
 import 'products/product_screen.dart';
 
 class InventoryScreen extends StatelessWidget {
@@ -17,7 +18,11 @@ class InventoryScreen extends StatelessWidget {
               onPress: () {
                 Get.to(() => ProductsScreen());
               }),
-          itemList(title: "Danh mục"),
+          itemList(
+              title: "Danh mục",
+              onPress: () {
+                Get.to(() => CategoryScreen());
+              }),
         ],
       ),
     );

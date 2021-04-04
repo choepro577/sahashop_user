@@ -17,12 +17,15 @@ class AuthInterceptor extends InterceptorsWrapper {
     if (UserInfo().getToken() != null) {
       options.headers.putIfAbsent("token", () => UserInfo().getToken());
     }
-
+    print('--------------------------Header: ${options.headers}');
+    print('--------------------------Request: ${options.data}');
+    options.data = new FormData.fromMap(options.data);
     return super.onRequest(options);
   }
 
   @override
   Future onError(DioError error) {
+    print('--------------------------Response: ${error.response}');
     if (error is DioError) {
       var dioError = error;
       switch (dioError.type) {
@@ -59,7 +62,7 @@ class AuthInterceptor extends InterceptorsWrapper {
 
   @override
   Future onResponse(Response response) async {
-    print('Response: ${response.data}');
+    print('--------------------------Response: ${response.data}');
 
     if (response.data["code"] == 401) {
       UserInfo().setToken(null);

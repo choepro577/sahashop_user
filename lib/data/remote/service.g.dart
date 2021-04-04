@@ -127,4 +127,45 @@ class _SahaService implements SahaService {
     final value = TypeShopResponse.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<CreateCategoryResponse> createCategory(idStore, body) async {
+    ArgumentError.checkNotNull(idStore, 'idStore');
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$idStore/categories',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            contentType: 'application/x-www-form-urlencoded',
+            baseUrl: baseUrl),
+        data: _data);
+    final value = CreateCategoryResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<AllCategoryResponse> getAllCategory(idStore) async {
+    ArgumentError.checkNotNull(idStore, 'idStore');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$idStore/categories',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = AllCategoryResponse.fromJson(_result.data);
+    return value;
+  }
 }
