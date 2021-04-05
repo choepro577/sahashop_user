@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sahashop_user/components/config_app/banner_type/banner_type1.dart';
+import 'package:sahashop_user/components/config_app/cart_screen_type/cart_screen_1.dart';
 import 'package:sahashop_user/components/config_app/product_screen/product_screen_1.dart';
 import 'package:sahashop_user/components/config_app/search_bar_type/search_bar_type1.dart';
 import 'package:sahashop_user/components/config_app/search_bar_type/search_bar_type2.dart';
@@ -32,6 +33,11 @@ List<Widget> LIST_WIDGET_CATEGORY_PRODUCT = [
 List<Widget> LIST_WIDGET_PRODUCT_SCREEN = [
   ProductScreen1(),
   ProductScreen1(),
+];
+
+List<Widget> LIST_WIDGET_CART_SCREEN = [
+  CartScreen1(),
+  CartScreen1(),
 ];
 
 List<Widget> LIST_WIDGET_SEARCH_BAR = [

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/config_app/cart_screen_type/cart_screen_1.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/screen/config_app/config_screen.dart';
 import 'package:sahashop_user/screen/home/choose_store/choose_store.dart';
@@ -47,14 +48,14 @@ class HeadHome extends StatelessWidget {
                 ),
               ),
               Obx(() => Center(
-                  child: Text(homeController?.storeCurrent?.value?.name == null
-                      ? "Xin chào"
-                      : homeController.storeCurrent.value.name,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20
-                  ),
+                      child: Text(
+                    homeController?.storeCurrent?.value?.name == null
+                        ? "Xin chào"
+                        : homeController.storeCurrent.value.name,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20),
                   ))),
               Obx(() => !homeController.isExpansion.value
                   ? Container()
@@ -67,7 +68,7 @@ class HeadHome extends StatelessWidget {
         ),
         Obx(() => AnimatedContainer(
               width: double.infinity,
-              height: homeController.isExpansion.value ? 0 : 300,
+              height: homeController.isExpansion.value ? 0 : 320,
               duration: Duration(milliseconds: 500),
               curve: Curves.easeInQuad,
               child: SingleChildScrollView(
@@ -98,6 +99,13 @@ class HeadHome extends StatelessWidget {
                               text: 'Chỉnh sửa giao diện',
                               press: () {
                                 Get.to(ConfigScreen());
+                              },
+                            ),
+                            ItemStoreView(
+                              icon: 'assets/icons/gift_icon.svg',
+                              text: 'Giỏ hàng',
+                              press: () {
+                                Get.to(CartScreen1());
                               },
                             ),
                           ]),
