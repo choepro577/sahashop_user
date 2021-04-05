@@ -8,7 +8,7 @@ import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/screen/inventory/products/add_product/add_product_controller.dart';
 import 'package:smart_select/smart_select.dart';
-import 'package:sticky_headers/sticky_headers.dart';
+import 'package:sticky_headers/sticky_headers/widget.dart';
 
 import 'widget/select_images.dart';
 
@@ -74,109 +74,109 @@ class AddProductScreen extends StatelessWidget {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              child:  Column(
-                  children: [
-                    SahaTextField(
-                      onChanged: (value) {
-                        addProductController.productRequest.name = value;
-                      },
-                      validator: (value) {
-                        if (value.length == 0) {
-                          return 'Không được để trống';
-                        }
-                        return null;
-                      },
-                      labelText: "Tên sản phẩm",
-                      hintText: "Mời nhập tên sản phẩm",
-                    ),
-                    SelectProductImages(),
-                    Obx(
-                      () => addProductController.isLoadingCategory.value
-                          ? SahaLoadingWidget(
-                              size: 20,
-                            )
-                          : SmartSelect<Category>.multiple(
-                              title: 'Danh mục',
-                              value: addProductController.listCategorySelected
-                                  .toList(),
-                              modalHeader: true,
-                              modalFilter: true,
-                              modalType: S2ModalType.bottomSheet,
-                              modalFilterHint: "",
-                              choiceConfig: S2ChoiceConfig(),
-                              choiceGroupBuilder: (context, header, choices) {
-                                return StickyHeader(
-                                  header: header,
-                                  content: choices,
-                                );
-                              },
-                              tileBuilder: (context, state) {
-                                return S2Tile.fromState(
-                                  state,
-                                  hideValue: true,
-                                  body: S2TileChips(
-                                    chipLength: state.valueObject.length,
-                                    chipLabelBuilder: (context, i) {
-                                      return Text(state.valueObject[i].title);
-                                    },
-                                    chipAvatarBuilder: (context, i) {
-                                      return CircleAvatar(
-                                          backgroundImage: NetworkImage(state
-                                                  .valueObject[i]
-                                                  .value
-                                                  ?.imageUrl ??
-                                              ""));
-                                    },
-                                    chipOnDelete: (i) {
-                                      addProductController.onRemoveItem(
-                                          state.valueObject[i].value);
-                                    },
-                                    chipColor: SahaPrimaryColor,
-                                    chipBrightness: Brightness.dark,
-                                    chipBorderOpacity: .5,
-                                  ),
-                                );
-                              },
-                              choiceItems: addProductController.listCategory
-                                  .toList()
-                                  .map(
-                                    (category) => S2Choice<Category>(
-                                        value: category, title: category.name),
-                                  )
-                                  .toList(),
-                              onChange: (state) {
-                                addProductController.onChoose(state.value);
-                              }),
-                    ),
-                    SahaTextField(
-                      onChanged: (value) {
-                        addProductController.productRequest.description = value;
-                      },
-                      validator: (value) {
-                        if (value.length == 0) {
-                          return 'Không được để trống';
-                        }
-                        return null;
-                      },
-                      labelText: "Mô tả",
-                      hintText: "Mời nhập mô tả sản phẩm",
-                    ),
-                    SahaTextField(
-                      onChanged: (value) {
-                        addProductController.productRequest.price =
-                            int.tryParse(value);
-                      },
-                      validator: (value) {
-                        if (value.length == 0) {
-                          return 'Không được để trống';
-                        }
-                        return null;
-                      },
-                      textInputType: TextInputType.number,
-                      labelText: "Giá",
-                      hintText: "Mời nhập mô tả sản phẩm",
-                    ),
-                  ],
+              child: Column(
+                children: [
+                  SahaTextField(
+                    onChanged: (value) {
+                      addProductController.productRequest.name = value;
+                    },
+                    validator: (value) {
+                      if (value.length == 0) {
+                        return 'Không được để trống';
+                      }
+                      return null;
+                    },
+                    labelText: "Tên sản phẩm",
+                    hintText: "Mời nhập tên sản phẩm",
+                  ),
+                  SelectProductImages(),
+                  Obx(
+                    () => addProductController.isLoadingCategory.value
+                        ? SahaLoadingWidget(
+                            size: 20,
+                          )
+                        : SmartSelect<Category>.multiple(
+                            title: 'Danh mục',
+                            value: addProductController.listCategorySelected
+                                .toList(),
+                            modalHeader: true,
+                            modalFilter: true,
+                            modalType: S2ModalType.bottomSheet,
+                            modalFilterHint: "",
+                            choiceConfig: S2ChoiceConfig(),
+                            choiceGroupBuilder: (context, header, choices) {
+                              return StickyHeader(
+                                header: header,
+                                content: choices,
+                              );
+                            },
+                            tileBuilder: (context, state) {
+                              return S2Tile.fromState(
+                                state,
+                                hideValue: true,
+                                body: S2TileChips(
+                                  chipLength: state.valueObject.length,
+                                  chipLabelBuilder: (context, i) {
+                                    return Text(state.valueObject[i].title);
+                                  },
+                                  chipAvatarBuilder: (context, i) {
+                                    return CircleAvatar(
+                                        backgroundImage: NetworkImage(state
+                                                .valueObject[i]
+                                                .value
+                                                ?.imageUrl ??
+                                            ""));
+                                  },
+                                  chipOnDelete: (i) {
+                                    addProductController.onRemoveItem(
+                                        state.valueObject[i].value);
+                                  },
+                                  chipColor: SahaPrimaryColor,
+                                  chipBrightness: Brightness.dark,
+                                  chipBorderOpacity: .5,
+                                ),
+                              );
+                            },
+                            choiceItems: addProductController.listCategory
+                                .toList()
+                                .map(
+                                  (category) => S2Choice<Category>(
+                                      value: category, title: category.name),
+                                )
+                                .toList(),
+                            onChange: (state) {
+                              addProductController.onChoose(state.value);
+                            }),
+                  ),
+                  SahaTextField(
+                    onChanged: (value) {
+                      addProductController.productRequest.description = value;
+                    },
+                    validator: (value) {
+                      if (value.length == 0) {
+                        return 'Không được để trống';
+                      }
+                      return null;
+                    },
+                    labelText: "Mô tả",
+                    hintText: "Mời nhập mô tả sản phẩm",
+                  ),
+                  SahaTextField(
+                    onChanged: (value) {
+                      addProductController.productRequest.price =
+                          int.tryParse(value);
+                    },
+                    validator: (value) {
+                      if (value.length == 0) {
+                        return 'Không được để trống';
+                      }
+                      return null;
+                    },
+                    textInputType: TextInputType.number,
+                    labelText: "Giá",
+                    hintText: "Mời nhập mô tả sản phẩm",
+                  ),
+                ],
               ),
             ),
           ),
