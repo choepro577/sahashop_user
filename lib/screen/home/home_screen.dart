@@ -31,33 +31,29 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Stack(
-        children: [
-          Scaffold(
-              bottomNavigationBar: CurvedNavigationBar(
-                height: 55,
-                backgroundColor: Colors.transparent,
-                items: <Widget>[
-                  Icon(Icons.add, size: 30),
-                  Icon(Icons.settings, size: 30),
-                  Icon(Icons.list, size: 30),
-                  Icon(Icons.compare_arrows, size: 30),
-                ],
-                onTap: (currentIndex) {
-                  setState(() {
-                    selectedItem = currentIndex;
-                  });
-                },
-              ),
-              body: screen[selectedItem]),
-
-            Obx(
-                    () => homeController.isLoadingStore.value
-                    ? SahaLoadingFullScreen() : Container()
+    return Stack(
+      children: [
+        Scaffold(
+            bottomNavigationBar: CurvedNavigationBar(
+              height: 55,
+              backgroundColor: Colors.transparent,
+              items: <Widget>[
+                Icon(Icons.add, size: 30),
+                Icon(Icons.settings, size: 30),
+                Icon(Icons.list, size: 30),
+                Icon(Icons.compare_arrows, size: 30),
+              ],
+              onTap: (currentIndex) {
+                setState(() {
+                  selectedItem = currentIndex;
+                });
+              },
             ),
-        ],
-      ),
+            body: screen[selectedItem]),
+        Obx(() => homeController.isLoadingStore.value
+            ? SahaLoadingFullScreen()
+            : Container()),
+      ],
     );
   }
 }

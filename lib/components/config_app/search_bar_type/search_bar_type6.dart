@@ -12,10 +12,12 @@ class SearchBarType6 extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Flexible(
-          flex: 7,
+        SizedBox(
+          width: 20,
+        ),
+        Expanded(
           child: Container(
             margin: EdgeInsets.symmetric(vertical: 30),
             padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
@@ -40,22 +42,28 @@ class SearchBarType6 extends StatelessWidget {
             ),
           ),
         ),
-        Flexible(
-          flex: 4,
-          child: Row(
-            children: [
-              IconBtnWithCounterType3(
-                svgSrc: "assets/icons/cart_icon.svg",
-                press: () {},
-              ),
-              IconBtnWithCounterType3(
-                svgSrc: "assets/icons/wallet.svg",
-                numOfitem: 3,
-                press: () {},
-              ),
-            ],
-          ),
-        )
+        SizedBox(
+          width: 10,
+        ),
+        Row(
+          children: [
+            IconBtnWithCounterType3(
+              svgSrc: "assets/icons/cart_icon.svg",
+              press: () {},
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            IconBtnWithCounterType3(
+              svgSrc: "assets/icons/wallet.svg",
+              numOfitem: 3,
+              press: () {},
+            ),
+          ],
+        ),
+        SizedBox(
+          width: 20,
+        ),
       ],
     );
   }

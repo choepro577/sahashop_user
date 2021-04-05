@@ -11,5 +11,7 @@ class ConfigController extends GetxController {
     configApp.searchType = 0;
 
     configApp.homeIdCarouselAppImage = 0;
+
+    configApp.categoryPageType = 0;
   }
 }
