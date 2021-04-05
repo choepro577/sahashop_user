@@ -23,7 +23,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
               child: Container(
@@ -43,6 +43,9 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                       prefixIcon: Icon(Icons.search)),
                 ),
               ),
+            ),
+            SizedBox(
+              width: 20,
             ),
             IconBtnWithCounter(
               svgSrc: "assets/icons/cart_icon.svg",

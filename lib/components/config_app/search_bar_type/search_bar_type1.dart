@@ -24,11 +24,17 @@ class SearchBarType1 extends StatelessWidget {
             },
           ),
         ),
+        SizedBox(
+          width: 10,
+        ),
         Row(
           children: [
             IconBtnWithCounter(
               svgSrc: "assets/icons/cart_icon.svg",
               press: () {},
+            ),
+            SizedBox(
+              width: 10,
             ),
             IconBtnWithCounter(
               svgSrc: "assets/icons/bell.svg",

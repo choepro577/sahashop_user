@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_box_button.dart';
-import 'package:sahashop_user/components/saha_user/customCard/productCard.dart';
+import 'package:sahashop_user/components/saha_user/customCard/product_card.dart';
 import 'package:sahashop_user/components/saha_user/special_card/special_offer_card_type1.dart';
 import 'package:sahashop_user/model/button.dart';
 import 'package:sahashop_user/model/category.dart';

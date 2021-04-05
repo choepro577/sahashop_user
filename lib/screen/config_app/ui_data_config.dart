@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sahashop_user/components/config_app/font_type/font.dart';
 import 'package:sahashop_user/screen/config_app/screens_config/header_config/banner_config.dart';
 import 'package:sahashop_user/screen/config_app/screens_config/header_config/searchBar.dart';
+import 'package:sahashop_user/screen/config_app/screens_config/product_screen/product_screen.dart';
 
 import 'screens_config/category_product/category_product.dart';
 import 'screens_config/home_screen/home_screen.dart';
@@ -35,14 +36,12 @@ var UIDataConfig = [
             editWidget: CategoryProductConfig()),
       ]),
   ParentConfig(
-      name: "Màn hình Sản phẩm",
-      icon: "productScreen.svg",
+      name: "Màn hình sản phẩm",
+      icon: "product_screen.svg",
       listChildConfig: [
-        ChildConfig(
-          name: "Logo",
-        )
+        ChildConfig(name: "Logo", editWidget: ProductScreenConfig())
       ]),
-  ParentConfig(name: "Màn hình Liên hệ", icon: "Bell.svg", listChildConfig: [
+  ParentConfig(name: "Màn hình Liên hệ", icon: "bell.svg", listChildConfig: [
     ChildConfig(
       name: "Logo",
     )

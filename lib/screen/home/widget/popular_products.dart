@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:sahashop_user/components/saha_user/customCard/productCard.dart';
+import 'package:get/get.dart';
+import 'package:sahashop_user/components/config_app/product_screen/product_screen_1.dart';
+import 'package:sahashop_user/components/saha_user/customCard/product_card.dart';
 import 'package:sahashop_user/model/product.dart';
 import 'section_title.dart';
 
@@ -21,8 +23,13 @@ class PopularProducts extends StatelessWidget {
                 demoProducts.length,
                 (index) {
                   if (demoProducts[index].isPopular)
-                    return ProductCard(product: demoProducts[index]);
-
+                    return ProductCard(
+                        product: demoProducts[index],
+                        press: () {
+                          Get.to(ProductScreen1(
+                              rating: demoProducts[index].rating,
+                              product: demoProducts[index]));
+                        });
                   return SizedBox
                       .shrink(); // here by default width and height is 0
                 },

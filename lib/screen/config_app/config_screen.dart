@@ -32,7 +32,9 @@ class _ConfigScreenState extends State<ConfigScreen> {
       builder: (controller) => Scaffold(
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
-          title: Text("Chỉnh sửa giao diện"),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          title: Text('Chỉnh sửa giao diện'),
         ),
         body: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
