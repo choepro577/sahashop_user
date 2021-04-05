@@ -5,7 +5,7 @@ import 'package:sahashop_user/components/saha_user/customCard/product_card.dart'
 import 'package:sahashop_user/components/saha_user/special_card/special_offer_card_type1.dart';
 import 'package:sahashop_user/model/button.dart';
 import 'package:sahashop_user/model/category.dart';
-import 'package:sahashop_user/model/product.dart';
+import 'package:sahashop_user/model/product2222.dart';
 import 'package:sahashop_user/screen/config_app/config_controller.dart';
 import 'package:sahashop_user/screen/home/widget/section_title.dart';
 

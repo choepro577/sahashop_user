@@ -16,7 +16,7 @@ class InventoryScreen extends StatelessWidget {
           itemList(
               title: "Sản phẩm",
               onPress: () {
-                Get.to(() => ProductsScreen());
+                Get.to(() => ProductScreen());
               }),
           itemList(
               title: "Danh mục",

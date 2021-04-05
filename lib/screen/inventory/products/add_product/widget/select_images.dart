@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:sahashop_user/const/constant.dart';
 
+final MAX_SELECT = 10;
+
 class SelectProductImages extends StatelessWidget {
   SelectImageController selectImageController = new SelectImageController();
 
@@ -14,17 +16,50 @@ class SelectProductImages extends StatelessWidget {
       child: Obx(() {
         var deviceImages = selectImageController.deviceImages.toList();
 
-        if (deviceImages == null || deviceImages.length == 0) return addImage();
+        if (deviceImages == null || deviceImages.length == 0)
+          return Row(
+            children: [
+              addImage(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Ảnh sản phẩm"),
+                        Text(
+                          "Tối đa 10 hình, có thể thêm sau",
+                          style: TextStyle(
+                              color: Colors.grey, fontStyle: FontStyle.italic),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            ],
+          );
 
         return ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: deviceImages.length,
             itemBuilder: (context, index) {
-              return buildItemAsset(deviceImages[index]);
+              return Row(
+                children: [
+                  buildItemAsset(deviceImages[index]),
+                  index == deviceImages.length - 1 &&
+                          deviceImages.length < MAX_SELECT
+                      ? addImage()
+                      : Container()
+                ],
+              );
             });
       }),
     );
   }
+
   Widget addImage() {
     return Align(
       alignment: Alignment.centerLeft,
@@ -37,8 +72,7 @@ class SelectProductImages extends StatelessWidget {
           width: 100,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(8)),
-              border: Border.all(color: SahaPrimaryColor,width: 3)
-          ),
+              border: Border.all(color: SahaPrimaryColor)),
           child: Center(
             child: Icon(Icons.camera_alt_outlined),
           ),
@@ -46,10 +80,14 @@ class SelectProductImages extends StatelessWidget {
       ),
     );
   }
+
   Widget buildItem() {
     return Padding(
       padding: const EdgeInsets.all(4.0),
-      child: SizedBox(
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            border: Border.all(color: SahaPrimaryColor)),
         height: 100,
         width: 100,
         child: Stack(
@@ -99,8 +137,6 @@ class SelectProductImages extends StatelessWidget {
     );
   }
 
-
-
   Widget buildItemAsset(Asset asset) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
@@ -122,22 +158,27 @@ class SelectProductImages extends StatelessWidget {
             Positioned(
               top: 0,
               right: 0,
-              child: Container(
-                height: 17,
-                width: 17,
-                decoration: BoxDecoration(
-                  color: Colors.black54,
-                  shape: BoxShape.circle,
-                  border: Border.all(width: 1, color: Colors.white),
-                ),
-                child: Center(
-                  child: Text(
-                    "x",
-                    style: TextStyle(
-                      fontSize: 10,
-                      height: 1,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
+              child: InkWell(
+                onTap: () {
+                  selectImageController.deleteImage(asset);
+                },
+                child: Container(
+                  height: 17,
+                  width: 17,
+                  decoration: BoxDecoration(
+                    color: Colors.black54,
+                    shape: BoxShape.circle,
+                    border: Border.all(width: 1, color: Colors.white),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "x",
+                      style: TextStyle(
+                        fontSize: 10,
+                        height: 1,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -153,20 +194,24 @@ class SelectProductImages extends StatelessWidget {
 class SelectImageController extends GetxController {
   var deviceImages = <Asset>[].obs;
 
+  Future<void> deleteImage(Asset asset) {
+    deviceImages.remove(asset);
+  }
+
   Future<void> loadAssets() async {
     List<Asset> resultList = <Asset>[];
     String error = 'No Error Detected';
 
     try {
       resultList = await MultiImagePicker.pickImages(
-        maxImages: 300,
+        maxImages: MAX_SELECT - resultList.length,
         enableCamera: true,
-        selectedAssets: deviceImages,
+        selectedAssets: deviceImages.toList(),
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: MaterialOptions(
           actionBarColor: "#abcdef",
-          actionBarTitle: "Example App",
-          allViewTitle: "All Photos",
+          actionBarTitle: "SahaShop",
+          allViewTitle: "Mời chọn ảnh",
           useDetailsView: false,
           selectCircleStrokeColor: "#000000",
         ),

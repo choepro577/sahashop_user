@@ -7,6 +7,7 @@ import 'package:sahashop_user/data/remote/response/auth/login_response.dart';
 import 'response/auth/register_response.dart';
 import 'response/category/all_category_response.dart';
 import 'response/category/create_category_response.dart';
+import 'response/product/all_product_response.dart';
 import 'response/product/product_response.dart';
 import 'response/store/all_store_response.dart';
 import 'response/store/create_store_response.dart';
@@ -35,6 +36,9 @@ abstract class SahaService {
   Future<ProductResponse> createProduct(
       @Path() int idStore, @Body() Map<String, dynamic> body);
 
+  @GET("store/{idStore}/products")
+  Future<AllProductResponse> getAllProduct(@Path() int idStore);
+
   @GET("type_of_store")
   Future<TypeShopResponse> getAllTypeOfStore();
 
@@ -45,4 +49,6 @@ abstract class SahaService {
 
   @GET("store/{idStore}/categories")
   Future<AllCategoryResponse> getAllCategory(@Path() int idStore);
+
+
 }

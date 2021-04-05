@@ -1,101 +1,90 @@
-import 'package:flutter/material.dart';
-
 class Product {
-  final int id;
-  final String title, description;
-  final List<String> images;
-  final List<Color> colors;
-  final double rating, price;
-  final bool isFavourite, isPopular;
+  String description;
+  String name;
+  int indexImageAvatar;
+  int price;
+  String barcode;
+  int status;
+  List<String> images;
+  List<Detail> detail;
 
-  Product({
-    @required this.id,
-    @required this.images,
-    @required this.colors,
-    this.rating = 0.0,
-    this.isFavourite = false,
-    this.isPopular = false,
-    @required this.title,
-    @required this.price,
-    @required this.description,
-  });
+  Product(
+      {this.description,
+        this.name,
+        this.indexImageAvatar,
+        this.price,
+        this.barcode,
+        this.status,
+        this.images,
+        this.detail});
+
+  Product.fromJson(Map<String, dynamic> json) {
+    description = json['description'];
+    name = json['name'];
+    indexImageAvatar = json['index_image_avatar'];
+    price = json['price'];
+    barcode = json['barcode'];
+    status = json['status'];
+    images = json['images'].cast<String>();
+    if (json['detail'] != null) {
+      detail = new List<Detail>();
+      json['detail'].forEach((v) {
+        detail.add(new Detail.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['description'] = this.description;
+    data['name'] = this.name;
+    data['index_image_avatar'] = this.indexImageAvatar;
+    data['price'] = this.price;
+    data['barcode'] = this.barcode;
+    data['status'] = this.status;
+    data['images'] = this.images;
+    if (this.detail != null) {
+      data['detail'] = this.detail.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
-List<Product> demoProducts = [
-  Product(
-    id: 1,
-    images: [
-      "assets/images/ps4_console_white_1.png",
-      "assets/images/ps4_console_white_2.png",
-      "assets/images/ps4_console_white_3.png",
-      "assets/images/ps4_console_white_4.png",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Wireless Controller for PS4™",
-    price: 64.99,
-    description: description,
-    rating: 4.8,
-    isFavourite: true,
-    isPopular: true,
-  ),
-  Product(
-    id: 2,
-    images: [
-      "assets/images/Image Popular Product 2.png",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Nike Sport White - Man Pant",
-    price: 50.5,
-    description: description,
-    rating: 4.1,
-    isPopular: true,
-  ),
-  Product(
-    id: 3,
-    images: [
-      "assets/images/glap.png",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Gloves XC Omega - Polygon",
-    price: 36.55,
-    description: description,
-    rating: 4.1,
-    isFavourite: true,
-    isPopular: true,
-  ),
-  Product(
-    id: 4,
-    images: [
-      "assets/images/wireless headset.png",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Logitech Head",
-    price: 20.20,
-    description: description,
-    rating: 4.1,
-    isFavourite: true,
-  ),
-];
+class Detail {
+  Atrribute atrribute;
 
-const String description =
-    "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";
+  Detail({this.atrribute});
+
+  Detail.fromJson(Map<String, dynamic> json) {
+    atrribute = json['atrribute'] != null
+        ? new Atrribute.fromJson(json['atrribute'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.atrribute != null) {
+      data['atrribute'] = this.atrribute.toJson();
+    }
+    return data;
+  }
+}
+
+class Atrribute {
+  String name;
+  List<String> items;
+
+  Atrribute({this.name, this.items});
+
+  Atrribute.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    items = json['items'].cast<String>();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['items'] = this.items;
+    return data;
+  }
+}

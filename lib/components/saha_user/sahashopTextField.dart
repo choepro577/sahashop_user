@@ -27,7 +27,7 @@ class SahaTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 1),
       child: TextFormField(
         validator: validator,
         keyboardType: textInputType,
@@ -36,7 +36,7 @@ class SahaTextField extends StatelessWidget {
         controller: controller,
         decoration: new InputDecoration(
             border: new OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15)),),
+              borderRadius: BorderRadius.all(Radius.circular(8)),),
             labelText: labelText,
             hintText: hintText,
             suffixIcon: obscureText == true && icon != null ? icon : null,

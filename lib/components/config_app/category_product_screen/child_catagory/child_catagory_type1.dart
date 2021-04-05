@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:sahashop_user/components/saha_user/customCard/product_card.dart';
-import 'package:sahashop_user/model/product.dart';
+import 'package:sahashop_user/model/product2222.dart';
 
 class ChildCategoryType1 extends StatelessWidget {
   @override

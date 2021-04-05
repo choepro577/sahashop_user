@@ -6,6 +6,8 @@ Tools • Dart 2.12.2
 # generate code
 flutter pub run build_runner build
 
+flutter pub run build_runner build --delete-conflicting-outputs
+
  export ANDROID_HOME=$HOME/Android/Sdk
 
  export ANDROID_HOME=/Users/hoangdr/Library/Android/sdk

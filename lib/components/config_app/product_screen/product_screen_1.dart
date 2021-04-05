@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/const/constant.dart';
-import 'package:sahashop_user/model/product.dart';
+import 'package:sahashop_user/model/product2222.dart';
 
 class ProductScreen1 extends StatefulWidget {
   final double rating;

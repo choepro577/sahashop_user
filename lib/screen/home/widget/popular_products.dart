@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/config_app/product_screen/product_screen_1.dart';
 import 'package:sahashop_user/components/saha_user/customCard/product_card.dart';
 import 'package:sahashop_user/model/product.dart';
+import 'package:sahashop_user/model/product2222.dart';
 import 'section_title.dart';
 
 class PopularProducts extends StatelessWidget {

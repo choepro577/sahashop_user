@@ -5,6 +5,7 @@ class ProductRequest {
   int price;
   String barcode;
   int status;
+  List<int> categories;
   List<String> images;
   List<Detail> detail;
 
@@ -36,13 +37,14 @@ class ProductRequest {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['description'] = this.description;
-    data['name'] = this.name;
-    data['index_image_avatar'] = this.indexImageAvatar;
-    data['price'] = this.price;
-    data['barcode'] = this.barcode;
-    data['status'] = this.status;
-    data['images'] = this.images;
+    data['description'] = this.description ?? "";
+    data['name'] = this.name ?? "";
+    data['index_image_avatar'] = this.indexImageAvatar ?? 0;
+    data['price'] = this.price ?? 0;
+    data['categories'] = this.categories.toList();
+    data['barcode'] = this.barcode ?? "dsad";
+    data['status'] = this.status ?? 0;
+    data['images'] = this.images ?? [];
     if (this.detail != null) {
       data['detail'] = this.detail.map((v) => v.toJson()).toList();
     }
