@@ -17,17 +17,17 @@ class ConfigController extends GetxController {
 
     configApp.colorMain1 = "b74093";
 
-    configApp.searchType = 0;
+    configApp.searchType = 1;
 
-    configApp.homeIdCarouselAppImage = 0;
+    configApp.homeIdCarouselAppImage = 1;
 
-    configApp.typeOfMenu = 0;
+    configApp.typeOfMenu = 1;
 
-    configApp.categoryPageType = 0;
+    configApp.categoryPageType = 1;
 
-    configApp.productPageType = 0;
+    configApp.productPageType = 1;
 
-    configApp.cartPageType = 0;
+    configApp.cartPageType = 1;
   }
 
   Future<void> createAppTheme() async {
