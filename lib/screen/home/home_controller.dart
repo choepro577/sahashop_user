@@ -29,12 +29,14 @@ class HomeController extends GetxController {
 
         if (store != null) {
           setNewStoreCurrent(store);
+          setUserIdCurrent(store);
         } else {
           setNewStoreCurrent(list[0]);
+          setUserIdCurrent(list[0]);
         }
-      }
-     else if (UserInfo().getCurrentIdStore() == null && list.length > 0) {
+      } else if (UserInfo().getCurrentIdStore() == null && list.length > 0) {
         setNewStoreCurrent(list[0]);
+        setUserIdCurrent(list[0]);
       } else {
         storeCurrent = null;
         UserInfo().setCurrentIdStore(null);
@@ -50,5 +52,9 @@ class HomeController extends GetxController {
   void setNewStoreCurrent(Store store) {
     UserInfo().setCurrentIdStore(store.id);
     storeCurrent.value = store;
+  }
+
+  void setUserIdCurrent(Store store) {
+    UserInfo().setCurrentIdUser(store.userId);
   }
 }
