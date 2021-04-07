@@ -151,6 +151,25 @@ class _SahaService implements SahaService {
   }
 
   @override
+  Future<CreateAppThemeResponse> createAppTheme(body) async {
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>('app_theme',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = CreateAppThemeResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<AllCategoryResponse> getAllCategory(idStore) async {
     ArgumentError.checkNotNull(idStore, 'idStore');
     const _extra = <String, dynamic>{};

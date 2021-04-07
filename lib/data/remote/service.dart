@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:sahashop_user/data/remote/response/auth/login_response.dart';
+import 'package:sahashop_user/data/remote/response/config_ui/create_app_theme_response.dart';
 
 import 'response/auth/register_response.dart';
 import 'response/category/all_category_response.dart';
@@ -44,11 +45,12 @@ abstract class SahaService {
 
   @POST("store/{idStore}/categories")
   @FormUrlEncoded()
-  Future<CreateCategoryResponse> createCategory(@Path() int idStore,
+  Future<CreateCategoryResponse> createCategory(
+      @Path() int idStore, @Body() Map<String, dynamic> body);
+  @POST("app_theme")
+  Future<CreateAppThemeResponse> createAppTheme(
       @Body() Map<String, dynamic> body);
 
   @GET("store/{idStore}/categories")
   Future<AllCategoryResponse> getAllCategory(@Path() int idStore);
-
-
 }

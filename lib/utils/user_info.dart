@@ -6,6 +6,7 @@ class UserInfo {
 
   String _token;
   int _currentIdStore;
+  int _currentIdUser;
 
   factory UserInfo() {
     return _singleton;
@@ -15,7 +16,7 @@ class UserInfo {
 
   Future<void> setCurrentIdStore(int id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if(id == null) {
+    if (id == null) {
       await prefs.remove(CURRENT_ID_STORE);
     } else {
       await prefs.setInt(CURRENT_ID_STORE, id);
@@ -23,9 +24,19 @@ class UserInfo {
     this._currentIdStore = id;
   }
 
+  Future<void> setCurrentIdUser(int idUser) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (idUser == null) {
+      await prefs.remove(CURRENT_ID_USER);
+    } else {
+      await prefs.setInt(CURRENT_ID_USER, idUser);
+    }
+    this._currentIdUser = idUser;
+  }
+
   Future<void> setToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if(token == null) {
+    if (token == null) {
       await prefs.remove(USER_TOKEN);
     } else {
       await prefs.setString(USER_TOKEN, token);
@@ -39,6 +50,10 @@ class UserInfo {
 
   int getCurrentIdStore() {
     return _currentIdStore;
+  }
+
+  int getCurrentIdUser() {
+    return _currentIdUser;
   }
 
   Future<bool> hasLogged() async {

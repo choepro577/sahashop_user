@@ -3,7 +3,11 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/config_app/data_widget_config.dart';
 import 'package:sahashop_user/components/saha_user/carousel/carousel_select.dart';
 
+import '../../config_controller.dart';
+
 class HomeScreenConfig extends StatelessWidget {
+  final ConfigController controller = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -11,8 +15,11 @@ class HomeScreenConfig extends StatelessWidget {
         CarouselSelect(
           listWidget: LIST_WIDGET_HOME_SCREEN,
           height: Get.height * 0.6,
-          indexSelected: 1,
-          initPage: 1,
+          indexSelected: controller.configApp.typeOfMenu,
+          initPage: controller.configApp.typeOfMenu,
+          onChange: (index) {
+            controller.configApp.typeOfMenu = index;
+          },
         )
       ],
     );
