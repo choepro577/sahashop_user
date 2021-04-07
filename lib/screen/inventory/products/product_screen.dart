@@ -83,6 +83,7 @@ class ItemProductWidget extends StatelessWidget {
         //   errorWidget: (context, url, error) => new Icon(Icons.error),
         // ),
         title: Text(product.name??""),
+        trailing: Text(product.price .toString()?? ""),
       ),
     );
   }
