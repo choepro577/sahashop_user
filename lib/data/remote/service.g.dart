@@ -9,7 +9,7 @@ part of 'service.dart';
 class _SahaService implements SahaService {
   _SahaService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'https://sahavi.vn/api/public/api/';
+    baseUrl ??= 'https://stkvip.net/api/public/api/';
   }
 
   final Dio _dio;
@@ -151,13 +151,15 @@ class _SahaService implements SahaService {
   }
 
   @override
-  Future<CreateAppThemeResponse> createAppTheme(body) async {
+  Future<CreateAppThemeResponse> createAppTheme(idStore, body) async {
+    ArgumentError.checkNotNull(idStore, 'idStore');
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>('app_theme',
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'app-theme/$idStore',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -204,6 +206,25 @@ class _SahaService implements SahaService {
             baseUrl: baseUrl),
         data: _data);
     final value = AllProductResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<CreateAppThemeResponse> getAppTheme(idStore) async {
+    ArgumentError.checkNotNull(idStore, 'idStore');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'app-theme/$idStore',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = CreateAppThemeResponse.fromJson(_result.data);
     return value;
   }
 }

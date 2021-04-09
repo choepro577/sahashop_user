@@ -16,7 +16,7 @@ import 'response/store/type_store_respones.dart';
 
 part 'service.g.dart';
 
-@RestApi(baseUrl: "https://sahavi.vn/api/public/api/")
+@RestApi(baseUrl: "https://stkvip.net/api/public/api/")
 abstract class SahaService {
   /// Retrofit factory
   factory SahaService(Dio dio) => _SahaService(dio);
@@ -47,9 +47,13 @@ abstract class SahaService {
   @FormUrlEncoded()
   Future<CreateCategoryResponse> createCategory(
       @Path() int idStore, @Body() Map<String, dynamic> body);
-  @POST("app_theme")
+
+  @POST("app-theme/{idStore}")
   Future<CreateAppThemeResponse> createAppTheme(
-      @Body() Map<String, dynamic> body);
+      @Path() int idStore, @Body() Map<String, dynamic> body);
+
+  @GET("app-theme/{idStore}")
+  Future<CreateAppThemeResponse> getAppTheme(@Path() int idStore);
 
   @GET("store/{idStore}/categories")
   Future<AllCategoryResponse> getAllCategory(@Path() int idStore);
