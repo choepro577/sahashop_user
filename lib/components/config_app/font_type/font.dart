@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sahashop_user/components/saha_user/button/pickerColorButton.dart';
 import 'package:sahashop_user/components/saha_user/dropDownCustom/dropDownButton.dart';
-import 'package:sahashop_user/screen/config_app/constantConfig/contansConfig.dart';
+import 'package:sahashop_user/data/example/data_example.dart';
 
 class FontConfig extends StatefulWidget {
   @override
@@ -16,10 +16,8 @@ class _FontConfigState extends State<FontConfig> {
   String fontSub;
   String fontTitle;
 
-
   Color colorTitle;
   changeColorTitle(Color color) => setState(() => colorTitle = color);
-
 
   Color colorNormal;
   changeColorNormal(Color color) => setState(() => colorNormal = color);
@@ -37,7 +35,7 @@ class _FontConfigState extends State<FontConfig> {
           children: [
             Text(
               "Cỡ chữ tiêu đề",
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16, fontFamily: "Brandon_light"),
             ),
             DropDownButtonCustom(
               value: fontTitle,

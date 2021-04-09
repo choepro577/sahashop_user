@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sahashop_user/components/saha_user/custom_fonts/custom_font.dart';
 
 import '../../../const/constant.dart';
 
@@ -18,10 +19,11 @@ class _MainConfigLogoState extends State<MainConfigLogo> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              "Thêm Logo",
-              style: TextStyle(fontSize: 16),
-            ),
+            Text("Thêm Logo",
+                style: TextStyle(
+                    color: Colors.green,
+                    fontFamily: "baloo_regular",
+                    fontSize: 30)),
             IconButton(
               icon: Icon(Icons.camera_alt),
               onPressed: () {},
