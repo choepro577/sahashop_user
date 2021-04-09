@@ -11,7 +11,9 @@ class SelectCategoryImage extends StatelessWidget {
   SelectImageController selectImageController = new SelectImageController();
   final Function onChange;
 
-  SelectCategoryImage({Key key, this.onChange}) : super(key: key);
+  final File fileSelected;
+
+  SelectCategoryImage({Key key, this.onChange, this.fileSelected}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

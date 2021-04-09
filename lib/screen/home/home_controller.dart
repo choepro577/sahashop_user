@@ -23,24 +23,23 @@ class HomeController extends GetxController {
     try {
       var list = await RepositoryManager.storeRepository.getAll();
 
-      if (UserInfo().getCurrentIdStore() != null && list.length > 0) {
-        var stores = list
-            .where((storeE) => storeE?.id == UserInfo().getCurrentIdStore()).toList();
-         Store store;
-        if(stores.length>0){
-          store= stores[0];
+      if (list.length > 0) {
+        var indexStoreSelected;
+        if (UserInfo().getCurrentIdStore() != null) {
+          indexStoreSelected = list.indexWhere(
+              (storeE) => storeE?.id == UserInfo().getCurrentIdStore());
         }
 
-        if (store != null) {
-          setNewStoreCurrent(store);
-          setUserIdCurrent(store);
+        if (indexStoreSelected != null && indexStoreSelected >= 0) {
         } else {
-          setNewStoreCurrent(list[0]);
-          setUserIdCurrent(list[0]);
+          indexStoreSelected = 0;
         }
-      } else if (UserInfo().getCurrentIdStore() == null && list.length > 0) {
-        setNewStoreCurrent(list[0]);
-        setUserIdCurrent(list[0]);
+
+        Store store;
+        store = list[indexStoreSelected];
+
+        setNewStoreCurrent(store);
+        setUserIdCurrent(store);
       } else {
         storeCurrent = null;
         UserInfo().setCurrentIdStore(null);
