@@ -9,7 +9,7 @@ part of 'service.dart';
 class _SahaService implements SahaService {
   _SahaService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'https://sahavi.vn/api/public/api/';
+    baseUrl ??= 'http://localhost:8000/api/';
   }
 
   final Dio _dio;

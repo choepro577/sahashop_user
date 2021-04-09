@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/data/remote/response/store/all_store_response.dart';
@@ -48,28 +49,22 @@ class ChooseStoreScreen extends StatelessWidget {
                                       homeController.setNewStoreCurrent(store);
                                     },
                                   ),
-                                  if (index == listStore.length - 1)
-                                    MaterialButton(
-                                      onPressed: () {
-                                        Get.to(() => AddStore())
-                                            .then((value) => {
-                                                  if (value == "added")
-                                                    {
-                                                      chooseStoreController
-                                                          .getListStore()
-                                                    }
-                                                });
-                                      },
-                                      child: Column(
-                                        children: [
-                                          Icon(Icons.add),
-                                          Text("Thêm cửa hàng"),
-                                        ],
-                                      ),
-                                    )
                                 ],
                               ));
-                    }))
+                    })),
+                    SahaButtonFullParent(
+                      text: "Thêm cửa hàng",
+                      onPressed: () {
+                        Get.to(() => AddStore())
+                            .then((value) => {
+                          if (value == "added")
+                            {
+                              chooseStoreController
+                                  .getListStore()
+                            }
+                        });
+                      },
+                    )
                   ],
                 ),
               ),

@@ -165,7 +165,7 @@ class ConfigApp {
         homeListCategoryIsShow: json["home_list_category_is_show"] ?? null,
         homeIdListCategoryAppImage:
             json["home_id_list_category_app_image"] ?? null,
-        categoryPageType: int.parse('${json["category_page_type"]}'),
+        categoryPageType: json["category_page_type"],
         productPageType: int.parse('${json["product_page_type"]}'),
         isShowSameProduct: json["is_show_same_product"] ?? null,
         contactPageType: int.parse('${json["contact_page_type"]}'),

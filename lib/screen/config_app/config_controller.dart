@@ -4,7 +4,7 @@ import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
-import 'model/config_app.dart';
+import '../../model/config_app.dart';
 
 class ConfigController extends GetxController {
   ConfigApp configApp = ConfigApp();
