@@ -68,7 +68,7 @@ class AuthInterceptor extends InterceptorsWrapper {
 
     if (response.data["code"] == 401) {
       UserInfo().setToken(null);
-      SahaDialogApp.showDialogOneButton(
+      SahaDialogApp.showDialogNotificationOneButton(
           mess: "Hết phiên đăng nhập mời đăng nhập lại",
           barrierDismissible: false,
           onClose: () {

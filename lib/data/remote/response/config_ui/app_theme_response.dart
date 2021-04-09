@@ -1,4 +1,5 @@
-import 'package:sahashop_user/screen/config_app/model/config_app.dart';
+
+import 'package:sahashop_user/model/config_app.dart';
 
 class GetAppThemeResponse {
   int code;

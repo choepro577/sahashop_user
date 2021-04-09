@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/data/remote/response/store/all_store_response.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/utils/user_info.dart';
@@ -23,9 +24,12 @@ class HomeController extends GetxController {
       var list = await RepositoryManager.storeRepository.getAll();
 
       if (UserInfo().getCurrentIdStore() != null && list.length > 0) {
-        var store = list
-            .where((store) => store.id == UserInfo().getCurrentIdStore())
-            .first;
+        var stores = list
+            .where((storeE) => storeE?.id == UserInfo().getCurrentIdStore()).toList();
+         Store store;
+        if(stores.length>0){
+          store= stores[0];
+        }
 
         if (store != null) {
           setNewStoreCurrent(store);
@@ -44,7 +48,8 @@ class HomeController extends GetxController {
 
       isLoadingStore.value = false;
     } catch (err) {
-      errMsg.value = err;
+      SahaAlert.showError(message: err.toString());
+      errMsg.value = err.toString();
       isLoadingStore.value = false;
     }
   }
