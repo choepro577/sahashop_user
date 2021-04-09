@@ -210,7 +210,7 @@ class _SahaService implements SahaService {
   }
 
   @override
-  Future<CreateAppThemeResponse> getAppTheme(idStore) async {
+  Future<GetAppThemeResponse> getAppTheme(idStore) async {
     ArgumentError.checkNotNull(idStore, 'idStore');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -224,7 +224,7 @@ class _SahaService implements SahaService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = CreateAppThemeResponse.fromJson(_result.data);
+    final value = GetAppThemeResponse.fromJson(_result.data);
     return value;
   }
 }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:sahashop_user/data/remote/response/auth/login_response.dart';
+import 'package:sahashop_user/data/remote/response/config_ui/app_theme_response.dart';
 import 'package:sahashop_user/data/remote/response/config_ui/create_app_theme_response.dart';
 
 import 'response/auth/register_response.dart';
@@ -53,7 +54,7 @@ abstract class SahaService {
       @Path() int idStore, @Body() Map<String, dynamic> body);
 
   @GET("app-theme/{idStore}")
-  Future<CreateAppThemeResponse> getAppTheme(@Path() int idStore);
+  Future<GetAppThemeResponse> getAppTheme(@Path() int idStore);
 
   @GET("store/{idStore}/categories")
   Future<AllCategoryResponse> getAllCategory(@Path() int idStore);
