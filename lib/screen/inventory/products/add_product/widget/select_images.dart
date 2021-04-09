@@ -2,21 +2,29 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/const/constant.dart';
 
-final MAX_SELECT = 10;
+import 'select_image_controller.dart';
 
 class SelectProductImages extends StatelessWidget {
-  SelectImageController selectImageController = new SelectImageController();
+  Function onUpload;
+  Function doneUpload;
+
+  SelectImageController selectImageController;
+  SelectProductImages({this.onUpload, this.doneUpload}) {
+    selectImageController =
+    new SelectImageController(onUpload: onUpload, doneUpload: doneUpload);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 110,
       child: Obx(() {
-        var deviceImages = selectImageController.deviceImages.toList();
+        var dataImages = selectImageController.dataImages.toList();
 
-        if (deviceImages == null || deviceImages.length == 0)
+        if (dataImages == null || dataImages.length == 0)
           return Row(
             children: [
               addImage(),
@@ -44,13 +52,13 @@ class SelectProductImages extends StatelessWidget {
 
         return ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: deviceImages.length,
+            itemCount: dataImages.length,
             itemBuilder: (context, index) {
               return Row(
                 children: [
-                  buildItemAsset(deviceImages[index]),
-                  index == deviceImages.length - 1 &&
-                          deviceImages.length < MAX_SELECT
+                  buildItemImageData(dataImages[index]),
+                  index == dataImages.length - 1 &&
+                          dataImages.length < MAX_SELECT
                       ? addImage()
                       : Container()
                 ],
@@ -137,7 +145,7 @@ class SelectProductImages extends StatelessWidget {
     );
   }
 
-  Widget buildItemAsset(Asset asset) {
+  Widget buildItemImageData(ImageData imageData) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: SizedBox(
@@ -149,18 +157,45 @@ class SelectProductImages extends StatelessWidget {
             Container(
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(5.0),
-                  child: AssetThumb(
-                    asset: asset,
-                    width: 300,
-                    height: 300,
-                  )),
+                  child: imageData.linkImage != null
+                      ? CachedNetworkImage(
+                          height: 300,
+                          width: 300,
+                          fit: BoxFit.cover,
+                          imageUrl: imageData.linkImage,
+                          placeholder: (context, url) => Stack(
+                            children: [
+                              imageData.file == null
+                                  ? Container()
+                                  : AssetThumb(
+                                      asset: imageData.file,
+                                      width: 300,
+                                      height: 300,
+                                      spinner: SahaLoadingWidget(
+                                        size: 50,
+                                      ),
+                                    ),
+                              SahaLoadingWidget(),
+                            ],
+                          ),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        )
+                      : AssetThumb(
+                          asset: imageData.file,
+                          width: 300,
+                          height: 300,
+                          spinner: SahaLoadingWidget(
+                            size: 50,
+                          ),
+                        )),
             ),
             Positioned(
               top: 0,
               right: 0,
               child: InkWell(
                 onTap: () {
-                  selectImageController.deleteImage(asset);
+                  selectImageController.deleteImage(imageData.file);
                 },
                 child: Container(
                   height: 17,
@@ -183,43 +218,16 @@ class SelectProductImages extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
+            imageData.uploading
+                ? SahaLoadingWidget(
+                    size: 50,
+                  )
+                : Container(),
+            imageData.errorUpload ? Icon(Icons.error) : Container(),
           ],
         ),
       ),
     );
-  }
-}
-
-class SelectImageController extends GetxController {
-  var deviceImages = <Asset>[].obs;
-
-  Future<void> deleteImage(Asset asset) {
-    deviceImages.remove(asset);
-  }
-
-  Future<void> loadAssets() async {
-    List<Asset> resultList = <Asset>[];
-    String error = 'No Error Detected';
-
-    try {
-      resultList = await MultiImagePicker.pickImages(
-        maxImages: MAX_SELECT - resultList.length,
-        enableCamera: true,
-        selectedAssets: deviceImages.toList(),
-        cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
-        materialOptions: MaterialOptions(
-          actionBarColor: "#abcdef",
-          actionBarTitle: "SahaShop",
-          allViewTitle: "Mời chọn ảnh",
-          useDetailsView: false,
-          selectCircleStrokeColor: "#000000",
-        ),
-      );
-    } on Exception catch (e) {
-      error = e.toString();
-    }
-
-    deviceImages(resultList);
   }
 }

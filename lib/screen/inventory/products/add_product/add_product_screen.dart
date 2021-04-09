@@ -10,6 +10,7 @@ import 'package:sahashop_user/screen/inventory/products/add_product/add_product_
 import 'package:smart_select/smart_select.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
 
+import 'widget/select_image_controller.dart';
 import 'widget/select_images.dart';
 
 class AddProductScreen extends StatelessWidget {
@@ -89,7 +90,16 @@ class AddProductScreen extends StatelessWidget {
                     labelText: "Tên sản phẩm",
                     hintText: "Mời nhập tên sản phẩm",
                   ),
-                  SelectProductImages(),
+                  SelectProductImages(
+                    onUpload: () {
+                      addProductController.setUploadingImages(true);
+                    },
+                    doneUpload: (List<ImageData> listImages) {
+                      print("done upload image ${listImages?.length} images");
+                      addProductController.setUploadingImages(false);
+                      addProductController.listImages = listImages;
+                    },
+                  ),
                   Obx(
                     () => addProductController.isLoadingCategory.value
                         ? SahaLoadingWidget(
@@ -180,13 +190,17 @@ class AddProductScreen extends StatelessWidget {
               ),
             ),
           ),
-          SahaButtonFullParent(
-            text: "Thêm",
-            onPressed: () {
-              if (_formKey.currentState.validate()) {
-                addProductController.createProduct();
-              }
-            },
+          Obx(
+            () => SahaButtonFullParent(
+              text: addProductController.uploadingImages.value ? "Đang up ảnh..." : "Thêm",
+              onPressed: !addProductController.uploadingImages.value
+                  ? () {
+                      if (_formKey.currentState.validate()) {
+                        addProductController.createProduct();
+                      }
+                    }
+                  : null,
+            ),
           ),
         ],
       ),

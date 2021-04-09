@@ -23,8 +23,7 @@ class AddCategoryScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Thêm danh mục"),
       ),
-      body: Obx(
-        () => Stack(
+      body: Stack(
           children: [
             Form(
               key: _formKey,
@@ -90,11 +89,12 @@ class AddCategoryScreen extends StatelessWidget {
                 ],
               ),
             ),
-            addCategoryController.isLoadingAdd.value
-                ? SahaLoadingFullScreen()
-                : Container()
+            Obx((){
+             return addCategoryController.isLoadingAdd.value
+                  ? SahaLoadingFullScreen()
+                  : Container();
+            })
           ],
-        ),
       ),
     );
   }
