@@ -5,10 +5,10 @@ import 'package:sahashop_user/utils/user_info.dart';
 
 
 import '../handle_error.dart';
-import 'product_request.dart';
+
 
 class ProductRepository {
-  Future<DataProductCreate> create(ProductRequest productRequest) async {
+  Future<Product> create(Product productRequest) async {
     try {
       var res = await SahaServiceManager()
           .service

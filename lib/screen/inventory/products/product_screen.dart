@@ -56,9 +56,7 @@ class ProductScreen extends StatelessWidget {
                   },
                   text: "Thêm sản phẩm mới",
                 ),
-                SizedBox(
-                  height: 10,
-                )
+
               ],
             ),
           ),
@@ -74,14 +72,14 @@ class ItemProductWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: ListTile(
-        // leading: CachedNetworkImage(
-        //   height: 60,
-        //   width: 60,
-        //   fit: BoxFit.cover,
-        //   imageUrl: product.imageUrl ?? "",
-        //   placeholder: (context, url) => new SahaLoadingWidget(size: 30,),
-        //   errorWidget: (context, url, error) => new Icon(Icons.error),
-        // ),
+        leading: CachedNetworkImage(
+          height: 60,
+          width: 60,
+          fit: BoxFit.cover,
+          imageUrl: product.images != null && product.images.length >0 ?product.images[0].imageUrl: "",
+          placeholder: (context, url) => new SahaLoadingWidget(size: 30,),
+          errorWidget: (context, url, error) => new Icon(Icons.error),
+        ),
         title: Text(product.name??""),
         trailing: Text(product.price .toString()?? ""),
       ),

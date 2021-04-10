@@ -3,12 +3,12 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
-import 'package:sahashop_user/data/repository/product/product_request.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
-import 'package:sahashop_user/utils/user_info.dart';
+import 'package:sahashop_user/model/product.dart';
+
 
 class AddCategoryController extends GetxController {
-  ProductRequest productRequest = new ProductRequest();
+  Product productRequest = new Product();
   var isLoadingAdd = false.obs;
 
   String name;
