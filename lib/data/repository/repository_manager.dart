@@ -4,6 +4,7 @@ import 'package:sahashop_user/data/repository/type_of_shop/type_of_shop_reposito
 
 import 'category/category_repository.dart';
 import 'config_ui/config_ui_repository.dart';
+import 'image/image_repository.dart';
 import 'login/login_repository.dart';
 import 'store/store_repository.dart';
 
@@ -16,4 +17,5 @@ class RepositoryManager {
       TypeOfShopRepository();
   static CategoryRepository get categoryRepository => CategoryRepository();
   static ConfigUIRepository get configUiRepository => ConfigUIRepository();
+  static ImageRepository get imageRepository => ImageRepository();
 }
