@@ -112,6 +112,25 @@ class _SahaService implements SahaService {
   }
 
   @override
+  Future<AllProductResponse> getAllProduct(idStore) async {
+    ArgumentError.checkNotNull(idStore, 'idStore');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$idStore/products',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = AllProductResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<TypeShopResponse> getAllTypeOfStore() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -172,6 +191,25 @@ class _SahaService implements SahaService {
   }
 
   @override
+  Future<GetAppThemeResponse> getAppTheme(idStore) async {
+    ArgumentError.checkNotNull(idStore, 'idStore');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'app-theme/$idStore',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = GetAppThemeResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<AllCategoryResponse> getAllCategory(idStore) async {
     ArgumentError.checkNotNull(idStore, 'idStore');
     const _extra = <String, dynamic>{};
@@ -191,40 +229,21 @@ class _SahaService implements SahaService {
   }
 
   @override
-  Future<AllProductResponse> getAllProduct(idStore) async {
-    ArgumentError.checkNotNull(idStore, 'idStore');
+  Future<UploadImageResponse> uploadImage(body) async {
+    ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        'store/$idStore/products',
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>('images',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET',
+            method: 'POST',
             headers: <String, dynamic>{},
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = AllProductResponse.fromJson(_result.data);
-    return value;
-  }
-
-  @override
-  Future<GetAppThemeResponse> getAppTheme(idStore) async {
-    ArgumentError.checkNotNull(idStore, 'idStore');
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        'app-theme/$idStore',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = GetAppThemeResponse.fromJson(_result.data);
+    final value = UploadImageResponse.fromJson(_result.data);
     return value;
   }
 }

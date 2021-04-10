@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
@@ -13,14 +15,15 @@ class AddCategoryScreen extends StatelessWidget {
   final AddCategoryController addCategoryController =
       new AddCategoryController();
   final _formKey = GlobalKey<FormState>();
+
+  File imageSelected;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Thêm danh mục"),
       ),
-      body: Obx(
-        () => Stack(
+      body: Stack(
           children: [
             Form(
               key: _formKey,
@@ -47,9 +50,13 @@ class AddCategoryScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 15, right: 15),
                           child: Row(
                             children: [
-                              SelectCategoryImage(onChange: (image) {
-                                addCategoryController.image = image;
-                              }),
+                              SelectCategoryImage(
+                                onChange: (image) {
+                                  addCategoryController.image = image;
+                                  imageSelected = image;
+                                },
+                                fileSelected: imageSelected,
+                              ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
@@ -82,11 +89,12 @@ class AddCategoryScreen extends StatelessWidget {
                 ],
               ),
             ),
-            addCategoryController.isLoadingAdd.value
-                ? SahaLoadingFullScreen()
-                : Container()
+            Obx((){
+             return addCategoryController.isLoadingAdd.value
+                  ? SahaLoadingFullScreen()
+                  : Container();
+            })
           ],
-        ),
       ),
     );
   }

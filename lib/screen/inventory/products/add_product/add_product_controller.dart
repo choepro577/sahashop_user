@@ -5,6 +5,8 @@ import 'package:sahashop_user/data/repository/product/product_request.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/model/category.dart';
 
+import 'widget/select_image_controller.dart';
+
 class AddProductController extends GetxController {
   ProductRequest productRequest = new ProductRequest();
   var listCategory = RxList<Category>();
@@ -12,8 +14,15 @@ class AddProductController extends GetxController {
   var isLoadingAdd = false.obs;
   var isLoadingCategory = false.obs;
 
+  List<ImageData> listImages;
+  var uploadingImages = false.obs;
+
   AddProductController() {
     getAllCategory();
+  }
+
+  void setUploadingImages(bool value) {
+    uploadingImages.value = value;
   }
 
   void onChoose(List<Category> list) {
@@ -42,6 +51,9 @@ class AddProductController extends GetxController {
     isLoadingAdd.value = true;
     productRequest.categories =
         listCategorySelected.toList().map((e) => e.id).toList();
+    productRequest.images =
+        listImages == null ? [] : listImages.map((e) => e.linkImage).toList();
+
     try {
       var data =
           await RepositoryManager.productRepository.create(productRequest);

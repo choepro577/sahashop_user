@@ -9,6 +9,7 @@ import 'package:sahashop_user/data/remote/response/config_ui/create_app_theme_re
 import 'response/auth/register_response.dart';
 import 'response/category/all_category_response.dart';
 import 'response/category/create_category_response.dart';
+import 'response/image/upload_image_response.dart';
 import 'response/product/all_product_response.dart';
 import 'response/product/product_response.dart';
 import 'response/store/all_store_response.dart';
@@ -58,4 +59,7 @@ abstract class SahaService {
 
   @GET("store/{idStore}/categories")
   Future<AllCategoryResponse> getAllCategory(@Path() int idStore);
+
+  @POST("images")
+  Future<UploadImageResponse> uploadImage(@Body() Map<String, dynamic> body);
 }
