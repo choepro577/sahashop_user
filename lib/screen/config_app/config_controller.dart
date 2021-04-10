@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
-import 'package:sahashop_user/data/repository/register/register_repository.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
