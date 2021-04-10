@@ -20,50 +20,52 @@ class AddProductScreen extends StatelessWidget {
   final AddProductController addProductController = new AddProductController();
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Stack(
-        children: [
-          DefaultTabController(
-            length: 3,
-            child: Scaffold(
-                appBar: AppBar(
-                  title: Text("Thêm sản phẩm"),
-                  actions: [
-                    InkWell(
-                      onTap: () {
-                        addProductController.createProduct();
-                      },
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text("Thêm"),
+    return Center(
+      child: Form(
+        key: _formKey,
+        child: Stack(
+          children: [
+            DefaultTabController(
+              length: 3,
+              child: Scaffold(
+                  appBar: AppBar(
+                    title: Text("Thêm sản phẩm"),
+                    actions: [
+                      InkWell(
+                        onTap: () {
+                          addProductController.createProduct();
+                        },
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("Thêm"),
+                          ),
                         ),
-                      ),
-                    )
-                  ],
-                  bottom: TabBar(
-                    tabs: [
-                      Tab(icon: Text("Thông tin chính")),
-                      Tab(icon: Text("Thuộc tính")),
-                      Tab(icon: Text("Nâng cao")),
+                      )
                     ],
+                    bottom: TabBar(
+                      tabs: [
+                        Tab(icon: Text("Thông tin chính")),
+                        Tab(icon: Text("Thuộc tính")),
+                        Tab(icon: Text("Nâng cao")),
+                      ],
+                    ),
                   ),
-                ),
-                body: TabBarView(
-                  children: [
-                    tab1(),
-                    Icon(Icons.directions_transit),
-                    Icon(Icons.directions_bike),
-                  ],
-                )),
-          ),
-          Obx(() {
-            return (addProductController.isLoadingAdd.value)
-                ? SahaLoadingFullScreen()
-                : Container();
-          })
-        ],
+                  body: TabBarView(
+                    children: [
+                      tab1(),
+                      Icon(Icons.directions_transit),
+                      Icon(Icons.directions_bike),
+                    ],
+                  )),
+            ),
+            Obx(() {
+              return (addProductController.isLoadingAdd.value)
+                  ? SahaLoadingFullScreen()
+                  : Container();
+            })
+          ],
+        ),
       ),
     );
   }

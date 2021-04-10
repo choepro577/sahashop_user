@@ -1,3 +1,5 @@
+import 'package:sahashop_user/model/category.dart';
+
 class Product {
   String description;
   String name;
@@ -5,18 +7,20 @@ class Product {
   int price;
   String barcode;
   int status;
-  List<String> images;
-  List<Detail> detail;
+  List<ImageProduct> images;
+  List<Details> details;
+  List<Category> categories;
 
   Product(
       {this.description,
-        this.name,
-        this.indexImageAvatar,
-        this.price,
-        this.barcode,
-        this.status,
-        this.images,
-        this.detail});
+      this.name,
+      this.indexImageAvatar,
+      this.price,
+      this.barcode,
+      this.status,
+      this.images,
+      this.details,
+      this.categories});
 
   Product.fromJson(Map<String, dynamic> json) {
     description = json['description'];
@@ -25,12 +29,23 @@ class Product {
     price = json['price'];
     barcode = json['barcode'];
     status = json['status'];
-    images = json['images'].cast<String>();
-    if (json['detail'] != null) {
-      detail = new List<Detail>();
-      json['detail'].forEach((v) {
-        detail.add(new Detail.fromJson(v));
+    if (json['images'] != null) {
+      images = new List<ImageProduct>();
+      json['images'].forEach((v) {
+        images.add(new ImageProduct.fromJson(v));
       });
+    }
+    if (json['details'] != null) {
+      details = new List<Details>();
+      json['details'].forEach((v) {
+        details.add(new Details.fromJson(v));
+      });
+    };
+    if (json['categories'] != null) {
+    categories = new List<Category>();
+    json['categories'].forEach((v) {
+    categories.add(new Category.fromJson(v));
+    });
     }
   }
 
@@ -43,48 +58,81 @@ class Product {
     data['barcode'] = this.barcode;
     data['status'] = this.status;
     data['images'] = this.images;
-    if (this.detail != null) {
-      data['detail'] = this.detail.map((v) => v.toJson()).toList();
+    if (this.details != null) {
+      data['details'] = this.details.map((v) => v.toJson()).toList();
+    }
+    if (this.categories != null) {
+    data['categories'] = this.categories.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Detail {
-  Atrribute atrribute;
 
-  Detail({this.atrribute});
 
-  Detail.fromJson(Map<String, dynamic> json) {
-    atrribute = json['atrribute'] != null
-        ? new Atrribute.fromJson(json['atrribute'])
-        : null;
+class ImageProduct {
+  int id;
+  String imageUrl;
+
+  ImageProduct({this.id, this.imageUrl});
+
+  ImageProduct.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    imageUrl = json['image_url'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.atrribute != null) {
-      data['atrribute'] = this.atrribute.toJson();
-    }
+    data['id'] = this.id;
+    data['image_url'] = this.imageUrl;
     return data;
   }
 }
 
-class Atrribute {
+class Details {
+  int id;
   String name;
-  List<String> items;
+  List<Attributes> attributes;
 
-  Atrribute({this.name, this.items});
+  Details({this.id, this.name, this.attributes});
 
-  Atrribute.fromJson(Map<String, dynamic> json) {
+  Details.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     name = json['name'];
-    items = json['items'].cast<String>();
+    if (json['attributes'] != null) {
+      attributes = new List<Attributes>();
+      json['attributes'].forEach((v) {
+        attributes.add(new Attributes.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['name'] = this.name;
-    data['items'] = this.items;
+    if (this.attributes != null) {
+      data['attributes'] = this.attributes.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Attributes {
+  int id;
+  String name;
+
+  Attributes({this.id, this.name});
+
+  Attributes.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
     return data;
   }
 }
