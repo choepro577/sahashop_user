@@ -20,13 +20,12 @@ class _MainConfigThemeColorState extends State<MainConfigThemeColor> {
     controller.configApp.colorMain1 = color.toHex();
   }
 
-  ConfigController controller;
+  final ConfigController controller = Get.find();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    controller = Get.find();
   }
 
   @override
@@ -41,7 +40,7 @@ class _MainConfigThemeColorState extends State<MainConfigThemeColor> {
         ),
         PickerColorButton(
             currentColor:
-                colorButton ?? HexColor(controller.configApp.colorMain1),
+                HexColor(controller.configApp.colorMain1) ?? colorButton,
             onChange: changeColor)
       ],
     );

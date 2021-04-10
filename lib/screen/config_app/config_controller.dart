@@ -14,17 +14,13 @@ class ConfigController extends GetxController {
   var isLoadingGet = false.obs;
   var isLoadingCreate = false.obs;
 
-  ConfigController() {
-    getAppTheme();
-  }
-
   Future<void> getAppTheme() async {
     isLoadingGet.value = true;
     try {
       var data = await RepositoryManager.configUiRepository.getAppTheme();
       configApp.userId = UserInfo().getCurrentIdUser();
 
-      configApp.colorMain1 = "b74093" ?? "";
+      configApp.colorMain1 = data.colorMain1 ?? "#ff93b9b4";
 
       configApp.searchType = data.searchType ?? 0;
 

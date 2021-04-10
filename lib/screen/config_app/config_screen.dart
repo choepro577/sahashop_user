@@ -6,6 +6,7 @@ import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_full_screen.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/screen/config_app/config_controller.dart';
+import 'package:sahashop_user/utils/color.dart';
 
 import 'ui_data_config.dart';
 
@@ -20,24 +21,23 @@ class ConfigScreen extends StatefulWidget {
 class _ConfigScreenState extends State<ConfigScreen> {
   var indexSelected = 0;
 
-  ConfigController configController = Get.find();
+  ConfigController configController = Get.put(ConfigController());
 
   @override
   void initState() {
     super.initState();
-
-    Get.put(ConfigController());
+    configController.getAppTheme();
   }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        backgroundColor: Colors.grey[100],
         appBar: AppBar(
-          backgroundColor: Colors.white,
           elevation: 0,
-          title: Text('Chỉnh sửa giao diện'),
+          title: Text(
+            'Chỉnh sửa giao diện',
+          ),
         ),
         body: Obx(
           () => configController.isLoadingGet.value
@@ -151,6 +151,42 @@ class _ConfigScreenState extends State<ConfigScreen> {
                         SahaButtonFullParent(
                           onPressed: () {
                             configController.createAppTheme();
+                            Get.changeTheme(ThemeData(
+                                primarySwatch: MaterialColor(
+                                    HexColor.getColorFromHex(
+                                        configController.configApp.colorMain1),
+                                    {
+                                  50: HexColor(
+                                          configController.configApp.colorMain1)
+                                      .withOpacity(0.1),
+                                  100: HexColor(
+                                          configController.configApp.colorMain1)
+                                      .withOpacity(0.2),
+                                  200: HexColor(
+                                          configController.configApp.colorMain1)
+                                      .withOpacity(0.3),
+                                  300: HexColor(
+                                          configController.configApp.colorMain1)
+                                      .withOpacity(0.4),
+                                  400: HexColor(
+                                          configController.configApp.colorMain1)
+                                      .withOpacity(0.5),
+                                  500: HexColor(
+                                          configController.configApp.colorMain1)
+                                      .withOpacity(0.6),
+                                  600: HexColor(
+                                          configController.configApp.colorMain1)
+                                      .withOpacity(0.7),
+                                  700: HexColor(
+                                          configController.configApp.colorMain1)
+                                      .withOpacity(0.8),
+                                  800: HexColor(
+                                          configController.configApp.colorMain1)
+                                      .withOpacity(0.9),
+                                  900: HexColor(
+                                          configController.configApp.colorMain1)
+                                      .withOpacity(1),
+                                })));
                           },
                           text: "Lưu cài đặt",
                         ),

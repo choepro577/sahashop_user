@@ -8,7 +8,7 @@ import 'package:sahashop_user/components/config_app/search_bar_type/search_bar_t
 import 'package:sahashop_user/components/config_app/search_bar_type/search_bar_type4.dart';
 import 'package:sahashop_user/components/config_app/search_bar_type/search_bar_type5.dart';
 import 'package:sahashop_user/components/config_app/search_bar_type/search_bar_type6.dart';
-import 'package:sahashop_user/screen/config_app/constantConfig/contansConfig.dart';
+import 'package:sahashop_user/data/example/data_example.dart';
 
 import 'banner_type/banner_type1.dart';
 import 'banner_type/banner_type2.dart';

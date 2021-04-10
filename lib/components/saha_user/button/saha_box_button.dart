@@ -34,16 +34,11 @@ class SahaBoxButton extends StatelessWidget {
                     width: 55,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                          colors: [SahaPrimaryColor, SahaPrimaryLightColor],
-                          begin: const FractionalOffset(0.0, 0.0),
-                          end: const FractionalOffset(0.5, 0.0),
-                          stops: [0.0, 1.0],
-                          tileMode: TileMode.clamp),
+                      color: Theme.of(context).primaryColor,
                     ),
                     child: SvgPicture.asset(
                       icon,
-                      color: Colors.white,
+                      color: Theme.of(context).primaryTextTheme.headline1.color,
                     ),
                   ),
                   SizedBox(height: 5),

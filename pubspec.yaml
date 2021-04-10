@@ -65,9 +65,31 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
 
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
+  fonts:
+    - family: aller_display
+      fonts:
+        - asset: assets/fonts/aller_display.ttf
+          weight: 700
+    - family: amatic_bold
+      fonts:
+        - asset: assets/fonts/amatic_bold.ttf
+          weight: 700
+    - family: amatics_regular
+      fonts:
+        - asset: assets/fonts/amaticsc_regular.ttf
+          weight: 700
+    - family: baloo_regular
+      fonts:
+        - asset: assets/fonts/baloo_regular.ttf
+          weight: 700
+    - family: dancing_script_regular
+      fonts:
+        - asset: assets/fonts/dancing_script_regular.ttf
+          weight: 700
+    - family: pacifico
+      fonts:
+        - asset: assets/fonts/pacifico.ttf
+          weight: 700
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
