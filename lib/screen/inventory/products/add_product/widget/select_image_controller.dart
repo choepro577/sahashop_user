@@ -66,8 +66,6 @@ class SelectImageController extends GetxController {
           await getImageFileFromAssets(dataImages[indexImage].file));
 
       dataImages[indexImage].linkImage = link;
-
-      print( dataImages[indexImage].linkImage);
       dataImages[indexImage].errorUpload = false;
       dataImages[indexImage].uploading = false;
       dataImages.refresh();
