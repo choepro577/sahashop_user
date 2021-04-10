@@ -22,6 +22,18 @@ class HomeScreenStyle2 extends StatelessWidget {
     {"icon": "assets/icons/gift_icon.svg", "text": "Daily Gift"},
     {"icon": "assets/icons/discover.svg", "text": "More"},
   ];
+
+  final List<Map<String, dynamic>> option = [
+    {"icon": "assets/icons/bill_icon.svg", "text": "Ví"},
+    {"icon": "assets/icons/gift_icon.svg", "text": "My Voucher"},
+    {"icon": "assets/icons/gift_icon.svg", "text": "Quét QR"},
+    {"icon": "assets/icons/discover.svg", "text": "Tin Tức"},
+    {"icon": "assets/icons/gift_icon.svg", "text": "Daily Gift"},
+    {"icon": "assets/icons/discover.svg", "text": "More"},
+    {"icon": "assets/icons/gift_icon.svg", "text": "Daily Gift"},
+    {"icon": "assets/icons/discover.svg", "text": "More"},
+  ];
+
   final List<Category> categories;
   final List<ButtonConfig> buttonConfigs;
   final Function(Product) onPressedProduct;
@@ -54,10 +66,33 @@ class HomeScreenStyle2 extends StatelessWidget {
           LIST_WIDGET_BANNER[configController.configApp.homeIdCarouselAppImage],
           Column(
             children: [
+              SizedBox(
+                height: 20,
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(
+                    option.length,
+                    (index) => SahaBoxButton(
+                      icon: option[index]["icon"],
+                      text: option[index]["text"],
+                      numOfitem: option[index]["numOfitem"],
+                      press: () {},
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Column(
+            children: [
               Padding(
                 padding: EdgeInsets.all(20),
                 child: SectionTitle(
-                  title: "Cài đặt cửa hàng",
+                  title: "Danh mục cửa hàng",
                   press: () {},
                 ),
               ),
