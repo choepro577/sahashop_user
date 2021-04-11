@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/pickerColorButton.dart';
+import 'package:sahashop_user/screen/config_app/config_controller.dart';
 import 'package:sahashop_user/utils/color.dart';
-
-import '../../../screen/config_app/config_controller.dart';
 
 class MainConfigThemeColor extends StatefulWidget {
   @override

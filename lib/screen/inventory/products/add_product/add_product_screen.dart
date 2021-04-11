@@ -10,7 +10,7 @@ import 'package:sahashop_user/screen/inventory/products/add_product/add_product_
 import 'package:smart_select/smart_select.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
 
-import 'widget/select_image_controller.dart';
+import 'widget/select_images_controller.dart';
 import 'widget/select_images.dart';
 
 class AddProductScreen extends StatelessWidget {
@@ -97,7 +97,8 @@ class AddProductScreen extends StatelessWidget {
                       addProductController.setUploadingImages(true);
                     },
                     doneUpload: (List<ImageData> listImages) {
-                      print("done upload image ${listImages?.length} images");
+                      print(
+                          "done upload image ${listImages?.length} images => ${listImages.toList().map((e) => e.linkImage).toList()}");
                       addProductController.setUploadingImages(false);
                       addProductController.listImages = listImages;
                     },
@@ -194,7 +195,9 @@ class AddProductScreen extends StatelessWidget {
           ),
           Obx(
             () => SahaButtonFullParent(
-              text: addProductController.uploadingImages.value ? "Đang up ảnh..." : "Thêm",
+              text: addProductController.uploadingImages.value
+                  ? "Đang up ảnh..."
+                  : "Thêm",
               onPressed: !addProductController.uploadingImages.value
                   ? () {
                       if (_formKey.currentState.validate()) {

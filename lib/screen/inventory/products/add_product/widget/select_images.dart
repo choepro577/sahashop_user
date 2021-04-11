@@ -5,7 +5,7 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/const/constant.dart';
 
-import 'select_image_controller.dart';
+import 'select_images_controller.dart';
 
 class SelectProductImages extends StatelessWidget {
   Function onUpload;

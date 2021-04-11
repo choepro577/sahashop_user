@@ -5,7 +5,7 @@ import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/model/product.dart';
 
-import 'widget/select_image_controller.dart';
+import 'widget/select_images_controller.dart';
 
 class AddProductController extends GetxController {
   Product productRequest = new Product();

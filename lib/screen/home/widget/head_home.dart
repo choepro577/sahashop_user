@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/config_app/cart_screen_type/cart_screen_1.dart';
+import 'package:sahashop_user/components/data_app_customer/screen/cart_screen_type/cart_screen_1.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/screen/config_app/config_controller.dart';
 import 'package:sahashop_user/screen/config_app/config_screen.dart';

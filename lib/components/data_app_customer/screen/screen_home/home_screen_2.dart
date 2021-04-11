@@ -9,7 +9,8 @@ import 'package:sahashop_user/model/product2222.dart';
 import 'package:sahashop_user/screen/config_app/config_controller.dart';
 import 'package:sahashop_user/screen/home/widget/section_title.dart';
 
-import '../data_widget_config.dart';
+import '../../data_widget_config.dart';
+
 
 class HomeScreenStyle2 extends StatelessWidget {
   final List<Map<String, dynamic>> sahaBoxButtons = [

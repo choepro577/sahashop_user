@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sahashop_user/components/config_app/font_type/font.dart';
+import 'package:sahashop_user/components/data_app_customer/screen/font_type/font.dart';
+import 'package:sahashop_user/components/data_app_customer/screen/theme_color/theme_color.dart';
 import 'package:sahashop_user/screen/config_app/screens_config/cart_screen_config/cart_screen_config.dart';
 import 'package:sahashop_user/screen/config_app/screens_config/header_config/banner_config.dart';
 import 'package:sahashop_user/screen/config_app/screens_config/header_config/searchBar.dart';
@@ -9,7 +10,6 @@ import 'package:sahashop_user/screen/config_app/screens_config/product_screen/pr
 import 'screens_config/category_product/category_product.dart';
 import 'screens_config/home_screen/home_screen.dart';
 import 'screens_config/icon_helpler/iconType/supportIcon.dart';
-import '../../components/config_app/theme_color/theme_color.dart';
 
 var UIDataConfig = [
   ParentConfig(name: "Cấu hình chính", icon: "config.svg", listChildConfig: [

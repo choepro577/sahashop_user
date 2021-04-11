@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:sahashop_user/components/config_app/search_bar_type/handle_search_bar.dart';
 import 'package:sahashop_user/components/saha_user/iconButton/iconbtn_counter.dart';
 import 'package:sahashop_user/components/saha_user/search/seach_field.dart';
+
+import 'handle_search_bar.dart';
 
 class SearchBarType1 extends StatelessWidget {
   final Function onSearch;

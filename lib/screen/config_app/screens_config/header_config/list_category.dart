@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:sahashop_user/components/config_app/data_widget_config.dart';
+import 'package:sahashop_user/components/data_app_customer/data_widget_config.dart';
 import 'package:sahashop_user/components/saha_user/carousel/carousel_select.dart';
 
 class ListCategoryConfig extends StatelessWidget {
