@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sahashop_user/components/config_app/font_type/font.dart';
 import 'package:sahashop_user/screen/config_app/screens_config/cart_screen_config/cart_screen_config.dart';
+import 'package:sahashop_user/screen/config_app/screens_config/font_type/font.dart';
 import 'package:sahashop_user/screen/config_app/screens_config/header_config/banner_config.dart';
 import 'package:sahashop_user/screen/config_app/screens_config/header_config/searchBar.dart';
 import 'package:sahashop_user/screen/config_app/screens_config/logo_type/logo.dart';

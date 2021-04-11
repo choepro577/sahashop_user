@@ -17,10 +17,10 @@ class BoxPionConfig extends StatelessWidget {
         CarouselSelect(
           height: 150,
           listWidget: LIST_WIDGET_BANNER,
-          indexSelected: controller.configApp.homeIdCarouselAppImage,
-          initPage: controller.configApp.homeIdCarouselAppImage,
+          indexSelected: controller.configApp.carouselType,
+          initPage: controller.configApp.carouselType,
           onSelected: (index) {
-            controller.configApp.homeIdCarouselAppImage = index;
+            controller.configApp.carouselType = index;
           },
         )
       ],

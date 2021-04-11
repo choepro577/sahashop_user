@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:provider/provider.dart';
 
+import 'model/theme_model.dart';
 import 'saha_load_app.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(ChangeNotifierProvider<ThemeModel>(
+    create: (BuildContext context) => ThemeModel(), child: MyApp()));
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'SahaShop',
-      theme: ThemeData(
-        primarySwatch: Colors.cyan,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      theme: Provider.of<ThemeModel>(context).currentTheme,
       home: SahaMainScreen(),
     );
   }

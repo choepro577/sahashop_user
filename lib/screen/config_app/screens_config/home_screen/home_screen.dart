@@ -15,10 +15,10 @@ class HomeScreenConfig extends StatelessWidget {
         CarouselSelect(
           listWidget: LIST_WIDGET_HOME_SCREEN,
           height: Get.height * 0.6,
-          indexSelected: controller.configApp.typeOfMenu,
-          initPage: controller.configApp.typeOfMenu,
+          indexSelected: controller.configApp.homePageType,
+          initPage: controller.configApp.homePageType,
           onChange: (index) {
-            controller.configApp.typeOfMenu = index;
+            controller.configApp.homePageType = index;
           },
         )
       ],
