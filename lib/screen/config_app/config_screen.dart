@@ -20,7 +20,6 @@ class ConfigScreen extends StatefulWidget {
 
 class _ConfigScreenState extends State<ConfigScreen> {
   var indexSelected = 0;
-
   ConfigController configController = Get.put(ConfigController());
 
   @override
@@ -32,172 +31,159 @@ class _ConfigScreenState extends State<ConfigScreen> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          title: Text(
-            'Chỉnh sửa giao diện',
-          ),
-        ),
-        body: Obx(
-          () => configController.isLoadingGet.value
-              ? SahaLoadingFullScreen()
-              : Stack(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+    return Obx(
+      () => MaterialApp(
+        theme: configController.currentTheme.value,
+        home: Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back_ios),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              title: Text(
+                'Chỉnh sửa giao diện',
+              ),
+            ),
+            body: Obx(
+              () => configController.isLoadingGet.value
+                  ? SahaLoadingFullScreen()
+                  : Column(
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.22,
-                                color: Colors.grey[200],
-                                child: ListView.builder(
-                                    itemCount: UIDataConfig.length,
-                                    itemBuilder: (context, index) {
-                                      return buildItem(index: index);
-                                    }),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          child: SingleChildScrollView(
-                            child: Column(
+                        Expanded(
+                          child: Stack(children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  height: 30,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.78,
-                                  decoration:
-                                      BoxDecoration(color: Colors.black12),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        UIDataConfig[indexSelected].name,
-                                        style: TextStyle(
-                                          fontSize: 17,
-                                        ),
-                                        textAlign: TextAlign.center,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.22,
+                                        color: Colors.grey[200],
+                                        child: ListView.builder(
+                                            itemCount: UIDataConfig.length,
+                                            itemBuilder: (context, index) {
+                                              return buildItem(index: index);
+                                            }),
                                       ),
-                                    ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: 30,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.78,
+                                          decoration: BoxDecoration(
+                                              color: Colors.black12),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                UIDataConfig[indexSelected]
+                                                    .name,
+                                                style: TextStyle(
+                                                  fontSize: 17,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        UIDataConfig[indexSelected]
+                                                        .listChildConfig ==
+                                                    null ||
+                                                UIDataConfig[indexSelected]
+                                                        .listChildConfig
+                                                        .length ==
+                                                    0
+                                            ? Container(
+                                                height: 5,
+                                              )
+                                            : Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children:
+                                                    UIDataConfig[indexSelected]
+                                                        .listChildConfig
+                                                        .map(
+                                                          (e) =>
+                                                              e.editWidget ==
+                                                                      null
+                                                                  ? Container()
+                                                                  : SizedBox(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.78,
+                                                                      child:
+                                                                          Padding(
+                                                                        padding:
+                                                                            EdgeInsets.all(10.0),
+                                                                        child:
+                                                                            Column(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
+                                                                          children: [
+                                                                            SizedBox(
+                                                                              height: 10,
+                                                                            ),
+                                                                            Text(
+                                                                              e.name ?? "",
+                                                                              style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                                                                            ),
+                                                                            SizedBox(
+                                                                              height: 10,
+                                                                            ),
+                                                                            e.editWidget
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                        )
+                                                        .toList(),
+                                              )
+                                      ],
+                                    ),
                                   ),
                                 ),
-                                UIDataConfig[indexSelected].listChildConfig ==
-                                            null ||
-                                        UIDataConfig[indexSelected]
-                                                .listChildConfig
-                                                .length ==
-                                            0
-                                    ? Container(
-                                        height: 5,
-                                      )
-                                    : Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: UIDataConfig[indexSelected]
-                                            .listChildConfig
-                                            .map(
-                                              (e) => e.editWidget == null
-                                                  ? Container()
-                                                  : SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.78,
-                                                      child: Padding(
-                                                        padding: EdgeInsets.all(
-                                                            10.0),
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            Text(
-                                                              e.name ?? "",
-                                                              style: TextStyle(
-                                                                  fontSize: 17,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
-                                                            SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            e.editWidget
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                            )
-                                            .toList(),
-                                      )
                               ],
                             ),
-                          ),
+                          ]),
                         ),
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SahaButtonFullParent(
-                          onPressed: () {
-                            configController.createAppTheme();
-                            Get.changeTheme(ThemeData(
-                                primarySwatch: MaterialColor(
-                                    HexColor.getColorFromHex(
-                                        configController.configApp.colorMain1),
-                                    {
-                                  50: HexColor(
-                                          configController.configApp.colorMain1)
-                                      .withOpacity(0.1),
-                                  100: HexColor(
-                                          configController.configApp.colorMain1)
-                                      .withOpacity(0.2),
-                                  200: HexColor(
-                                          configController.configApp.colorMain1)
-                                      .withOpacity(0.3),
-                                  300: HexColor(
-                                          configController.configApp.colorMain1)
-                                      .withOpacity(0.4),
-                                  400: HexColor(
-                                          configController.configApp.colorMain1)
-                                      .withOpacity(0.5),
-                                  500: HexColor(
-                                          configController.configApp.colorMain1)
-                                      .withOpacity(0.6),
-                                  600: HexColor(
-                                          configController.configApp.colorMain1)
-                                      .withOpacity(0.7),
-                                  700: HexColor(
-                                          configController.configApp.colorMain1)
-                                      .withOpacity(0.8),
-                                  800: HexColor(
-                                          configController.configApp.colorMain1)
-                                      .withOpacity(0.9),
-                                  900: HexColor(
-                                          configController.configApp.colorMain1)
-                                      .withOpacity(1),
-                                })));
-                          },
-                          text: "Lưu cài đặt",
-                        ),
-                        SizedBox(
-                          height: 20,
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SahaButtonFullParent(
+                              color: Theme.of(context).primaryColor,
+                              onPressed: () {
+                                configController.createAppTheme();
+                                configController.updateTheme();
+                              },
+                              text: "Lưu cài đặt",
+                            ),
+                            SizedBox(
+                              height: 20,
+                            )
+                          ],
                         )
                       ],
-                    )
-                  ],
-                ),
-        ));
+                    ),
+            )),
+      ),
+    );
   }
 
   Widget buildItem({int index}) {

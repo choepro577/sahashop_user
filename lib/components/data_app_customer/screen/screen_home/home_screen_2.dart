@@ -64,7 +64,7 @@ class HomeScreenStyle2 extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          LIST_WIDGET_BANNER[configController.configApp.homeIdCarouselAppImage],
+          LIST_WIDGET_BANNER[configController.configApp.carouselType],
           Column(
             children: [
               SizedBox(
