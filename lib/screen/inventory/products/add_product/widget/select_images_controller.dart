@@ -1,11 +1,11 @@
 import 'dart:io';
 
+import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:sahashop_user/data/repository/repository_manager.dart';
-import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:path/path.dart';
 
 final MAX_SELECT = 10;

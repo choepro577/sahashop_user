@@ -2,11 +2,15 @@ import 'dart:ui';
 
 class HexColor extends Color {
   static int getColorFromHex(String hexColor) {
-    hexColor = hexColor.toUpperCase().replaceAll("#", "");
-    if (hexColor.length == 6) {
-      hexColor = "FF" + hexColor;
+    try {
+      hexColor = hexColor.toUpperCase().replaceAll("#", "");
+      if (hexColor.length == 6) {
+        hexColor = "FF" + hexColor;
+      }
+      return int.parse(hexColor, radix: 16);
+    } catch (err) {
+      return int.parse("FF93b9b4", radix: 16);
     }
-    return int.parse(hexColor, radix: 16);
   }
 
   HexColor(final String hexColor) : super(getColorFromHex(hexColor));

@@ -24,20 +24,20 @@ class ConfigController extends GetxController {
 
   void updateTheme() {
     currentTheme.value = ThemeData(
-      fontFamily: configApp.fontFamily,
+        fontFamily: configApp.fontFamily,
         primarySwatch:
             MaterialColor(HexColor.getColorFromHex(configApp.colorMain1), {
-      50: HexColor(configApp.colorMain1).withOpacity(0.1),
-      100: HexColor(configApp.colorMain1).withOpacity(0.2),
-      200: HexColor(configApp.colorMain1).withOpacity(0.3),
-      300: HexColor(configApp.colorMain1).withOpacity(0.4),
-      400: HexColor(configApp.colorMain1).withOpacity(0.5),
-      500: HexColor(configApp.colorMain1).withOpacity(0.6),
-      600: HexColor(configApp.colorMain1).withOpacity(0.7),
-      700: HexColor(configApp.colorMain1).withOpacity(0.8),
-      800: HexColor(configApp.colorMain1).withOpacity(0.9),
-      900: HexColor(configApp.colorMain1).withOpacity(1),
-    }));
+          50: HexColor(configApp.colorMain1).withOpacity(0.1),
+          100: HexColor(configApp.colorMain1).withOpacity(0.2),
+          200: HexColor(configApp.colorMain1).withOpacity(0.3),
+          300: HexColor(configApp.colorMain1).withOpacity(0.4),
+          400: HexColor(configApp.colorMain1).withOpacity(0.5),
+          500: HexColor(configApp.colorMain1).withOpacity(0.6),
+          600: HexColor(configApp.colorMain1).withOpacity(0.7),
+          700: HexColor(configApp.colorMain1).withOpacity(0.8),
+          800: HexColor(configApp.colorMain1).withOpacity(0.9),
+          900: HexColor(configApp.colorMain1).withOpacity(1),
+        }));
   }
 
   Future<void> getAppTheme() async {
@@ -46,8 +46,6 @@ class ConfigController extends GetxController {
       var data = await RepositoryManager.configUiRepository.getAppTheme();
 
       configApp.colorMain1 = data.colorMain1 ?? "#ff93b9b4";
-
-
 
       configApp.fontFamily =
           data.fontFamily != null && FONT_DATA.containsKey(data.fontFamily)
@@ -60,7 +58,14 @@ class ConfigController extends GetxController {
       configApp.productPageType = data.productPageType ?? 0;
       configApp.cartPageType = data.cartPageType ?? 0;
       configApp.logoUrl = data.logoUrl ?? "";
-
+      configApp.phoneNumberHotline = data.phoneNumberHotline ?? "";
+      configApp.contactEmail = data.contactEmail ?? "";
+      configApp.idFacebook = data.idFacebook ?? "";
+      configApp.idZalo = data.idZalo ?? "";
+      configApp.isShowIconHotline = data.isShowIconHotline ?? false;
+      configApp.isShowIconEmail = data.isShowIconEmail ?? false;
+      configApp.isShowIconFacebook = data.isShowIconFacebook ?? false;
+      configApp.isShowIconZalo = data.isShowIconZalo ?? false;
 
       updateTheme();
       isLoadingGet.value = false;

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sahashop_user/components/data_app_customer/screen/font_type/font.dart';
 import 'package:sahashop_user/components/data_app_customer/screen/theme_color/theme_color.dart';
 import 'package:sahashop_user/screen/config_app/screens_config/cart_screen_config/cart_screen_config.dart';
 import 'package:sahashop_user/screen/config_app/screens_config/font_type/font.dart';

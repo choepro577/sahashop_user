@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/pickerColorButton.dart';
 
 import '../../../../../const/constant.dart';
+import '../../../config_controller.dart';
 
 class SupportIcon extends StatefulWidget {
   @override
@@ -12,12 +14,7 @@ class SupportIcon extends StatefulWidget {
 }
 
 class _SupportIconState extends State<SupportIcon> {
-  bool isShowHotline = false;
-
-  Color colorIconHotline;
-
-  changeColorIconHotline(Color color) =>
-      setState(() => colorIconHotline = color);
+  final ConfigController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -33,34 +30,22 @@ class _SupportIconState extends State<SupportIcon> {
             ),
             Icon(
               Icons.phone,
-              color: bmColors,
+              color: Theme.of(context).primaryColor,
             ),
             Checkbox(
               tristate: false,
-              value: isShowHotline,
+              value: controller.configApp.isShowIconHotline,
               onChanged: (bool choose) {
                 setState(() {
-                  isShowHotline = choose;
+                  controller.configApp.isShowIconHotline = choose;
                 });
               },
-              activeColor: bmColors,
+              activeColor: Theme.of(context).primaryColor,
             ),
           ],
         ),
         SizedBox(
           height: 10,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "- Màu Icon :",
-              style: TextStyle(fontSize: 15),
-            ),
-            PickerColorButton(
-                currentColor: colorIconHotline ?? Colors.transparent,
-                onChange: changeColorIconHotline)
-          ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,8 +59,13 @@ class _SupportIconState extends State<SupportIcon> {
             ),
             Expanded(
               child: TextField(
-                controller: TextEditingController(),
+                decoration: InputDecoration(
+                  hintText: controller.configApp.phoneNumberHotline ?? "",
+                ),
                 keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  controller.configApp.phoneNumberHotline = value;
+                },
               ),
             )
           ],
@@ -92,34 +82,22 @@ class _SupportIconState extends State<SupportIcon> {
             ),
             Icon(
               Icons.email,
-              color: bmColors,
+              color: Theme.of(context).primaryColor,
             ),
             Checkbox(
               tristate: false,
-              value: isShowHotline,
+              value: controller.configApp.isShowIconEmail,
               onChanged: (bool choose) {
                 setState(() {
-                  isShowHotline = choose;
+                  controller.configApp.isShowIconEmail = choose;
                 });
               },
-              activeColor: bmColors,
+              activeColor: Theme.of(context).primaryColor,
             ),
           ],
         ),
         SizedBox(
           height: 10,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "- Màu Icon :",
-              style: TextStyle(fontSize: 15),
-            ),
-            PickerColorButton(
-                currentColor: colorIconHotline ?? Colors.transparent,
-                onChange: changeColorIconHotline)
-          ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -133,7 +111,13 @@ class _SupportIconState extends State<SupportIcon> {
             ),
             Expanded(
               child: TextField(
+                decoration: InputDecoration(
+                  hintText: controller.configApp.contactEmail ?? "",
+                ),
                 keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  controller.configApp.contactEmail = value;
+                },
               ),
             )
           ],
@@ -160,13 +144,13 @@ class _SupportIconState extends State<SupportIcon> {
             ),
             Checkbox(
               tristate: false,
-              value: isShowHotline,
+              value: controller.configApp.isShowIconFacebook,
               onChanged: (bool choose) {
                 setState(() {
-                  isShowHotline = choose;
+                  controller.configApp.isShowIconFacebook = choose;
                 });
               },
-              activeColor: bmColors,
+              activeColor: Theme.of(context).primaryColor,
             ),
           ],
         ),
@@ -185,7 +169,13 @@ class _SupportIconState extends State<SupportIcon> {
             ),
             Expanded(
               child: TextField(
+                decoration: InputDecoration(
+                  hintText: controller.configApp.idFacebook ?? "",
+                ),
                 keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  controller.configApp.idFacebook = value;
+                },
               ),
             )
           ],
@@ -211,13 +201,13 @@ class _SupportIconState extends State<SupportIcon> {
             ),
             Checkbox(
               tristate: false,
-              value: isShowHotline,
+              value: controller.configApp.isShowIconZalo,
               onChanged: (bool choose) {
                 setState(() {
-                  isShowHotline = choose;
+                  controller.configApp.isShowIconZalo = choose;
                 });
               },
-              activeColor: bmColors,
+              activeColor: Theme.of(context).primaryColor,
             ),
           ],
         ),
@@ -236,7 +226,13 @@ class _SupportIconState extends State<SupportIcon> {
             ),
             Expanded(
               child: TextField(
+                decoration: InputDecoration(
+                  hintText: controller.configApp.idZalo ?? "",
+                ),
                 keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  controller.configApp.idZalo = value;
+                },
               ),
             )
           ],

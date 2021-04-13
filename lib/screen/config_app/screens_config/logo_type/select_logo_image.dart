@@ -34,37 +34,40 @@ class SelectLogoImage extends StatelessWidget {
   }
 
   Widget addImage() {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: InkWell(
-        onTap: () {
-          selectImageController.getImage(onOK: (link) {
-            onChange(link);
-          });
-        },
-        child: Container(
-          height: 100,
-          width: 100,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              border: Border.all(color: SahaPrimaryColor)),
-          child: linkLogo != null
-              ? CachedNetworkImage(
-                  height: 100,
-                  width: 100,
-                  fit: BoxFit.cover,
-                  imageUrl: linkLogo,
-                  placeholder: (context, url) => new SahaLoadingWidget(
-                    size: 30,
-                  ),
-                  errorWidget: (context, url, error) => new Icon(Icons.error),
-                )
-              : Center(
-                  child: Icon(Icons.camera_alt_outlined),
-                ),
-        ),
-      ),
-    );
+    return selectImageController.isLoadingAdd.value
+        ? SahaLoadingWidget()
+        : Align(
+            alignment: Alignment.centerLeft,
+            child: InkWell(
+              onTap: () {
+                selectImageController.getImage(onOK: (link) {
+                  onChange(link);
+                });
+              },
+              child: Container(
+                height: 100,
+                width: 100,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    border: Border.all(color: SahaPrimaryColor)),
+                child: linkLogo != null
+                    ? CachedNetworkImage(
+                        height: 100,
+                        width: 100,
+                        fit: BoxFit.cover,
+                        imageUrl: linkLogo,
+                        placeholder: (context, url) => new SahaLoadingWidget(
+                          size: 30,
+                        ),
+                        errorWidget: (context, url, error) =>
+                            new Icon(Icons.error),
+                      )
+                    : Center(
+                        child: Icon(Icons.camera_alt_outlined),
+                      ),
+              ),
+            ),
+          );
   }
 
   Widget buildItemAsset(File asset) {
@@ -142,12 +145,8 @@ class SelectLogoImageController extends GetxController {
       final targetPath = dir.absolute.path + basename(pickedFile.path);
 
       var result = await FlutterImageCompress.compressAndGetFile(
-        file.absolute.path,
-        targetPath,
-        quality: 60,
-        minHeight: 512,
-        minWidth: 512
-      );
+          file.absolute.path, targetPath,
+          quality: 60, minHeight: 512, minWidth: 512);
 
       var link = await upLogo(result);
       onOK(link);
@@ -162,17 +161,15 @@ class SelectLogoImageController extends GetxController {
     pathImage.value = null;
   }
 
-  File image;
-
   Future<String> upLogo(File file) async {
     isLoadingAdd.value = true;
     try {
       var link = await RepositoryManager.imageRepository.uploadImage(file);
-
+      isLoadingAdd.value = false;
       return link;
     } catch (err) {
+      isLoadingAdd.value = false;
       SahaAlert.showError(message: err.toString());
     }
-    isLoadingAdd.value = false;
   }
 }

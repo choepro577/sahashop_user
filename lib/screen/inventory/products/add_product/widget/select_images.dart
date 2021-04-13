@@ -14,7 +14,7 @@ class SelectProductImages extends StatelessWidget {
   SelectImageController selectImageController;
   SelectProductImages({this.onUpload, this.doneUpload}) {
     selectImageController =
-    new SelectImageController(onUpload: onUpload, doneUpload: doneUpload);
+        new SelectImageController(onUpload: onUpload, doneUpload: doneUpload);
   }
 
   @override
