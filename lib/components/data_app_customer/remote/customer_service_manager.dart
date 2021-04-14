@@ -1,29 +1,29 @@
 import 'package:dio/dio.dart';
-import 'package:sahashop_user/data/remote/service.dart';
-
-import 'inteceptors/auth_interceptor.dart';
-import 'service.dart';
+import 'package:sahashop_user/components/data_app_customer/remote/customer_service.dart';
+import 'package:sahashop_user/components/data_app_customer/remote/inteceptors/auth_interceptor.dart';
+import 'customer_service.dart';
 
 /// Class holds reference to Dio clients
-class SahaServiceManager {
+class CustomerServiceManager {
   /// Singleton
-  static final SahaServiceManager _instance = SahaServiceManager._internal();
+  static final CustomerServiceManager _instance =
+      CustomerServiceManager._internal();
 
-  factory SahaServiceManager() {
+  factory CustomerServiceManager() {
     return _instance;
   }
 
-  SahaServiceManager._internal();
+  CustomerServiceManager._internal();
 
   /// Service getter
-  SahaService get service => _service;
+  CustomerService get service => _service;
 
   /// Dio client uses to perform normal requests
   Dio dioClient;
 
   /// Dio client uses to perform upload requests
   Dio uploadClient;
-  SahaService _service;
+  CustomerService _service;
 
   /// Initialzation function
   static void initialize() {
@@ -41,7 +41,7 @@ class SahaServiceManager {
 
     uploadClient = Dio(options);
 
-    _service = SahaService(
+    _service = CustomerService(
       dioClient,
     );
   }

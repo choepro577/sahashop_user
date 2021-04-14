@@ -1,45 +1,26 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:sahashop_user/screen/home/home_screen.dart';
-import 'package:sahashop_user/screen/login/loginScreen.dart';
-import 'package:sahashop_user/utils/user_info.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:sahashop_user/components/customer_screen/home_screen/customer_screen.dart';
+import 'package:sahashop_user/components/data_app_customer/remote/customer_service_manager.dart';
 
-import 'data/remote/saha_service_manager.dart';
-
-class SahaMainScreen extends StatefulWidget {
+class CustomerMainScreen extends StatefulWidget {
   @override
-  _SahaMainScreenState createState() => _SahaMainScreenState();
+  _CustomerMainScreenState createState() => _CustomerMainScreenState();
 }
 
-class _SahaMainScreenState extends State<SahaMainScreen> {
+class _CustomerMainScreenState extends State<CustomerMainScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     loadInit(context);
   }
 
-  void loadInit(BuildContext context) {
-    SahaServiceManager.initialize();
-    checkLogin(context);
-  }
-
-  Future<void> checkLogin(BuildContext context) async {
+  Future<void> loadInit(BuildContext context) async {
+    CustomerServiceManager.initialize();
     await Future.delayed(Duration(seconds: 1));
-    if (await UserInfo().hasLogged()) {
-      hasLogged(context);
-    } else {
-      noLogin(context);
-    }
-  }
-
-  hasLogged(BuildContext context) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => HomeScreen()));
-  }
-
-  noLogin(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => LoginScreen()));
+        context, MaterialPageRoute(builder: (context) => CustomerScreen()));
   }
 
   @override

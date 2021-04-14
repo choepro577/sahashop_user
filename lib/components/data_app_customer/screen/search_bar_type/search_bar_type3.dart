@@ -19,8 +19,9 @@ class SearchBarType3 extends StatelessWidget {
           width: 20,
         ),
         Expanded(
-          flex: 7,
           child: Container(
+            margin: EdgeInsets.symmetric(vertical: 30),
+            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(5),
@@ -44,11 +45,8 @@ class SearchBarType3 extends StatelessWidget {
                   fontSize: 12,
                   color: Color(0xFF464A7E),
                 ),
+                border: InputBorder.none,
                 suffixIcon: Icon(Icons.search),
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 10,
-                ),
               ),
             ),
           ),

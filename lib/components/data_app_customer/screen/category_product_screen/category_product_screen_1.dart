@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/saha_user/customCard/product_card.dart';
 import 'package:sahashop_user/components/saha_user/iconButton/iconbtn_counter.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/const/constant.dart';
@@ -99,33 +100,9 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                         ],
                       ),
                     ),
-                    uiDataCategoryProduct[indexSelected].listChildConfig ==
-                                null ||
-                            uiDataCategoryProduct[indexSelected]
-                                    .listChildConfig
-                                    .length ==
-                                0
-                        ? Container(
-                            height: 5,
-                          )
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: uiDataCategoryProduct[indexSelected]
-                                .listChildConfig
-                                .map(
-                                  (e) => e.editWidget == null
-                                      ? Container()
-                                      : Column(
-                                          children: [
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                            e.editWidget
-                                          ],
-                                        ),
-                                )
-                                .toList(),
-                          )
+                    // Wrap(
+                    //   children: [ProductCard(product: product, press: () {})],
+                    // )
                   ],
                 ),
               ),

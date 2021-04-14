@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/customer_load_app.dart';
+import 'package:sahashop_user/components/customer_screen/config_customer_app_controller.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_full_screen.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/screen/config_app/config_controller.dart';
-import 'package:sahashop_user/utils/color.dart';
 
 import 'ui_data_config.dart';
 
@@ -46,6 +47,14 @@ class _ConfigScreenState extends State<ConfigScreen> {
               title: Text(
                 'Chỉnh sửa giao diện',
               ),
+              actions: [
+                IconButton(
+                    icon: Icon(Icons.add_to_home_screen_sharp),
+                    onPressed: () {
+                      Get.to(() => buildPreView(context));
+                      Get.put(ConfigAppCustomerController());
+                    })
+              ],
             ),
             body: Obx(
               () => configController.isLoadingGet.value
@@ -225,6 +234,14 @@ class _ConfigScreenState extends State<ConfigScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildPreView(BuildContext context) {
+    return MaterialApp(
+      title: 'SahaShop',
+      theme: configController.currentTheme.value,
+      home: CustomerMainScreen(),
     );
   }
 }

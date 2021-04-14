@@ -11,7 +11,6 @@ import 'package:sahashop_user/screen/home/widget/section_title.dart';
 
 import '../../data_widget_config.dart';
 
-
 class HomeScreenStyle2 extends StatelessWidget {
   final List<Map<String, dynamic>> sahaBoxButtons = [
     {"icon": "assets/icons/bill_icon.svg", "text": "Bill"},
@@ -54,127 +53,129 @@ class HomeScreenStyle2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(
-            height: 20,
-          ),
-          LIST_WIDGET_SEARCH_BAR[configController.configApp.searchType],
-          SizedBox(
-            height: 10,
-          ),
-          LIST_WIDGET_BANNER[configController.configApp.carouselType],
-          Column(
-            children: [
-              SizedBox(
-                height: 20,
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: List.generate(
-                    option.length,
-                    (index) => SahaBoxButton(
-                      icon: option[index]["icon"],
-                      text: option[index]["text"],
-                      numOfitem: option[index]["numOfitem"],
-                      press: () {},
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            LIST_WIDGET_SEARCH_BAR[configController.configApp.searchType],
+            SizedBox(
+              height: 10,
+            ),
+            LIST_WIDGET_BANNER[configController.configApp.carouselType],
+            Column(
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: List.generate(
+                      option.length,
+                      (index) => SahaBoxButton(
+                        icon: option[index]["icon"],
+                        text: option[index]["text"],
+                        numOfitem: option[index]["numOfitem"],
+                        press: () {},
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: SectionTitle(
-                  title: "Danh mục cửa hàng",
-                  press: () {},
+              ],
+            ),
+            Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(20),
+                  child: SectionTitle(
+                    title: "Danh mục cửa hàng",
+                    press: () {},
+                  ),
                 ),
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: List.generate(
-                    sahaBoxButtons.length,
-                    (index) => SahaBoxButton(
-                      icon: sahaBoxButtons[index]["icon"],
-                      text: sahaBoxButtons[index]["text"],
-                      numOfitem: sahaBoxButtons[index]["numOfitem"],
-                      press: () {},
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: List.generate(
+                      sahaBoxButtons.length,
+                      (index) => SahaBoxButton(
+                        icon: sahaBoxButtons[index]["icon"],
+                        text: sahaBoxButtons[index]["text"],
+                        numOfitem: sahaBoxButtons[index]["numOfitem"],
+                        press: () {},
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: SectionTitle(
-                  title: "Ưu đãi cho bạn",
-                  press: () {},
+              ],
+            ),
+            Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: SectionTitle(
+                    title: "Ưu đãi cho bạn",
+                    press: () {},
+                  ),
                 ),
-              ),
-              SizedBox(height: 20),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    SpecialOfferCard(
-                      image: "assets/images/Image Banner 2.png",
-                      category: "Smartphone",
-                      numOfBrands: 18,
-                      press: () {},
-                    ),
-                    SpecialOfferCard(
-                      image: "assets/images/Image Banner 3.png",
-                      category: "Fashion",
-                      numOfBrands: 24,
-                      press: () {},
-                    ),
-                    SizedBox(width: 20),
-                  ],
+                SizedBox(height: 20),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      SpecialOfferCard(
+                        image: "assets/images/Image Banner 2.png",
+                        category: "Smartphone",
+                        numOfBrands: 18,
+                        press: () {},
+                      ),
+                      SpecialOfferCard(
+                        image: "assets/images/Image Banner 3.png",
+                        category: "Fashion",
+                        numOfBrands: 24,
+                        press: () {},
+                      ),
+                      SizedBox(width: 20),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: SectionTitle(title: "Sản phẩm bán chạy", press: () {}),
-              ),
-              SizedBox(height: 20),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    ...List.generate(
-                      demoProducts.length,
-                      (index) {
-                        if (demoProducts[index].isPopular)
-                          return ProductCard(product: demoProducts[index]);
+              ],
+            ),
+            Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: SectionTitle(title: "Sản phẩm bán chạy", press: () {}),
+                ),
+                SizedBox(height: 20),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      ...List.generate(
+                        demoProducts.length,
+                        (index) {
+                          if (demoProducts[index].isPopular)
+                            return ProductCard(product: demoProducts[index]);
 
-                        return SizedBox
-                            .shrink(); // here by default width and height is 0
-                      },
-                    ),
-                    SizedBox(width: 20),
-                  ],
-                ),
-              )
-            ],
-          )
-        ],
+                          return SizedBox
+                              .shrink(); // here by default width and height is 0
+                        },
+                      ),
+                      SizedBox(width: 20),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

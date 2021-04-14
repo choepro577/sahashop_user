@@ -15,11 +15,14 @@ class SearchBarType2 extends StatelessWidget {
           width: 20,
         ),
         Expanded(
-          child: SearchField(
-            onSearch: (text) {
-              HandleSearchBar.onSearch(text);
-            },
-          ),
+          child: Container(
+              margin: EdgeInsets.symmetric(vertical: 30),
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+              child: SearchField(
+                onSearch: (text) {
+                  HandleSearchBar.onSearch(text);
+                },
+              )),
         ),
         SizedBox(
           width: 10,

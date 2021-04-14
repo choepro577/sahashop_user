@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:sahashop_user/components/saha_user/iconButton/iconbtn_counter.dart';
 import 'package:sahashop_user/components/saha_user/search/seach_field.dart';
 
@@ -19,11 +20,14 @@ class SearchBarType1 extends StatelessWidget {
           width: 20,
         ),
         Expanded(
-          child: SearchField(
-            onSearch: (text) {
-              HandleSearchBar.onSearch(text);
-            },
-          ),
+          child: Container(
+              margin: EdgeInsets.symmetric(vertical: 30),
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+              child: SearchField(
+                onSearch: (text) {
+                  HandleSearchBar.onSearch(text);
+                },
+              )),
         ),
         SizedBox(
           width: 10,
