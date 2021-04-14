@@ -7,7 +7,8 @@ class HexColor extends Color {
       if (hexColor.length == 6) {
         hexColor = "FF" + hexColor;
       }
-      return int.parse(hexColor, radix: 16);
+      var a = int.parse(hexColor, radix: 16);
+      return a;
     } catch (err) {
       return int.parse("FF93b9b4", radix: 16);
     }
