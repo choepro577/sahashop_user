@@ -30,7 +30,7 @@ class AddStoreController extends GetxController {
     creating.value = true;
     try {
       var dataCreateShop = await RepositoryManager.storeRepository.create(
-          UserInfo().getCurrentIdStore(),
+          UserInfo().getCurrentstoreCode(),
           nameShop: nameShop,
           address: address,
           idTypeShop: idType,

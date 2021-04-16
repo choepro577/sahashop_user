@@ -1,27 +1,31 @@
 class Category {
+  Category({
+    this.id,
+    this.name,
+    this.imageUrl,
+    this.createdAt,
+    this.updatedAt,
+  });
+
   int id;
   String name;
-  String imageUrl;
-  String createdAt;
-  String updatedAt;
+  dynamic imageUrl;
+  DateTime createdAt;
+  DateTime updatedAt;
 
-  Category({this.id, this.name, this.imageUrl, this.createdAt, this.updatedAt});
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
+        id: json["id"],
+        name: json["name"],
+        imageUrl: json["image_url"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
 
-  Category.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    imageUrl = json['image_url'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['image_url'] = this.imageUrl;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "image_url": imageUrl,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+      };
 }

@@ -38,6 +38,8 @@ class ConfigController extends GetxController {
           800: HexColor(configApp.colorMain1).withOpacity(0.9),
           900: HexColor(configApp.colorMain1).withOpacity(1),
         }));
+
+    Get.changeTheme(currentTheme.value);
   }
 
   Future<void> getAppTheme() async {

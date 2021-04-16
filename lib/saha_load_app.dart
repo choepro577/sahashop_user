@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:sahashop_user/components/app_customer/remote/customer_service_manager.dart';
 import 'package:sahashop_user/screen/home/home_screen.dart';
 import 'package:sahashop_user/screen/login/loginScreen.dart';
 import 'package:sahashop_user/utils/user_info.dart';
@@ -20,6 +21,7 @@ class _SahaMainScreenState extends State<SahaMainScreen> {
 
   void loadInit(BuildContext context) {
     SahaServiceManager.initialize();
+    CustomerServiceManager.initialize();
     checkLogin(context);
   }
 

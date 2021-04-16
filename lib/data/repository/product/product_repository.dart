@@ -3,16 +3,13 @@ import 'package:sahashop_user/data/remote/saha_service_manager.dart';
 import 'package:sahashop_user/model/product.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
-
 import '../handle_error.dart';
-
 
 class ProductRepository {
   Future<Product> create(Product productRequest) async {
     try {
-      var res = await SahaServiceManager()
-          .service
-          .createProduct(UserInfo().getCurrentIdStore(), productRequest.toJson());
+      var res = await SahaServiceManager().service.createProduct(
+          UserInfo().getCurrentstoreCode(), productRequest.toJson());
       return res.data;
     } catch (err) {
       handleError(err);
@@ -21,7 +18,9 @@ class ProductRepository {
 
   Future<List<Product>> getAllProduct() async {
     try {
-      var res = await SahaServiceManager().service.getAllProduct(UserInfo().getCurrentIdStore());
+      var res = await SahaServiceManager()
+          .service
+          .getAllProduct(UserInfo().getCurrentstoreCode());
       return res.data;
     } catch (err) {
       handleError(err);

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/data_app_customer/data_widget_config.dart';
+import 'package:sahashop_user/components/app_customer/screen/data_widget_config.dart';
 import 'package:sahashop_user/components/saha_user/carousel/carousel_select.dart';
 
 import '../../config_controller.dart';

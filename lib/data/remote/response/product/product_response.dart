@@ -1,9 +1,12 @@
 import 'dart:convert';
+
 import 'package:sahashop_user/model/product.dart';
 
-ProductResponse productResponseFromJson(String str) => ProductResponse.fromJson(json.decode(str));
+ProductResponse productResponseFromJson(String str) =>
+    ProductResponse.fromJson(json.decode(str));
 
-String productResponseToJson(ProductResponse data) => json.encode(data.toJson());
+String productResponseToJson(ProductResponse data) =>
+    json.encode(data.toJson());
 
 class ProductResponse {
   ProductResponse({
@@ -18,19 +21,18 @@ class ProductResponse {
   String msgCode;
   Product data;
 
-  factory ProductResponse.fromJson(Map<String, dynamic> json) => ProductResponse(
-    code: json["code"],
-    success: json["success"],
-    msgCode: json["msg_code"],
-    data: Product.fromJson(json["data"]),
-  );
+  factory ProductResponse.fromJson(Map<String, dynamic> json) =>
+      ProductResponse(
+        code: json["code"],
+        success: json["success"],
+        msgCode: json["msg_code"],
+        data: Product.fromJson(json["data"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "code": code,
-    "success": success,
-    "msg_code": msgCode,
-    "data": data.toJson(),
-  };
+        "code": code,
+        "success": success,
+        "msg_code": msgCode,
+        "data": data.toJson(),
+      };
 }
-
-

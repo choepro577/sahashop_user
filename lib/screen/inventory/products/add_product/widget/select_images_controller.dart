@@ -28,28 +28,25 @@ class SelectImageController extends GetxController {
   }
 
   void updateListImage(List<Asset> listAsset) {
-
     print(listAsset);
     onUpload();
 
     var listPre = dataImages.toList();
     var newList = <ImageData>[];
 
-
     for (var asset in listAsset) {
-
-
       var dataPre = listPre.firstWhere((itemPre) => itemPre.file == asset,
           orElse: () => null);
 
       if (dataPre != null) {
-
         newList.add(dataPre);
       } else {
         newList.add(ImageData(
-            file: asset, linkImage: null, errorUpload: false, uploading: false));
+            file: asset,
+            linkImage: null,
+            errorUpload: false,
+            uploading: false));
       }
-
     }
     dataImages(newList);
     uploadListImage();
@@ -61,7 +58,6 @@ class SelectImageController extends GetxController {
     int indexImageData = 0;
     for (var imageData in dataImages) {
       if (imageData.linkImage == null) {
-
         uploadImageData(indexImageData, () {
           stackComplete++;
 
@@ -101,13 +97,8 @@ class SelectImageController extends GetxController {
     final dir = await path_provider.getTemporaryDirectory();
     final targetPath = dir.absolute.path + basename(path);
 
-    var file = await FlutterImageCompress.compressAndGetFile(
-      path,
-      targetPath,
-      quality: 20,
-      minHeight: 1024,
-      minWidth: 1024
-    );
+    var file = await FlutterImageCompress.compressAndGetFile(path, targetPath,
+        quality: 20, minHeight: 1024, minWidth: 1024);
 
     return file;
   }
