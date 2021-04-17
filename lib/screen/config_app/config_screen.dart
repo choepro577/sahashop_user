@@ -43,6 +43,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
     super.dispose();
 
     Get.changeTheme(SahaUserPrimaryTheme);
+    configController.deleteContactButton();
   }
 
   @override

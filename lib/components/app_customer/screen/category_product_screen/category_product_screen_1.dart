@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/screen/search_screen/search_screen.dart';
+import 'package:sahashop_user/components/saha_user/customCard/product_card.dart';
+import 'package:sahashop_user/components/saha_user/customCard/product_card_exam.dart';
 import 'package:sahashop_user/components/saha_user/iconButton/iconbtn_counter.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/const/constant.dart';
@@ -29,18 +32,19 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: SahaSecondaryColor.withOpacity(0.1),
+                  color: Theme.of(context).primaryTextTheme.headline1.color,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: TextField(
-                  onChanged: (value) => print(value),
+                  onChanged: (value) => Get.to(() => SearchScreen(
+                        searchText: value,
+                      )),
                   decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 20, vertical: 9),
@@ -80,31 +84,40 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                       }),
             ),
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(color: Colors.black12),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            uiDataCategoryProduct[indexSelected].name,
-                            style: TextStyle(
-                              fontSize: 17,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Obx(
+                    () => categoryController.isLoadingCategory.value
+                        ? SahaLoadingWidget()
+                        : SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Text(
+                                  categoryController.categoryCurrent.value.name,
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Wrap(
+                                  children: [
+                                    ...List.generate(
+                                        categoryController.products.length,
+                                        (index) => ProductCard(
+                                            product: categoryController
+                                                .products[index],
+                                            press: () {}))
+                                  ],
+                                )
+                              ],
                             ),
-                            textAlign: TextAlign.center,
                           ),
-                        ],
-                      ),
-                    ),
-                    // Wrap(
-                    //   children: [ProductCard(product: product, press: () {})],
-                    // )
-                  ],
-                ),
+                  ),
+                ],
               ),
-            )
+            ),
           ],
         ),
       ),

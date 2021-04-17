@@ -16,6 +16,7 @@ class CategoryController extends GetxController {
   void setCategoryCurrent(Category category) {
     categoryCurrent.value = category;
     idCategory.value = categoryCurrent.value.id;
+    print(categoryCurrent.value.id);
     getProductWithCategory(idCategory.value);
   }
 
@@ -24,10 +25,12 @@ class CategoryController extends GetxController {
     try {
       var res = await CustomerRepositoryManager.productCustomerRepository
           .getProductWithCategory(idCategory);
+      products.value = res;
     } catch (err) {
       print(err);
       handleErrorCustomer(err);
     }
+    isLoadingCategory.value = false;
   }
 
   Future<void> getAllCategory() async {

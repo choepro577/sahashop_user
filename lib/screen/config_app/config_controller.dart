@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/screen/config_app/screens_config/font_type/font_data.dart';
 import 'package:sahashop_user/utils/color.dart';
 import 'package:sahashop_user/utils/user_info.dart';
+import 'package:unicorndial/unicorndial.dart';
 
 import '../../model/config_app.dart';
 
@@ -14,6 +16,7 @@ class ConfigController extends GetxController {
 
   var isLoadingGet = false.obs;
   var isLoadingCreate = false.obs;
+  var contactButton = RxList<UnicornButton>();
 
   ConfigController() {
     currentTheme.value = ThemeData(
@@ -68,7 +71,7 @@ class ConfigController extends GetxController {
       configApp.isShowIconEmail = data.isShowIconEmail ?? false;
       configApp.isShowIconFacebook = data.isShowIconFacebook ?? false;
       configApp.isShowIconZalo = data.isShowIconZalo ?? false;
-
+      addButton();
       updateTheme();
       isLoadingGet.value = false;
       return true;
@@ -92,5 +95,77 @@ class ConfigController extends GetxController {
       SahaAlert.showError(message: err.toString());
     }
     isLoadingCreate.value = false;
+  }
+
+  void addButton() {
+    if (configApp.isShowIconHotline == true) {
+      contactButton.add(UnicornButton(
+          hasLabel: true,
+          labelText: configApp.phoneNumberHotline ?? "",
+          currentButton: FloatingActionButton(
+            heroTag: "train",
+            backgroundColor: Colors.redAccent,
+            mini: true,
+            child: Icon(Icons.phone),
+            onPressed: () {},
+          )));
+    }
+    if (configApp.isShowIconEmail == true) {
+      contactButton.add(UnicornButton(
+          hasLabel: true,
+          labelText: configApp.contactEmail ?? "",
+          currentButton: FloatingActionButton(
+            heroTag: "train",
+            backgroundColor: Colors.redAccent,
+            mini: true,
+            child: Icon(Icons.email),
+            onPressed: () {},
+          )));
+    }
+    if (configApp.isShowIconFacebook == true) {
+      contactButton.add(UnicornButton(
+          hasLabel: true,
+          labelText: configApp.idFacebook ?? "",
+          currentButton: FloatingActionButton(
+            heroTag: "train",
+            backgroundColor: Colors.redAccent,
+            mini: true,
+            child: Container(
+              padding: EdgeInsets.all(12),
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                color: Color(0xFFF5F6F9),
+                shape: BoxShape.circle,
+              ),
+              child: SvgPicture.asset("assets/icons/facebook-2.svg"),
+            ),
+            onPressed: () {},
+          )));
+    }
+    if (configApp.isShowIconZalo == true) {
+      contactButton.add(UnicornButton(
+          hasLabel: true,
+          labelText: configApp.idZalo ?? "",
+          currentButton: FloatingActionButton(
+            heroTag: "train",
+            backgroundColor: Colors.redAccent,
+            mini: true,
+            child: Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                color: Color(0xFFF5F6F9),
+                shape: BoxShape.circle,
+              ),
+              child: SvgPicture.asset("assets/icons/zalo.svg"),
+            ),
+            onPressed: () {},
+          )));
+    }
+  }
+
+  void deleteContactButton() {
+    contactButton = RxList<UnicornButton>();
   }
 }

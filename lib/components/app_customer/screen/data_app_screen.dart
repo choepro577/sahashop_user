@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_widget_config.dart';
-import 'package:sahashop_user/components/app_customer/remote/customer_service_manager.dart';
 import 'data_app_controller.dart';
 
 class LoadAppScreen extends StatefulWidget {

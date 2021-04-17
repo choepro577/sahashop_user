@@ -1,5 +1,4 @@
 import 'package:dotted_border/dotted_border.dart';
-import 'package:dropdown_below/dropdown_below.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/screen/inventory/products/add_product/widget/dropdown_string.dart';
@@ -55,7 +54,7 @@ class DetailSelect extends StatelessWidget {
   }
 
   Widget buildDetail(Details details) {
-    print(detailSelectController.  getListStringBuild());
+    print(detailSelectController.getListStringBuild());
     return Row(
       children: [
         Container(
@@ -64,7 +63,7 @@ class DetailSelect extends StatelessWidget {
               value: "0",
               hint: "dsda",
               errorText: "",
-              items:detailSelectController.  getListStringBuild().map((e) {
+              items: detailSelectController.getListStringBuild().map((e) {
                 return DropdownMenuItem<String>(
                   value: e,
                   child: Text(e),

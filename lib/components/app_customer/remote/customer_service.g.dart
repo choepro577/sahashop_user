@@ -113,7 +113,7 @@ class _CustomerService implements CustomerService {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(idCategory, 'idCategory');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{"category_ids": idCategory};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(
         '$storeCode/products',

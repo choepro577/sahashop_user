@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_box_button.dart';
-import 'package:sahashop_user/components/saha_user/customCard/product_card.dart';
+import 'package:sahashop_user/components/saha_user/customCard/product_card_exam.dart';
 import 'package:sahashop_user/components/saha_user/special_card/special_offer_card_type1.dart';
 import 'package:sahashop_user/model/button.dart';
 import 'package:sahashop_user/model/category.dart';
@@ -64,6 +63,25 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: configController.contactButton.isEmpty
+          ? Container()
+          : UnicornDialer(
+              backgroundColor: Color.fromRGBO(255, 255, 255, 0.6),
+              parentButtonBackground: Colors.redAccent,
+              orientation: UnicornOrientation.VERTICAL,
+              parentButton: Icon(Icons.phone),
+              childButtons: configController.contactButton ??
+                  UnicornButton(
+                      hasLabel: true,
+                      labelText:
+                          configController.configApp.phoneNumberHotline ?? "",
+                      currentButton: FloatingActionButton(
+                        heroTag: "train",
+                        backgroundColor: Colors.blue,
+                        mini: true,
+                        child: Icon(Icons.add),
+                        onPressed: () {},
+                      ))),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -104,7 +122,11 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                   padding: EdgeInsets.all(20),
                   child: SectionTitle(
                     title: "Danh mục cửa hàng",
-                    press: () {},
+                    press: () {
+                      print("aaaaa");
+                      Get.to(LIST_WIDGET_CATEGORY_PRODUCT[
+                          configController.configApp.categoryPageType]);
+                    },
                   ),
                 ),
                 SingleChildScrollView(
@@ -172,7 +194,8 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                         demoProducts.length,
                         (index) {
                           if (demoProducts[index].isPopular)
-                            return ProductCard(product: demoProducts[index]);
+                            return ProductCardExam(
+                                product: demoProducts[index]);
 
                           return SizedBox
                               .shrink(); // here by default width and height is 0
