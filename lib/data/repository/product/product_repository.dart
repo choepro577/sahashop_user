@@ -9,7 +9,7 @@ class ProductRepository {
   Future<Product> create(Product productRequest) async {
     try {
       var res = await SahaServiceManager().service.createProduct(
-          UserInfo().getCurrentstoreCode(), productRequest.toJson());
+          UserInfo().getCurrentStoreCode(), productRequest.toJson());
       return res.data;
     } catch (err) {
       handleError(err);
@@ -20,7 +20,7 @@ class ProductRepository {
     try {
       var res = await SahaServiceManager()
           .service
-          .getAllProduct(UserInfo().getCurrentstoreCode());
+          .getAllProduct(UserInfo().getCurrentStoreCode());
       return res.data;
     } catch (err) {
       handleError(err);

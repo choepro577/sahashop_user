@@ -11,7 +11,7 @@ class CategoryRepository {
       try {
         var res = await SahaServiceManager()
             .service
-            .getAllCategory(UserInfo().getCurrentstoreCode());
+            .getAllCategory(UserInfo().getCurrentStoreCode());
         return res.data;
       } catch (err) {
         handleErrorCustomer(err);

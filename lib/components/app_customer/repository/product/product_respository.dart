@@ -8,7 +8,7 @@ class ProductCustomerRepository {
     try {
       var res = await CustomerServiceManager()
           .service
-          .getProductWithCategory(UserInfo().getCurrentstoreCode(), idCategory);
+          .getProductWithCategory(UserInfo().getCurrentStoreCode(), idCategory);
       return res.data.data;
     } catch (err) {
       handleErrorCustomer(err);

@@ -11,7 +11,7 @@ class CategoryRepository {
   Future<Category> createCategory(String name, File image) async {
     try {
       var res = await SahaServiceManager().service.createCategory(
-        UserInfo().getCurrentstoreCode(),
+        UserInfo().getCurrentStoreCode(),
         {
           "name": name,
           "image":
@@ -28,7 +28,7 @@ class CategoryRepository {
     try {
       var res = await SahaServiceManager()
           .service
-          .getAllCategory(UserInfo().getCurrentstoreCode());
+          .getAllCategory(UserInfo().getCurrentStoreCode());
       return res.data;
     } catch (err) {
       handleError(err);

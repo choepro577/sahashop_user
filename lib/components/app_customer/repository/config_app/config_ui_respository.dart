@@ -8,7 +8,7 @@ class ConfigUICustomerRepository {
     try {
       var res = await CustomerServiceManager()
           .service
-          .getAppTheme(UserInfo().getCurrentstoreCode());
+          .getAppTheme(UserInfo().getCurrentStoreCode());
       return res.data;
     } catch (err) {
       handleErrorCustomer(err);

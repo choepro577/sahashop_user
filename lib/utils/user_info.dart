@@ -5,7 +5,7 @@ class UserInfo {
   static final UserInfo _singleton = UserInfo._internal();
 
   String _token;
-  String _currentstoreCode;
+  String _currentStoreCode;
   int _currentIdUser;
 
   factory UserInfo() {
@@ -14,22 +14,22 @@ class UserInfo {
 
   UserInfo._internal();
 
-  Future<void> setCurrentstoreCode(String id) async {
+  Future<void> setCurrentStoreCode(String code) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (id == null) {
-      await prefs.remove(CURRENT_ID_STORE);
+    if (code == null) {
+      await prefs.remove(CURRENT_STORE_CODE);
     } else {
-      await prefs.setString(CURRENT_ID_STORE, id);
+      await prefs.setString(CURRENT_STORE_CODE, code);
     }
-    this._currentstoreCode = id;
+    this._currentStoreCode = code;
   }
 
   Future<void> setCurrentIdUser(int idUser) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (idUser == null) {
-      await prefs.remove(CURRENT_ID_USER);
+      await prefs.remove(CURRENT_USER_ID);
     } else {
-      await prefs.setInt(CURRENT_ID_USER, idUser);
+      await prefs.setInt(CURRENT_USER_ID, idUser);
     }
     this._currentIdUser = idUser;
   }
@@ -48,8 +48,8 @@ class UserInfo {
     return _token;
   }
 
-  String getCurrentstoreCode() {
-    return _currentstoreCode;
+  String getCurrentStoreCode() {
+    return _currentStoreCode;
   }
 
   int getCurrentIdUser() {
@@ -69,6 +69,6 @@ class UserInfo {
     String tokenLocal = prefs.getString(USER_TOKEN) ?? null;
     this._token = tokenLocal;
 
-    this._currentstoreCode = prefs.getString(CURRENT_ID_STORE) ?? null;
+    this._currentStoreCode = prefs.getString(CURRENT_STORE_CODE) ?? null;
   }
 }

@@ -25,9 +25,9 @@ class HomeController extends GetxController {
 
       if (list.length > 0) {
         var indexStoreSelected;
-        if (UserInfo().getCurrentstoreCode() != null) {
+        if (UserInfo().getCurrentStoreCode() != null) {
           indexStoreSelected = list.indexWhere(
-              (storeE) => storeE?.id == UserInfo().getCurrentstoreCode());
+              (storeE) => storeE?.storeCode == UserInfo().getCurrentStoreCode());
         }
 
         if (indexStoreSelected != null && indexStoreSelected >= 0) {
@@ -42,7 +42,7 @@ class HomeController extends GetxController {
         setUserIdCurrent(store);
       } else {
         storeCurrent = null;
-        UserInfo().setCurrentstoreCode(null);
+        UserInfo().setCurrentStoreCode(null);
       }
 
       isLoadingStore.value = false;
@@ -54,7 +54,7 @@ class HomeController extends GetxController {
   }
 
   void setNewStoreCurrent(Store store) {
-    UserInfo().setCurrentstoreCode(store.storeCode);
+    UserInfo().setCurrentStoreCode(store.storeCode);
     storeCurrent.value = store;
   }
 
