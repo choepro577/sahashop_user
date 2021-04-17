@@ -12,15 +12,18 @@ import 'package:sahashop_user/screen/sign_up/signUpScreen_controller.dart';
 
 import 'add_store_controller.dart';
 
-
 class AddStore extends StatefulWidget {
   @override
   _AddStoreState createState() => _AddStoreState();
 }
 
 class _AddStoreState extends State<AddStore> {
-  TextEditingController textEditingControllerNameShop = new TextEditingController();
-  TextEditingController textEditingControllerAddress = new TextEditingController();
+  TextEditingController textEditingControllerNameShop =
+      new TextEditingController();
+  TextEditingController textEditingControllerAddress =
+      new TextEditingController();
+  TextEditingController textEditingControllerStoreCode =
+      new TextEditingController();
 
   AddStoreController addStoreController = AddStoreController();
 
@@ -47,12 +50,12 @@ class _AddStoreState extends State<AddStore> {
     super.didChangeDependencies();
     sub ??= addStoreController.stateCreate.listen((state) {
       if (state != "success") {
-        SahaDialogApp.showDialogError(context: context,errorMess: state);
+        SahaDialogApp.showDialogError(context: context, errorMess: state);
         EasyLoading.dismiss();
       }
 
       if (state == "success") {
-        Navigator.pop(context,"added");
+        Navigator.pop(context, "added");
         EasyLoading.dismiss();
       }
     });
@@ -105,7 +108,7 @@ class _AddStoreState extends State<AddStore> {
                 onChanged: (value) {},
                 validator: (value) {
                   if (value.length < 6) {
-                    return 'Bạn chưa nhập số điện thoại';
+                    return 'Tên cửa hàng chứa 6 kí tự trở lên';
                   }
                   return null;
                 },
@@ -130,6 +133,22 @@ class _AddStoreState extends State<AddStore> {
                 hintText: "Nhập địa chỉ cửa hàng",
                 icon: Icon(Icons.lock),
               ),
+              SahaTextField(
+                controller: textEditingControllerStoreCode,
+                onChanged: (value) {},
+                validator: (value) {
+                  if (value.length < 2) {
+                    return 'Địa chỉ online chứa 2 kí tự trở lên';
+                  }
+                  return null;
+                },
+                textInputType: TextInputType.emailAddress,
+                obscureText: false,
+                suffix: "sahashop.net",
+                labelText: "Địa chỉ cửa hàng Online",
+                hintText: "Nhập địa chỉ cửa hàng Online",
+                icon: Icon(Icons.lock),
+              ),
               GetX<AddStoreController>(
                 builder: (_) => DropdownButton<Map<String, String>>(
                   focusColor: Colors.white,
@@ -138,7 +157,8 @@ class _AddStoreState extends State<AddStore> {
                   style: TextStyle(color: Colors.white),
                   iconEnabledColor: Colors.black,
                   items: addStoreController.mapTypeShop
-                      .map<DropdownMenuItem<Map<String, String>>>((Map<String, String> value) {
+                      .map<DropdownMenuItem<Map<String, String>>>(
+                          (Map<String, String> value) {
                     return DropdownMenuItem<Map<String, String>>(
                       value: value,
                       child: Text(
@@ -163,21 +183,20 @@ class _AddStoreState extends State<AddStore> {
                 ),
               ),
               TextButton(
-                 // signUpController.shopPhones.toString()
+                // signUpController.shopPhones.toString()
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
                     KeyboardUtil.hideKeyboard(context);
-                    addStoreController.createShop(textEditingControllerNameShop.text,
+                    addStoreController.createShop(
+                        textEditingControllerNameShop.text,
                         textEditingControllerAddress.text,
                         _chosenValue,
-                        textEditingControllerNameShop.text + signUpController.shopPhones.toString());
+                        textEditingControllerStoreCode.text);
                     EasyLoading.show();
                   }
                 },
-                style: ButtonStyle(
-
-                ),
+                style: ButtonStyle(),
                 child: Text(
                   "Continue",
                   style: TextStyle(fontSize: 18),

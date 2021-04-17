@@ -8,7 +8,7 @@ class ConfigUIRepository {
     try {
       var res = await SahaServiceManager()
           .service
-          .createAppTheme(UserInfo().getCurrentIdStore(), configApp.toJson());
+          .createAppTheme(UserInfo().getCurrentstoreCode(), configApp.toJson());
       return res.data;
     } catch (err) {
       handleError(err);
@@ -19,7 +19,7 @@ class ConfigUIRepository {
     try {
       var res = await SahaServiceManager()
           .service
-          .getAppTheme(UserInfo().getCurrentIdStore());
+          .getAppTheme(UserInfo().getCurrentstoreCode());
       return res.data;
     } catch (err) {
       handleError(err);

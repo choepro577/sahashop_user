@@ -11,12 +11,11 @@ class CategoryRepository {
   Future<Category> createCategory(String name, File image) async {
     try {
       var res = await SahaServiceManager().service.createCategory(
-        UserInfo().getCurrentIdStore(),
+        UserInfo().getCurrentstoreCode(),
         {
           "name": name,
-          "image": image == null
-              ? null
-              : await MultipartFile.fromFile(image.path),
+          "image":
+              image == null ? null : await MultipartFile.fromFile(image.path),
         },
       );
       return res.data;
@@ -27,7 +26,9 @@ class CategoryRepository {
 
   Future<List<Category>> getAllCategory() async {
     try {
-      var res = await SahaServiceManager().service.getAllCategory(UserInfo().getCurrentIdStore());
+      var res = await SahaServiceManager()
+          .service
+          .getAllCategory(UserInfo().getCurrentstoreCode());
       return res.data;
     } catch (err) {
       handleError(err);

@@ -1,7 +1,7 @@
 class ThreadData {
   static final ThreadData _singleton = ThreadData._internal();
 
-  bool _isOnline = false;
+  bool _isOnline = true;
 
   factory ThreadData() {
     return _singleton;

@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:sahashop_user/data/remote/service.dart';
 
 import 'inteceptors/auth_interceptor.dart';
@@ -26,7 +25,6 @@ class SahaServiceManager {
   Dio uploadClient;
   SahaService _service;
 
-
   /// Initialzation function
   static void initialize() {
     if (_instance.service == null) {
@@ -36,7 +34,6 @@ class SahaServiceManager {
 
   /// Return the one and the only instance
   void getNewInstance() {
-
     final options = BaseOptions(receiveTimeout: 15000);
     dioClient = Dio(options)
       ..interceptors.add(AuthInterceptor())
@@ -48,7 +45,4 @@ class SahaServiceManager {
       dioClient,
     );
   }
-
-
-
 }

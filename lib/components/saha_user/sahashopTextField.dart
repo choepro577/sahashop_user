@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class SahaTextField extends StatelessWidget {
   String labelText;
+  String suffix;
   Icon icon;
   TextEditingController controller;
   Function(String) onChanged;
@@ -14,6 +15,7 @@ class SahaTextField extends StatelessWidget {
 
   SahaTextField({
     this.labelText,
+    this.suffix = "",
     this.controller,
     this.icon,
     this.hintText,
@@ -35,14 +37,15 @@ class SahaTextField extends StatelessWidget {
         onChanged: onChanged,
         controller: controller,
         decoration: new InputDecoration(
+            suffix: Text(suffix),
             border: new OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8)),),
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+            ),
             labelText: labelText,
             hintText: hintText,
             suffixIcon: obscureText == true && icon != null ? icon : null,
             floatingLabelBehavior: FloatingLabelBehavior.always,
-            suffixStyle: const TextStyle(color: bmColors)
-        ),
+            suffixStyle: const TextStyle(color: bmColors)),
       ),
     );
   }

@@ -91,15 +91,15 @@ class _SahaService implements SahaService {
   }
 
   @override
-  Future<ProductResponse> createProduct(idStore, body) async {
-    ArgumentError.checkNotNull(idStore, 'idStore');
+  Future<ProductResponse> createProduct(storeCode, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body ?? <String, dynamic>{});
     final _result = await _dio.request<Map<String, dynamic>>(
-        'store/$idStore/products',
+        'store/$storeCode/products',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -112,13 +112,13 @@ class _SahaService implements SahaService {
   }
 
   @override
-  Future<AllProductResponse> getAllProduct(idStore) async {
-    ArgumentError.checkNotNull(idStore, 'idStore');
+  Future<AllProductResponse> getAllProduct(storeCode) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(
-        'store/$idStore/products',
+        'store/$storeCode/products',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -148,15 +148,15 @@ class _SahaService implements SahaService {
   }
 
   @override
-  Future<CreateCategoryResponse> createCategory(idStore, body) async {
-    ArgumentError.checkNotNull(idStore, 'idStore');
+  Future<CreateCategoryResponse> createCategory(storeCode, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body ?? <String, dynamic>{});
     final _result = await _dio.request<Map<String, dynamic>>(
-        'store/$idStore/categories',
+        'store/$storeCode/categories',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -170,15 +170,15 @@ class _SahaService implements SahaService {
   }
 
   @override
-  Future<CreateAppThemeResponse> createAppTheme(idStore, body) async {
-    ArgumentError.checkNotNull(idStore, 'idStore');
+  Future<CreateAppThemeResponse> createAppTheme(storeCode, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body ?? <String, dynamic>{});
     final _result = await _dio.request<Map<String, dynamic>>(
-        'app-theme/$idStore',
+        'app-theme/$storeCode',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -191,13 +191,13 @@ class _SahaService implements SahaService {
   }
 
   @override
-  Future<GetAppThemeResponse> getAppTheme(idStore) async {
-    ArgumentError.checkNotNull(idStore, 'idStore');
+  Future<GetAppThemeResponse> getAppTheme(storeCode) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(
-        'app-theme/$idStore',
+        'app-theme/$storeCode',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -210,13 +210,13 @@ class _SahaService implements SahaService {
   }
 
   @override
-  Future<AllCategoryResponse> getAllCategory(idStore) async {
-    ArgumentError.checkNotNull(idStore, 'idStore');
+  Future<AllCategoryResponse> getAllCategory(storeCode) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(
-        'store/$idStore/categories',
+        'store/$storeCode/categories',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',

@@ -1,11 +1,12 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:sahashop_user/const/constant.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:path/path.dart';
 
 class SelectCategoryImage extends StatelessWidget {
   SelectImageController selectImageController = new SelectImageController();
@@ -13,7 +14,8 @@ class SelectCategoryImage extends StatelessWidget {
 
   final File fileSelected;
 
-  SelectCategoryImage({Key key, this.onChange, this.fileSelected}) : super(key: key);
+  SelectCategoryImage({Key key, this.onChange, this.fileSelected})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +36,15 @@ class SelectCategoryImage extends StatelessWidget {
       child: InkWell(
         onTap: () {
           selectImageController.getImage((file) {
-           onChange(file);
+            onChange(file);
           });
         },
         child: Container(
           height: 100,
           width: 100,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            border: Border.all(color: SahaPrimaryColor)
-          ),
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              border: Border.all(color: SahaPrimaryColor)),
           child: Center(
             child: Icon(Icons.camera_alt_outlined),
           ),
@@ -58,8 +59,7 @@ class SelectCategoryImage extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(8)),
-            border: Border.all(color: SahaPrimaryColor)
-        ),
+            border: Border.all(color: SahaPrimaryColor)),
         child: SizedBox(
           height: 100,
           width: 100,
@@ -120,10 +120,17 @@ class SelectImageController extends GetxController {
   Future getImage(Function onPick) async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      onPick(
-        File(pickedFile.path)
-      );
       pathImage.value = pickedFile.path;
+      var file = File(pickedFile.path);
+
+      final dir = await path_provider.getTemporaryDirectory();
+      final targetPath = dir.absolute.path + basename(pickedFile.path);
+
+      var result = await FlutterImageCompress.compressAndGetFile(
+          file.absolute.path, targetPath,
+          quality: 60, minHeight: 512, minWidth: 512);
+
+      onPick(File(result.path));
     } else {
       print('No image selected.');
     }

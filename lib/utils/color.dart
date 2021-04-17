@@ -1,12 +1,28 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+import 'package:sahashop_user/const/constant.dart';
+
 class HexColor extends Color {
   static int getColorFromHex(String hexColor) {
-    hexColor = hexColor.toUpperCase().replaceAll("#", "");
-    if (hexColor.length == 6) {
-      hexColor = "FF" + hexColor;
+    try {
+      hexColor = hexColor.toUpperCase().replaceAll("#", "");
+      if (hexColor.length == 6) {
+        hexColor = "FF" + hexColor;
+      }
+
+      var a = int.tryParse(hexColor, radix: 16);
+
+      var color = Color(a);
+
+      if (color.opacity < 1) {
+        return SahaPrimaryColor.value;
+      }
+
+      return Color(a).value;
+    } catch (err) {
+      return SahaPrimaryColor.value;
     }
-    return int.parse(hexColor, radix: 16);
   }
 
   HexColor(final String hexColor) : super(getColorFromHex(hexColor));

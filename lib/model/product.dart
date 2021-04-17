@@ -1,138 +1,139 @@
+import 'dart:convert';
+
 import 'package:sahashop_user/model/category.dart';
 
+Product productFromJson(String str) => Product.fromJson(json.decode(str));
+
+String productToJson(Product data) => json.encode(data.toJson());
+
 class Product {
-  String description;
+  Product({
+    this.id,
+    this.name,
+    this.storeId,
+    this.description,
+    this.indexImageAvatar,
+    this.price,
+    this.barcode,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
+    this.details,
+    this.images,
+    this.categories,
+  });
+
+  int id;
   String name;
+  int storeId;
+  String description;
   int indexImageAvatar;
   int price;
   String barcode;
   int status;
-  List<ImageProduct> images;
+  DateTime createdAt;
+  DateTime updatedAt;
   List<Details> details;
+  List<ImageProduct> images;
   List<Category> categories;
 
-  Product(
-      {this.description,
-      this.name,
-      this.indexImageAvatar,
-      this.price,
-      this.barcode,
-      this.status,
-      this.images,
-      this.details,
-      this.categories});
+  factory Product.fromJson(Map<String, dynamic> json) => Product(
+        id: json["id"],
+        name: json["name"],
+        storeId: json["store_id"],
+        description: json["description"],
+        indexImageAvatar: json["index_image_avatar"],
+        price: json["price"],
+        barcode: json["barcode"],
+        status: json["status"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+        details:
+            List<Details>.from(json["details"].map((x) => Details.fromJson(x))),
+        images: List<ImageProduct>.from(
+            json["images"].map((x) => ImageProduct.fromJson(x))),
+        categories: List<Category>.from(
+            json["categories"].map((x) => Category.fromJson(x))),
+      );
 
-  Product.fromJson(Map<String, dynamic> json) {
-    description = json['description'];
-    name = json['name'];
-    indexImageAvatar = json['index_image_avatar'];
-    price = json['price'];
-    barcode = json['barcode'];
-    status = json['status'];
-    if (json['images'] != null) {
-      images = new List<ImageProduct>();
-      json['images'].forEach((v) {
-        images.add(new ImageProduct.fromJson(v));
-      });
-    }
-    if (json['details'] != null) {
-      details = new List<Details>();
-      json['details'].forEach((v) {
-        details.add(new Details.fromJson(v));
-      });
-    };
-    if (json['categories'] != null) {
-    categories = new List<Category>();
-    json['categories'].forEach((v) {
-    categories.add(new Category.fromJson(v));
-    });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['description'] = this.description;
-    data['name'] = this.name;
-    data['index_image_avatar'] = this.indexImageAvatar;
-    data['price'] = this.price;
-    data['barcode'] = this.barcode;
-    data['status'] = this.status;
-    data['images'] = this.images;
-    if (this.details != null) {
-      data['details'] = this.details.map((v) => v.toJson()).toList();
-    }
-    if (this.categories != null) {
-    data['categories'] = this.categories.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-
-
-class ImageProduct {
-  int id;
-  String imageUrl;
-
-  ImageProduct({this.id, this.imageUrl});
-
-  ImageProduct.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    imageUrl = json['image_url'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['image_url'] = this.imageUrl;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "store_id": storeId,
+        "description": description,
+        "index_image_avatar": indexImageAvatar,
+        "price": price,
+        "barcode": barcode,
+        "status": status,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+        "details": List<dynamic>.from(details.map((x) => x.toJson())),
+        "images": List<dynamic>.from(images.map((x) => x.toJson())),
+        "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
+      };
 }
 
 class Details {
+  Details({
+    this.id,
+    this.name,
+    this.attributes,
+  });
+
   int id;
   String name;
   List<Attributes> attributes;
 
-  Details({this.id, this.name, this.attributes});
+  factory Details.fromJson(Map<String, dynamic> json) => Details(
+        id: json["id"],
+        name: json["name"],
+        attributes: List<Attributes>.from(
+            json["attributes"].map((x) => Attributes.fromJson(x))),
+      );
 
-  Details.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    if (json['attributes'] != null) {
-      attributes = new List<Attributes>();
-      json['attributes'].forEach((v) {
-        attributes.add(new Attributes.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    if (this.attributes != null) {
-      data['attributes'] = this.attributes.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "attributes": List<dynamic>.from(attributes.map((x) => x.toJson())),
+      };
 }
 
 class Attributes {
+  Attributes({
+    this.id,
+    this.name,
+  });
+
   int id;
   String name;
 
-  Attributes({this.id, this.name});
+  factory Attributes.fromJson(Map<String, dynamic> json) => Attributes(
+        id: json["id"],
+        name: json["name"],
+      );
 
-  Attributes.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-  }
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+      };
+}
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    return data;
-  }
+class ImageProduct {
+  ImageProduct({
+    this.id,
+    this.imageUrl,
+  });
+
+  int id;
+  String imageUrl;
+
+  factory ImageProduct.fromJson(Map<String, dynamic> json) => ImageProduct(
+        id: json["id"],
+        imageUrl: json["image_url"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "image_url": imageUrl,
+      };
 }

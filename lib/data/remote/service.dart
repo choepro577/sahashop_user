@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:sahashop_user/data/remote/response/auth/login_response.dart';
@@ -35,30 +33,30 @@ abstract class SahaService {
   @POST("store")
   Future<CreateShopResponse> createStore(@Body() Map<String, dynamic> body);
 
-  @POST("store/{idStore}/products")
+  @POST("store/{storeCode}/products")
   Future<ProductResponse> createProduct(
-      @Path() int idStore, @Body() Map<String, dynamic> body);
+      @Path() String storeCode, @Body() Map<String, dynamic> body);
 
-  @GET("store/{idStore}/products")
-  Future<AllProductResponse> getAllProduct(@Path() int idStore);
+  @GET("store/{storeCode}/products")
+  Future<AllProductResponse> getAllProduct(@Path() String storeCode);
 
   @GET("type_of_store")
   Future<TypeShopResponse> getAllTypeOfStore();
 
-  @POST("store/{idStore}/categories")
+  @POST("store/{storeCode}/categories")
   @FormUrlEncoded()
   Future<CreateCategoryResponse> createCategory(
-      @Path() int idStore, @Body() Map<String, dynamic> body);
+      @Path() String storeCode, @Body() Map<String, dynamic> body);
 
-  @POST("app-theme/{idStore}")
+  @POST("app-theme/{storeCode}")
   Future<CreateAppThemeResponse> createAppTheme(
-      @Path() int idStore, @Body() Map<String, dynamic> body);
+      @Path() String storeCode, @Body() Map<String, dynamic> body);
 
-  @GET("app-theme/{idStore}")
-  Future<GetAppThemeResponse> getAppTheme(@Path() int idStore);
+  @GET("app-theme/{storeCode}")
+  Future<GetAppThemeResponse> getAppTheme(@Path() String storeCode);
 
-  @GET("store/{idStore}/categories")
-  Future<AllCategoryResponse> getAllCategory(@Path() int idStore);
+  @GET("store/{storeCode}/categories")
+  Future<AllCategoryResponse> getAllCategory(@Path() String storeCode);
 
   @POST("images")
   Future<UploadImageResponse> uploadImage(@Body() Map<String, dynamic> body);

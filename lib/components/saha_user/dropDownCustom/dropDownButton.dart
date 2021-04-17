@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sahashop_user/screen/config_app/screens_config/font_type/font_data.dart';
 
 class DropDownButtonCustom extends StatelessWidget {
   String value;
@@ -12,35 +13,25 @@ class DropDownButtonCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return DropdownButton<String>(
+    return DropdownButton<dynamic>(
       focusColor: Colors.white,
       value: value,
       //elevation: 5,
       style: TextStyle(color: Colors.white),
       iconEnabledColor: Colors.black,
-      items: item.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
+      items: item.map<DropdownMenuItem<dynamic>>((String value) {
+        return DropdownMenuItem<dynamic>(
           value: value,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                value,
-                style: TextStyle(color: Colors.black),
+                FONT_DATA[value],
+                style: TextStyle(color: Colors.black,
+                fontFamily: value
+                ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
-                width: 20,
-              ),
-              Container(
-                height: 30,
-                width: 30,
-                child: Text(
-                  "Aa",
-                  style: TextStyle(fontSize: double.parse(value), color: Colors.black,),
-                  textAlign: TextAlign.center,
-                ),
-              )
             ],
           ),
         );

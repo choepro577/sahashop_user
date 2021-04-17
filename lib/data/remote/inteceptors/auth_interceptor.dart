@@ -64,7 +64,7 @@ class AuthInterceptor extends InterceptorsWrapper {
 
   @override
   Future onResponse(Response response) async {
-    print('--------------------------Response: ${response.data}');
+    print('------Response: ${response.data}');
 
     if (response.data["code"] == 401) {
       UserInfo().setToken(null);

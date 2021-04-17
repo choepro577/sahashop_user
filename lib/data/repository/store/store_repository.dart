@@ -4,11 +4,9 @@ import 'package:sahashop_user/data/remote/saha_service_manager.dart';
 
 import '../handle_error.dart';
 
-
 class StoreRepository {
-
-  Future<DataCreateShop> create(
-  int idStore,   {String nameShop, String address, String idTypeShop, String code}) async {
+  Future<DataCreateShop> create(String storeCode,
+      {String nameShop, String address, String idTypeShop, String code}) async {
     try {
       var res = await SahaServiceManager().service.createStore({
         "name": nameShop,
