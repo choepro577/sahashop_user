@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/model/product.dart';
+import 'package:sahashop_user/utils/image_utils.dart';
 
 
 class AddCategoryController extends GetxController {
@@ -17,8 +18,10 @@ class AddCategoryController extends GetxController {
   Future<void> createCategory() async {
     isLoadingAdd.value = true;
     try {
+
+      var imageUp = await ImageUtils.getImageCompress(image);
       var data = await RepositoryManager.categoryRepository
-          .createCategory(name, image);
+          .createCategory(name, imageUp);
 
       SahaAlert.showSuccess(message: "Thêm thành công");
       Navigator.pop(Get.context, "added");

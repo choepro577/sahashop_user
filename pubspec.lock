@@ -204,6 +204,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.10"
+  dotted_border:
+    dependency: "direct main"
+    description:
+      name: dotted_border
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.7"
+  dropdown_below:
+    dependency: "direct main"
+    description:
+      name: dropdown_below
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.7"
   empty_widget:
     dependency: "direct main"
     description:

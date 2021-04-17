@@ -34,6 +34,8 @@ dependencies:
   cached_network_image: ^2.5.1
   carousel_slider: ^3.0.0
   dio: ^3.0.10
+  dropdown_below: ^0.0.7
+  dotted_border: ^1.0.7
   empty_widget: ^0.0.1
   multi_image_picker: ^4.8.0
   flash: ^1.5.1

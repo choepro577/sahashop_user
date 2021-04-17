@@ -10,6 +10,8 @@ import 'package:sahashop_user/screen/inventory/products/add_product/add_product_
 import 'package:smart_select/smart_select.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
 
+import 'widget/detail_select.dart';
+import 'widget/detail_select_controller.dart';
 import 'widget/select_images_controller.dart';
 import 'widget/select_images.dart';
 
@@ -18,6 +20,10 @@ class AddProductScreen extends StatelessWidget {
   final TextEditingController textEditingControllerName =
       new TextEditingController();
   final AddProductController addProductController = new AddProductController();
+
+  final DetailSelectController detailSelectController =
+      Get.put(DetailSelectController());
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -54,7 +60,7 @@ class AddProductScreen extends StatelessWidget {
                   body: TabBarView(
                     children: [
                       tab1(),
-                      Icon(Icons.directions_transit),
+                      DetailSelect(),
                       Icon(Icons.directions_bike),
                     ],
                   )),

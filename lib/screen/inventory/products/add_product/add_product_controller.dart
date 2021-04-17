@@ -49,8 +49,7 @@ class AddProductController extends GetxController {
 
   Future<void> createProduct() async {
     isLoadingAdd.value = true;
-    productRequest.categories =
-        listCategorySelected.toList();
+    productRequest.categories = listCategorySelected.toList();
     productRequest.images =
         listImages == null ? [] : listImages.map((e) => e.linkImage).toList();
 
