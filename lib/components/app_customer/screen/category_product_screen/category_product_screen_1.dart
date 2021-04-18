@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/search_screen/search_screen.dart';
 import 'package:sahashop_user/components/saha_user/customCard/product_card.dart';
@@ -30,6 +31,11 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
+    /*24 is for notification bar on Android*/
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
+    final double itemWidth = size.width / 2;
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -91,28 +97,41 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                   Obx(
                     () => categoryController.isLoadingCategory.value
                         ? SahaLoadingWidget()
-                        : SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                Text(
-                                  categoryController.categoryCurrent.value.name,
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                  ),
-                                  textAlign: TextAlign.center,
+                        : Column(
+                            children: [
+                              Text(
+                                categoryController.categoryCurrent.value.name,
+                                style: TextStyle(
+                                  fontSize: 17,
                                 ),
-                                Wrap(
-                                  children: [
-                                    ...List.generate(
-                                        categoryController.products.length,
-                                        (index) => ProductCard(
-                                            product: categoryController
-                                                .products[index],
-                                            press: () {}))
-                                  ],
-                                )
-                              ],
-                            ),
+                                textAlign: TextAlign.center,
+                              ),
+                              // StaggeredGridView.countBuilder(
+                              //   crossAxisCount: 2,
+                              //   itemCount: categoryController.products.length,
+                              //   itemBuilder: (BuildContext context,
+                              //           int index) =>
+                              //       ProductCard(
+                              //           product:
+                              //               categoryController.products[index],
+                              //           press: () {}),
+                              //   mainAxisSpacing: 4.0,
+                              //   crossAxisSpacing: 4.0,
+                              // )
+                              GridView.count(
+                                crossAxisCount: 2,
+                                childAspectRatio: (itemWidth / itemHeight),
+                                scrollDirection: Axis.vertical,
+                                children: [
+                                  ...List.generate(
+                                      categoryController.products.length,
+                                      (index) => ProductCard(
+                                          product: categoryController
+                                              .products[index],
+                                          press: () {}))
+                                ],
+                              ),
+                            ],
                           ),
                   ),
                 ],

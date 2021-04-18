@@ -14,4 +14,20 @@ class ProductCustomerRepository {
       handleErrorCustomer(err);
     }
   }
+
+  Future<List<Product>> searchProduct(String search, String idCategory,
+      bool descending, String details, String sortBy) async {
+    try {
+      var res = await CustomerServiceManager().service.searchProduct(
+          UserInfo().getCurrentStoreCode(),
+          search,
+          idCategory,
+          descending,
+          details,
+          sortBy);
+      return res.data.data;
+    } catch (err) {
+      handleErrorCustomer(err);
+    }
+  }
 }

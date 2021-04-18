@@ -95,7 +95,7 @@ class _CustomerService implements CustomerService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(
-        'store/$storeCode/categories',
+        '$storeCode/categories',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -114,6 +114,33 @@ class _CustomerService implements CustomerService {
     ArgumentError.checkNotNull(idCategory, 'idCategory');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{"category_ids": idCategory};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/products',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = QueryProductResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<QueryProductResponse> searchProduct(
+      storeCode, search, idCategory, descending, details, String sortBy) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(idCategory, 'idCategory');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      "category_ids": idCategory,
+      "descending": descending,
+      "details": details,
+      "sort_by": sortBy,
+      "search": search,
+    };
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(
         '$storeCode/products',

@@ -6,12 +6,12 @@ import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/model/product.dart';
 
 class SearchController extends GetxController {
-  Product productRequest = new Product();
   var listCategory = RxList<Category>();
-  var listCategorySelected = RxList<Category>();
+  var listCategorySelected = RxList<Map<int, bool>>();
   var isLoadingAdd = false.obs;
   var isLoadingCategory = false.obs;
-  var listSelected = RxList<Map<int, bool>>();
+  var sizeSearch = "";
+  var selectedCategoryParam = "";
 
   Future<void> getAllCategory() async {
     isLoadingCategory.value = true;
@@ -20,11 +20,40 @@ class SearchController extends GetxController {
           await CustomerRepositoryManager.categoryRepository.getAllCategory();
       listCategory(list);
       listCategory.forEach((cate) {
-        listSelected.value.add({cate.id: false});
+        listCategorySelected.add({cate.id: false});
       });
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
     isLoadingCategory.value = false;
+  }
+
+  void checkIsSelectedCategory() {
+    listCategorySelected.forEach((cate) {
+      if (cate.values.first == true) {
+        selectedCategoryParam = cate.keys.toString() + ",";
+      }
+    });
+    print("---------$selectedCategoryParam");
+  }
+
+  var listProduct = RxList<Product>();
+  var isLoadingProduct = false.obs;
+  Future<void> searchProduct(
+      String search, bool descending, String sortBy) async {
+    isLoadingProduct.value = true;
+    checkIsSelectedCategory();
+    try {
+      var list = await CustomerRepositoryManager.productCustomerRepository
+          .searchProduct(
+              search, selectedCategoryParam, descending, sizeSearch, sortBy);
+      listProduct.value = list;
+      print(listProduct.length);
+      isLoadingProduct.value = false;
+      return true;
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+    isLoadingProduct.value = false;
   }
 }

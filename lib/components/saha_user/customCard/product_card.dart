@@ -38,8 +38,8 @@ class ProductCard extends StatelessWidget {
                     color: SahaSecondaryColor.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child:
-                      CachedNetworkImage(imageUrl: product.images[0].imageUrl),
+                  // child:
+                  //     CachedNetworkImage(imageUrl: product.images[0].imageUrl),
                 ),
               ),
               const SizedBox(height: 10),

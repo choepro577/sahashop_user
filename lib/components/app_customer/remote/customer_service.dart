@@ -2,14 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
 import 'package:sahashop_user/components/app_customer/remote/response/category/all_category_response.dart';
-import 'package:sahashop_user/components/app_customer/remote/response/category/create_category_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response/config_ui/app_theme_response.dart';
-import 'package:sahashop_user/components/app_customer/remote/response/image/upload_image_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response/product/all_product_response.dart';
-import 'package:sahashop_user/components/app_customer/remote/response/product/product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response/product/query_product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response/store/all_store_response.dart';
-import 'package:sahashop_user/components/app_customer/remote/response/store/create_store_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response/store/type_store_respones.dart';
 
 part 'customer_service.g.dart';
@@ -31,10 +27,19 @@ abstract class CustomerService {
   @GET("{storeCode}/app-theme")
   Future<GetAppThemeResponse> getAppTheme(@Path() String storeCode);
 
-  @GET("store/{storeCode}/categories")
+  @GET("{storeCode}/categories")
   Future<AllCategoryResponse> getAllCategory(@Path() String storeCode);
 
   @GET("{storeCode}/products")
   Future<QueryProductResponse> getProductWithCategory(
       @Path() String storeCode, int idCategory);
+
+  @GET("{storeCode}/products")
+  Future<QueryProductResponse> searchProduct(
+      @Path() String storeCode,
+      String search,
+      String idCategory,
+      bool descending,
+      String details,
+      String sortBy);
 }
