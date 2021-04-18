@@ -42,6 +42,7 @@ dependencies:
   flutter_absolute_path: ^1.0.6
   flutter_easyloading: ^3.0.0
   flutter_image_compress: ^1.0.0
+  flutter_chips_input: ^1.9.5
   flutter_svg: ^0.19.3
   flutter_spinkit: ^5.0.0
   flutter_colorpicker: ^0.4.0
@@ -50,6 +51,7 @@ dependencies:
   smart_select: ^4.3.2
   sticky_headers: ^0.1.8
   image_picker: ^0.6.7+7
+  intl: ^0.17.0
   pretty_dio_logger: ^1.1.1
   provider: ^5.0.0
   path_provider: ^2.0.1

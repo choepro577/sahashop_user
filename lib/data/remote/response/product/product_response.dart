@@ -21,7 +21,7 @@ class ProductResponse {
   String msgCode;
   Product data;
 
-  factory ProductResponse.fromJson(Map<String, dynamic> json) =>
+  factory ProductResponse.fromJson(json) =>
       ProductResponse(
         code: json["code"],
         success: json["success"],

@@ -8,6 +8,7 @@ class SahaTextField extends StatelessWidget {
   Icon icon;
   TextEditingController controller;
   Function(String) onChanged;
+  Function(String) onSubmitted;
   Function(String) validator;
   bool obscureText;
   TextInputType textInputType;
@@ -20,6 +21,7 @@ class SahaTextField extends StatelessWidget {
     this.icon,
     this.hintText,
     this.onChanged,
+    this.onSubmitted,
     this.validator,
     this.obscureText = false,
     this.textInputType = TextInputType.text,
@@ -29,12 +31,13 @@ class SahaTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 1),
+      padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 1),
       child: TextFormField(
         validator: validator,
         keyboardType: textInputType,
         obscureText: obscureText,
         onChanged: onChanged,
+        onFieldSubmitted: onSubmitted,
         controller: controller,
         decoration: new InputDecoration(
             suffix: Text(suffix),

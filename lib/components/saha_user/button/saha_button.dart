@@ -6,28 +6,56 @@ class SahaButtonFullParent extends StatelessWidget {
   final String text;
   final Color textColor;
   final Color color;
+  final Color colorBorder;
 
   const SahaButtonFullParent(
-      {Key key, this.onPressed, this.text, this.textColor, this.color})
+      {Key key,
+      this.onPressed,
+      this.text,
+      this.textColor,
+      this.color,
+      this.colorBorder})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Padding(
-      padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-      child: MaterialButton(
-        padding: EdgeInsets.only(top: 15, bottom: 15),
-        color: onPressed == null ? Colors.grey : (color ?? SahaPrimaryColor),
+      padding: const EdgeInsets.only(left: 8, right: 8),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: color,
+          padding: EdgeInsets.only(top: 10, bottom: 10),
+          onPrimary: Colors.white,
+          shape: RoundedRectangleBorder(
+            side: colorBorder == null
+                ? BorderSide(
+              width: 0,
+              color: Colors.transparent
+            )
+                : BorderSide(
+                    width: 1.0,
+                    color: colorBorder,
+                  ),
+            borderRadius: BorderRadius.circular(4),
+          ),
+        ),
         onPressed: () {
           onPressed();
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "$text",
-              style: TextStyle(color: textColor ?? Colors.white),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 5,right: 5,top: 3,bottom: 3),
+                  child: Text(
+                    "$text",
+                    style: TextStyle(color: textColor ?? Colors.white),
+                  ),
+                )
+              ],
             )
           ],
         ),

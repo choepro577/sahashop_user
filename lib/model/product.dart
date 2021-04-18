@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:sahashop_user/model/category.dart';
 
-Product productFromJson(String str) => Product.fromJson(json.decode(str));
+Product productFromJson(String str) => Product.fromJson(jsonDecode(str));
 
 String productToJson(Product data) => json.encode(data.toJson());
 
@@ -42,7 +42,7 @@ class Product {
         name: json["name"],
         storeId: json["store_id"],
         description: json["description"],
-        indexImageAvatar: json["index_image_avatar"],
+        indexImageAvatar: 0,
         price: json["price"],
         barcode: json["barcode"],
         status: json["status"],
@@ -61,15 +61,13 @@ class Product {
         "name": name,
         "store_id": storeId,
         "description": description,
-        "index_image_avatar": indexImageAvatar,
+        "index_image_avatar": 0,
         "price": price,
-        "barcode": barcode,
+        "barcode": name,
         "status": status,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-        "details": List<dynamic>.from(details.map((x) => x.toJson())),
-        "images": List<dynamic>.from(images.map((x) => x.toJson())),
-        "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
+        "details": details == null ? null : List<dynamic>.from(details.map((x) => x.toJson())),
+        "images": images == null ? null : images.map((e) => e.imageUrl).toList(),
+        "categories": categories == null ? null : categories.map((e) => e.id).toList(),
       };
 }
 
@@ -85,14 +83,12 @@ class Details {
   List<Attributes> attributes;
 
   factory Details.fromJson(Map<String, dynamic> json) => Details(
-        id: json["id"],
         name: json["name"],
         attributes: List<Attributes>.from(
             json["attributes"].map((x) => Attributes.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
         "name": name,
         "attributes": List<dynamic>.from(attributes.map((x) => x.toJson())),
       };
@@ -113,7 +109,6 @@ class Attributes {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
         "name": name,
       };
 }
