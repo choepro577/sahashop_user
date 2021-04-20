@@ -103,7 +103,7 @@ class ConfigController extends GetxController {
           hasLabel: true,
           labelText: configApp.phoneNumberHotline ?? "",
           currentButton: FloatingActionButton(
-            heroTag: "train",
+            heroTag: "hotline",
             backgroundColor: Colors.redAccent,
             mini: true,
             child: Icon(Icons.phone),
@@ -115,7 +115,7 @@ class ConfigController extends GetxController {
           hasLabel: true,
           labelText: configApp.contactEmail ?? "",
           currentButton: FloatingActionButton(
-            heroTag: "train",
+            heroTag: "email",
             backgroundColor: Colors.redAccent,
             mini: true,
             child: Icon(Icons.email),
@@ -127,7 +127,7 @@ class ConfigController extends GetxController {
           hasLabel: true,
           labelText: configApp.idFacebook ?? "",
           currentButton: FloatingActionButton(
-            heroTag: "train",
+            heroTag: "facebook",
             backgroundColor: Colors.redAccent,
             mini: true,
             child: Container(
@@ -148,7 +148,7 @@ class ConfigController extends GetxController {
           hasLabel: true,
           labelText: configApp.idZalo ?? "",
           currentButton: FloatingActionButton(
-            heroTag: "train",
+            heroTag: "zalo",
             backgroundColor: Colors.redAccent,
             mini: true,
             child: Container(

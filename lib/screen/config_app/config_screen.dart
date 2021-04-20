@@ -6,6 +6,7 @@ import 'package:sahashop_user/components/app_customer/screen/data_app_controller
 import 'package:sahashop_user/components/app_customer/screen/data_app_screen.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_full_screen.dart';
+import 'package:sahashop_user/components/utils/thread_data.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/model/theme_model.dart';
 import 'package:sahashop_user/screen/config_app/config_controller.dart';

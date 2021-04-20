@@ -7,21 +7,18 @@ import 'package:sahashop_user/model/product.dart';
 class CategoryController extends GetxController {
   var isLoadingScreen = false.obs;
   var isLoadingCategory = false.obs;
-  var isLoadingProduct = false.obs;
-  var idCategory = 1.obs;
+  var isLoadingProduct = true.obs;
   var categories = RxList<Category>();
   var products = RxList<Product>();
   var categoryCurrent = Category().obs;
 
   void setCategoryCurrent(Category category) {
+    isLoadingProduct.value = true;
     categoryCurrent.value = category;
-    idCategory.value = categoryCurrent.value.id;
-    print(categoryCurrent.value.id);
-    getProductWithCategory(idCategory.value);
+    getProductWithCategory(category.id);
   }
 
   Future<void> getProductWithCategory(int idCategory) async {
-    isLoadingCategory.value = true;
     try {
       var res = await CustomerRepositoryManager.productCustomerRepository
           .getProductWithCategory(idCategory);
@@ -30,10 +27,11 @@ class CategoryController extends GetxController {
       print(err);
       handleErrorCustomer(err);
     }
-    isLoadingCategory.value = false;
+    isLoadingProduct.value = false;
   }
 
   Future<void> getAllCategory() async {
+    isLoadingProduct.value = true;
     isLoadingCategory.value = true;
     try {
       var res =

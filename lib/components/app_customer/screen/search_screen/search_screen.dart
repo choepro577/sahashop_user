@@ -557,15 +557,18 @@ class _SearchScreenState extends State<SearchScreen> {
             Obx(
               () => searchController.isLoadingProduct.value
                   ? SahaLoadingWidget()
-                  : Wrap(
-                      direction: Axis.horizontal,
-                      children: [
-                        ...List.generate(
-                            searchController.listProduct.length,
-                            (index) => ProductCard(
-                                product: searchController.listProduct[index],
-                                press: () {}))
-                      ],
+                  : Expanded(
+                      child: GridView.count(
+                        crossAxisCount: 2,
+                        scrollDirection: Axis.vertical,
+                        children: [
+                          ...List.generate(
+                              searchController.listProduct.length,
+                              (index) => ProductCard(
+                                  product: searchController.listProduct[index],
+                                  press: () {}))
+                        ],
+                      ),
                     ),
             )
           ],

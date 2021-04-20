@@ -76,7 +76,7 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                       labelText:
                           configController.configApp.phoneNumberHotline ?? "",
                       currentButton: FloatingActionButton(
-                        heroTag: "train",
+                        heroTag: "main",
                         backgroundColor: Colors.blue,
                         mini: true,
                         child: Icon(Icons.add),
@@ -123,7 +123,6 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                   child: SectionTitle(
                     title: "Danh mục cửa hàng",
                     press: () {
-                      print("aaaaa");
                       Get.to(LIST_WIDGET_CATEGORY_PRODUCT[
                           configController.configApp.categoryPageType]);
                     },

@@ -26,8 +26,7 @@ class _LoadAppScreenState extends State<LoadAppScreen> {
     // CustomerServiceManager.initialize();
     await dataAppController.getAppTheme();
     await Future.delayed(Duration(seconds: 1));
-    Get.off(() =>
-        LIST_WIDGET_HOME_SCREEN[dataAppController.configApp.homePageType]);
+    Get.off(LIST_WIDGET_HOME_SCREEN[dataAppController.configApp.homePageType]);
   }
 
   @override

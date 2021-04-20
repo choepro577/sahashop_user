@@ -9,6 +9,8 @@ import 'package:sahashop_user/components/saha_user/iconButton/iconbtn_counter.da
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/model/category.dart';
+import 'package:sahashop_user/model/product2222.dart';
+import 'package:shimmer/shimmer.dart';
 import 'controller/category_controller.dart';
 import 'ui_data_category_product_screen.dart';
 
@@ -18,24 +20,18 @@ class CategoryProductStyle1 extends StatefulWidget {
 }
 
 class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
-  var indexSelected = 0;
-
-  final categoryController = Get.put(CategoryController());
+  CategoryController categoryController;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    categoryController = Get.put(CategoryController());
     categoryController.getAllCategory();
   }
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-
-    /*24 is for notification bar on Android*/
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
-    final double itemWidth = size.width / 2;
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -76,66 +72,62 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
       body: Obx(
         () => Row(
           children: [
-            Container(
-              width: 70,
-              color: Colors.grey[200],
-              child: categoryController.isLoadingCategory.value
-                  ? SahaLoadingWidget()
-                  : ListView.builder(
-                      itemCount: categoryController.categories.value.length,
-                      itemBuilder: (context, index) {
-                        return buildItem(
-                            category:
-                                categoryController.categories.value[index]);
-                      }),
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Obx(
-                    () => categoryController.isLoadingCategory.value
-                        ? SahaLoadingWidget()
-                        : Column(
-                            children: [
-                              Text(
-                                categoryController.categoryCurrent.value.name,
-                                style: TextStyle(
-                                  fontSize: 17,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              // StaggeredGridView.countBuilder(
-                              //   crossAxisCount: 2,
-                              //   itemCount: categoryController.products.length,
-                              //   itemBuilder: (BuildContext context,
-                              //           int index) =>
-                              //       ProductCard(
-                              //           product:
-                              //               categoryController.products[index],
-                              //           press: () {}),
-                              //   mainAxisSpacing: 4.0,
-                              //   crossAxisSpacing: 4.0,
-                              // )
-                              GridView.count(
-                                crossAxisCount: 2,
-                                childAspectRatio: (itemWidth / itemHeight),
-                                scrollDirection: Axis.vertical,
-                                children: [
-                                  ...List.generate(
-                                      categoryController.products.length,
-                                      (index) => ProductCard(
-                                          product: categoryController
-                                              .products[index],
-                                          press: () {}))
-                                ],
-                              ),
-                            ],
-                          ),
+            categoryController.isLoadingCategory.value
+                ? SahaLoadingWidget()
+                : Container(
+                    width: 70,
+                    color: Colors.grey[200],
+                    child: ListView.builder(
+                        itemCount: categoryController.categories.length,
+                        itemBuilder: (context, index) {
+                          return buildItem(
+                              category: categoryController.categories[index]);
+                        }),
                   ),
-                ],
-              ),
+            Expanded(
+              child: categoryController.isLoadingProduct.value
+                  ? Shimmer.fromColors(
+                      baseColor: Colors.grey[300],
+                      highlightColor: Colors.white60,
+                      enabled: true,
+                      child: StaggeredGridView.countBuilder(
+                        crossAxisCount: 2,
+                        itemCount: demoProducts.length,
+                        itemBuilder: (BuildContext context, int index) =>
+                            ProductCardExam(product: demoProducts[index]),
+                        staggeredTileBuilder: (int index) =>
+                            new StaggeredTile.fit(1),
+                        mainAxisSpacing: 4.0,
+                        crossAxisSpacing: 4.0,
+                      ),
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          categoryController.categoryCurrent.value.name,
+                          style: TextStyle(
+                            fontSize: 17,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        Expanded(
+                          child: new StaggeredGridView.countBuilder(
+                            crossAxisCount: 2,
+                            itemCount: categoryController.products.length,
+                            itemBuilder: (BuildContext context, int index) =>
+                                ProductCard(
+                                    product: categoryController.products[index],
+                                    press: () {}),
+                            staggeredTileBuilder: (int index) =>
+                                new StaggeredTile.fit(1),
+                            mainAxisSpacing: 4.0,
+                            crossAxisSpacing: 4.0,
+                          ),
+                        ),
+                      ],
+                    ),
             ),
           ],
         ),
