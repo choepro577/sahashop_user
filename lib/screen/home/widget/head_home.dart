@@ -99,7 +99,7 @@ class HeadHome extends StatelessWidget {
                               icon: 'assets/icons/gift_icon.svg',
                               text: 'Chỉnh sửa giao diện',
                               press: () {
-                                Get.to(ConfigScreen());
+                                Get.to(() => ConfigScreen());
                                 Get.put(ConfigController());
                               },
                             ),

@@ -16,6 +16,7 @@ class LoadAppScreen extends StatefulWidget {
 class _LoadAppScreenState extends State<LoadAppScreen> {
   var dataAppController = Get.put(DataAppController());
 
+  var isInit = false;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -26,7 +27,12 @@ class _LoadAppScreenState extends State<LoadAppScreen> {
     // CustomerServiceManager.initialize();
     await dataAppController.getAppTheme();
     await Future.delayed(Duration(seconds: 1));
-    Get.off(LIST_WIDGET_HOME_SCREEN[dataAppController.configApp.homePageType]);
+    isInit =true;
+    Get.to(LIST_WIDGET_HOME_SCREEN[dataAppController.configApp.homePageType]).then((value) {
+      if(isInit) {
+        Get.back();
+      }
+    });
   }
 
   @override
