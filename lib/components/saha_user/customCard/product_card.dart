@@ -10,11 +10,12 @@ class ProductCard extends StatelessWidget {
   const ProductCard({
     Key key,
     @required this.product,
-    @required this.press,
+    @required this.press, this.isLoading,
   }) : super(key: key);
 
   final Product product;
   final GestureTapCallback press;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,19 @@ class ProductCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            isLoading ?
+
             Container(
+                color: Colors.black,
+                child: Row(
+                  children: [
+                    Container(
+                      height: 100,
+                    )
+                  ],
+                ),
+            )
+                :   Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: SahaSecondaryColor.withOpacity(0.1),
@@ -36,7 +49,8 @@ class ProductCard extends StatelessWidget {
                       "https://scontent.fdad2-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=gbgKm8Vhx7YAX-xAI5s&_nc_ht=scontent.fdad2-1.fna&oh=8e173f23660f49f728670ea22b8e4746&oe=60A2E8CA"), //product.images[0].imageUrl
             ),
             SizedBox(height: 10),
-            Text(
+            isLoading ? Container(width: 40,
+            height: 10,):    Text(
               product.name,
               style: TextStyle(color: Colors.black),
               maxLines: 2,
@@ -44,7 +58,8 @@ class ProductCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                isLoading ? Container(height: 10,
+                width: 20,color: Colors.black87,)  :  Text(
                   "\$${product.price}",
                   style: TextStyle(
                     fontSize: 18,

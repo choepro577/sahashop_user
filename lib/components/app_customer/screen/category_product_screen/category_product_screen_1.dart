@@ -2,10 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/app_customer/screen/search_screen/search_screen.dart';
 import 'package:sahashop_user/components/saha_user/customCard/product_card.dart';
 import 'package:sahashop_user/components/saha_user/customCard/product_card_exam.dart';
 import 'package:sahashop_user/components/saha_user/iconButton/iconbtn_counter.dart';
+import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/model/category.dart';
@@ -83,55 +85,30 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                               category: categoryController.categories[index]);
                         }),
                   ),
-            Expanded(
-              child: categoryController.isLoadingProduct.value
-                  ? Shimmer.fromColors(
-                      baseColor: Colors.grey[300],
-                      highlightColor: Colors.white60,
-                      enabled: true,
-                      child: StaggeredGridView.countBuilder(
-                        crossAxisCount: 2,
-                        itemCount: demoProducts.length,
-                        itemBuilder: (BuildContext context, int index) =>
-                            ProductCardExam(product: demoProducts[index]),
-                        staggeredTileBuilder: (int index) =>
-                            new StaggeredTile.fit(1),
-                        mainAxisSpacing: 4.0,
-                        crossAxisSpacing: 4.0,
-                      ),
-                    )
-                  : Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          categoryController.categoryCurrent.value.name,
-                          style: TextStyle(
-                            fontSize: 17,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        Expanded(
-                          child: new StaggeredGridView.countBuilder(
-                            crossAxisCount: 2,
-                            itemCount: categoryController.products.length,
-                            itemBuilder: (BuildContext context, int index) =>
-                                ProductCard(
-                                    product: categoryController.products[index],
-                                    press: () {}),
-                            staggeredTileBuilder: (int index) =>
-                                new StaggeredTile.fit(1),
-                            mainAxisSpacing: 4.0,
-                            crossAxisSpacing: 4.0,
-                          ),
-                        ),
-                      ],
-                    ),
-            ),
+            Expanded(child: buildList()),
           ],
         ),
       ),
     );
+  }
+
+  Widget buildList() {
+    return Obx(() {
+      var isLoading = categoryController.isLoadingProduct.value;
+      var list = isLoading ? LIST_PRODUCT_EXAMPLE : categoryController.products;
+      return SahaSimmer(
+        isLoading: isLoading,
+        child: StaggeredGridView.countBuilder(
+          crossAxisCount: 2,
+          itemCount: list.length,
+          itemBuilder: (BuildContext context, int index) => ProductCard(
+              product: list[index], isLoading: isLoading, press: () {}),
+          staggeredTileBuilder: (int index) => new StaggeredTile.fit(1),
+          mainAxisSpacing: 4.0,
+          crossAxisSpacing: 4.0,
+        ),
+      );
+    });
   }
 
   Widget buildItem({Category category}) {

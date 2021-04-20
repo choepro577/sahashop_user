@@ -20,5 +20,25 @@ List<Product> LIST_PRODUCT_EXAMPLE = [
     name: "Sản phẩm 1",
     description: "Mô tả 1",
     price: 200,
-  )
+  ),
+  Product(
+    name: "Sản phẩm 1",
+    description: "Mô tả 1",
+    price: 200,
+  ),
+  Product(
+    name: "Sản phẩm 1",
+    description: "Mô tả 1",
+    price: 200,
+  ),
+  Product(
+    name: "Sản phẩm 1",
+    description: "Mô tả 1",
+    price: 200,
+  ),
+  Product(
+    name: "Sản phẩm 1",
+    description: "Mô tả 1",
+    price: 200,
+  ),
 ];
