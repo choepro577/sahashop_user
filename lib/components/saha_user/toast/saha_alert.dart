@@ -8,6 +8,7 @@ class SahaAlert {
     String title = "Saha",
   }) {
     showFlash(
+      duration: Duration(milliseconds: 1000),
       context: Get.context,
       builder: (_, controller) {
         return Flash(
@@ -16,7 +17,7 @@ class SahaAlert {
           borderColor: Colors.blue,
           boxShadows: kElevationToShadow[8],
           backgroundGradient: RadialGradient(
-            colors: [Colors.amber, Colors.black87],
+            colors: [Colors.black87, Colors.black87],
             center: Alignment.topLeft,
             radius: 2,
           ),
@@ -29,10 +30,50 @@ class SahaAlert {
               title: Text('$title'),
               message: Text('$message'),
               leftBarIndicatorColor: Colors.red,
+              icon: Icon(Icons.error),
+              primaryAction: TextButton(
+                onPressed: () => controller.dismiss(),
+                child: Text('Đóng'),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+
+  static void showWarning({
+    String message = "",
+    String title = "Saha",
+  }) {
+    showFlash(
+      duration: Duration(milliseconds: 2000),
+      context: Get.context,
+      builder: (_, controller) {
+        return Flash(
+          controller: controller,
+          borderRadius: BorderRadius.circular(8.0),
+          borderColor: Colors.amber,
+          boxShadows: kElevationToShadow[8],
+          backgroundGradient: RadialGradient(
+            colors: [Colors.black87, Colors.black87],
+            center: Alignment.topLeft,
+            radius: 2,
+          ),
+          onTap: () => controller.dismiss(),
+          forwardAnimationCurve: Curves.easeInCirc,
+          reverseAnimationCurve: Curves.bounceIn,
+          child: DefaultTextStyle(
+            style: TextStyle(color: Colors.white),
+            child: FlashBar(
+              title: Text('$title'),
+              message: Text('$message'),
+              leftBarIndicatorColor: Colors.yellow,
               icon: Icon(Icons.info_outline),
               primaryAction: TextButton(
                 onPressed: () => controller.dismiss(),
-                child: Text('DISMISS'),
+                child: Text('Đóng'),
               ),
             ),
           ),
@@ -55,7 +96,7 @@ class SahaAlert {
           borderColor: Colors.blue,
           boxShadows: kElevationToShadow[8],
           backgroundGradient: RadialGradient(
-            colors: [Colors.amber, Colors.green],
+            colors: [Colors.black87, Colors.black87],
             center: Alignment.topLeft,
             radius: 2,
           ),
@@ -68,7 +109,7 @@ class SahaAlert {
               title: Text('$title'),
               message: Text('$message'),
               leftBarIndicatorColor: Colors.green,
-              icon: Icon(Icons.info_outline),
+              icon: Icon(Icons.check),
             ),
           ),
         );
@@ -120,7 +161,7 @@ class SahaAlert {
             showProgressIndicator: true,
             primaryAction: TextButton(
               onPressed: () => controller.dismiss(),
-              child: Text('DISMISS', style: TextStyle(color: Colors.amber)),
+              child: Text('Đóng', style: TextStyle(color: Colors.amber)),
             ),
           ),
         );
@@ -157,7 +198,7 @@ class SahaAlert {
               icon: Icon(Icons.info_outline),
               primaryAction: TextButton(
                 onPressed: () => controller.dismiss(),
-                child: Text('DISMISS'),
+                child: Text('Đóng'),
               ),
               actions: <Widget>[
                 TextButton(

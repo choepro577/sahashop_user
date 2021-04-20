@@ -34,10 +34,12 @@ class SahaServiceManager {
 
   /// Return the one and the only instance
   void getNewInstance() {
-    final options = BaseOptions(receiveTimeout: 15000);
-    dioClient = Dio(options)
-      ..interceptors.add(AuthInterceptor())
-      ..interceptors;
+    final options = BaseOptions(
+            receiveDataWhenStatusError: true,
+            connectTimeout: 10 * 1000,
+            receiveTimeout: 10 * 1000,
+            responseType: ResponseType.json), // seconds);
+        dioClient = Dio(options)..interceptors.add(AuthInterceptor());
 
     uploadClient = Dio(options);
 

@@ -51,7 +51,9 @@ class AddProductController extends GetxController {
     isLoadingAdd.value = true;
     productRequest.categories = listCategorySelected.toList();
     productRequest.images =
-        listImages == null ? [] : listImages.map((e) => e.linkImage).toList();
+        listImages == null ? [] : listImages.map((e) => ImageProduct(
+          imageUrl: e.linkImage
+        )).toList();
 
     try {
       var data =

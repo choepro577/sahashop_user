@@ -203,7 +203,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
                             configController.createAppTheme();
                             configController.updateTheme();
                           },
-                          text: "Lưu cài đặt",
+                          text: "Cập nhật giao diện",
                         ),
                         SizedBox(
                           height: 10,

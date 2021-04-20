@@ -6,7 +6,9 @@ import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/empty/empty_widget.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_full_screen.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
+import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/model/product.dart';
+import 'package:sahashop_user/utils/string_utils.dart';
 
 import 'add_product/add_product_screen.dart';
 import 'product_controller.dart';
@@ -46,15 +48,18 @@ class ProductScreen extends StatelessWidget {
                         });
                   }),
                 ),
-                SahaButtonFullParent(
-                  onPressed: () {
-                    Get.to(AddProductScreen()).then((value) {
-                      if (value == "added") {
-                        productController.getAllProduct();
-                      }
-                    });
-                  },
-                  text: "Thêm sản phẩm mới",
+                SizedBox(
+                  width: Get.width,
+                  child: SahaButtonFullParent(
+                    onPressed: () {
+                      Get.to(AddProductScreen()).then((value) {
+                        if (value == "added") {
+                          productController.getAllProduct();
+                        }
+                      });
+                    },
+                    text: "Thêm sản phẩm mới",
+                  ),
                 ),
 
               ],
@@ -71,17 +76,52 @@ class ItemProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: ListTile(
-        leading: CachedNetworkImage(
-          height: 60,
-          width: 60,
-          fit: BoxFit.cover,
-          imageUrl: product.images != null && product.images.length >0 ?product.images[0].imageUrl: "",
-          placeholder: (context, url) => new SahaLoadingWidget(size: 30,),
-          errorWidget: (context, url, error) => new Icon(Icons.error),
-        ),
-        title: Text(product.name??""),
-        trailing: Text(product.price .toString()?? ""),
+      child: Column(
+        children: [
+          ListTile(
+            leading: CachedNetworkImage(
+              height: 60,
+              width: 60,
+              fit: BoxFit.cover,
+              imageUrl: product.images != null && product.images.length >0 ?product.images[0].imageUrl: "",
+              placeholder: (context, url) => new SahaLoadingWidget(size: 30,),
+              errorWidget: (context, url, error) => new Icon(Icons.error),
+            ),
+            title: Text(product.name??""),
+            trailing: Text(SahaStringUtils().convertToMoney(product.price),
+
+              style: TextStyle(
+                color: SahaPrimaryColor
+              ),
+            ),
+          ),
+          Row(
+            children: [
+              Expanded(child: buildItemOption(title: "Hiển thị")),
+              Expanded(child: buildItemOption(title: "Sửa")),
+              Expanded(child: buildItemOption(title: "Xóa")),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget buildItemOption({String title, Function onTap}) {
+    return Container(
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.all(Radius.circular(3))
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [Column(
+          children: [
+            Text(title)
+          ],
+        )],
       ),
     );
   }

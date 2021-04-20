@@ -23,40 +23,39 @@ class CustomDropDownString extends StatelessWidget {
       children: <Widget>[
         Container(
           decoration: BoxDecoration(
-              color: Colors.grey[100], borderRadius: BorderRadius.circular(30)),
+            border: Border.all(color: Colors.grey),
+              color: Colors.grey[100], borderRadius: BorderRadius.circular(8)),
           child: Padding(
             padding:
-                const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 5),
-            child: DropdownButton<String>(
-              value: items.map((e) => e.value).contains(value)
-                  ? value
-                  : items.map((e) => e.value).toList()[0],
-              hint: Text(
-                hint,
-                style: TextStyle(),
-                overflow: TextOverflow.ellipsis,
+                const EdgeInsets.only(left: 5,right: 5),
+            child: SizedBox(
+              height: 35,
+              child: DropdownButton<String>(
+                value: items.map((e) => e.value).contains(value)
+                    ? value
+                    : items.map((e) => e.value).toList()[0],
+                hint: Text(
+                  hint,
+                  style: TextStyle(
+
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                // style:  TextStyle(
+                //   color: Colors.green
+                // ),
+                items: items,
+                onChanged: (item) {
+                  onChanged(item);
+                },
+                isExpanded: true,
+                underline: Container(),
+                icon: Icon(Icons.keyboard_arrow_down),
               ),
-              // style:  TextStyle(
-              //   color: Colors.green
-              // ),
-              items: items,
-              onChanged: (item) {
-                onChanged(item);
-              },
-              isExpanded: true,
-              underline: Container(),
-              icon: Icon(Icons.keyboard_arrow_down),
             ),
           ),
         ),
-        if (errorText != null)
-          Padding(
-            padding: EdgeInsets.only(left: 30, top: 10),
-            child: Text(
-              errorText,
-              style: TextStyle(fontSize: 12, color: Colors.red[800]),
-            ),
-          )
+
       ],
     );
   }
