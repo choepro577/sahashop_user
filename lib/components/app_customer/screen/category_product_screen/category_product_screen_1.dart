@@ -26,8 +26,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    categoryController = Get.put(CategoryController());
-    categoryController.getAllCategory();
+    categoryController ??= CategoryController()..getAllCategory();
   }
 
   @override
