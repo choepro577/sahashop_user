@@ -112,45 +112,47 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
   }
 
   Widget buildItem({Category category}) {
-    return Container(
-      color: categoryController.categoryCurrent.value == category
-          ? Colors.white
-          : Colors.transparent,
-      child: InkWell(
-        onTap: () {
-          categoryController.setCategoryCurrent(category);
-        },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              width: 30,
-              height: 30,
-              child: CachedNetworkImage(
-                imageUrl: category.imageUrl ?? "",
-                placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+    return Obx(
+      () => Container(
+        color: categoryController.categoryCurrent.value == category
+            ? Colors.white
+            : Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            categoryController.setCategoryCurrent(category);
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 20,
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              category.name,
-              style: TextStyle(
-                  fontSize: 14,
-                  color: categoryController.categoryCurrent.value == category
-                      ? bmColors
-                      : Colors.black54),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-          ],
+              SizedBox(
+                width: 30,
+                height: 30,
+                child: CachedNetworkImage(
+                  imageUrl: category.imageUrl ?? "",
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                category.name,
+                style: TextStyle(
+                    fontSize: 14,
+                    color: categoryController.categoryCurrent.value == category
+                        ? bmColors
+                        : Colors.black54),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
         ),
       ),
     );
