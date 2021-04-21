@@ -19,6 +19,7 @@ class AuthInterceptor extends InterceptorsWrapper {
     }
     print('Header: ${options.headers}');
     print('Request: ${options.data}');
+    print('Param: ${options.queryParameters}');
     options.data = new FormData.fromMap(options.data);
     return super.onRequest(options);
   }

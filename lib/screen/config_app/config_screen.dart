@@ -25,18 +25,13 @@ class ConfigScreen extends StatefulWidget {
 class _ConfigScreenState extends State<ConfigScreen> {
   var indexSelected = 0;
   ConfigController configController = Get.put(ConfigController());
-  // DataAppController dataAppController = Get.put(DataAppController());
+  // DataAppCustomerController dataAppController = Get.put(DataAppCustomerController()); // create DataAppController
 
   @override
   void initState() {
     super.initState();
     configController.getAppTheme();
     // dataAppController.getAppTheme();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
   }
 
   @override
@@ -67,7 +62,6 @@ class _ConfigScreenState extends State<ConfigScreen> {
             IconButton(
                 icon: Icon(Icons.add_to_home_screen_sharp),
                 onPressed: () {
-
                   ButtonBackOverLay().show(context);
 
                   Get.to(

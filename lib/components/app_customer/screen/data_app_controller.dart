@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/app_customer/repository/repository_customer.dart';
 import 'package:sahashop_user/components/app_customer/screen/font_data/font_data.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/model/config_app.dart';
+import 'package:sahashop_user/model/product.dart';
 import 'package:unicorndial/unicorndial.dart';
 
-class DataAppController extends GetxController {
+class ConfigAppCustomerController extends GetxController {
   ConfigApp configApp = ConfigApp();
   var currentTheme = ThemeData().obs;
   var contactButton = RxList<UnicornButton>();
@@ -112,5 +114,16 @@ class DataAppController extends GetxController {
             onPressed: () {},
           )));
     }
+  }
+}
+
+class DataAppCustomerController extends GetxController {
+  Product dataProduct = Product();
+  DataAppCustomerController() {
+    dataProduct = LIST_PRODUCT_EXAMPLE[0];
+  }
+
+  void setCurrentProduct(Product product) {
+    dataProduct = product;
   }
 }

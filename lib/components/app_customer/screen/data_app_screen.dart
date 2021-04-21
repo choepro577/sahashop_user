@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_widget_config.dart';
+import 'package:sahashop_user/screen/config_app/config_controller.dart';
 import 'data_app_controller.dart';
 
 class LoadAppScreen extends StatefulWidget {
@@ -14,8 +15,9 @@ class LoadAppScreen extends StatefulWidget {
 }
 
 class _LoadAppScreenState extends State<LoadAppScreen> {
-  var dataAppController = Get.put(DataAppController());
-
+  //ConfigController configAppCustomerController;
+  var configAppCustomerController = Get.put(ConfigAppCustomerController());
+  //var dataAppCustomerController = Get.put(DataAppCustomerController());
   var isInit = false;
   @override
   void didChangeDependencies() {
@@ -25,11 +27,14 @@ class _LoadAppScreenState extends State<LoadAppScreen> {
 
   Future<void> loadInit(BuildContext context) async {
     // CustomerServiceManager.initialize();
-    await dataAppController.getAppTheme();
+    await configAppCustomerController.getAppTheme();
+    // configAppCustomerController ??= ConfigController()..getAppTheme();
     await Future.delayed(Duration(seconds: 1));
-    isInit =true;
-    Get.to(LIST_WIDGET_HOME_SCREEN[dataAppController.configApp.homePageType]).then((value) {
-      if(isInit) {
+    isInit = true;
+    Get.to(LIST_WIDGET_HOME_SCREEN[
+            configAppCustomerController.configApp.homePageType])
+        .then((value) {
+      if (isInit) {
         Get.back();
       }
     });
@@ -47,7 +52,7 @@ class _LoadAppScreenState extends State<LoadAppScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image.network(
-                widget.logo ?? dataAppController.configApp.logoUrl,
+                widget.logo ?? configAppCustomerController.configApp.logoUrl,
                 height: 150,
                 width: 150,
               ),

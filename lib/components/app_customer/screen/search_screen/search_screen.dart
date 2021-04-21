@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/customCard/product_card.dart';
 import 'package:sahashop_user/components/saha_user/iconButton/iconbtn_counter.dart';
+import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'search_controller.dart';
 
@@ -157,6 +159,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                         print(searchController
                                             .listCategorySelected[index]
                                             .values
+                                            .first);
+                                        print(searchController
+                                            .listCategorySelected[index]
+                                            .keys
                                             .first);
                                       });
                                     },
@@ -558,16 +564,22 @@ class _SearchScreenState extends State<SearchScreen> {
               () => searchController.isLoadingProduct.value
                   ? SahaLoadingWidget()
                   : Expanded(
-                      child: GridView.count(
-                        crossAxisCount: 2,
-                        scrollDirection: Axis.vertical,
-                        children: [
-                          ...List.generate(
-                              searchController.listProduct.length,
-                              (index) => ProductCard(
+                      child: SahaSimmer(
+                        isLoading: searchController.isLoadingProduct.value,
+                        child: StaggeredGridView.countBuilder(
+                          crossAxisCount: 2,
+                          itemCount: searchController.listProduct.length,
+                          itemBuilder: (BuildContext context, int index) =>
+                              ProductCard(
                                   product: searchController.listProduct[index],
-                                  press: () {}))
-                        ],
+                                  isLoading:
+                                      searchController.isLoadingProduct.value,
+                                  press: () {}),
+                          staggeredTileBuilder: (int index) =>
+                              new StaggeredTile.fit(1),
+                          mainAxisSpacing: 4.0,
+                          crossAxisSpacing: 4.0,
+                        ),
                       ),
                     ),
             )

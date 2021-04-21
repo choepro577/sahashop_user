@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/screen/data_app_screen.dart';
 import 'package:sahashop_user/const/constant.dart';
 
 class ButtonBackOverLay {
@@ -14,12 +15,10 @@ class ButtonBackOverLay {
 
   void show(BuildContext context) {
     _context = context;
-
-    if(entry == null) {
+    if (entry == null) {
       entry = _createOverlayEntry(context);
       Overlay.of(context).insert(entry);
     }
-
   }
 
   void hide() {
@@ -44,16 +43,13 @@ class _DragWidgetOverlayState extends State<DragWidgetOverlay> {
   double x = 20;
   double y = 20;
 
-
   @override
   void didChangeDependencies() {
-
     super.didChangeDependencies();
 
-    y = MediaQuery.of(context).padding.top+5;
-    x =  MediaQuery.of(context).size.width/3;
+    y = MediaQuery.of(context).padding.top + 5;
+    x = MediaQuery.of(context).size.width / 3;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -84,22 +80,21 @@ class _DragWidgetOverlayState extends State<DragWidgetOverlay> {
         borderRadius: BorderRadius.circular(8),
         child: InkWell(
           onTap: () {
-            Get.back();
-
+            Get.back(result: LoadAppScreen());
           },
           child: Container(
             decoration: BoxDecoration(
-              color: SahaPrimaryColor,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.grey)
-            ),
+                color: SahaPrimaryColor,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.grey)),
             padding: EdgeInsets.all(5),
             child: Row(
               children: [
-                Icon(Icons.arrow_back_ios,size: 13, color: Colors.white),
-                Text("Trở về chỉnh sửa", style: TextStyle(
-                  color: Colors.white
-                ),),
+                Icon(Icons.arrow_back_ios, size: 13, color: Colors.white),
+                Text(
+                  "Trở về chỉnh sửa",
+                  style: TextStyle(color: Colors.white),
+                ),
               ],
             ),
           ),

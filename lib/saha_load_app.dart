@@ -22,6 +22,7 @@ class _SahaMainScreenState extends State<SahaMainScreen> {
   void loadInit(BuildContext context) {
     SahaServiceManager.initialize();
     CustomerServiceManager.initialize();
+
     checkLogin(context);
   }
 

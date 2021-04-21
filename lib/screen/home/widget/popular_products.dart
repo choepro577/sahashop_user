@@ -26,9 +26,9 @@ class PopularProducts extends StatelessWidget {
                     return ProductCardExam(
                         product: demoProducts[index],
                         press: () {
-                          Get.to(ProductScreen1(
-                              rating: demoProducts[index].rating,
-                              product: demoProducts[index]));
+                          // Get.to(ProductScreen1(
+                          //     rating: demoProducts[index].rating,
+                          //     product: demoProducts[index]));
                         });
                   return SizedBox
                       .shrink(); // here by default width and height is 0

@@ -195,7 +195,6 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                           if (demoProducts[index].isPopular)
                             return ProductCardExam(
                                 product: demoProducts[index]);
-
                           return SizedBox
                               .shrink(); // here by default width and height is 0
                         },

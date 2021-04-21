@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/const/constant.dart';
-import 'package:sahashop_user/model/product2222.dart';
+import 'package:sahashop_user/model/product.dart';
 
 class ProductScreen1 extends StatefulWidget {
   final double rating;
@@ -23,12 +24,13 @@ class _ProductScreen1State extends State<ProductScreen1> {
   int selectedColor = 2; // demo
   bool showShadow = false;
   double rating;
+  DataAppCustomerController dataAppController = Get.find();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    product = widget.product ?? demoProducts[0];
+    product = dataAppController.dataProduct;
     rating = widget.rating ?? 4.9;
   }
 
@@ -95,20 +97,20 @@ class _ProductScreen1State extends State<ProductScreen1> {
                       width: 238,
                       child: AspectRatio(
                         aspectRatio: 1,
-                        child: Hero(
-                          tag: product.id.toString(),
-                          child: Image.asset(product.images[selectedImage]),
-                        ),
+                        // child: Hero(
+                        //   tag: product.id.toString(),
+                        //   child: Image.asset(product.images[selectedImage]),
+                        // ),
                       ),
                     ),
                     // SizedBox(height: getProportionateScreenWidth(20)),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ...List.generate(product.images.length,
-                            (index) => buildSmallProductPreview(index)),
-                      ],
-                    )
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     ...List.generate(product.images.length,
+                    //         (index) => buildSmallProductPreview(index)),
+                    //   ],
+                    // )
                   ],
                 ),
                 Container(
@@ -130,7 +132,7 @@ class _ProductScreen1State extends State<ProductScreen1> {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20),
                             child: Text(
-                              product.title,
+                              product.name,
                               style: Theme.of(context).textTheme.headline6,
                             ),
                           ),
@@ -140,7 +142,7 @@ class _ProductScreen1State extends State<ProductScreen1> {
                               padding: EdgeInsets.all(15),
                               width: 64,
                               decoration: BoxDecoration(
-                                color: product.isFavourite
+                                color: true //product.isFavourite
                                     ? Color(0xFFFFE6E6)
                                     : Color(0xFFF5F6F9),
                                 borderRadius: BorderRadius.only(
@@ -150,7 +152,7 @@ class _ProductScreen1State extends State<ProductScreen1> {
                               ),
                               child: SvgPicture.asset(
                                 "assets/icons/Heart Icon_2.svg",
-                                color: product.isFavourite
+                                color: true //product.isFavourite
                                     ? Color(0xFFFF4848)
                                     : Color(0xFFDBDEE4),
                                 height: 16,
@@ -211,29 +213,29 @@ class _ProductScreen1State extends State<ProductScreen1> {
                               padding: EdgeInsets.symmetric(horizontal: 20),
                               child: Row(
                                 children: [
-                                  ...List.generate(
-                                    product.colors.length,
-                                    (index) => Container(
-                                      margin: EdgeInsets.only(right: 2),
-                                      padding: EdgeInsets.all(8),
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                        color: Colors.transparent,
-                                        border: Border.all(
-                                            color: index == selectedColor
-                                                ? SahaPrimaryColor
-                                                : Colors.transparent),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          color: product.colors[index],
-                                          shape: BoxShape.circle,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  // ...List.generate(
+                                  //   product.colors.length,
+                                  //   (index) => Container(
+                                  //     margin: EdgeInsets.only(right: 2),
+                                  //     padding: EdgeInsets.all(8),
+                                  //     height: 40,
+                                  //     width: 40,
+                                  //     decoration: BoxDecoration(
+                                  //       color: Colors.transparent,
+                                  //       border: Border.all(
+                                  //           color: index == selectedColor
+                                  //               ? SahaPrimaryColor
+                                  //               : Colors.transparent),
+                                  //       shape: BoxShape.circle,
+                                  //     ),
+                                  //     child: DecoratedBox(
+                                  //       decoration: BoxDecoration(
+                                  //         color: product.colors[index],
+                                  //         shape: BoxShape.circle,
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   Spacer(),
                                   Container(
                                     height: 40,
@@ -360,7 +362,7 @@ class _ProductScreen1State extends State<ProductScreen1> {
               color:
                   SahaPrimaryColor.withOpacity(selectedImage == index ? 1 : 0)),
         ),
-        child: Image.asset(product.images[index]),
+        //child: Image.asset(product.images[index]),
       ),
     );
   }

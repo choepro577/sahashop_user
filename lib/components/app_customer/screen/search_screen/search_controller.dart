@@ -7,7 +7,7 @@ import 'package:sahashop_user/model/product.dart';
 
 class SearchController extends GetxController {
   var listCategory = RxList<Category>();
-  var listCategorySelected = RxList<Map<int, bool>>();
+  var listCategorySelected = RxList<Map<String, bool>>();
   var isLoadingAdd = false.obs;
   var isLoadingCategory = false.obs;
   var sizeSearch = "";
@@ -20,7 +20,7 @@ class SearchController extends GetxController {
           await CustomerRepositoryManager.categoryRepository.getAllCategory();
       listCategory(list);
       listCategory.forEach((cate) {
-        listCategorySelected.add({cate.id: false});
+        listCategorySelected.add({cate.id.toString(): false});
       });
     } catch (err) {
       SahaAlert.showError(message: err.toString());
@@ -29,9 +29,10 @@ class SearchController extends GetxController {
   }
 
   void checkIsSelectedCategory() {
+    selectedCategoryParam = "";
     listCategorySelected.forEach((cate) {
       if (cate.values.first == true) {
-        selectedCategoryParam = cate.keys.toString() + ",";
+        selectedCategoryParam = selectedCategoryParam + cate.keys.first + ",";
       }
     });
     print("---------$selectedCategoryParam");
