@@ -12,6 +12,7 @@ import 'package:sahashop_user/model/theme_model.dart';
 import 'package:sahashop_user/screen/config_app/config_controller.dart';
 
 import 'ui_data_config.dart';
+import 'widget/button_back_overlay.dart';
 
 class ConfigScreen extends StatefulWidget {
   final Widget child;
@@ -66,11 +67,16 @@ class _ConfigScreenState extends State<ConfigScreen> {
             IconButton(
                 icon: Icon(Icons.add_to_home_screen_sharp),
                 onPressed: () {
+
+                  ButtonBackOverLay().show(context);
+
                   Get.to(
                     () => LoadAppScreen(
                       logo: configController.configApp.logoUrl,
                     ),
-                  );
+                  ).then((value) {
+                    ButtonBackOverLay().hide();
+                  });
                 })
           ],
         ),
