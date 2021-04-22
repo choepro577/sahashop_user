@@ -1,3 +1,7 @@
+import 'package:hive/hive.dart';
+part 'category.g.dart';
+
+@HiveType(typeId: 5)
 class Category {
   Category({
     this.id,
@@ -6,11 +10,15 @@ class Category {
     this.createdAt,
     this.updatedAt,
   });
-
+  @HiveField(0)
   int id;
+  @HiveField(1)
   String name;
+  @HiveField(2)
   dynamic imageUrl;
+  @HiveField(3)
   DateTime createdAt;
+  @HiveField(4)
   DateTime updatedAt;
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(

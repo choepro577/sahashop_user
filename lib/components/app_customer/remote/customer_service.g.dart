@@ -113,7 +113,7 @@ class _CustomerService implements CustomerService {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(idCategory, 'idCategory');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{"category_ids": idCategory};
+    final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(
         '$storeCode/products',
@@ -130,17 +130,15 @@ class _CustomerService implements CustomerService {
 
   @override
   Future<QueryProductResponse> searchProduct(
-      storeCode, search, idCategory, descending, details, String sortBy) async {
+      storeCode, search, idCategory, descending, details, sortBy) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(search, 'search');
     ArgumentError.checkNotNull(idCategory, 'idCategory');
+    ArgumentError.checkNotNull(descending, 'descending');
+    ArgumentError.checkNotNull(details, 'details');
+    ArgumentError.checkNotNull(sortBy, 'sortBy');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      "category_ids": idCategory,
-      "descending": descending,
-      "details": details,
-      "sort_by": sortBy,
-      "search": search,
-    };
+    final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(
         '$storeCode/products',

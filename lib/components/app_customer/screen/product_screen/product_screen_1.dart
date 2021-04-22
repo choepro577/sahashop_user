@@ -1,8 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
+import 'package:sahashop_user/components/app_customer/screen/product_screen/controller/product_controller.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/model/product.dart';
 
@@ -25,12 +28,13 @@ class _ProductScreen1State extends State<ProductScreen1> {
   bool showShadow = false;
   double rating;
   DataAppCustomerController dataAppController = Get.find();
+  ProductController productController = Get.put(ProductController());
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    product = dataAppController.dataProduct;
+    product = dataAppController.dataProduct ?? LIST_PRODUCT_EXAMPLE;
     rating = widget.rating ?? 4.9;
   }
 
@@ -38,81 +42,91 @@ class _ProductScreen1State extends State<ProductScreen1> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      backgroundColor: Color(0xFFF5F6F9),
-      appBar: AppBar(
-        backgroundColor: Color(0xFFF5F6F9),
-        automaticallyImplyLeading: false,
-        elevation: 0,
-        title: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Row(
-            children: [
-              SizedBox(
-                height: 40,
-                width: 40,
-                child: FlatButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(60),
-                  ),
-                  color: Colors.white,
-                  padding: EdgeInsets.zero,
-                  onPressed: () => Navigator.pop(context),
-                  child: Icon(Icons.arrow_back_ios),
-                ),
-              ),
-              Spacer(),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: Row(
-                  children: [
-                    Text(
-                      "${rating}",
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    SvgPicture.asset("assets/icons/star.svg"),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Column(
+            Stack(
               children: [
                 Column(
                   children: [
-                    SizedBox(
-                      width: 238,
-                      child: AspectRatio(
-                        aspectRatio: 1,
-                        // child: Hero(
-                        //   tag: product.id.toString(),
-                        //   child: Image.asset(product.images[selectedImage]),
-                        // ),
+                    AspectRatio(
+                      aspectRatio: 0.9,
+                      child: Hero(
+                        tag: product.id.toString(),
+                        child: CachedNetworkImage(
+                          fit: BoxFit.cover,
+                          imageUrl: product.images[selectedImage].imageUrl,
+                        ),
                       ),
                     ),
-                    // SizedBox(height: getProportionateScreenWidth(20)),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     ...List.generate(product.images.length,
-                    //         (index) => buildSmallProductPreview(index)),
-                    //   ],
-                    // )
                   ],
                 ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: AppBar().preferredSize.height,
+                      ),
+                      Row(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: FlatButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(60),
+                              ),
+                              color: Colors.white,
+                              padding: EdgeInsets.zero,
+                              onPressed: () => Navigator.pop(context),
+                              child: Icon(Icons.arrow_back_ios),
+                            ),
+                          ),
+                          Spacer(),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 14, vertical: 5),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "${rating}",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const SizedBox(width: 5),
+                                SvgPicture.asset("assets/icons/star.svg"),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: Get.width / 1.4,
+                      ),
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ...List.generate(product.images.length,
+                                (index) => buildSmallProductPreview(index)),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              children: [
                 Container(
                   margin: EdgeInsets.only(top: 20),
                   padding: EdgeInsets.only(top: 20),
@@ -236,7 +250,7 @@ class _ProductScreen1State extends State<ProductScreen1> {
                                   //     ),
                                   //   ),
                                   // ),
-                                  Spacer(),
+                                  //Spacer(),
                                   Container(
                                     height: 40,
                                     width: 40,
@@ -258,10 +272,17 @@ class _ProductScreen1State extends State<ProductScreen1> {
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(50)),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        productController.decreaseItem();
+                                      },
                                       child: Icon(Icons.remove),
                                     ),
                                   ),
+                                  SizedBox(width: 20),
+                                  Obx(() => Text(
+                                        '${productController.quantity.value}',
+                                        style: TextStyle(fontSize: 19),
+                                      )),
                                   SizedBox(width: 20),
                                   Container(
                                     height: 40,
@@ -284,7 +305,9 @@ class _ProductScreen1State extends State<ProductScreen1> {
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(50)),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        productController.increaseItem();
+                                      },
                                       child: Icon(Icons.add),
                                     ),
                                   ),
@@ -317,7 +340,10 @@ class _ProductScreen1State extends State<ProductScreen1> {
                                           borderRadius:
                                               BorderRadius.circular(20)),
                                       color: SahaPrimaryColor,
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        productController.addOrder(product,
+                                            productController.quantity.value);
+                                      },
                                       child: Text(
                                         "add to card",
                                         style: TextStyle(
@@ -352,7 +378,7 @@ class _ProductScreen1State extends State<ProductScreen1> {
       child: AnimatedContainer(
         duration: Duration(milliseconds: 250),
         margin: EdgeInsets.only(right: 15),
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.all(2),
         height: 48,
         width: 48,
         decoration: BoxDecoration(
@@ -362,7 +388,13 @@ class _ProductScreen1State extends State<ProductScreen1> {
               color:
                   SahaPrimaryColor.withOpacity(selectedImage == index ? 1 : 0)),
         ),
-        //child: Image.asset(product.images[index]),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: CachedNetworkImage(
+            fit: BoxFit.cover,
+            imageUrl: product.images[index].imageUrl,
+          ),
+        ),
       ),
     );
   }

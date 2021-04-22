@@ -1,11 +1,14 @@
 import 'dart:convert';
 
+import 'package:hive/hive.dart';
 import 'package:sahashop_user/model/category.dart';
+part 'product.g.dart';
 
 Product productFromJson(String str) => Product.fromJson(jsonDecode(str));
 
 String productToJson(Product data) => json.encode(data.toJson());
 
+@HiveType(typeId: 1)
 class Product {
   Product({
     this.id,
@@ -23,18 +26,31 @@ class Product {
     this.categories,
   });
 
+  @HiveField(0)
   int id;
+  @HiveField(1)
   String name;
+  @HiveField(2)
   int storeId;
+  @HiveField(3)
   String description;
+  @HiveField(4)
   int indexImageAvatar;
+  @HiveField(5)
   int price;
+  @HiveField(6)
   String barcode;
+  @HiveField(7)
   int status;
+  @HiveField(8)
   DateTime createdAt;
+  @HiveField(9)
   DateTime updatedAt;
+  @HiveField(10)
   List<Details> details;
+  @HiveField(11)
   List<ImageProduct> images;
+  @HiveField(12)
   List<Category> categories;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
@@ -65,12 +81,17 @@ class Product {
         "price": price,
         "barcode": name,
         "status": status,
-        "details": details == null ? null : List<dynamic>.from(details.map((x) => x.toJson())),
-        "images": images == null ? null : images.map((e) => e.imageUrl).toList(),
-        "categories": categories == null ? null : categories.map((e) => e.id).toList(),
+        "details": details == null
+            ? null
+            : List<dynamic>.from(details.map((x) => x.toJson())),
+        "images":
+            images == null ? null : images.map((e) => e.imageUrl).toList(),
+        "categories":
+            categories == null ? null : categories.map((e) => e.id).toList(),
       };
 }
 
+@HiveType(typeId: 2)
 class Details {
   Details({
     this.id,
@@ -78,8 +99,13 @@ class Details {
     this.attributes,
   });
 
+  @HiveField(0)
   int id;
+
+  @HiveField(1)
   String name;
+
+  @HiveField(2)
   List<Attributes> attributes;
 
   factory Details.fromJson(Map<String, dynamic> json) => Details(
@@ -94,13 +120,17 @@ class Details {
       };
 }
 
+@HiveType(typeId: 3)
 class Attributes {
   Attributes({
     this.id,
     this.name,
   });
 
+  @HiveField(0)
   int id;
+
+  @HiveField(1)
   String name;
 
   factory Attributes.fromJson(Map<String, dynamic> json) => Attributes(
@@ -113,13 +143,17 @@ class Attributes {
       };
 }
 
+@HiveType(typeId: 4)
 class ImageProduct {
   ImageProduct({
     this.id,
     this.imageUrl,
   });
 
+  @HiveField(0)
   int id;
+
+  @HiveField(1)
   String imageUrl;
 
   factory ImageProduct.fromJson(Map<String, dynamic> json) => ImageProduct(

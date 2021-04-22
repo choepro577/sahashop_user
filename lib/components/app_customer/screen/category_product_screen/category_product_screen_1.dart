@@ -7,18 +7,13 @@ import 'package:sahashop_user/components/app_customer/screen/data_app_controller
 import 'package:sahashop_user/components/app_customer/screen/data_widget_config.dart';
 import 'package:sahashop_user/components/app_customer/screen/search_screen/search_screen.dart';
 import 'package:sahashop_user/components/saha_user/customCard/product_card.dart';
-import 'package:sahashop_user/components/saha_user/customCard/product_card_exam.dart';
 import 'package:sahashop_user/components/saha_user/iconButton/iconbtn_counter.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/model/category.dart';
-import 'package:sahashop_user/model/config_app.dart';
-import 'package:sahashop_user/model/product2222.dart';
 import 'package:sahashop_user/screen/config_app/config_controller.dart';
-import 'package:shimmer/shimmer.dart';
 import 'controller/category_controller.dart';
-import 'ui_data_category_product_screen.dart';
 
 class CategoryProductStyle1 extends StatefulWidget {
   @override
@@ -84,7 +79,10 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
             IconBtnWithCounter(
               svgSrc: "assets/icons/cart_icon.svg",
               numOfitem: 1,
-              press: () {},
+              press: () {
+                Get.to(() => LIST_WIDGET_CART_SCREEN[
+                    configController.configApp.cartPageType]);
+              },
             ),
           ],
         ),
@@ -126,7 +124,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
               press: () {
                 dataAppCustomerController.setCurrentProduct(list[index]);
                 Get.to(() => LIST_WIDGET_PRODUCT_SCREEN[
-                    configController.configApp.cartPageType]);
+                    configController.configApp.productPageType]);
               }),
           staggeredTileBuilder: (int index) => new StaggeredTile.fit(1),
           mainAxisSpacing: 4.0,

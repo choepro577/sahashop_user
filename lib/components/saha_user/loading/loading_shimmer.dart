@@ -13,8 +13,8 @@ class SahaSimmer extends StatelessWidget {
     return isLoading
         ? Shimmer.fromColors(
             baseColor: Colors.grey[300],
-            highlightColor: Colors.grey[100],
-            enabled: false,
+            highlightColor: Colors.white60,
+            enabled: true,
             child: child)
         : child;
   }
