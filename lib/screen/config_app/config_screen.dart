@@ -62,6 +62,9 @@ class _ConfigScreenState extends State<ConfigScreen> {
             IconButton(
                 icon: Icon(Icons.add_to_home_screen_sharp),
                 onPressed: () {
+                  setState(() {
+                    indexSelected = 0;
+                  });
                   ButtonBackOverLay().show(context);
 
                   Get.to(
@@ -71,6 +74,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
                   ).then((value) {
                     ButtonBackOverLay().hide();
                   });
+                  configController.dispose();
                 })
           ],
         ),

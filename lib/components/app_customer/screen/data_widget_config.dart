@@ -36,7 +36,7 @@ List<Widget> LIST_WIDGET_PRODUCT_SCREEN = [
 
 List<Widget> LIST_WIDGET_CART_SCREEN = [
   CartScreen1(),
-  CartScreen1(),
+  //CartScreen1(),
 ];
 
 List<Widget> LIST_WIDGET_SEARCH_BAR = [

@@ -27,13 +27,18 @@ class _ProductScreen1State extends State<ProductScreen1> {
   int selectedColor = 2; // demo
   bool showShadow = false;
   double rating;
-  DataAppCustomerController dataAppController = Get.find();
+  DataAppCustomerController dataAppController;
   ProductController productController = Get.put(ProductController());
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    try {
+      dataAppController = Get.find();
+    } catch (e) {
+      dataAppController = Get.put(DataAppCustomerController());
+    }
     product = dataAppController.dataProduct ?? LIST_PRODUCT_EXAMPLE;
     rating = widget.rating ?? 4.9;
   }

@@ -15,6 +15,7 @@ class CartScreen1 extends StatefulWidget {
 
 class _CartScreen1State extends State<CartScreen1> {
   CartController cartController;
+  List<Order> listOrder;
 
   @override
   void initState() {
@@ -26,6 +27,14 @@ class _CartScreen1State extends State<CartScreen1> {
       cartController = Get.put(CartController());
     }
     cartController.getListOrder();
+    // listOrder = cartController.listOrder.value;
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    cartController.dispose();
   }
 
   @override
@@ -38,9 +47,11 @@ class _CartScreen1State extends State<CartScreen1> {
             Text(
               "Your Cart",
             ),
-            Text(
-              "${cartController.listOrder.value.length} items",
-              style: TextStyle(fontSize: 14),
+            Obx(
+              () => Text(
+                "${cartController.listOrder.value.length} items",
+                style: TextStyle(fontSize: 14),
+              ),
             ),
           ],
         ),
@@ -53,14 +64,11 @@ class _CartScreen1State extends State<CartScreen1> {
             itemBuilder: (context, index) => Padding(
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Dismissible(
-                key: Key(cartController.listOrder.value[index].product.id
-                    .toString()),
+                key: UniqueKey(),
                 direction: DismissDirection.endToStart,
                 onDismissed: (direction) {
-                  setState(() {
-                    cartController.removeProduct(index);
-                    cartController.getListOrder();
-                  });
+                  cartController.listOrder.value.removeAt(index);
+                  cartController.removeProduct(index);
                 },
                 background: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -200,7 +208,7 @@ class _CartScreen1State extends State<CartScreen1> {
                       text: "Total:\n",
                       children: [
                         TextSpan(
-                          text: "\$337.15",
+                          text: "${cartController.totalMoney.value}",
                           style: TextStyle(fontSize: 16, color: Colors.black),
                         ),
                       ],
