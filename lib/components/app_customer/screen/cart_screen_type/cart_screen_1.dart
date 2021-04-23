@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/controller/cart_controller.dart';
+import 'package:sahashop_user/components/app_customer/screen/pay_screen_type/pay_screen_type1.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/model/cart.dart';
 import 'package:sahashop_user/model/order.dart';
@@ -88,7 +89,7 @@ class _CartScreen1State extends State<CartScreen1> {
                     SizedBox(
                       width: 88,
                       child: AspectRatio(
-                        aspectRatio: 0.88,
+                        aspectRatio: 1,
                         child: Container(
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
@@ -223,7 +224,9 @@ class _CartScreen1State extends State<CartScreen1> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),
                         color: SahaPrimaryColor,
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.to(() => PayScreen1());
+                        },
                         child: Text(
                           "Check Out",
                           style: TextStyle(
