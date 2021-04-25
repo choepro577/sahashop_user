@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/controller/cart_controller.dart';
-import 'package:sahashop_user/components/app_customer/screen/pay_screen_type/pay_screen_type1.dart';
+import 'package:sahashop_user/components/app_customer/screen/pay_screen/pay_screen.dart';
+import 'package:sahashop_user/components/utils/money.dart';
 import 'package:sahashop_user/const/constant.dart';
-import 'package:sahashop_user/model/cart.dart';
 import 'package:sahashop_user/model/order.dart';
 
 class CartScreen1 extends StatefulWidget {
@@ -68,8 +68,9 @@ class _CartScreen1State extends State<CartScreen1> {
                 key: UniqueKey(),
                 direction: DismissDirection.endToStart,
                 onDismissed: (direction) {
-                  cartController.listOrder.value.removeAt(index);
+                  // cartController.listOrder.value.removeAt(index);
                   cartController.removeProduct(index);
+                  cartController.getListOrder();
                 },
                 background: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -132,14 +133,14 @@ class _CartScreen1State extends State<CartScreen1> {
                         Text.rich(
                           TextSpan(
                             text:
-                                "\$${cartController.listOrder.value[index].product.price}",
+                                "\$${FormatMoney.toVND(cartController.listOrder.value[index].product.price)}",
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 color: SahaPrimaryColor),
                             children: [
                               TextSpan(
                                   text:
-                                      " x${cartController.listOrder.value[index].quantity}",
+                                      " x ${cartController.listOrder.value[index].quantity}",
                                   style: Theme.of(context).textTheme.bodyText1),
                             ],
                           ),
@@ -204,15 +205,18 @@ class _CartScreen1State extends State<CartScreen1> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text.rich(
-                    TextSpan(
-                      text: "Total:\n",
-                      children: [
-                        TextSpan(
-                          text: "${cartController.totalMoney.value}",
-                          style: TextStyle(fontSize: 16, color: Colors.black),
-                        ),
-                      ],
+                  Obx(
+                    () => Text.rich(
+                      TextSpan(
+                        text: "Total:\n",
+                        children: [
+                          TextSpan(
+                            text:
+                                "${FormatMoney.toVND(cartController.totalMoney.value)}",
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -225,7 +229,7 @@ class _CartScreen1State extends State<CartScreen1> {
                             borderRadius: BorderRadius.circular(20)),
                         color: SahaPrimaryColor,
                         onPressed: () {
-                          Get.to(() => PayScreen1());
+                          Get.to(() => PayScreen());
                         },
                         child: Text(
                           "Check Out",
