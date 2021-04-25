@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/divide/divide.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_full_screen.dart';
@@ -33,7 +34,7 @@ class AddProductScreen extends StatelessWidget {
       child: Form(
         key: _formKey,
         child: Scaffold(
-            appBar: AppBar(
+            appBar: SahaAppBar(
               title: Text("Thêm sản phẩm"),
               actions: [
                 InkWell(

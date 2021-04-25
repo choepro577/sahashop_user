@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
+import 'package:sahashop_user/load_data/load_firebase.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class LoginController extends GetxController {
@@ -11,9 +12,12 @@ class LoginController extends GetxController {
       var loginData = await RepositoryManager.loginRepository
           .login(phone: shopPhone, pass: password);
 
-
       await UserInfo().setToken(loginData.token);
 
+      if (FCMToken().getToken() != null) {
+        RepositoryManager.deviceTokenRepository
+            .updateDeviceTokenUser(FCMToken().getToken());
+      }
 
       logging.value = false;
       stateLogin.value = "success";

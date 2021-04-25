@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_screen.dart';
+import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_full_screen.dart';
 import 'package:sahashop_user/components/utils/thread_data.dart';
@@ -47,9 +48,10 @@ class _ConfigScreenState extends State<ConfigScreen> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
+        appBar: SahaAppBar(
+
           leading: IconButton(
+            color: Colors.black87,
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
               Navigator.pop(context);
@@ -57,9 +59,13 @@ class _ConfigScreenState extends State<ConfigScreen> {
           ),
           title: Text(
             'Chỉnh sửa giao diện',
+            style: TextStyle(
+              color: Colors.black87
+            ),
           ),
           actions: [
             IconButton(
+              color: Colors.blueAccent,
                 icon: Icon(Icons.add_to_home_screen_sharp),
                 onPressed: () {
                   setState(() {

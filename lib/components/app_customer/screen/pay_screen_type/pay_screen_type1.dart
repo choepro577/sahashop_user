@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/controller/cart_controller.dart';
+import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/order_step.dart';
 import 'package:sahashop_user/const/constant.dart';
 
@@ -25,7 +26,7 @@ class _PayScreen1State extends State<PayScreen1> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(
+        appBar: SahaAppBar(
           title: Text("Thanh toán"),
         ),
         body: SingleChildScrollView(

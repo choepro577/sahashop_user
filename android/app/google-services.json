@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "33848766026",
+    "project_id": "sahashop-7d2f7",
+    "storage_bucket": "sahashop-7d2f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:33848766026:android:c7406cce8819cec59b80b3",
+        "android_client_info": {
+          "package_name": "com.saha.shopuser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "33848766026-n0dpdeahdfp3s1kqu919due3gv5e9d5j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCflaiAKeAqSXWtwhoCL0UkulvkKKSjHvM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "33848766026-n0dpdeahdfp3s1kqu919due3gv5e9d5j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

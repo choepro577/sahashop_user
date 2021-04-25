@@ -112,10 +112,22 @@ class _SahaService implements SahaService {
   }
 
   @override
-  Future<AllProductResponse> getAllProduct(storeCode) async {
+  Future<AllProductResponse> getAllProduct(
+      storeCode, search, idCategory, descending, details, sortBy) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(search, 'search');
+    ArgumentError.checkNotNull(idCategory, 'idCategory');
+    ArgumentError.checkNotNull(descending, 'descending');
+    ArgumentError.checkNotNull(details, 'details');
+    ArgumentError.checkNotNull(sortBy, 'sortBy');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'search': search,
+      r'idCategory': idCategory,
+      r'descending': descending,
+      r'details': details,
+      r'sortBy': sortBy
+    };
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(
         'store/$storeCode/products',
@@ -244,6 +256,26 @@ class _SahaService implements SahaService {
             baseUrl: baseUrl),
         data: _data);
     final value = UploadImageResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<UpdateDeviceTokenResponse> updateDeviceTokenUser(body) async {
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'device_token_user',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = UpdateDeviceTokenResponse.fromJson(_result.data);
     return value;
   }
 }

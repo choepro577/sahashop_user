@@ -30,6 +30,7 @@ class SearchController extends GetxController {
 
   void checkIsSelectedCategory() {
     selectedCategoryParam = "";
+
     listCategorySelected.forEach((cate) {
       if (cate.values.first == true) {
         selectedCategoryParam = selectedCategoryParam + cate.keys.first + ",";

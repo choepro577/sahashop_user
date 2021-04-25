@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/controller/cart_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/pay_screen_type/pay_screen_type1.dart';
+import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/model/cart.dart';
 import 'package:sahashop_user/model/order.dart';
@@ -42,7 +43,7 @@ class _CartScreen1State extends State<CartScreen1> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
+      appBar: SahaAppBar(
         title: Column(
           children: [
             Text(

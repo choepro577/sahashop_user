@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/product_screen/controller/product_controller.dart';
+import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/model/product.dart';
 
@@ -71,7 +72,7 @@ class _ProductScreen1State extends State<ProductScreen1> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: AppBar().preferredSize.height,
+                        height: SahaAppBar().preferredSize.height,
                       ),
                       Row(
                         children: [

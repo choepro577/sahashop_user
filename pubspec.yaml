@@ -35,6 +35,7 @@ dependencies:
   carousel_slider: ^3.0.0
   dio: ^3.0.10
   dropdown_below: ^0.0.7
+  device_info: ^2.0.0
   dotted_border: ^1.0.7
   empty_widget: ^0.0.1
   multi_image_picker: ^4.8.0
@@ -47,7 +48,11 @@ dependencies:
   flutter_svg: ^0.19.3
   flutter_spinkit: ^5.0.0
   flutter_colorpicker: ^0.4.0
+  firebase_messaging: ^7.0.3
+  firebase_core: ^0.5.0+1
+  firebase_analytics: ^6.3.0
   http_parser: ^3.1.2
+  hive: ^1.4.4+1
   get: ^3.26.0
   smart_select: ^4.3.2
   shimmer: ^1.1.1
@@ -58,9 +63,10 @@ dependencies:
   provider: ^5.0.0
   path_provider: ^2.0.1
   retrofit: ^1.3.4+1
-  shared_preferences: ^2.0.5
   unicorndial: ^1.1.5
-  hive: ^1.4.4+1
+  shared_preferences: ^2.0.5
+
+
 
 
 dev_dependencies:
@@ -114,7 +120,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/icon.png
+    - assets/logo.png
     - assets/images/
     - assets/icons/
     - assets/saha_loading.png

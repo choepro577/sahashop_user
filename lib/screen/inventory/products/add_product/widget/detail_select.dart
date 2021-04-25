@@ -2,6 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:dropdown_below/dropdown_below.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/divide/divide.dart';
 import 'package:sahashop_user/components/saha_user/sahashopTextField.dart';
 import 'package:sahashop_user/screen/inventory/products/add_product/widget/dropdown_string.dart';
@@ -34,7 +35,7 @@ class _DetailSelectState extends State<DetailSelect> {
         return detailSelectController.checkValidParam();
       },
       child: Scaffold(
-        appBar: AppBar(
+        appBar: SahaAppBar(
           title: Text("Phân loại sản phẩm"),
         ),
         body: Padding(

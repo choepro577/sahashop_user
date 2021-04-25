@@ -6,6 +6,7 @@ import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_widget_config.dart';
 import 'package:sahashop_user/components/app_customer/screen/search_screen/search_screen.dart';
+import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/customCard/product_card.dart';
 import 'package:sahashop_user/components/saha_user/iconButton/iconbtn_counter.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
@@ -48,7 +49,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: SahaAppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

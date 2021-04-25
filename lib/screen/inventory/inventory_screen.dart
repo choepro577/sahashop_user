@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 
 import 'categories/category_screen.dart';
 import 'products/product_screen.dart';
@@ -8,7 +9,7 @@ class InventoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: SahaAppBar(
         title: Text("Quản lý mặt hàng"),
       ),
       body: Column(
