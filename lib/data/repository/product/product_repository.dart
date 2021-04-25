@@ -16,12 +16,23 @@ class ProductRepository {
     }
   }
 
-  Future<List<Product>> getAllProduct() async {
+  Future<List<Product>> getAllProduct({String search, String idCategory,
+      bool descending, String details, String sortBy}) async {
     try {
       var res = await SahaServiceManager()
           .service
-          .getAllProduct(UserInfo().getCurrentStoreCode());
-      return res.data;
+          .getAllProduct(     UserInfo().getCurrentStoreCode(),
+          search ?? "",
+          idCategory ?? "[]",
+          descending ?? false,
+          details ?? "",
+          sortBy ?? "");
+
+
+      print(res.data.data);
+
+
+      return res.data.data;
     } catch (err) {
       handleError(err);
     }

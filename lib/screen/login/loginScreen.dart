@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/dialog/dialog.dart';
 import 'package:sahashop_user/components/saha_user/sahashopTextField.dart';
-import 'package:sahashop_user/helper/keyboard.dart';
+import 'package:sahashop_user/utils/keyboard.dart';
 import 'package:sahashop_user/screen/home/home_screen.dart';
 import 'package:sahashop_user/screen/login/loginScreen_controller.dart';
 import 'package:sahashop_user/screen/sign_up/signUpScreen.dart';
@@ -53,14 +54,11 @@ class _SignInState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
+      appBar: SahaAppBar(
         title: Text(
           "Sign In",
           style: TextStyle(color: Colors.grey[600]),
         ),
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Form(

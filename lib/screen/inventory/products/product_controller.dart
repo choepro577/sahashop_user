@@ -16,7 +16,10 @@ class ProductController extends GetxController {
   Future<void> getAllProduct() async {
     loading.value = true;
     try {
-     var list = await RepositoryManager.productRepository.getAllProduct();
+     var list = await RepositoryManager.productRepository.getAllProduct(
+
+     );
+
       listProduct(list);
 
       loading.value = false;

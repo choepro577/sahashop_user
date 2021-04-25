@@ -141,7 +141,7 @@ class _CustomerService implements CustomerService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/products',
+        '$storeCode/products?=',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',

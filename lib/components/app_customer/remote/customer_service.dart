@@ -34,7 +34,7 @@ abstract class CustomerService {
   Future<QueryProductResponse> getProductWithCategory(
       @Path() String storeCode, int idCategory);
 
-  @GET("{storeCode}/products")
+  @GET("{storeCode}/products?=")
   Future<QueryProductResponse> searchProduct(
       @Path() String storeCode,
       String search,

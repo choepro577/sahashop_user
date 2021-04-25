@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/customCard/product_card.dart';
 import 'package:sahashop_user/components/saha_user/iconButton/iconbtn_counter.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
@@ -67,7 +68,7 @@ class _SearchScreenState extends State<SearchScreen> {
     // TODO: implement build
     return Scaffold(
       endDrawerEnableOpenDragGesture: false,
-      appBar: AppBar(
+      appBar: SahaAppBar(
         title: Row(
           children: [
             Expanded(

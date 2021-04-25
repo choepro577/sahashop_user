@@ -3,10 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/dialog/dialog.dart';
 import 'package:sahashop_user/components/saha_user/sahashopTextField.dart';
 import 'package:sahashop_user/data/remote/response/store/type_store_respones.dart';
-import 'package:sahashop_user/helper/keyboard.dart';
+import 'package:sahashop_user/utils/keyboard.dart';
 import 'package:sahashop_user/screen/home/home_screen.dart';
 import 'package:sahashop_user/screen/sign_up/signUpScreen_controller.dart';
 
@@ -64,7 +65,7 @@ class _AddStoreState extends State<AddStore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: SahaAppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           color: Colors.grey,
@@ -76,9 +77,6 @@ class _AddStoreState extends State<AddStore> {
           "Thêm cửa hàng",
           style: TextStyle(color: Colors.grey[600]),
         ),
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Form(

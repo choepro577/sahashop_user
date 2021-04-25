@@ -7,6 +7,7 @@ import 'package:sahashop_user/data/remote/response/config_ui/create_app_theme_re
 import 'response/auth/register_response.dart';
 import 'response/category/all_category_response.dart';
 import 'response/category/create_category_response.dart';
+import 'response/device_token/device_token_user_response.dart';
 import 'response/image/upload_image_response.dart';
 import 'response/product/all_product_response.dart';
 import 'response/product/product_response.dart';
@@ -38,7 +39,13 @@ abstract class SahaService {
       @Path() String storeCode, @Body() Map<String, dynamic> body);
 
   @GET("store/{storeCode}/products")
-  Future<AllProductResponse> getAllProduct(@Path() String storeCode);
+  Future<AllProductResponse> getAllProduct(
+      @Path() String storeCode,
+      @Query("search") String search,
+      @Query("idCategory") String idCategory,
+      @Query("descending") bool descending,
+      @Query("details") String details,
+      @Query("sortBy") String sortBy);
 
   @GET("type_of_store")
   Future<TypeShopResponse> getAllTypeOfStore();
@@ -60,4 +67,8 @@ abstract class SahaService {
 
   @POST("images")
   Future<UploadImageResponse> uploadImage(@Body() Map<String, dynamic> body);
+
+  @POST("device_token_user")
+  Future<UpdateDeviceTokenResponse> updateDeviceTokenUser(
+      @Body() Map<String, dynamic> body);
 }
