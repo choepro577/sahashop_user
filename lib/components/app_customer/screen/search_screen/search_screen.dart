@@ -7,6 +7,7 @@ import 'package:sahashop_user/components/saha_user/customCard/product_card.dart'
 import 'package:sahashop_user/components/saha_user/iconButton/iconbtn_counter.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
+import 'package:shimmer/shimmer.dart';
 import 'search_controller.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -562,27 +563,28 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ),
             Obx(
-              () => searchController.isLoadingProduct.value
-                  ? SahaLoadingWidget()
-                  : Expanded(
-                      child: SahaSimmer(
-                        isLoading: searchController.isLoadingProduct.value,
-                        child: StaggeredGridView.countBuilder(
-                          crossAxisCount: 2,
-                          itemCount: searchController.listProduct.length,
-                          itemBuilder: (BuildContext context, int index) =>
-                              ProductCard(
-                                  product: searchController.listProduct[index],
-                                  isLoading:
-                                      searchController.isLoadingProduct.value,
-                                  press: () {}),
-                          staggeredTileBuilder: (int index) =>
-                              new StaggeredTile.fit(1),
-                          mainAxisSpacing: 4.0,
-                          crossAxisSpacing: 4.0,
-                        ),
-                      ),
+              () => Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: SahaSimmer(
+                    isLoading: searchController.isLoadingProduct.value,
+                    child: StaggeredGridView.countBuilder(
+                      crossAxisCount: 2,
+                      itemCount: searchController.listProduct.length,
+                      itemBuilder: (BuildContext context, int index) =>
+                          ProductCard(
+                              product: searchController.listProduct[index],
+                              isLoading:
+                                  searchController.isLoadingProduct.value,
+                              press: () {}),
+                      staggeredTileBuilder: (int index) =>
+                          new StaggeredTile.fit(1),
+                      mainAxisSpacing: 5.0,
+                      crossAxisSpacing: 5.0,
                     ),
+                  ),
+                ),
+              ),
             )
           ],
         ),

@@ -37,9 +37,9 @@ abstract class CustomerService {
   @GET("{storeCode}/products?=")
   Future<QueryProductResponse> searchProduct(
       @Path() String storeCode,
-      String search,
-      String idCategory,
-      bool descending,
-      String details,
-      String sortBy);
+      @Query("search") String search,
+      @Query("category_ids") String idCategory,
+      @Query("descending") bool descending,
+      @Query("details") String details,
+      @Query("sort_by") String sortBy);
 }

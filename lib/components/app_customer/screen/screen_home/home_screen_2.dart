@@ -67,7 +67,7 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
           ? Container()
           : UnicornDialer(
               backgroundColor: Color.fromRGBO(255, 255, 255, 0.6),
-              parentButtonBackground: Colors.redAccent,
+              parentButtonBackground: Theme.of(context).primaryColor,
               orientation: UnicornOrientation.VERTICAL,
               parentButton: Icon(Icons.phone),
               childButtons: configController.contactButton ??

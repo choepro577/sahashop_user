@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/example/product.dart';
+import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/controller/cart_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_widget_config.dart';
+import 'package:sahashop_user/components/app_customer/screen/product_screen/controller/product_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/search_screen/search_screen.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/customCard/product_card.dart';
@@ -25,6 +27,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
   CategoryController categoryController;
   ConfigController configController;
   DataAppCustomerController dataAppCustomerController;
+  ProductController productController = Get.put(ProductController());
 
   @override
   void initState() {
@@ -37,6 +40,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
     } catch (e) {
       dataAppCustomerController = Get.put(DataAppCustomerController());
     }
+    productController.getListOrder();
   }
 
   @override
@@ -77,13 +81,15 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
             SizedBox(
               width: 20,
             ),
-            IconBtnWithCounter(
-              svgSrc: "assets/icons/cart_icon.svg",
-              numOfitem: 1,
-              press: () {
-                Get.to(() => LIST_WIDGET_CART_SCREEN[
-                    configController.configApp.cartPageType]);
-              },
+            Obx(
+              () => IconBtnWithCounter(
+                svgSrc: "assets/icons/cart_icon.svg",
+                numOfitem: productController.listOrder.value.length ?? 0,
+                press: () {
+                  Get.to(() => LIST_WIDGET_CART_SCREEN[
+                      configController.configApp.cartPageType]);
+                },
+              ),
             ),
           ],
         ),
@@ -116,20 +122,23 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
       var list = isLoading ? LIST_PRODUCT_EXAMPLE : categoryController.products;
       return SahaSimmer(
         isLoading: isLoading,
-        child: StaggeredGridView.countBuilder(
-          crossAxisCount: 2,
-          itemCount: list.length,
-          itemBuilder: (BuildContext context, int index) => ProductCard(
-              product: list[index],
-              isLoading: isLoading,
-              press: () {
-                dataAppCustomerController.setCurrentProduct(list[index]);
-                Get.to(() => LIST_WIDGET_PRODUCT_SCREEN[
-                    configController.configApp.productPageType]);
-              }),
-          staggeredTileBuilder: (int index) => new StaggeredTile.fit(1),
-          mainAxisSpacing: 4.0,
-          crossAxisSpacing: 4.0,
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: StaggeredGridView.countBuilder(
+            crossAxisCount: 2,
+            itemCount: list.length,
+            itemBuilder: (BuildContext context, int index) => ProductCard(
+                product: list[index],
+                isLoading: isLoading,
+                press: () {
+                  dataAppCustomerController.setCurrentProduct(list[index]);
+                  Get.to(() => LIST_WIDGET_PRODUCT_SCREEN[
+                      configController.configApp.productPageType]);
+                }),
+            staggeredTileBuilder: (int index) => new StaggeredTile.fit(1),
+            mainAxisSpacing: 5.0,
+            crossAxisSpacing: 5.0,
+          ),
         ),
       );
     });
@@ -149,31 +158,33 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: 20,
+                height: 5,
               ),
               SizedBox(
-                width: 30,
-                height: 30,
+                width: 60,
+                height: 60,
                 child: CachedNetworkImage(
                   imageUrl: category.imageUrl ?? "",
                   placeholder: (context, url) => CircularProgressIndicator(),
                   errorWidget: (context, url, error) => Icon(Icons.error),
+                  fit: BoxFit.cover,
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: 5,
               ),
               Text(
                 category.name,
+                maxLines: 3,
                 style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 13,
                     color: categoryController.categoryCurrent.value == category
-                        ? bmColors
+                        ? Theme.of(context).primaryColor
                         : Colors.black54),
                 textAlign: TextAlign.center,
               ),
               SizedBox(
-                height: 10,
+                height: 5,
               ),
             ],
           ),

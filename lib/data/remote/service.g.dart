@@ -123,10 +123,10 @@ class _SahaService implements SahaService {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'search': search,
-      r'idCategory': idCategory,
+      r'category_ids': idCategory,
       r'descending': descending,
       r'details': details,
-      r'sortBy': sortBy
+      r'sort_by': sortBy
     };
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(

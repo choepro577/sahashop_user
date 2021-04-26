@@ -29,7 +29,7 @@ class _ProductScreen1State extends State<ProductScreen1> {
   bool showShadow = false;
   double rating;
   DataAppCustomerController dataAppController;
-  ProductController productController = Get.put(ProductController());
+  ProductController productController = Get.find();
 
   @override
   void initState() {
@@ -349,6 +349,7 @@ class _ProductScreen1State extends State<ProductScreen1> {
                                       onPressed: () {
                                         productController.addOrder(product,
                                             productController.quantity.value);
+                                        productController.getListOrder();
                                       },
                                       child: Text(
                                         "add to card",

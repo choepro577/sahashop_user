@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
@@ -62,11 +63,16 @@ class FCMMess {
           print(err);
         }
       },
-      onBackgroundMessage: Platform.isIOS ? onBackgroundMessage : onBackgroundMessage,
+      onBackgroundMessage:
+          Platform.isIOS ? onBackgroundMessage : onBackgroundMessage,
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
       },
       onResume: (Map<String, dynamic> message) async {
+        if (Platform.isIOS) {
+          message = _modifyNotificationJson(message);
+        }
+        //performActionOnNotification(message);
         print("onResume: $message");
       },
     );
@@ -78,6 +84,16 @@ class FCMMess {
     });
     await _firebaseMessaging.subscribeToTopic("matchscore");
   }
+}
+
+// void _performActionOnNotification(Map<String, dynamic> message) {
+//   NotificationsBloc.instance.newNotification(message);
+// }
+
+Map _modifyNotificationJson(Map<String, dynamic> message) {
+  message['data'] = Map.from(message ?? {});
+  message['notification'] = message['aps']['alert'];
+  return message;
 }
 
 class FCMToken {

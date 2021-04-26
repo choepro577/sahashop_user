@@ -6,6 +6,7 @@ import 'package:sahashop_user/model/product.dart';
 
 class ProductController extends GetxController {
   var quantity = 1.obs;
+  var listOrder = RxList<Order>().obs;
 
   void increaseItem() {
     quantity = quantity + 1;
@@ -24,7 +25,8 @@ class ProductController extends GetxController {
     StorageOrder.addOrder(order);
   }
 
-  void getOrder() {
-    StorageOrder.getOrder();
+  void getListOrder() {
+    var rsListOrder = StorageOrder.getOrder();
+    listOrder.value.assignAll(rsListOrder);
   }
 }

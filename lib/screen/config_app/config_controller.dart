@@ -71,8 +71,8 @@ class ConfigController extends GetxController {
       configApp.isShowIconEmail = data.isShowIconEmail ?? false;
       configApp.isShowIconFacebook = data.isShowIconFacebook ?? false;
       configApp.isShowIconZalo = data.isShowIconZalo ?? false;
-      addButton();
       updateTheme();
+      addButton();
       isLoadingGet.value = false;
       return true;
     } catch (err) {
@@ -104,7 +104,7 @@ class ConfigController extends GetxController {
           labelText: configApp.phoneNumberHotline ?? "",
           currentButton: FloatingActionButton(
             heroTag: "hotline",
-            backgroundColor: Colors.redAccent,
+            backgroundColor: currentTheme.value.primaryColor,
             mini: true,
             child: Icon(Icons.phone),
             onPressed: () {},
@@ -116,7 +116,7 @@ class ConfigController extends GetxController {
           labelText: configApp.contactEmail ?? "",
           currentButton: FloatingActionButton(
             heroTag: "email",
-            backgroundColor: Colors.redAccent,
+            backgroundColor: currentTheme.value.primaryColor,
             mini: true,
             child: Icon(Icons.email),
             onPressed: () {},
@@ -128,7 +128,7 @@ class ConfigController extends GetxController {
           labelText: configApp.idFacebook ?? "",
           currentButton: FloatingActionButton(
             heroTag: "facebook",
-            backgroundColor: Colors.redAccent,
+            backgroundColor: currentTheme.value.primaryColor,
             mini: true,
             child: Container(
               padding: EdgeInsets.all(12),
@@ -149,7 +149,7 @@ class ConfigController extends GetxController {
           labelText: configApp.idZalo ?? "",
           currentButton: FloatingActionButton(
             heroTag: "zalo",
-            backgroundColor: Colors.redAccent,
+            backgroundColor: currentTheme.value.primaryColor,
             mini: true,
             child: Container(
               height: 40,

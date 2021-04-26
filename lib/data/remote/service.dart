@@ -42,10 +42,10 @@ abstract class SahaService {
   Future<AllProductResponse> getAllProduct(
       @Path() String storeCode,
       @Query("search") String search,
-      @Query("idCategory") String idCategory,
+      @Query("category_ids") String idCategory,
       @Query("descending") bool descending,
       @Query("details") String details,
-      @Query("sortBy") String sortBy);
+      @Query("sort_by") String sortBy);
 
   @GET("type_of_store")
   Future<TypeShopResponse> getAllTypeOfStore();
