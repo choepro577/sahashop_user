@@ -490,7 +490,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.only(left: 10, right: 10),
                     child: Row(
                       children: [
                         Text("Sắp xếp : "),
@@ -564,8 +564,11 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             Obx(
               () => Expanded(
-                child: Padding(
+                child: Container(
                   padding: const EdgeInsets.all(5.0),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                  ),
                   child: SahaSimmer(
                     isLoading: searchController.isLoadingProduct.value,
                     child: StaggeredGridView.countBuilder(
@@ -579,8 +582,8 @@ class _SearchScreenState extends State<SearchScreen> {
                               press: () {}),
                       staggeredTileBuilder: (int index) =>
                           new StaggeredTile.fit(1),
-                      mainAxisSpacing: 5.0,
-                      crossAxisSpacing: 5.0,
+                      mainAxisSpacing: 0,
+                      crossAxisSpacing: 0,
                     ),
                   ),
                 ),

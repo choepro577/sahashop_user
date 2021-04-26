@@ -53,6 +53,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: SahaAppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -120,10 +121,10 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
     return Obx(() {
       var isLoading = categoryController.isLoadingProduct.value;
       var list = isLoading ? LIST_PRODUCT_EXAMPLE : categoryController.products;
-      return SahaSimmer(
-        isLoading: isLoading,
-        child: Padding(
-          padding: const EdgeInsets.all(5.0),
+      return Padding(
+        padding: const EdgeInsets.all(2.5),
+        child: SahaSimmer(
+          isLoading: isLoading,
           child: StaggeredGridView.countBuilder(
             crossAxisCount: 2,
             itemCount: list.length,
@@ -136,8 +137,8 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                       configController.configApp.productPageType]);
                 }),
             staggeredTileBuilder: (int index) => new StaggeredTile.fit(1),
-            mainAxisSpacing: 5.0,
-            crossAxisSpacing: 5.0,
+            mainAxisSpacing: 0,
+            crossAxisSpacing: 0,
           ),
         ),
       );
