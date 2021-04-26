@@ -155,7 +155,7 @@ class ProductCard extends StatelessWidget {
                         width: 45,
                         child: SvgPicture.asset(
                           "assets/icons/flag.svg",
-                          color: Theme.of(context).primaryColor,
+                          color: Color(0xfffdd100),
                         ),
                       ),
                       Positioned(
@@ -166,10 +166,7 @@ class ProductCard extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context)
-                                  .primaryTextTheme
-                                  .headline6
-                                  .color),
+                              color: Colors.white),
                         ),
                       ),
                       Positioned(
@@ -180,10 +177,7 @@ class ProductCard extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context)
-                                  .primaryTextTheme
-                                  .headline6
-                                  .color),
+                              color: Color(0xfffd5800)),
                         ),
                       )
                     ],
@@ -218,8 +212,7 @@ class ProductCard extends StatelessWidget {
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
                       fontFamily: "nunito_bold",
-                      color:
-                          Theme.of(context).primaryTextTheme.headline6.color),
+                      color: Colors.white),
                 ),
               ),
             ],
