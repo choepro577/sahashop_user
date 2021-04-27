@@ -48,6 +48,8 @@ class ChooseStoreScreen extends StatelessWidget {
                                     index: index + 1,
                                     onChange: (store) {
                                       homeController.setNewStoreCurrent(store);
+                                      homeController
+                                          .removeAndCloseHiveBox(store);
                                     },
                                   ),
                                 ],
@@ -56,14 +58,10 @@ class ChooseStoreScreen extends StatelessWidget {
                     SahaButtonFullParent(
                       text: "Thêm cửa hàng",
                       onPressed: () {
-                        Get.to(() => AddStore())
-                            .then((value) => {
-                          if (value == "added")
-                            {
-                              chooseStoreController
-                                  .getListStore()
-                            }
-                        });
+                        Get.to(() => AddStore()).then((value) => {
+                              if (value == "added")
+                                {chooseStoreController.getListStore()}
+                            });
                       },
                     )
                   ],

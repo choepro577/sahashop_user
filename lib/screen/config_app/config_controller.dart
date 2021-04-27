@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
+import 'package:sahashop_user/const/const_database_hive.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/screen/config_app/screens_config/font_type/font_data.dart';
 import 'package:sahashop_user/utils/color.dart';
@@ -167,5 +169,9 @@ class ConfigController extends GetxController {
 
   void deleteContactButton() {
     contactButton = RxList<UnicornButton>();
+  }
+
+  void openBoxHiveCurrentStore() {
+    Hive.openBox(CART + '${UserInfo().getCurrentStoreCode()}');
   }
 }

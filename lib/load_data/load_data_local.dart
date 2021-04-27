@@ -4,6 +4,7 @@ import 'package:sahashop_user/const/const_database_hive.dart';
 import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/model/order.dart';
 import 'package:sahashop_user/model/product.dart';
+import 'package:sahashop_user/utils/user_info.dart';
 
 class LoadDataLocal {
   static void load() async {
@@ -16,6 +17,5 @@ class LoadDataLocal {
     Hive.registerAdapter(AttributesAdapter());
     Hive.registerAdapter(ImageProductAdapter());
     Hive.registerAdapter(CategoryAdapter());
-    Hive.openBox(CART);
   }
 }

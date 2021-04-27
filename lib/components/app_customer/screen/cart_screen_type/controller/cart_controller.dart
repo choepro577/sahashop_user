@@ -16,5 +16,6 @@ class CartController extends GetxController {
 
   void removeProduct(int index) {
     StorageOrder.removeProductInCart(index);
+    totalMoney.value = 0;
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/controller/cart_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/pay_screen/pay_screen.dart';
+import 'package:sahashop_user/components/app_customer/screen/product_screen/controller/product_controller.dart';
 import 'package:sahashop_user/components/utils/money.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/const/constant.dart';
@@ -17,6 +18,7 @@ class CartScreen1 extends StatefulWidget {
 
 class _CartScreen1State extends State<CartScreen1> {
   CartController cartController;
+  ProductController productController = Get.find();
   List<Order> listOrder;
 
   @override
@@ -72,6 +74,7 @@ class _CartScreen1State extends State<CartScreen1> {
                   // cartController.listOrder.value.removeAt(index);
                   cartController.removeProduct(index);
                   cartController.getListOrder();
+                  productController.getListOrder();
                 },
                 background: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),

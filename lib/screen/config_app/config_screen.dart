@@ -32,6 +32,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
   void initState() {
     super.initState();
     configController.getAppTheme();
+    configController.openBoxHiveCurrentStore();
     // dataAppController.getAppTheme();
   }
 
@@ -49,7 +50,6 @@ class _ConfigScreenState extends State<ConfigScreen> {
     // TODO: implement build
     return Scaffold(
         appBar: SahaAppBar(
-
           leading: IconButton(
             color: Colors.black87,
             icon: Icon(Icons.arrow_back_ios),
@@ -59,13 +59,11 @@ class _ConfigScreenState extends State<ConfigScreen> {
           ),
           title: Text(
             'Chỉnh sửa giao diện',
-            style: TextStyle(
-              color: Colors.black87
-            ),
+            style: TextStyle(color: Colors.black87),
           ),
           actions: [
             IconButton(
-              color: Colors.blueAccent,
+                color: Colors.blueAccent,
                 icon: Icon(Icons.add_to_home_screen_sharp),
                 onPressed: () {
                   setState(() {

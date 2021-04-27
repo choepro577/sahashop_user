@@ -5,8 +5,6 @@ import 'components/app_customer/screen/data_app_screen.dart';
 import 'model/theme_model.dart';
 import 'saha_load_app.dart';
 
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
@@ -16,9 +14,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      getPages: [
-        GetPage(name: '/loadApp', page: () => LoadAppScreen()),
-      ],
       title: 'SahaShop',
       theme: SahaUserPrimaryTheme,
       home: SahaMainScreen(),

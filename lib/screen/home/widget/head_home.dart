@@ -69,7 +69,7 @@ class HeadHome extends StatelessWidget {
         ),
         Obx(() => AnimatedContainer(
               width: double.infinity,
-              height: homeController.isExpansion.value ? 0 : 320,
+              height: homeController.isExpansion.value ? 0 : 250,
               duration: Duration(milliseconds: 500),
               curve: Curves.easeInQuad,
               child: SingleChildScrollView(
@@ -101,13 +101,6 @@ class HeadHome extends StatelessWidget {
                               press: () {
                                 Get.to(() => ConfigScreen());
                                 Get.put(ConfigController());
-                              },
-                            ),
-                            ItemStoreView(
-                              icon: 'assets/icons/gift_icon.svg',
-                              text: 'Giỏ hàng',
-                              press: () {
-                                Get.to(CartScreen1());
                               },
                             ),
                           ]),
