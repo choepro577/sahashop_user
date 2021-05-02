@@ -21,7 +21,7 @@ class SahaButtonFullParent extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Padding(
-      padding: const EdgeInsets.only(left: 8, right: 8),
+      padding: const EdgeInsets.only(left: 25, right: 25),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: color,
@@ -29,10 +29,7 @@ class SahaButtonFullParent extends StatelessWidget {
           onPrimary: Colors.white,
           shape: RoundedRectangleBorder(
             side: colorBorder == null
-                ? BorderSide(
-              width: 0,
-              color: Colors.transparent
-            )
+                ? BorderSide(width: 0, color: Colors.transparent)
                 : BorderSide(
                     width: 1.0,
                     color: colorBorder,
@@ -49,7 +46,8 @@ class SahaButtonFullParent extends StatelessWidget {
             Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 5,right: 5,top: 3,bottom: 3),
+                  padding: const EdgeInsets.only(
+                      left: 10, right: 10, top: 3, bottom: 3),
                   child: Text(
                     "$text",
                     style: TextStyle(color: textColor ?? Colors.white),

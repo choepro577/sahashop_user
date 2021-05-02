@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/controller/cart_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/choose_address_screen/choose_address_screen.dart';
+import 'package:sahashop_user/components/app_customer/screen/pay_screen/controller/pay_controller.dart';
 import 'package:sahashop_user/components/utils/money.dart';
 import 'package:sahashop_user/const/constant.dart';
 
@@ -14,14 +15,17 @@ class PayScreen extends StatefulWidget {
   _PayScreenState createState() => _PayScreenState();
 }
 
-class _PayScreenState extends State<PayScreen> {
-  CartController cartController;
-
-  final oCcy = new NumberFormat("#,##0", "en_US");
+class _PayScreenState extends State<PayScreen>
+    with SingleTickerProviderStateMixin {
+  PayController payController;
+  final dataKey = new GlobalKey();
+  Color _color = Colors.transparent;
+  double _opacityCurrent = 1;
 
   @override
   void initState() {
-    cartController = Get.find();
+    payController = Get.put(PayController());
+    payController.getListOrder();
     super.initState();
   }
 
@@ -36,57 +40,161 @@ class _PayScreenState extends State<PayScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Card(
-                child: InkWell(
-                  onTap: () {
-                    Get.to(() => ChooseAddressScreen());
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(6),
-                              height: 30,
-                              width: 30,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFF5F6F9),
-                                shape: BoxShape.circle,
-                              ),
-                              child: SvgPicture.asset(
-                                "assets/icons/location.svg",
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+              SizedBox(
+                key: dataKey,
+                height: 5,
+              ),
+              Obx(
+                () => Column(
+                  children: [
+                    if (payController.infoAddress.value != null)
+                      Card(
+                        child: InkWell(
+                          onTap: () {
+                            Get.to(() => ChooseAddressScreen());
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Địa chỉ nhận hàng :"),
-                                Container(
-                                  width: Get.width * 0.7,
-                                  child: Text(
-                                    "-----------------------------------------------------------",
-                                    maxLines: 2,
-                                  ),
-                                )
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(6),
+                                      height: 30,
+                                      width: 30,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFF5F6F9),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: SvgPicture.asset(
+                                        "assets/icons/location.svg",
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Địa chỉ nhận hàng :"),
+                                        Container(
+                                          width: Get.width * 0.7,
+                                          child: Text(
+                                            "${payController.infoAddress.value.name}  | ${payController.infoAddress.value.phone}",
+                                            maxLines: 2,
+                                          ),
+                                        ),
+                                        Container(
+                                          width: Get.width * 0.7,
+                                          child: Text(
+                                            "${payController.infoAddress.value.addressDetail}",
+                                            maxLines: 2,
+                                          ),
+                                        ),
+                                        Container(
+                                          width: Get.width * 0.7,
+                                          child: Text(
+                                            "${payController.infoAddress.value.district}, ${payController.infoAddress.value.wards}, ${payController.infoAddress.value.city}",
+                                            style: TextStyle(
+                                                color: Colors.grey[700],
+                                                fontSize: 13),
+                                            maxLines: 2,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.arrow_forward_ios_rounded)
+                                  ],
+                                ),
                               ],
                             ),
-                          ],
+                          ),
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [Icon(Icons.arrow_forward_ios_rounded)],
+                      )
+                    else
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: AnimatedOpacity(
+                          opacity: _opacityCurrent,
+                          duration: const Duration(seconds: 1),
+                          child: AnimatedContainer(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: _color)),
+                            duration: Duration(seconds: 1),
+                            child: Card(
+                              child: InkWell(
+                                onTap: () {
+                                  Get.to(() => ChooseAddressScreen());
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.all(6),
+                                            height: 30,
+                                            width: 30,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xFFF5F6F9),
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: SvgPicture.asset(
+                                              "assets/icons/location.svg",
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text("Địa chỉ nhận hàng :"),
+                                              Container(
+                                                width: Get.width * 0.7,
+                                                child: Text(
+                                                  "Chưa chọn địa chỉ nhận hàng (nhấn để chọn)",
+                                                  maxLines: 2,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.arrow_forward_ios_rounded)
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
+                  ],
                 ),
               ),
               Container(
@@ -108,7 +216,7 @@ class _PayScreenState extends State<PayScreen> {
                 ),
               ),
               ...List.generate(
-                cartController.listOrder.value.length,
+                payController.listOrder.value.length,
                 (index) => Container(
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
@@ -130,7 +238,7 @@ class _PayScreenState extends State<PayScreen> {
                               borderRadius: BorderRadius.circular(10),
                               child: CachedNetworkImage(
                                 fit: BoxFit.cover,
-                                imageUrl: cartController.listOrder.value[index]
+                                imageUrl: payController.listOrder.value[index]
                                     .product.images[0].imageUrl,
                                 errorWidget: (context, url, error) => ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
@@ -149,34 +257,39 @@ class _PayScreenState extends State<PayScreen> {
                         ),
                       ),
                       SizedBox(width: 20),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            cartController
-                                    .listOrder.value[index].product.name ??
-                                "Loi san pham",
-                            style: TextStyle(color: Colors.black, fontSize: 16),
-                            maxLines: 2,
-                          ),
-                          SizedBox(height: 10),
-                          Text.rich(
-                            TextSpan(
-                              text:
-                                  "\$${FormatMoney.toVND(cartController.listOrder.value[index].product.price)}",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: SahaPrimaryColor),
-                              children: [
-                                TextSpan(
-                                    text:
-                                        " x ${cartController.listOrder.value[index].quantity}",
-                                    style:
-                                        Theme.of(context).textTheme.bodyText1),
-                              ],
+                      Container(
+                        width: Get.width * 0.5,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              payController
+                                      .listOrder.value[index].product.name ??
+                                  "Loi san pham",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 16),
+                              maxLines: 2,
                             ),
-                          )
-                        ],
+                            SizedBox(height: 10),
+                            Text.rich(
+                              TextSpan(
+                                text:
+                                    "\$${FormatMoney.toVND(payController.listOrder.value[index].product.price)}",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: SahaPrimaryColor),
+                                children: [
+                                  TextSpan(
+                                      text:
+                                          " x ${payController.listOrder.value[index].quantity}",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       )
                     ],
                   ),
@@ -272,12 +385,12 @@ class _PayScreenState extends State<PayScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Tổng số tiền (${cartController.listOrder.value.length} sản phẩm) : ',
+                      'Tổng số tiền (${payController.listOrder.value.length} sản phẩm) : ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Obx(
                       () => Text(
-                          "${FormatMoney.toVND(cartController.totalMoney.value + 45000)}"),
+                          "${FormatMoney.toVND(payController.totalMoney.value + 45000)}"),
                     )
                   ],
                 ),
@@ -386,7 +499,7 @@ class _PayScreenState extends State<PayScreen> {
                               style: TextStyle(
                                   fontSize: 13, color: Colors.grey[700])),
                           Text(
-                              "${FormatMoney.toVND(cartController.totalMoney.value)}",
+                              "${FormatMoney.toVND(payController.totalMoney.value)}",
                               style: TextStyle(
                                   fontSize: 13, color: Colors.grey[800])),
                         ],
@@ -415,7 +528,7 @@ class _PayScreenState extends State<PayScreen> {
                             'Tổng thanh toán :',
                           ),
                           Text(
-                              "${FormatMoney.toVND(cartController.totalMoney.value + 45000)}",
+                              "${FormatMoney.toVND(payController.totalMoney.value + 45000)}",
                               style: TextStyle(
                                   fontSize: 13, color: Colors.grey[800])),
                         ],
@@ -488,7 +601,7 @@ class _PayScreenState extends State<PayScreen> {
                   ),
                   Text("Tổng thanh toán"),
                   Text(
-                    "${FormatMoney.toVND(cartController.totalMoney.value + 45000)}",
+                    "${FormatMoney.toVND(payController.totalMoney.value + 45000)}",
                     style: TextStyle(
                         fontSize: 16,
                         color: Colors.red,
@@ -500,7 +613,35 @@ class _PayScreenState extends State<PayScreen> {
                 width: 20,
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  if (payController.infoAddress.value == null) {
+                    Scrollable.ensureVisible(dataKey.currentContext,
+                        duration: Duration(milliseconds: 500));
+                    setState(() {
+                      _color = Colors.red;
+                      _opacityCurrent = 0;
+                      Future.delayed(const Duration(milliseconds: 1000), () {
+                        setState(() {
+                          _opacityCurrent = 1;
+                          Future.delayed(const Duration(milliseconds: 1000),
+                              () {
+                            setState(() {
+                              _opacityCurrent = 0;
+                              Future.delayed(const Duration(milliseconds: 1000),
+                                  () {
+                                setState(() {
+                                  _opacityCurrent = 1;
+                                });
+                              });
+                            });
+                          });
+                        });
+                      });
+                    });
+                  } else {
+                    payController.createOrders();
+                  }
+                },
                 child: Container(
                   width: 120,
                   height: 50,

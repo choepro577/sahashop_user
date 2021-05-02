@@ -124,32 +124,37 @@ class _CartScreen1State extends State<CartScreen1> {
                       ),
                     ),
                     SizedBox(width: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          cartController.listOrder.value[index].product.name ??
-                              "Loi san pham",
-                          style: TextStyle(color: Colors.black, fontSize: 16),
-                          maxLines: 2,
-                        ),
-                        SizedBox(height: 10),
-                        Text.rich(
-                          TextSpan(
-                            text:
-                                "\$${FormatMoney.toVND(cartController.listOrder.value[index].product.price)}",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: SahaPrimaryColor),
-                            children: [
-                              TextSpan(
-                                  text:
-                                      " x ${cartController.listOrder.value[index].quantity}",
-                                  style: Theme.of(context).textTheme.bodyText1),
-                            ],
+                    Container(
+                      width: Get.width * 0.5,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            cartController
+                                    .listOrder.value[index].product.name ??
+                                "Loi san pham",
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                            maxLines: 2,
                           ),
-                        )
-                      ],
+                          SizedBox(height: 10),
+                          Text.rich(
+                            TextSpan(
+                              text:
+                                  "\$${FormatMoney.toVND(cartController.listOrder.value[index].product.price)}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: SahaPrimaryColor),
+                              children: [
+                                TextSpan(
+                                    text:
+                                        " x ${cartController.listOrder.value[index].quantity}",
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     )
                   ],
                 ),

@@ -29,7 +29,6 @@ class SahaDateUtils {
     return formatHDM.format(dateTime);
   }
 
-
   String getStringMYYYYFromString(String date) {
     DateTime dateTime = getDateTimeFormString(date);
     return formatMyyyy.format(dateTime);
@@ -96,6 +95,7 @@ class SahaDateUtils {
   String getDateTimeString2(DateTime dateTime) {
     return formatYMD_HHMMSS.format(dateTime);
   }
+
   String getDateTimeString3(DateTime dateTime) {
     return formatYMD_HHMM.format(dateTime);
   }
@@ -135,7 +135,9 @@ class SahaDateUtils {
   }
 
   bool isSameDate(DateTime date1, DateTime date2) {
-    return date1.month == date2.month && date1.year == date2.year && date1.day == date2.day;
+    return date1.month == date2.month &&
+        date1.year == date2.year &&
+        date1.day == date2.day;
   }
 
   int dayOfYear(DateTime date) {
@@ -158,8 +160,11 @@ class SahaDateUtils {
   }
 
   String getTimeByMinute(double minutes) {
-    String hour = (minutes ~/ 60 < 10) ? '0${minutes ~/ 60}' : '${minutes ~/ 60}';
-    String minute = ((minutes % 60).toInt() < 10) ? '0${(minutes % 60).toInt()}' : '${(minutes % 60).toInt()}';
+    String hour =
+        (minutes ~/ 60 < 10) ? '0${minutes ~/ 60}' : '${minutes ~/ 60}';
+    String minute = ((minutes % 60).toInt() < 10)
+        ? '0${(minutes % 60).toInt()}'
+        : '${(minutes % 60).toInt()}';
     return '$hour:$minute';
   }
 
@@ -180,12 +185,14 @@ class SahaDateUtils {
   }
 
   String getStringEndOfTheDay(DateTime dateTime) {
-    DateTime endDate = DateTime(dateTime.year, dateTime.month, dateTime.day, 23, 59);
+    DateTime endDate =
+        DateTime(dateTime.year, dateTime.month, dateTime.day, 23, 59);
     return getDateTimeString2(endDate);
   }
 
   String getStringBeginOfTheDay(DateTime dateTime) {
-    DateTime endDate = DateTime(dateTime.year, dateTime.month, dateTime.day, 00, 00);
+    DateTime endDate =
+        DateTime(dateTime.year, dateTime.month, dateTime.day, 00, 00);
     return getDateTimeString2(endDate);
   }
 
@@ -199,25 +206,29 @@ class SahaDateUtils {
 
   String getFirstDayOfWeek() {
     DateTime now = DateTime.now();
-    DateTime firtDayOfWeek = new DateTime(now.year, now.month, now.day - now.weekday + 1); //tinh thu 2
+    DateTime firtDayOfWeek = new DateTime(
+        now.year, now.month, now.day - now.weekday + 1); //tinh thu 2
     return formatYMD.format(firtDayOfWeek);
   }
 
   String getEndDayOfWeek() {
     DateTime now = DateTime.now();
-    DateTime endDayOfWeek = new DateTime(now.year, now.month, now.day + (7 - now.weekday));
+    DateTime endDayOfWeek =
+        new DateTime(now.year, now.month, now.day + (7 - now.weekday));
     return formatYMD.format(endDayOfWeek);
   }
 
   String getFirstDayOfLastWeek() {
     DateTime now = DateTime.now();
-    DateTime firtDayOfWeek = new DateTime(now.year, now.month, now.day - now.weekday + 1 - 7);
+    DateTime firtDayOfWeek =
+        new DateTime(now.year, now.month, now.day - now.weekday + 1 - 7);
     return formatYMD.format(firtDayOfWeek);
   }
 
   String getEndDayOfLastWeek() {
     DateTime now = DateTime.now();
-    DateTime endDayOfWeek = new DateTime(now.year, now.month, now.day + (7 - now.weekday) - 7);
+    DateTime endDayOfWeek =
+        new DateTime(now.year, now.month, now.day + (7 - now.weekday) - 7);
     return formatYMD.format(endDayOfWeek);
   }
 
@@ -348,6 +359,10 @@ class SahaDateUtils {
 
   String getHHMMSS(DateTime dateTime) {
     return DateFormat('hh:mm:ss').format(dateTime);
+  }
+
+  String getHHMM(DateTime dateTime) {
+    return DateFormat('hh:mm').format(dateTime);
   }
 
   Future<TimeOfDay> selectTime(BuildContext context, TimeOfDay initTime) async {

@@ -5,10 +5,13 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/example/info_address.dart';
 import 'package:sahashop_user/components/app_customer/screen/choose_address_screen/config_address_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/choose_address_screen/new_address_screen.dart';
+import 'package:sahashop_user/components/app_customer/screen/pay_screen/controller/pay_controller.dart';
 import 'package:sahashop_user/model/info_address.dart';
 
 class ChooseAddressScreen extends StatelessWidget {
   bool isChoose = true;
+  PayController payController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -72,54 +75,60 @@ class ChooseAddressScreen extends StatelessWidget {
   Widget addressSave(BuildContext context, InfoAddress infoAddress) {
     return Column(
       children: [
-        Container(
-          padding: EdgeInsets.all(10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${infoAddress.name}",
-                    style: TextStyle(fontSize: 15),
-                  ),
-                  Text(
-                    "${infoAddress.phone}",
-                    style: TextStyle(color: Colors.grey[700], fontSize: 13),
-                  ),
-                  Text(
-                    "${infoAddress.addressDetail}",
-                    style: TextStyle(color: Colors.grey[700], fontSize: 13),
-                  ),
-                  Text(
-                    "${infoAddress.district}, ${infoAddress.wards}, ${infoAddress.city}",
-                    style: TextStyle(color: Colors.grey[700], fontSize: 13),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Icon(
-                    Icons.check_outlined,
-                    color: isChoose
-                        ? Theme.of(context).primaryColor
-                        : Colors.grey[500],
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(6),
-                    height: 30,
-                    width: 30,
-                    child: SvgPicture.asset(
-                      "assets/icons/pin.svg",
+        InkWell(
+          onTap: () {
+            payController.infoAddress.value = infoAddress;
+            Get.back();
+          },
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${infoAddress.name}",
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Text(
+                      "${infoAddress.phone}",
+                      style: TextStyle(color: Colors.grey[700], fontSize: 13),
+                    ),
+                    Text(
+                      "${infoAddress.addressDetail}",
+                      style: TextStyle(color: Colors.grey[700], fontSize: 13),
+                    ),
+                    Text(
+                      "${infoAddress.district}, ${infoAddress.wards}, ${infoAddress.city}",
+                      style: TextStyle(color: Colors.grey[700], fontSize: 13),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Icon(
+                      Icons.check_outlined,
                       color: isChoose
                           ? Theme.of(context).primaryColor
                           : Colors.grey[500],
                     ),
-                  ),
-                ],
-              )
-            ],
+                    Container(
+                      padding: EdgeInsets.all(6),
+                      height: 30,
+                      width: 30,
+                      child: SvgPicture.asset(
+                        "assets/icons/pin.svg",
+                        color: isChoose
+                            ? Theme.of(context).primaryColor
+                            : Colors.grey[500],
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
         Container(

@@ -17,7 +17,7 @@ import 'response/store/type_store_respones.dart';
 
 part 'service.g.dart';
 
-@RestApi(baseUrl: "https://stkvip.net/api/public/api/")
+@RestApi(baseUrl: "https://sahashop.net/api/public/api/")
 abstract class SahaService {
   /// Retrofit factory
   factory SahaService(Dio dio) => _SahaService(dio);

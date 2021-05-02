@@ -263,7 +263,7 @@ class _NewAddressScreenState extends State<NewAddressScreen> {
         ),
       ),
       bottomNavigationBar: Container(
-        height: 80,
+        height: 65,
         color: Colors.white,
         child: Column(
           children: [

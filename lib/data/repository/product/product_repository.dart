@@ -1,4 +1,3 @@
-import 'package:sahashop_user/data/remote/response/product/product_response.dart';
 import 'package:sahashop_user/data/remote/saha_service_manager.dart';
 import 'package:sahashop_user/model/product.dart';
 import 'package:sahashop_user/utils/user_info.dart';
@@ -16,21 +15,22 @@ class ProductRepository {
     }
   }
 
-  Future<List<Product>> getAllProduct({String search, String idCategory,
-      bool descending, String details, String sortBy}) async {
+  Future<List<Product>> getAllProduct(
+      {String search,
+      String idCategory,
+      bool descending,
+      String details,
+      String sortBy}) async {
     try {
-      var res = await SahaServiceManager()
-          .service
-          .getAllProduct(     UserInfo().getCurrentStoreCode(),
+      var res = await SahaServiceManager().service.getAllProduct(
+          UserInfo().getCurrentStoreCode(),
           search ?? "",
           idCategory ?? "[]",
           descending ?? false,
           details ?? "",
           sortBy ?? "");
 
-
       print(res.data.data);
-
 
       return res.data.data;
     } catch (err) {

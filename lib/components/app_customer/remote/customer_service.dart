@@ -3,6 +3,7 @@ import 'package:retrofit/retrofit.dart';
 
 import 'package:sahashop_user/components/app_customer/remote/response/category/all_category_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response/config_ui/app_theme_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response/orders/order_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response/product/all_product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response/product/query_product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response/store/all_store_response.dart';
@@ -10,7 +11,7 @@ import 'package:sahashop_user/components/app_customer/remote/response/store/type
 
 part 'customer_service.g.dart';
 
-@RestApi(baseUrl: "https://stkvip.net/api/public/api/customer/")
+@RestApi(baseUrl: "https://sahashop.net/api/public/api/customer/")
 abstract class CustomerService {
   /// Retrofit factory
   factory CustomerService(Dio dio) => _CustomerService(dio);
@@ -42,4 +43,8 @@ abstract class CustomerService {
       @Query("descending") bool descending,
       @Query("details") String details,
       @Query("sort_by") String sortBy);
+
+  @POST("{storeCode}/orders")
+  Future<OrdersResponse> createOrder(
+      @Path() String storeCode, @Body() Map<String, dynamic> body);
 }

@@ -7,6 +7,7 @@ import 'package:sahashop_user/screen/config_app/config_controller.dart';
 import 'package:sahashop_user/screen/config_app/config_screen.dart';
 import 'package:sahashop_user/screen/home/choose_store/choose_store.dart';
 import 'package:sahashop_user/screen/inventory/inventory_screen.dart';
+import 'package:sahashop_user/screen/maketing_chanel/marketing_chanel_screen.dart';
 
 import '../home_controller.dart';
 import 'funtionList.dart';
@@ -69,7 +70,7 @@ class HeadHome extends StatelessWidget {
         ),
         Obx(() => AnimatedContainer(
               width: double.infinity,
-              height: homeController.isExpansion.value ? 0 : 250,
+              height: homeController.isExpansion.value ? 0 : 320,
               duration: Duration(milliseconds: 500),
               curve: Curves.easeInQuad,
               child: SingleChildScrollView(
@@ -100,6 +101,14 @@ class HeadHome extends StatelessWidget {
                               text: 'Chỉnh sửa giao diện',
                               press: () {
                                 Get.to(() => ConfigScreen());
+                                Get.put(ConfigController());
+                              },
+                            ),
+                            ItemStoreView(
+                              icon: 'assets/icons/gift_icon.svg',
+                              text: 'Chương trình khuyến mãi',
+                              press: () {
+                                Get.to(() => MarketingChanelScreen());
                                 Get.put(ConfigController());
                               },
                             ),
