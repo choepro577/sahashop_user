@@ -35,7 +35,7 @@ class AddProductScreen extends StatelessWidget {
         key: _formKey,
         child: Scaffold(
             appBar: SahaAppBar(
-              title: Text("Thêm sản phẩm"),
+              titleText: "Thêm sản phẩm",
               actions: [
                 InkWell(
                   onTap: () {

@@ -1,49 +1,33 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/components/product_item/product_card.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_box_button.dart';
-import 'package:sahashop_user/components/saha_user/customCard/product_card_exam.dart';
 import 'package:sahashop_user/components/saha_user/special_card/special_offer_card_type1.dart';
+import 'package:sahashop_user/controller/config_controller.dart';
 import 'package:sahashop_user/model/button.dart';
 import 'package:sahashop_user/model/category.dart';
-import 'package:sahashop_user/model/product2222.dart';
-import 'package:sahashop_user/screen/config_app/config_controller.dart';
 import 'package:sahashop_user/screen/home/widget/section_title.dart';
 import 'package:unicorndial/unicorndial.dart';
 
+import '../data_app_controller.dart';
 import '../data_widget_config.dart';
 
 class HomeScreenStyle2 extends StatefulWidget {
   final List<Category> categories;
   final List<ButtonConfig> buttonConfigs;
-  final Function(Product) onPressedProduct;
-  final Function(Product) onPressedCategories;
-  final Function(Product) onPressedButtonConfig;
 
-  HomeScreenStyle2(
-      {Key key,
-      this.categories,
-      this.buttonConfigs,
-      this.onPressedProduct,
-      this.onPressedCategories,
-      this.onPressedButtonConfig})
-      : super(key: key);
+  HomeScreenStyle2({
+    Key key,
+    this.categories,
+    this.buttonConfigs,
+  }) : super(key: key);
 
   @override
   _HomeScreenStyle2State createState() => _HomeScreenStyle2State();
 }
 
 class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
-  final List<Map<String, dynamic>> sahaBoxButtons = [
-    {"icon": "assets/icons/bill_icon.svg", "text": "Bill"},
-    {"icon": "assets/icons/gift_icon.svg", "text": "Game"},
-    {"icon": "assets/icons/gift_icon.svg", "text": "Daily Gift"},
-    {"icon": "assets/icons/discover.svg", "text": "More"},
-    {"icon": "assets/icons/gift_icon.svg", "text": "Daily Gift"},
-    {"icon": "assets/icons/discover.svg", "text": "More"},
-    {"icon": "assets/icons/gift_icon.svg", "text": "Daily Gift"},
-    {"icon": "assets/icons/discover.svg", "text": "More"},
-  ];
-
   final List<Map<String, dynamic>> option = [
     {"icon": "assets/icons/bill_icon.svg", "text": "Ví"},
     {"icon": "assets/icons/gift_icon.svg", "text": "My Voucher"},
@@ -56,12 +40,22 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
   ];
 
   ConfigController configController = Get.find();
+  DataAppCustomerController dataAppCustomerController = Get.find();
 
   @override
   void initState() {}
 
   @override
   Widget build(BuildContext context) {
+    var discountProducts = [];
+
+    if (dataAppCustomerController.homeData?.discountProducts?.list != null) {
+      dataAppCustomerController.homeData.discountProducts.list
+          .forEach((listDiscount) {
+        discountProducts.addAll(listDiscount.products);
+      });
+    }
+
     return Scaffold(
       floatingActionButton: configController.contactButton.isEmpty
           ? Container()
@@ -92,7 +86,7 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
             SizedBox(
               height: 10,
             ),
-            LIST_WIDGET_BANNER[configController.configApp.carouselType],
+            dataAppCustomerController.getBanner(),
             Column(
               children: [
                 SizedBox(
@@ -123,26 +117,28 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                   child: SectionTitle(
                     title: "Danh mục cửa hàng",
                     press: () {
+
+
                       Get.to(LIST_WIDGET_CATEGORY_PRODUCT[
                           configController.configApp.categoryPageType]);
+
+
                     },
                   ),
                 ),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: List.generate(
-                      sahaBoxButtons.length,
-                      (index) => SahaBoxButton(
-                        icon: sahaBoxButtons[index]["icon"],
-                        text: sahaBoxButtons[index]["text"],
-                        numOfitem: sahaBoxButtons[index]["numOfitem"],
-                        press: () {},
-                      ),
-                    ),
-                  ),
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children:
+                          dataAppCustomerController.homeData.allCategory.list
+                              .map(
+                                (category) => CategoryButton(
+                                  category: category,
+                                ),
+                              )
+                              .toList()),
                 ),
               ],
             ),
@@ -159,51 +155,155 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children: [
-                      SpecialOfferCard(
-                        image: "assets/images/Image Banner 2.png",
-                        category: "Smartphone",
-                        numOfBrands: 18,
-                        press: () {},
-                      ),
-                      SpecialOfferCard(
-                        image: "assets/images/Image Banner 3.png",
-                        category: "Fashion",
-                        numOfBrands: 24,
-                        press: () {},
-                      ),
-                      SizedBox(width: 20),
-                    ],
-                  ),
+                      children:
+                          dataAppCustomerController.homeData.newProduct.list
+                              .map(
+                                (e) => SpecialOfferCard(
+                                  image: "assets/images/Image Banner 2.png",
+                                  category: "Smartphone",
+                                  numOfBrands: 18,
+                                  press: () {},
+                                ),
+                              )
+                              .toList()),
                 ),
               ],
             ),
+            discountProducts.length == 0 ?Container():      Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child:
+                      SectionTitle(title: "Sản phẩm khuyến mãi", press: () {}),
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 251,
+                    alignment: Alignment.topLeft,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: discountProducts
+                            .map((product) => ProductItem(
+                                  width: 180,
+                                  product: product,
+                                ))
+                            .toList(),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: SectionTitle(title: "Sản phẩm bán chạy", press: () {}),
                 ),
                 SizedBox(height: 20),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      ...List.generate(
-                        demoProducts.length,
-                        (index) {
-                          if (demoProducts[index].isPopular)
-                            return ProductCardExam(
-                                product: demoProducts[index]);
-                          return SizedBox
-                              .shrink(); // here by default width and height is 0
-                        },
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 251,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: dataAppCustomerController
+                            .homeData.bestSellProduct.list
+                            .map((product) => ProductItem(
+                                  width: 180,
+                                  product: product,
+                                ))
+                            .toList(),
                       ),
-                      SizedBox(width: 20),
-                    ],
+                    ),
                   ),
                 )
               ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: SectionTitle(title: "Sản phẩm mới", press: () {}),
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 251,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children:
+                            dataAppCustomerController.homeData.newProduct.list
+                                .map((product) => ProductItem(
+                                      width: 180,
+                                      product: product,
+                                    ))
+                                .toList(),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CategoryButton extends StatelessWidget {
+  const CategoryButton({Key key, this.category}) : super(key: key);
+
+  final Category category;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onTap: () {},
+        child: Stack(
+          children: [
+            SizedBox(
+              width: 80,
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(15),
+                    height: 55,
+                    width: 55,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    child: CachedNetworkImage(
+                      imageUrl: category.imageUrl ?? "",
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        category?.name,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

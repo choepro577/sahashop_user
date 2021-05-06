@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_widget_config.dart';
 import 'package:sahashop_user/components/saha_user/carousel/carousel_select.dart';
-import 'package:sahashop_user/screen/config_app/config_controller.dart';
+import 'package:sahashop_user/controller/config_controller.dart';
 
 class SearchBarConfig extends StatelessWidget {
   final ConfigController controller = Get.find();

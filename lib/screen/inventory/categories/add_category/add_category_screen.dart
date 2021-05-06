@@ -22,7 +22,7 @@ class AddCategoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SahaAppBar(
-        title: Text("Thêm danh mục"),
+       titleText: "Thêm danh mục",
       ),
       body: Stack(
           children: [

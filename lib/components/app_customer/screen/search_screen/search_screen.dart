@@ -2,12 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/components/product_item/product_card.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
-import 'package:sahashop_user/components/saha_user/customCard/product_card.dart';
 import 'package:sahashop_user/components/saha_user/iconButton/iconbtn_counter.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
-import 'package:shimmer/shimmer.dart';
 import 'search_controller.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -70,7 +69,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       endDrawerEnableOpenDragGesture: false,
       appBar: SahaAppBar(
-        title: Row(
+        titleChild: Row(
           children: [
             Expanded(
               child: Container(
@@ -158,14 +157,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                     .listCategorySelected[index]
                                                     .values
                                                     .first);
-                                        print(searchController
-                                            .listCategorySelected[index]
-                                            .values
-                                            .first);
-                                        print(searchController
-                                            .listCategorySelected[index]
-                                            .keys
-                                            .first);
+
                                       });
                                     },
                                   ),
@@ -575,11 +567,10 @@ class _SearchScreenState extends State<SearchScreen> {
                       crossAxisCount: 2,
                       itemCount: searchController.listProduct.length,
                       itemBuilder: (BuildContext context, int index) =>
-                          ProductCard(
-                              product: searchController.listProduct[index],
-                              isLoading:
-                                  searchController.isLoadingProduct.value,
-                              press: () {}),
+                          ProductItem(
+                        product: searchController.listProduct[index],
+                        isLoading: searchController.isLoadingProduct.value,
+                      ),
                       staggeredTileBuilder: (int index) =>
                           new StaggeredTile.fit(1),
                       mainAxisSpacing: 0,

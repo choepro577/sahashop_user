@@ -18,7 +18,7 @@ class CategoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: SahaAppBar(
-          title: Text("Tất cả danh mục"),
+         titleText: "Tất cả danh mục",
         ),
         body: Obx(
           () => categoryController.loading.value

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/dropDownCustom/dropDownButton.dart';
-import 'package:sahashop_user/screen/config_app/config_controller.dart';
+import 'package:sahashop_user/controller/config_controller.dart';
 
 import 'font_data.dart';
 

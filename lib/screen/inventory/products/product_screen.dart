@@ -22,7 +22,7 @@ class ProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: SahaAppBar(
-          title: Text("Tất cả sản phẩm"),
+         titleText: "Tất cả sản phẩm",
         ),
         body: Obx(
               () => productController.loading.value

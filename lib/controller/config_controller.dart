@@ -5,20 +5,35 @@ import 'package:hive/hive.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/const/const_database_hive.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
+import 'package:sahashop_user/model/config_app.dart';
+import 'package:sahashop_user/model/theme_model.dart';
 import 'package:sahashop_user/screen/config_app/screens_config/font_type/font_data.dart';
 import 'package:sahashop_user/utils/color.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 import 'package:unicorndial/unicorndial.dart';
 
-import '../../model/config_app.dart';
-
 class ConfigController extends GetxController {
   ConfigApp configApp = ConfigApp();
   var currentTheme = ThemeData().obs;
+  var indexTab = 0.obs;
 
   var isLoadingGet = false.obs;
   var isLoadingCreate = false.obs;
   var contactButton = RxList<UnicornButton>();
+
+
+  @override
+  void onInit() {
+    super.onInit();
+    getAppTheme();
+    openBoxHiveCurrentStore();
+  }
+
+  @override
+  void onClose() {
+    Get.changeTheme(SahaUserPrimaryTheme);
+    deleteContactButton();
+  }
 
   ConfigController() {
     currentTheme.value = ThemeData(
@@ -26,6 +41,11 @@ class ConfigController extends GetxController {
       visualDensity: VisualDensity.adaptivePlatformDensity,
     );
   }
+
+  void setTab(int va) {
+    indexTab.value = va;
+  }
+
 
   void updateTheme() {
     currentTheme.value = ThemeData(
@@ -48,12 +68,11 @@ class ConfigController extends GetxController {
   }
 
   Future<void> getAppTheme() async {
-    isLoadingGet.value = true;
+
     try {
+      isLoadingGet.value = true;
       var data = await RepositoryManager.configUiRepository.getAppTheme();
-
       configApp.colorMain1 = data.colorMain1 ?? "#ff93b9b4";
-
       configApp.fontFamily =
           data.fontFamily != null && FONT_DATA.containsKey(data.fontFamily)
               ? data.fontFamily
@@ -79,8 +98,9 @@ class ConfigController extends GetxController {
       return true;
     } catch (err) {
       SahaAlert.showError(message: err.toString());
+      isLoadingGet.value = false;
     }
-    isLoadingGet.value = false;
+
   }
 
   Future<void> createAppTheme() async {

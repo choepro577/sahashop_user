@@ -1,129 +1,75 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/app_customer/repository/repository_customer.dart';
-import 'package:sahashop_user/components/app_customer/screen/font_data/font_data.dart';
-import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
-import 'package:sahashop_user/model/config_app.dart';
+import 'package:sahashop_user/controller/config_controller.dart';
+import 'package:sahashop_user/model/home_data.dart';
 import 'package:sahashop_user/model/product.dart';
-import 'package:unicorndial/unicorndial.dart';
-
-class ConfigAppCustomerController extends GetxController {
-  ConfigApp configApp = ConfigApp();
-  var currentTheme = ThemeData().obs;
-  var contactButton = RxList<UnicornButton>();
-  var isLoadingGet = false.obs;
-  var isLoadingCreate = false.obs;
-
-  Future<void> getAppTheme() async {
-    isLoadingGet.value = true;
-    try {
-      var data =
-          await CustomerRepositoryManager.configUiRepository.getAppTheme();
-
-      configApp.colorMain1 = data.colorMain1 ?? "#ff93b9b4";
-
-      configApp.fontFamily =
-          data.fontFamily != null && FONT_DATA.containsKey(data.fontFamily)
-              ? data.fontFamily
-              : FONT_DATA.keys.toList()[0];
-      configApp.searchType = data.searchType ?? 0;
-      configApp.carouselType = data.carouselType ?? 0;
-      configApp.homePageType = data.homePageType ?? 0;
-      configApp.categoryPageType = data.categoryPageType ?? 0;
-      configApp.productPageType = data.productPageType ?? 0;
-      configApp.cartPageType = data.cartPageType ?? 0;
-      configApp.logoUrl = data.logoUrl ?? "";
-      configApp.phoneNumberHotline = data.phoneNumberHotline ?? "";
-      configApp.contactEmail = data.contactEmail ?? "";
-      configApp.idFacebook = data.idFacebook ?? "";
-      configApp.idZalo = data.idZalo ?? "";
-      configApp.isShowIconHotline = data.isShowIconHotline ?? false;
-      configApp.isShowIconEmail = data.isShowIconEmail ?? false;
-      configApp.isShowIconFacebook = data.isShowIconFacebook ?? false;
-      configApp.isShowIconZalo = data.isShowIconZalo ?? false;
-      isLoadingGet.value = false;
-      addButton();
-      return true;
-    } catch (err) {
-      SahaAlert.showError(message: err.toString());
-    }
-    isLoadingGet.value = false;
-  }
-
-  void addButton() {
-    if (configApp.isShowIconHotline == true) {
-      contactButton.value.add(UnicornButton(
-          hasLabel: true,
-          labelText: configApp.phoneNumberHotline ?? "",
-          currentButton: FloatingActionButton(
-            backgroundColor: Colors.redAccent,
-            mini: true,
-            child: Icon(Icons.phone),
-            onPressed: () {},
-          )));
-    }
-    if (configApp.isShowIconEmail == true) {
-      contactButton.value.add(UnicornButton(
-          hasLabel: true,
-          labelText: configApp.contactEmail ?? "",
-          currentButton: FloatingActionButton(
-            backgroundColor: Colors.redAccent,
-            mini: true,
-            child: Icon(Icons.email),
-            onPressed: () {},
-          )));
-    }
-    if (configApp.isShowIconFacebook == true) {
-      contactButton.value.add(UnicornButton(
-          hasLabel: true,
-          labelText: configApp.idFacebook ?? "",
-          currentButton: FloatingActionButton(
-            backgroundColor: Colors.redAccent,
-            mini: true,
-            child: Container(
-              padding: EdgeInsets.all(12),
-              height: 40,
-              width: 40,
-              decoration: BoxDecoration(
-                color: Color(0xFFF5F6F9),
-                shape: BoxShape.circle,
-              ),
-              child: SvgPicture.asset("assets/icons/facebook-2.svg"),
-            ),
-            onPressed: () {},
-          )));
-    }
-    if (configApp.isShowIconZalo == true) {
-      contactButton.value.add(UnicornButton(
-          hasLabel: true,
-          labelText: configApp.idZalo ?? "",
-          currentButton: FloatingActionButton(
-            backgroundColor: Colors.redAccent,
-            mini: true,
-            child: Container(
-              height: 40,
-              width: 40,
-              decoration: BoxDecoration(
-                color: Color(0xFFF5F6F9),
-                shape: BoxShape.circle,
-              ),
-              child: SvgPicture.asset("assets/icons/zalo.svg"),
-            ),
-            onPressed: () {},
-          )));
-    }
-  }
-}
+import 'data_widget_config.dart';
 
 class DataAppCustomerController extends GetxController {
-  Product dataProduct = Product();
+  Product productCurrent = Product();
+  HomeData homeData = HomeData();
   DataAppCustomerController() {
-    dataProduct = LIST_PRODUCT_EXAMPLE[0];
+    productCurrent = LIST_PRODUCT_EXAMPLE[0];
   }
 
-  void setCurrentProduct(Product product) {
-    dataProduct = product;
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    getHomeData();
+  }
+
+  void toProductScreen(Product product) {
+    ConfigController configController = Get.find();
+    productCurrent = product;
+
+
+    if (configController.configApp.productPageType <
+        LIST_WIDGET_PRODUCT_SCREEN.length) {
+
+      Get.to(LIST_WIDGET_PRODUCT_SCREEN[
+          configController.configApp.productPageType]);
+    } else {
+      Get.to(LIST_WIDGET_PRODUCT_SCREEN[0]);
+
+
+    }
+  }
+
+  void toHomeScreen() {
+    ConfigController configController = Get.find();
+    if (configController.configApp?.homePageType != null &&
+        configController.configApp.homePageType <
+            LIST_WIDGET_HOME_SCREEN.length) {
+      Get.to(() =>
+          LIST_WIDGET_HOME_SCREEN[configController.configApp.homePageType]);
+    } else {
+      Get.to(() => LIST_WIDGET_HOME_SCREEN[0]);
+    }
+  }
+
+  Widget getBanner() {
+
+    ConfigController configController = Get.find();
+
+    if (configController.configApp?.carouselType != null &&
+        configController.configApp.carouselType < LIST_WIDGET_BANNER.length) {
+      return LIST_WIDGET_BANNER[configController.configApp.carouselType];
+    } else {
+      return LIST_WIDGET_BANNER[0];
+    }
+  }
+
+  Future<void> getHomeData() async {
+    try {
+      var data = await CustomerRepositoryManager.homeDataCustomerRepository
+          .getHomeData();
+      homeData = data;
+      return true;
+    } catch (err) {
+      return false;
+    }
   }
 }

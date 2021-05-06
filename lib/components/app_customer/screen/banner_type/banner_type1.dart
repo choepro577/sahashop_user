@@ -2,6 +2,9 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../data_app_controller.dart';
 
 class BannerType1 extends StatefulWidget {
   @override
@@ -18,6 +21,8 @@ class _BannerType1State extends State<BannerType1> {
   double height;
   List<String> imgList;
 
+  DataAppCustomerController dataAppCustomerController = Get.find();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -30,7 +35,7 @@ class _BannerType1State extends State<BannerType1> {
   Widget build(BuildContext context) {
     return Column(children: [
       CarouselSlider(
-        items: imgList
+        items: dataAppCustomerController.homeData.banner.list
             .map((item) => Container(
                   child: Container(
                     margin: EdgeInsets.all(5.0),
@@ -38,7 +43,7 @@ class _BannerType1State extends State<BannerType1> {
                         borderRadius: BorderRadius.all(Radius.circular(5.0)),
                         child: Stack(
                           children: <Widget>[
-                            Image.network(item,
+                            Image.network(item.imageUrl,
                                 fit: BoxFit.cover, width: 1000.0),
                             Positioned(
                               bottom: 0.0,
@@ -58,7 +63,7 @@ class _BannerType1State extends State<BannerType1> {
                                 padding: EdgeInsets.symmetric(
                                     vertical: 10.0, horizontal: 20.0),
                                 child: Text(
-                                  'No. ${imgList.indexOf(item)} image',
+                                  'No. ${imgList.indexOf(item.title)} image',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 20.0,

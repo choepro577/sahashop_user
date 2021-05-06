@@ -21,7 +21,7 @@ class ChooseStoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SahaAppBar(
-        title: Text("Chọn cửa hàng"),
+        titleText: "Chọn cửa hàng",
       ),
       body: Obx(
         () => chooseStoreController.isLoading.value

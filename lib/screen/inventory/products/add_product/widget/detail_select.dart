@@ -36,7 +36,7 @@ class _DetailSelectState extends State<DetailSelect> {
       },
       child: Scaffold(
         appBar: SahaAppBar(
-          title: Text("Phân loại sản phẩm"),
+          titleText: "Phân loại sản phẩm",
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),

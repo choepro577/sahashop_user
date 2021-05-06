@@ -20,7 +20,7 @@ import 'search_bar_type/search_bar_type5.dart';
 import 'search_bar_type/search_bar_type6.dart';
 
 final List<Widget> LIST_WIDGET_HOME_SCREEN = [
-  HomeScreenStyle1(),
+  HomeScreenStyle2(),
   HomeScreenStyle2(),
 ];
 
