@@ -2,12 +2,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_widget_config.dart';
-import 'package:sahashop_user/screen/config_app/config_controller.dart';
+import 'package:sahashop_user/controller/config_controller.dart';
 import 'data_app_controller.dart';
 
 class LoadAppScreen extends StatefulWidget {
   final String logo;
-
   const LoadAppScreen({Key key, this.logo}) : super(key: key);
 
   @override
@@ -15,9 +14,9 @@ class LoadAppScreen extends StatefulWidget {
 }
 
 class _LoadAppScreenState extends State<LoadAppScreen> {
-  //ConfigController configAppCustomerController;
-  var configAppCustomerController = Get.put(ConfigAppCustomerController());
-  //var dataAppCustomerController = Get.put(DataAppCustomerController());
+  ConfigController configController = Get.find();
+  DataAppCustomerController dataAppCustomerController = Get.find();
+
   var isInit = false;
   @override
   void didChangeDependencies() {
@@ -26,18 +25,16 @@ class _LoadAppScreenState extends State<LoadAppScreen> {
   }
 
   Future<void> loadInit(BuildContext context) async {
-    // CustomerServiceManager.initialize();
-    await configAppCustomerController.getAppTheme();
-    // configAppCustomerController ??= ConfigController()..getAppTheme();
+
+    configController.configApp ??
+        await configController.getAppTheme();
+    dataAppCustomerController.homeData ??
+        await dataAppCustomerController.getHomeData();
+
     await Future.delayed(Duration(seconds: 1));
     isInit = true;
-    Get.to(LIST_WIDGET_HOME_SCREEN[
-            configAppCustomerController.configApp.homePageType])
-        .then((value) {
-      if (isInit) {
-        Get.back();
-      }
-    });
+
+    dataAppCustomerController.toHomeScreen();
   }
 
   @override
@@ -52,7 +49,9 @@ class _LoadAppScreenState extends State<LoadAppScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image.network(
-                widget.logo ?? configAppCustomerController.configApp.logoUrl,
+                widget.logo == null
+                    ? "https://sahavi.vn/wp-content/uploads/2018/11/cb9551447aa689f8d0b7-1536x524.png"
+                    : configController.configApp.logoUrl,
                 height: 150,
                 width: 150,
               ),

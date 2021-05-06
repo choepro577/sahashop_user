@@ -44,7 +44,7 @@ class _ProductScreen1State extends State<ProductScreen1> {
 
     productController = Get.put(ProductController());
 
-    product = dataAppController.dataProduct ?? LIST_PRODUCT_EXAMPLE;
+    product = dataAppController.productCurrent ?? LIST_PRODUCT_EXAMPLE;
     rating = widget.rating ?? 4.9;
   }
 

@@ -10,7 +10,7 @@ class InventoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SahaAppBar(
-        title: Text("Quản lý mặt hàng"),
+     titleText: "Quản lý mặt hàng",
       ),
       body: Column(
         children: [

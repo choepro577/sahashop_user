@@ -14,6 +14,13 @@ class CategoryController extends GetxController {
   var products = RxList<Product>();
   var categoryCurrent = Category().obs;
 
+  @override
+  void onInit() {
+    super.onInit();
+    getAllCategory();
+
+  }
+
   void setCategoryCurrent(Category category) {
     isLoadingProduct.value = true;
     categoryCurrent.value = category;
@@ -38,7 +45,9 @@ class CategoryController extends GetxController {
     try {
       var res =
           await CustomerRepositoryManager.categoryRepository.getAllCategory();
-      categories.assignAll(res);
+
+      categories(res);
+
       setCategoryCurrent(categories.value[0]);
     } catch (err) {
       print(err);

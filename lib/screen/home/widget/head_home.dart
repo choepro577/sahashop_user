@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/cart_screen_1.dart';
 import 'package:sahashop_user/const/constant.dart';
-import 'package:sahashop_user/screen/config_app/config_controller.dart';
+import 'package:sahashop_user/controller/config_controller.dart';
 import 'package:sahashop_user/screen/config_app/config_screen.dart';
 import 'package:sahashop_user/screen/home/choose_store/choose_store.dart';
 import 'package:sahashop_user/screen/inventory/inventory_screen.dart';
 import 'package:sahashop_user/screen/maketing_chanel/marketing_chanel_screen.dart';
-
 import '../home_controller.dart';
-import 'funtionList.dart';
 
 class HeadHome extends StatelessWidget {
   List<Map<String, dynamic>> categories = [
@@ -101,7 +98,7 @@ class HeadHome extends StatelessWidget {
                               text: 'Chỉnh sửa giao diện',
                               press: () {
                                 Get.to(() => ConfigScreen());
-                                Get.put(ConfigController());
+
                               },
                             ),
                             ItemStoreView(
@@ -109,7 +106,7 @@ class HeadHome extends StatelessWidget {
                               text: 'Chương trình khuyến mãi',
                               press: () {
                                 Get.to(() => MarketingChanelScreen());
-                                Get.put(ConfigController());
+
                               },
                             ),
                           ]),

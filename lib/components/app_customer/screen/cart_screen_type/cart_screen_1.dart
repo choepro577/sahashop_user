@@ -46,7 +46,7 @@ class _CartScreen1State extends State<CartScreen1> {
     // TODO: implement build
     return Scaffold(
       appBar: SahaAppBar(
-        title: Column(
+        titleChild: Column(
           children: [
             Text(
               "Your Cart",

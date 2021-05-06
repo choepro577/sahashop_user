@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/controller/config_controller.dart';
 import 'package:sahashop_user/screen/config_app/screens_config/logo_type/select_logo_image.dart';
-
-import '../../config_controller.dart';
 
 class MainConfigLogo extends StatefulWidget {
   const MainConfigLogo({Key key})

@@ -160,6 +160,25 @@ class _CustomerService implements CustomerService {
   }
 
   @override
+  Future<HomeResponse> getHomeApp(storeCode) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/home_app',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = HomeResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<OrdersResponse> createOrder(storeCode, body) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(body, 'body');

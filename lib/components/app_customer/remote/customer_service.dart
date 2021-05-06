@@ -9,6 +9,8 @@ import 'package:sahashop_user/components/app_customer/remote/response/product/qu
 import 'package:sahashop_user/components/app_customer/remote/response/store/all_store_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response/store/type_store_respones.dart';
 
+import 'response/home/home_response.dart';
+
 part 'customer_service.g.dart';
 
 @RestApi(baseUrl: "https://sahashop.net/api/public/api/customer/")
@@ -44,7 +46,12 @@ abstract class CustomerService {
       @Query("details") String details,
       @Query("sort_by") String sortBy);
 
+  @GET("{storeCode}/home_app")
+  Future<HomeResponse> getHomeApp(@Path() String storeCode);
+
   @POST("{storeCode}/orders")
   Future<OrdersResponse> createOrder(
       @Path() String storeCode, @Body() Map<String, dynamic> body);
+
+
 }

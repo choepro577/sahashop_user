@@ -2,83 +2,38 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/run_app.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_screen.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_full_screen.dart';
-import 'package:sahashop_user/components/utils/thread_data.dart';
 import 'package:sahashop_user/const/constant.dart';
+import 'package:sahashop_user/controller/config_controller.dart';
 import 'package:sahashop_user/model/theme_model.dart';
-import 'package:sahashop_user/screen/config_app/config_controller.dart';
 
 import 'ui_data_config.dart';
 import 'widget/button_back_overlay.dart';
 
-class ConfigScreen extends StatefulWidget {
-  final Widget child;
-  const ConfigScreen({Key key, this.child}) : super(key: key);
+class ConfigScreen extends StatelessWidget {
 
-  @override
-  _ConfigScreenState createState() => _ConfigScreenState();
-}
-
-class _ConfigScreenState extends State<ConfigScreen> {
-  var indexSelected = 0;
   ConfigController configController = Get.put(ConfigController());
-  // DataAppCustomerController dataAppController = Get.put(DataAppCustomerController()); // create DataAppController
+  DataAppCustomerController dataAppController =
+      Get.put(DataAppCustomerController()); // create DataAppController
 
-  @override
-  void initState() {
-    super.initState();
-    configController.getAppTheme();
-    configController.openBoxHiveCurrentStore();
-    // dataAppController.getAppTheme();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-
-    Get.changeTheme(SahaUserPrimaryTheme);
-    configController.deleteContactButton();
-  }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
         appBar: SahaAppBar(
-          leading: IconButton(
-            color: Colors.black87,
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          title: Text(
-            'Chỉnh sửa giao diện',
-            style: TextStyle(color: Colors.black87),
-          ),
+          titleText: 'Chỉnh sửa giao diện',
           actions: [
             IconButton(
                 color: Colors.blueAccent,
                 icon: Icon(Icons.add_to_home_screen_sharp),
                 onPressed: () {
-                  setState(() {
-                    indexSelected = 0;
-                  });
-                  ButtonBackOverLay().show(context);
-
-                  Get.to(
-                    () => LoadAppScreen(
-                      logo: configController.configApp.logoUrl,
-                    ),
-                  ).then((value) {
-                    ButtonBackOverLay().hide();
-                  });
-                  configController.dispose();
+                  runMain(context);
                 })
           ],
         ),
@@ -124,7 +79,9 @@ class _ConfigScreenState extends State<ConfigScreen> {
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            UIDataConfig[indexSelected].name,
+                                            UIDataConfig[configController
+                                                    .indexTab.value]
+                                                .name,
                                             style: TextStyle(
                                               fontSize: 17,
                                             ),
@@ -133,10 +90,12 @@ class _ConfigScreenState extends State<ConfigScreen> {
                                         ],
                                       ),
                                     ),
-                                    UIDataConfig[indexSelected]
+                                    UIDataConfig[configController
+                                                        .indexTab.value]
                                                     .listChildConfig ==
                                                 null ||
-                                            UIDataConfig[indexSelected]
+                                            UIDataConfig[configController
+                                                        .indexTab.value]
                                                     .listChildConfig
                                                     .length ==
                                                 0
@@ -147,7 +106,8 @@ class _ConfigScreenState extends State<ConfigScreen> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: UIDataConfig[
-                                                    indexSelected]
+                                                    configController
+                                                        .indexTab.value]
                                                 .listChildConfig
                                                 .map(
                                                   (e) => e.editWidget == null
@@ -226,12 +186,12 @@ class _ConfigScreenState extends State<ConfigScreen> {
   Widget buildItem({int index}) {
     ParentConfig parentConfig = UIDataConfig[index];
     return Container(
-      color: indexSelected == index ? Colors.white : Colors.transparent,
+      color: configController.indexTab.value == index
+          ? Colors.white
+          : Colors.transparent,
       child: InkWell(
         onTap: () {
-          setState(() {
-            indexSelected = index;
-          });
+          configController.setTab(index);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -253,7 +213,9 @@ class _ConfigScreenState extends State<ConfigScreen> {
               parentConfig.name,
               style: TextStyle(
                   fontSize: 14,
-                  color: indexSelected == index ? bmColors : Colors.black54),
+                  color: configController.indexTab.value == index
+                      ? bmColors
+                      : Colors.black54),
               textAlign: TextAlign.center,
             ),
             SizedBox(

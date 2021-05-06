@@ -55,10 +55,7 @@ class _SignInState extends State<LoginScreen> {
     // TODO: implement build
     return Scaffold(
       appBar: SahaAppBar(
-        title: Text(
-          "Sign In",
-          style: TextStyle(color: Colors.grey[600]),
-        ),
+        titleText:  "Sign In",
       ),
       body: SingleChildScrollView(
         child: Form(

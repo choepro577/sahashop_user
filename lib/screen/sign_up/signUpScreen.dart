@@ -60,10 +60,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Get.back();
           },
         ),
-        title: Text(
-          "Sign In",
-          style: TextStyle(color: Colors.grey[600]),
-        ),
+        titleText: "Sign In",
       ),
       body: SingleChildScrollView(
         child: Form(

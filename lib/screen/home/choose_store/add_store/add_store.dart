@@ -73,10 +73,7 @@ class _AddStoreState extends State<AddStore> {
             Get.back();
           },
         ),
-        title: Text(
-          "Thêm cửa hàng",
-          style: TextStyle(color: Colors.grey[600]),
-        ),
+        titleText:  "Thêm cửa hàng",
       ),
       body: SingleChildScrollView(
         child: Form(

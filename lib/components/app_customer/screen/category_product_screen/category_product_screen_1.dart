@@ -2,60 +2,42 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/components/product_item/product_card.dart';
 import 'package:sahashop_user/components/app_customer/example/product.dart';
-import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/controller/cart_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_widget_config.dart';
 import 'package:sahashop_user/components/app_customer/screen/product_screen/controller/product_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/search_screen/search_screen.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
-import 'package:sahashop_user/components/saha_user/customCard/product_card.dart';
 import 'package:sahashop_user/components/saha_user/iconButton/iconbtn_counter.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
-import 'package:sahashop_user/const/constant.dart';
+import 'package:sahashop_user/controller/config_controller.dart';
 import 'package:sahashop_user/model/category.dart';
-import 'package:sahashop_user/screen/config_app/config_controller.dart';
 import 'controller/category_controller.dart';
 
-class CategoryProductStyle1 extends StatefulWidget {
-  @override
-  _CategoryProductStyle1State createState() => _CategoryProductStyle1State();
-}
+class CategoryProductStyle1 extends StatelessWidget {
 
-class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
-  CategoryController categoryController;
-  ConfigController configController;
-  DataAppCustomerController dataAppCustomerController;
-  ProductController productController = Get.put(ProductController());
+  ConfigController configController = Get.find();
+  DataAppCustomerController dataAppCustomerController = Get.find();
+  CategoryController categoryController =Get.put(CategoryController());
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    categoryController ??= CategoryController()..getAllCategory();
-    configController = Get.find();
-    try {
-      dataAppCustomerController = Get.find();
-    } catch (e) {
-      dataAppCustomerController = Get.put(DataAppCustomerController());
-    }
-    productController.getListOrder();
-  }
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    super.dispose();
     dataAppCustomerController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+
+    categoryController.getAllCategory();
+
+    ////  ////  ////  ////  ////  ////
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: SahaAppBar(
-        title: Row(
+        titleChild: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
@@ -82,16 +64,16 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
             SizedBox(
               width: 20,
             ),
-            Obx(
-              () => IconBtnWithCounter(
-                svgSrc: "assets/icons/cart_icon.svg",
-                numOfitem: productController.listOrder.value.length ?? 0,
-                press: () {
-                  Get.to(() => LIST_WIDGET_CART_SCREEN[
-                      configController.configApp.cartPageType]);
-                },
-              ),
-            ),
+            // Obx(
+            //   () => IconBtnWithCounter(
+            //     svgSrc: "assets/icons/cart_icon.svg",
+            //     numOfitem: productController.listOrder.value.length ?? 0,
+            //     press: () {
+            //       Get.to(() => LIST_WIDGET_CART_SCREEN[
+            //           configController.configApp.cartPageType]);
+            //     },
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -128,14 +110,10 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
           child: StaggeredGridView.countBuilder(
             crossAxisCount: 2,
             itemCount: list.length,
-            itemBuilder: (BuildContext context, int index) => ProductCard(
+            itemBuilder: (BuildContext context, int index) => ProductItem(
                 product: list[index],
                 isLoading: isLoading,
-                press: () {
-                  dataAppCustomerController.setCurrentProduct(list[index]);
-                  Get.to(() => LIST_WIDGET_PRODUCT_SCREEN[
-                      configController.configApp.productPageType]);
-                }),
+                ),
             staggeredTileBuilder: (int index) => new StaggeredTile.fit(1),
             mainAxisSpacing: 0,
             crossAxisSpacing: 0,
@@ -180,7 +158,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                 style: TextStyle(
                     fontSize: 13,
                     color: categoryController.categoryCurrent.value == category
-                        ? Theme.of(context).primaryColor
+                        ? Theme.of(Get.context).primaryColor
                         : Colors.black54),
                 textAlign: TextAlign.center,
               ),
