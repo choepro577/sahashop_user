@@ -311,7 +311,7 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
                   ),
                   InkWell(
                     onTap: () {
-                      Get.to(() => AddProductScreen());
+                      Get.to(() => AddProductToSaleScreen());
                     },
                     child: Container(
                       width: 100,

@@ -3,15 +3,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/example/product.dart';
+import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/add_product/add_product_controller.dart';
 
-class AddProductScreen extends StatefulWidget {
+class AddProductToSaleScreen extends StatefulWidget {
   @override
-  _AddProductScreenState createState() => _AddProductScreenState();
+  _AddProductToSaleScreenState createState() => _AddProductToSaleScreenState();
 }
 
-class _AddProductScreenState extends State<AddProductScreen> {
+class _AddProductToSaleScreenState extends State<AddProductToSaleScreen> {
   bool isSearch = false;
   bool isChoose = false;
+  AddProductToSaleController addProductToSaleController =
+      Get.put(AddProductToSaleController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    addProductToSaleController.getAllProduct();
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -53,82 +65,98 @@ class _AddProductScreenState extends State<AddProductScreen> {
         ],
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            ...List.generate(
-              LIST_PRODUCT_EXAMPLE.length,
-              (index) => Container(
-                padding: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                ),
-                child: Row(
+        child: Obx(
+          () => addProductToSaleController.isLoadingProduct.value == true
+              ? SahaLoadingWidget()
+              : Column(
                   children: [
-                    Checkbox(
-                        value: isChoose,
-                        onChanged: (v) {
-                          setState(() {
-                            isChoose = !isChoose;
-                          });
-                        }),
-                    SizedBox(
-                      width: 88,
-                      child: AspectRatio(
-                        aspectRatio: 1,
-                        child: Container(
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: Color(0xFFF5F6F9),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: CachedNetworkImage(
-                              fit: BoxFit.cover,
-                              imageUrl: LIST_PRODUCT_EXAMPLE[index]
-                                  .images[0]
-                                  .imageUrl,
-                              errorWidget: (context, url, error) => ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
+                    ...List.generate(
+                      addProductToSaleController.listProduct.length ??
+                          LIST_PRODUCT_EXAMPLE.length,
+                      (index) => Container(
+                        padding: const EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                        ),
+                        child: Row(
+                          children: [
+                            Checkbox(
+                                value: isChoose,
+                                onChanged: (v) {
+                                  setState(() {
+                                    isChoose = !isChoose;
+                                  });
+                                }),
+                            SizedBox(
+                              width: 88,
+                              child: AspectRatio(
+                                aspectRatio: 1,
                                 child: Container(
-                                  height: 100,
-                                  child: CachedNetworkImage(
-                                    fit: BoxFit.cover,
-                                    imageUrl:
-                                        "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
+                                  padding: EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFF5F6F9),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: CachedNetworkImage(
+                                      fit: BoxFit.cover,
+                                      imageUrl: addProductToSaleController
+                                                  .listProduct[index]
+                                                  .images
+                                                  .length ==
+                                              0
+                                          ? ""
+                                          : addProductToSaleController
+                                              .listProduct[index]
+                                              .images[0]
+                                              .imageUrl,
+                                      errorWidget: (context, url, error) =>
+                                          ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Container(
+                                          height: 100,
+                                          child: CachedNetworkImage(
+                                            fit: BoxFit.cover,
+                                            imageUrl:
+                                                "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
+                            SizedBox(width: 20),
+                            Container(
+                              width: Get.width * 0.5,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    addProductToSaleController
+                                            .listProduct[index].name ??
+                                        "Loi san pham",
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 16),
+                                    maxLines: 2,
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                      "${addProductToSaleController.listProduct[index].price} đ" ??
+                                          "Chưa đặt giá"),
+                                ],
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),
-                    SizedBox(width: 20),
-                    Container(
-                      width: Get.width * 0.5,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            LIST_PRODUCT_EXAMPLE[index].name ?? "Loi san pham",
-                            style: TextStyle(color: Colors.black, fontSize: 16),
-                            maxLines: 2,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                              "${LIST_PRODUCT_EXAMPLE[index].price.toString()} đ" ??
-                                  "Chưa đặt giá"),
-                        ],
-                      ),
-                    )
                   ],
                 ),
-              ),
-            ),
-          ],
         ),
       ),
       bottomNavigationBar: Container(
