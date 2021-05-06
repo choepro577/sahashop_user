@@ -1,3 +1,12 @@
-import 'package:get/get_state_manager/get_state_manager.dart';
 
-class SahaDataController extends GetxController {}
+import 'package:get/get.dart';
+
+class SahaDataController extends GetxController {
+
+  var isPreview = false.obs;
+
+  void changeStatusPreview(bool status) {
+    isPreview.value = status;
+  }
+
+}

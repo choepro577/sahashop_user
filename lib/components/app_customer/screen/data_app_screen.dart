@@ -26,15 +26,12 @@ class _LoadAppScreenState extends State<LoadAppScreen> {
 
   Future<void> loadInit(BuildContext context) async {
 
-    configController.configApp ??
-        await configController.getAppTheme();
-    dataAppCustomerController.homeData ??
-        await dataAppCustomerController.getHomeData();
-
     await Future.delayed(Duration(seconds: 1));
     isInit = true;
 
-    dataAppCustomerController.toHomeScreen();
+    dataAppCustomerController.toHomeScreen().then((value) {
+      Get.back();
+    });
   }
 
   @override
@@ -70,10 +67,3 @@ class _LoadAppScreenState extends State<LoadAppScreen> {
   }
 }
 
-class SplashAppCustomer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-}

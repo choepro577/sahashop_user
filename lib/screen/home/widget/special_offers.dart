@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 
 import 'section_title.dart';
 
@@ -13,11 +15,15 @@ class SpecialOffers extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding:
-          EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: SectionTitle(
             title: "Ưu đãi cho bạn",
-            press: () {},
+            pressTitleEnd: () {
+              final DataAppCustomerController dataAppCustomerController =
+                  Get.find();
+
+              dataAppCustomerController.toCategoryProductScreen();
+            },
           ),
         ),
         SizedBox(height: 20),
@@ -90,7 +96,7 @@ class SpecialOfferCard extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal:15.0,
+                    horizontal: 15.0,
                     vertical: 10,
                   ),
                   child: Text.rich(

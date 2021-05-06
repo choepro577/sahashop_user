@@ -34,6 +34,9 @@ class _BannerType1State extends State<BannerType1> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
+
+      dataAppCustomerController.homeData?.banner?.list == null
+      ? Container() :
       CarouselSlider(
         items: dataAppCustomerController.homeData.banner.list
             .map((item) => Container(

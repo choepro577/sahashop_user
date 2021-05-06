@@ -25,7 +25,7 @@ class Categories extends StatelessWidget {
           padding: EdgeInsets.all(20),
           child: SectionTitle(
             title: "Cài đặt cửa hàng",
-            press: () {},
+
           ),
         ),
         SingleChildScrollView(

@@ -7,6 +7,7 @@ import 'package:sahashop_user/screen/config_app/config_screen.dart';
 import 'package:sahashop_user/screen/home/choose_store/choose_store.dart';
 import 'package:sahashop_user/screen/inventory/inventory_screen.dart';
 import 'package:sahashop_user/screen/maketing_chanel/marketing_chanel_screen.dart';
+import '../../../saha_data_controller.dart';
 import '../home_controller.dart';
 
 class HeadHome extends StatelessWidget {
@@ -14,17 +15,15 @@ class HeadHome extends StatelessWidget {
     {"icon": "assets/icons/flash_icon.svg", "text": "Báo cáo"},
     {"icon": "assets/icons/bill_icon.svg", "text": "Đơn hàng", "numOfitem": 40},
     {"icon": "assets/icons/gift_icon.svg", "text": "Các ưu đãi"},
-    // {"icon": "assets/icons/discover.svg", "text": "More"},
-    // {"icon": "assets/icons/gift_icon.svg", "text": "Daily Gift"},
-    // {"icon": "assets/icons/discover.svg", "text": "More"},
-    // {"icon": "assets/icons/gift_icon.svg", "text": "Daily Gift"},
-    // {"icon": "assets/icons/discover.svg", "text": "More"},
   ];
 
   final HomeController homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
+
+
+
     return Column(
       children: [
         Container(
@@ -97,7 +96,8 @@ class HeadHome extends StatelessWidget {
                               icon: 'assets/icons/gift_icon.svg',
                               text: 'Chỉnh sửa giao diện',
                               press: () {
-                                Get.to(() => ConfigScreen());
+
+                               Get.toNamed("ConfigScreen");
 
                               },
                             ),

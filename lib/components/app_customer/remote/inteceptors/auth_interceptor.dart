@@ -18,8 +18,9 @@ class AuthInterceptor extends InterceptorsWrapper {
       options.headers.putIfAbsent("token", () => UserInfo().getToken());
     }
     print('Header: ${options.headers}');
-    print('Request: ${options.data}');
-    print('Param: ${options.queryParameters}');
+    // print('Request: ${options.data}');
+    // print('Param: ${options.queryParameters}');
+    print('Link: ${options.uri.toString()}');
     options.data = new FormData.fromMap(options.data);
     return super.onRequest(options);
   }

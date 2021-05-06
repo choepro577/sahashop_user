@@ -6,7 +6,10 @@ import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/model/order.dart';
 import 'package:sahashop_user/model/product.dart';
 
+import '../../data_app_controller.dart';
+
 class CategoryController extends GetxController {
+
   var isLoadingScreen = false.obs;
   var isLoadingCategory = false.obs;
   var isLoadingProduct = true.obs;
@@ -14,11 +17,17 @@ class CategoryController extends GetxController {
   var products = RxList<Product>();
   var categoryCurrent = Category().obs;
 
+  CategoryController() {
+    final DataAppCustomerController dataAppCustomerController = Get.find();
+    if (dataAppCustomerController.categoryCurrent != null) {
+      categoryCurrent(dataAppCustomerController.categoryCurrent);
+    }
+  }
+
   @override
   void onInit() {
     super.onInit();
     getAllCategory();
-
   }
 
   void setCategoryCurrent(Category category) {
@@ -30,8 +39,8 @@ class CategoryController extends GetxController {
   Future<void> getProductWithCategory(int idCategory) async {
     try {
       var res = await CustomerRepositoryManager.productCustomerRepository
-          .getProductWithCategory(idCategory);
-      products.value = res;
+          .searchProduct(idCategory: idCategory.toString());
+      products(res);
     } catch (err) {
       print(err);
       handleErrorCustomer(err);
@@ -48,7 +57,11 @@ class CategoryController extends GetxController {
 
       categories(res);
 
-      setCategoryCurrent(categories.value[0]);
+      if (categoryCurrent.value != null) {
+        getProductWithCategory(categoryCurrent.value.id);
+      } else if (categories.length > 0) {
+        setCategoryCurrent(categories.value.toList()[0]);
+      }
     } catch (err) {
       print(err);
       handleErrorCustomer(err);

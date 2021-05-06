@@ -4,10 +4,12 @@ import '../../../const/constant.dart';
 
 class SearchField extends StatelessWidget {
   final Function onSearch;
+  final Function onClick;
 
   const SearchField({
     Key key,
     this.onSearch,
+    this.onClick,
   }) : super(key: key);
 
   @override
@@ -19,12 +21,17 @@ class SearchField extends StatelessWidget {
       ),
       child: TextField(
         onChanged: (value) => onSearch(value),
+        onTap: () {
+          if (onClick != null) {
+            onClick();
+          }
+        },
         decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 9),
+            contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             enabledBorder: InputBorder.none,
-            hintText: "Search product",
+            hintText: "Tìm kiếm ",
             prefixIcon: Icon(Icons.search)),
       ),
     );

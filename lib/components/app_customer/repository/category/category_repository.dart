@@ -7,7 +7,7 @@ import 'package:sahashop_user/utils/user_info.dart';
 
 class CategoryRepository {
   Future<List<Category>> getAllCategory() async {
-    if (ThreadData().isOnline()) {
+    if (FlowData().isOnline()) {
       try {
         var res = await CustomerServiceManager()
             .service

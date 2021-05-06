@@ -1,12 +1,12 @@
 import 'package:sahashop_user/const/const_database_shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ThreadData {
-  static final ThreadData _singleton = ThreadData._internal();
+class FlowData {
+  static final FlowData _singleton = FlowData._internal();
 
   bool _isOnline = true;
 
-  factory ThreadData() {
+  factory FlowData() {
     return _singleton;
   }
 
@@ -18,7 +18,7 @@ class ThreadData {
     return _isOnline;
   }
 
-  ThreadData._internal();
+  FlowData._internal();
 
   isOnline() {
     return _isOnline;

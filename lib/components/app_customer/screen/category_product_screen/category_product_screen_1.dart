@@ -18,19 +18,22 @@ import 'controller/category_controller.dart';
 
 class CategoryProductStyle1 extends StatelessWidget {
 
-  ConfigController configController = Get.find();
-  DataAppCustomerController dataAppCustomerController = Get.find();
-  CategoryController categoryController =Get.put(CategoryController());
 
+  final ConfigController configController = Get.find();
+  final DataAppCustomerController dataAppCustomerController = Get.find();
+  final CategoryController categoryController = CategoryController(
+
+  );
+
+  CategoryProductStyle1({Key key}) : super(key: key);
 
   @override
   void dispose() {
-    dataAppCustomerController.dispose();
+
   }
 
   @override
   Widget build(BuildContext context) {
-
     categoryController.getAllCategory();
 
     ////  ////  ////  ////  ////  ////
@@ -56,7 +59,7 @@ class CategoryProductStyle1 extends StatelessWidget {
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
                       enabledBorder: InputBorder.none,
-                      hintText: "Search product",
+                      hintText: "Tìm kiếm ",
                       prefixIcon: Icon(Icons.search)),
                 ),
               ),
@@ -111,9 +114,9 @@ class CategoryProductStyle1 extends StatelessWidget {
             crossAxisCount: 2,
             itemCount: list.length,
             itemBuilder: (BuildContext context, int index) => ProductItem(
-                product: list[index],
-                isLoading: isLoading,
-                ),
+              product: list[index],
+              isLoading: isLoading,
+            ),
             staggeredTileBuilder: (int index) => new StaggeredTile.fit(1),
             mainAxisSpacing: 0,
             crossAxisSpacing: 0,
@@ -126,48 +129,48 @@ class CategoryProductStyle1 extends StatelessWidget {
   Widget buildItem({Category category}) {
     return Obx(
       () => Container(
-        color: categoryController.categoryCurrent.value == category
-            ? Colors.white
-            : Colors.transparent,
-        child: InkWell(
-          onTap: () {
-            categoryController.setCategoryCurrent(category);
-          },
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 5,
-              ),
-              SizedBox(
-                width: 60,
-                height: 60,
-                child: CachedNetworkImage(
-                  imageUrl: category.imageUrl ?? "",
-                  placeholder: (context, url) => CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                  fit: BoxFit.cover,
+          color: categoryController.categoryCurrent?.value?.id == category.id
+              ? Colors.white
+              : Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              categoryController.setCategoryCurrent(category);
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 5,
                 ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Text(
-                category.name,
-                maxLines: 3,
-                style: TextStyle(
-                    fontSize: 13,
-                    color: categoryController.categoryCurrent.value == category
-                        ? Theme.of(Get.context).primaryColor
-                        : Colors.black54),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 5,
-              ),
-            ],
+                SizedBox(
+                  width: 60,
+                  height: 60,
+                  child: CachedNetworkImage(
+                    imageUrl: category.imageUrl ?? "",
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  category.name,
+                  maxLines: 3,
+                  style: TextStyle(
+                      fontSize: 13,
+                      color: categoryController.categoryCurrent.value == category
+                          ? Theme.of(Get.context).primaryColor
+                          : Colors.black54),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+              ],
+            ),
           ),
-        ),
       ),
     );
   }
