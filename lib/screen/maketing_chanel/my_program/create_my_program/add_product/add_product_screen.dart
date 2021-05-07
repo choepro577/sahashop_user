@@ -14,14 +14,20 @@ class AddProductToSaleScreen extends StatefulWidget {
 class _AddProductToSaleScreenState extends State<AddProductToSaleScreen> {
   bool isSearch = false;
   bool isChoose = false;
-  AddProductToSaleController addProductToSaleController =
-      Get.put(AddProductToSaleController());
+  AddProductToSaleController addProductToSaleController = Get.find();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     addProductToSaleController.getAllProduct();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    addProductToSaleController.resetListProduct();
   }
 
   @override
@@ -81,10 +87,30 @@ class _AddProductToSaleScreenState extends State<AddProductToSaleScreen> {
                         child: Row(
                           children: [
                             Checkbox(
-                                value: isChoose,
+                                value: addProductToSaleController
+                                        .listCheckSelectedProduct
+                                        .value[index]
+                                        .values
+                                        .first ??
+                                    false,
                                 onChanged: (v) {
                                   setState(() {
-                                    isChoose = !isChoose;
+                                    addProductToSaleController
+                                        .listCheckSelectedProduct.value[index]
+                                        .update(
+                                            addProductToSaleController
+                                                .listCheckSelectedProduct
+                                                .value[index]
+                                                .keys
+                                                .first,
+                                            (value) =>
+                                                !addProductToSaleController
+                                                    .listCheckSelectedProduct
+                                                    .value[index]
+                                                    .values
+                                                    .first);
+                                    print(addProductToSaleController
+                                        .listCheckSelectedProduct);
                                   });
                                 }),
                             SizedBox(
@@ -180,7 +206,9 @@ class _AddProductToSaleScreenState extends State<AddProductToSaleScreen> {
                 ],
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  addProductToSaleController.checkSelectedProduct();
+                },
                 child: Container(
                   width: 100,
                   height: 40,

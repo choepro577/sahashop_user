@@ -15,9 +15,6 @@ import 'screen_home/home_screen_2.dart';
 import 'search_bar_type/search_bar_type1.dart';
 import 'search_bar_type/search_bar_type2.dart';
 import 'search_bar_type/search_bar_type3.dart';
-import 'search_bar_type/search_bar_type4.dart';
-import 'search_bar_type/search_bar_type5.dart';
-import 'search_bar_type/search_bar_type6.dart';
 
 final List<Widget> LIST_WIDGET_HOME_SCREEN = [
   HomeScreenStyle2(),
@@ -43,9 +40,6 @@ List<Widget> LIST_WIDGET_SEARCH_BAR = [
   SearchBarType1(),
   SearchBarType2(),
   SearchBarType3(),
-  SearchBarType4(),
-  SearchBarType5(),
-  SearchBarType6(),
 ];
 
 List<Widget> LIST_WIDGET_BANNER = [

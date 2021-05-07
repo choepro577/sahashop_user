@@ -42,7 +42,7 @@ class _SahaMainScreenState extends State<SahaMainScreen> {
   }
 
   hasLogged(BuildContext context) {
-    Navigator.push(
+    Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => HomeScreen()));
   }
 

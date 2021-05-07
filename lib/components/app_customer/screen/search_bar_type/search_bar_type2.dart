@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/iconButton/iconbtn_counter.dart';
 import 'package:sahashop_user/components/saha_user/search/seach_field.dart';
 
-import 'handle_search_bar.dart';
+import '../data_app_controller.dart';
+
 
 class SearchBarType2 extends StatelessWidget {
+
+  final DataAppCustomerController dataAppCustomerController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -19,8 +24,8 @@ class SearchBarType2 extends StatelessWidget {
               margin: EdgeInsets.symmetric(vertical: 30),
               padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
               child: SearchField(
-                onSearch: (text) {
-                  HandleSearchBar.onSearch(text);
+                onClick: () {
+                  dataAppCustomerController.toSearchScreen();
                 },
               )),
         ),

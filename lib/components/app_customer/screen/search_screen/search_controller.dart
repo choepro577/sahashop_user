@@ -48,7 +48,11 @@ class SearchController extends GetxController {
     try {
       var list = await CustomerRepositoryManager.productCustomerRepository
           .searchProduct(
-              search, selectedCategoryParam, descending, sizeSearch, sortBy);
+              search: search,
+              idCategory: selectedCategoryParam,
+              descending: descending,
+              details: sizeSearch,
+              sortBy: sortBy);
       listProduct.value = list;
       print(listProduct.length);
       isLoadingProduct.value = false;

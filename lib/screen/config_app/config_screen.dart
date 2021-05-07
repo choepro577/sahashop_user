@@ -10,21 +10,16 @@ import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_full_screen.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/controller/config_controller.dart';
-import 'package:sahashop_user/model/theme_model.dart';
-
+import '../../saha_data_controller.dart';
 import 'ui_data_config.dart';
-import 'widget/button_back_overlay.dart';
 
 class ConfigScreen extends StatelessWidget {
-
   ConfigController configController = Get.put(ConfigController());
   DataAppCustomerController dataAppController =
       Get.put(DataAppCustomerController()); // create DataAppController
 
-
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
         appBar: SahaAppBar(
           titleText: 'Chỉnh sửa giao diện',
@@ -33,7 +28,7 @@ class ConfigScreen extends StatelessWidget {
                 color: Colors.blueAccent,
                 icon: Icon(Icons.add_to_home_screen_sharp),
                 onPressed: () {
-                  runMain(context);
+                  runMainAppCustomer(context);
                 })
           ],
         ),

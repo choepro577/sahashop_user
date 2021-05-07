@@ -1,8 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/add_product/add_product_controller.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/add_product/add_product_screen.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 
@@ -16,6 +19,8 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
   DateTime timeStart = DateTime.now().add(Duration(hours: 1));
   DateTime dateEnd = DateTime.now();
   DateTime timeEnd = DateTime.now().add(Duration(hours: 2));
+  AddProductToSaleController addProductToSaleController =
+      Get.put(AddProductToSaleController());
   bool checkDayStart = false;
   bool checkDayEnd = false;
 
@@ -305,37 +310,126 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Sản phẩm'),
+                  Obx(
+                    () => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Sản phẩm'),
+                        addProductToSaleController
+                                    .listSelectedProduct.value.length ==
+                                0
+                            ? Container()
+                            : IconButton(
+                                icon: Icon(
+                                  Icons.add,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                onPressed: () {
+                                  Get.to(() => AddProductToSaleScreen());
+                                })
+                      ],
+                    ),
+                  ),
                   SizedBox(
                     height: 10,
                   ),
-                  InkWell(
-                    onTap: () {
-                      Get.to(() => AddProductToSaleScreen());
-                    },
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Theme.of(context).primaryColor)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.add,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          Text(
-                            'Thêm sản phẩm',
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor),
-                            textAlign: TextAlign.center,
+                  Obx(
+                    () => addProductToSaleController
+                                .listSelectedProduct.value.length ==
+                            0
+                        ? InkWell(
+                            onTap: () {
+                              Get.to(() => AddProductToSaleScreen());
+                            },
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Theme.of(context).primaryColor)),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.add,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                  Text(
+                                    'Thêm sản phẩm',
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor),
+                                    textAlign: TextAlign.center,
+                                  )
+                                ],
+                              ),
+                            ),
                           )
-                        ],
-                      ),
-                    ),
-                  )
+                        : Container(
+                            height: 400,
+                            child: StaggeredGridView.countBuilder(
+                              crossAxisCount: 4,
+                              itemCount: addProductToSaleController
+                                  .listSelectedProduct.value.length,
+                              itemBuilder: (BuildContext context, int index) =>
+                                  Stack(
+                                children: [
+                                  Container(
+                                    height: 100,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                    child: CachedNetworkImage(
+                                      fit: BoxFit.cover,
+                                      imageUrl: addProductToSaleController
+                                                  .listSelectedProduct
+                                                  .value[index]
+                                                  .images
+                                                  .length ==
+                                              0
+                                          ? ""
+                                          : addProductToSaleController
+                                              .listSelectedProduct
+                                              .value[index]
+                                              .images[0]
+                                              .imageUrl,
+                                      errorWidget: (context, url, error) =>
+                                          Container(
+                                        height: 100,
+                                        child: CachedNetworkImage(
+                                          fit: BoxFit.cover,
+                                          imageUrl:
+                                              "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: -10,
+                                    right: -10,
+                                    child: IconButton(
+                                        icon: Icon(
+                                          Icons.delete,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                        onPressed: () {
+                                          addProductToSaleController
+                                              .deleteProductSelected(
+                                                  addProductToSaleController
+                                                      .listSelectedProduct
+                                                      .value[index]
+                                                      .id);
+                                        }),
+                                  ),
+                                ],
+                              ),
+                              staggeredTileBuilder: (int index) =>
+                                  new StaggeredTile.fit(1),
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 10,
+                            ),
+                          ),
+                  ),
                 ],
               ),
             )

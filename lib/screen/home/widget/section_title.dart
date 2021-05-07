@@ -5,11 +5,13 @@ class SectionTitle extends StatelessWidget {
   const SectionTitle({
     Key key,
     @required this.title,
-    @required this.press,
+  this.titleEnd, this.pressTitleEnd,
   }) : super(key: key);
 
   final String title;
-  final GestureTapCallback press;
+  final String titleEnd;
+
+  final GestureTapCallback pressTitleEnd;
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +25,10 @@ class SectionTitle extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        GestureDetector(
-          onTap: press,
+        pressTitleEnd == null ?Container() :  GestureDetector(
+          onTap: pressTitleEnd,
           child: Text(
-            "See More",
+            "$titleEnd",
             style: TextStyle(color: Color(0xFFBBBBBB)),
           ),
         ),

@@ -21,17 +21,18 @@ class ConfigController extends GetxController {
   var isLoadingCreate = false.obs;
   var contactButton = RxList<UnicornButton>();
 
-
   @override
   void onInit() {
     super.onInit();
     getAppTheme();
     openBoxHiveCurrentStore();
+    print("------------------mo");
   }
 
   @override
   void onClose() {
     Get.changeTheme(SahaUserPrimaryTheme);
+    print("-----------------------dong");
     deleteContactButton();
   }
 
@@ -45,7 +46,6 @@ class ConfigController extends GetxController {
   void setTab(int va) {
     indexTab.value = va;
   }
-
 
   void updateTheme() {
     currentTheme.value = ThemeData(
@@ -68,7 +68,6 @@ class ConfigController extends GetxController {
   }
 
   Future<void> getAppTheme() async {
-
     try {
       isLoadingGet.value = true;
       var data = await RepositoryManager.configUiRepository.getAppTheme();
@@ -100,7 +99,6 @@ class ConfigController extends GetxController {
       SahaAlert.showError(message: err.toString());
       isLoadingGet.value = false;
     }
-
   }
 
   Future<void> createAppTheme() async {

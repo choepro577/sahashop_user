@@ -1,9 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/components/product_item/product_card.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_box_button.dart';
-import 'package:sahashop_user/components/saha_user/special_card/special_offer_card_type1.dart';
 import 'package:sahashop_user/controller/config_controller.dart';
 import 'package:sahashop_user/model/button.dart';
 import 'package:sahashop_user/model/category.dart';
@@ -33,10 +33,6 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
     {"icon": "assets/icons/gift_icon.svg", "text": "My Voucher"},
     {"icon": "assets/icons/gift_icon.svg", "text": "Quét QR"},
     {"icon": "assets/icons/discover.svg", "text": "Tin Tức"},
-    {"icon": "assets/icons/gift_icon.svg", "text": "Daily Gift"},
-    {"icon": "assets/icons/discover.svg", "text": "More"},
-    {"icon": "assets/icons/gift_icon.svg", "text": "Daily Gift"},
-    {"icon": "assets/icons/discover.svg", "text": "More"},
   ];
 
   ConfigController configController = Get.find();
@@ -82,11 +78,11 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
             SizedBox(
               height: 20,
             ),
-            LIST_WIDGET_SEARCH_BAR[configController.configApp.searchType],
+            dataAppCustomerController.getSearchWidget(),
             SizedBox(
               height: 10,
             ),
-            dataAppCustomerController.getBanner(),
+            dataAppCustomerController.getBannerWidget(),
             Column(
               children: [
                 SizedBox(
@@ -116,143 +112,144 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                   padding: EdgeInsets.all(20),
                   child: SectionTitle(
                     title: "Danh mục cửa hàng",
-                    press: () {
-
-
-                      Get.to(LIST_WIDGET_CATEGORY_PRODUCT[
-                          configController.configApp.categoryPageType]);
-
-
+                    titleEnd: "Tất cả",
+                    pressTitleEnd: () {
+                      dataAppCustomerController.toCategoryProductScreen();
                     },
                   ),
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children:
-                          dataAppCustomerController.homeData.allCategory.list
-                              .map(
-                                (category) => CategoryButton(
-                                  category: category,
-                                ),
-                              )
-                              .toList()),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: SectionTitle(
-                    title: "Ưu đãi cho bạn",
-                    press: () {},
-                  ),
-                ),
-                SizedBox(height: 20),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                      children:
-                          dataAppCustomerController.homeData.newProduct.list
-                              .map(
-                                (e) => SpecialOfferCard(
-                                  image: "assets/images/Image Banner 2.png",
-                                  category: "Smartphone",
-                                  numOfBrands: 18,
-                                  press: () {},
-                                ),
-                              )
-                              .toList()),
-                ),
-              ],
-            ),
-            discountProducts.length == 0 ?Container():      Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child:
-                      SectionTitle(title: "Sản phẩm khuyến mãi", press: () {}),
-                ),
-                SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 251,
-                    alignment: Alignment.topLeft,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: discountProducts
-                            .map((product) => ProductItem(
-                                  width: 180,
-                                  product: product,
-                                ))
-                            .toList(),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: SectionTitle(title: "Sản phẩm bán chạy", press: () {}),
-                ),
-                SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 251,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: dataAppCustomerController
-                            .homeData.bestSellProduct.list
-                            .map((product) => ProductItem(
-                                  width: 180,
-                                  product: product,
-                                ))
-                            .toList(),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: SectionTitle(title: "Sản phẩm mới", press: () {}),
-                ),
-                SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 251,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children:
-                            dataAppCustomerController.homeData.newProduct.list
-                                .map((product) => ProductItem(
-                                      width: 180,
-                                      product: product,
-                                    ))
-                                .toList(),
-                      ),
-                    ),
+                            dataAppCustomerController.homeData.allCategory.list
+                                .map(
+                                  (category) => CategoryButton(
+                                    category: category,
+                                  ),
+                                )
+                                .toList()),
                   ),
-                )
+                ),
               ],
             ),
+            discountProducts.length == 0
+                ? Container()
+                : Column(
+                    children: [
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: SectionTitle(
+                            title: "Sản phẩm khuyến mãi",
+                            titleEnd: "Xem thêm",
+                            pressTitleEnd: () {
+                              dataAppCustomerController
+                                  .toCategoryProductScreen();
+                            }),
+                      ),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: 251,
+                          alignment: Alignment.topLeft,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: discountProducts
+                                  .map((product) => ProductItem(
+                                        width: 180,
+                                        product: product,
+                                      ))
+                                  .toList(),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+            dataAppCustomerController.homeData?.bestSellProduct?.list == null ||
+                    dataAppCustomerController
+                            .homeData?.bestSellProduct?.list?.length ==
+                        0
+                ? Container()
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: SectionTitle(
+                            title: "Sản phẩm bán chạy",
+                            titleEnd: "Tất cả",
+                            pressTitleEnd: () {
+                              dataAppCustomerController
+                                  .toCategoryProductScreen();
+                            }),
+                      ),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: 251,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: dataAppCustomerController
+                                  .homeData.bestSellProduct.list
+                                  .map((product) => ProductItem(
+                                        width: 180,
+                                        product: product,
+                                      ))
+                                  .toList(),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+            dataAppCustomerController.homeData?.newProduct?.list == null
+                ? Container()
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: SectionTitle(
+                            title: "Sản phẩm mới",
+                            titleEnd: "Tất cả",
+                            pressTitleEnd: () {
+                              dataAppCustomerController
+                                  .toCategoryProductScreen();
+                            }),
+                      ),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: 251,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: dataAppCustomerController
+                                  .homeData.newProduct.list
+                                  .map((product) => ProductItem(
+                                        width: 180,
+                                        product: product,
+                                      ))
+                                  .toList(),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
           ],
         ),
       ),
@@ -270,7 +267,12 @@ class CategoryButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          final DataAppCustomerController dataAppCustomerController =
+              Get.find();
+
+          dataAppCustomerController.toCategoryProductScreen(category: category);
+        },
         child: Stack(
           children: [
             SizedBox(
@@ -278,30 +280,30 @@ class CategoryButton extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(15),
                     height: 55,
                     width: 55,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Theme.of(context).primaryColor,
                     ),
-                    child: CachedNetworkImage(
-                      imageUrl: category.imageUrl ?? "",
-                      placeholder: (context, url) =>
-                          CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      child: CachedNetworkImage(
+                        imageUrl: category.imageUrl ?? "",
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
                     ),
                   ),
                   SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        category?.name,
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
+                  AutoSizeText(
+                    category?.name,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                    maxLines: 2,
+                  )
                 ],
               ),
             ),

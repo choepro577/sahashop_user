@@ -6,33 +6,24 @@ import 'package:sahashop_user/model/product.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class ProductCustomerRepository {
-  Future<List<Product>> getProductWithCategory(int idCategory) async {
-    if (ThreadData().isOnline()) {
+
+  Future<List<Product>> searchProduct({String search="", String idCategory="",
+    bool descending=false, String details="", String sortBy=""}) async {
+    if (FlowData().isOnline()) {
       try {
-        var res = await CustomerServiceManager().service.getProductWithCategory(
-            UserInfo().getCurrentStoreCode(), idCategory);
+        var res = await CustomerServiceManager().service.searchProduct(
+            UserInfo().getCurrentStoreCode(),
+            search,
+            idCategory,
+            descending,
+            details,
+            sortBy);
         return res.data.data;
       } catch (err) {
         handleErrorCustomer(err);
       }
     } else {
       return LIST_PRODUCT_EXAMPLE;
-    }
-  }
-
-  Future<List<Product>> searchProduct(String search, String idCategory,
-      bool descending, String details, String sortBy) async {
-    try {
-      var res = await CustomerServiceManager().service.searchProduct(
-          UserInfo().getCurrentStoreCode(),
-          search,
-          idCategory,
-          descending,
-          details,
-          sortBy);
-      return res.data.data;
-    } catch (err) {
-      handleErrorCustomer(err);
     }
   }
 }
