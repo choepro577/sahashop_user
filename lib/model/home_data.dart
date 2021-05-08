@@ -1,6 +1,7 @@
 import 'package:sahashop_user/model/post.dart';
 import 'package:sahashop_user/model/product.dart';
 
+import 'banner.dart';
 import 'category.dart';
 import 'discount_product_list.dart';
 
@@ -14,7 +15,7 @@ class HomeData {
     this.newPost,
   });
 
-  Banner banner;
+  BannerList banner;
   AllCategory allCategory;
   DiscountProducts discountProducts;
   NewProduct newProduct;
@@ -22,7 +23,7 @@ class HomeData {
   NewPost newPost;
 
   factory HomeData.fromJson(Map<String, dynamic> json) => HomeData(
-        banner: Banner.fromJson(json["banner"]),
+        banner: BannerList.fromJson(json["banner"]),
         allCategory: AllCategory.fromJson(json["allCategory"]),
         discountProducts: DiscountProducts.fromJson(json["discountProducts"]),
         newProduct: NewProduct.fromJson(json["newProduct"]),
@@ -65,8 +66,8 @@ class AllCategory {
       };
 }
 
-class Banner {
-  Banner({
+class BannerList {
+  BannerList({
     this.name,
     this.type,
     this.list,
@@ -74,13 +75,13 @@ class Banner {
 
   String name;
   String type;
-  List<BannerList> list;
+  List<BannerItem> list;
 
-  factory Banner.fromJson(Map<String, dynamic> json) => Banner(
+  factory BannerList.fromJson(Map<String, dynamic> json) => BannerList(
         name: json["name"],
         type: json["type"],
-        list: List<BannerList>.from(
-            json["list"].map((x) => BannerList.fromJson(x))),
+        list: List<BannerItem>.from(
+            json["list"].map((x) => BannerItem.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -90,37 +91,7 @@ class Banner {
       };
 }
 
-class BannerList {
-  BannerList({
-    this.storeId,
-    this.imageUrl,
-    this.title,
-    this.createdAt,
-    this.updatedAt,
-  });
 
-  int storeId;
-  String imageUrl;
-  String title;
-  DateTime createdAt;
-  DateTime updatedAt;
-
-  factory BannerList.fromJson(Map<String, dynamic> json) => BannerList(
-        storeId: json["store_id"],
-        imageUrl: json["image_url"],
-        title: json["title"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "store_id": storeId,
-        "image_url": imageUrl,
-        "title": title,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-      };
-}
 
 class NewProduct {
   NewProduct({

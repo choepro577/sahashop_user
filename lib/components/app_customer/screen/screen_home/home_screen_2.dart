@@ -77,17 +77,17 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
         child: Column(
           children: [
             SizedBox(
-              height: 20,
+              height: 10,
             ),
             dataAppCustomerController.getSearchWidget(),
             SizedBox(
-              height: 10,
+              height: 0,
             ),
             dataAppCustomerController.getBannerWidget(),
             Column(
               children: [
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -107,37 +107,39 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                 ),
               ],
             ),
-            Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(20),
-                  child: SectionTitle(
-                    title: "Danh mục cửa hàng",
-                    titleEnd: "Tất cả",
-                    pressTitleEnd: () {
-                      dataAppCustomerController.toCategoryProductScreen();
-                    },
+            dataAppCustomerController.homeData?.allCategory?.list == null
+                ? Container()
+                : Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(20),
+                        child: SectionTitle(
+                          title: "Danh mục cửa hàng",
+                          titleEnd: "Tất cả",
+                          pressTitleEnd: () {
+                            dataAppCustomerController.toCategoryProductScreen();
+                          },
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: dataAppCustomerController
+                                  .homeData.allCategory.list
+                                  .map(
+                                    (category) => CategoryButton(
+                                      category: category,
+                                    ),
+                                  )
+                                  .toList()),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children:
-                            dataAppCustomerController.homeData.allCategory.list
-                                .map(
-                                  (category) => CategoryButton(
-                                    category: category,
-                                  ),
-                                )
-                                .toList()),
-                  ),
-                ),
-              ],
-            ),
             discountProducts.length == 0
                 ? Container()
                 : Column(
@@ -175,8 +177,9 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                     ],
                   ),
             dataAppCustomerController.homeData?.bestSellProduct?.list == null ||
-
-                dataAppCustomerController.homeData?.bestSellProduct?.list?.length == 0
+                    dataAppCustomerController
+                            .homeData?.bestSellProduct?.list?.length ==
+                        0
                 ? Container()
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
