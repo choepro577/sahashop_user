@@ -23,9 +23,6 @@ class MyApp extends StatelessWidget {
         title: 'SahaShop',
         theme: SahaUserPrimaryTheme,
         home: SahaMainScreen(),
-        routes: {
-          "ConfigScreen": (context) => ConfigScreen(),
-        },
         getPages: [GetPage(name: "ConfigScreen", page: () => ConfigScreen())],
         builder: (context, widget) => Column(
               children: [
