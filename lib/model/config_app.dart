@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'banner.dart';
+
 ConfigApp configAppFromJson(String str) => ConfigApp.fromJson(json.decode(str));
 
 String configAppToJson(ConfigApp data) => json.encode(data.toJson());
@@ -8,6 +10,7 @@ class ConfigApp {
   ConfigApp({
     this.logoUrl,
     this.isShowLogo,
+    this.carouselAppImages,
     this.colorMain1,
     this.colorMain2,
     this.fontFamily,
@@ -67,6 +70,7 @@ class ConfigApp {
 
   String logoUrl;
   bool isShowLogo;
+  List<BannerItem> carouselAppImages;
   String colorMain1;
   String colorMain2;
   String fontFamily;
@@ -126,6 +130,9 @@ class ConfigApp {
   factory ConfigApp.fromJson(Map<String, dynamic> json) => ConfigApp(
         logoUrl: json["logo_url"],
         isShowLogo: json["is_show_logo"],
+        carouselAppImages: json["carousel_app_images"] == null ? [] :
+        List<BannerItem>.from(
+            json["carousel_app_images"].map((x) => BannerItem.fromJson(x))),
         colorMain1: json["color_main_1"],
         colorMain2: json["color_main_2"],
         fontFamily: json["font_family"],
@@ -186,6 +193,7 @@ class ConfigApp {
   Map<String, dynamic> toJson() => {
         "logo_url": logoUrl,
         "is_show_logo": isShowLogo,
+        "carousel_app_images": carouselAppImages.map((e) => e.toJson()).toList(),
         "color_main_1": colorMain1,
         "color_main_2": colorMain2,
         "font_family": fontFamily,
