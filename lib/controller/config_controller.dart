@@ -91,6 +91,7 @@ class ConfigController extends GetxController {
       configApp.isShowIconEmail = data.isShowIconEmail ?? false;
       configApp.isShowIconFacebook = data.isShowIconFacebook ?? false;
       configApp.isShowIconZalo = data.isShowIconZalo ?? false;
+      configApp.carouselAppImages = data.carouselAppImages;
       updateTheme();
       addButton();
       isLoadingGet.value = false;
@@ -102,6 +103,7 @@ class ConfigController extends GetxController {
   }
 
   Future<void> createAppTheme() async {
+
     isLoadingCreate.value = true;
     try {
       var data =
@@ -112,6 +114,7 @@ class ConfigController extends GetxController {
 
       return true;
     } catch (err) {
+
       SahaAlert.showError(message: err.toString());
     }
     isLoadingCreate.value = false;

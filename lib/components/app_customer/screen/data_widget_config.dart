@@ -43,9 +43,9 @@ List<Widget> LIST_WIDGET_SEARCH_BAR = [
 ];
 
 List<Widget> LIST_WIDGET_BANNER = [
-  BannerType1(imgList: imgList, height: 120),
-  BannerType2(imgList: imgList, height: 120),
-  BannerType3(imgList: imgList, height: 130),
+  BannerType1(height: 120),
+  BannerType2(height: 120),
+  BannerType3(height: 130),
 ];
 
 List<Widget> LIST_WIDGET_LIST_CATEGORY = [

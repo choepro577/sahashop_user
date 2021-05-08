@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:sahashop_user/screen/home/home_screen.dart';
 import 'components/app_customer/screen/data_app_screen.dart';
 import 'model/theme_model.dart';
 import 'saha_data_controller.dart';
@@ -23,6 +22,7 @@ class MyApp extends StatelessWidget {
         title: 'SahaShop',
         theme: SahaUserPrimaryTheme,
         home: SahaMainScreen(),
+        // routes: {"ConfigScreen": (context) => ConfigScreen()},
         getPages: [GetPage(name: "ConfigScreen", page: () => ConfigScreen())],
         builder: (context, widget) => Column(
               children: [
@@ -33,10 +33,9 @@ class MyApp extends StatelessWidget {
                       : Material(
                           child: InkWell(
                             onTap: () {
-                              Get.offNamedUntil(
-                                  "ConfigScreen",
-                                  (route) =>
-                                      route.settings.name == "ConfigScreen");
+                              Get.offNamedUntil("ConfigScreen",
+                                  (route) => route.settings.name == "ConfigScreen"
+                              );
                               Get.back();
                               sahaDataController.changeStatusPreview(false);
                             },
