@@ -10,16 +10,14 @@ class BannerType3 extends StatefulWidget {
   @override
   _BannerType3State createState() => _BannerType3State();
 
-  final List<String> imgList;
   final double height;
 
-  BannerType3({this.imgList, this.height});
+  BannerType3({this.height});
 }
 
 class _BannerType3State extends State<BannerType3> {
   int _current = 0;
   double height;
-  List<String> imgList;
 
   DataAppCustomerController dataAppCustomerController = Get.find();
 
@@ -27,23 +25,22 @@ class _BannerType3State extends State<BannerType3> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    imgList = widget.imgList;
     height = widget.height;
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-
       dataAppCustomerController.homeData?.banner?.list == null
-          ? Container() :
-      CarouselSlider(
+          ? Container()
+          : CarouselSlider(
         items: dataAppCustomerController.homeData.banner.list
             .map((item) => Container(
           child: Container(
             margin: EdgeInsets.all(5.0),
             child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                borderRadius:
+                BorderRadius.all(Radius.circular(5.0)),
                 child: Stack(
                   children: <Widget>[
                     Image.network(item.imageUrl,
@@ -66,7 +63,7 @@ class _BannerType3State extends State<BannerType3> {
                         padding: EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 20.0),
                         child: Text(
-                          'No. ${imgList.indexOf(item.title)} image',
+                          '',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20.0,
@@ -81,20 +78,23 @@ class _BannerType3State extends State<BannerType3> {
         ))
             .toList(),
         options: CarouselOptions(
-            height: height,
             autoPlay: true,
-            enlargeCenterPage: true,
-            aspectRatio: 2.0,
+          scrollDirection: Axis.vertical,
+            aspectRatio: 16 / 7,
             onPageChanged: (index, reason) {
               setState(() {
                 _current = index;
               });
             }),
       ),
-      Row(
+      dataAppCustomerController.homeData?.banner?.list == null
+          ? Container()
+          : Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: imgList.map((url) {
-          int index = imgList.indexOf(url);
+        children:
+        dataAppCustomerController.homeData.banner.list.map((url) {
+          int index =
+          dataAppCustomerController.homeData.banner.list.indexOf(url);
           return Container(
             width: 8.0,
             height: 8.0,

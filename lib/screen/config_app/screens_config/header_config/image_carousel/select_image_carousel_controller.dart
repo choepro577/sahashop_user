@@ -108,7 +108,9 @@ class SelectCarouselImagesController extends GetxController {
               initAspectRatio: CropAspectRatioPreset.original,
               lockAspectRatio: true),
           iosUiSettings: IOSUiSettings(
-            minimumAspectRatio: 1.0,
+            minimumAspectRatio: 16/9,
+            aspectRatioLockEnabled: true,
+            title: 'Cắt ảnh',
           ));
 
       if(croppedFile == null) return "";
