@@ -25,10 +25,15 @@ class AddProductToSaleController extends GetxController {
           descending ?? false,
           details ?? "",
           sortBy ?? "");
+
       listProduct.addAll(res.data.data);
-      listProduct.forEach((product) {
-        listCheckSelectedProduct.value.add({product: false});
-      });
+
+      if (listCheckSelectedProduct.value.length == 0) {
+        listProduct.forEach((product) {
+          listCheckSelectedProduct.value.add({product: false});
+        });
+      }
+
       print(listProduct);
       isLoadingProduct.value = false;
       return res.data.data;
@@ -48,6 +53,7 @@ class AddProductToSaleController extends GetxController {
     } else {
       for (int i = 0; i < listCheckSelectedProduct.value.length; i++) {
         if (listCheckSelectedProduct.value[i].values.first == true) {
+          print(listCheckSelectedProduct.value.length);
           bool isSame = false;
           for (int j = 0; j < listSelectedProduct.value.length; j++) {
             if (listCheckSelectedProduct.value[i].keys.first.id ==
@@ -60,6 +66,9 @@ class AddProductToSaleController extends GetxController {
             listSelectedProduct.value
                 .add(listCheckSelectedProduct.value[i].keys.first);
           }
+        } else {
+          listSelectedProduct.value.removeWhere((element) =>
+              element.id == listCheckSelectedProduct.value[i].keys.first.id);
         }
       }
     }
