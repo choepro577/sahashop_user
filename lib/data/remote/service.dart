@@ -3,6 +3,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:sahashop_user/data/remote/response/auth/login_response.dart';
 import 'package:sahashop_user/data/remote/response/config_ui/app_theme_response.dart';
 import 'package:sahashop_user/data/remote/response/config_ui/create_app_theme_response.dart';
+import 'package:sahashop_user/data/remote/response/create_discount_response/create_discount_respone.dart';
 
 import 'response/auth/register_response.dart';
 import 'response/category/all_category_response.dart';
@@ -67,6 +68,10 @@ abstract class SahaService {
 
   @POST("images")
   Future<UploadImageResponse> uploadImage(@Body() Map<String, dynamic> body);
+
+  @POST('store/{storeCode}/discounts')
+  Future<CreateDiscountResponse> createDiscount(
+      @Path() String storeCode, @Body() Map<String, dynamic> body);
 
   @POST("device_token_user")
   Future<UpdateDeviceTokenResponse> updateDeviceTokenUser(

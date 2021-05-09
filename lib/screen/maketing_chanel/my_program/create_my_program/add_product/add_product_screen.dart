@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
+import 'package:sahashop_user/model/product.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/add_product/add_product_controller.dart';
 
 class AddProductToSaleScreen extends StatefulWidget {
@@ -13,7 +14,8 @@ class AddProductToSaleScreen extends StatefulWidget {
 
 class _AddProductToSaleScreenState extends State<AddProductToSaleScreen> {
   bool isSearch = false;
-  bool isChoose = false;
+  //bool isSave = false;
+
   AddProductToSaleController addProductToSaleController = Get.find();
 
   @override
@@ -28,6 +30,11 @@ class _AddProductToSaleScreenState extends State<AddProductToSaleScreen> {
     // TODO: implement dispose
     super.dispose();
     addProductToSaleController.resetListProduct();
+    //print(isSave);
+    // if (isSave == false) {
+    //   addProductToSaleController.listCheckSelectedProduct.value =
+    //       addProductToSaleController.listCheckSelectedProductNotSave;
+    // }
   }
 
   @override
@@ -79,107 +86,235 @@ class _AddProductToSaleScreenState extends State<AddProductToSaleScreen> {
                     ...List.generate(
                       addProductToSaleController.listProduct.length ??
                           LIST_PRODUCT_EXAMPLE.length,
-                      (index) => Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                        ),
-                        child: Row(
-                          children: [
-                            Checkbox(
-                                value: addProductToSaleController
-                                        .listCheckSelectedProduct
-                                        .value[index]
-                                        .values
-                                        .first ??
-                                    false,
-                                onChanged: (v) {
-                                  setState(() {
-                                    addProductToSaleController
-                                        .listCheckSelectedProduct.value[index]
-                                        .update(
-                                            addProductToSaleController
-                                                .listCheckSelectedProduct
-                                                .value[index]
-                                                .keys
-                                                .first,
-                                            (value) =>
-                                                !addProductToSaleController
-                                                    .listCheckSelectedProduct
-                                                    .value[index]
-                                                    .values
-                                                    .first);
-                                    print(addProductToSaleController
-                                        .listCheckSelectedProduct);
-                                  });
-                                }),
-                            SizedBox(
-                              width: 88,
-                              child: AspectRatio(
-                                aspectRatio: 1,
+                      (index) => addProductToSaleController
+                                  .listIsSave.value[index] ==
+                              true
+                          ? IgnorePointer(
+                              child: Opacity(
+                                opacity: 0.4,
                                 child: Container(
-                                  padding: EdgeInsets.all(5),
+                                  padding: const EdgeInsets.all(8.0),
                                   decoration: BoxDecoration(
-                                    color: Color(0xFFF5F6F9),
-                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.grey[200],
                                   ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: CachedNetworkImage(
-                                      fit: BoxFit.cover,
-                                      imageUrl: addProductToSaleController
-                                                  .listProduct[index]
-                                                  .images
-                                                  .length ==
-                                              0
-                                          ? ""
-                                          : addProductToSaleController
-                                              .listProduct[index]
-                                              .images[0]
-                                              .imageUrl,
-                                      errorWidget: (context, url, error) =>
-                                          ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: Container(
-                                          height: 100,
+                                  child: Row(
+                                    children: [
+                                      Checkbox(
+                                          value: addProductToSaleController
+                                                  .listCheckSelectedProduct
+                                                  .value[index]
+                                                  .values
+                                                  .first ??
+                                              false,
+                                          onChanged: (v) {
+                                            setState(() {
+                                              addProductToSaleController
+                                                  .listCheckSelectedProduct
+                                                  .value[index]
+                                                  .update(
+                                                      addProductToSaleController
+                                                          .listCheckSelectedProduct
+                                                          .value[index]
+                                                          .keys
+                                                          .first,
+                                                      (value) =>
+                                                          !addProductToSaleController
+                                                              .listCheckSelectedProduct
+                                                              .value[index]
+                                                              .values
+                                                              .first);
+                                              print(addProductToSaleController
+                                                  .listCheckSelectedProduct);
+                                            });
+                                          }),
+                                      SizedBox(
+                                        width: 88,
+                                        child: AspectRatio(
+                                          aspectRatio: 1,
+                                          child: Container(
+                                            padding: EdgeInsets.all(5),
+                                            decoration: BoxDecoration(
+                                              color: Color(0xFFF5F6F9),
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: CachedNetworkImage(
+                                                fit: BoxFit.cover,
+                                                imageUrl: addProductToSaleController
+                                                            .listProduct[index]
+                                                            .images
+                                                            .length ==
+                                                        0
+                                                    ? ""
+                                                    : addProductToSaleController
+                                                        .listProduct[index]
+                                                        .images[0]
+                                                        .imageUrl,
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  child: Container(
+                                                    height: 100,
+                                                    child: CachedNetworkImage(
+                                                      fit: BoxFit.cover,
+                                                      imageUrl:
+                                                          "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 20),
+                                      Container(
+                                        width: Get.width * 0.5,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              addProductToSaleController
+                                                      .listProduct[index]
+                                                      .name ??
+                                                  "Loi san pham",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16),
+                                              maxLines: 2,
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                                "${addProductToSaleController.listProduct[index].price} đ" ??
+                                                    "Chưa đặt giá"),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Container(
+                              padding: const EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                              ),
+                              child: Row(
+                                children: [
+                                  Checkbox(
+                                      value: addProductToSaleController
+                                              .listCheckSelectedProduct
+                                              .value[index]
+                                              .values
+                                              .first ??
+                                          false,
+                                      onChanged: (v) {
+                                        setState(() {
+                                          addProductToSaleController
+                                              .listCheckSelectedProduct
+                                              .value[index]
+                                              .update(
+                                                  addProductToSaleController
+                                                      .listCheckSelectedProduct
+                                                      .value[index]
+                                                      .keys
+                                                      .first,
+                                                  (value) =>
+                                                      !addProductToSaleController
+                                                          .listCheckSelectedProduct
+                                                          .value[index]
+                                                          .values
+                                                          .first);
+                                          print(addProductToSaleController
+                                              .listCheckSelectedProduct);
+                                          addProductToSaleController
+                                              .countProductSelected();
+                                        });
+                                        print(
+                                            "check in setState ${addProductToSaleController.listIsSave.value}");
+                                      }),
+                                  SizedBox(
+                                    width: 88,
+                                    child: AspectRatio(
+                                      aspectRatio: 1,
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFF5F6F9),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                           child: CachedNetworkImage(
                                             fit: BoxFit.cover,
-                                            imageUrl:
-                                                "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
+                                            imageUrl: addProductToSaleController
+                                                        .listProduct[index]
+                                                        .images
+                                                        .length ==
+                                                    0
+                                                ? ""
+                                                : addProductToSaleController
+                                                    .listProduct[index]
+                                                    .images[0]
+                                                    .imageUrl,
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Container(
+                                                height: 100,
+                                                child: CachedNetworkImage(
+                                                  fit: BoxFit.cover,
+                                                  imageUrl:
+                                                      "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
+                                                ),
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 20),
-                            Container(
-                              width: Get.width * 0.5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    addProductToSaleController
-                                            .listProduct[index].name ??
-                                        "Loi san pham",
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 16),
-                                    maxLines: 2,
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                      "${addProductToSaleController.listProduct[index].price} đ" ??
-                                          "Chưa đặt giá"),
+                                  SizedBox(width: 20),
+                                  Container(
+                                    width: Get.width * 0.5,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          addProductToSaleController
+                                                  .listProduct[index].name ??
+                                              "Loi san pham",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16),
+                                          maxLines: 2,
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                            "${addProductToSaleController.listProduct[index].price} đ" ??
+                                                "Chưa đặt giá"),
+                                      ],
+                                    ),
+                                  )
                                 ],
                               ),
-                            )
-                          ],
-                        ),
-                      ),
+                            ),
                     ),
                   ],
                 ),
@@ -196,7 +331,8 @@ class _AddProductToSaleScreenState extends State<AddProductToSaleScreen> {
               Row(
                 children: [
                   Text(
-                    '0',
+                    addProductToSaleController.quantityProductSelected.value
+                        .toString(),
                     style: TextStyle(color: Colors.red),
                   ),
                   SizedBox(
@@ -208,6 +344,8 @@ class _AddProductToSaleScreenState extends State<AddProductToSaleScreen> {
               InkWell(
                 onTap: () {
                   addProductToSaleController.checkSelectedProduct();
+                  addProductToSaleController.checkIsSaveProduct();
+                  Get.back();
                 },
                 child: Container(
                   width: 100,
