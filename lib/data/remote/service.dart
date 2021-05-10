@@ -4,6 +4,7 @@ import 'package:sahashop_user/data/remote/response/auth/login_response.dart';
 import 'package:sahashop_user/data/remote/response/config_ui/app_theme_response.dart';
 import 'package:sahashop_user/data/remote/response/config_ui/create_app_theme_response.dart';
 import 'package:sahashop_user/data/remote/response/create_discount_response/create_discount_respone.dart';
+import 'package:sahashop_user/data/remote/response/post/all_post_response.dart';
 
 import 'response/auth/register_response.dart';
 import 'response/category/all_category_response.dart';
@@ -11,6 +12,8 @@ import 'response/category/create_category_response.dart';
 import 'response/device_token/device_token_user_response.dart';
 import 'response/image/upload_image_response.dart';
 import 'response/post/all_category_post_response.dart';
+import 'response/post/create_category_post_response.dart';
+import 'response/post/create_post_response.dart';
 import 'response/product/all_product_response.dart';
 import 'response/product/product_response.dart';
 import 'response/store/all_store_response.dart';

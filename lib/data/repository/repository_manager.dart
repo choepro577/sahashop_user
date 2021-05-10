@@ -7,6 +7,7 @@ import 'config_ui/config_ui_repository.dart';
 import 'device_token/device_token_repository.dart';
 import 'image/image_repository.dart';
 import 'login/login_repository.dart';
+import 'marketing_chanel/marketing_chanel_repository.dart';
 import 'post/post_repository.dart';
 import 'store/store_repository.dart';
 
@@ -24,4 +25,6 @@ class RepositoryManager {
       DeviceTokenRepository();
   static MarketingChanelRepository get marketingChanel =>
       MarketingChanelRepository();
+  static PostRepository get postRepository =>
+      PostRepository();
 }
