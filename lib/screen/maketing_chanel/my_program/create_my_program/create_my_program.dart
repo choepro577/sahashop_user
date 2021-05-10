@@ -19,7 +19,7 @@ class CreateMyProgram extends StatefulWidget {
 class _CreateMyProgramState extends State<CreateMyProgram> {
   final _formKey = GlobalKey<FormState>();
   DateTime dateStart = DateTime.now();
-  DateTime timeStart = DateTime.now().add(Duration(hours: 1));
+  DateTime timeStart = DateTime.now().add(Duration(minutes: 1));
   DateTime dateEnd = DateTime.now();
   DateTime timeEnd = DateTime.now().add(Duration(hours: 2));
   AddProductToSaleController addProductToSaleController =
