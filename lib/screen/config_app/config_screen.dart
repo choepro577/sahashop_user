@@ -160,17 +160,19 @@ class ConfigScreen extends StatelessWidget {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        SahaButtonFullParent(
-                          color: Theme.of(context).primaryColor,
-                          textColor: Theme.of(context)
-                              .primaryTextTheme
-                              .bodyText1
-                              .color,
-                          onPressed: () {
-                            configController.createAppTheme();
-                            configController.updateTheme();
-                          },
-                          text: "Cập nhật giao diện",
+                        Obx(
+                         ()=> SahaButtonFullParent(
+                            color: Theme.of(context).primaryColor,
+                            textColor: Theme.of(context)
+                                .primaryTextTheme
+                                .bodyText1
+                                .color,
+                            onPressed:configController.isLoadingCreate.value == true ? null : () {
+                              configController.createAppTheme();
+                              configController.updateTheme();
+                            },
+                            text:configController.isLoadingCreate.value == true ? "..." :  "Cập nhật giao diện",
+                          ),
                         ),
                         SizedBox(
                           height: 10,

@@ -7,6 +7,7 @@ import 'config_ui/config_ui_repository.dart';
 import 'device_token/device_token_repository.dart';
 import 'image/image_repository.dart';
 import 'login/login_repository.dart';
+import 'post/post_repository.dart';
 import 'store/store_repository.dart';
 
 class RepositoryManager {
@@ -20,4 +21,5 @@ class RepositoryManager {
   static ConfigUIRepository get configUiRepository => ConfigUIRepository();
   static ImageRepository get imageRepository => ImageRepository();
   static DeviceTokenRepository get deviceTokenRepository => DeviceTokenRepository();
+  static PostRepository get postRepository => PostRepository();
 }

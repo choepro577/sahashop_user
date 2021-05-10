@@ -160,6 +160,54 @@ class _CustomerService implements CustomerService {
   }
 
   @override
+  Future<AllCategoryPostResponse> getAllCategoryPost(storeCode) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/post_categories',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = AllCategoryPostResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<AllPostResponse> searchPost(
+      storeCode, search, idCategory, descending, sortBy) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(search, 'search');
+    ArgumentError.checkNotNull(idCategory, 'idCategory');
+    ArgumentError.checkNotNull(descending, 'descending');
+    ArgumentError.checkNotNull(sortBy, 'sortBy');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'search': search,
+      r'category_ids': idCategory,
+      r'descending': descending,
+      r'sort_by': sortBy
+    };
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/posts?=',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = AllPostResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<HomeResponse> getHomeApp(storeCode) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     const _extra = <String, dynamic>{};

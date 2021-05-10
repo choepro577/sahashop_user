@@ -110,11 +110,7 @@ class ConfigController extends GetxController {
     try {
       var data =
       await RepositoryManager.configUiRepository.createAppTheme(configApp);
-
       SahaAlert.showSuccess(message: "Cập nhật thành công");
-      // Navigator.pop(Get.context, "added");
-
-      return true;
     } catch (err) {
 
       SahaAlert.showError(message: err.toString());

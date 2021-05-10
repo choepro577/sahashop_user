@@ -1,20 +1,20 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_full_screen.dart';
 import 'package:sahashop_user/components/saha_user/text_field/sahashopTextField.dart';
-import 'package:sahashop_user/screen/inventory/categories/add_category/widget/select_image.dart';
-
 import 'add_category_controller.dart';
+import 'widget/select_image.dart';
 
-class AddCategoryScreen extends StatelessWidget {
-  final TextEditingController textEditingControllerName =
+class AddCategoryPostScreen extends StatelessWidget {
+  final TextEditingController textEditingControllerTitle =
       new TextEditingController();
-  final AddCategoryController addCategoryController =
-      new AddCategoryController();
+  final TextEditingController textEditingControllerDescription =
+  new TextEditingController();
+  final AddCategoryPostController addCategoryPostController =
+      new AddCategoryPostController();
   final _formKey = GlobalKey<FormState>();
 
   File imageSelected;
@@ -22,7 +22,7 @@ class AddCategoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SahaAppBar(
-       titleText: "Thêm danh mục",
+       titleText: "Thêm danh mục bài viết",
       ),
       body: Stack(
           children: [
@@ -36,7 +36,7 @@ class AddCategoryScreen extends StatelessWidget {
                       children: [
                         SahaTextField(
                           onChanged: (value) {
-                            addCategoryController.name = value;
+                            addCategoryPostController.title = value;
                           },
                           validator: (value) {
                             if (value.length == 0) {
@@ -51,9 +51,9 @@ class AddCategoryScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 15, right: 15),
                           child: Row(
                             children: [
-                              SelectCategoryImage(
+                              SelectCategoryPostImage(
                                 onChange: (image) {
-                                  addCategoryController.image = image;
+                                  addCategoryPostController.image = image;
                                   imageSelected = image;
                                 },
                                 fileSelected: imageSelected,
@@ -76,6 +76,14 @@ class AddCategoryScreen extends StatelessWidget {
                             ],
                           ),
                         ),
+
+                        SahaTextField(
+                          onChanged: (value) {
+                            addCategoryPostController.title = value;
+                          },
+                          labelText: "Mô tả",
+                          hintText: "Mời nhập mô tả cho danh mục",
+                        ),
                       ],
                     ),
                   )),
@@ -83,7 +91,7 @@ class AddCategoryScreen extends StatelessWidget {
                     text: "Thêm",
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
-                        addCategoryController.createCategory();
+                        addCategoryPostController.createCategoryPost();
                       }
                     },
                   ),
@@ -91,7 +99,7 @@ class AddCategoryScreen extends StatelessWidget {
               ),
             ),
             Obx((){
-             return addCategoryController.isLoadingAdd.value
+             return addCategoryPostController.isLoadingAdd.value
                   ? SahaLoadingFullScreen()
                   : Container();
             })

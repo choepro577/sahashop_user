@@ -3,12 +3,16 @@ import 'package:retrofit/retrofit.dart';
 import 'package:sahashop_user/data/remote/response/auth/login_response.dart';
 import 'package:sahashop_user/data/remote/response/config_ui/app_theme_response.dart';
 import 'package:sahashop_user/data/remote/response/config_ui/create_app_theme_response.dart';
+import 'package:sahashop_user/data/remote/response/post/all_post_response.dart';
+import 'package:sahashop_user/data/remote/response/post/create_category_post_response.dart';
+import 'package:sahashop_user/data/remote/response/post/create_post_response.dart';
 
 import 'response/auth/register_response.dart';
 import 'response/category/all_category_response.dart';
 import 'response/category/create_category_response.dart';
 import 'response/device_token/device_token_user_response.dart';
 import 'response/image/upload_image_response.dart';
+import 'response/post/all_category_post_response.dart';
 import 'response/product/all_product_response.dart';
 import 'response/product/product_response.dart';
 import 'response/store/all_store_response.dart';
@@ -71,4 +75,20 @@ abstract class SahaService {
   @POST("device_token_user")
   Future<UpdateDeviceTokenResponse> updateDeviceTokenUser(
       @Body() Map<String, dynamic> body);
+
+  @POST("store/{storeCode}/post_categories")
+  @FormUrlEncoded()
+  Future<CreateCategoryPostResponse> createCategoryPost(
+      @Path() String storeCode, @Body() Map<String, dynamic> body);
+
+  @GET("store/{storeCode}/post_categories")
+  Future<AllCategoryPostResponse> getAllCategoryPost(@Path() String storeCode);
+
+  @POST("store/{storeCode}/posts")
+  @FormUrlEncoded()
+  Future<CreatePostResponse> createPost(
+      @Path() String storeCode, @Body() Map<String, dynamic> body);
+
+  @GET("store/{storeCode}/posts")
+  Future<AllPostResponse> getAllPost(@Path() String storeCode);
 }
