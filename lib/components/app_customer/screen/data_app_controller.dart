@@ -4,6 +4,7 @@ import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/app_customer/repository/repository_customer.dart';
 import 'package:sahashop_user/controller/config_controller.dart';
 import 'package:sahashop_user/model/category.dart';
+import 'package:sahashop_user/model/category_post.dart';
 import 'package:sahashop_user/model/home_data.dart';
 import 'package:sahashop_user/model/product.dart';
 import 'data_widget_config.dart';
@@ -12,6 +13,7 @@ import 'search_screen/search_screen.dart';
 class DataAppCustomerController extends GetxController {
   Product productCurrent = Product();
   Category categoryCurrent;
+  CategoryPost categoryPostCurrent;
   HomeData homeData = HomeData();
   DataAppCustomerController() {
     productCurrent = LIST_PRODUCT_EXAMPLE[0];

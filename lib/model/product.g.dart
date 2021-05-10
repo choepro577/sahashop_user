@@ -30,13 +30,14 @@ class ProductAdapter extends TypeAdapter<Product> {
       details: (fields[10] as List)?.cast<Details>(),
       images: (fields[11] as List)?.cast<ImageProduct>(),
       categories: (fields[12] as List)?.cast<Category>(),
+      productDiscount: fields[13] as ProductDiscount,
     );
   }
 
   @override
   void write(BinaryWriter writer, Product obj) {
     writer
-      ..writeByte(13)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -62,7 +63,9 @@ class ProductAdapter extends TypeAdapter<Product> {
       ..writeByte(11)
       ..write(obj.images)
       ..writeByte(12)
-      ..write(obj.categories);
+      ..write(obj.categories)
+      ..writeByte(13)
+      ..write(obj.productDiscount);
   }
 
   @override
@@ -186,6 +189,43 @@ class ImageProductAdapter extends TypeAdapter<ImageProduct> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is ImageProductAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class ProductDiscountAdapter extends TypeAdapter<ProductDiscount> {
+  @override
+  final int typeId = 5;
+
+  @override
+  ProductDiscount read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return ProductDiscount(
+      value: fields[0] as int,
+      discountPrice: fields[1] as int,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, ProductDiscount obj) {
+    writer
+      ..writeByte(2)
+      ..writeByte(0)
+      ..write(obj.value)
+      ..writeByte(1)
+      ..write(obj.discountPrice);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ProductDiscountAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

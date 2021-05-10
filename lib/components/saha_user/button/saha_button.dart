@@ -37,9 +37,7 @@ class SahaButtonFullParent extends StatelessWidget {
             borderRadius: BorderRadius.circular(4),
           ),
         ),
-        onPressed: () {
-          onPressed();
-        },
+        onPressed: onPressed,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

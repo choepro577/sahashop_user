@@ -110,6 +110,8 @@ class SelectCarouselImagesController extends GetxController {
           iosUiSettings: IOSUiSettings(
             minimumAspectRatio: 16/9,
             aspectRatioLockEnabled: true,
+            aspectRatioLockDimensionSwapEnabled: true,
+            rotateButtonsHidden: true,
             title: 'Cắt ảnh',
           ));
 

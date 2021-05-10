@@ -7,6 +7,8 @@ import 'package:sahashop_user/screen/config_app/config_screen.dart';
 import 'package:sahashop_user/screen/home/choose_store/choose_store.dart';
 import 'package:sahashop_user/screen/inventory/inventory_screen.dart';
 import 'package:sahashop_user/screen/maketing_chanel/marketing_chanel_screen.dart';
+import 'package:sahashop_user/screen/posts/post/posts_screen.dart';
+import 'package:sahashop_user/screen/posts/screen.dart';
 import '../../../saha_data_controller.dart';
 import '../home_controller.dart';
 
@@ -106,6 +108,14 @@ class HeadHome extends StatelessWidget {
                               text: 'Chương trình khuyến mãi',
                               press: () {
                                 Get.to(() => MarketingChanelScreen());
+
+                              },
+                            ),
+                            ItemStoreView(
+                              icon: 'assets/icons/gift_icon.svg',
+                              text: 'Tin tức - Bài viết',
+                              press: () {
+                                Get.to(() => PostNaviScreen());
 
                               },
                             ),

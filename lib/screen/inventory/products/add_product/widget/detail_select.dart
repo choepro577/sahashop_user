@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/divide/divide.dart';
-import 'package:sahashop_user/components/saha_user/sahashopTextField.dart';
+import 'package:sahashop_user/components/saha_user/text_field/sahashopTextField.dart';
 import 'package:sahashop_user/screen/inventory/products/add_product/widget/dropdown_string.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/model/product.dart';

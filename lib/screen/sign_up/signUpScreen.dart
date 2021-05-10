@@ -6,7 +6,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/dialog/dialog.dart';
-import 'package:sahashop_user/components/saha_user/sahashopTextField.dart';
+import 'package:sahashop_user/components/saha_user/text_field/sahashopTextField.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
 import 'package:sahashop_user/screen/login/loginScreen_controller.dart';
 import 'package:sahashop_user/screen/setup_Info/setup_info_shop.dart';

@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:sahashop_user/components/app_customer/remote/post/all_category_post_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/post/all_post_response.dart';
 
 import 'package:sahashop_user/components/app_customer/remote/response/category/all_category_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response/config_ui/app_theme_response.dart';
@@ -44,6 +46,17 @@ abstract class CustomerService {
       @Query("category_ids") String idCategory,
       @Query("descending") bool descending,
       @Query("details") String details,
+      @Query("sort_by") String sortBy);
+
+  @GET("{storeCode}/post_categories")
+  Future<AllCategoryPostResponse> getAllCategoryPost(@Path() String storeCode);
+
+  @GET("{storeCode}/posts?=")
+  Future<AllPostResponse> searchPost(
+      @Path() String storeCode,
+      @Query("search") String search,
+      @Query("category_ids") String idCategory,
+      @Query("descending") bool descending,
       @Query("sort_by") String sortBy);
 
   @GET("{storeCode}/home_app")

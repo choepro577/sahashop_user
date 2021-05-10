@@ -1,24 +1,6 @@
-import 'dart:convert';
-
-Post postFromJson(String str) => Post.fromJson(json.decode(str));
-
-String postToJson(Post data) => json.encode(data.toJson());
+import 'category.dart';
 
 class Post {
-  Post({
-    this.id,
-    this.storeId,
-    this.title,
-    this.imageUrl,
-    this.summary,
-    this.content,
-    this.published,
-    this.countView,
-    this.createdAt,
-    this.updatedAt,
-    this.categories,
-  });
-
   int id;
   int storeId;
   String title;
@@ -27,35 +9,57 @@ class Post {
   String content;
   bool published;
   int countView;
-  DateTime createdAt;
-  DateTime updatedAt;
-  List<dynamic> categories;
+  String createdAt;
+  String updatedAt;
+  List<Category> category;
 
-  factory Post.fromJson(Map<String, dynamic> json) => Post(
-    id: json["id"],
-    storeId: json["store_id"],
-    title: json["title"],
-    imageUrl: json["image_url"],
-    summary: json["summary"],
-    content: json["content"],
-    published: json["published"],
-    countView: json["count_view"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-    categories: List<dynamic>.from(json["categories"].map((x) => x)),
-  );
+  Post(
+      {this.id,
+        this.storeId,
+        this.title,
+        this.imageUrl,
+        this.summary,
+        this.content,
+        this.published,
+        this.countView,
+        this.createdAt,
+        this.updatedAt,
+        this.category});
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "store_id": storeId,
-    "title": title,
-    "image_url": imageUrl,
-    "summary": summary,
-    "content": content,
-    "published": published,
-    "count_view": countView,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-    "categories": List<dynamic>.from(categories.map((x) => x)),
-  };
+  Post.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    storeId = json['store_id'];
+    title = json['title'];
+    imageUrl = json['image_url'];
+    summary = json['summary'];
+    content = json['content'];
+    published = json['published'];
+    countView = json['count_view'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    if (json['category'] != null) {
+      category = new List<Category>();
+      json['category'].forEach((v) {
+        category.add(new Category.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['store_id'] = this.storeId;
+    data['title'] = this.title;
+    data['image_url'] = this.imageUrl;
+    data['summary'] = this.summary;
+    data['content'] = this.content;
+    data['published'] = this.published;
+    data['count_view'] = this.countView;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    if (this.category != null) {
+      data['category'] = this.category.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
