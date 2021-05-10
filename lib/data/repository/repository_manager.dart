@@ -1,3 +1,4 @@
+import 'package:sahashop_user/data/repository/marketing_chanel/marketing_chanel_repository.dart';
 import 'package:sahashop_user/data/repository/product/product_repository.dart';
 import 'package:sahashop_user/data/repository/register/register_repository.dart';
 import 'package:sahashop_user/data/repository/type_of_shop/type_of_shop_repository.dart';
@@ -19,5 +20,8 @@ class RepositoryManager {
   static CategoryRepository get categoryRepository => CategoryRepository();
   static ConfigUIRepository get configUiRepository => ConfigUIRepository();
   static ImageRepository get imageRepository => ImageRepository();
-  static DeviceTokenRepository get deviceTokenRepository => DeviceTokenRepository();
+  static DeviceTokenRepository get deviceTokenRepository =>
+      DeviceTokenRepository();
+  static MarketingChanelRepository get marketingChanel =>
+      MarketingChanelRepository();
 }
