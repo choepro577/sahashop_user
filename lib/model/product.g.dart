@@ -31,13 +31,14 @@ class ProductAdapter extends TypeAdapter<Product> {
       images: (fields[11] as List)?.cast<ImageProduct>(),
       categories: (fields[12] as List)?.cast<Category>(),
       productDiscount: fields[13] as ProductDiscount,
+      hasInDiscount: fields[14] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, Product obj) {
     writer
-      ..writeByte(14)
+      ..writeByte(15)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -65,7 +66,9 @@ class ProductAdapter extends TypeAdapter<Product> {
       ..writeByte(12)
       ..write(obj.categories)
       ..writeByte(13)
-      ..write(obj.productDiscount);
+      ..write(obj.productDiscount)
+      ..writeByte(14)
+      ..write(obj.hasInDiscount);
   }
 
   @override
@@ -205,7 +208,7 @@ class ProductDiscountAdapter extends TypeAdapter<ProductDiscount> {
     };
     return ProductDiscount(
       value: fields[0] as int,
-      discountPrice: fields[1] as int,
+      discountPrice: fields[1] as double,
     );
   }
 

@@ -32,15 +32,7 @@ class AddProductToSaleController extends GetxController {
           details ?? "",
           sortBy ?? "");
 
-      for (int i = 0; i < res.data.data.length; i++) {
-        try {
-          if (res.data.data[i].productDiscount == null) {
-            listProduct.add(res.data.data[i]);
-          }
-        } catch (e) {
-          listProduct.add(res.data.data[i]);
-        }
-      }
+      listProduct.addAll(res.data.data);
 
       if (listCheckSelectedProduct.value.length == 0) {
         listProduct.forEach((product) {
@@ -48,6 +40,13 @@ class AddProductToSaleController extends GetxController {
           listIsSave.value.add(false);
         });
       }
+
+      for (int i = 0; i < res.data.data.length; i++) {
+        if (res.data.data[i].hasInDiscount == true) {
+          listIsSave.value[i] = true;
+        }
+      }
+
       isLoadingProduct.value = false;
       return res.data.data;
     } catch (err) {
@@ -169,5 +168,6 @@ class AddProductToSaleController extends GetxController {
       SahaAlert.showError(message: err.toString());
     }
     isLoadingCreate.value = false;
+    listProductParam = "";
   }
 }

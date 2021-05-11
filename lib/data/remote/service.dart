@@ -3,7 +3,8 @@ import 'package:retrofit/retrofit.dart';
 import 'package:sahashop_user/data/remote/response/auth/login_response.dart';
 import 'package:sahashop_user/data/remote/response/config_ui/app_theme_response.dart';
 import 'package:sahashop_user/data/remote/response/config_ui/create_app_theme_response.dart';
-import 'package:sahashop_user/data/remote/response/create_discount_response/create_discount_respone.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/create_discount_respone.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/my_program_reponse.dart';
 import 'package:sahashop_user/data/remote/response/post/all_post_response.dart';
 
 import 'response/auth/register_response.dart';
@@ -96,4 +97,7 @@ abstract class SahaService {
 
   @GET("store/{storeCode}/posts")
   Future<AllPostResponse> getAllPost(@Path() String storeCode);
+
+  @GET("store/{storeCode}/discounts")
+  Future<MyProgramResponse> getAllDisCount(@Path() String storeCode);
 }

@@ -25,6 +25,7 @@ class Product {
     this.images,
     this.categories,
     this.productDiscount,
+    this.hasInDiscount,
   });
 
   @HiveField(0)
@@ -55,6 +56,8 @@ class Product {
   List<Category> categories;
   @HiveField(13)
   ProductDiscount productDiscount;
+  @HiveField(14)
+  bool hasInDiscount;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
@@ -65,6 +68,7 @@ class Product {
         productDiscount: json["product_discount"] == null
             ? null
             : ProductDiscount.fromJson(json["product_discount"]),
+        hasInDiscount: json["has_in_discount"],
         price: json["price"],
         barcode: json["barcode"],
         status: json["status"],
@@ -89,6 +93,7 @@ class Product {
         "status": status,
         "product_discount":
             productDiscount == null ? null : productDiscount.toJson(),
+        "has_in_discount": hasInDiscount,
         "details": details == null
             ? null
             : List<dynamic>.from(details.map((x) => x.toJson())),
@@ -186,12 +191,13 @@ class ProductDiscount {
   int value;
 
   @HiveField(1)
-  int discountPrice;
+  double discountPrice;
 
   factory ProductDiscount.fromJson(Map<String, dynamic> json) =>
       ProductDiscount(
         value: json["value"],
-        discountPrice: json["discount_price"],
+        discountPrice:
+            double.tryParse(json["discount_price"].toString()).toDouble(),
       );
 
   Map<String, dynamic> toJson() => {

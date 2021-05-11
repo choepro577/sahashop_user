@@ -1,4 +1,5 @@
-import 'package:sahashop_user/data/remote/response/create_discount_response/create_discount_respone.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/create_discount_respone.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/my_program_reponse.dart';
 import 'package:sahashop_user/data/remote/saha_service_manager.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 import '../handle_error.dart';
@@ -30,6 +31,17 @@ class MarketingChanelRepository {
         "product_ids": listIdProduct,
       });
 
+      return res;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  Future<MyProgramResponse> getAllDiscount() async {
+    try {
+      var res = await SahaServiceManager()
+          .service
+          .getAllDisCount(UserInfo().getCurrentStoreCode());
       return res;
     } catch (err) {
       handleError(err);

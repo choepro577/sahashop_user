@@ -38,7 +38,8 @@ class ProductItem extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      DataAppCustomerController dataAppCustomerController = Get.find();
+                      DataAppCustomerController dataAppCustomerController =
+                          Get.find();
                       dataAppCustomerController.toProductScreen(product);
                     },
                     child: Column(
@@ -149,7 +150,7 @@ class ProductItem extends StatelessWidget {
                                         child: Text(
                                           product.productDiscount == null
                                               ? "${FormatMoney.toVND(product.price)}"
-                                              : "${FormatMoney.toVND(product.productDiscount.discountPrice)}",
+                                              : "${FormatMoney.toVND(product.productDiscount.discountPrice.toInt())}",
                                           style: TextStyle(
                                               color: Theme.of(context)
                                                   .primaryColor,

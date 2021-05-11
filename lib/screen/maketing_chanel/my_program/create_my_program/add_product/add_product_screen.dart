@@ -90,117 +90,153 @@ class _AddProductToSaleScreenState extends State<AddProductToSaleScreen> {
                                   .listIsSave.value[index] ==
                               true
                           ? IgnorePointer(
-                              child: Opacity(
-                                opacity: 0.4,
-                                child: Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[200],
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Checkbox(
-                                          value: addProductToSaleController
-                                                  .listCheckSelectedProduct
-                                                  .value[index]
-                                                  .values
-                                                  .first ??
-                                              false,
-                                          onChanged: (v) {
-                                            setState(() {
-                                              addProductToSaleController
-                                                  .listCheckSelectedProduct
-                                                  .value[index]
-                                                  .update(
-                                                      addProductToSaleController
-                                                          .listCheckSelectedProduct
-                                                          .value[index]
-                                                          .keys
-                                                          .first,
-                                                      (value) =>
-                                                          !addProductToSaleController
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Opacity(
+                                    opacity: 0.4,
+                                    child: Container(
+                                      padding: const EdgeInsets.all(8.0),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[200],
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Checkbox(
+                                              value: addProductToSaleController
+                                                      .listCheckSelectedProduct
+                                                      .value[index]
+                                                      .values
+                                                      .first ??
+                                                  false,
+                                              onChanged: (v) {
+                                                setState(() {
+                                                  addProductToSaleController
+                                                      .listCheckSelectedProduct
+                                                      .value[index]
+                                                      .update(
+                                                          addProductToSaleController
                                                               .listCheckSelectedProduct
                                                               .value[index]
-                                                              .values
-                                                              .first);
-                                              print(addProductToSaleController
-                                                  .listCheckSelectedProduct);
-                                            });
-                                          }),
-                                      SizedBox(
-                                        width: 88,
-                                        child: AspectRatio(
-                                          aspectRatio: 1,
-                                          child: Container(
-                                            padding: EdgeInsets.all(5),
-                                            decoration: BoxDecoration(
-                                              color: Color(0xFFF5F6F9),
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            ),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              child: CachedNetworkImage(
-                                                fit: BoxFit.cover,
-                                                imageUrl: addProductToSaleController
-                                                            .listProduct[index]
-                                                            .images
-                                                            .length ==
-                                                        0
-                                                    ? ""
-                                                    : addProductToSaleController
-                                                        .listProduct[index]
-                                                        .images[0]
-                                                        .imageUrl,
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        ClipRRect(
+                                                              .keys
+                                                              .first,
+                                                          (value) =>
+                                                              !addProductToSaleController
+                                                                  .listCheckSelectedProduct
+                                                                  .value[index]
+                                                                  .values
+                                                                  .first);
+                                                  print(addProductToSaleController
+                                                      .listCheckSelectedProduct);
+                                                });
+                                              }),
+                                          SizedBox(
+                                            width: 88,
+                                            child: AspectRatio(
+                                              aspectRatio: 1,
+                                              child: Container(
+                                                padding: EdgeInsets.all(5),
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xFFF5F6F9),
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                                child: ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(10),
-                                                  child: Container(
-                                                    height: 100,
-                                                    child: CachedNetworkImage(
-                                                      fit: BoxFit.cover,
-                                                      imageUrl:
-                                                          "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
+                                                  child: CachedNetworkImage(
+                                                    fit: BoxFit.cover,
+                                                    imageUrl:
+                                                        addProductToSaleController
+                                                                    .listProduct[
+                                                                        index]
+                                                                    .images
+                                                                    .length ==
+                                                                0
+                                                            ? ""
+                                                            : addProductToSaleController
+                                                                .listProduct[
+                                                                    index]
+                                                                .images[0]
+                                                                .imageUrl,
+                                                    errorWidget:
+                                                        (context, url, error) =>
+                                                            ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      child: Container(
+                                                        height: 100,
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          fit: BoxFit.cover,
+                                                          imageUrl:
+                                                              "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
                                             ),
                                           ),
-                                        ),
+                                          SizedBox(width: 20),
+                                          Container(
+                                            width: Get.width * 0.5,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  addProductToSaleController
+                                                          .listProduct[index]
+                                                          .name ??
+                                                      "Loi san pham",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 16),
+                                                  maxLines: 2,
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text(
+                                                    "${addProductToSaleController.listProduct[index].price} đ" ??
+                                                        "Chưa đặt giá"),
+                                              ],
+                                            ),
+                                          )
+                                        ],
                                       ),
-                                      SizedBox(width: 20),
-                                      Container(
-                                        width: Get.width * 0.5,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              addProductToSaleController
-                                                      .listProduct[index]
-                                                      .name ??
-                                                  "Loi san pham",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 16),
-                                              maxLines: 2,
+                                    ),
+                                  ),
+                                  Center(
+                                    child: Container(
+                                      width: Get.width * 0.5,
+                                      padding: EdgeInsets.all(2),
+                                      child: Text(
+                                        "Sản phẩm đã có chương trình giảm giá",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xffff0004),
+                                          fontSize: 12,
+                                          shadows: <Shadow>[
+                                            Shadow(
+                                              offset: Offset(0, 0),
+                                              blurRadius: 10.0,
+                                              color: Colors.black12,
                                             ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                                "${addProductToSaleController.listProduct[index].price} đ" ??
-                                                    "Chưa đặt giá"),
+                                            Shadow(
+                                                offset: Offset(0, 0),
+                                                blurRadius: 10.0,
+                                                color: Colors.grey[200]),
                                           ],
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                ),
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
                             )
                           : Container(
