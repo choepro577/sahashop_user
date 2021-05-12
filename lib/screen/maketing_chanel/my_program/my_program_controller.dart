@@ -6,20 +6,38 @@ import 'package:sahashop_user/model/discount_product_list.dart';
 class MyProgramController extends GetxController {
   var isLoadingProgram = false.obs;
   var listProgramIsComing = RxList<DiscountProductsList>().obs;
+  var listProgramIsRunning = RxList<DiscountProductsList>().obs;
+  var listProgramIsEnd = RxList<DiscountProductsList>().obs;
+  var listAll = RxList<RxList<DiscountProductsList>>().obs;
   var hasDiscounted = false.obs;
   var listCheckHasDiscountState = RxList<bool>([false, false, false]).obs;
+  DateTime timeNow = DateTime.now();
 
   Future<void> getAllDiscount() async {
     isLoadingProgram.value = true;
     try {
       var res = await RepositoryManager.marketingChanel.getAllDiscount();
-      print(hasDiscounted.value);
 
-      listProgramIsComing.value.addAll(res.data);
+      //listProgramIsComing.value.addAll(res.data);
       if (res.data.isNotEmpty) {
         hasDiscounted.value = true;
-        listCheckHasDiscountState.value[0] = true;
       }
+
+      res.data.forEach((element) {
+        if (element.startTime.isAfter(timeNow)) {
+          listProgramIsComing.value.add(element);
+        } else {
+          if (element.endTime.isAfter(timeNow)) {
+            listProgramIsRunning.value.add(element);
+          } else {
+            listProgramIsEnd.value.add(element);
+          }
+        }
+      });
+
+      listAll.value.add(listProgramIsComing.value);
+      listAll.value.add(listProgramIsRunning.value);
+      listAll.value.add(listProgramIsEnd.value);
     } catch (err) {
       handleError(err);
     }

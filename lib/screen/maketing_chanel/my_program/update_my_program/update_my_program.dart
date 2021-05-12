@@ -2,34 +2,53 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/add_product/add_product_controller.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/add_product/add_product_screen.dart';
+import 'package:sahashop_user/model/discount_product_list.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_controller.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_program/update_my_program/update_product_discount_update/update_product_discount_controller.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_program/update_my_program/update_product_discount_update/update_product_discount_screen.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
 
 class UpdateMyProgram extends StatefulWidget {
+  DiscountProductsList programDiscount;
+
+  UpdateMyProgram({this.programDiscount});
+
   @override
   _UpdateMyProgramState createState() => _UpdateMyProgramState();
 }
 
 class _UpdateMyProgramState extends State<UpdateMyProgram> {
   final _formKey = GlobalKey<FormState>();
-  DateTime dateStart = DateTime.now();
-  DateTime timeStart = DateTime.now().add(Duration(minutes: 1));
-  DateTime dateEnd = DateTime.now();
-  DateTime timeEnd = DateTime.now().add(Duration(hours: 2));
-  AddProductToSaleController addProductToSaleController =
-      Get.put(AddProductToSaleController());
+  DateTime dateStart;
+  DateTime timeStart;
+  DateTime dateEnd;
+  DateTime timeEnd;
+  UpdateProductToDiscountController updateProductToDiscountController =
+      Get.put(UpdateProductToDiscountController());
+  MyProgramController myProgramController = Get.find();
   bool checkDayStart = false;
   bool checkDayEnd = false;
   TextEditingController nameProgramEditingController =
       new TextEditingController();
   TextEditingController discountEditingController = new TextEditingController();
   TextEditingController quantityEditingController = new TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    updateProductToDiscountController.listSelectedProduct.value
+        .addAll(widget.programDiscount.products);
+    updateProductToDiscountController.listProductHasInDiscount.value
+        .addAll(widget.programDiscount.products);
+    dateStart = widget.programDiscount.startTime ?? DateTime.now();
+    timeStart = widget.programDiscount.startTime ?? DateTime.now();
+    dateEnd = widget.programDiscount.endTime ?? DateTime.now();
+    timeEnd = widget.programDiscount.endTime ?? DateTime.now();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -360,7 +379,7 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('Sản phẩm'),
-                            addProductToSaleController
+                            updateProductToDiscountController
                                         .listSelectedProduct.value.length ==
                                     0
                                 ? Container()
@@ -370,7 +389,8 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
                                       color: Theme.of(context).primaryColor,
                                     ),
                                     onPressed: () {
-                                      Get.to(() => AddProductToSaleScreen());
+                                      Get.to(() =>
+                                          UpdateProductToDiscountScreen());
                                     })
                           ],
                         ),
@@ -379,12 +399,12 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
                         height: 10,
                       ),
                       Obx(
-                        () => addProductToSaleController
+                        () => updateProductToDiscountController
                                     .listSelectedProduct.value.length ==
                                 0
                             ? InkWell(
                                 onTap: () {
-                                  Get.to(() => AddProductToSaleScreen());
+                                  Get.to(() => UpdateProductToDiscountScreen());
                                 },
                                 child: Container(
                                   height: 100,
@@ -414,7 +434,7 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
                                 height: 400,
                                 child: StaggeredGridView.countBuilder(
                                   crossAxisCount: 4,
-                                  itemCount: addProductToSaleController
+                                  itemCount: updateProductToDiscountController
                                       .listSelectedProduct.value.length,
                                   itemBuilder:
                                       (BuildContext context, int index) =>
@@ -429,18 +449,19 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
                                         ),
                                         child: CachedNetworkImage(
                                           fit: BoxFit.cover,
-                                          imageUrl: addProductToSaleController
+                                          imageUrl:
+                                              updateProductToDiscountController
+                                                          .listSelectedProduct
+                                                          .value[index]
+                                                          .images
+                                                          .length ==
+                                                      0
+                                                  ? ""
+                                                  : updateProductToDiscountController
                                                       .listSelectedProduct
                                                       .value[index]
-                                                      .images
-                                                      .length ==
-                                                  0
-                                              ? ""
-                                              : addProductToSaleController
-                                                  .listSelectedProduct
-                                                  .value[index]
-                                                  .images[0]
-                                                  .imageUrl,
+                                                      .images[0]
+                                                      .imageUrl,
                                           errorWidget: (context, url, error) =>
                                               Container(
                                             height: 100,
@@ -462,13 +483,13 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
                                                   .primaryColor,
                                             ),
                                             onPressed: () {
-                                              addProductToSaleController
+                                              updateProductToDiscountController
                                                   .deleteProductSelected(
-                                                      addProductToSaleController
+                                                      updateProductToDiscountController
                                                           .listSelectedProduct
                                                           .value[index]
                                                           .id);
-                                              addProductToSaleController
+                                              updateProductToDiscountController
                                                   .countProductSelected();
                                             }),
                                       ),
@@ -499,8 +520,9 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
                     KeyboardUtil.hideKeyboard(context);
-                    addProductToSaleController.listSelectedProductToString();
-                    addProductToSaleController.createDiscount(
+                    updateProductToDiscountController
+                        .listSelectedProductToString();
+                    updateProductToDiscountController.createDiscount(
                         nameProgramEditingController.text,
                         "",
                         "",
@@ -509,7 +531,7 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
                         int.parse(discountEditingController.text),
                         false,
                         int.parse(quantityEditingController.text),
-                        addProductToSaleController.listProductParam);
+                        updateProductToDiscountController.listProductParam);
                   }
                 },
                 color: Theme.of(context).primaryColor,

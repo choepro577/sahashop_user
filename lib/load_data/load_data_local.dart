@@ -17,5 +17,6 @@ class LoadDataLocal {
     Hive.registerAdapter(AttributesAdapter());
     Hive.registerAdapter(ImageProductAdapter());
     Hive.registerAdapter(CategoryAdapter());
+    Hive.registerAdapter(ProductDiscountAdapter());
   }
 }

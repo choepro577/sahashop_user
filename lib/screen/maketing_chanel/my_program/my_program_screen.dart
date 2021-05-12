@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
+import 'package:sahashop_user/model/discount_product_list.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/create_my_program.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_controller.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/update_my_program/update_my_program.dart';
@@ -69,9 +70,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                   controller: tabController,
                   children: List<Widget>.generate(3, (int index) {
                     return buildStateProgram(
-                        index,
-                        myProgramController
-                            .listCheckHasDiscountState.value[index]);
+                        index, myProgramController.listAll.value[index]);
                   }),
                 ),
                 bottomNavigationBar: Container(
@@ -152,14 +151,13 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
     );
   }
 
-  Widget buildStateProgram(int indexState, bool isLoading) {
-    return isLoading
+  Widget buildStateProgram(
+      int indexState, List<DiscountProductsList> listProgramState) {
+    return listProgramState.isNotEmpty
         ? Column(
             children: [
-              ...List.generate(
-                  myProgramController.listProgramIsComing.value.length,
-                  (index) {
-                return programIsComingItem(index, indexState);
+              ...List.generate(listProgramState.length, (index) {
+                return programIsComingItem(listProgramState[index], indexState);
               })
             ],
           )
@@ -196,7 +194,8 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
           );
   }
 
-  Widget programIsComingItem(int index, int indexState) {
+  Widget programIsComingItem(
+      DiscountProductsList listProgramState, int indexState) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Container(
@@ -215,8 +214,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                         width: Get.width * 0.6,
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          myProgramController
-                              .listProgramIsComing.value[index].name,
+                          listProgramState.name,
                           textAlign: TextAlign.start,
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w500),
@@ -226,7 +224,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                         width: Get.width * 0.7,
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "${SahaDateUtils().getDDMMYY(myProgramController.listProgramIsComing.value[index].startTime)} ${SahaDateUtils().getHHMM(myProgramController.listProgramIsComing.value[index].startTime)} - ${SahaDateUtils().getDDMMYY(myProgramController.listProgramIsComing.value[index].endTime)} ${SahaDateUtils().getHHMM(myProgramController.listProgramIsComing.value[index].endTime)}",
+                          "${SahaDateUtils().getDDMMYY(listProgramState.startTime)} ${SahaDateUtils().getHHMM(listProgramState.startTime)} - ${SahaDateUtils().getDDMMYY(listProgramState.endTime)} ${SahaDateUtils().getHHMM(listProgramState.endTime)}",
                           style:
                               TextStyle(fontSize: 13, color: Colors.grey[700]),
                         ),
@@ -241,7 +239,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                       child: CachedNetworkImage(
                         fit: BoxFit.cover,
                         imageUrl:
-                            "${myProgramController.listProgramIsComing.value[index].products[0].images[0].imageUrl}",
+                            "${listProgramState.products[0].images[0].imageUrl}",
                         errorWidget: (context, url, error) => ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: CachedNetworkImage(
@@ -279,7 +277,9 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.to(() => UpdateMyProgram());
+                            Get.to(() => UpdateMyProgram(
+                                  programDiscount: listProgramState,
+                                ));
                           },
                           child: Container(
                             height: 35,
