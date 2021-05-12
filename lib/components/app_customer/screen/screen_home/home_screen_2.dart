@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/components/product_item/post_item_widget.dart';
 import 'package:sahashop_user/components/app_customer/components/product_item/product_card.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_box_button.dart';
 import 'package:sahashop_user/components/saha_user/special_card/special_offer_card_type1.dart';
@@ -250,6 +251,44 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                       )
                     ],
                   ),
+
+
+            dataAppCustomerController.homeData?.newPost?.list == null
+                ? Container()
+                : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: SectionTitle(
+                      title: "Tin tức - bài viết",
+                      titleEnd: "Tất cả",
+                      pressTitleEnd: () {
+                        dataAppCustomerController
+                            .toCategoryProductScreen();
+                      }),
+                ),
+                SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: dataAppCustomerController
+                            .homeData.newPost.list
+                            .map((post) => PostItemWidget(
+                          width: 220,
+                          post: post,
+                        ))
+                            .toList(),
+                      ),
+                  ),
+                )
+              ],
+            ),
+
+
           ],
         ),
       ),
