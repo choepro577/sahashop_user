@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/model/discount_product_list.dart';
@@ -39,7 +40,6 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
     // TODO: implement initState
     super.initState();
     tabController = new TabController(length: 3, vsync: this, initialIndex: 0);
-    tabController.addListener(_handleTabSelection);
     myProgramController.getAllDiscount();
   }
 
@@ -80,12 +80,8 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                 body: TabBarView(
                   controller: tabController,
                   children: List<Widget>.generate(3, (int index) {
-                    return Obx(
-                      () => myProgramController.isRefreshingData.value == true
-                          ? SahaLoadingWidget()
-                          : buildStateProgram(
-                              index, myProgramController.listAll.value[index]),
-                    );
+                    return buildStateProgram(
+                        index, myProgramController.listAll.value[index]);
                   }),
                 ),
                 bottomNavigationBar: Container(
@@ -168,48 +164,104 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
 
   Widget buildStateProgram(
       int indexState, List<DiscountProductsList> listProgramState) {
-    return listProgramState.isNotEmpty
-        ? SingleChildScrollView(
-            child: Column(
-              children: [
-                ...List.generate(listProgramState.length, (index) {
-                  return programIsComingItem(
-                      listProgramState[index], indexState);
-                })
-              ],
-            ),
-          )
-        : Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                  padding: EdgeInsets.all(15.0),
-                  width: Get.width * 0.4,
-                  child: AspectRatio(
-                      aspectRatio: 1,
-                      child: SvgPicture.asset("assets/icons/time_out.svg"))),
-              Container(
-                width: Get.width * 0.9,
-                padding: const EdgeInsets.all(4.0),
-                child: Text(
-                  stateProgram[indexState],
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Container(
-                width: Get.width * 0.9,
-                padding: const EdgeInsets.all(4.0),
-                child: Text(
-                  stateProgramSub[indexState],
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.grey[700],
+    RefreshController _refreshController =
+        RefreshController(initialRefresh: true);
+    return SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: true,
+        header: WaterDropHeader(),
+        footer: CustomFooter(
+          builder: (BuildContext context, LoadStatus mode) {
+            Widget body;
+            if (mode == LoadStatus.idle) {
+              body = Text("pull up load");
+            } else if (mode == LoadStatus.loading) {
+              body = CupertinoActivityIndicator();
+            } else if (mode == LoadStatus.failed) {
+              body = Text("Load Failed!Click retry!");
+            } else if (mode == LoadStatus.canLoading) {
+              body = Text("release to load more");
+            } else {
+              body = Text("No more Data");
+            }
+            return Container(
+              height: 55.0,
+              child: Center(child: body),
+            );
+          },
+        ),
+        controller: _refreshController,
+        onRefresh: () async {
+          //monitor fetch data from network
+          await Future.delayed(Duration(milliseconds: 1000));
+
+          if (mounted) setState(() {});
+          myProgramController.refreshData();
+          _refreshController.refreshCompleted();
+        },
+        onLoading: () async {
+          //monitor fetch data from network
+          await Future.delayed(Duration(milliseconds: 180));
+          // if (mounted) setState(() {});
+          _refreshController.loadFailed();
+        },
+        child: listProgramState.isNotEmpty
+            ? Obx(
+                () => myProgramController.isRefreshingData.value == true
+                    ? SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            ...List.generate(listProgramState.length, (index) {
+                              return programIsComingItem(
+                                  listProgramState[index], indexState);
+                            })
+                          ],
+                        ),
+                      )
+                    : SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            ...List.generate(listProgramState.length, (index) {
+                              return programIsComingItem(
+                                  listProgramState[index], indexState);
+                            })
+                          ],
+                        ),
+                      ),
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      padding: EdgeInsets.all(15.0),
+                      width: Get.width * 0.4,
+                      child: AspectRatio(
+                          aspectRatio: 1,
+                          child:
+                              SvgPicture.asset("assets/icons/time_out.svg"))),
+                  Container(
+                    width: Get.width * 0.9,
+                    padding: const EdgeInsets.all(4.0),
+                    child: Text(
+                      stateProgram[indexState],
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-              ),
-            ],
-          );
+                  Container(
+                    width: Get.width * 0.9,
+                    padding: const EdgeInsets.all(4.0),
+                    child: Text(
+                      stateProgramSub[indexState],
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                  ),
+                ],
+              ));
   }
 
   Widget programIsComingItem(

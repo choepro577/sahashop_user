@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/add_product/add_product_controller.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/add_product/add_product_screen.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_controller.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
 
@@ -24,6 +24,7 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
   DateTime timeEnd = DateTime.now().add(Duration(hours: 2));
   AddProductToSaleController addProductToSaleController =
       Get.put(AddProductToSaleController());
+  MyProgramController myProgramController = Get.find();
   bool checkDayStart = false;
   bool checkDayEnd = false;
   TextEditingController nameProgramEditingController =
@@ -493,26 +494,44 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
           color: Colors.white,
           child: Column(
             children: [
-              SahaButtonFullParent(
-                text: "Lưu",
-                onPressed: () {
-                  if (_formKey.currentState.validate()) {
-                    _formKey.currentState.save();
-                    KeyboardUtil.hideKeyboard(context);
-                    addProductToSaleController.listSelectedProductToString();
-                    addProductToSaleController.createDiscount(
-                        nameProgramEditingController.text,
-                        "",
-                        "",
-                        timeStart.toIso8601String(),
-                        timeEnd.toIso8601String(),
-                        int.parse(discountEditingController.text),
-                        false,
-                        int.parse(quantityEditingController.text),
-                        addProductToSaleController.listProductParam);
-                  }
-                },
-                color: Theme.of(context).primaryColor,
+              Obx(
+                () => addProductToSaleController.isLoadingCreate.value == true
+                    ? IgnorePointer(
+                        child: SahaButtonFullParent(
+                          text: "Lưu",
+                          textColor: Colors.grey[600],
+                          onPressed: () {},
+                          color: Colors.grey[300],
+                        ),
+                      )
+                    : SahaButtonFullParent(
+                        text: "Lưu",
+                        onPressed: () {
+                          if (_formKey.currentState.validate()) {
+                            _formKey.currentState.save();
+                            KeyboardUtil.hideKeyboard(context);
+                            addProductToSaleController
+                                .listSelectedProductToString();
+                            addProductToSaleController.createDiscount(
+                                nameProgramEditingController.text,
+                                "",
+                                "",
+                                timeStart.toIso8601String(),
+                                timeEnd.toIso8601String(),
+                                int.parse(discountEditingController.text),
+                                false,
+                                int.parse(quantityEditingController.text),
+                                addProductToSaleController.listProductParam);
+                          }
+                          if (addProductToSaleController
+                                  .isLoadingCreate.value ==
+                              false) {
+                            Get.back();
+                            myProgramController.refreshData();
+                          }
+                        },
+                        color: Theme.of(context).primaryColor,
+                      ),
               ),
             ],
           ),

@@ -9,13 +9,14 @@ class MyProgramController extends GetxController {
   var listProgramIsComing = RxList<DiscountProductsList>().obs;
   var listProgramIsRunning = RxList<DiscountProductsList>().obs;
   var listProgramIsEnd = RxList<DiscountProductsList>().obs;
-  var listAll = RxList<RxList<DiscountProductsList>>().obs;
+  var listAll = RxList<List<DiscountProductsList>>([[], [], []]).obs;
   var hasDiscounted = false.obs;
   var listCheckHasDiscountState = RxList<bool>([false, false, false]).obs;
   DateTime timeNow = DateTime.now();
 
   Future<void> getAllDiscount() async {
     isLoadingProgram.value = true;
+    DateTime timeNow = DateTime.now();
     try {
       var res = await RepositoryManager.marketingChanel.getAllDiscount();
 
@@ -35,9 +36,9 @@ class MyProgramController extends GetxController {
         }
       });
 
-      listAll.value.add(listProgramIsComing.value);
-      listAll.value.add(listProgramIsRunning.value);
-      listAll.value.add(listProgramIsEnd.value);
+      listAll.value[0] = listProgramIsComing.value;
+      listAll.value[1] = listProgramIsRunning.value;
+      listAll.value[2] = listProgramIsEnd.value;
     } catch (err) {
       handleError(err);
     }
@@ -49,7 +50,7 @@ class MyProgramController extends GetxController {
     listProgramIsComing = RxList<DiscountProductsList>().obs;
     listProgramIsRunning = RxList<DiscountProductsList>().obs;
     listProgramIsEnd = RxList<DiscountProductsList>().obs;
-    listAll = RxList<RxList<DiscountProductsList>>().obs;
+    listAll = RxList<List<DiscountProductsList>>([[], [], []]).obs;
     await getAllDiscount();
     isRefreshingData.value = false;
   }

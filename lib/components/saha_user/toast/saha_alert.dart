@@ -8,7 +8,7 @@ class SahaAlert {
     String title = "Saha",
   }) {
     showFlash(
-      duration: Duration(milliseconds: 1000),
+      duration: Duration(milliseconds: 3500),
       context: Get.context,
       builder: (_, controller) {
         return Flash(
@@ -41,7 +41,6 @@ class SahaAlert {
       },
     );
   }
-
 
   static void showWarning({
     String message = "",
