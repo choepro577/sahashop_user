@@ -13,6 +13,10 @@ import 'package:sahashop_user/screen/maketing_chanel/my_program/update_my_progra
 import 'package:sahashop_user/utils/date_utils.dart';
 
 class MyProgram extends StatefulWidget {
+  Function onChange;
+
+  MyProgram({this.onChange});
+
   @override
   _MyProgramState createState() => _MyProgramState();
 }
@@ -55,6 +59,16 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
     }
   }
 
+  void reload() {
+    if (myProgramController.isRefreshingData.value == true) {
+      print("trueeeeeeeeeeeeeeeeeeeeeee");
+    } else {
+      setState(() {
+        print("falssssssseeeeeeeeeeeeeee");
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -81,7 +95,9 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                   controller: tabController,
                   children: List<Widget>.generate(3, (int index) {
                     return buildStateProgram(
-                        index, myProgramController.listAll.value[index]);
+                        index,
+                        myProgramController
+                            .listAllSaveStateBefore.value[index]);
                   }),
                 ),
                 bottomNavigationBar: Container(
@@ -92,7 +108,9 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                       SahaButtonFullParent(
                         text: "Tạo chương trình khuyến mãi",
                         onPressed: () {
-                          Get.to(() => CreateMyProgram());
+                          Get.to(() => CreateMyProgram(
+                                onChange: reload,
+                              ));
                         },
                         color: Theme.of(context).primaryColor,
                       ),
@@ -193,7 +211,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
         controller: _refreshController,
         onRefresh: () async {
           //monitor fetch data from network
-          await Future.delayed(Duration(milliseconds: 1000));
+          await Future.delayed(Duration(milliseconds: 200));
 
           if (mounted) setState(() {});
           myProgramController.refreshData();
@@ -205,63 +223,68 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
           // if (mounted) setState(() {});
           _refreshController.loadFailed();
         },
-        child: listProgramState.isNotEmpty
-            ? Obx(
-                () => myProgramController.isRefreshingData.value == true
-                    ? SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            ...List.generate(listProgramState.length, (index) {
-                              return programIsComingItem(
-                                  listProgramState[index], indexState);
-                            })
-                          ],
+        child: Obx(
+          () => listProgramState.isNotEmpty
+              ? Obx(
+                  () => myProgramController.isRefreshingData.value == true &&
+                          listProgramState.isNotEmpty
+                      ? SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              ...List.generate(listProgramState.length,
+                                  (index) {
+                                return programIsComingItem(
+                                    listProgramState[index], indexState);
+                              })
+                            ],
+                          ),
+                        )
+                      : SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              ...List.generate(listProgramState.length,
+                                  (index) {
+                                return programIsComingItem(
+                                    listProgramState[index], indexState);
+                              })
+                            ],
+                          ),
                         ),
-                      )
-                    : SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            ...List.generate(listProgramState.length, (index) {
-                              return programIsComingItem(
-                                  listProgramState[index], indexState);
-                            })
-                          ],
-                        ),
-                      ),
-              )
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                      padding: EdgeInsets.all(15.0),
-                      width: Get.width * 0.4,
-                      child: AspectRatio(
-                          aspectRatio: 1,
-                          child:
-                              SvgPicture.asset("assets/icons/time_out.svg"))),
-                  Container(
-                    width: Get.width * 0.9,
-                    padding: const EdgeInsets.all(4.0),
-                    child: Text(
-                      stateProgram[indexState],
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Container(
-                    width: Get.width * 0.9,
-                    padding: const EdgeInsets.all(4.0),
-                    child: Text(
-                      stateProgramSub[indexState],
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.grey[700],
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                        padding: EdgeInsets.all(15.0),
+                        width: Get.width * 0.4,
+                        child: AspectRatio(
+                            aspectRatio: 1,
+                            child:
+                                SvgPicture.asset("assets/icons/time_out.svg"))),
+                    Container(
+                      width: Get.width * 0.9,
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text(
+                        stateProgram[indexState],
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w600),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                  ),
-                ],
-              ));
+                    Container(
+                      width: Get.width * 0.9,
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text(
+                        stateProgramSub[indexState],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.grey[700],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+        ));
   }
 
   Widget programIsComingItem(

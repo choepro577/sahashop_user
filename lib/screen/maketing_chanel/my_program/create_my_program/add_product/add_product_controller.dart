@@ -5,10 +5,12 @@ import 'package:sahashop_user/data/repository/handle_error.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/model/product.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_controller.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_screen.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class AddProductToSaleController extends GetxController {
   MyProgramController myProgramController = Get.find();
+
   var listProduct = RxList<Product>();
   var isLoadingProduct = false.obs;
   var listIsSave = RxList<bool>().obs;

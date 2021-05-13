@@ -12,6 +12,10 @@ import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
 
 class CreateMyProgram extends StatefulWidget {
+  Function onChange;
+
+  CreateMyProgram({this.onChange});
+
   @override
   _CreateMyProgramState createState() => _CreateMyProgramState();
 }
@@ -522,12 +526,7 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
                                 false,
                                 int.parse(quantityEditingController.text),
                                 addProductToSaleController.listProductParam);
-                          }
-                          if (addProductToSaleController
-                                  .isLoadingCreate.value ==
-                              false) {
-                            Get.back();
-                            myProgramController.refreshData();
+                            widget.onChange();
                           }
                         },
                         color: Theme.of(context).primaryColor,
