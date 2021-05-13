@@ -37,6 +37,13 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
   TextEditingController quantityEditingController = new TextEditingController();
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    widget.onChange();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return GestureDetector(
@@ -526,7 +533,6 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
                                 false,
                                 int.parse(quantityEditingController.text),
                                 addProductToSaleController.listProductParam);
-                            widget.onChange();
                           }
                         },
                         color: Theme.of(context).primaryColor,

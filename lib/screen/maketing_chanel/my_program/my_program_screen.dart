@@ -60,13 +60,11 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
   }
 
   void reload() {
-    if (myProgramController.isRefreshingData.value == true) {
-      print("trueeeeeeeeeeeeeeeeeeeeeee");
-    } else {
+    Future.delayed(Duration(milliseconds: 3000), () {
       setState(() {
         print("falssssssseeeeeeeeeeeeeee");
       });
-    }
+    });
   }
 
   @override
