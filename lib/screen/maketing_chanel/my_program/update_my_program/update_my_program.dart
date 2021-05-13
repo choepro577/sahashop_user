@@ -48,6 +48,9 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
     timeStart = widget.programDiscount.startTime ?? DateTime.now();
     dateEnd = widget.programDiscount.endTime ?? DateTime.now();
     timeEnd = widget.programDiscount.endTime ?? DateTime.now();
+    nameProgramEditingController.text = widget.programDiscount.name;
+    discountEditingController.text = widget.programDiscount.value.toString();
+    quantityEditingController.text = widget.programDiscount.amount;
   }
 
   @override

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
+import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/model/discount_product_list.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/create_my_program.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_controller.dart';
@@ -17,6 +18,7 @@ class MyProgram extends StatefulWidget {
 
 class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
   bool isHasDiscount = false;
+  bool isTabOnTap = false;
   TabController tabController;
   MyProgramController myProgramController = Get.put(MyProgramController());
 
@@ -42,8 +44,14 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
   }
 
   _handleTabSelection() {
-    if (tabController.index == 0) {
-      print(tabController.index);
+    if (isTabOnTap) {
+      isTabOnTap = false;
+    } else {
+      if (tabController.index == 0) {
+        myProgramController.refreshData();
+      } else {
+        myProgramController.refreshData();
+      }
     }
   }
 
@@ -59,6 +67,9 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                   title: Text('Chương trình của tôi'),
                   bottom: TabBar(
                     controller: tabController,
+                    onTap: (index) {
+                      isTabOnTap = true;
+                    },
                     tabs: [
                       Tab(text: "Sắp diễn ra"),
                       Tab(text: "Đang diễn ra"),
@@ -69,8 +80,12 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                 body: TabBarView(
                   controller: tabController,
                   children: List<Widget>.generate(3, (int index) {
-                    return buildStateProgram(
-                        index, myProgramController.listAll.value[index]);
+                    return Obx(
+                      () => myProgramController.isRefreshingData.value == true
+                          ? SahaLoadingWidget()
+                          : buildStateProgram(
+                              index, myProgramController.listAll.value[index]),
+                    );
                   }),
                 ),
                 bottomNavigationBar: Container(
@@ -154,12 +169,15 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
   Widget buildStateProgram(
       int indexState, List<DiscountProductsList> listProgramState) {
     return listProgramState.isNotEmpty
-        ? Column(
-            children: [
-              ...List.generate(listProgramState.length, (index) {
-                return programIsComingItem(listProgramState[index], indexState);
-              })
-            ],
+        ? SingleChildScrollView(
+            child: Column(
+              children: [
+                ...List.generate(listProgramState.length, (index) {
+                  return programIsComingItem(
+                      listProgramState[index], indexState);
+                })
+              ],
+            ),
           )
         : Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -238,8 +256,10 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                       height: 80,
                       child: CachedNetworkImage(
                         fit: BoxFit.cover,
-                        imageUrl:
-                            "${listProgramState.products[0].images[0].imageUrl}",
+                        imageUrl: listProgramState.products[0].images.length ==
+                                0
+                            ? ""
+                            : "${listProgramState.products[0].images[0].imageUrl}",
                         errorWidget: (context, url, error) => ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: CachedNetworkImage(

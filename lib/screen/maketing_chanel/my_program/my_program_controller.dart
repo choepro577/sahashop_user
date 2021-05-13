@@ -5,6 +5,7 @@ import 'package:sahashop_user/model/discount_product_list.dart';
 
 class MyProgramController extends GetxController {
   var isLoadingProgram = false.obs;
+  var isRefreshingData = false.obs;
   var listProgramIsComing = RxList<DiscountProductsList>().obs;
   var listProgramIsRunning = RxList<DiscountProductsList>().obs;
   var listProgramIsEnd = RxList<DiscountProductsList>().obs;
@@ -18,7 +19,6 @@ class MyProgramController extends GetxController {
     try {
       var res = await RepositoryManager.marketingChanel.getAllDiscount();
 
-      //listProgramIsComing.value.addAll(res.data);
       if (res.data.isNotEmpty) {
         hasDiscounted.value = true;
       }
@@ -42,5 +42,15 @@ class MyProgramController extends GetxController {
       handleError(err);
     }
     isLoadingProgram.value = false;
+  }
+
+  Future<void> refreshData() async {
+    isRefreshingData.value = true;
+    listProgramIsComing = RxList<DiscountProductsList>().obs;
+    listProgramIsRunning = RxList<DiscountProductsList>().obs;
+    listProgramIsEnd = RxList<DiscountProductsList>().obs;
+    listAll = RxList<RxList<DiscountProductsList>>().obs;
+    await getAllDiscount();
+    isRefreshingData.value = false;
   }
 }
