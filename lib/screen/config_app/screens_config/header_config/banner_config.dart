@@ -21,6 +21,8 @@ class BoxPionConfig extends StatelessWidget {
           initPage: controller.configApp.carouselType,
           onSelected: (index) {
             controller.configApp.carouselType = index;
+            print(
+                "-----------------------------${controller.configApp.carouselType}");
           },
         )
       ],

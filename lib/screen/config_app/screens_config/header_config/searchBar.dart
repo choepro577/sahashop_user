@@ -5,7 +5,7 @@ import 'package:sahashop_user/components/saha_user/carousel/carousel_select.dart
 import 'package:sahashop_user/controller/config_controller.dart';
 
 class SearchBarConfig extends StatelessWidget {
-  final ConfigController controller = Get.find();
+  final ConfigController configController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +14,12 @@ class SearchBarConfig extends StatelessWidget {
         CarouselSelect(
           height: 100,
           listWidget: LIST_WIDGET_SEARCH_BAR,
-          indexSelected: controller.configApp.searchType,
-          initPage: controller.configApp.searchType,
-          onChange: (index) {
-            controller.configApp.searchType = index;
+          indexSelected: configController.configApp.searchType,
+          initPage: configController.configApp.searchType,
+          onSelected: (index) {
+            configController.configApp.searchType = index;
+            print(
+                "-----------------------------${configController.configApp.searchType}");
           },
         )
       ],

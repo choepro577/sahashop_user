@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:sahashop_user/components/app_customer/screen/data_widget_config.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/const/const_database_hive.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
@@ -20,7 +21,6 @@ class ConfigController extends GetxController {
   var isLoadingGet = false.obs;
   var isLoadingCreate = false.obs;
   var contactButton = RxList<UnicornButton>();
-
 
   @override
   void onInit() {
@@ -46,12 +46,11 @@ class ConfigController extends GetxController {
     indexTab.value = va;
   }
 
-
   void updateTheme() {
     currentTheme.value = ThemeData(
         fontFamily: configApp.fontFamily,
         primarySwatch:
-        MaterialColor(HexColor.getColorFromHex(configApp.colorMain1), {
+            MaterialColor(HexColor.getColorFromHex(configApp.colorMain1), {
           50: HexColor(configApp.colorMain1).withOpacity(0.1),
           100: HexColor(configApp.colorMain1).withOpacity(0.2),
           200: HexColor(configApp.colorMain1).withOpacity(0.3),
@@ -68,16 +67,18 @@ class ConfigController extends GetxController {
   }
 
   Future<void> getAppTheme() async {
-
     try {
       isLoadingGet.value = true;
       var data = await RepositoryManager.configUiRepository.getAppTheme();
       configApp.colorMain1 = data.colorMain1 ?? "#ff93b9b4";
       configApp.fontFamily =
-      data.fontFamily != null && FONT_DATA.containsKey(data.fontFamily)
-          ? data.fontFamily
-          : FONT_DATA.keys.toList()[0];
+          data.fontFamily != null && FONT_DATA.containsKey(data.fontFamily)
+              ? data.fontFamily
+              : FONT_DATA.keys.toList()[0];
       configApp.searchType = data.searchType ?? 0;
+      if (configApp.searchType > LIST_WIDGET_SEARCH_BAR.length) {
+        configApp.searchType = LIST_WIDGET_SEARCH_BAR.length - 1;
+      }
       configApp.carouselType = data.carouselType ?? 0;
       configApp.homePageType = data.homePageType ?? 0;
       configApp.categoryPageType = data.categoryPageType ?? 0;
@@ -101,18 +102,15 @@ class ConfigController extends GetxController {
       SahaAlert.showError(message: err.toString());
       isLoadingGet.value = false;
     }
-
   }
 
   Future<void> createAppTheme() async {
-
     isLoadingCreate.value = true;
     try {
       var data =
-      await RepositoryManager.configUiRepository.createAppTheme(configApp);
+          await RepositoryManager.configUiRepository.createAppTheme(configApp);
       SahaAlert.showSuccess(message: "Cập nhật thành công");
     } catch (err) {
-
       SahaAlert.showError(message: err.toString());
     }
     isLoadingCreate.value = false;
