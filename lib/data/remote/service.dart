@@ -100,4 +100,8 @@ abstract class SahaService {
 
   @GET("store/{storeCode}/discounts")
   Future<MyProgramResponse> getAllDisCount(@Path() String storeCode);
+
+  @PUT("store/{storeCode}/discounts/{idDiscount}")
+  Future<MyProgramResponse> updateDiscount(@Path() String storeCode,
+      @Path() int idDiscount, @Body() Map<String, dynamic> body);
 }

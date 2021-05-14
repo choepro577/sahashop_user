@@ -32,9 +32,10 @@ class MyApp extends StatelessWidget {
                       : Material(
                           child: InkWell(
                             onTap: () {
-                              Get.offNamedUntil("ConfigScreen",
-                                  (route) => route.settings.name == "ConfigScreen"
-                              );
+                              Get.offNamedUntil(
+                                  "ConfigScreen",
+                                  (route) =>
+                                      route.settings.name == "ConfigScreen");
                               Get.back();
                               sahaDataController.changeStatusPreview(false);
                             },

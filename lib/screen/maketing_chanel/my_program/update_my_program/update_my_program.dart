@@ -48,6 +48,9 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
     timeStart = widget.programDiscount.startTime ?? DateTime.now();
     dateEnd = widget.programDiscount.endTime ?? DateTime.now();
     timeEnd = widget.programDiscount.endTime ?? DateTime.now();
+    nameProgramEditingController.text = widget.programDiscount.name;
+    discountEditingController.text = widget.programDiscount.value.toString();
+    quantityEditingController.text = widget.programDiscount.amount.toString();
   }
 
   @override
@@ -345,12 +348,6 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
                         child: TextFormField(
                           controller: quantityEditingController,
                           keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value.length < 1) {
-                              return 'Chưa nhập số lượng';
-                            }
-                            return null;
-                          },
                           style: TextStyle(fontSize: 14),
                           textAlign: TextAlign.end,
                           decoration: InputDecoration(
@@ -517,20 +514,45 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
               SahaButtonFullParent(
                 text: "Lưu",
                 onPressed: () {
+                  print(
+                    widget.programDiscount.id,
+                  );
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
                     KeyboardUtil.hideKeyboard(context);
                     updateProductToDiscountController
                         .listSelectedProductToString();
-                    updateProductToDiscountController.createDiscount(
+                    updateProductToDiscountController.updateDiscount(
+                        widget.programDiscount.id,
+                        false,
                         nameProgramEditingController.text,
                         "",
                         "",
-                        timeStart.toIso8601String(),
-                        timeEnd.toIso8601String(),
+                        DateTime(
+                                dateStart.year,
+                                dateStart.month,
+                                dateStart.day,
+                                timeStart.hour,
+                                timeStart.minute,
+                                timeStart.second,
+                                timeStart.millisecond,
+                                timeStart.microsecond)
+                            .toIso8601String(), //timeStart.toIso8601String(),\
+                        DateTime(
+                                dateEnd.year,
+                                dateEnd.month,
+                                dateEnd.day,
+                                timeEnd.hour,
+                                timeEnd.minute,
+                                timeEnd.second,
+                                timeEnd.millisecond,
+                                timeEnd.microsecond)
+                            .toIso8601String(),
                         int.parse(discountEditingController.text),
-                        false,
-                        int.parse(quantityEditingController.text),
+                        quantityEditingController.text == "null" ? false : true,
+                        quantityEditingController.text == "null"
+                            ? 0
+                            : int.parse(quantityEditingController.text),
                         updateProductToDiscountController.listProductParam);
                   }
                 },

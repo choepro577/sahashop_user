@@ -4,26 +4,20 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/run_app.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
-import 'package:sahashop_user/components/app_customer/screen/data_app_screen.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_full_screen.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/controller/config_controller.dart';
-import '../../saha_data_controller.dart';
 import 'ui_data_config.dart';
 
 class ConfigScreen extends StatelessWidget {
-
   ConfigController configController = Get.put(ConfigController());
   DataAppCustomerController dataAppController =
       Get.put(DataAppCustomerController()); // create DataAppController
 
-
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
         appBar: SahaAppBar(
           titleText: 'Chỉnh sửa giao diện',
@@ -161,17 +155,26 @@ class ConfigScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Obx(
-                         ()=> SahaButtonFullParent(
+                          () => SahaButtonFullParent(
                             color: Theme.of(context).primaryColor,
                             textColor: Theme.of(context)
                                 .primaryTextTheme
                                 .bodyText1
                                 .color,
-                            onPressed:configController.isLoadingCreate.value == true ? null : () {
-                              configController.createAppTheme();
-                              configController.updateTheme();
-                            },
-                            text:configController.isLoadingCreate.value == true ? "..." :  "Cập nhật giao diện",
+                            onPressed:
+                                configController.isLoadingCreate.value == true
+                                    ? null
+                                    : () {
+                                        print(
+                                            "-----------------------------${configController.configApp.searchType}");
+                                        print(
+                                            "banner--------${configController.configApp.carouselType}");
+                                        configController.createAppTheme();
+                                        configController.updateTheme();
+                                      },
+                            text: configController.isLoadingCreate.value == true
+                                ? "..."
+                                : "Cập nhật giao diện",
                           ),
                         ),
                         SizedBox(

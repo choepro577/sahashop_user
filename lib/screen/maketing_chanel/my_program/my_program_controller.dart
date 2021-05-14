@@ -5,20 +5,23 @@ import 'package:sahashop_user/model/discount_product_list.dart';
 
 class MyProgramController extends GetxController {
   var isLoadingProgram = false.obs;
+  var isRefreshingData = false.obs;
   var listProgramIsComing = RxList<DiscountProductsList>().obs;
   var listProgramIsRunning = RxList<DiscountProductsList>().obs;
   var listProgramIsEnd = RxList<DiscountProductsList>().obs;
-  var listAll = RxList<RxList<DiscountProductsList>>().obs;
+  var listAll = RxList<List<DiscountProductsList>>([[], [], []]).obs;
+  var listAllSaveStateBefore =
+      RxList<List<DiscountProductsList>>([[], [], []]).obs;
   var hasDiscounted = false.obs;
   var listCheckHasDiscountState = RxList<bool>([false, false, false]).obs;
   DateTime timeNow = DateTime.now();
 
   Future<void> getAllDiscount() async {
     isLoadingProgram.value = true;
+    DateTime timeNow = DateTime.now();
     try {
       var res = await RepositoryManager.marketingChanel.getAllDiscount();
 
-      //listProgramIsComing.value.addAll(res.data);
       if (res.data.isNotEmpty) {
         hasDiscounted.value = true;
       }
@@ -35,12 +38,23 @@ class MyProgramController extends GetxController {
         }
       });
 
-      listAll.value.add(listProgramIsComing.value);
-      listAll.value.add(listProgramIsRunning.value);
-      listAll.value.add(listProgramIsEnd.value);
+      listAll.value[0] = listProgramIsComing.value;
+      listAll.value[1] = listProgramIsRunning.value;
+      listAll.value[2] = listProgramIsEnd.value;
+      listAllSaveStateBefore = listAll;
     } catch (err) {
       handleError(err);
     }
     isLoadingProgram.value = false;
+  }
+
+  Future<void> refreshData() async {
+    isRefreshingData.value = true;
+    listProgramIsComing = RxList<DiscountProductsList>().obs;
+    listProgramIsRunning = RxList<DiscountProductsList>().obs;
+    listProgramIsEnd = RxList<DiscountProductsList>().obs;
+    listAll = RxList<List<DiscountProductsList>>([[], [], []]).obs;
+    await getAllDiscount();
+    isRefreshingData.value = false;
   }
 }

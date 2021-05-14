@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
+import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/model/discount_product_list.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/create_my_program.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_controller.dart';
@@ -11,12 +13,17 @@ import 'package:sahashop_user/screen/maketing_chanel/my_program/update_my_progra
 import 'package:sahashop_user/utils/date_utils.dart';
 
 class MyProgram extends StatefulWidget {
+  Function onChange;
+
+  MyProgram({this.onChange});
+
   @override
   _MyProgramState createState() => _MyProgramState();
 }
 
 class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
   bool isHasDiscount = false;
+  bool isTabOnTap = false;
   TabController tabController;
   MyProgramController myProgramController = Get.put(MyProgramController());
 
@@ -37,14 +44,27 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
     // TODO: implement initState
     super.initState();
     tabController = new TabController(length: 3, vsync: this, initialIndex: 0);
-    tabController.addListener(_handleTabSelection);
     myProgramController.getAllDiscount();
   }
 
   _handleTabSelection() {
-    if (tabController.index == 0) {
-      print(tabController.index);
+    if (isTabOnTap) {
+      isTabOnTap = false;
+    } else {
+      if (tabController.index == 0) {
+        myProgramController.refreshData();
+      } else {
+        myProgramController.refreshData();
+      }
     }
+  }
+
+  void reload() {
+    Future.delayed(Duration(milliseconds: 3000), () {
+      setState(() {
+        print("falssssssseeeeeeeeeeeeeee");
+      });
+    });
   }
 
   @override
@@ -59,6 +79,9 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                   title: Text('Chương trình của tôi'),
                   bottom: TabBar(
                     controller: tabController,
+                    onTap: (index) {
+                      isTabOnTap = true;
+                    },
                     tabs: [
                       Tab(text: "Sắp diễn ra"),
                       Tab(text: "Đang diễn ra"),
@@ -70,7 +93,9 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                   controller: tabController,
                   children: List<Widget>.generate(3, (int index) {
                     return buildStateProgram(
-                        index, myProgramController.listAll.value[index]);
+                        index,
+                        myProgramController
+                            .listAllSaveStateBefore.value[index]);
                   }),
                 ),
                 bottomNavigationBar: Container(
@@ -81,7 +106,9 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                       SahaButtonFullParent(
                         text: "Tạo chương trình khuyến mãi",
                         onPressed: () {
-                          Get.to(() => CreateMyProgram());
+                          Get.to(() => CreateMyProgram(
+                                onChange: reload,
+                              ));
                         },
                         color: Theme.of(context).primaryColor,
                       ),
@@ -153,45 +180,109 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
 
   Widget buildStateProgram(
       int indexState, List<DiscountProductsList> listProgramState) {
-    return listProgramState.isNotEmpty
-        ? Column(
-            children: [
-              ...List.generate(listProgramState.length, (index) {
-                return programIsComingItem(listProgramState[index], indexState);
-              })
-            ],
-          )
-        : Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                  padding: EdgeInsets.all(15.0),
-                  width: Get.width * 0.4,
-                  child: AspectRatio(
-                      aspectRatio: 1,
-                      child: SvgPicture.asset("assets/icons/time_out.svg"))),
-              Container(
-                width: Get.width * 0.9,
-                padding: const EdgeInsets.all(4.0),
-                child: Text(
-                  stateProgram[indexState],
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                  textAlign: TextAlign.center,
+    RefreshController _refreshController =
+        RefreshController(initialRefresh: true);
+    return SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: true,
+        header: WaterDropHeader(),
+        footer: CustomFooter(
+          builder: (BuildContext context, LoadStatus mode) {
+            Widget body;
+            if (mode == LoadStatus.idle) {
+              body = Text("pull up load");
+            } else if (mode == LoadStatus.loading) {
+              body = CupertinoActivityIndicator();
+            } else if (mode == LoadStatus.failed) {
+              body = Text("Load Failed!Click retry!");
+            } else if (mode == LoadStatus.canLoading) {
+              body = Text("release to load more");
+            } else {
+              body = Text("No more Data");
+            }
+            return Container(
+              height: 55.0,
+              child: Center(child: body),
+            );
+          },
+        ),
+        controller: _refreshController,
+        onRefresh: () async {
+          //monitor fetch data from network
+          await Future.delayed(Duration(milliseconds: 200));
+
+          if (mounted) setState(() {});
+          myProgramController.refreshData();
+          _refreshController.refreshCompleted();
+        },
+        onLoading: () async {
+          //monitor fetch data from network
+          await Future.delayed(Duration(milliseconds: 180));
+          // if (mounted) setState(() {});
+          _refreshController.loadFailed();
+        },
+        child: Obx(
+          () => listProgramState.isNotEmpty
+              ? Obx(
+                  () => myProgramController.isRefreshingData.value == true &&
+                          listProgramState.isNotEmpty
+                      ? SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              ...List.generate(listProgramState.length,
+                                  (index) {
+                                return programIsComingItem(
+                                    listProgramState[index], indexState);
+                              })
+                            ],
+                          ),
+                        )
+                      : SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              ...List.generate(listProgramState.length,
+                                  (index) {
+                                return programIsComingItem(
+                                    listProgramState[index], indexState);
+                              })
+                            ],
+                          ),
+                        ),
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                        padding: EdgeInsets.all(15.0),
+                        width: Get.width * 0.4,
+                        child: AspectRatio(
+                            aspectRatio: 1,
+                            child:
+                                SvgPicture.asset("assets/icons/time_out.svg"))),
+                    Container(
+                      width: Get.width * 0.9,
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text(
+                        stateProgram[indexState],
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w600),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Container(
+                      width: Get.width * 0.9,
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text(
+                        stateProgramSub[indexState],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.grey[700],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              Container(
-                width: Get.width * 0.9,
-                padding: const EdgeInsets.all(4.0),
-                child: Text(
-                  stateProgramSub[indexState],
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.grey[700],
-                  ),
-                ),
-              ),
-            ],
-          );
+        ));
   }
 
   Widget programIsComingItem(
@@ -238,8 +329,10 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                       height: 80,
                       child: CachedNetworkImage(
                         fit: BoxFit.cover,
-                        imageUrl:
-                            "${listProgramState.products[0].images[0].imageUrl}",
+                        imageUrl: listProgramState.products[0].images.length ==
+                                0
+                            ? ""
+                            : "${listProgramState.products[0].images[0].imageUrl}",
                         errorWidget: (context, url, error) => ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: CachedNetworkImage(

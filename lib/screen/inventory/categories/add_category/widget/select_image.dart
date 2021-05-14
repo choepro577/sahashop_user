@@ -10,6 +10,7 @@ import 'package:path/path.dart';
 
 class SelectCategoryImage extends StatelessWidget {
   SelectImageController selectImageController = new SelectImageController();
+
   final Function onChange;
 
   final File fileSelected;
