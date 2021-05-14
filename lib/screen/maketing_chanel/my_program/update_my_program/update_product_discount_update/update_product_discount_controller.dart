@@ -152,7 +152,9 @@ class UpdateProductToDiscountController extends GetxController {
     print(listProductParam);
   }
 
-  Future<void> createDiscount(
+  Future<void> updateDiscount(
+    int idDiscount,
+    bool isEnd,
     String name,
     String description,
     String imageUrl,
@@ -165,7 +167,9 @@ class UpdateProductToDiscountController extends GetxController {
   ) async {
     isLoadingCreate.value = true;
     try {
-      var data = await RepositoryManager.marketingChanel.createDiscount(
+      var data = await RepositoryManager.marketingChanel.updateDiscount(
+          idDiscount,
+          isEnd,
           name,
           description,
           imageUrl,
@@ -175,7 +179,7 @@ class UpdateProductToDiscountController extends GetxController {
           setLimitedAmount,
           amount,
           listIdProduct);
-      SahaAlert.showSuccess(message: "Lưu thành công");
+      SahaAlert.showSuccess(message: "Sửa thành công");
       return true;
     } catch (err) {
       SahaAlert.showError(message: err.toString());

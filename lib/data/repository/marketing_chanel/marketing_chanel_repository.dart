@@ -37,6 +37,38 @@ class MarketingChanelRepository {
     }
   }
 
+  Future<MyProgramResponse> updateDiscount(
+    int idDiscount,
+    bool isEnd,
+    String name,
+    String description,
+    String imageUrl,
+    String startTime,
+    String endTime,
+    int value,
+    bool setLimitedAmount,
+    int amount,
+    String listIdProduct,
+  ) async {
+    try {
+      var res = await SahaServiceManager()
+          .service
+          .updateDiscount(UserInfo().getCurrentStoreCode(), idDiscount, {
+        "is_end": isEnd,
+        "name": name,
+        "description": description,
+        "image_url": imageUrl,
+        "start_time": startTime,
+        "end_time": endTime,
+        "value": value,
+        "set_limit_amount": setLimitedAmount,
+        "amount": amount,
+        "product_ids": listIdProduct,
+      });
+      return res;
+    } catch (err) {}
+  }
+
   Future<MyProgramResponse> getAllDiscount() async {
     try {
       var res = await SahaServiceManager()

@@ -338,12 +338,6 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
                         child: TextFormField(
                           controller: quantityEditingController,
                           keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value.length < 1) {
-                              return 'Chưa nhập số lượng';
-                            }
-                            return null;
-                          },
                           style: TextStyle(fontSize: 14),
                           textAlign: TextAlign.end,
                           decoration: InputDecoration(
@@ -527,11 +521,34 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
                                 nameProgramEditingController.text,
                                 "",
                                 "",
-                                timeStart.toIso8601String(),
-                                timeEnd.toIso8601String(),
+                                DateTime(
+                                        dateStart.year,
+                                        dateStart.month,
+                                        dateStart.day,
+                                        timeStart.hour,
+                                        timeStart.minute,
+                                        timeStart.second,
+                                        timeStart.millisecond,
+                                        timeStart.microsecond)
+                                    .toIso8601String(), //timeStart.toIso8601String(),\
+                                DateTime(
+                                        dateEnd.year,
+                                        dateEnd.month,
+                                        dateEnd.day,
+                                        timeEnd.hour,
+                                        timeEnd.minute,
+                                        timeEnd.second,
+                                        timeEnd.millisecond,
+                                        timeEnd.microsecond)
+                                    .toIso8601String(),
+                                //timeEnd.toIso8601String(),
                                 int.parse(discountEditingController.text),
-                                false,
-                                int.parse(quantityEditingController.text),
+                                quantityEditingController.text.isEmpty
+                                    ? false
+                                    : true,
+                                quantityEditingController.text.isEmpty
+                                    ? 0
+                                    : int.parse(quantityEditingController.text),
                                 addProductToSaleController.listProductParam);
                           }
                         },
