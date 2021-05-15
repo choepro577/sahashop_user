@@ -33,6 +33,22 @@ class ConfigController extends GetxController {
   void onClose() {
     Get.changeTheme(SahaUserPrimaryTheme);
     deleteContactButton();
+    print("onclose");
+  }
+
+  @override
+  void refresh() {
+    print("refresh");
+  }
+
+  @override
+  void onReady() {
+    print("onReady");
+  }
+
+  @override
+  void update([List<Object> ids, bool condition = true]) {
+    print("upddate");
   }
 
   ConfigController() {

@@ -18,8 +18,6 @@ class SearchBarConfig extends StatelessWidget {
           initPage: configController.configApp.searchType,
           onSelected: (index) {
             configController.configApp.searchType = index;
-            print(
-                "-----------------------------${configController.configApp.searchType}");
           },
         )
       ],

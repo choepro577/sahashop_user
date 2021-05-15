@@ -12,49 +12,55 @@ import 'screens_config/header_config/image_carousel/select_image_carousel.dart';
 import 'screens_config/home_screen/home_screen.dart';
 import 'screens_config/icon_helpler/iconType/supportIcon.dart';
 
-var UIDataConfig = [
-  ParentConfig(name: "Cấu hình chính", icon: "config.svg", listChildConfig: [
-    ChildConfig(name: "Theme", editWidget: MainConfigThemeColor()),
-    ChildConfig(name: "Logo", editWidget: MainConfigLogo()),
-    ChildConfig(name: "Kiểu chữ", editWidget: FontConfig()),
-  ]),
-  ParentConfig(name: "Nút hỗ trợ", icon: "support.svg", listChildConfig: [
-    ChildConfig(name: "Contact", editWidget: SupportIcon()),
-  ]),
-  ParentConfig(name: "Màn hình trang chủ", icon: "home.svg", listChildConfig: [
-    ChildConfig(
-        name: "Mời chọn kiểu giao diện", editWidget: HomeScreenConfig()),
-  ]),
-  ParentConfig(name: "Thành phần trang chủ", icon: "home.svg", listChildConfig: [
-    ChildConfig(name: "Thanh tìm kiếm", editWidget: SearchBarConfig()),
-    ChildConfig(name: "Ảnh banner", editWidget: SelectCarouselImages()),
-    ChildConfig(name: "Kiểu banner ", editWidget: BoxPionConfig()),
-  ]),
-
-  ParentConfig(
-      name: "Màn hình Danh mục sản phẩm",
-      icon: "categories.svg",
-      listChildConfig: [
-        ChildConfig(
-            name: "Mời chọn kiểu giao diện",
-            editWidget: CategoryProductConfig()),
-      ]),
-  ParentConfig(
-      name: "Màn hình sản phẩm",
-      icon: "product_screen.svg",
-      listChildConfig: [
-        ChildConfig(name: "", editWidget: ProductScreenConfig())
-      ]),
-  ParentConfig(
-      name: "Màn hình giỏ hàng",
-      icon: "cart.svg",
-      listChildConfig: [ChildConfig(name: "", editWidget: CartSceenConfig())]),
-  ParentConfig(name: "Màn hình Liên hệ", icon: "bell.svg", listChildConfig: [
-    ChildConfig(
-      name: "Logo",
-    )
-  ]),
-];
+class UIDataConfig {
+  final UIData = [
+    ParentConfig(name: "Cấu hình chính", icon: "config.svg", listChildConfig: [
+      ChildConfig(name: "Theme", editWidget: MainConfigThemeColor()),
+      ChildConfig(name: "Logo", editWidget: MainConfigLogo()),
+      ChildConfig(name: "Kiểu chữ", editWidget: FontConfig()),
+    ]),
+    ParentConfig(name: "Nút hỗ trợ", icon: "support.svg", listChildConfig: [
+      ChildConfig(name: "Contact", editWidget: SupportIcon()),
+    ]),
+    ParentConfig(
+        name: "Màn hình trang chủ",
+        icon: "home.svg",
+        listChildConfig: [
+          ChildConfig(
+              name: "Mời chọn kiểu giao diện", editWidget: HomeScreenConfig()),
+        ]),
+    ParentConfig(
+        name: "Thành phần trang chủ",
+        icon: "home.svg",
+        listChildConfig: [
+          ChildConfig(name: "Thanh tìm kiếm", editWidget: SearchBarConfig()),
+          ChildConfig(name: "Ảnh banner", editWidget: SelectCarouselImages()),
+          ChildConfig(name: "Kiểu banner ", editWidget: BoxPionConfig()),
+        ]),
+    ParentConfig(
+        name: "Màn hình Danh mục sản phẩm",
+        icon: "categories.svg",
+        listChildConfig: [
+          ChildConfig(
+              name: "Mời chọn kiểu giao diện",
+              editWidget: CategoryProductConfig()),
+        ]),
+    ParentConfig(
+        name: "Màn hình sản phẩm",
+        icon: "product_screen.svg",
+        listChildConfig: [
+          ChildConfig(name: "", editWidget: ProductScreenConfig())
+        ]),
+    ParentConfig(name: "Màn hình giỏ hàng", icon: "cart.svg", listChildConfig: [
+      ChildConfig(name: "", editWidget: CartSceenConfig())
+    ]),
+    ParentConfig(name: "Màn hình Liên hệ", icon: "bell.svg", listChildConfig: [
+      ChildConfig(
+        name: "Logo",
+      )
+    ]),
+  ];
+}
 
 class ParentConfig {
   String name;

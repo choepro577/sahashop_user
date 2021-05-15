@@ -362,7 +362,7 @@ class SahaDateUtils {
   }
 
   String getHHMM(DateTime dateTime) {
-    return DateFormat('hh:mm').format(dateTime);
+    return DateFormat('HH:mm').format(dateTime);
   }
 
   Future<TimeOfDay> selectTime(BuildContext context, TimeOfDay initTime) async {

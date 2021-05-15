@@ -7,6 +7,7 @@ import 'model/theme_model.dart';
 import 'saha_data_controller.dart';
 import 'saha_load_app.dart';
 import 'screen/config_app/config_screen.dart';
+import 'screen/home/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
                                   "ConfigScreen",
                                   (route) =>
                                       route.settings.name == "ConfigScreen");
-                              Get.back();
+
                               sahaDataController.changeStatusPreview(false);
                             },
                             child: Container(

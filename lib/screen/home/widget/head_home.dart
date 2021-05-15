@@ -23,9 +23,6 @@ class HeadHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
-
     return Column(
       children: [
         Container(
@@ -98,9 +95,7 @@ class HeadHome extends StatelessWidget {
                               icon: 'assets/icons/gift_icon.svg',
                               text: 'Chỉnh sửa giao diện',
                               press: () {
-
-                               Get.toNamed("ConfigScreen");
-
+                                Get.toNamed("ConfigScreen");
                               },
                             ),
                             ItemStoreView(
@@ -108,7 +103,6 @@ class HeadHome extends StatelessWidget {
                               text: 'Chương trình khuyến mãi',
                               press: () {
                                 Get.to(() => MarketingChanelScreen());
-
                               },
                             ),
                             ItemStoreView(
@@ -116,7 +110,6 @@ class HeadHome extends StatelessWidget {
                               text: 'Tin tức - Bài viết',
                               press: () {
                                 Get.to(() => PostNaviScreen());
-
                               },
                             ),
                           ]),

@@ -12,10 +12,11 @@ import 'package:sahashop_user/controller/config_controller.dart';
 import 'ui_data_config.dart';
 
 class ConfigScreen extends StatelessWidget {
-  ConfigController configController = Get.put(ConfigController());
-  DataAppCustomerController dataAppController =
+  final ConfigController configController = Get.put(ConfigController());
+  final DataAppCustomerController dataAppController =
       Get.put(DataAppCustomerController()); // create DataAppController
 
+  UIDataConfig uiDataConfig = new UIDataConfig();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +50,7 @@ class ConfigScreen extends StatelessWidget {
                                         0.22,
                                     color: Colors.grey[200],
                                     child: ListView.builder(
-                                        itemCount: UIDataConfig.length,
+                                        itemCount: uiDataConfig.UIData.length,
                                         itemBuilder: (context, index) {
                                           return buildItem(index: index);
                                         }),
@@ -72,7 +73,7 @@ class ConfigScreen extends StatelessWidget {
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            UIDataConfig[configController
+                                            uiDataConfig.UIData[configController
                                                     .indexTab.value]
                                                 .name,
                                             style: TextStyle(
@@ -83,11 +84,11 @@ class ConfigScreen extends StatelessWidget {
                                         ],
                                       ),
                                     ),
-                                    UIDataConfig[configController
+                                    uiDataConfig.UIData[configController
                                                         .indexTab.value]
                                                     .listChildConfig ==
                                                 null ||
-                                            UIDataConfig[configController
+                                        uiDataConfig.UIData[configController
                                                         .indexTab.value]
                                                     .listChildConfig
                                                     .length ==
@@ -98,7 +99,7 @@ class ConfigScreen extends StatelessWidget {
                                         : Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
-                                            children: UIDataConfig[
+                                            children: uiDataConfig.UIData[
                                                     configController
                                                         .indexTab.value]
                                                 .listChildConfig
@@ -165,10 +166,6 @@ class ConfigScreen extends StatelessWidget {
                                 configController.isLoadingCreate.value == true
                                     ? null
                                     : () {
-                                        print(
-                                            "-----------------------------${configController.configApp.searchType}");
-                                        print(
-                                            "banner--------${configController.configApp.carouselType}");
                                         configController.createAppTheme();
                                         configController.updateTheme();
                                       },
@@ -188,7 +185,7 @@ class ConfigScreen extends StatelessWidget {
   }
 
   Widget buildItem({int index}) {
-    ParentConfig parentConfig = UIDataConfig[index];
+    ParentConfig parentConfig = uiDataConfig.UIData[index];
     return Container(
       color: configController.indexTab.value == index
           ? Colors.white

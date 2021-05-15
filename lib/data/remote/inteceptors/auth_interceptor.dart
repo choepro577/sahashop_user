@@ -19,9 +19,13 @@ class AuthInterceptor extends InterceptorsWrapper {
     if (UserInfo().getToken() != null) {
       options.headers.putIfAbsent("token", () => UserInfo().getToken());
     }
+    print('Link: ${options.uri.toString()}');
     print('Header: ${options.headers}');
     print('Request: ${options.data}');
-    options.data = new FormData.fromMap(options.data);
+    if(options.method == 'POST') {
+      options.data = new FormData.fromMap(options.data);
+    }
+
     return super.onRequest(options);
   }
 
@@ -62,9 +66,14 @@ class AuthInterceptor extends InterceptorsWrapper {
     return mess;
   }
 
+  void printWrapped(String text) {
+    final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
+    pattern.allMatches(text).forEach((match) => print(match.group(0)));
+  }
+
   @override
   Future onResponse(Response response) async {
-    print('------Response: ${response.data}');
+    printWrapped('------Response: ${response.data}');
 
     if (response.data["code"] == 401) {
       UserInfo().setToken(null);
