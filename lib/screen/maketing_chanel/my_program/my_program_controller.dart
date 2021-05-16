@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/data/repository/handle_error.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/model/discount_product_list.dart';
@@ -6,6 +7,8 @@ import 'package:sahashop_user/model/discount_product_list.dart';
 class MyProgramController extends GetxController {
   var isLoadingProgram = false.obs;
   var isRefreshingData = false.obs;
+  var isDeletingDiscount = false.obs;
+  var isEndDiscount = false.obs;
   var listProgramIsComing = RxList<DiscountProductsList>().obs;
   var listProgramIsRunning = RxList<DiscountProductsList>().obs;
   var listProgramIsEnd = RxList<DiscountProductsList>().obs;
@@ -56,5 +59,54 @@ class MyProgramController extends GetxController {
     listAll = RxList<List<DiscountProductsList>>([[], [], []]).obs;
     await getAllDiscount();
     isRefreshingData.value = false;
+  }
+
+  Future<void> endDiscount(
+    int idDiscount,
+    bool isEnd,
+    String name,
+    String description,
+    String imageUrl,
+    String startTime,
+    String endTime,
+    int value,
+    bool setLimitedAmount,
+    int amount,
+    String listIdProduct,
+  ) async {
+    isEndDiscount.value = true;
+    try {
+      var data = await RepositoryManager.marketingChanel.updateDiscount(
+          idDiscount,
+          isEnd,
+          name,
+          description,
+          imageUrl,
+          startTime,
+          endTime,
+          value,
+          setLimitedAmount,
+          amount,
+          listIdProduct);
+      SahaAlert.showSuccess(message: "Sửa thành công");
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+    isEndDiscount.value = false;
+  }
+
+  Future<void> deleteDiscount(
+    int idDiscount,
+  ) async {
+    isDeletingDiscount.value = true;
+    try {
+      var data = await RepositoryManager.marketingChanel.deleteDiscount(
+        idDiscount,
+      );
+      SahaAlert.showSuccess(message: "Xoá thành công");
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+    isDeletingDiscount.value = false;
   }
 }

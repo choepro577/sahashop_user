@@ -1,4 +1,5 @@
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/create_discount_respone.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/delete_discount_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/my_program_reponse.dart';
 import 'package:sahashop_user/data/remote/saha_service_manager.dart';
 import 'package:sahashop_user/utils/user_info.dart';
@@ -74,6 +75,17 @@ class MarketingChanelRepository {
       var res = await SahaServiceManager()
           .service
           .getAllDisCount(UserInfo().getCurrentStoreCode());
+      return res;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  Future<DeleteDiscountResponse> deleteDiscount(int idDiscount) async {
+    try {
+      var res = await SahaServiceManager()
+          .service
+          .deleteDiscount(UserInfo().getCurrentStoreCode(), idDiscount);
       return res;
     } catch (err) {
       handleError(err);

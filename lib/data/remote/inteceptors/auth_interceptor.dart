@@ -21,8 +21,8 @@ class AuthInterceptor extends InterceptorsWrapper {
     }
     print('Link: ${options.uri.toString()}');
     print('Header: ${options.headers}');
-    print('Request: ${options.data}');
-    if(options.method == 'POST') {
+    printWrapped('Request: ${options.data}');
+    if (options.method == 'POST') {
       options.data = new FormData.fromMap(options.data);
     }
 
@@ -73,7 +73,7 @@ class AuthInterceptor extends InterceptorsWrapper {
 
   @override
   Future onResponse(Response response) async {
-    printWrapped('------Response: ${response.data}');
+    print('------Response: ${response.data}');
 
     if (response.data["code"] == 401) {
       UserInfo().setToken(null);

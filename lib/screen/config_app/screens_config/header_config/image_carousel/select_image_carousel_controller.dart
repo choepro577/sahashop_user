@@ -44,10 +44,7 @@ class SelectCarouselImagesController extends GetxController {
 
     dataImages.forEach((imageData) {
       if (imageData.linkImage != null) {
-        banners.add(BannerItem(
-          imageUrl: imageData.linkImage,
-          title: ""
-        ));
+        banners.add(BannerItem(imageUrl: imageData.linkImage, title: ""));
       }
     });
 
@@ -56,19 +53,18 @@ class SelectCarouselImagesController extends GetxController {
   }
 
   void updateImage({int index, ImageData imageData}) {
-    var  indexWithLength = index-1;
+    var indexWithLength = index - 1;
     var newList = dataImages.toList();
 
-      newList[indexWithLength] = imageData;
+    newList[indexWithLength] = imageData;
 
     dataImages(newList);
   }
 
   Future<String> uploadImage(File file) async {
     try {
-      var fileUpImageCompress = await ImageUtils.getImageCompress(file,
-
-      quality: 90);
+      var fileUpImageCompress =
+          await ImageUtils.getImageCompress(file, quality: 80);
 
       var link = await RepositoryManager.imageRepository
           .uploadImage(fileUpImageCompress);
@@ -98,7 +94,7 @@ class SelectCarouselImagesController extends GetxController {
       final picker = ImagePicker();
       final pickedFile = await picker.getImage(source: ImageSource.gallery);
       File croppedFile = await ImageCropper.cropImage(
-        compressQuality: 100,
+          compressQuality: 100,
           sourcePath: pickedFile.path,
           aspectRatioPresets: [CropAspectRatioPreset.ratio16x9],
           androidUiSettings: AndroidUiSettings(
@@ -108,14 +104,14 @@ class SelectCarouselImagesController extends GetxController {
               initAspectRatio: CropAspectRatioPreset.original,
               lockAspectRatio: true),
           iosUiSettings: IOSUiSettings(
-            minimumAspectRatio: 16/9,
-            aspectRatioLockEnabled: true,
-            aspectRatioLockDimensionSwapEnabled: true,
-            rotateButtonsHidden: true,
+            minimumAspectRatio: 9 / 16,
+            aspectRatioLockEnabled: false,
+            aspectRatioLockDimensionSwapEnabled: false,
+            rotateButtonsHidden: false,
             title: 'Cắt ảnh',
           ));
 
-      if(croppedFile == null) return "";
+      if (croppedFile == null) return "";
 
       dataImages.add(
           ImageData(file: croppedFile, uploading: true, errorUpload: false));

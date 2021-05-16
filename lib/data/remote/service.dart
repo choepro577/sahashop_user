@@ -4,6 +4,7 @@ import 'package:sahashop_user/data/remote/response/auth/login_response.dart';
 import 'package:sahashop_user/data/remote/response/config_ui/app_theme_response.dart';
 import 'package:sahashop_user/data/remote/response/config_ui/create_app_theme_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/create_discount_respone.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/delete_discount_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/my_program_reponse.dart';
 import 'package:sahashop_user/data/remote/response/post/all_post_response.dart';
 
@@ -105,4 +106,8 @@ abstract class SahaService {
   @PUT("store/{storeCode}/discounts/{idDiscount}")
   Future<MyProgramResponse> updateDiscount(@Path() String storeCode,
       @Path() int idDiscount, @Body() Map<String, dynamic> body);
+
+  @DELETE("store/{storeCode}/discounts/{idDiscount}")
+  Future<DeleteDiscountResponse> deleteDiscount(
+      @Path() String storeCode, @Path() int idDiscount);
 }

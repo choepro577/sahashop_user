@@ -423,4 +423,24 @@ class _SahaService implements SahaService {
     final value = MyProgramResponse.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<DeleteDiscountResponse> deleteDiscount(storeCode, idDiscount) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(idDiscount, 'idDiscount');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/discounts/$idDiscount',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'DELETE',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = DeleteDiscountResponse.fromJson(_result.data);
+    return value;
+  }
 }

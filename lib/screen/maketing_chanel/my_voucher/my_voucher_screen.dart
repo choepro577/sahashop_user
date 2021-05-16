@@ -10,33 +10,35 @@ import 'package:sahashop_user/model/discount_product_list.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/create_my_program.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_controller.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/update_my_program/update_my_program.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_voucher/create_my_voucher/create_my_voucher_screen.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 
-class MyProgram extends StatefulWidget {
+class MyVoucherScreen extends StatefulWidget {
   Function onChange;
 
-  MyProgram({this.onChange});
+  MyVoucherScreen({this.onChange});
 
   @override
-  _MyProgramState createState() => _MyProgramState();
+  _MyVoucherScreenState createState() => _MyVoucherScreenState();
 }
 
-class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
+class _MyVoucherScreenState extends State<MyVoucherScreen>
+    with TickerProviderStateMixin {
   bool isHasDiscount = false;
   bool isTabOnTap = false;
   TabController tabController;
   MyProgramController myProgramController = Get.put(MyProgramController());
 
   List<String> stateProgram = [
-    "Không có khuyến mãi sắp diễn ra",
-    "Không có khuyến mãi đang diễn ra",
-    "Không có khuyến mãi đã kết thúc",
+    "Chưa có Voucher nào được tạo",
+    "Chưa có Voucher nào được tạo",
+    "Chưa có Voucher nào được tạo",
   ];
 
   List<String> stateProgramSub = [
-    "Không có chương trình khuyến mãi nào sắp diễn ra",
-    "Không có chương trình khuyến mãi nào đang diễn ra",
-    "Không có chương trình khuyến mãi nào đã kết thúc",
+    "Tạo mã giảm giá cho toàn shop hoặc cho các sản phẩm cụ thể để thu hút khách hàng nhé.",
+    "Tạo mã giảm giá cho toàn shop hoặc cho các sản phẩm cụ thể để thu hút khách hàng nhé.",
+    "Tạo mã giảm giá cho toàn shop hoặc cho các sản phẩm cụ thể để thu hút khách hàng nhé.",
   ];
 
   @override
@@ -44,19 +46,6 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
     // TODO: implement initState
     super.initState();
     tabController = new TabController(length: 3, vsync: this, initialIndex: 0);
-    myProgramController.getAllDiscount();
-  }
-
-  _handleTabSelection() {
-    if (isTabOnTap) {
-      isTabOnTap = false;
-    } else {
-      if (tabController.index == 0) {
-        myProgramController.refreshData();
-      } else {
-        myProgramController.refreshData();
-      }
-    }
   }
 
   void reload() {
@@ -69,112 +58,138 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => myProgramController.hasDiscounted.value == true
-          ? DefaultTabController(
-              length: 3,
-              child: Scaffold(
-                backgroundColor: Colors.grey[200],
-                appBar: AppBar(
-                  title: Text('Chương trình của tôi'),
-                  bottom: TabBar(
-                    controller: tabController,
-                    onTap: (index) {
-                      isTabOnTap = true;
-                    },
-                    tabs: [
-                      Tab(text: "Sắp diễn ra"),
-                      Tab(text: "Đang diễn ra"),
-                      Tab(text: "Đã kết thúc"),
-                    ],
-                  ),
-                ),
-                body: TabBarView(
-                  controller: tabController,
-                  children: List<Widget>.generate(3, (int index) {
-                    return buildStateProgram(
-                        index,
-                        myProgramController
-                            .listAllSaveStateBefore.value[index]);
-                  }),
-                ),
-                bottomNavigationBar: Container(
-                  height: 65,
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      SahaButtonFullParent(
-                        text: "Tạo chương trình khuyến mãi",
-                        onPressed: () {
-                          Get.to(() => CreateMyProgram(
-                                onChange: reload,
-                              ));
-                        },
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            )
-          : Scaffold(
-              backgroundColor: Colors.grey[200],
-              appBar: AppBar(
-                title: Text('Chương trình của tôi'),
-              ),
-              body: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    // check my program
-                    Container(
-                      child: Column(
-                        children: [
-                          Image.asset("assets/images/my_program_help.jpg"),
-                          Container(
-                            width: Get.width * 0.8,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 20,
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        backgroundColor: Colors.grey[200],
+        appBar: AppBar(
+          title: Text('Mã giảm giá của tôi'),
+          bottom: TabBar(
+            controller: tabController,
+            onTap: (index) {
+              isTabOnTap = true;
+            },
+            tabs: [
+              Tab(text: "Sắp diễn ra"),
+              Tab(text: "Đang diễn ra"),
+              Tab(text: "Đã kết thúc"),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          controller: tabController,
+          children: List<Widget>.generate(3, (int index) {
+            return buildStateProgram(
+                index, myProgramController.listAllSaveStateBefore.value[index]);
+          }),
+        ),
+        bottomNavigationBar: Container(
+          height: 65,
+          color: Colors.white,
+          child: Column(
+            children: [
+              SahaButtonFullParent(
+                text: "Tạo Voucher mới",
+                onPressed: () {
+                  showModalBottomSheet<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: 250,
+                        color: Colors.white,
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Get.to(() => CreateMyVoucher());
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(5),
+                                height: 80,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Tạo Voucher toàn Shop",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      "Có thể áp dụng voucher này cho tất cả các sản phẩm trong Shop của bạn",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.grey),
+                                    )
+                                  ],
                                 ),
-                                Text(
-                                  "Cài đặt chương trình khuyến mãi",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  "Chương trình khuyến mãi sẽ hiển thị trên giao diện sản phẩm của bạn",
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                            Divider(
+                              height: 1,
+                            ),
+                            Container(
+                              height: 80,
+                              padding: EdgeInsets.all(5),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Tạo Voucher sản phẩm",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    "Có thể áp dụng voucher này cho một số sản phẩm nhất định trong Shop của bạn",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.grey),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Container(
+                              height: 10,
+                              color: Colors.grey[200],
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Get.back();
+                              },
+                              child: Container(
+                                height: 50,
+                                child: Center(
+                                  child: Text(
+                                    "Thoát",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                  // Get.to(() => CreateMyProgram(
+                  //       onChange: reload,
+                  //     ));
+                },
+                color: Theme.of(context).primaryColor,
               ),
-              bottomNavigationBar: Container(
-                height: 65,
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    SahaButtonFullParent(
-                      text: "Tạo chương trình khuyến mãi",
-                      onPressed: () {
-                        Get.to(() => CreateMyProgram());
-                      },
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -217,7 +232,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
           await Future.delayed(Duration(milliseconds: 300));
 
           if (mounted) setState(() {});
-          myProgramController.refreshData();
+          //myProgramController.refreshData();
           _refreshController.refreshCompleted();
         },
         onLoading: () async {
@@ -229,8 +244,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
         child: Obx(
           () => listProgramState.isNotEmpty
               ? Obx(
-                  () => myProgramController.isRefreshingData.value == true &&
-                          listProgramState.isNotEmpty
+                  () => true && listProgramState.isNotEmpty
                       ? SingleChildScrollView(
                           child: Column(
                             children: [
@@ -399,20 +413,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                         ),
                         indexState == 1
                             ? InkWell(
-                                onTap: () {
-                                  myProgramController.endDiscount(
-                                      listProgramState.id,
-                                      true,
-                                      "",
-                                      "",
-                                      "",
-                                      "",
-                                      "",
-                                      0,
-                                      false,
-                                      0,
-                                      "");
-                                },
+                                onTap: () {},
                                 child: Container(
                                   height: 35,
                                   width: Get.width * 0.45,
@@ -426,11 +427,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                                 ),
                               )
                             : InkWell(
-                                onTap: () {
-                                  myProgramController.deleteDiscount(
-                                    listProgramState.id,
-                                  );
-                                },
+                                onTap: () {},
                                 child: Container(
                                   height: 35,
                                   width: Get.width * 0.45,
