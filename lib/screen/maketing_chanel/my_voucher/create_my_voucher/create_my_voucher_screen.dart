@@ -3,24 +3,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/add_product/add_product_controller.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/add_product/add_product_screen.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_controller.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_voucher/create_my_voucher/add_product_to_voucher/add_product_voucher_screen.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
+import 'package:sahashop_user/utils/string_utils.dart';
 
 import 'create_my_voucher_controller.dart';
 
 class CreateMyVoucher extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  Function onChange;
+  final _formKeyTypeVoucher = GlobalKey<FormState>();
+  int voucherType;
   CreateMyVoucherController createMyVoucherController =
       CreateMyVoucherController();
 
-  CreateMyVoucher({this.onChange});
+  CreateMyVoucher({this.voucherType});
 
   @override
   Widget build(BuildContext context) {
@@ -95,22 +94,23 @@ class CreateMyVoucher extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Giảm giá"),
+                        Text("Mã giảm giá"),
                         Container(
                           width: Get.width * 0.5,
                           child: TextFormField(
                             controller: createMyVoucherController
-                                .discountEditingController,
-                            keyboardType: TextInputType.number,
+                                .codeVoucherEditingController,
+                            keyboardType: TextInputType.name,
                             validator: (value) {
                               if (value.length < 1) {
-                                return 'Chưa nhập % giảm giá';
+                                return 'Chưa nhập mã giảm giá';
                               } else {
-                                var myInt = int.parse(value);
-                                if (myInt > 50) {
-                                  return '% giảm giá không được quá 50 %';
+                                if (SahaStringUtils()
+                                    .validateCharacter(value)) {
+                                  return null;
+                                } else {
+                                  return "Không chứa các kí tự đặc biệt";
                                 }
-                                return null;
                               }
                             },
                             style: TextStyle(fontSize: 14),
@@ -294,35 +294,30 @@ class CreateMyVoucher extends StatelessWidget {
                               context: context,
                               builder: (BuildContext context) {
                                 return Obx(
-                                  () => Container(
-                                    height: 400,
-                                    color: Colors.white,
-                                    child: Column(
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                            createMyVoucherController
-                                                .hideShowVoucher
-                                                .value = "Hiển thị";
-                                            Get.back();
-                                          },
-                                          child: Column(
+                                  () => Form(
+                                    key: _formKeyTypeVoucher,
+                                    child: Container(
+                                      height: 430,
+                                      color: Colors.white,
+                                      child: Column(
+                                        children: [
+                                          Column(
                                             children: [
                                               Container(
                                                 padding: EdgeInsets.all(15.0),
                                                 child: Row(
                                                   children: [
                                                     Radio(
-                                                        value: DiscountType.k1,
-                                                        groupValue:
-                                                            createMyVoucherController
-                                                                .discountType
-                                                                .value,
-                                                        onChanged: (v) {
+                                                      value: DiscountType.k1,
+                                                      groupValue:
                                                           createMyVoucherController
                                                               .discountType
-                                                              .value = v;
-                                                        }),
+                                                              .value,
+                                                      onChanged: (v) {
+                                                        createMyVoucherController
+                                                            .onChangeRatio(v);
+                                                      },
+                                                    ),
                                                     SizedBox(
                                                       width: 10,
                                                     ),
@@ -331,221 +326,12 @@ class CreateMyVoucher extends StatelessWidget {
                                                   ],
                                                 ),
                                               ),
-                                              Container(
-                                                height: 55,
-                                                width: Get.width * 0.7,
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      "đ",
-                                                      style: TextStyle(
-                                                          color:
-                                                              Colors.grey[600]),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Expanded(
-                                                      child: TextFormField(
-                                                        controller:
-                                                            createMyVoucherController
-                                                                .discountEditingController,
-                                                        keyboardType:
-                                                            TextInputType
-                                                                .number,
-                                                        validator: (value) {
-                                                          if (value.length <
-                                                              1) {
-                                                            return 'Chưa nhập % giảm giá';
-                                                          } else {
-                                                            var myInt =
-                                                                int.parse(
-                                                                    value);
-                                                            if (myInt > 50) {
-                                                              return '% giảm giá không được quá 50 %';
-                                                            }
-                                                            return null;
-                                                          }
-                                                        },
-                                                        style: TextStyle(
-                                                            fontSize: 14),
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        decoration: InputDecoration(
-                                                            isDense: true,
-                                                            border: InputBorder
-                                                                .none,
-                                                            hintText:
-                                                                "Nhập giá trị bạn muốn giảm"),
-                                                        minLines: 1,
-                                                        maxLines: 1,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Divider(
-                                          height: 1,
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            createMyVoucherController
-                                                .hideShowVoucher
-                                                .value = "Hiển thị";
-
-                                            Get.back();
-                                          },
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                padding: EdgeInsets.all(15.0),
-                                                child: Row(
-                                                  children: [
-                                                    Radio(
-                                                        value: DiscountType.k0,
-                                                        groupValue:
-                                                            createMyVoucherController
-                                                                .discountType
-                                                                .value,
-                                                        onChanged: (v) {
-                                                          createMyVoucherController
-                                                              .discountType
-                                                              .value = v;
-                                                        }),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Text("Giảm giá (Theo %)")
-                                                  ],
-                                                ),
-                                              ),
-                                              Container(
-                                                width: Get.width * 0.7,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Expanded(
-                                                          child: TextFormField(
-                                                            controller:
-                                                                createMyVoucherController
-                                                                    .discountEditingController,
-                                                            keyboardType:
-                                                                TextInputType
-                                                                    .number,
-                                                            validator: (value) {
-                                                              if (value.length <
-                                                                  1) {
-                                                                return 'Chưa nhập % giảm giá';
-                                                              } else {
-                                                                var myInt =
-                                                                    int.parse(
-                                                                        value);
-                                                                if (myInt >
-                                                                    50) {
-                                                                  return '% giảm giá không được quá 50 %';
-                                                                }
-                                                                return null;
-                                                              }
-                                                            },
-                                                            style: TextStyle(
-                                                                fontSize: 14),
-                                                            textAlign:
-                                                                TextAlign.start,
-                                                            decoration: InputDecoration(
-                                                                isDense: true,
-                                                                border:
-                                                                    InputBorder
-                                                                        .none,
-                                                                hintText:
-                                                                    "Nhập giá trị bạn muốn giảm"),
-                                                            minLines: 1,
-                                                            maxLines: 1,
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 10,
-                                                        ),
-                                                        Text(
-                                                          "% Giảm",
-                                                          style: TextStyle(
-                                                              color: Colors
-                                                                  .grey[600]),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Divider(
-                                                      height: 1,
-                                                    ),
-                                                    Container(
-                                                      padding:
-                                                          EdgeInsets.all(8.0),
-                                                      child:
-                                                          Text("Giảm tối đa"),
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        Container(
-                                                          decoration: BoxDecoration(
-                                                              border: Border.all(
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .primaryColor),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5)),
-                                                          height: 40,
-                                                          child: Center(
-                                                            child: Text(
-                                                              "chọn mức giảm",
-                                                              style: TextStyle(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                        ),
-                                                        Spacer(),
-                                                        Container(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                          decoration: BoxDecoration(
-                                                              border: Border.all(
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .primaryColor),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5)),
-                                                          height: 40,
-                                                          child: Center(
-                                                            child: Text(
-                                                              "Không giới hạn",
-                                                              style: TextStyle(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                    Container(
-                                                      padding:
-                                                          EdgeInsets.all(8),
+                                              createMyVoucherController
+                                                          .discountType.value ==
+                                                      DiscountType.k1
+                                                  ? Container(
+                                                      height: 55,
+                                                      width: Get.width * 0.7,
                                                       child: Row(
                                                         children: [
                                                           Text(
@@ -562,7 +348,7 @@ class CreateMyVoucher extends StatelessWidget {
                                                                 TextFormField(
                                                               controller:
                                                                   createMyVoucherController
-                                                                      .discountEditingController,
+                                                                      .pricePermanentEditingController,
                                                               keyboardType:
                                                                   TextInputType
                                                                       .number,
@@ -571,14 +357,14 @@ class CreateMyVoucher extends StatelessWidget {
                                                                 if (value
                                                                         .length <
                                                                     1) {
-                                                                  return 'Chưa nhập % giảm giá';
+                                                                  return 'Chưa nhập giá trị muốn giảm';
                                                                 } else {
                                                                   var myInt =
                                                                       int.parse(
                                                                           value);
                                                                   if (myInt >
-                                                                      50) {
-                                                                    return '% giảm giá không được quá 50 %';
+                                                                      100000000) {
+                                                                    return '% giảm giá không được quá 100 triệu';
                                                                   }
                                                                   return null;
                                                                 }
@@ -601,35 +387,321 @@ class CreateMyVoucher extends StatelessWidget {
                                                           ),
                                                         ],
                                                       ),
+                                                    )
+                                                  : Container(),
+                                            ],
+                                          ),
+                                          Divider(
+                                            height: 1,
+                                          ),
+                                          Column(
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.all(15.0),
+                                                child: Row(
+                                                  children: [
+                                                    Radio(
+                                                      value: DiscountType.k0,
+                                                      groupValue:
+                                                          createMyVoucherController
+                                                              .discountType
+                                                              .value,
+                                                      onChanged: (v) {
+                                                        createMyVoucherController
+                                                            .onChangeRatio(v);
+                                                      },
                                                     ),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Text("Giảm giá (Theo %)")
                                                   ],
                                                 ),
                                               ),
+                                              createMyVoucherController
+                                                          .discountType.value ==
+                                                      DiscountType.k0
+                                                  ? Container(
+                                                      width: Get.width * 0.7,
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              Expanded(
+                                                                child:
+                                                                    TextFormField(
+                                                                  controller:
+                                                                      createMyVoucherController
+                                                                          .pricePercentEditingController,
+                                                                  keyboardType:
+                                                                      TextInputType
+                                                                          .number,
+                                                                  validator:
+                                                                      (value) {
+                                                                    if (value
+                                                                            .length <
+                                                                        1) {
+                                                                      return 'Chưa nhập % giảm giá';
+                                                                    } else {
+                                                                      var myInt =
+                                                                          int.parse(
+                                                                              value);
+                                                                      if (myInt >
+                                                                          99) {
+                                                                        return '% giảm giá không được quá 99 %';
+                                                                      }
+                                                                      return null;
+                                                                    }
+                                                                  },
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14),
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .start,
+                                                                  decoration: InputDecoration(
+                                                                      isDense:
+                                                                          true,
+                                                                      border: InputBorder
+                                                                          .none,
+                                                                      hintText:
+                                                                          "Nhập giá trị bạn muốn giảm"),
+                                                                  minLines: 1,
+                                                                  maxLines: 1,
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                              Text(
+                                                                "% Giảm",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                            .grey[
+                                                                        600]),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          Divider(
+                                                            height: 1,
+                                                          ),
+                                                          Container(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    8.0),
+                                                            child: Text(
+                                                                "Giảm tối đa"),
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              InkWell(
+                                                                  onTap: () {
+                                                                    createMyVoucherController
+                                                                        .isLimitedPrice
+                                                                        .value = true;
+                                                                  },
+                                                                  child: createMyVoucherController
+                                                                              .isLimitedPrice
+                                                                              .value ==
+                                                                          true
+                                                                      ? Container(
+                                                                          decoration: BoxDecoration(
+                                                                              border: Border.all(color: Theme.of(context).primaryColor),
+                                                                              borderRadius: BorderRadius.circular(5)),
+                                                                          height:
+                                                                              40,
+                                                                          child:
+                                                                              Center(
+                                                                            child:
+                                                                                Text(
+                                                                              "chọn mức giảm",
+                                                                              style: TextStyle(
+                                                                                color: Theme.of(context).primaryColor,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          padding:
+                                                                              EdgeInsets.all(8.0),
+                                                                        )
+                                                                      : Container(
+                                                                          decoration: BoxDecoration(
+                                                                              border: Border.all(color: Colors.grey[600]),
+                                                                              borderRadius: BorderRadius.circular(5)),
+                                                                          height:
+                                                                              40,
+                                                                          child:
+                                                                              Center(
+                                                                            child:
+                                                                                Text(
+                                                                              "chọn mức giảm",
+                                                                              style: TextStyle(color: Colors.grey[600]),
+                                                                            ),
+                                                                          ),
+                                                                          padding:
+                                                                              EdgeInsets.all(8.0),
+                                                                        )),
+                                                              Spacer(),
+                                                              InkWell(
+                                                                onTap: () {
+                                                                  createMyVoucherController
+                                                                      .isLimitedPrice
+                                                                      .value = false;
+                                                                },
+                                                                child: createMyVoucherController
+                                                                            .isLimitedPrice
+                                                                            .value ==
+                                                                        false
+                                                                    ? Container(
+                                                                        padding:
+                                                                            EdgeInsets.all(8.0),
+                                                                        decoration: BoxDecoration(
+                                                                            border:
+                                                                                Border.all(color: Theme.of(context).primaryColor),
+                                                                            borderRadius: BorderRadius.circular(5)),
+                                                                        height:
+                                                                            40,
+                                                                        child:
+                                                                            Center(
+                                                                          child:
+                                                                              Text(
+                                                                            "Không giới hạn",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: Theme.of(context).primaryColor,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      )
+                                                                    : Container(
+                                                                        padding:
+                                                                            EdgeInsets.all(8.0),
+                                                                        decoration: BoxDecoration(
+                                                                            border:
+                                                                                Border.all(color: Colors.grey[600]),
+                                                                            borderRadius: BorderRadius.circular(5)),
+                                                                        height:
+                                                                            40,
+                                                                        child:
+                                                                            Center(
+                                                                          child:
+                                                                              Text(
+                                                                            "Không giới hạn",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: Colors.grey[600],
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                          createMyVoucherController
+                                                                      .isLimitedPrice
+                                                                      .value ==
+                                                                  true
+                                                              ? Container(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .all(
+                                                                              8),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        "đ",
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.grey[600]),
+                                                                      ),
+                                                                      SizedBox(
+                                                                        width:
+                                                                            10,
+                                                                      ),
+                                                                      Expanded(
+                                                                        child:
+                                                                            TextFormField(
+                                                                          controller:
+                                                                              createMyVoucherController.priceDiscountLimitedEditingController,
+                                                                          keyboardType:
+                                                                              TextInputType.number,
+                                                                          validator:
+                                                                              (value) {
+                                                                            if (value.length <
+                                                                                1) {
+                                                                              return 'Chưa nhập giá trị muốn giảm';
+                                                                            } else {
+                                                                              var myInt = int.parse(value);
+                                                                              if (myInt > 100000000) {
+                                                                                return 'giảm giá không được quá 100.000.000 đ';
+                                                                              }
+                                                                              if (myInt < 1000) {
+                                                                                return 'giảm giá không nên dưới 1000 đ';
+                                                                              }
+                                                                              return null;
+                                                                            }
+                                                                          },
+                                                                          style:
+                                                                              TextStyle(fontSize: 14),
+                                                                          textAlign:
+                                                                              TextAlign.start,
+                                                                          decoration: InputDecoration(
+                                                                              isDense: true,
+                                                                              border: InputBorder.none,
+                                                                              hintText: "Nhập giá trị bạn muốn giảm"),
+                                                                          minLines:
+                                                                              1,
+                                                                          maxLines:
+                                                                              1,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                )
+                                                              : Container(
+                                                                  height: 20,
+                                                                ),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  : Container(),
                                             ],
                                           ),
-                                        ),
-                                        Container(
-                                          height: 10,
-                                          color: Colors.grey[200],
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            Get.back();
-                                          },
-                                          child: Container(
-                                            height: 50,
-                                            child: Center(
-                                              child: Text(
-                                                "Thoát",
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                        FontWeight.w400),
+                                          Container(
+                                            height: 10,
+                                            color: Colors.grey[200],
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              if (_formKeyTypeVoucher
+                                                  .currentState
+                                                  .validate()) {
+                                                _formKeyTypeVoucher.currentState
+                                                    .save();
+                                                KeyboardUtil.hideKeyboard(
+                                                    context);
+                                                createMyVoucherController
+                                                    .checkTypeDiscount();
+                                                Get.back();
+                                              }
+                                            },
+                                            child: Container(
+                                              height: 50,
+                                              child: Center(
+                                                child: Text(
+                                                  "Lưu",
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        )
-                                      ],
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 );
@@ -642,7 +714,8 @@ class CreateMyVoucher extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Text(
-                                  "Chọn loại giảm giá",
+                                  createMyVoucherController
+                                      .typeVoucherDiscount.value,
                                   style: TextStyle(color: Colors.grey[600]),
                                 ),
                                 Icon(Icons.arrow_forward_ios_rounded),
@@ -653,9 +726,21 @@ class CreateMyVoucher extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Divider(
-                    height: 1,
-                  ),
+                  createMyVoucherController
+                              .isChoosedTypeVoucherDiscount.value ==
+                          false
+                      ? Container(
+                          padding: EdgeInsets.all(8.0),
+                          color: Colors.red[50],
+                          width: Get.width,
+                          child: Text(
+                            "Chưa chọn loại giảm giá",
+                            style: TextStyle(fontSize: 13, color: Colors.red),
+                          ),
+                        )
+                      : Divider(
+                          height: 1,
+                        ),
                   Container(
                     padding: EdgeInsets.all(10),
                     color: Colors.white,
@@ -667,8 +752,37 @@ class CreateMyVoucher extends StatelessWidget {
                           width: Get.width * 0.7,
                           child: TextFormField(
                             controller: createMyVoucherController
-                                .quantityEditingController,
+                                .minimumOrderEditingController,
                             keyboardType: TextInputType.number,
+                            validator: (value) {
+                              if (value.length < 1) {
+                                return 'Chưa nhập giá trị tối thiểu đơn hàng';
+                              } else {
+                                if (createMyVoucherController
+                                    .pricePermanentEditingController
+                                    .text
+                                    .isEmpty) {
+                                  return null;
+                                } else {
+                                  var myInt = int.parse(value);
+                                  var pricePermanent = int.parse(
+                                      createMyVoucherController
+                                          .pricePermanentEditingController
+                                          .text);
+                                  if (myInt < pricePermanent) {
+                                    createMyVoucherController
+                                        .isCheckMinimumOrderDiscount
+                                        .value = false;
+                                    return "";
+                                  } else {
+                                    createMyVoucherController
+                                        .isCheckMinimumOrderDiscount
+                                        .value = true;
+                                    return null;
+                                  }
+                                }
+                              }
+                            },
                             style: TextStyle(fontSize: 14),
                             textAlign: TextAlign.end,
                             decoration: InputDecoration(
@@ -683,6 +797,20 @@ class CreateMyVoucher extends StatelessWidget {
                       ],
                     ),
                   ),
+                  createMyVoucherController.isCheckMinimumOrderDiscount.value ==
+                          false
+                      ? Container(
+                          padding: EdgeInsets.all(8.0),
+                          color: Colors.red[50],
+                          width: Get.width,
+                          child: Text(
+                            "Giá trị voucher không thể vượt quá giá trị tối thiểu của đơn hàng",
+                            style: TextStyle(fontSize: 13, color: Colors.red),
+                          ),
+                        )
+                      : Divider(
+                          height: 1,
+                        ),
                   Container(
                     padding: EdgeInsets.all(10),
                     color: Colors.white,
@@ -694,8 +822,15 @@ class CreateMyVoucher extends StatelessWidget {
                           width: Get.width * 0.55,
                           child: TextFormField(
                             controller: createMyVoucherController
-                                .quantityEditingController,
+                                .amountCodeAvailableEditingController,
                             keyboardType: TextInputType.number,
+                            validator: (value) {
+                              if (value.length < 1) {
+                                return 'Chưa nhập số mã có thể sử dụng';
+                              } else {
+                                return null;
+                              }
+                            },
                             style: TextStyle(fontSize: 14),
                             textAlign: TextAlign.end,
                             decoration: InputDecoration(
@@ -725,7 +860,7 @@ class CreateMyVoucher extends StatelessWidget {
                                 InkWell(
                                   onTap: () {
                                     createMyVoucherController
-                                        .hideShowVoucher.value = "Hiển thị";
+                                        .isShowVoucher.value = true;
 
                                     Get.back();
                                   },
@@ -760,8 +895,8 @@ class CreateMyVoucher extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    createMyVoucherController.hideShowVoucher
-                                        .value = "Không hiển thị";
+                                    createMyVoucherController
+                                        .isShowVoucher.value = false;
 
                                     Get.back();
                                   },
@@ -829,8 +964,11 @@ class CreateMyVoucher extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Text(createMyVoucherController
-                                      .hideShowVoucher.value),
+                                  createMyVoucherController
+                                              .isShowVoucher.value ==
+                                          true
+                                      ? Text("Hiển thị")
+                                      : Text("Không hiển thị"),
                                   Icon(Icons.arrow_forward_ios_rounded),
                                 ],
                               )),
@@ -838,158 +976,165 @@ class CreateMyVoucher extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    color: Colors.white,
-                    width: Get.width,
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Obx(
-                          () => Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  voucherType == 1
+                      ? Container(
+                          color: Colors.white,
+                          width: Get.width,
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Sản phẩm'),
-                              createMyVoucherController
-                                          .addProductToSaleController
-                                          .listSelectedProduct
-                                          .value
-                                          .length ==
-                                      0
-                                  ? Container()
-                                  : IconButton(
-                                      icon: Icon(
-                                        Icons.add,
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                      onPressed: () {
-                                        Get.to(() => AddProductToSaleScreen());
-                                      })
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Obx(
-                          () => createMyVoucherController
-                                      .addProductToSaleController
-                                      .listSelectedProduct
-                                      .value
-                                      .length ==
-                                  0
-                              ? InkWell(
-                                  onTap: () {
-                                    Get.to(() => AddProductToSaleScreen());
-                                  },
-                                  child: Container(
-                                    height: 100,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Theme.of(context)
-                                                .primaryColor)),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.add,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                        Text(
-                                          'Thêm sản phẩm',
-                                          style: TextStyle(
+                              Obx(
+                                () => Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text('Sản phẩm'),
+                                    createMyVoucherController
+                                                .addProductToVoucherController
+                                                .listSelectedProduct
+                                                .value
+                                                .length ==
+                                            0
+                                        ? Container()
+                                        : IconButton(
+                                            icon: Icon(
+                                              Icons.add,
                                               color: Theme.of(context)
-                                                  .primaryColor),
-                                          textAlign: TextAlign.center,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              : Container(
-                                  height: 400,
-                                  child: StaggeredGridView.countBuilder(
-                                    crossAxisCount: 4,
-                                    itemCount: createMyVoucherController
-                                        .addProductToSaleController
-                                        .listSelectedProduct
-                                        .value
-                                        .length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) =>
-                                            Stack(
-                                      children: [
-                                        Container(
+                                                  .primaryColor,
+                                            ),
+                                            onPressed: () {
+                                              Get.to(() =>
+                                                  AddProductToVoucherScreen());
+                                            })
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Obx(
+                                () => createMyVoucherController
+                                            .addProductToVoucherController
+                                            .listSelectedProduct
+                                            .value
+                                            .length ==
+                                        0
+                                    ? InkWell(
+                                        onTap: () {
+                                          Get.to(() =>
+                                              AddProductToVoucherScreen());
+                                        },
+                                        child: Container(
                                           height: 100,
                                           decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Theme.of(context)
-                                                    .primaryColor),
-                                          ),
-                                          child: CachedNetworkImage(
-                                            fit: BoxFit.cover,
-                                            imageUrl: createMyVoucherController
-                                                        .addProductToSaleController
-                                                        .listSelectedProduct
-                                                        .value[index]
-                                                        .images
-                                                        .length ==
-                                                    0
-                                                ? ""
-                                                : createMyVoucherController
-                                                    .addProductToSaleController
-                                                    .listSelectedProduct
-                                                    .value[index]
-                                                    .images[0]
-                                                    .imageUrl,
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    Container(
-                                              height: 100,
-                                              child: CachedNetworkImage(
-                                                fit: BoxFit.cover,
-                                                imageUrl:
-                                                    "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          top: -10,
-                                          right: -10,
-                                          child: IconButton(
-                                              icon: Icon(
-                                                Icons.delete,
+                                              border: Border.all(
+                                                  color: Theme.of(context)
+                                                      .primaryColor)),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.add,
                                                 color: Theme.of(context)
                                                     .primaryColor,
                                               ),
-                                              onPressed: () {
-                                                createMyVoucherController
-                                                    .addProductToSaleController
-                                                    .deleteProductSelected(
-                                                        createMyVoucherController
-                                                            .addProductToSaleController
-                                                            .listSelectedProduct
-                                                            .value[index]
-                                                            .id);
-                                                createMyVoucherController
-                                                    .addProductToSaleController
-                                                    .countProductSelected();
-                                              }),
+                                              Text(
+                                                'Thêm sản phẩm',
+                                                style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .primaryColor),
+                                                textAlign: TextAlign.center,
+                                              )
+                                            ],
+                                          ),
                                         ),
-                                      ],
-                                    ),
-                                    staggeredTileBuilder: (int index) =>
-                                        new StaggeredTile.fit(1),
-                                    mainAxisSpacing: 10,
-                                    crossAxisSpacing: 10,
-                                  ),
-                                ),
-                        ),
-                      ],
-                    ),
-                  )
+                                      )
+                                    : Container(
+                                        height: 400,
+                                        child: StaggeredGridView.countBuilder(
+                                          crossAxisCount: 4,
+                                          itemCount: createMyVoucherController
+                                              .addProductToVoucherController
+                                              .listSelectedProduct
+                                              .value
+                                              .length,
+                                          itemBuilder: (BuildContext context,
+                                                  int index) =>
+                                              Stack(
+                                            children: [
+                                              Container(
+                                                height: 100,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Theme.of(context)
+                                                          .primaryColor),
+                                                ),
+                                                child: CachedNetworkImage(
+                                                  fit: BoxFit.cover,
+                                                  imageUrl: createMyVoucherController
+                                                              .addProductToVoucherController
+                                                              .listSelectedProduct
+                                                              .value[index]
+                                                              .images
+                                                              .length ==
+                                                          0
+                                                      ? ""
+                                                      : createMyVoucherController
+                                                          .addProductToVoucherController
+                                                          .listSelectedProduct
+                                                          .value[index]
+                                                          .images[0]
+                                                          .imageUrl,
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          Container(
+                                                    height: 100,
+                                                    child: CachedNetworkImage(
+                                                      fit: BoxFit.cover,
+                                                      imageUrl:
+                                                          "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                top: -10,
+                                                right: -10,
+                                                child: IconButton(
+                                                    icon: Icon(
+                                                      Icons.delete,
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                    ),
+                                                    onPressed: () {
+                                                      createMyVoucherController
+                                                          .addProductToVoucherController
+                                                          .deleteProductSelected(
+                                                              createMyVoucherController
+                                                                  .addProductToVoucherController
+                                                                  .listSelectedProduct
+                                                                  .value[index]
+                                                                  .id);
+                                                      createMyVoucherController
+                                                          .addProductToVoucherController
+                                                          .countProductSelected();
+                                                    }),
+                                              ),
+                                            ],
+                                          ),
+                                          staggeredTileBuilder: (int index) =>
+                                              new StaggeredTile.fit(1),
+                                          mainAxisSpacing: 10,
+                                          crossAxisSpacing: 10,
+                                        ),
+                                      ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container(),
                 ],
               ),
             ),
@@ -1001,75 +1146,39 @@ class CreateMyVoucher extends StatelessWidget {
           child: Column(
             children: [
               Obx(
-                () =>
-                    createMyVoucherController.addProductToSaleController
-                                .isLoadingCreate.value ==
-                            true
-                        ? IgnorePointer(
-                            child: SahaButtonFullParent(
-                              text: "Lưu",
-                              textColor: Colors.grey[600],
-                              onPressed: () {},
-                              color: Colors.grey[300],
-                            ),
-                          )
-                        : SahaButtonFullParent(
-                            text: "Lưu",
-                            onPressed: () {
-                              if (_formKey.currentState.validate()) {
-                                _formKey.currentState.save();
-                                KeyboardUtil.hideKeyboard(context);
-                                createMyVoucherController
-                                    .addProductToSaleController
-                                    .listSelectedProductToString();
-                                createMyVoucherController
-                                    .addProductToSaleController
-                                    .createDiscount(
-                                        createMyVoucherController
-                                            .nameProgramEditingController.text,
-                                        "",
-                                        "",
-                                        DateTime(
-                                                createMyVoucherController
-                                                    .dateStart.value.year,
-                                                createMyVoucherController
-                                                    .dateStart.value.month,
-                                                createMyVoucherController
-                                                    .dateStart.value.day,
-                                                createMyVoucherController
-                                                    .timeStart.value.hour,
-                                                createMyVoucherController
-                                                    .timeStart.value.minute,
-                                                createMyVoucherController
-                                                    .timeStart.value.second,
-                                                createMyVoucherController
-                                                    .timeStart
-                                                    .value
-                                                    .millisecond,
-                                                createMyVoucherController
-                                                    .timeStart
-                                                    .value
-                                                    .microsecond)
-                                            .toIso8601String(), //timeStart.toIso8601String(),\
-                                        DateTime(
-                                                createMyVoucherController.dateEnd.value.year,
-                                                createMyVoucherController.dateEnd.value.month,
-                                                createMyVoucherController.dateEnd.value.day,
-                                                createMyVoucherController.timeEnd.value.hour,
-                                                createMyVoucherController.timeEnd.value.minute,
-                                                createMyVoucherController.timeEnd.value.second,
-                                                createMyVoucherController.timeEnd.value.millisecond,
-                                                createMyVoucherController.timeEnd.value.microsecond)
-                                            .toIso8601String(),
-                                        //timeEnd.toIso8601String(),
-                                        int.parse(createMyVoucherController.discountEditingController.text),
-                                        createMyVoucherController.quantityEditingController.text.isEmpty ? false : true,
-                                        createMyVoucherController.quantityEditingController.text.isEmpty ? 0 : int.parse(createMyVoucherController.quantityEditingController.text),
-                                        createMyVoucherController.addProductToSaleController.listProductParam);
-                              }
-                            },
-                            color: Theme.of(context).primaryColor,
-                          ),
+                () => createMyVoucherController.isLoadingCreate.value == true
+                    ? IgnorePointer(
+                        child: SahaButtonFullParent(
+                          text: "Lưu",
+                          textColor: Colors.grey[600],
+                          onPressed: () {},
+                          color: Colors.grey[300],
+                        ),
+                      )
+                    : SahaButtonFullParent(
+                        text: "Lưu",
+                        onPressed: () {
+                          if (_formKey.currentState.validate()) {
+                            _formKey.currentState.save();
+                            KeyboardUtil.hideKeyboard(context);
+                            createMyVoucherController
+                                .addProductToVoucherController
+                                .listSelectedProductToString();
+                            if (createMyVoucherController
+                                    .typeVoucherDiscount.value ==
+                                "Chọn loại giảm giá") {
+                              createMyVoucherController
+                                  .isChoosedTypeVoucherDiscount.value = false;
+                            } else {
+                              createMyVoucherController
+                                  .createVoucher(voucherType); // CREATE VOUCHER
+                              createMyVoucherController
+                                  .isChoosedTypeVoucherDiscount.value = true;
+                            }
+                          }
+                        },
+                        color: Theme.of(context).primaryColor,
+                      ),
               ),
             ],
           ),

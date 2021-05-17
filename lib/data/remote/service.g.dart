@@ -402,6 +402,25 @@ class _SahaService implements SahaService {
   }
 
   @override
+  Future<MyVoucherResponse> getAllVoucher(storeCode) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/vouchers',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = MyVoucherResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<MyProgramResponse> updateDiscount(storeCode, idDiscount, body) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(idDiscount, 'idDiscount');
@@ -441,6 +460,27 @@ class _SahaService implements SahaService {
             baseUrl: baseUrl),
         data: _data);
     final value = DeleteDiscountResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<CreateVoucherResponse> createVoucher(storeCode, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/vouchers',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = CreateVoucherResponse.fromJson(_result.data);
     return value;
   }
 }

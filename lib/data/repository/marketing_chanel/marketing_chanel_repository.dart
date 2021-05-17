@@ -1,7 +1,10 @@
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/create_discount_respone.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/create_voucher_reponse.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/delete_discount_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/my_program_reponse.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/my_voucher_response.dart';
 import 'package:sahashop_user/data/remote/saha_service_manager.dart';
+import 'package:sahashop_user/model/voucher_request.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 import '../handle_error.dart';
 
@@ -81,11 +84,33 @@ class MarketingChanelRepository {
     }
   }
 
+  Future<MyVoucherResponse> getAllVoucher() async {
+    try {
+      var res = await SahaServiceManager()
+          .service
+          .getAllVoucher(UserInfo().getCurrentStoreCode());
+      return res;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
   Future<DeleteDiscountResponse> deleteDiscount(int idDiscount) async {
     try {
       var res = await SahaServiceManager()
           .service
           .deleteDiscount(UserInfo().getCurrentStoreCode(), idDiscount);
+      return res;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  Future<CreateVoucherResponse> createVoucher(
+      VoucherRequest voucherRequest) async {
+    try {
+      var res = await SahaServiceManager().service.createVoucher(
+          UserInfo().getCurrentStoreCode(), voucherRequest.toJson());
       return res;
     } catch (err) {
       handleError(err);

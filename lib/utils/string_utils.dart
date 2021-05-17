@@ -11,7 +11,6 @@ class SahaStringUtils {
     return _singleton;
   }
 
-
   String convertToMoney(dynamic price) {
     if (price is String) {
       price = double.parse(price);
@@ -30,7 +29,8 @@ class SahaStringUtils {
     return value.replaceAll(',', '');
   }
 
-  String convertToDetailItem(double timeStart, double timeServing, String text) {
+  String convertToDetailItem(
+      double timeStart, double timeServing, String text) {
     return "${SahaDateUtils().getTimeByMinute(timeStart)} - ${SahaDateUtils().getTimeByMinute(timeStart + timeServing)}  $text\n$text";
   }
 
@@ -113,6 +113,15 @@ class SahaStringUtils {
       return "0";
     } else {
       return from.substring(i, from.length);
+    }
+  }
+
+  bool validateCharacter(String value) {
+    var validCharacters = RegExp(r'^[a-zA-Z0-9_\-=@,\.;]+$');
+    if (validCharacters.hasMatch(value) == true) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

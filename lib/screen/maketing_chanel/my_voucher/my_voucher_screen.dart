@@ -7,11 +7,14 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/model/discount_product_list.dart';
+import 'package:sahashop_user/model/voucher.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/create_my_program.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_controller.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/update_my_program/update_my_program.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_voucher/create_my_voucher/create_my_voucher_screen.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_voucher/my_voucher_controller.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
+import 'package:sahashop_user/utils/string_utils.dart';
 
 class MyVoucherScreen extends StatefulWidget {
   Function onChange;
@@ -27,15 +30,15 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
   bool isHasDiscount = false;
   bool isTabOnTap = false;
   TabController tabController;
-  MyProgramController myProgramController = Get.put(MyProgramController());
+  MyVoucherController myVoucherController = Get.put(MyVoucherController());
 
-  List<String> stateProgram = [
+  List<String> stateVoucher = [
     "Chưa có Voucher nào được tạo",
     "Chưa có Voucher nào được tạo",
     "Chưa có Voucher nào được tạo",
   ];
 
-  List<String> stateProgramSub = [
+  List<String> stateVoucherSub = [
     "Tạo mã giảm giá cho toàn shop hoặc cho các sản phẩm cụ thể để thu hút khách hàng nhé.",
     "Tạo mã giảm giá cho toàn shop hoặc cho các sản phẩm cụ thể để thu hút khách hàng nhé.",
     "Tạo mã giảm giá cho toàn shop hoặc cho các sản phẩm cụ thể để thu hút khách hàng nhé.",
@@ -46,6 +49,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
     // TODO: implement initState
     super.initState();
     tabController = new TabController(length: 3, vsync: this, initialIndex: 0);
+    myVoucherController.getAllVoucher();
   }
 
   void reload() {
@@ -79,8 +83,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
         body: TabBarView(
           controller: tabController,
           children: List<Widget>.generate(3, (int index) {
-            return buildStateProgram(
-                index, myProgramController.listAllSaveStateBefore.value[index]);
+            return buildStateProgram(index);
           }),
         ),
         bottomNavigationBar: Container(
@@ -101,7 +104,12 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                           children: [
                             InkWell(
                               onTap: () {
-                                Get.to(() => CreateMyVoucher());
+                                Get.back();
+                                Get.to(() => CreateMyVoucher(
+                                          voucherType: 0,
+                                        ))
+                                    .then((value) =>
+                                        {myVoucherController.getAllVoucher()});
                               },
                               child: Container(
                                 padding: EdgeInsets.all(5),
@@ -131,28 +139,36 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                             Divider(
                               height: 1,
                             ),
-                            Container(
-                              height: 80,
-                              padding: EdgeInsets.all(5),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Tạo Voucher sản phẩm",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    "Có thể áp dụng voucher này cho một số sản phẩm nhất định trong Shop của bạn",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 12, color: Colors.grey),
-                                  )
-                                ],
+                            InkWell(
+                              onTap: () {
+                                Get.back();
+                                Get.to(() => CreateMyVoucher(
+                                      voucherType: 1,
+                                    ));
+                              },
+                              child: Container(
+                                height: 80,
+                                padding: EdgeInsets.all(5),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Tạo Voucher sản phẩm",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      "Có thể áp dụng voucher này cho một số sản phẩm nhất định trong Shop của bạn",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.grey),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                             Container(
@@ -193,8 +209,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
     );
   }
 
-  Widget buildStateProgram(
-      int indexState, List<DiscountProductsList> listProgramState) {
+  Widget buildStateProgram(int indexState) {
     RefreshController _refreshController =
         RefreshController(initialRefresh: true);
     return SmartRefresher(
@@ -228,30 +243,29 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
         ),
         controller: _refreshController,
         onRefresh: () async {
-          //monitor fetch data from network
           await Future.delayed(Duration(milliseconds: 300));
 
           if (mounted) setState(() {});
-          //myProgramController.refreshData();
+          myVoucherController.refreshData();
           _refreshController.refreshCompleted();
         },
-        onLoading: () async {
-          //monitor fetch data from network
-          await Future.delayed(Duration(milliseconds: 180));
-          // if (mounted) setState(() {});
-          _refreshController.loadFailed();
-        },
         child: Obx(
-          () => listProgramState.isNotEmpty
+          () => myVoucherController
+                  .listAllSaveStateBefore.value[indexState].isNotEmpty
               ? Obx(
-                  () => true && listProgramState.isNotEmpty
+                  () => true &&
+                          myVoucherController.listAllSaveStateBefore
+                              .value[indexState].isNotEmpty
                       ? SingleChildScrollView(
                           child: Column(
                             children: [
-                              ...List.generate(listProgramState.length,
-                                  (index) {
+                              ...List.generate(
+                                  myVoucherController.listAllSaveStateBefore
+                                      .value[indexState].length, (index) {
                                 return programIsComingItem(
-                                    listProgramState[index], indexState);
+                                    myVoucherController.listAllSaveStateBefore
+                                        .value[indexState][index],
+                                    indexState);
                               })
                             ],
                           ),
@@ -259,10 +273,13 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                       : SingleChildScrollView(
                           child: Column(
                             children: [
-                              ...List.generate(listProgramState.length,
-                                  (index) {
+                              ...List.generate(
+                                  myVoucherController.listAllSaveStateBefore
+                                      .value[indexState].length, (index) {
                                 return programIsComingItem(
-                                    listProgramState[index], indexState);
+                                    myVoucherController.listAllSaveStateBefore
+                                        .value[indexState][index],
+                                    indexState);
                               })
                             ],
                           ),
@@ -282,7 +299,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                       width: Get.width * 0.9,
                       padding: const EdgeInsets.all(4.0),
                       child: Text(
-                        stateProgram[indexState],
+                        stateVoucher[indexState],
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w600),
                         textAlign: TextAlign.center,
@@ -292,7 +309,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                       width: Get.width * 0.9,
                       padding: const EdgeInsets.all(4.0),
                       child: Text(
-                        stateProgramSub[indexState],
+                        stateVoucherSub[indexState],
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.grey[700],
@@ -304,8 +321,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
         ));
   }
 
-  Widget programIsComingItem(
-      DiscountProductsList listProgramState, int indexState) {
+  Widget programIsComingItem(Voucher listVoucherState, int indexState) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Container(
@@ -324,7 +340,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                         width: Get.width * 0.6,
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          listProgramState.name,
+                          listVoucherState.name,
                           textAlign: TextAlign.start,
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w500),
@@ -334,26 +350,29 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                         width: Get.width * 0.7,
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "${SahaDateUtils().getDDMMYY(listProgramState.startTime)} ${SahaDateUtils().getHHMM(listProgramState.startTime)} - ${SahaDateUtils().getDDMMYY(listProgramState.endTime)} ${SahaDateUtils().getHHMM(listProgramState.endTime)}",
+                          "${SahaDateUtils().getDDMMYY(listVoucherState.startTime)} ${SahaDateUtils().getHHMM(listVoucherState.startTime)} - ${SahaDateUtils().getDDMMYY(listVoucherState.endTime)} ${SahaDateUtils().getHHMM(listVoucherState.endTime)}",
                           style:
                               TextStyle(fontSize: 13, color: Colors.grey[700]),
                         ),
                       ),
                     ],
                   ),
+                ],
+              ),
+              Row(
+                children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(5),
                     child: Container(
-                      width: 80,
-                      height: 80,
+                      width: 55,
+                      height: 55,
                       child: CachedNetworkImage(
                         fit: BoxFit.cover,
-                        imageUrl: listProgramState.products[0].images.length ==
-                                0
+                        imageUrl: listVoucherState.imageUrl == null
                             ? ""
-                            : "${listProgramState.products[0].images[0].imageUrl}",
+                            : "${listVoucherState.imageUrl}",
                         errorWidget: (context, url, error) => ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(1),
                           child: CachedNetworkImage(
                             fit: BoxFit.cover,
                             imageUrl:
@@ -361,6 +380,56 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                           ),
                         ),
                       ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            listVoucherState.valueDiscount < 100
+                                ? Text(
+                                    "${listVoucherState.valueDiscount}% Giảm",
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontWeight: FontWeight.w500),
+                                  )
+                                : Text(
+                                    "đ${listVoucherState.valueDiscount} Giảm",
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                            SizedBox(
+                              height: 3,
+                            ),
+                            Text(
+                              "Đơn tối thiểu ${SahaStringUtils().convertToMoney("${listVoucherState.valueLimitTotal}")}",
+                              style: TextStyle(fontSize: 13),
+                            ),
+                            SizedBox(
+                              height: 3,
+                            ),
+                            listVoucherState.voucherType == 0
+                                ? Text(
+                                    "Voucher toàn Shop",
+                                    style: TextStyle(
+                                        fontSize: 13, color: Colors.grey[600]),
+                                  )
+                                : Text(
+                                    "Voucher theo sản phẩm",
+                                    style: TextStyle(
+                                        fontSize: 13, color: Colors.grey[600]),
+                                  ),
+                          ],
+                        ),
+                        Text("${listVoucherState.code}")
+                      ],
                     ),
                   ),
                 ],
@@ -374,9 +443,9 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.to(() => UpdateMyProgram(
-                                  programDiscount: listProgramState,
-                                ));
+                            // Get.to(() => UpdateMyProgram(
+                            //       programDiscount: listProgramState,
+                            //     ));
                           },
                           child: Container(
                             height: 35,
@@ -396,9 +465,9 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.to(() => UpdateMyProgram(
-                                  programDiscount: listProgramState,
-                                ));
+                            // Get.to(() => UpdateMyProgram(
+                            //       programDiscount: listProgramState,
+                            //     ));
                           },
                           child: Container(
                             height: 35,

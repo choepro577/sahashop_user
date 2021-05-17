@@ -92,10 +92,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                 body: TabBarView(
                   controller: tabController,
                   children: List<Widget>.generate(3, (int index) {
-                    return buildStateProgram(
-                        index,
-                        myProgramController
-                            .listAllSaveStateBefore.value[index]);
+                    return buildStateProgram(index);
                   }),
                 ),
                 bottomNavigationBar: Container(
@@ -178,8 +175,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
     );
   }
 
-  Widget buildStateProgram(
-      int indexState, List<DiscountProductsList> listProgramState) {
+  Widget buildStateProgram(int indexState) {
     RefreshController _refreshController =
         RefreshController(initialRefresh: true);
     return SmartRefresher(
@@ -227,17 +223,22 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
           _refreshController.loadFailed();
         },
         child: Obx(
-          () => listProgramState.isNotEmpty
+          () => myProgramController
+                  .listAllSaveStateBefore.value[indexState].isNotEmpty
               ? Obx(
                   () => myProgramController.isRefreshingData.value == true &&
-                          listProgramState.isNotEmpty
+                          myProgramController.listAllSaveStateBefore
+                              .value[indexState].isNotEmpty
                       ? SingleChildScrollView(
                           child: Column(
                             children: [
-                              ...List.generate(listProgramState.length,
-                                  (index) {
+                              ...List.generate(
+                                  myProgramController.listAllSaveStateBefore
+                                      .value[indexState].length, (index) {
                                 return programIsComingItem(
-                                    listProgramState[index], indexState);
+                                    myProgramController.listAllSaveStateBefore
+                                        .value[indexState][index],
+                                    indexState);
                               })
                             ],
                           ),
@@ -245,10 +246,13 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                       : SingleChildScrollView(
                           child: Column(
                             children: [
-                              ...List.generate(listProgramState.length,
-                                  (index) {
+                              ...List.generate(
+                                  myProgramController.listAllSaveStateBefore
+                                      .value[indexState].length, (index) {
                                 return programIsComingItem(
-                                    listProgramState[index], indexState);
+                                    myProgramController.listAllSaveStateBefore
+                                        .value[indexState][index],
+                                    indexState);
                               })
                             ],
                           ),

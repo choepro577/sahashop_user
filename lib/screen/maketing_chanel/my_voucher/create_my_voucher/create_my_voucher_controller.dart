@@ -1,30 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_controller.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/add_product/add_product_controller.dart';
+import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
+import 'package:sahashop_user/model/voucher_request.dart';
+import 'package:sahashop_user/data/repository/repository_manager.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_voucher/create_my_voucher/add_product_to_voucher/add_product_voucher_controller.dart';
 
 enum DiscountType { k0, k1 }
 
 class CreateMyVoucherController extends GetxController {
+  var isLoadingCreate = false.obs;
   var dateStart = DateTime.now().obs;
   var timeStart = DateTime.now().add(Duration(minutes: 1)).obs;
   var dateEnd = DateTime.now().obs;
   var timeEnd = DateTime.now().add(Duration(hours: 2)).obs;
 
-  AddProductToSaleController addProductToSaleController =
-      Get.put(AddProductToSaleController());
-  MyProgramController myProgramController = Get.find();
+  AddProductToVoucherController addProductToVoucherController =
+      Get.put(AddProductToVoucherController());
 
   var checkDayStart = false.obs;
   var checkDayEnd = false.obs;
 
   TextEditingController nameProgramEditingController =
       new TextEditingController();
-  TextEditingController discountEditingController = new TextEditingController();
-  TextEditingController quantityEditingController = new TextEditingController();
-  var hideShowVoucher = "Hiển thị".obs;
+  TextEditingController codeVoucherEditingController =
+      new TextEditingController();
+  TextEditingController pricePermanentEditingController =
+      new TextEditingController();
+  TextEditingController pricePercentEditingController =
+      new TextEditingController();
+  TextEditingController priceDiscountLimitedEditingController =
+      new TextEditingController();
+  TextEditingController minimumOrderEditingController =
+      new TextEditingController();
+  TextEditingController amountCodeAvailableEditingController =
+      new TextEditingController();
+
+  var textHideShowVoucher = "Hiển thị".obs;
+  var isShowVoucher = true.obs;
+  var isLimitedPrice = true.obs;
+  var typeVoucherDiscount = "Chọn loại giảm giá".obs;
+  var isChoosedTypeVoucherDiscount = true.obs;
+  var isCheckMinimumOrderDiscount = true.obs;
 
   var discountType = DiscountType.k1.obs;
+  var discountTypeRequest = 0.obs;
 
   void onChangeDateStart(DateTime date) {
     if (date.isBefore(dateStart.value) == true) {
@@ -54,5 +73,95 @@ class CreateMyVoucherController extends GetxController {
       checkDayEnd.value = false;
       timeEnd.value = date;
     }
+  }
+
+  void checkTypeDiscount() {
+    if (pricePermanentEditingController.text.isEmpty) {
+      if (priceDiscountLimitedEditingController.text.isEmpty) {
+        typeVoucherDiscount.value =
+            "Không giới hạn - " + pricePercentEditingController.text + "%";
+      } else {
+        typeVoucherDiscount.value = "Giới hạn - " +
+            priceDiscountLimitedEditingController.text +
+            "đ -" +
+            pricePercentEditingController.text +
+            "%";
+      }
+    } else {
+      typeVoucherDiscount.value =
+          "Cố định - " + pricePermanentEditingController.text + "đ";
+    }
+  }
+
+  void onChangeRatio(DiscountType v) {
+    if (discountType.value == DiscountType.k1) {
+      pricePermanentEditingController.text = "";
+    } else {
+      pricePercentEditingController.text = "";
+      priceDiscountLimitedEditingController.text = "";
+    }
+    discountType.value = v;
+    if (discountType.value == DiscountType.k1) {
+      discountTypeRequest.value = 0;
+    } else {
+      discountTypeRequest.value = 1;
+    }
+  }
+
+  Future<void> createVoucher(int voucherType) async {
+    isLoadingCreate.value = true;
+    try {
+      var res = await RepositoryManager.marketingChanel.createVoucher(
+        VoucherRequest(
+            isShowVoucher: isShowVoucher.value,
+            name: nameProgramEditingController.text,
+            description: "",
+            imageUrl: "",
+            startTime: DateTime(
+                    dateStart.value.year,
+                    dateStart.value.month,
+                    dateStart.value.day,
+                    timeStart.value.hour,
+                    timeStart.value.minute,
+                    timeStart.value.second,
+                    timeStart.value.millisecond,
+                    timeStart.value.microsecond)
+                .toIso8601String(),
+            endTime: DateTime(
+                    dateEnd.value.year,
+                    dateEnd.value.month,
+                    dateEnd.value.day,
+                    timeEnd.value.hour,
+                    timeEnd.value.minute,
+                    timeEnd.value.second,
+                    timeEnd.value.millisecond,
+                    timeEnd.value.microsecond)
+                .toIso8601String(),
+            voucherType: voucherType,
+            discountType: discountTypeRequest.value,
+            valueDiscount: pricePermanentEditingController.text.isEmpty
+                ? int.parse(pricePercentEditingController.text)
+                : int.parse(pricePermanentEditingController.text),
+            setLimitValueDiscount: isLimitedPrice.value,
+            maxValueDiscount: priceDiscountLimitedEditingController.text.isEmpty
+                ? 0
+                : int.parse(priceDiscountLimitedEditingController.text),
+            setLimitTotal: true,
+            valueLimitTotal: minimumOrderEditingController.text.isEmpty
+                ? 0
+                : int.parse(minimumOrderEditingController.text),
+            setLimitAmount: true,
+            amount: amountCodeAvailableEditingController.text.isEmpty
+                ? 0
+                : int.parse(amountCodeAvailableEditingController.text),
+            code: codeVoucherEditingController.text,
+            products: addProductToVoucherController.listProductParam),
+      );
+      SahaAlert.showSuccess(message: "Lưu thành công");
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+    isLoadingCreate.value = false;
+    Get.back();
   }
 }
