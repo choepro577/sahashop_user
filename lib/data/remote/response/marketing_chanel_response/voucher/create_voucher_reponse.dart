@@ -111,7 +111,8 @@ class Data {
         used: json["used"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        products: List<Product>.from(json["products"].map((x) => x)),
+        products: List<Product>.from(
+            json["products"].map((x) => Product.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

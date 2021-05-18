@@ -17,6 +17,7 @@ class VoucherRequest {
     this.setLimitAmount,
     this.amount,
     this.products,
+    this.isEnd,
   });
 
   int voucherType;
@@ -36,9 +37,10 @@ class VoucherRequest {
   bool setLimitAmount;
   int amount;
   String products;
+  bool isEnd;
 
   Map<String, dynamic> toJson() => {
-        //"is_end": isEnd,
+        "is_end": isEnd,
         "voucher_type": voucherType,
         "name": name,
         "code": code,
