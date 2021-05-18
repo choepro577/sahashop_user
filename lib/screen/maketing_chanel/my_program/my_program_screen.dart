@@ -212,7 +212,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
           //monitor fetch data from network
           await Future.delayed(Duration(milliseconds: 300));
 
-          if (mounted) setState(() {});
+          //if (mounted) setState(() {});
           myProgramController.refreshData();
           _refreshController.refreshCompleted();
         },

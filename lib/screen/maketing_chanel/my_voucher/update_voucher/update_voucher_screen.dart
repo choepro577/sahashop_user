@@ -5,21 +5,102 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_voucher/create_my_voucher/add_product_to_voucher/add_product_voucher_screen.dart';
+import 'package:sahashop_user/model/voucher.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_voucher/create_my_voucher/create_my_voucher_controller.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_voucher/update_voucher/update_product_voucher/update_product_voucher_screen.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_voucher/update_voucher/update_voucher_controller.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
-import 'create_my_voucher_controller.dart';
+class UpdateMyVoucherScreen extends StatefulWidget {
+  Voucher voucher;
 
-class CreateMyVoucher extends StatelessWidget {
+  UpdateMyVoucherScreen({this.voucher});
+
+  @override
+  _UpdateMyVoucherScreenState createState() => _UpdateMyVoucherScreenState();
+}
+
+class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _formKeyTypeVoucher = GlobalKey<FormState>();
-  int voucherType;
-  CreateMyVoucherController createMyVoucherController =
-      CreateMyVoucherController();
 
-  CreateMyVoucher({this.voucherType});
+  final _formKeyTypeVoucher = GlobalKey<FormState>();
+
+  UpdateVoucherController updateVoucherController = UpdateVoucherController();
+
+  @override
+  void initState() {
+    updateVoucherController
+        .updateProductVoucherController.listSelectedProduct.value
+        .addAll(widget.voucher.products);
+    updateVoucherController
+        .updateProductVoucherController.listProductHasInDiscount.value
+        .addAll(widget.voucher.products);
+    updateVoucherController.nameProgramEditingController.text =
+        widget.voucher.name;
+    updateVoucherController.codeVoucherEditingController.text =
+        widget.voucher.code;
+
+    updateVoucherController.dateStart.value = DateTime(
+      widget.voucher.startTime.year,
+      widget.voucher.startTime.month,
+      widget.voucher.startTime.day,
+      widget.voucher.startTime.hour,
+      widget.voucher.startTime.minute,
+      widget.voucher.startTime.second,
+      widget.voucher.startTime.millisecond,
+      widget.voucher.startTime.microsecond,
+    );
+    updateVoucherController.dateEnd.value = DateTime(
+      widget.voucher.endTime.year,
+      widget.voucher.endTime.month,
+      widget.voucher.endTime.day,
+      widget.voucher.endTime.hour,
+      widget.voucher.endTime.minute,
+      widget.voucher.endTime.second,
+      widget.voucher.endTime.millisecond,
+      widget.voucher.endTime.microsecond,
+    );
+    updateVoucherController.timeStart.value = DateTime(
+      widget.voucher.startTime.year,
+      widget.voucher.startTime.month,
+      widget.voucher.startTime.day,
+      widget.voucher.startTime.hour,
+      widget.voucher.startTime.minute,
+      widget.voucher.startTime.second,
+      widget.voucher.startTime.millisecond,
+      widget.voucher.startTime.microsecond,
+    );
+    updateVoucherController.timeEnd.value = DateTime(
+      widget.voucher.endTime.year,
+      widget.voucher.endTime.month,
+      widget.voucher.endTime.day,
+      widget.voucher.endTime.hour,
+      widget.voucher.endTime.minute,
+      widget.voucher.endTime.second,
+      widget.voucher.endTime.millisecond,
+      widget.voucher.endTime.microsecond,
+    );
+    updateVoucherController.discountTypeInput.value =
+        widget.voucher.discountType;
+    updateVoucherController.voucherTypeInput.value = widget.voucher.voucherType;
+
+    updateVoucherController.pricePermanentEditingController.text =
+        widget.voucher.valueDiscount.toString();
+    updateVoucherController.priceDiscountLimitedEditingController.text =
+        widget.voucher.maxValueDiscount == null
+            ? ""
+            : widget.voucher.maxValueDiscount.toString();
+    updateVoucherController.isLimitedPrice.value =
+        widget.voucher.setLimitValueDiscount;
+    updateVoucherController.minimumOrderEditingController.text =
+        widget.voucher.valueLimitTotal.toString();
+    updateVoucherController.amountCodeAvailableEditingController.text =
+        widget.voucher.amount == null ? "" : widget.voucher.amount.toString();
+    updateVoucherController.checkTypeDiscountInput();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +117,7 @@ class CreateMyVoucher extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.grey[200],
         appBar: AppBar(
-          title: Text('Tạo chương trình khuyến mãi'),
+          title: Text('Sửa chương trình khuyến mãi'),
         ),
         body: Obx(
           () => SingleChildScrollView(
@@ -63,7 +144,7 @@ class CreateMyVoucher extends StatelessWidget {
                       children: [
                         Expanded(
                           child: TextFormField(
-                            controller: createMyVoucherController
+                            controller: updateVoucherController
                                 .nameProgramEditingController,
                             validator: (value) {
                               if (value.length < 1) {
@@ -98,7 +179,7 @@ class CreateMyVoucher extends StatelessWidget {
                         Container(
                           width: Get.width * 0.5,
                           child: TextFormField(
-                            controller: createMyVoucherController
+                            controller: updateVoucherController
                                 .codeVoucherEditingController,
                             keyboardType: TextInputType.name,
                             validator: (value) {
@@ -151,14 +232,14 @@ class CreateMyVoucher extends StatelessWidget {
                                         doneStyle: TextStyle(
                                             color: Colors.black,
                                             fontSize: 16)), onConfirm: (date) {
-                                  createMyVoucherController
+                                  updateVoucherController
                                       .onChangeDateStart(date);
                                 },
                                     currentTime: DateTime.now(),
                                     locale: LocaleType.vi);
                               },
                               child: Text(
-                                '${SahaDateUtils().getDDMMYY(createMyVoucherController.dateStart.value)}',
+                                '${SahaDateUtils().getDDMMYY(updateVoucherController.dateStart.value)}',
                                 style: TextStyle(color: Colors.blue),
                               ),
                             ),
@@ -180,7 +261,7 @@ class CreateMyVoucher extends StatelessWidget {
                                   );
                                 },
                                 child: Text(
-                                  '  ${SahaDateUtils().getHHMM(createMyVoucherController.timeStart.value)}',
+                                  '  ${SahaDateUtils().getHHMM(updateVoucherController.timeStart.value)}',
                                   style: TextStyle(color: Colors.blue),
                                 )),
                           ],
@@ -188,7 +269,7 @@ class CreateMyVoucher extends StatelessWidget {
                       ],
                     ),
                   ),
-                  createMyVoucherController.checkDayStart.value
+                  updateVoucherController.checkDayStart.value
                       ? Container(
                           padding: EdgeInsets.all(8.0),
                           color: Colors.red[50],
@@ -226,14 +307,13 @@ class CreateMyVoucher extends StatelessWidget {
                                         doneStyle: TextStyle(
                                             color: Colors.black, fontSize: 16)),
                                     onChanged: (date) {}, onConfirm: (date) {
-                                  createMyVoucherController
-                                      .onChangeDateEnd(date);
+                                  updateVoucherController.onChangeDateEnd(date);
                                 },
                                     currentTime: DateTime.now(),
                                     locale: LocaleType.vi);
                               },
                               child: Text(
-                                '${SahaDateUtils().getDDMMYY(createMyVoucherController.dateEnd.value)}',
+                                '${SahaDateUtils().getDDMMYY(updateVoucherController.dateEnd.value)}',
                                 style: TextStyle(color: Colors.blue),
                               ),
                             ),
@@ -248,7 +328,7 @@ class CreateMyVoucher extends StatelessWidget {
                                               .toString());
                                     },
                                     onConfirm: (date) {
-                                      createMyVoucherController
+                                      updateVoucherController
                                           .onChangeTimeEnd(date);
                                     },
                                     currentTime: DateTime.now(),
@@ -256,7 +336,7 @@ class CreateMyVoucher extends StatelessWidget {
                                   );
                                 },
                                 child: Text(
-                                  '  ${SahaDateUtils().getHHMM(createMyVoucherController.timeEnd.value)}',
+                                  '  ${SahaDateUtils().getHHMM(updateVoucherController.timeEnd.value)}',
                                   style: TextStyle(color: Colors.blue),
                                 )),
                           ],
@@ -264,7 +344,7 @@ class CreateMyVoucher extends StatelessWidget {
                       ],
                     ),
                   ),
-                  createMyVoucherController.checkDayEnd.value
+                  updateVoucherController.checkDayEnd.value
                       ? Container(
                           padding: EdgeInsets.all(8.0),
                           color: Colors.red[50],
@@ -310,11 +390,11 @@ class CreateMyVoucher extends StatelessWidget {
                                                     Radio(
                                                       value: DiscountType.k1,
                                                       groupValue:
-                                                          createMyVoucherController
+                                                          updateVoucherController
                                                               .discountType
                                                               .value,
                                                       onChanged: (v) {
-                                                        createMyVoucherController
+                                                        updateVoucherController
                                                             .onChangeRatio(v);
                                                       },
                                                     ),
@@ -326,7 +406,7 @@ class CreateMyVoucher extends StatelessWidget {
                                                   ],
                                                 ),
                                               ),
-                                              createMyVoucherController
+                                              updateVoucherController
                                                           .discountType.value ==
                                                       DiscountType.k1
                                                   ? Container(
@@ -347,7 +427,7 @@ class CreateMyVoucher extends StatelessWidget {
                                                             child:
                                                                 TextFormField(
                                                               controller:
-                                                                  createMyVoucherController
+                                                                  updateVoucherController
                                                                       .pricePermanentEditingController,
                                                               keyboardType:
                                                                   TextInputType
@@ -403,11 +483,11 @@ class CreateMyVoucher extends StatelessWidget {
                                                     Radio(
                                                       value: DiscountType.k0,
                                                       groupValue:
-                                                          createMyVoucherController
+                                                          updateVoucherController
                                                               .discountType
                                                               .value,
                                                       onChanged: (v) {
-                                                        createMyVoucherController
+                                                        updateVoucherController
                                                             .onChangeRatio(v);
                                                       },
                                                     ),
@@ -418,7 +498,7 @@ class CreateMyVoucher extends StatelessWidget {
                                                   ],
                                                 ),
                                               ),
-                                              createMyVoucherController
+                                              updateVoucherController
                                                           .discountType.value ==
                                                       DiscountType.k0
                                                   ? Container(
@@ -434,7 +514,7 @@ class CreateMyVoucher extends StatelessWidget {
                                                                 child:
                                                                     TextFormField(
                                                                   controller:
-                                                                      createMyVoucherController
+                                                                      updateVoucherController
                                                                           .pricePercentEditingController,
                                                                   keyboardType:
                                                                       TextInputType
@@ -499,11 +579,11 @@ class CreateMyVoucher extends StatelessWidget {
                                                             children: [
                                                               InkWell(
                                                                   onTap: () {
-                                                                    createMyVoucherController
+                                                                    updateVoucherController
                                                                         .isLimitedPrice
                                                                         .value = true;
                                                                   },
-                                                                  child: createMyVoucherController
+                                                                  child: updateVoucherController
                                                                               .isLimitedPrice
                                                                               .value ==
                                                                           true
@@ -546,14 +626,14 @@ class CreateMyVoucher extends StatelessWidget {
                                                               Spacer(),
                                                               InkWell(
                                                                 onTap: () {
-                                                                  createMyVoucherController
+                                                                  updateVoucherController
                                                                       .isLimitedPrice
                                                                       .value = false;
-                                                                  createMyVoucherController
+                                                                  updateVoucherController
                                                                       .priceDiscountLimitedEditingController
                                                                       .text = "";
                                                                 },
-                                                                child: createMyVoucherController
+                                                                child: updateVoucherController
                                                                             .isLimitedPrice
                                                                             .value ==
                                                                         false
@@ -602,7 +682,7 @@ class CreateMyVoucher extends StatelessWidget {
                                                               )
                                                             ],
                                                           ),
-                                                          createMyVoucherController
+                                                          updateVoucherController
                                                                       .isLimitedPrice
                                                                       .value ==
                                                                   true
@@ -627,7 +707,7 @@ class CreateMyVoucher extends StatelessWidget {
                                                                         child:
                                                                             TextFormField(
                                                                           controller:
-                                                                              createMyVoucherController.priceDiscountLimitedEditingController,
+                                                                              updateVoucherController.priceDiscountLimitedEditingController,
                                                                           keyboardType:
                                                                               TextInputType.number,
                                                                           validator:
@@ -685,7 +765,7 @@ class CreateMyVoucher extends StatelessWidget {
                                                     .save();
                                                 KeyboardUtil.hideKeyboard(
                                                     context);
-                                                createMyVoucherController
+                                                updateVoucherController
                                                     .checkTypeDiscount();
                                                 Get.back();
                                               }
@@ -717,7 +797,7 @@ class CreateMyVoucher extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Text(
-                                  createMyVoucherController
+                                  updateVoucherController
                                       .typeVoucherDiscount.value,
                                   style: TextStyle(color: Colors.grey[600]),
                                 ),
@@ -729,8 +809,7 @@ class CreateMyVoucher extends StatelessWidget {
                       ],
                     ),
                   ),
-                  createMyVoucherController
-                              .isChoosedTypeVoucherDiscount.value ==
+                  updateVoucherController.isChoosedTypeVoucherDiscount.value ==
                           false
                       ? Container(
                           padding: EdgeInsets.all(8.0),
@@ -754,14 +833,14 @@ class CreateMyVoucher extends StatelessWidget {
                         Container(
                           width: Get.width * 0.7,
                           child: TextFormField(
-                            controller: createMyVoucherController
+                            controller: updateVoucherController
                                 .minimumOrderEditingController,
                             keyboardType: TextInputType.number,
                             validator: (value) {
                               if (value.length < 1) {
                                 return 'Chưa nhập giá trị tối thiểu đơn hàng';
                               } else {
-                                if (createMyVoucherController
+                                if (updateVoucherController
                                     .pricePermanentEditingController
                                     .text
                                     .isEmpty) {
@@ -769,16 +848,16 @@ class CreateMyVoucher extends StatelessWidget {
                                 } else {
                                   var myInt = int.parse(value);
                                   var pricePermanent = int.parse(
-                                      createMyVoucherController
+                                      updateVoucherController
                                           .pricePermanentEditingController
                                           .text);
                                   if (myInt < pricePermanent) {
-                                    createMyVoucherController
+                                    updateVoucherController
                                         .isCheckMinimumOrderDiscount
                                         .value = false;
                                     return "";
                                   } else {
-                                    createMyVoucherController
+                                    updateVoucherController
                                         .isCheckMinimumOrderDiscount
                                         .value = true;
                                     return null;
@@ -800,7 +879,7 @@ class CreateMyVoucher extends StatelessWidget {
                       ],
                     ),
                   ),
-                  createMyVoucherController.isCheckMinimumOrderDiscount.value ==
+                  updateVoucherController.isCheckMinimumOrderDiscount.value ==
                           false
                       ? Container(
                           padding: EdgeInsets.all(8.0),
@@ -824,7 +903,7 @@ class CreateMyVoucher extends StatelessWidget {
                         Container(
                           width: Get.width * 0.55,
                           child: TextFormField(
-                            controller: createMyVoucherController
+                            controller: updateVoucherController
                                 .amountCodeAvailableEditingController,
                             keyboardType: TextInputType.number,
                             validator: (value) {
@@ -862,7 +941,7 @@ class CreateMyVoucher extends StatelessWidget {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    createMyVoucherController
+                                    updateVoucherController
                                         .isShowVoucher.value = true;
 
                                     Get.back();
@@ -898,7 +977,7 @@ class CreateMyVoucher extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    createMyVoucherController
+                                    updateVoucherController
                                         .isShowVoucher.value = false;
 
                                     Get.back();
@@ -967,8 +1046,7 @@ class CreateMyVoucher extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  createMyVoucherController
-                                              .isShowVoucher.value ==
+                                  updateVoucherController.isShowVoucher.value ==
                                           true
                                       ? Text("Hiển thị")
                                       : Text("Không hiển thị"),
@@ -979,7 +1057,7 @@ class CreateMyVoucher extends StatelessWidget {
                       ),
                     ),
                   ),
-                  voucherType == 1
+                  widget.voucher.voucherType == 1
                       ? Container(
                           color: Colors.white,
                           width: Get.width,
@@ -993,8 +1071,8 @@ class CreateMyVoucher extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text('Sản phẩm'),
-                                    createMyVoucherController
-                                                .addProductToVoucherController
+                                    updateVoucherController
+                                                .updateProductVoucherController
                                                 .listSelectedProduct
                                                 .value
                                                 .length ==
@@ -1008,7 +1086,7 @@ class CreateMyVoucher extends StatelessWidget {
                                             ),
                                             onPressed: () {
                                               Get.to(() =>
-                                                  AddProductToVoucherScreen());
+                                                  UpdateProductToVoucherScreen());
                                             })
                                   ],
                                 ),
@@ -1017,49 +1095,66 @@ class CreateMyVoucher extends StatelessWidget {
                                 height: 10,
                               ),
                               Obx(
-                                () => createMyVoucherController
-                                            .addProductToVoucherController
+                                () => updateVoucherController
+                                            .updateProductVoucherController
                                             .listSelectedProduct
                                             .value
                                             .length ==
                                         0
-                                    ? InkWell(
-                                        onTap: () {
-                                          Get.to(() =>
-                                              AddProductToVoucherScreen());
-                                        },
-                                        child: Container(
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Theme.of(context)
-                                                      .primaryColor)),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.add,
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              ),
-                                              Text(
-                                                'Thêm sản phẩm',
-                                                style: TextStyle(
+                                    ? Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              Get.to(() =>
+                                                  UpdateProductToVoucherScreen());
+                                            },
+                                            child: Container(
+                                              height: 100,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Theme.of(context)
+                                                          .primaryColor)),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    Icons.add,
                                                     color: Theme.of(context)
-                                                        .primaryColor),
-                                                textAlign: TextAlign.center,
-                                              )
-                                            ],
+                                                        .primaryColor,
+                                                  ),
+                                                  Text(
+                                                    'Thêm sản phẩm',
+                                                    style: TextStyle(
+                                                        color: Theme.of(context)
+                                                            .primaryColor),
+                                                    textAlign: TextAlign.center,
+                                                  )
+                                                ],
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                          Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            color: Colors.red[50],
+                                            width: Get.width,
+                                            child: Text(
+                                              "Voucher sẽ chuyển sang kiểu sử dụng cho toàn Shop nếu bạn không chọn sản phẩm",
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  color: Colors.red),
+                                            ),
+                                          )
+                                        ],
                                       )
                                     : Container(
                                         height: 400,
                                         child: StaggeredGridView.countBuilder(
                                           crossAxisCount: 4,
-                                          itemCount: createMyVoucherController
-                                              .addProductToVoucherController
+                                          itemCount: updateVoucherController
+                                              .updateProductVoucherController
                                               .listSelectedProduct
                                               .value
                                               .length,
@@ -1076,16 +1171,16 @@ class CreateMyVoucher extends StatelessWidget {
                                                 ),
                                                 child: CachedNetworkImage(
                                                   fit: BoxFit.cover,
-                                                  imageUrl: createMyVoucherController
-                                                              .addProductToVoucherController
+                                                  imageUrl: updateVoucherController
+                                                              .updateProductVoucherController
                                                               .listSelectedProduct
                                                               .value[index]
                                                               .images
                                                               .length ==
                                                           0
                                                       ? ""
-                                                      : createMyVoucherController
-                                                          .addProductToVoucherController
+                                                      : updateVoucherController
+                                                          .updateProductVoucherController
                                                           .listSelectedProduct
                                                           .value[index]
                                                           .images[0]
@@ -1112,16 +1207,16 @@ class CreateMyVoucher extends StatelessWidget {
                                                           .primaryColor,
                                                     ),
                                                     onPressed: () {
-                                                      createMyVoucherController
-                                                          .addProductToVoucherController
+                                                      updateVoucherController
+                                                          .updateProductVoucherController
                                                           .deleteProductSelected(
-                                                              createMyVoucherController
-                                                                  .addProductToVoucherController
+                                                              updateVoucherController
+                                                                  .updateProductVoucherController
                                                                   .listSelectedProduct
                                                                   .value[index]
                                                                   .id);
-                                                      createMyVoucherController
-                                                          .addProductToVoucherController
+                                                      updateVoucherController
+                                                          .updateProductVoucherController
                                                           .countProductSelected();
                                                     }),
                                               ),
@@ -1149,7 +1244,7 @@ class CreateMyVoucher extends StatelessWidget {
           child: Column(
             children: [
               Obx(
-                () => createMyVoucherController.isLoadingCreate.value == true
+                () => updateVoucherController.isLoadingCreate.value == true
                     ? IgnorePointer(
                         child: SahaButtonFullParent(
                           text: "Lưu",
@@ -1164,18 +1259,18 @@ class CreateMyVoucher extends StatelessWidget {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
                             KeyboardUtil.hideKeyboard(context);
-                            createMyVoucherController
-                                .addProductToVoucherController
+                            updateVoucherController
+                                .updateProductVoucherController
                                 .listSelectedProductToString();
-                            if (createMyVoucherController
+                            if (updateVoucherController
                                     .typeVoucherDiscount.value ==
                                 "Chọn loại giảm giá") {
-                              createMyVoucherController
+                              updateVoucherController
                                   .isChoosedTypeVoucherDiscount.value = false;
                             } else {
-                              createMyVoucherController
-                                  .createVoucher(voucherType); // CREATE VOUCHER
-                              createMyVoucherController
+                              updateVoucherController
+                                  .updateVoucher(widget.voucher.id);
+                              updateVoucherController
                                   .isChoosedTypeVoucherDiscount.value = true;
                             }
                           }

@@ -6,12 +6,14 @@ import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/model/product.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
-class AddProductToVoucherController extends GetxController {
+class UpdateProductVoucherController extends GetxController {
   var listProduct = RxList<Product>();
   var isLoadingProduct = false.obs;
   var listIsSave = RxList<bool>().obs;
+  var listCheckHasInDiscount = RxList<bool>().obs;
   var listCheckSelectedProduct = RxList<Map<Product, bool>>().obs;
   var listSelectedProduct = RxList<Product>().obs;
+  var listProductHasInDiscount = RxList<Product>().obs;
   var quantityProductSelected = 0.obs;
   var isLoadingCreate = false.obs;
   var listProductParam = "";
@@ -37,13 +39,20 @@ class AddProductToVoucherController extends GetxController {
       if (listCheckSelectedProduct.value.length == 0) {
         listProduct.forEach((product) {
           listCheckSelectedProduct.value.add({product: false});
+          listCheckHasInDiscount.value.add(false);
           listIsSave.value.add(false);
         });
       }
 
-      for (int i = 0; i < res.data.data.length; i++) {
-        if (res.data.data[i].hasInDiscount == true) {
-          listIsSave.value[i] = true;
+      for (int i = 0; i < listProduct.length; i++) {
+        for (int j = 0; j < listProductHasInDiscount.value.length; j++) {
+          if (listProduct[i].id == listProductHasInDiscount.value[j].id) {
+            listCheckSelectedProduct.value[i].update(
+                listCheckSelectedProduct.value[i].keys.first, (value) => true);
+            listCheckHasInDiscount.value[i] = true;
+            listIsSave.value[i] = false;
+            break;
+          }
         }
       }
 

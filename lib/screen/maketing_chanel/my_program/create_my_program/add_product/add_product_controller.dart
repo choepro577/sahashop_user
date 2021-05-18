@@ -91,7 +91,7 @@ class AddProductToSaleController extends GetxController {
 
   void resetListProduct() {
     listProduct = new RxList<Product>();
-    //listSelectedProduct.value = new RxList<Product>();
+    listProductParam = "";
   }
 
   void deleteProductSelected(int id) {
@@ -110,6 +110,7 @@ class AddProductToSaleController extends GetxController {
                 .values
                 .first);
     checkIsSaveProduct();
+    listProductParam = "";
   }
 
   void checkIsSaveProduct() {

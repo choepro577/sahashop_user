@@ -101,7 +101,7 @@ class UpdateProductToDiscountController extends GetxController {
 
   void resetListProduct() {
     listProduct = new RxList<Product>();
-    //listSelectedProduct.value = new RxList<Product>();
+    listProductParam = "";
   }
 
   void deleteProductSelected(int id) {
@@ -120,6 +120,7 @@ class UpdateProductToDiscountController extends GetxController {
                 .values
                 .first);
     checkIsSaveProduct();
+    listProductParam = "";
   }
 
   void checkIsSaveProduct() {
@@ -142,13 +143,15 @@ class UpdateProductToDiscountController extends GetxController {
   }
 
   void listSelectedProductToString() {
-    listSelectedProduct.value.forEach((element) {
-      if (element != listSelectedProduct.value.last) {
-        listProductParam = listProductParam + "${element.id.toString()},";
-      } else {
-        listProductParam = listProductParam + "${element.id.toString()}";
-      }
-    });
+    if (listProductParam.isEmpty) {
+      listSelectedProduct.value.forEach((element) {
+        if (element != listSelectedProduct.value.last) {
+          listProductParam = listProductParam + "${element.id.toString()},";
+        } else {
+          listProductParam = listProductParam + "${element.id.toString()}";
+        }
+      });
+    }
     print(listProductParam);
   }
 

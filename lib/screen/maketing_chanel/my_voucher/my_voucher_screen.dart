@@ -13,6 +13,7 @@ import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_contr
 import 'package:sahashop_user/screen/maketing_chanel/my_program/update_my_program/update_my_program.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_voucher/create_my_voucher/create_my_voucher_screen.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_voucher/my_voucher_controller.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_voucher/update_voucher/update_voucher_screen.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
@@ -109,7 +110,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                                           voucherType: 0,
                                         ))
                                     .then((value) =>
-                                        {myVoucherController.getAllVoucher()});
+                                        {myVoucherController.refreshData()});
                               },
                               child: Container(
                                 padding: EdgeInsets.all(5),
@@ -196,9 +197,6 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                       );
                     },
                   );
-                  // Get.to(() => CreateMyProgram(
-                  //       onChange: reload,
-                  //     ));
                 },
                 color: Theme.of(context).primaryColor,
               ),
@@ -245,15 +243,16 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
         onRefresh: () async {
           await Future.delayed(Duration(milliseconds: 300));
 
-          if (mounted) setState(() {});
+          //if (mounted) setState(() {});
           myVoucherController.refreshData();
           _refreshController.refreshCompleted();
         },
+        onLoading: () async {},
         child: Obx(
           () => myVoucherController
                   .listAllSaveStateBefore.value[indexState].isNotEmpty
               ? Obx(
-                  () => true &&
+                  () => myVoucherController.isRefreshingData.value == true &&
                           myVoucherController.listAllSaveStateBefore
                               .value[indexState].isNotEmpty
                       ? SingleChildScrollView(
@@ -392,7 +391,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            listVoucherState.valueDiscount < 100
+                            listVoucherState.discountType == 1
                                 ? Text(
                                     "${listVoucherState.valueDiscount}% Giảm",
                                     style: TextStyle(
@@ -465,9 +464,11 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                       children: [
                         InkWell(
                           onTap: () {
-                            // Get.to(() => UpdateMyProgram(
-                            //       programDiscount: listProgramState,
-                            //     ));
+                            Get.to(() => UpdateMyVoucherScreen(
+                                      voucher: listVoucherState,
+                                    ))
+                                .then((value) =>
+                                    {myVoucherController.refreshData()});
                           },
                           child: Container(
                             height: 35,

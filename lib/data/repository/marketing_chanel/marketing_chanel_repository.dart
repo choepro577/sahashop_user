@@ -1,8 +1,8 @@
-import 'package:sahashop_user/data/remote/response/marketing_chanel_response/create_discount_respone.dart';
-import 'package:sahashop_user/data/remote/response/marketing_chanel_response/create_voucher_reponse.dart';
-import 'package:sahashop_user/data/remote/response/marketing_chanel_response/delete_discount_response.dart';
-import 'package:sahashop_user/data/remote/response/marketing_chanel_response/my_program_reponse.dart';
-import 'package:sahashop_user/data/remote/response/marketing_chanel_response/my_voucher_response.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/create_discount_respone.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/create_voucher_reponse.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/delete_discount_response.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/my_program_reponse.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/my_voucher_response.dart';
 import 'package:sahashop_user/data/remote/saha_service_manager.dart';
 import 'package:sahashop_user/model/voucher_request.dart';
 import 'package:sahashop_user/utils/user_info.dart';
@@ -111,6 +111,17 @@ class MarketingChanelRepository {
     try {
       var res = await SahaServiceManager().service.createVoucher(
           UserInfo().getCurrentStoreCode(), voucherRequest.toJson());
+      return res;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  Future<CreateVoucherResponse> updateVoucher(
+      int idVoucher, VoucherRequest voucherRequest) async {
+    try {
+      var res = await SahaServiceManager().service.updateVoucher(
+          UserInfo().getCurrentStoreCode(), idVoucher, voucherRequest.toJson());
       return res;
     } catch (err) {
       handleError(err);

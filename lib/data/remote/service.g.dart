@@ -436,7 +436,6 @@ class _SahaService implements SahaService {
             method: 'PUT',
             headers: <String, dynamic>{},
             extra: _extra,
-            contentType: 'application/x-www-form-urlencoded',
             baseUrl: baseUrl),
         data: _data);
     final value = MyProgramResponse.fromJson(_result.data);
@@ -476,6 +475,29 @@ class _SahaService implements SahaService {
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = CreateVoucherResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<CreateVoucherResponse> updateVoucher(
+      storeCode, idVoucher, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(idVoucher, 'idVoucher');
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/vouchers/$idVoucher',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'PUT',
             headers: <String, dynamic>{},
             extra: _extra,
             baseUrl: baseUrl),
