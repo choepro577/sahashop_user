@@ -8,6 +8,7 @@ import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/model/discount_product_list.dart';
 import 'package:sahashop_user/model/voucher.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_combo/create_my_combo/create_my_combo/create_combo_screen.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/create_my_program.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_controller.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/update_my_program/update_my_program.dart';
@@ -17,12 +18,12 @@ import 'package:sahashop_user/screen/maketing_chanel/my_voucher/update_voucher/u
 import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
-class MyVoucherScreen extends StatefulWidget {
+class MyComboScreen extends StatefulWidget {
   @override
-  _MyVoucherScreenState createState() => _MyVoucherScreenState();
+  _MyComboScreenState createState() => _MyComboScreenState();
 }
 
-class _MyVoucherScreenState extends State<MyVoucherScreen>
+class _MyComboScreenState extends State<MyComboScreen>
     with TickerProviderStateMixin {
   bool isHasDiscount = false;
   bool isTabOnTap = false;
@@ -83,108 +84,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
               SahaButtonFullParent(
                 text: "Tạo Voucher mới",
                 onPressed: () {
-                  showModalBottomSheet<void>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Container(
-                        height: 250,
-                        color: Colors.white,
-                        child: Column(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Get.back();
-                                Get.to(() => CreateMyVoucher(
-                                          voucherType: 0,
-                                        ))
-                                    .then((value) =>
-                                        {myVoucherController.refreshData()});
-                              },
-                              child: Container(
-                                padding: EdgeInsets.all(5),
-                                height: 80,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Tạo Voucher toàn Shop",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "Có thể áp dụng voucher này cho tất cả các sản phẩm trong Shop của bạn",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 12, color: Colors.grey),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Divider(
-                              height: 1,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Get.back();
-                                Get.to(() => CreateMyVoucher(
-                                      voucherType: 1,
-                                    ));
-                              },
-                              child: Container(
-                                height: 80,
-                                padding: EdgeInsets.all(5),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Tạo Voucher sản phẩm",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "Có thể áp dụng voucher này cho một số sản phẩm nhất định trong Shop của bạn",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 12, color: Colors.grey),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: 10,
-                              color: Colors.grey[200],
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Get.back();
-                              },
-                              child: Container(
-                                height: 50,
-                                child: Center(
-                                  child: Text(
-                                    "Thoát",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                  );
+                  Get.to(() => CreateMyComboScreen());
                 },
                 color: Theme.of(context).primaryColor,
               ),

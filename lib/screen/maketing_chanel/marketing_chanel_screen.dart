@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_combo/my_combo_screen.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_screen.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_voucher/my_voucher_screen.dart';
 
@@ -96,7 +97,9 @@ class MarketingChanelScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.to(() => MyComboScreen());
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
