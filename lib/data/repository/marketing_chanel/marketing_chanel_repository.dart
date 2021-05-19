@@ -1,7 +1,9 @@
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/create_discount_respone.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/end_discount_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/create_voucher_reponse.dart';
-import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/delete_discount_response.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/delete_voucher_discount_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/my_program_reponse.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/end_voucher_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/my_voucher_response.dart';
 import 'package:sahashop_user/data/remote/saha_service_manager.dart';
 import 'package:sahashop_user/model/voucher_request.dart';
@@ -95,11 +97,44 @@ class MarketingChanelRepository {
     }
   }
 
-  Future<DeleteDiscountResponse> deleteDiscount(int idDiscount) async {
+  Future<EndVoucherResponse> getEndVoucherFromPage(int numberPage) async {
+    try {
+      var res = await SahaServiceManager()
+          .service
+          .getEndVoucherFromPage(UserInfo().getCurrentStoreCode(), numberPage);
+      return res;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  Future<EndDiscountResponse> getEndDiscountFromPage(int numberPage) async {
+    try {
+      var res = await SahaServiceManager()
+          .service
+          .getEndDiscountFromPage(UserInfo().getCurrentStoreCode(), numberPage);
+      return res;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  Future<DeleteDisCountVoucherResponse> deleteDiscount(int idDiscount) async {
     try {
       var res = await SahaServiceManager()
           .service
           .deleteDiscount(UserInfo().getCurrentStoreCode(), idDiscount);
+      return res;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  Future<DeleteDisCountVoucherResponse> deleteVoucher(int idVoucher) async {
+    try {
+      var res = await SahaServiceManager()
+          .service
+          .deleteVoucher(UserInfo().getCurrentStoreCode(), idVoucher);
       return res;
     } catch (err) {
       handleError(err);

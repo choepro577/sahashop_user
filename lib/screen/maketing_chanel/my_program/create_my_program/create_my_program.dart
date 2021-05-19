@@ -12,10 +12,6 @@ import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
 
 class CreateMyProgram extends StatefulWidget {
-  Function onChange;
-
-  CreateMyProgram({this.onChange});
-
   @override
   _CreateMyProgramState createState() => _CreateMyProgramState();
 }
@@ -35,13 +31,6 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
       new TextEditingController();
   TextEditingController discountEditingController = new TextEditingController();
   TextEditingController quantityEditingController = new TextEditingController();
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    widget.onChange();
-  }
 
   @override
   Widget build(BuildContext context) {

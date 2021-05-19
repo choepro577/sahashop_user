@@ -15,8 +15,9 @@ import 'package:sahashop_user/utils/string_utils.dart';
 
 class UpdateMyVoucherScreen extends StatefulWidget {
   Voucher voucher;
+  bool onlyWatch;
 
-  UpdateMyVoucherScreen({this.voucher});
+  UpdateMyVoucherScreen({this.voucher, this.onlyWatch});
 
   @override
   _UpdateMyVoucherScreenState createState() => _UpdateMyVoucherScreenState();
@@ -1253,30 +1254,41 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                           color: Colors.grey[300],
                         ),
                       )
-                    : SahaButtonFullParent(
-                        text: "Lưu",
-                        onPressed: () {
-                          if (_formKey.currentState.validate()) {
-                            _formKey.currentState.save();
-                            KeyboardUtil.hideKeyboard(context);
-                            updateVoucherController
-                                .updateProductVoucherController
-                                .listSelectedProductToString();
-                            if (updateVoucherController
-                                    .typeVoucherDiscount.value ==
-                                "Chọn loại giảm giá") {
-                              updateVoucherController
-                                  .isChoosedTypeVoucherDiscount.value = false;
-                            } else {
-                              updateVoucherController
-                                  .updateVoucher(widget.voucher.id);
-                              updateVoucherController
-                                  .isChoosedTypeVoucherDiscount.value = true;
-                            }
-                          }
-                        },
-                        color: Theme.of(context).primaryColor,
-                      ),
+                    : widget.onlyWatch == true
+                        ? IgnorePointer(
+                            child: SahaButtonFullParent(
+                              text: "Lưu",
+                              textColor: Colors.grey[600],
+                              onPressed: () {},
+                              color: Colors.grey[300],
+                            ),
+                          )
+                        : SahaButtonFullParent(
+                            text: "Lưu",
+                            onPressed: () {
+                              if (_formKey.currentState.validate()) {
+                                _formKey.currentState.save();
+                                KeyboardUtil.hideKeyboard(context);
+                                updateVoucherController
+                                    .updateProductVoucherController
+                                    .listSelectedProductToString();
+                                if (updateVoucherController
+                                        .typeVoucherDiscount.value ==
+                                    "Chọn loại giảm giá") {
+                                  updateVoucherController
+                                      .isChoosedTypeVoucherDiscount
+                                      .value = false;
+                                } else {
+                                  updateVoucherController
+                                      .updateVoucher(widget.voucher.id);
+                                  updateVoucherController
+                                      .isChoosedTypeVoucherDiscount
+                                      .value = true;
+                                }
+                              }
+                            },
+                            color: Theme.of(context).primaryColor,
+                          ),
               ),
             ],
           ),

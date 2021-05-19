@@ -4,9 +4,11 @@ import 'package:sahashop_user/data/remote/response/auth/login_response.dart';
 import 'package:sahashop_user/data/remote/response/config_ui/app_theme_response.dart';
 import 'package:sahashop_user/data/remote/response/config_ui/create_app_theme_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/create_discount_respone.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/end_discount_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/create_voucher_reponse.dart';
-import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/delete_discount_response.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/delete_voucher_discount_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/my_program_reponse.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/end_voucher_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/my_voucher_response.dart';
 import 'package:sahashop_user/data/remote/response/post/all_post_response.dart';
 
@@ -112,8 +114,12 @@ abstract class SahaService {
       @Path() int idDiscount, @Body() Map<String, dynamic> body);
 
   @DELETE("store/{storeCode}/discounts/{idDiscount}")
-  Future<DeleteDiscountResponse> deleteDiscount(
+  Future<DeleteDisCountVoucherResponse> deleteDiscount(
       @Path() String storeCode, @Path() int idDiscount);
+
+  @DELETE("store/{storeCode}/vouchers/{idVoucher}")
+  Future<DeleteDisCountVoucherResponse> deleteVoucher(
+      @Path() String storeCode, @Path() int idVoucher);
 
   @POST("store/{storeCode}/vouchers")
   Future<CreateVoucherResponse> createVoucher(
@@ -122,4 +128,12 @@ abstract class SahaService {
   @PUT("store/{storeCode}/vouchers/{idVoucher}")
   Future<CreateVoucherResponse> updateVoucher(@Path() String storeCode,
       @Path() int idVoucher, @Body() Map<String, dynamic> body);
+
+  @GET("store/{storeCode}/vouchers_end")
+  Future<EndVoucherResponse> getEndVoucherFromPage(
+      @Path() String storeCode, @Query("page") int numberPage);
+
+  @GET("store/{storeCode}/discounts_end")
+  Future<EndDiscountResponse> getEndDiscountFromPage(
+      @Path() String storeCode, @Query("page") int numberPage);
 }

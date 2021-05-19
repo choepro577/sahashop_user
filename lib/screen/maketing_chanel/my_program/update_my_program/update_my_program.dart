@@ -14,8 +14,9 @@ import 'package:sahashop_user/utils/keyboard.dart';
 
 class UpdateMyProgram extends StatefulWidget {
   DiscountProductsList programDiscount;
+  bool onlyWatch;
 
-  UpdateMyProgram({this.programDiscount});
+  UpdateMyProgram({this.programDiscount, this.onlyWatch});
 
   @override
   _UpdateMyProgramState createState() => _UpdateMyProgramState();
@@ -511,52 +512,79 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
           color: Colors.white,
           child: Column(
             children: [
-              SahaButtonFullParent(
-                text: "Lưu",
-                onPressed: () {
-                  print(
-                    widget.programDiscount.id,
-                  );
-                  if (_formKey.currentState.validate()) {
-                    _formKey.currentState.save();
-                    KeyboardUtil.hideKeyboard(context);
-                    updateProductToDiscountController
-                        .listSelectedProductToString();
-                    updateProductToDiscountController.updateDiscount(
-                        widget.programDiscount.id,
-                        false,
-                        nameProgramEditingController.text,
-                        "",
-                        "",
-                        DateTime(
-                                dateStart.year,
-                                dateStart.month,
-                                dateStart.day,
-                                timeStart.hour,
-                                timeStart.minute,
-                                timeStart.second,
-                                timeStart.millisecond,
-                                timeStart.microsecond)
-                            .toIso8601String(), //timeStart.toIso8601String(),\
-                        DateTime(
-                                dateEnd.year,
-                                dateEnd.month,
-                                dateEnd.day,
-                                timeEnd.hour,
-                                timeEnd.minute,
-                                timeEnd.second,
-                                timeEnd.millisecond,
-                                timeEnd.microsecond)
-                            .toIso8601String(),
-                        int.parse(discountEditingController.text),
-                        quantityEditingController.text == "null" ? false : true,
-                        quantityEditingController.text == "null"
-                            ? 0
-                            : int.parse(quantityEditingController.text),
-                        updateProductToDiscountController.listProductParam);
-                  }
-                },
-                color: Theme.of(context).primaryColor,
+              Obx(
+                () => updateProductToDiscountController.isLoadingCreate.value ==
+                        true
+                    ? IgnorePointer(
+                        child: SahaButtonFullParent(
+                          text: "Lưu",
+                          textColor: Colors.grey[600],
+                          onPressed: () {},
+                          color: Colors.grey[300],
+                        ),
+                      )
+                    : widget.onlyWatch == true
+                        ? IgnorePointer(
+                            child: SahaButtonFullParent(
+                              text: "Lưu",
+                              textColor: Colors.grey[600],
+                              onPressed: () {},
+                              color: Colors.grey[300],
+                            ),
+                          )
+                        : SahaButtonFullParent(
+                            text: "Lưu",
+                            onPressed: () {
+                              print(
+                                widget.programDiscount.id,
+                              );
+                              if (_formKey.currentState.validate()) {
+                                _formKey.currentState.save();
+                                KeyboardUtil.hideKeyboard(context);
+                                updateProductToDiscountController
+                                    .listSelectedProductToString();
+                                updateProductToDiscountController
+                                    .updateDiscount(
+                                        widget.programDiscount.id,
+                                        false,
+                                        nameProgramEditingController.text,
+                                        "",
+                                        "",
+                                        DateTime(
+                                                dateStart.year,
+                                                dateStart.month,
+                                                dateStart.day,
+                                                timeStart.hour,
+                                                timeStart.minute,
+                                                timeStart.second,
+                                                timeStart.millisecond,
+                                                timeStart.microsecond)
+                                            .toIso8601String(), //timeStart.toIso8601String(),\
+                                        DateTime(
+                                                dateEnd.year,
+                                                dateEnd.month,
+                                                dateEnd.day,
+                                                timeEnd.hour,
+                                                timeEnd.minute,
+                                                timeEnd.second,
+                                                timeEnd.millisecond,
+                                                timeEnd.microsecond)
+                                            .toIso8601String(),
+                                        int.parse(
+                                            discountEditingController.text),
+                                        quantityEditingController.text == "null"
+                                            ? false
+                                            : true,
+                                        quantityEditingController.text == "null"
+                                            ? 0
+                                            : int.parse(
+                                                quantityEditingController.text),
+                                        updateProductToDiscountController
+                                            .listProductParam);
+                              }
+                            },
+                            color: Theme.of(context).primaryColor,
+                          ),
               ),
             ],
           ),

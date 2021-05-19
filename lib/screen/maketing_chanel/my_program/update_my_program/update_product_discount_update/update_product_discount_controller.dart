@@ -183,11 +183,11 @@ class UpdateProductToDiscountController extends GetxController {
           amount,
           listIdProduct);
       SahaAlert.showSuccess(message: "Sửa thành công");
-      return true;
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
     isLoadingCreate.value = false;
     listProductParam = "";
+    Get.back();
   }
 }

@@ -443,7 +443,8 @@ class _SahaService implements SahaService {
   }
 
   @override
-  Future<DeleteDiscountResponse> deleteDiscount(storeCode, idDiscount) async {
+  Future<DeleteDisCountVoucherResponse> deleteDiscount(
+      storeCode, idDiscount) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(idDiscount, 'idDiscount');
     const _extra = <String, dynamic>{};
@@ -458,7 +459,28 @@ class _SahaService implements SahaService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = DeleteDiscountResponse.fromJson(_result.data);
+    final value = DeleteDisCountVoucherResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<DeleteDisCountVoucherResponse> deleteVoucher(
+      storeCode, idVoucher) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(idVoucher, 'idVoucher');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/vouchers/$idVoucher',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'DELETE',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = DeleteDisCountVoucherResponse.fromJson(_result.data);
     return value;
   }
 
@@ -503,6 +525,48 @@ class _SahaService implements SahaService {
             baseUrl: baseUrl),
         data: _data);
     final value = CreateVoucherResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<EndVoucherResponse> getEndVoucherFromPage(
+      storeCode, numberPage) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(numberPage, 'numberPage');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'page': numberPage};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/vouchers_end',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = EndVoucherResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<EndDiscountResponse> getEndDiscountFromPage(
+      storeCode, numberPage) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(numberPage, 'numberPage');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'page': numberPage};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/discounts_end',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = EndDiscountResponse.fromJson(_result.data);
     return value;
   }
 }

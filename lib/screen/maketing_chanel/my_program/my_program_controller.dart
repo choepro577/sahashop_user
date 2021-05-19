@@ -5,7 +5,6 @@ import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/model/discount_product_list.dart';
 
 class MyProgramController extends GetxController {
-  var isLoadingProgram = false.obs;
   var isRefreshingData = false.obs;
   var isDeletingDiscount = false.obs;
   var isEndDiscount = false.obs;
@@ -19,8 +18,10 @@ class MyProgramController extends GetxController {
   var listCheckHasDiscountState = RxList<bool>([false, false, false]).obs;
   DateTime timeNow = DateTime.now();
 
+  var pageLoadMore = 1;
+  var isEndPageDiscount = false;
+
   Future<void> getAllDiscount() async {
-    isLoadingProgram.value = true;
     DateTime timeNow = DateTime.now();
     try {
       var res = await RepositoryManager.marketingChanel.getAllDiscount();
@@ -35,20 +36,52 @@ class MyProgramController extends GetxController {
         } else {
           if (element.endTime.isAfter(timeNow)) {
             listProgramIsRunning.value.add(element);
-          } else {
-            listProgramIsEnd.value.add(element);
           }
+          // else {
+          //   listProgramIsEnd.value.add(element);
+          // }
         }
       });
 
       listAll.value[0] = listProgramIsComing.value;
       listAll.value[1] = listProgramIsRunning.value;
       listAll.value[2] = listProgramIsEnd.value;
-      listAllSaveStateBefore = listAll;
+      listAllSaveStateBefore.value = listAll.value;
     } catch (err) {
       handleError(err);
     }
-    isLoadingProgram.value = false;
+  }
+
+  void loadInitEndDiscount() {
+    pageLoadMore = 1;
+    isEndPageDiscount = false;
+    loadMoreEndDiscount();
+  }
+
+  Future<void> loadMoreEndDiscount() async {
+    try {
+      var res = await RepositoryManager.marketingChanel
+          .getEndDiscountFromPage(pageLoadMore);
+
+      if (!isEndPageDiscount) {
+        res.data.data.forEach((element) {
+          listProgramIsEnd.value.add(element);
+        });
+      } else {
+        return;
+      }
+
+      listAll.value[2] = listProgramIsEnd.value;
+      listAllSaveStateBefore = listAll;
+      if (res.data.nextPageUrl != null) {
+        pageLoadMore++;
+        isEndPageDiscount = false;
+      } else {
+        isEndPageDiscount = true;
+      }
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
   }
 
   Future<void> refreshData() async {
@@ -93,6 +126,7 @@ class MyProgramController extends GetxController {
       SahaAlert.showError(message: err.toString());
     }
     isEndDiscount.value = false;
+    refreshData();
   }
 
   Future<void> deleteDiscount(
@@ -108,5 +142,6 @@ class MyProgramController extends GetxController {
       SahaAlert.showError(message: err.toString());
     }
     isDeletingDiscount.value = false;
+    refreshData();
   }
 }

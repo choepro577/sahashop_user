@@ -168,7 +168,6 @@ class AddProductToSaleController extends GetxController {
           listIdProduct);
       SahaAlert.showSuccess(message: "Lưu thành công");
       Get.back();
-      myProgramController.refreshData();
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }

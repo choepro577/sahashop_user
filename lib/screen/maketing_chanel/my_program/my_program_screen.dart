@@ -47,131 +47,50 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
     myProgramController.getAllDiscount();
   }
 
-  _handleTabSelection() {
-    if (isTabOnTap) {
-      isTabOnTap = false;
-    } else {
-      if (tabController.index == 0) {
-        myProgramController.refreshData();
-      } else {
-        myProgramController.refreshData();
-      }
-    }
-  }
-
-  void reload() {
-    Future.delayed(Duration(milliseconds: 3000), () {
-      setState(() {
-        print("falssssssseeeeeeeeeeeeeee");
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => myProgramController.hasDiscounted.value == true
-          ? DefaultTabController(
-              length: 3,
-              child: Scaffold(
-                backgroundColor: Colors.grey[200],
-                appBar: AppBar(
-                  title: Text('Chương trình của tôi'),
-                  bottom: TabBar(
-                    controller: tabController,
-                    onTap: (index) {
-                      isTabOnTap = true;
-                    },
-                    tabs: [
-                      Tab(text: "Sắp diễn ra"),
-                      Tab(text: "Đang diễn ra"),
-                      Tab(text: "Đã kết thúc"),
-                    ],
-                  ),
-                ),
-                body: TabBarView(
-                  controller: tabController,
-                  children: List<Widget>.generate(3, (int index) {
-                    return buildStateProgram(index);
-                  }),
-                ),
-                bottomNavigationBar: Container(
-                  height: 65,
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      SahaButtonFullParent(
-                        text: "Tạo chương trình khuyến mãi",
-                        onPressed: () {
-                          Get.to(() => CreateMyProgram(
-                                onChange: reload,
-                              ));
-                        },
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ],
-                  ),
-                ),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        backgroundColor: Colors.grey[200],
+        appBar: AppBar(
+          title: Text('Chương trình của tôi'),
+          bottom: TabBar(
+            controller: tabController,
+            onTap: (index) {
+              isTabOnTap = true;
+            },
+            tabs: [
+              Tab(text: "Sắp diễn ra"),
+              Tab(text: "Đang diễn ra"),
+              Tab(text: "Đã kết thúc"),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          controller: tabController,
+          children: List<Widget>.generate(3, (int index) {
+            return buildStateProgram(index);
+          }),
+        ),
+        bottomNavigationBar: Container(
+          height: 65,
+          color: Colors.white,
+          child: Column(
+            children: [
+              SahaButtonFullParent(
+                text: "Tạo chương trình khuyến mãi",
+                onPressed: () {
+                  Get.to(() => CreateMyProgram()).then((value) => {
+                        myProgramController.refreshData(),
+                      });
+                },
+                color: Theme.of(context).primaryColor,
               ),
-            )
-          : Scaffold(
-              backgroundColor: Colors.grey[200],
-              appBar: AppBar(
-                title: Text('Chương trình của tôi'),
-              ),
-              body: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    // check my program
-                    Container(
-                      child: Column(
-                        children: [
-                          Image.asset("assets/images/my_program_help.jpg"),
-                          Container(
-                            width: Get.width * 0.8,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Text(
-                                  "Cài đặt chương trình khuyến mãi",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  "Chương trình khuyến mãi sẽ hiển thị trên giao diện sản phẩm của bạn",
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              bottomNavigationBar: Container(
-                height: 65,
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    SahaButtonFullParent(
-                      text: "Tạo chương trình khuyến mãi",
-                      onPressed: () {
-                        Get.to(() => CreateMyProgram());
-                      },
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -191,15 +110,15 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
           ) {
             Widget body;
             if (mode == LoadStatus.idle) {
-              body = Text("pull up load");
+              body = Text("Xem thêm");
             } else if (mode == LoadStatus.loading) {
               body = CupertinoActivityIndicator();
             } else if (mode == LoadStatus.failed) {
               body = Text("Load Failed!Click retry!");
             } else if (mode == LoadStatus.canLoading) {
-              body = Text("release to load more");
+              body = Text("Đã hết Voucher kết thúc");
             } else {
-              body = Text("No more Data");
+              body = Text("Đã xem hết Voucher");
             }
             return Container(
               height: 55.0,
@@ -209,18 +128,26 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
         ),
         controller: _refreshController,
         onRefresh: () async {
-          //monitor fetch data from network
           await Future.delayed(Duration(milliseconds: 300));
 
-          //if (mounted) setState(() {});
-          myProgramController.refreshData();
+          // if (mounted) setState(() {});
+          if (indexState == 2) {
+            myProgramController.loadInitEndDiscount();
+          } else {
+            myProgramController.refreshData();
+          }
           _refreshController.refreshCompleted();
         },
         onLoading: () async {
-          //monitor fetch data from network
-          await Future.delayed(Duration(milliseconds: 180));
-          // if (mounted) setState(() {});
-          _refreshController.loadFailed();
+          await Future.delayed(Duration(milliseconds: 300));
+          if (indexState == 2) {
+            if (!myProgramController.isEndPageDiscount) {
+              myProgramController.loadMoreEndDiscount();
+              _refreshController.loadComplete();
+            } else {
+              _refreshController.loadComplete();
+            }
+          }
         },
         child: Obx(
           () => myProgramController
@@ -366,6 +293,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                           onTap: () {
                             Get.to(() => UpdateMyProgram(
                                   programDiscount: listProgramState,
+                                  onlyWatch: true,
                                 ));
                           },
                           child: Container(
@@ -387,8 +315,10 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                         InkWell(
                           onTap: () {
                             Get.to(() => UpdateMyProgram(
-                                  programDiscount: listProgramState,
-                                ));
+                                      programDiscount: listProgramState,
+                                    ))
+                                .then((value) =>
+                                    {myProgramController.refreshData()});
                           },
                           child: Container(
                             height: 35,

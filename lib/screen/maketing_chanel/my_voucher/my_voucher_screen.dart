@@ -53,14 +53,6 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
     myVoucherController.getAllVoucher();
   }
 
-  void reload() {
-    Future.delayed(Duration(milliseconds: 3000), () {
-      setState(() {
-        print("falssssssseeeeeeeeeeeeeee");
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -223,15 +215,15 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
           ) {
             Widget body;
             if (mode == LoadStatus.idle) {
-              body = Text("pull up load");
+              body = Text("Xem thêm");
             } else if (mode == LoadStatus.loading) {
               body = CupertinoActivityIndicator();
             } else if (mode == LoadStatus.failed) {
               body = Text("Load Failed!Click retry!");
             } else if (mode == LoadStatus.canLoading) {
-              body = Text("release to load more");
+              body = Text("Đã hết Voucher kết thúc");
             } else {
-              body = Text("No more Data");
+              body = Text("Đã xem hết Voucher");
             }
             return Container(
               height: 55.0,
@@ -243,11 +235,25 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
         onRefresh: () async {
           await Future.delayed(Duration(milliseconds: 300));
 
-          //if (mounted) setState(() {});
-          myVoucherController.refreshData();
+          // if (mounted) setState(() {});
+          if (indexState == 2) {
+            myVoucherController.loadInitEndVoucher();
+          } else {
+            myVoucherController.refreshData();
+          }
           _refreshController.refreshCompleted();
         },
-        onLoading: () async {},
+        onLoading: () async {
+          await Future.delayed(Duration(milliseconds: 300));
+          if (indexState == 2) {
+            if (!myVoucherController.isEndPageVoucher) {
+              myVoucherController.loadMoreEndVoucher();
+              _refreshController.loadComplete();
+            } else {
+              _refreshController.loadComplete();
+            }
+          }
+        },
         child: Obx(
           () => myVoucherController
                   .listAllSaveStateBefore.value[indexState].isNotEmpty
@@ -442,9 +448,10 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                       children: [
                         InkWell(
                           onTap: () {
-                            // Get.to(() => UpdateMyProgram(
-                            //       programDiscount: listProgramState,
-                            //     ));
+                            Get.to(() => UpdateMyVoucherScreen(
+                                  voucher: listVoucherState,
+                                  onlyWatch: true,
+                                ));
                           },
                           child: Container(
                             height: 35,
@@ -483,7 +490,10 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                         ),
                         indexState == 1
                             ? InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  myVoucherController
+                                      .endVoucher(listVoucherState.id);
+                                },
                                 child: Container(
                                   height: 35,
                                   width: Get.width * 0.45,
@@ -497,7 +507,10 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                                 ),
                               )
                             : InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  myVoucherController
+                                      .deleteVoucher(listVoucherState.id);
+                                },
                                 child: Container(
                                   height: 35,
                                   width: Get.width * 0.45,

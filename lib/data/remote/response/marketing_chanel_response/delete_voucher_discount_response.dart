@@ -4,14 +4,14 @@
 
 import 'dart:convert';
 
-DeleteDiscountResponse deleteDiscountResponseFromJson(String str) =>
-    DeleteDiscountResponse.fromJson(json.decode(str));
+DeleteDisCountVoucherResponse deleteDiscountResponseFromJson(String str) =>
+    DeleteDisCountVoucherResponse.fromJson(json.decode(str));
 
-String deleteDiscountResponseToJson(DeleteDiscountResponse data) =>
+String deleteDiscountResponseToJson(DeleteDisCountVoucherResponse data) =>
     json.encode(data.toJson());
 
-class DeleteDiscountResponse {
-  DeleteDiscountResponse({
+class DeleteDisCountVoucherResponse {
+  DeleteDisCountVoucherResponse({
     this.code,
     this.success,
     this.msgCode,
@@ -23,8 +23,8 @@ class DeleteDiscountResponse {
   String msgCode;
   Data data;
 
-  factory DeleteDiscountResponse.fromJson(Map<String, dynamic> json) =>
-      DeleteDiscountResponse(
+  factory DeleteDisCountVoucherResponse.fromJson(Map<String, dynamic> json) =>
+      DeleteDisCountVoucherResponse(
         code: json["code"],
         success: json["success"],
         msgCode: json["msg_code"],
