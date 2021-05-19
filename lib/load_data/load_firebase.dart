@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
+import 'notification/alert_notification.dart';
+
 class LoadFirebase {
   static void initFirebase() async {
     await Firebase.initializeApp();
@@ -28,6 +30,8 @@ class FCMMess {
   }
 
   static Future<dynamic> onBackgroundMessage(Map<String, dynamic> message) {
+
+
     if (message.containsKey('data')) {
       final dynamic data = message['data'];
     }
@@ -40,7 +44,13 @@ class FCMMess {
   }
 
   void handleFirebaseMess() async {
-    _firebaseMessaging.requestNotificationPermissions();
+    _firebaseMessaging.requestNotificationPermissions(
+        IosNotificationSettings(
+            sound: true,
+            badge: true,
+            alert: true
+        )
+    );
     await _firebaseMessaging.getToken().then((String token) async {
       assert(token != null);
       print("Push Messaging token: $token");
@@ -53,8 +63,7 @@ class FCMMess {
     await _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessageFCM: $message");
-        print(message["data"]);
-
+        SahaNotificationAlert.alertNotification(message);
         var map = Platform.isAndroid ? message["data"] : message;
 
         try {

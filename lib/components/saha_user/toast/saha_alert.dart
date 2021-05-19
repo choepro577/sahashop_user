@@ -1,6 +1,7 @@
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/const/constant.dart';
 
 class SahaAlert {
   static void showError({
@@ -132,6 +133,43 @@ class SahaAlert {
           horizontalDismissDirection: HorizontalDismissDirection.horizontal,
           child: FlashBar(
             message: Text('$message'),
+          ),
+        );
+      },
+    );
+  }
+
+  static void showNotificationTopFlash(String title, String body) {
+    showFlash(
+      duration: Duration(milliseconds: 3500),
+      context: Get.context,
+      builder: (_, controller) {
+        return Flash(
+          controller: controller,
+          borderRadius: BorderRadius.circular(8.0),
+          borderColor: SahaPrimaryColor,
+          boxShadows: kElevationToShadow[8],
+          backgroundGradient: RadialGradient(
+            colors: [Colors.white, Colors.white],
+            center: Alignment.topLeft,
+            radius: 2,
+          ),
+          position: FlashPosition.top,
+          onTap: () => controller.dismiss(),
+          forwardAnimationCurve: Curves.easeInCirc,
+          reverseAnimationCurve: Curves.bounceIn,
+          child: DefaultTextStyle(
+            style: TextStyle(color: Colors.black87),
+            child: FlashBar(
+              title: Text('$title'),
+              message: Text('$body'),
+              leftBarIndicatorColor: SahaPrimaryColor,
+              icon: Icon(Icons.notifications_active),
+              primaryAction: TextButton(
+                onPressed: () => controller.dismiss(),
+                child: Text('Đóng'),
+              ),
+            ),
           ),
         );
       },
