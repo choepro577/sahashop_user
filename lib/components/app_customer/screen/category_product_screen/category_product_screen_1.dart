@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/app_customer/components/product_item/product_card.dart';
+import 'package:sahashop_user/components/app_customer/components/product_item/product_item_widget.dart';
 import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_widget_config.dart';
@@ -113,7 +113,7 @@ class CategoryProductStyle1 extends StatelessWidget {
           child: StaggeredGridView.countBuilder(
             crossAxisCount: 2,
             itemCount: list.length,
-            itemBuilder: (BuildContext context, int index) => ProductItem(
+            itemBuilder: (BuildContext context, int index) => ProductItemWidget(
               product: list[index],
               isLoading: isLoading,
             ),

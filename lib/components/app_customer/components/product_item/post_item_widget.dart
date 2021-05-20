@@ -31,7 +31,10 @@ class PostItemWidget extends StatelessWidget {
         color: Colors.white,
         padding: EdgeInsets.all(8),
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            DataAppCustomerController dataAppCustomerController = Get.find();
+            dataAppCustomerController.toPostAllScreen();
+          },
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -92,7 +95,8 @@ class PostItemWidget extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                               SahaDateUtils().getDDMMYY(DateTime.parse(post.updatedAt)),
+                                SahaDateUtils()
+                                    .getDDMMYY(DateTime.parse(post.updatedAt)),
                                 style: TextStyle(
                                   fontSize: 10,
                                   color: Colors.grey,
