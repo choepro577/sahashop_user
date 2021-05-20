@@ -4,10 +4,9 @@ import 'package:sahashop_user/data/remote/saha_service_manager.dart';
 import 'package:sahashop_user/data/repository/handle_error.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/model/product.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_controller.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
-class AddProductToSaleController extends GetxController {
+class AddProductComboController extends GetxController {
   var listProduct = RxList<Product>();
   var isLoadingProduct = false.obs;
   var listIsSave = RxList<bool>().obs;
@@ -43,7 +42,7 @@ class AddProductToSaleController extends GetxController {
       }
 
       for (int i = 0; i < res.data.data.length; i++) {
-        if (res.data.data[i].hasInDiscount == true) {
+        if (res.data.data[i].hasInCombo == true) {
           listIsSave.value[i] = true;
         }
       }
@@ -54,6 +53,13 @@ class AddProductToSaleController extends GetxController {
       handleError(err);
     }
     isLoadingProduct.value = false;
+  }
+
+  void onChangeCheckbox(int index) {
+    listCheckSelectedProduct.value[index].update(
+        listCheckSelectedProduct.value[index].keys.first,
+        (value) => !listCheckSelectedProduct.value[index].values.first);
+    listCheckSelectedProduct.refresh();
   }
 
   void checkSelectedProduct() {

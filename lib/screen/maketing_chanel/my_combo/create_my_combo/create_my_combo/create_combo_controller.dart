@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
+import 'package:sahashop_user/model/combo_request.dart';
 import 'package:sahashop_user/model/voucher_request.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_voucher/create_my_voucher/add_product_to_voucher/add_product_voucher_controller.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_combo/create_my_combo/create_my_combo/add_product/add_product_combo_controller.dart';
 
 enum DiscountType { k0, k1 }
 
@@ -14,8 +15,8 @@ class CreateMyComboController extends GetxController {
   var dateEnd = DateTime.now().obs;
   var timeEnd = DateTime.now().add(Duration(hours: 2)).obs;
 
-  AddProductToVoucherController addProductToVoucherController =
-      Get.put(AddProductToVoucherController());
+  AddProductComboController addProductComboController =
+      Get.put(AddProductComboController());
 
   var checkDayStart = false.obs;
   var checkDayEnd = false.obs;
@@ -24,10 +25,8 @@ class CreateMyComboController extends GetxController {
       new TextEditingController();
   TextEditingController codeVoucherEditingController =
       new TextEditingController();
-  TextEditingController pricePermanentEditingController =
-      new TextEditingController();
-  TextEditingController pricePercentEditingController =
-      new TextEditingController();
+  TextEditingController valueEditingController = new TextEditingController();
+  TextEditingController amountEditingController = new TextEditingController();
   TextEditingController priceDiscountLimitedEditingController =
       new TextEditingController();
   TextEditingController minimumOrderEditingController =
@@ -44,6 +43,8 @@ class CreateMyComboController extends GetxController {
 
   var discountType = DiscountType.k1.obs;
   var discountTypeRequest = 0.obs;
+
+  var validateComboPercent = false.obs;
 
   void onChangeDateStart(DateTime date) {
     if (date.isBefore(dateStart.value) == true) {
@@ -76,28 +77,20 @@ class CreateMyComboController extends GetxController {
   }
 
   void checkTypeDiscount() {
-    if (pricePermanentEditingController.text.isEmpty) {
-      if (priceDiscountLimitedEditingController.text.isEmpty) {
-        typeVoucherDiscount.value =
-            "Không giới hạn - " + pricePercentEditingController.text + "%";
-      } else {
-        typeVoucherDiscount.value = "Giới hạn - " +
-            priceDiscountLimitedEditingController.text +
-            "đ -" +
-            pricePercentEditingController.text +
-            "%";
-      }
+    if (discountType.value == DiscountType.k1) {
+      typeVoucherDiscount.value = "Giảm ${valueEditingController.text} %";
     } else {
-      typeVoucherDiscount.value =
-          "Cố định - " + pricePermanentEditingController.text + "đ";
+      typeVoucherDiscount.value = "Giảm đ${valueEditingController.text}";
     }
   }
 
   void onChangeRatio(DiscountType v) {
     if (discountType.value == DiscountType.k1) {
-      pricePermanentEditingController.text = "";
+      valueEditingController.text = "";
+      amountEditingController.text = "";
     } else {
-      pricePercentEditingController.text = "";
+      valueEditingController.text = "";
+      amountEditingController.text = "";
       priceDiscountLimitedEditingController.text = "";
     }
     discountType.value = v;
@@ -139,9 +132,9 @@ class CreateMyComboController extends GetxController {
                 .toIso8601String(),
             voucherType: voucherType,
             discountType: discountTypeRequest.value,
-            valueDiscount: pricePermanentEditingController.text.isEmpty
-                ? int.parse(pricePercentEditingController.text)
-                : int.parse(pricePermanentEditingController.text),
+            valueDiscount: valueEditingController.text.isEmpty
+                ? int.parse(amountEditingController.text)
+                : int.parse(valueEditingController.text),
             setLimitValueDiscount: isLimitedPrice.value,
             maxValueDiscount: priceDiscountLimitedEditingController.text.isEmpty
                 ? 0
@@ -155,7 +148,54 @@ class CreateMyComboController extends GetxController {
                 ? 0
                 : int.parse(amountCodeAvailableEditingController.text),
             code: codeVoucherEditingController.text,
-            products: addProductToVoucherController.listProductParam),
+            products: addProductComboController.listProductParam),
+      );
+      SahaAlert.showSuccess(message: "Lưu thành công");
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+    isLoadingCreate.value = false;
+    Get.back();
+  }
+
+  Future<void> createCombo() async {
+    isLoadingCreate.value = true;
+    try {
+      var res = await RepositoryManager.marketingChanel.createCombo(
+        ComboRequest(
+          name: nameProgramEditingController.text,
+          description: "",
+          imageUrl: "",
+          startTime: DateTime(
+                  dateStart.value.year,
+                  dateStart.value.month,
+                  dateStart.value.day,
+                  timeStart.value.hour,
+                  timeStart.value.minute,
+                  timeStart.value.second,
+                  timeStart.value.millisecond,
+                  timeStart.value.microsecond)
+              .toIso8601String(),
+          endTime: DateTime(
+                  dateEnd.value.year,
+                  dateEnd.value.month,
+                  dateEnd.value.day,
+                  timeEnd.value.hour,
+                  timeEnd.value.minute,
+                  timeEnd.value.second,
+                  timeEnd.value.millisecond,
+                  timeEnd.value.microsecond)
+              .toIso8601String(),
+          discountType: discountTypeRequest.value,
+          valueDiscount: valueEditingController.text.isEmpty
+              ? int.parse(amountEditingController.text)
+              : int.parse(valueEditingController.text),
+          setLimitAmount: true,
+          amount: amountCodeAvailableEditingController.text.isEmpty
+              ? 0
+              : int.parse(amountCodeAvailableEditingController.text),
+          // comboProducts:
+        ),
       );
       SahaAlert.showSuccess(message: "Lưu thành công");
     } catch (err) {

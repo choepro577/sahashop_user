@@ -30,8 +30,6 @@ class FCMMess {
   }
 
   static Future<dynamic> onBackgroundMessage(Map<String, dynamic> message) {
-
-
     if (message.containsKey('data')) {
       final dynamic data = message['data'];
     }
@@ -45,12 +43,7 @@ class FCMMess {
 
   void handleFirebaseMess() async {
     _firebaseMessaging.requestNotificationPermissions(
-        IosNotificationSettings(
-            sound: true,
-            badge: true,
-            alert: true
-        )
-    );
+        IosNotificationSettings(sound: true, badge: true, alert: true));
     await _firebaseMessaging.getToken().then((String token) async {
       assert(token != null);
       print("Push Messaging token: $token");
@@ -86,7 +79,9 @@ class FCMMess {
       },
     );
     await _firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(sound: true, badge: true, alert: true));
+        const IosNotificationSettings(
+            sound: true, badge: true, alert: true, provisional: false));
+
     await _firebaseMessaging.onIosSettingsRegistered
         .listen((IosNotificationSettings settings) {
       print("Settings registered: $settings");

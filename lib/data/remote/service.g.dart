@@ -569,4 +569,25 @@ class _SahaService implements SahaService {
     final value = EndDiscountResponse.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<CreateComboResponse> createCombo(storeCode, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/combos',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = CreateComboResponse.fromJson(_result.data);
+    return value;
+  }
 }

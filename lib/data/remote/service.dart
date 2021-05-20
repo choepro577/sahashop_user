@@ -3,6 +3,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:sahashop_user/data/remote/response/auth/login_response.dart';
 import 'package:sahashop_user/data/remote/response/config_ui/app_theme_response.dart';
 import 'package:sahashop_user/data/remote/response/config_ui/create_app_theme_response.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/combo/create_combo_reponse.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/create_discount_respone.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/end_discount_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/create_voucher_reponse.dart';
@@ -136,4 +137,8 @@ abstract class SahaService {
   @GET("store/{storeCode}/discounts_end")
   Future<EndDiscountResponse> getEndDiscountFromPage(
       @Path() String storeCode, @Query("page") int numberPage);
+
+  @POST("store/{storeCode}/combos")
+  Future<CreateComboResponse> createCombo(
+      @Path() String storeCode, @Body() Map<String, dynamic> body);
 }

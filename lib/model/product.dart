@@ -26,6 +26,7 @@ class Product {
     this.categories,
     this.productDiscount,
     this.hasInDiscount,
+    this.hasInCombo,
   });
 
   @HiveField(0)
@@ -58,6 +59,8 @@ class Product {
   ProductDiscount productDiscount;
   @HiveField(14)
   bool hasInDiscount;
+  @HiveField(15)
+  bool hasInCombo;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
@@ -69,6 +72,7 @@ class Product {
             ? null
             : ProductDiscount.fromJson(json["product_discount"]),
         hasInDiscount: json["has_in_discount"],
+        hasInCombo: json["has_in_combo"],
         price: json["price"],
         barcode: json["barcode"],
         status: json["status"],
@@ -94,6 +98,7 @@ class Product {
         "product_discount":
             productDiscount == null ? null : productDiscount.toJson(),
         "has_in_discount": hasInDiscount,
+        "has_in_combo": hasInCombo,
         "details": details == null
             ? null
             : List<dynamic>.from(details.map((x) => x.toJson())),

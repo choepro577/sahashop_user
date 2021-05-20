@@ -1,3 +1,4 @@
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/combo/create_combo_reponse.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/create_discount_respone.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/end_discount_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/create_voucher_reponse.dart';
@@ -6,6 +7,7 @@ import 'package:sahashop_user/data/remote/response/marketing_chanel_response/dis
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/end_voucher_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/my_voucher_response.dart';
 import 'package:sahashop_user/data/remote/saha_service_manager.dart';
+import 'package:sahashop_user/model/combo_request.dart';
 import 'package:sahashop_user/model/voucher_request.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 import '../handle_error.dart';
@@ -157,6 +159,17 @@ class MarketingChanelRepository {
     try {
       var res = await SahaServiceManager().service.updateVoucher(
           UserInfo().getCurrentStoreCode(), idVoucher, voucherRequest.toJson());
+      return res;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  Future<CreateComboResponse> createCombo(ComboRequest comboRequest) async {
+    try {
+      var res = await SahaServiceManager()
+          .service
+          .createCombo(UserInfo().getCurrentStoreCode(), comboRequest.toJson());
       return res;
     } catch (err) {
       handleError(err);

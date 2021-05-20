@@ -32,13 +32,14 @@ class ProductAdapter extends TypeAdapter<Product> {
       categories: (fields[12] as List)?.cast<Category>(),
       productDiscount: fields[13] as ProductDiscount,
       hasInDiscount: fields[14] as bool,
+      hasInCombo: fields[15] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, Product obj) {
     writer
-      ..writeByte(15)
+      ..writeByte(16)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -68,7 +69,9 @@ class ProductAdapter extends TypeAdapter<Product> {
       ..writeByte(13)
       ..write(obj.productDiscount)
       ..writeByte(14)
-      ..write(obj.hasInDiscount);
+      ..write(obj.hasInDiscount)
+      ..writeByte(15)
+      ..write(obj.hasInCombo);
   }
 
   @override
