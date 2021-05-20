@@ -6,7 +6,10 @@ import 'package:sahashop_user/controller/config_controller.dart';
 import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/model/category_post.dart';
 import 'package:sahashop_user/model/home_data.dart';
+import 'package:sahashop_user/model/post.dart';
 import 'package:sahashop_user/model/product.dart';
+import 'category_post_screen/category_post_screen_1.dart';
+import 'category_product_screen/category_product_screen_1.dart';
 import 'data_widget_config.dart';
 import 'search_screen/search_screen.dart';
 
@@ -14,6 +17,7 @@ class DataAppCustomerController extends GetxController {
   Product productCurrent = Product();
   Category categoryCurrent;
   CategoryPost categoryPostCurrent;
+  Post postCurrent;
   HomeData homeData = HomeData();
   DataAppCustomerController() {
     productCurrent = LIST_PRODUCT_EXAMPLE[0];
@@ -32,6 +36,16 @@ class DataAppCustomerController extends GetxController {
     )).then((value) {
       FocusScope.of(Get.context).requestFocus(FocusNode());
     });
+  }
+
+  void toPostAllScreen({CategoryPost categoryPost}) {
+    categoryPostCurrent = categoryPost;
+    Get.to(CategoryPostStyle1());
+  }
+
+  void toPostScreen({Post post}) {
+    postCurrent = post;
+    Get.to(CategoryProductStyle1());
   }
 
   void toCategoryProductScreen({Category category}) {

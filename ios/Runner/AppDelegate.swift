@@ -13,8 +13,9 @@ import Firebase
      GeneratedPluginRegistrant.register(with: self)
   
     if #available(iOS 10.0, *) {
+
+    UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
       // For iOS 10 display notification (sent via APNS)
-      UNUserNotificationCenter.current().delegate = self
 
       let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
       UNUserNotificationCenter.current().requestAuthorization(

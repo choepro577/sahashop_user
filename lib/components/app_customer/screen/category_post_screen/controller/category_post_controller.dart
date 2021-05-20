@@ -7,12 +7,11 @@ import 'package:sahashop_user/model/post.dart';
 import '../../data_app_controller.dart';
 
 class CategoryPostController extends GetxController {
-
   var isLoadingScreen = false.obs;
   var isLoadingCategoryPost = false.obs;
   var isLoadingPost = true.obs;
   var categories = RxList<CategoryPost>();
-  var products = RxList<Post>();
+  var posts = RxList<Post>();
   var categoryCurrent = CategoryPost().obs;
 
   CategoryPostController() {
@@ -37,8 +36,8 @@ class CategoryPostController extends GetxController {
   Future<void> getPostWithCategoryPost(int idCategoryPost) async {
     try {
       var res = await CustomerRepositoryManager.postCustomerRepository
-          .searchPost(idCategory: idCategoryPost.toString());
-      products(res);
+          .searchPost(idCategory: idCategoryPost ?? "");
+      posts(res);
     } catch (err) {
       print(err);
       handleErrorCustomer(err);
@@ -50,10 +49,11 @@ class CategoryPostController extends GetxController {
     isLoadingPost.value = true;
     isLoadingCategoryPost.value = true;
     try {
-      var res =
-          await CustomerRepositoryManager.postCustomerRepository.getAllCategoryPost();
+      var res = await CustomerRepositoryManager.postCustomerRepository
+          .getAllCategoryPost();
 
       categories(res);
+      categories.insert(0, CategoryPost(id: null, title: "Tất cả"));
 
       if (categoryCurrent.value != null) {
         getPostWithCategoryPost(categoryCurrent.value.id);
