@@ -4,35 +4,36 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_combo/create_my_combo/create_my_combo/add_product/add_product_combo_controller.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_combo/update_my_combo/update_product/update_product_combo_controller.dart';
 
-class AddProductComboScreen extends StatefulWidget {
+class UpdateProductComboScreen extends StatefulWidget {
   @override
-  _AddProductComboScreenState createState() => _AddProductComboScreenState();
+  _UpdateProductComboScreenState createState() =>
+      _UpdateProductComboScreenState();
 }
 
-class _AddProductComboScreenState extends State<AddProductComboScreen> {
+class _UpdateProductComboScreenState extends State<UpdateProductComboScreen> {
   bool isSearch = false;
   //bool isSave = false;
 
-  AddProductComboController addProductComboController = Get.find();
+  UpdateProductComboController updateProductComboController = Get.find();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    addProductComboController.getAllProduct();
+    updateProductComboController.getAllProduct();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    addProductComboController.resetListProduct();
+    updateProductComboController.resetListProduct();
     //print(isSave);
     // if (isSave == false) {
-    //   addProductComboController.listCheckSelectedProduct.value =
-    //       addProductComboController.listCheckSelectedProductNotSave;
+    //   updateProductComboController.listCheckSelectedProduct.value =
+    //       updateProductComboController.listCheckSelectedProductNotSave;
     // }
   }
 
@@ -78,14 +79,14 @@ class _AddProductComboScreenState extends State<AddProductComboScreen> {
       ),
       body: SingleChildScrollView(
         child: Obx(
-          () => addProductComboController.isLoadingProduct.value == true
+          () => updateProductComboController.isLoadingProduct.value == true
               ? SahaLoadingWidget()
               : Column(
                   children: [
                     ...List.generate(
-                      addProductComboController.listProduct.length ??
+                      updateProductComboController.listProduct.length ??
                           LIST_PRODUCT_EXAMPLE.length,
-                      (index) => addProductComboController
+                      (index) => updateProductComboController
                                   .listIsSave.value[index] ==
                               true
                           ? IgnorePointer(
@@ -102,7 +103,7 @@ class _AddProductComboScreenState extends State<AddProductComboScreen> {
                                       child: Row(
                                         children: [
                                           Checkbox(
-                                              value: addProductComboController
+                                              value: updateProductComboController
                                                       .listCheckSelectedProduct
                                                       .value[index]
                                                       .values
@@ -110,22 +111,22 @@ class _AddProductComboScreenState extends State<AddProductComboScreen> {
                                                   false,
                                               onChanged: (v) {
                                                 setState(() {
-                                                  addProductComboController
+                                                  updateProductComboController
                                                       .listCheckSelectedProduct
                                                       .value[index]
                                                       .update(
-                                                          addProductComboController
+                                                          updateProductComboController
                                                               .listCheckSelectedProduct
                                                               .value[index]
                                                               .keys
                                                               .first,
                                                           (value) =>
-                                                              !addProductComboController
+                                                              !updateProductComboController
                                                                   .listCheckSelectedProduct
                                                                   .value[index]
                                                                   .values
                                                                   .first);
-                                                  print(addProductComboController
+                                                  print(updateProductComboController
                                                       .listCheckSelectedProduct);
                                                 });
                                               }),
@@ -146,14 +147,14 @@ class _AddProductComboScreenState extends State<AddProductComboScreen> {
                                                   child: CachedNetworkImage(
                                                     fit: BoxFit.cover,
                                                     imageUrl:
-                                                        addProductComboController
+                                                        updateProductComboController
                                                                     .listProduct[
                                                                         index]
                                                                     .images
                                                                     .length ==
                                                                 0
                                                             ? ""
-                                                            : addProductComboController
+                                                            : updateProductComboController
                                                                 .listProduct[
                                                                     index]
                                                                 .images[0]
@@ -187,7 +188,7 @@ class _AddProductComboScreenState extends State<AddProductComboScreen> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  addProductComboController
+                                                  updateProductComboController
                                                           .listProduct[index]
                                                           .name ??
                                                       "Loi san pham",
@@ -200,7 +201,7 @@ class _AddProductComboScreenState extends State<AddProductComboScreen> {
                                                   height: 10,
                                                 ),
                                                 Text(
-                                                    "${addProductComboController.listProduct[index].price} đ" ??
+                                                    "${updateProductComboController.listProduct[index].price} đ" ??
                                                         "Chưa đặt giá"),
                                               ],
                                             ),
@@ -247,21 +248,21 @@ class _AddProductComboScreenState extends State<AddProductComboScreen> {
                                 children: [
                                   Obx(
                                     () => Checkbox(
-                                        value: addProductComboController
+                                        value: updateProductComboController
                                                 .listCheckSelectedProduct
                                                 .value[index]
                                                 .values
                                                 .first ??
                                             false,
                                         onChanged: (v) {
-                                          addProductComboController
+                                          updateProductComboController
                                               .onChangeCheckbox(index);
-                                          print(addProductComboController
+                                          print(updateProductComboController
                                               .listCheckSelectedProduct);
-                                          addProductComboController
+                                          updateProductComboController
                                               .countProductSelected();
                                           print(
-                                              "check in setState ${addProductComboController.listIsSave.value}");
+                                              "check in setState ${updateProductComboController.listIsSave.value}");
                                         }),
                                   ),
                                   SizedBox(
@@ -280,13 +281,13 @@ class _AddProductComboScreenState extends State<AddProductComboScreen> {
                                               BorderRadius.circular(10),
                                           child: CachedNetworkImage(
                                             fit: BoxFit.cover,
-                                            imageUrl: addProductComboController
+                                            imageUrl: updateProductComboController
                                                         .listProduct[index]
                                                         .images
                                                         .length ==
                                                     0
                                                 ? ""
-                                                : addProductComboController
+                                                : updateProductComboController
                                                     .listProduct[index]
                                                     .images[0]
                                                     .imageUrl,
@@ -317,7 +318,7 @@ class _AddProductComboScreenState extends State<AddProductComboScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          addProductComboController
+                                          updateProductComboController
                                                   .listProduct[index].name ??
                                               "Loi san pham",
                                           style: TextStyle(
@@ -329,7 +330,7 @@ class _AddProductComboScreenState extends State<AddProductComboScreen> {
                                           height: 10,
                                         ),
                                         Text(
-                                            "${addProductComboController.listProduct[index].price} đ" ??
+                                            "${updateProductComboController.listProduct[index].price} đ" ??
                                                 "Chưa đặt giá"),
                                       ],
                                     ),
@@ -354,7 +355,7 @@ class _AddProductComboScreenState extends State<AddProductComboScreen> {
               Row(
                 children: [
                   Text(
-                    addProductComboController.quantityProductSelected.value
+                    updateProductComboController.quantityProductSelected.value
                         .toString(),
                     style: TextStyle(color: Colors.red),
                   ),
@@ -366,8 +367,10 @@ class _AddProductComboScreenState extends State<AddProductComboScreen> {
               ),
               InkWell(
                 onTap: () {
-                  addProductComboController.checkSelectedProduct();
-                  addProductComboController.checkIsSaveProduct();
+                  updateProductComboController.checkSelectedProduct();
+                  updateProductComboController.checkIsSaveProduct();
+                  updateProductComboController
+                      .listSelectedProductToComboProduct();
                   Get.back();
                 },
                 child: Container(

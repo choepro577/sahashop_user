@@ -3,18 +3,21 @@ import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/data/remote/saha_service_manager.dart';
 import 'package:sahashop_user/data/repository/handle_error.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
+import 'package:sahashop_user/model/combo_request.dart';
 import 'package:sahashop_user/model/product.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
-class AddProductComboController extends GetxController {
+class UpdateProductComboController extends GetxController {
   var listProduct = RxList<Product>();
   var isLoadingProduct = false.obs;
   var listIsSave = RxList<bool>().obs;
   var listCheckSelectedProduct = RxList<Map<Product, bool>>().obs;
+  var listSelectedProductParam = RxList<ComboProduct>().obs;
   var listSelectedProduct = RxList<Product>().obs;
   var quantityProductSelected = 0.obs;
   var isLoadingCreate = false.obs;
-  var listProductParam = "";
+  var listCheckHasInDiscount = RxList<bool>().obs;
+  var listProductHasInDiscount = RxList<Product>().obs;
 
   Future<List<Product>> getAllProduct(
       {String search,
@@ -37,13 +40,24 @@ class AddProductComboController extends GetxController {
       if (listCheckSelectedProduct.value.length == 0) {
         listProduct.forEach((product) {
           listCheckSelectedProduct.value.add({product: false});
+          listCheckHasInDiscount.value.add(false);
           listIsSave.value.add(false);
         });
       }
 
-      for (int i = 0; i < res.data.data.length; i++) {
+      for (int i = 0; i < listProduct.length; i++) {
         if (res.data.data[i].hasInCombo == true) {
           listIsSave.value[i] = true;
+        }
+
+        for (int j = 0; j < listProductHasInDiscount.value.length; j++) {
+          if (listProduct[i].id == listProductHasInDiscount.value[j].id) {
+            listCheckSelectedProduct.value[i].update(
+                listCheckSelectedProduct.value[i].keys.first, (value) => true);
+            listCheckHasInDiscount.value[i] = true;
+            listIsSave.value[i] = false;
+            break;
+          }
         }
       }
 
@@ -95,11 +109,12 @@ class AddProductComboController extends GetxController {
 
   void resetListProduct() {
     listProduct = new RxList<Product>();
-    listProductParam = "";
   }
 
   void deleteProductSelected(int id) {
     listSelectedProduct.value.removeWhere((element) => element.id == id);
+    listSelectedProductParam.value
+        .removeWhere((element) => element.productId == id);
     listCheckSelectedProduct.value[listCheckSelectedProduct.value
             .indexWhere((e) => e.keys.first.id == id)]
         .update(
@@ -114,7 +129,6 @@ class AddProductComboController extends GetxController {
                 .values
                 .first);
     checkIsSaveProduct();
-    listProductParam = "";
   }
 
   void checkIsSaveProduct() {
@@ -136,46 +150,30 @@ class AddProductComboController extends GetxController {
     }
   }
 
-  void listSelectedProductToString() {
+  void listSelectedProductToComboProduct() {
     listSelectedProduct.value.forEach((element) {
-      if (element != listSelectedProduct.value.last) {
-        listProductParam = listProductParam + "${element.id.toString()},";
-      } else {
-        listProductParam = listProductParam + "${element.id.toString()}";
+      int indexSame = listSelectedProductParam.value
+          .indexWhere((e) => e.productId == element.id);
+
+      if (indexSame == -1) {
+        listSelectedProductParam.value
+            .add(ComboProduct(productId: element.id, quantity: 1));
       }
     });
-    print(listProductParam);
+    print(listSelectedProductParam);
   }
 
-  Future<void> createDiscount(
-    String name,
-    String description,
-    String imageUrl,
-    String startTime,
-    String endTime,
-    int value,
-    bool setLimitedAmount,
-    int amount,
-    String listIdProduct,
-  ) async {
-    isLoadingCreate.value = true;
-    try {
-      var data = await RepositoryManager.marketingChanel.createDiscount(
-          name,
-          description,
-          imageUrl,
-          startTime,
-          endTime,
-          value,
-          setLimitedAmount,
-          amount,
-          listIdProduct);
-      SahaAlert.showSuccess(message: "Lưu thành công");
-      Get.back();
-    } catch (err) {
-      SahaAlert.showError(message: err.toString());
+  void increaseAmountProductCombo(int index) {
+    listSelectedProductParam.value[index].quantity++;
+    listSelectedProductParam.refresh();
+    print(listSelectedProductParam.value[0].quantity);
+  }
+
+  void decreaseAmountProductCombo(int index) {
+    if (listSelectedProductParam.value[index].quantity > 1) {
+      listSelectedProductParam.value[index].quantity--;
+      listSelectedProductParam.refresh();
+      print(listSelectedProductParam.value[0].quantity);
     }
-    isLoadingCreate.value = false;
-    listProductParam = "";
   }
 }

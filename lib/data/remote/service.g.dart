@@ -421,6 +421,25 @@ class _SahaService implements SahaService {
   }
 
   @override
+  Future<MyComboResponse> getAllCombo(storeCode) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/combos',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = MyComboResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<MyProgramResponse> updateDiscount(storeCode, idDiscount, body) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(idDiscount, 'idDiscount');
@@ -443,8 +462,7 @@ class _SahaService implements SahaService {
   }
 
   @override
-  Future<DeleteDisCountVoucherResponse> deleteDiscount(
-      storeCode, idDiscount) async {
+  Future<DeleteProgramResponse> deleteDiscount(storeCode, idDiscount) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(idDiscount, 'idDiscount');
     const _extra = <String, dynamic>{};
@@ -459,13 +477,12 @@ class _SahaService implements SahaService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = DeleteDisCountVoucherResponse.fromJson(_result.data);
+    final value = DeleteProgramResponse.fromJson(_result.data);
     return value;
   }
 
   @override
-  Future<DeleteDisCountVoucherResponse> deleteVoucher(
-      storeCode, idVoucher) async {
+  Future<DeleteProgramResponse> deleteVoucher(storeCode, idVoucher) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(idVoucher, 'idVoucher');
     const _extra = <String, dynamic>{};
@@ -480,7 +497,27 @@ class _SahaService implements SahaService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = DeleteDisCountVoucherResponse.fromJson(_result.data);
+    final value = DeleteProgramResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<DeleteProgramResponse> deleteCombo(storeCode, idCombo) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(idCombo, 'idCombo');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/combos/$idCombo',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'DELETE',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = DeleteProgramResponse.fromJson(_result.data);
     return value;
   }
 
@@ -583,6 +620,28 @@ class _SahaService implements SahaService {
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = CreateComboResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<CreateComboResponse> updateCombo(storeCode, idCombo, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(idCombo, 'idCombo');
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/combos/$idCombo',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'PUT',
             headers: <String, dynamic>{},
             extra: _extra,
             baseUrl: baseUrl),

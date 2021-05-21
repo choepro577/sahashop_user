@@ -1,8 +1,9 @@
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/combo/create_combo_reponse.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/combo/my_combo_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/create_discount_respone.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/end_discount_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/create_voucher_reponse.dart';
-import 'package:sahashop_user/data/remote/response/marketing_chanel_response/delete_voucher_discount_response.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/delete_program_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/my_program_reponse.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/end_voucher_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/my_voucher_response.dart';
@@ -99,6 +100,17 @@ class MarketingChanelRepository {
     }
   }
 
+  Future<MyComboResponse> getAllCombo() async {
+    try {
+      var res = await SahaServiceManager()
+          .service
+          .getAllCombo(UserInfo().getCurrentStoreCode());
+      return res;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
   Future<EndVoucherResponse> getEndVoucherFromPage(int numberPage) async {
     try {
       var res = await SahaServiceManager()
@@ -121,7 +133,7 @@ class MarketingChanelRepository {
     }
   }
 
-  Future<DeleteDisCountVoucherResponse> deleteDiscount(int idDiscount) async {
+  Future<DeleteProgramResponse> deleteDiscount(int idDiscount) async {
     try {
       var res = await SahaServiceManager()
           .service
@@ -132,11 +144,22 @@ class MarketingChanelRepository {
     }
   }
 
-  Future<DeleteDisCountVoucherResponse> deleteVoucher(int idVoucher) async {
+  Future<DeleteProgramResponse> deleteVoucher(int idVoucher) async {
     try {
       var res = await SahaServiceManager()
           .service
           .deleteVoucher(UserInfo().getCurrentStoreCode(), idVoucher);
+      return res;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  Future<DeleteProgramResponse> deleteCombo(int idCombo) async {
+    try {
+      var res = await SahaServiceManager()
+          .service
+          .deleteCombo(UserInfo().getCurrentStoreCode(), idCombo);
       return res;
     } catch (err) {
       handleError(err);
@@ -159,6 +182,17 @@ class MarketingChanelRepository {
     try {
       var res = await SahaServiceManager().service.updateVoucher(
           UserInfo().getCurrentStoreCode(), idVoucher, voucherRequest.toJson());
+      return res;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  Future<CreateComboResponse> updateCombo(
+      int idCombo, ComboRequest comboRequest) async {
+    try {
+      var res = await SahaServiceManager().service.updateCombo(
+          UserInfo().getCurrentStoreCode(), idCombo, comboRequest.toJson());
       return res;
     } catch (err) {
       handleError(err);

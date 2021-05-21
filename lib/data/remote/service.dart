@@ -4,10 +4,11 @@ import 'package:sahashop_user/data/remote/response/auth/login_response.dart';
 import 'package:sahashop_user/data/remote/response/config_ui/app_theme_response.dart';
 import 'package:sahashop_user/data/remote/response/config_ui/create_app_theme_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/combo/create_combo_reponse.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/combo/my_combo_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/create_discount_respone.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/end_discount_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/create_voucher_reponse.dart';
-import 'package:sahashop_user/data/remote/response/marketing_chanel_response/delete_voucher_discount_response.dart';
+import 'package:sahashop_user/data/remote/response/marketing_chanel_response/delete_program_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/my_program_reponse.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/end_voucher_response.dart';
 import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/my_voucher_response.dart';
@@ -110,17 +111,24 @@ abstract class SahaService {
   @GET("store/{storeCode}/vouchers")
   Future<MyVoucherResponse> getAllVoucher(@Path() String storeCode);
 
+  @GET("store/{storeCode}/combos")
+  Future<MyComboResponse> getAllCombo(@Path() String storeCode);
+
   @PUT("store/{storeCode}/discounts/{idDiscount}")
   Future<MyProgramResponse> updateDiscount(@Path() String storeCode,
       @Path() int idDiscount, @Body() Map<String, dynamic> body);
 
   @DELETE("store/{storeCode}/discounts/{idDiscount}")
-  Future<DeleteDisCountVoucherResponse> deleteDiscount(
+  Future<DeleteProgramResponse> deleteDiscount(
       @Path() String storeCode, @Path() int idDiscount);
 
   @DELETE("store/{storeCode}/vouchers/{idVoucher}")
-  Future<DeleteDisCountVoucherResponse> deleteVoucher(
+  Future<DeleteProgramResponse> deleteVoucher(
       @Path() String storeCode, @Path() int idVoucher);
+
+  @DELETE("store/{storeCode}/combos/{idCombo}")
+  Future<DeleteProgramResponse> deleteCombo(
+      @Path() String storeCode, @Path() int idCombo);
 
   @POST("store/{storeCode}/vouchers")
   Future<CreateVoucherResponse> createVoucher(
@@ -141,4 +149,8 @@ abstract class SahaService {
   @POST("store/{storeCode}/combos")
   Future<CreateComboResponse> createCombo(
       @Path() String storeCode, @Body() Map<String, dynamic> body);
+
+  @PUT("store/{storeCode}/combos/{idCombo}")
+  Future<CreateComboResponse> updateCombo(@Path() String storeCode,
+      @Path() int idCombo, @Body() Map<String, dynamic> body);
 }

@@ -5,18 +5,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
-import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
-import 'package:sahashop_user/model/discount_product_list.dart';
-import 'package:sahashop_user/model/voucher.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_combo/create_my_combo/create_my_combo/create_combo_screen.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/create_my_program.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_controller.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_program/update_my_program/update_my_program.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_voucher/create_my_voucher/create_my_voucher_screen.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_voucher/my_voucher_controller.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_voucher/update_voucher/update_voucher_screen.dart';
+import 'package:sahashop_user/model/combo.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_combo/create_my_combo/create_combo_screen.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_combo/my_combo_controller.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_combo/update_my_combo/update_combo_screen.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
-import 'package:sahashop_user/utils/string_utils.dart';
 
 class MyComboScreen extends StatefulWidget {
   @override
@@ -28,7 +21,7 @@ class _MyComboScreenState extends State<MyComboScreen>
   bool isHasDiscount = false;
   bool isTabOnTap = false;
   TabController tabController;
-  MyVoucherController myVoucherController = Get.put(MyVoucherController());
+  MyComboController myComboController = Get.put(MyComboController());
 
   List<String> stateVoucher = [
     "Chưa có Voucher nào được tạo",
@@ -47,7 +40,7 @@ class _MyComboScreenState extends State<MyComboScreen>
     // TODO: implement initState
     super.initState();
     tabController = new TabController(length: 3, vsync: this, initialIndex: 0);
-    myVoucherController.getAllVoucher();
+    myComboController.getAllCombo();
   }
 
   @override
@@ -84,7 +77,8 @@ class _MyComboScreenState extends State<MyComboScreen>
               SahaButtonFullParent(
                 text: "Tạo Voucher mới",
                 onPressed: () {
-                  Get.to(() => CreateMyComboScreen());
+                  Get.to(() => CreateMyComboScreen())
+                      .then((value) => {myComboController.refreshData()});
                 },
                 color: Theme.of(context).primaryColor,
               ),
@@ -133,38 +127,38 @@ class _MyComboScreenState extends State<MyComboScreen>
 
           // if (mounted) setState(() {});
           if (indexState == 2) {
-            myVoucherController.loadInitEndVoucher();
+            //  myComboController.loadInitEndVoucher();
           } else {
-            myVoucherController.refreshData();
+            myComboController.refreshData();
           }
           _refreshController.refreshCompleted();
         },
-        onLoading: () async {
-          await Future.delayed(Duration(milliseconds: 300));
-          if (indexState == 2) {
-            if (!myVoucherController.isEndPageVoucher) {
-              myVoucherController.loadMoreEndVoucher();
-              _refreshController.loadComplete();
-            } else {
-              _refreshController.loadComplete();
-            }
-          }
-        },
+        // onLoading: () async {
+        //   await Future.delayed(Duration(milliseconds: 300));
+        //   if (indexState == 2) {
+        //     if (!myComboController.isEndPageVoucher) {
+        //       myComboController.loadMoreEndVoucher();
+        //       _refreshController.loadComplete();
+        //     } else {
+        //       _refreshController.loadComplete();
+        //     }
+        //   }
+        // },
         child: Obx(
-          () => myVoucherController
+          () => myComboController
                   .listAllSaveStateBefore.value[indexState].isNotEmpty
               ? Obx(
-                  () => myVoucherController.isRefreshingData.value == true &&
-                          myVoucherController.listAllSaveStateBefore
+                  () => myComboController.isRefreshingData.value == true &&
+                          myComboController.listAllSaveStateBefore
                               .value[indexState].isNotEmpty
                       ? SingleChildScrollView(
                           child: Column(
                             children: [
                               ...List.generate(
-                                  myVoucherController.listAllSaveStateBefore
+                                  myComboController.listAllSaveStateBefore
                                       .value[indexState].length, (index) {
                                 return programIsComingItem(
-                                    myVoucherController.listAllSaveStateBefore
+                                    myComboController.listAllSaveStateBefore
                                         .value[indexState][index],
                                     indexState);
                               })
@@ -175,10 +169,10 @@ class _MyComboScreenState extends State<MyComboScreen>
                           child: Column(
                             children: [
                               ...List.generate(
-                                  myVoucherController.listAllSaveStateBefore
+                                  myComboController.listAllSaveStateBefore
                                       .value[indexState].length, (index) {
                                 return programIsComingItem(
-                                    myVoucherController.listAllSaveStateBefore
+                                    myComboController.listAllSaveStateBefore
                                         .value[indexState][index],
                                     indexState);
                               })
@@ -222,7 +216,7 @@ class _MyComboScreenState extends State<MyComboScreen>
         ));
   }
 
-  Widget programIsComingItem(Voucher listVoucherState, int indexState) {
+  Widget programIsComingItem(Combo listComboState, int indexState) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Container(
@@ -241,7 +235,7 @@ class _MyComboScreenState extends State<MyComboScreen>
                         width: Get.width * 0.6,
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          listVoucherState.name,
+                          listComboState.name,
                           textAlign: TextAlign.start,
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w500),
@@ -251,17 +245,13 @@ class _MyComboScreenState extends State<MyComboScreen>
                         width: Get.width * 0.7,
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "${SahaDateUtils().getDDMMYY(listVoucherState.startTime)} ${SahaDateUtils().getHHMM(listVoucherState.startTime)} - ${SahaDateUtils().getDDMMYY(listVoucherState.endTime)} ${SahaDateUtils().getHHMM(listVoucherState.endTime)}",
+                          "${SahaDateUtils().getDDMMYY(listComboState.startTime)} ${SahaDateUtils().getHHMM(listComboState.startTime)} - ${SahaDateUtils().getDDMMYY(listComboState.endTime)} ${SahaDateUtils().getHHMM(listComboState.endTime)}",
                           style:
                               TextStyle(fontSize: 13, color: Colors.grey[700]),
                         ),
                       ),
                     ],
                   ),
-                ],
-              ),
-              Row(
-                children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(5),
                     child: Container(
@@ -269,9 +259,8 @@ class _MyComboScreenState extends State<MyComboScreen>
                       height: 55,
                       child: CachedNetworkImage(
                         fit: BoxFit.cover,
-                        imageUrl: listVoucherState.imageUrl == null
-                            ? ""
-                            : "${listVoucherState.imageUrl}",
+                        imageUrl:
+                            "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
                         errorWidget: (context, url, error) => ClipRRect(
                           borderRadius: BorderRadius.circular(1),
                           child: CachedNetworkImage(
@@ -283,56 +272,26 @@ class _MyComboScreenState extends State<MyComboScreen>
                       ),
                     ),
                   ),
+                ],
+              ),
+              Row(
+                children: [
                   SizedBox(
-                    width: 15,
+                    width: 10,
                   ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            listVoucherState.discountType == 1
-                                ? Text(
-                                    "${listVoucherState.valueDiscount}% Giảm",
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontWeight: FontWeight.w500),
-                                  )
-                                : Text(
-                                    "đ${listVoucherState.valueDiscount} Giảm",
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                            SizedBox(
-                              height: 3,
-                            ),
-                            Text(
-                              "Đơn tối thiểu ${SahaStringUtils().convertToMoney("${listVoucherState.valueLimitTotal}")}",
-                              style: TextStyle(fontSize: 13),
-                            ),
-                            SizedBox(
-                              height: 3,
-                            ),
-                            listVoucherState.voucherType == 0
-                                ? Text(
-                                    "Voucher toàn Shop",
-                                    style: TextStyle(
-                                        fontSize: 13, color: Colors.grey[600]),
-                                  )
-                                : Text(
-                                    "Voucher theo sản phẩm",
-                                    style: TextStyle(
-                                        fontSize: 13, color: Colors.grey[600]),
-                                  ),
-                          ],
+                  listComboState.discountType == 1
+                      ? Text(
+                          "Giảm ${listComboState.valueDiscount}%",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.w500),
+                        )
+                      : Text(
+                          "Giảm đ${listComboState.valueDiscount}",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.w500),
                         ),
-                        Text("${listVoucherState.code}")
-                      ],
-                    ),
-                  ),
                 ],
               ),
               SizedBox(
@@ -344,10 +303,10 @@ class _MyComboScreenState extends State<MyComboScreen>
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.to(() => UpdateMyVoucherScreen(
-                                  voucher: listVoucherState,
-                                  onlyWatch: true,
-                                ));
+                            // Get.to(() => UpdateMyVoucherScreen(
+                            //       voucher: listComboState,
+                            //       onlyWatch: true,
+                            //     ));
                           },
                           child: Container(
                             height: 35,
@@ -367,11 +326,11 @@ class _MyComboScreenState extends State<MyComboScreen>
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.to(() => UpdateMyVoucherScreen(
-                                      voucher: listVoucherState,
+                            Get.to(() => UpdateMyComboScreen(
+                                      combo: listComboState,
                                     ))
                                 .then((value) =>
-                                    {myVoucherController.refreshData()});
+                                    {myComboController.refreshData()});
                           },
                           child: Container(
                             height: 35,
@@ -387,8 +346,7 @@ class _MyComboScreenState extends State<MyComboScreen>
                         indexState == 1
                             ? InkWell(
                                 onTap: () {
-                                  myVoucherController
-                                      .endVoucher(listVoucherState.id);
+                                  myComboController.endCombo(listComboState.id);
                                 },
                                 child: Container(
                                   height: 35,
@@ -404,8 +362,8 @@ class _MyComboScreenState extends State<MyComboScreen>
                               )
                             : InkWell(
                                 onTap: () {
-                                  myVoucherController
-                                      .deleteVoucher(listVoucherState.id);
+                                  // myVoucherController
+                                  //     .deleteVoucher(listComboState.id);
                                 },
                                 child: Container(
                                   height: 35,

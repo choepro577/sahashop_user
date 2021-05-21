@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final combo = comboFromJson(jsonString);
+
 import 'dart:convert';
 
 import 'package:sahashop_user/model/product.dart';
@@ -23,7 +27,7 @@ class Combo {
     this.used,
     this.createdAt,
     this.updatedAt,
-    this.products,
+    this.productsCombo,
   });
 
   int id;
@@ -37,11 +41,11 @@ class Combo {
   int discountType;
   int valueDiscount;
   bool setLimitAmount;
-  int amount;
+  dynamic amount;
   int used;
   DateTime createdAt;
   DateTime updatedAt;
-  List<Product> products;
+  List<ProductsCombo> productsCombo;
 
   factory Combo.fromJson(Map<String, dynamic> json) => Combo(
         id: json["id"],
@@ -59,8 +63,8 @@ class Combo {
         used: json["used"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        products: List<Product>.from(
-            json["products"].map((x) => Product.fromJson(x))),
+        productsCombo: List<ProductsCombo>.from(
+            json["products_combo"].map((x) => ProductsCombo.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -79,6 +83,32 @@ class Combo {
         "used": used,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
-        "products": List<dynamic>.from(products.map((x) => x.toJson())),
+        "products_combo":
+            List<dynamic>.from(productsCombo.map((x) => x.toJson())),
+      };
+}
+
+class ProductsCombo {
+  ProductsCombo({
+    this.id,
+    this.quantity,
+    this.product,
+  });
+
+  int id;
+  int quantity;
+  List<Product> product;
+
+  factory ProductsCombo.fromJson(Map<String, dynamic> json) => ProductsCombo(
+        id: json["id"],
+        quantity: json["quantity"],
+        product:
+            List<Product>.from(json["product"].map((x) => Product.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "quantity": quantity,
+        "product": List<dynamic>.from(product.map((x) => x.toJson())),
       };
 }

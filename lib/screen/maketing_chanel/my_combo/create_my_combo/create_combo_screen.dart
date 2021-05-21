@@ -5,13 +5,10 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
-import 'package:sahashop_user/components/saha_user/text_field/text_field_no_border.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_combo/create_my_combo/create_my_combo/add_product/add_product_combo_screen.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_combo/create_my_combo/create_my_combo/create_combo_controller.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_voucher/create_my_voucher/add_product_to_voucher/add_product_voucher_screen.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_combo/create_my_combo/add_product/add_product_combo_screen.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_combo/create_my_combo/create_combo_controller.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
-import 'package:sahashop_user/utils/string_utils.dart';
 
 class CreateMyComboScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -303,31 +300,13 @@ class CreateMyComboScreen extends StatelessWidget {
                                                                   color: Colors
                                                                       .grey)),
                                                           child: Center(
-                                                            child:
-                                                                TextFormField(
+                                                            child: TextField(
                                                               controller:
                                                                   createMyVoucherController
                                                                       .valueEditingController,
                                                               keyboardType:
                                                                   TextInputType
                                                                       .number,
-                                                              validator:
-                                                                  (value) {
-                                                                if (value
-                                                                        .length <
-                                                                    1) {
-                                                                  return 'Chưa nhập giá trị muốn giảm';
-                                                                } else {
-                                                                  var myInt =
-                                                                      int.parse(
-                                                                          value);
-                                                                  if (myInt >
-                                                                      100000000) {
-                                                                    return '% giảm giá không được quá 100 triệu';
-                                                                  }
-                                                                  return null;
-                                                                }
-                                                              },
                                                               style: TextStyle(
                                                                   fontSize: 14),
                                                               textAlign:
@@ -538,37 +517,18 @@ class CreateMyComboScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Giới hạn đặt hàng"),
+                        Text("Giới hạn combo"),
                         Container(
                           width: Get.width * 0.6,
                           child: TextFormField(
                             controller: createMyVoucherController
-                                .minimumOrderEditingController,
+                                .amountCodeAvailableEditingController,
                             keyboardType: TextInputType.number,
                             validator: (value) {
                               if (value.length < 1) {
-                                return 'Chưa nhập giá trị tối thiểu đơn hàng';
+                                return 'Chưa nhập giới hạn combo';
                               } else {
-                                if (createMyVoucherController
-                                    .valueEditingController.text.isEmpty) {
-                                  return null;
-                                } else {
-                                  var myInt = int.parse(value);
-                                  var pricePermanent = int.parse(
-                                      createMyVoucherController
-                                          .valueEditingController.text);
-                                  if (myInt < pricePermanent) {
-                                    createMyVoucherController
-                                        .isCheckMinimumOrderDiscount
-                                        .value = false;
-                                    return "";
-                                  } else {
-                                    createMyVoucherController
-                                        .isCheckMinimumOrderDiscount
-                                        .value = true;
-                                    return null;
-                                  }
-                                }
+                                return null;
                               }
                             },
                             style: TextStyle(fontSize: 14),
@@ -576,8 +536,7 @@ class CreateMyComboScreen extends StatelessWidget {
                             decoration: InputDecoration(
                               isDense: true,
                               border: InputBorder.none,
-                              hintText:
-                                  "Số lượng đặt hàng tối đa cho mỗi người",
+                              hintText: "Giới hạn cobom có thể sử dụng",
                             ),
                             minLines: 1,
                             maxLines: 1,
@@ -628,8 +587,7 @@ class CreateMyComboScreen extends StatelessWidget {
                                         color: Theme.of(context).primaryColor,
                                       ),
                                       onPressed: () {
-                                        Get.to(
-                                            () => AddProductToVoucherScreen());
+                                        Get.to(() => AddProductComboScreen());
                                       })
                             ],
                           ),
@@ -674,7 +632,7 @@ class CreateMyComboScreen extends StatelessWidget {
                                   ),
                                 )
                               : Container(
-                                  height: 400,
+                                  height: 350,
                                   child: StaggeredGridView.countBuilder(
                                     crossAxisCount: 1,
                                     scrollDirection: Axis.vertical,
@@ -734,17 +692,30 @@ class CreateMyComboScreen extends StatelessWidget {
                                                   ),
                                                   IconButton(
                                                       icon: Icon(Icons.remove),
-                                                      onPressed: () {}),
+                                                      onPressed: () {
+                                                        createMyVoucherController
+                                                            .addProductComboController
+                                                            .decreaseAmountProductCombo(
+                                                                index);
+                                                      }),
                                                   SizedBox(
                                                     width: 20,
                                                   ),
-                                                  Text("SL: 1"),
+                                                  Obx(
+                                                    () => Text(
+                                                        "${createMyVoucherController.addProductComboController.listSelectedProductParam.value[index].quantity}"),
+                                                  ),
                                                   SizedBox(
                                                     width: 20,
                                                   ),
                                                   IconButton(
                                                       icon: Icon(Icons.add),
-                                                      onPressed: () {}),
+                                                      onPressed: () {
+                                                        createMyVoucherController
+                                                            .addProductComboController
+                                                            .increaseAmountProductCombo(
+                                                                index);
+                                                      }),
                                                 ],
                                               ),
                                             ),
@@ -811,16 +782,13 @@ class CreateMyComboScreen extends StatelessWidget {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
                             KeyboardUtil.hideKeyboard(context);
-                            createMyVoucherController.addProductComboController
-                                .listSelectedProductToString();
                             if (createMyVoucherController
                                     .typeVoucherDiscount.value ==
                                 "Chọn") {
                               createMyVoucherController
                                   .isChoosedTypeVoucherDiscount.value = false;
                             } else {
-                              // createMyVoucherController
-                              //     .createVoucher(voucherType); // CREATE VOUCHER
+                              createMyVoucherController.createCombo();
                               createMyVoucherController
                                   .isChoosedTypeVoucherDiscount.value = true;
                             }

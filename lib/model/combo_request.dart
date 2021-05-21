@@ -7,6 +7,7 @@ String comboRequestToJson(ComboRequest data) => json.encode(data.toJson());
 
 class ComboRequest {
   ComboRequest({
+    this.isEnd,
     this.name,
     this.description,
     this.imageUrl,
@@ -19,6 +20,7 @@ class ComboRequest {
     this.comboProducts,
   });
 
+  bool isEnd;
   String name;
   String description;
   String imageUrl;
@@ -45,6 +47,7 @@ class ComboRequest {
       );
 
   Map<String, dynamic> toJson() => {
+        "is_end": isEnd,
         "name": name,
         "description": description,
         "image_url": imageUrl,
@@ -54,8 +57,9 @@ class ComboRequest {
         "value_discount": valueDiscount,
         "set_limit_amount": setLimitAmount,
         "amount": amount,
-        "combo_products":
-            List<dynamic>.from(comboProducts.map((x) => x.toJson())),
+        "combo_products": comboProducts == null
+            ? null
+            : List<dynamic>.from(comboProducts.map((x) => x.toJson())),
       };
 }
 
