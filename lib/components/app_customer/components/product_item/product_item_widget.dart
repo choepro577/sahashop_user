@@ -8,8 +8,8 @@ import 'package:sahashop_user/components/app_customer/screen/data_app_controller
 import 'package:sahashop_user/components/utils/money.dart';
 import 'package:sahashop_user/model/product.dart';
 
-class ProductItem extends StatelessWidget {
-  const ProductItem({
+class ProductItemWidget extends StatelessWidget {
+  const ProductItemWidget({
     Key key,
     @required this.product,
     this.isLoading = false,

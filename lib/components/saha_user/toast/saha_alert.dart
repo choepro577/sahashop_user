@@ -15,10 +15,10 @@ class SahaAlert {
         return Flash(
           controller: controller,
           borderRadius: BorderRadius.circular(8.0),
-          borderColor: Colors.blue,
+          borderColor: Colors.red,
           boxShadows: kElevationToShadow[8],
           backgroundGradient: RadialGradient(
-            colors: [Colors.black87, Colors.black87],
+            colors: [Colors.white, Colors.white],
             center: Alignment.topLeft,
             radius: 2,
           ),
@@ -28,10 +28,16 @@ class SahaAlert {
           child: DefaultTextStyle(
             style: TextStyle(color: Colors.white),
             child: FlashBar(
-              title: Text('$title'),
-              message: Text('$message'),
+              title: Text(
+                '$title',
+                style: TextStyle(color: Colors.black87),
+              ),
+              message: Text(
+                '$message',
+                style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),
+              ),
               leftBarIndicatorColor: Colors.red,
-              icon: Icon(Icons.error),
+              icon: Icon(Icons.error, color: Colors.red,),
               primaryAction: TextButton(
                 onPressed: () => controller.dismiss(),
                 child: Text('Đóng'),

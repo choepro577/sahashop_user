@@ -25,7 +25,7 @@ class ProductRepository {
       var res = await SahaServiceManager().service.getAllProduct(
           UserInfo().getCurrentStoreCode(),
           search ?? "",
-          idCategory ?? "[]",
+          idCategory ?? "",
           descending ?? false,
           details ?? "",
           sortBy ?? "");

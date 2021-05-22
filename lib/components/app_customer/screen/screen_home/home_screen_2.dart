@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/components/product_item/post_item_widget.dart';
-import 'package:sahashop_user/components/app_customer/components/product_item/product_card.dart';
+import 'package:sahashop_user/components/app_customer/components/product_item/product_item_widget.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_box_button.dart';
 import 'package:sahashop_user/components/saha_user/special_card/special_offer_card_type1.dart';
 import 'package:sahashop_user/controller/config_controller.dart';
@@ -164,7 +164,7 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children: discountProducts
-                                  .map((product) => ProductItem(
+                                  .map((product) => ProductItemWidget(
                                         width: 180,
                                         product: product,
                                       ))
@@ -176,8 +176,9 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                     ],
                   ),
             dataAppCustomerController.homeData?.bestSellProduct?.list == null ||
-
-                dataAppCustomerController.homeData?.bestSellProduct?.list?.length == 0
+                    dataAppCustomerController
+                            .homeData?.bestSellProduct?.list?.length ==
+                        0
                 ? Container()
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -203,7 +204,7 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                             child: Row(
                               children: dataAppCustomerController
                                   .homeData.bestSellProduct.list
-                                  .map((product) => ProductItem(
+                                  .map((product) => ProductItemWidget(
                                         width: 180,
                                         product: product,
                                       ))
@@ -240,7 +241,7 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                             child: Row(
                               children: dataAppCustomerController
                                   .homeData.newProduct.list
-                                  .map((product) => ProductItem(
+                                  .map((product) => ProductItemWidget(
                                         width: 180,
                                         product: product,
                                       ))
@@ -251,44 +252,41 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                       )
                     ],
                   ),
-
-
-            dataAppCustomerController.homeData?.newPost?.list == null
+            dataAppCustomerController.homeData?.newPost?.list == null ||
+                    dataAppCustomerController.homeData.newPost.list.length == 0
                 ? Container()
                 : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 20),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: SectionTitle(
-                      title: "Tin tức - bài viết",
-                      titleEnd: "Tất cả",
-                      pressTitleEnd: () {
-                        dataAppCustomerController
-                            .toCategoryProductScreen();
-                      }),
-                ),
-                SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: dataAppCustomerController
-                            .homeData.newPost.list
-                            .map((post) => PostItemWidget(
-                          width: 220,
-                          post: post,
-                        ))
-                            .toList(),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: SectionTitle(
+                            title: "Tin tức - bài viết",
+                            titleEnd: "Tất cả",
+                            pressTitleEnd: () {
+                              dataAppCustomerController
+                                  .toPostAllScreen();
+                            }),
                       ),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children:
+                                dataAppCustomerController.homeData.newPost.list
+                                    .map((post) => PostItemWidget(
+                                          width: 220,
+                                          post: post,
+                                        ))
+                                    .toList(),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                )
-              ],
-            ),
-
-
           ],
         ),
       ),

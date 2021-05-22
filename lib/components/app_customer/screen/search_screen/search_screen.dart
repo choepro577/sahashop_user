@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/app_customer/components/product_item/product_card.dart';
+import 'package:sahashop_user/components/app_customer/components/product_item/product_item_widget.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/iconButton/iconbtn_counter.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
@@ -567,7 +567,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       crossAxisCount: 2,
                       itemCount: searchController.listProduct.length,
                       itemBuilder: (BuildContext context, int index) =>
-                          ProductItem(
+                          ProductItemWidget(
                         product: searchController.listProduct[index],
                         isLoading: searchController.isLoadingProduct.value,
                       ),

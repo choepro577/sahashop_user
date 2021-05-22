@@ -39,7 +39,7 @@ class CategoryController extends GetxController {
   Future<void> getProductWithCategory(int idCategory) async {
     try {
       var res = await CustomerRepositoryManager.productCustomerRepository
-          .searchProduct(idCategory: idCategory.toString());
+          .searchProduct(idCategory: idCategory == null ? "" : idCategory.toString());
       products(res);
     } catch (err) {
       print(err);
@@ -58,9 +58,13 @@ class CategoryController extends GetxController {
       categories(res);
 
       if (categoryCurrent.value != null) {
-        getProductWithCategory(categoryCurrent.value.id);
+
+        setCategoryCurrent(categoryCurrent.value);
+
+
       } else if (categories.length > 0) {
-        setCategoryCurrent(categories.value.toList()[0]);
+        getProductWithCategory(categories.toList()[0].id);
+        setCategoryCurrent(categories.toList()[0]);
       }
     } catch (err) {
       print(err);
