@@ -99,7 +99,7 @@ class _PayScreenState extends State<PayScreen>
                                         Container(
                                           width: Get.width * 0.7,
                                           child: Text(
-                                            "${payController.infoAddress.value.district}, ${payController.infoAddress.value.wards}, ${payController.infoAddress.value.city}",
+                                            "${payController.infoAddress.value.district}, ${payController.infoAddress.value.wards}, ${payController.infoAddress.value.province}",
                                             style: TextStyle(
                                                 color: Colors.grey[700],
                                                 fontSize: 13),

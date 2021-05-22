@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
-import 'package:sahashop_user/model/voucher_request.dart';
+import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/voucher_request.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_voucher/create_my_voucher/add_product_to_voucher/add_product_voucher_controller.dart';
 

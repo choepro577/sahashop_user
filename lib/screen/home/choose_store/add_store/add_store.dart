@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/dialog/dialog.dart';
 import 'package:sahashop_user/components/saha_user/text_field/sahashopTextField.dart';
-import 'package:sahashop_user/data/remote/response/store/type_store_respones.dart';
+import 'package:sahashop_user/data/remote/response-request/store/type_store_respones.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
 import 'package:sahashop_user/screen/home/home_screen.dart';
 import 'package:sahashop_user/screen/sign_up/signUpScreen_controller.dart';
@@ -73,7 +73,7 @@ class _AddStoreState extends State<AddStore> {
             Get.back();
           },
         ),
-        titleText:  "Thêm cửa hàng",
+        titleText: "Thêm cửa hàng",
       ),
       body: SingleChildScrollView(
         child: Form(

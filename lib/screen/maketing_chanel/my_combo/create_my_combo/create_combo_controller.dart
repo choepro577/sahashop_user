@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
-import 'package:sahashop_user/model/combo_request.dart';
+import 'package:sahashop_user/data/remote/response-request/combo_request.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_combo/create_my_combo/add_product/add_product_combo_controller.dart';
 

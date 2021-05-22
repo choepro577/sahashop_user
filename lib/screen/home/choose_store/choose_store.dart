@@ -4,7 +4,7 @@ import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/const/constant.dart';
-import 'package:sahashop_user/data/remote/response/store/all_store_response.dart';
+import 'package:sahashop_user/data/remote/response-request/store/all_store_response.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 import '../home_controller.dart';

@@ -4,39 +4,24 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/switch_button/switch_button.dart';
-import 'package:sahashop_user/model/info_address.dart';
+import 'package:sahashop_user/model/location_address.dart';
+import 'package:sahashop_user/screen/config_store_address/choose_address_screen/choose_address_screen.dart';
+import 'package:sahashop_user/screen/config_store_address/new_address_store_screen/new_address_controller.dart';
 
-class SetAddressScreen extends StatefulWidget {
-  final InfoAddress infoAddress;
+class NewAddressStoreScreen extends StatefulWidget {
   @override
-  _SetAddressScreenState createState() => _SetAddressScreenState();
-
-  SetAddressScreen({this.infoAddress});
+  _NewAddressStoreScreenState createState() => _NewAddressStoreScreenState();
 }
 
-class _SetAddressScreenState extends State<SetAddressScreen> {
-  bool _enable = true;
-  InfoAddress infoAddress;
-  TextEditingController nameTextEditingController = TextEditingController();
-  TextEditingController phoneTextEditingController = TextEditingController();
-  TextEditingController addressDetailTextEditingController =
-      TextEditingController();
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    infoAddress = widget.infoAddress;
-    nameTextEditingController.text = widget.infoAddress.name;
-    phoneTextEditingController.text = widget.infoAddress.phone;
-    addressDetailTextEditingController.text = widget.infoAddress.addressDetail;
-  }
+class _NewAddressStoreScreenState extends State<NewAddressStoreScreen> {
+  NewAddressController newAddressController;
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    newAddressController = new NewAddressController();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sửa địa chỉ"),
+        title: Text("Địa chỉ mới"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -51,13 +36,14 @@ class _SetAddressScreenState extends State<SetAddressScreen> {
                     width: Get.width * 0.5,
                     height: 25,
                     child: TextField(
+                      controller:
+                          newAddressController.nameTextEditingController,
                       style: TextStyle(fontSize: 14),
-                      controller: nameTextEditingController,
                       textAlign: TextAlign.end,
                       decoration: InputDecoration(
-                        isDense: true,
-                        border: InputBorder.none,
-                      ),
+                          isDense: true,
+                          border: InputBorder.none,
+                          hintText: "Điền Họ và tên"),
                       minLines: 1,
                       maxLines: 1,
                     ),
@@ -78,14 +64,15 @@ class _SetAddressScreenState extends State<SetAddressScreen> {
                     height: 25,
                     width: Get.width * 0.5,
                     child: TextField(
+                      controller:
+                          newAddressController.phoneTextEditingController,
                       keyboardType: TextInputType.phone,
                       style: TextStyle(fontSize: 14),
-                      controller: phoneTextEditingController,
                       textAlign: TextAlign.end,
                       decoration: InputDecoration(
-                        isDense: true,
-                        border: InputBorder.none,
-                      ),
+                          isDense: true,
+                          border: InputBorder.none,
+                          hintText: "Điền Số điện thoại"),
                       minLines: 1,
                       maxLines: 1,
                     ),
@@ -97,7 +84,18 @@ class _SetAddressScreenState extends State<SetAddressScreen> {
               height: 1,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.to(() => ChooseAddressScreen(
+                      typeAddress: TypeAddress.Province,
+                      callback: (LocationAddress location) {
+                        newAddressController.locationProvince.value = location;
+                        newAddressController.locationDistrict.value =
+                            new LocationAddress();
+                        newAddressController.locationWard.value =
+                            new LocationAddress();
+                      },
+                    ));
+              },
               child: Container(
                 padding: EdgeInsets.all(10),
                 child: Row(
@@ -106,7 +104,8 @@ class _SetAddressScreenState extends State<SetAddressScreen> {
                     Text("Tỉnh/Thành phố"),
                     Row(
                       children: [
-                        Text("${infoAddress.province}"),
+                        Obx(() => Text(
+                            "${newAddressController.locationProvince.value.name ?? "Điền Tỉnh/Thành phố"}")),
                         Icon(Icons.arrow_forward_ios_rounded),
                       ],
                     ),
@@ -118,7 +117,16 @@ class _SetAddressScreenState extends State<SetAddressScreen> {
               height: 1,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.to(() => ChooseAddressScreen(
+                      typeAddress: TypeAddress.District,
+                      idProvince:
+                          newAddressController.locationProvince.value.id,
+                      callback: (LocationAddress location) {
+                        newAddressController.locationDistrict.value = location;
+                      },
+                    ));
+              },
               child: Container(
                 padding: EdgeInsets.all(10),
                 child: Row(
@@ -127,7 +135,8 @@ class _SetAddressScreenState extends State<SetAddressScreen> {
                     Text("Quận/Huyện"),
                     Row(
                       children: [
-                        Text("${infoAddress.district}"),
+                        Obx(() => Text(
+                            "${newAddressController.locationDistrict.value.name ?? "Điền Quận/Huyện"}")),
                         Icon(Icons.arrow_forward_ios_rounded),
                       ],
                     ),
@@ -139,7 +148,16 @@ class _SetAddressScreenState extends State<SetAddressScreen> {
               height: 1,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.to(() => ChooseAddressScreen(
+                      typeAddress: TypeAddress.Wards,
+                      idDistrict:
+                          newAddressController.locationDistrict.value.id,
+                      callback: (LocationAddress location) {
+                        newAddressController.locationWard.value = location;
+                      },
+                    ));
+              },
               child: Container(
                 padding: EdgeInsets.all(10),
                 child: Row(
@@ -148,7 +166,10 @@ class _SetAddressScreenState extends State<SetAddressScreen> {
                     Text("Phường/Xã"),
                     Row(
                       children: [
-                        Text("${infoAddress.wards}"),
+                        Obx(
+                          () => Text(
+                              "${newAddressController.locationWard.value.name ?? "Chưa chọn Phường/Xã"}"),
+                        ),
                         Icon(Icons.arrow_forward_ios_rounded),
                       ],
                     ),
@@ -180,7 +201,8 @@ class _SetAddressScreenState extends State<SetAddressScreen> {
                       Container(
                         width: Get.width * 0.9,
                         child: TextField(
-                          controller: addressDetailTextEditingController,
+                          controller: newAddressController
+                              .addressDetailTextEditingController,
                           decoration: InputDecoration(
                             isDense: true,
                             border: InputBorder.none,
@@ -205,13 +227,30 @@ class _SetAddressScreenState extends State<SetAddressScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Đặt làm địa chỉ mặc định"),
-                  CustomSwitch(
-                    value: _enable,
-                    onChanged: (bool val) {
-                      setState(() {
-                        _enable = val;
-                      });
-                    },
+                  Obx(
+                    () => CustomSwitch(
+                      value: newAddressController.isDefaultPickup.value,
+                      onChanged: (bool val) {
+                        newAddressController.isDefaultPickup.value = val;
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Đặt làm địa chỉ trả hàng"),
+                  Obx(
+                    () => CustomSwitch(
+                      value: newAddressController.isDefaultReturn.value,
+                      onChanged: (bool val) {
+                        newAddressController.isDefaultReturn.value = val;
+                      },
+                    ),
                   )
                 ],
               ),
@@ -283,13 +322,15 @@ class _SetAddressScreenState extends State<SetAddressScreen> {
         ),
       ),
       bottomNavigationBar: Container(
-        height: 80,
+        height: 65,
         color: Colors.white,
         child: Column(
           children: [
             SahaButtonFullParent(
               text: "CHỌN",
-              onPressed: () {},
+              onPressed: () {
+                newAddressController.createAddressStore();
+              },
               color: Theme.of(context).primaryColor,
             ),
           ],

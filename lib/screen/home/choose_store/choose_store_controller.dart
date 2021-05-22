@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:sahashop_user/data/remote/response/store/all_store_response.dart';
+import 'package:sahashop_user/data/remote/response-request/store/all_store_response.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 
 class ChooseStoreController extends GetxController {

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:sahashop_user/data/remote/response/store/type_store_respones.dart';
+import 'package:sahashop_user/data/remote/response-request/store/type_store_respones.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 

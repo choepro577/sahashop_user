@@ -1,32 +1,35 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:sahashop_user/data/remote/response/auth/login_response.dart';
-import 'package:sahashop_user/data/remote/response/config_ui/app_theme_response.dart';
-import 'package:sahashop_user/data/remote/response/config_ui/create_app_theme_response.dart';
-import 'package:sahashop_user/data/remote/response/marketing_chanel_response/combo/create_combo_reponse.dart';
-import 'package:sahashop_user/data/remote/response/marketing_chanel_response/combo/my_combo_response.dart';
-import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/create_discount_respone.dart';
-import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/end_discount_response.dart';
-import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/create_voucher_reponse.dart';
-import 'package:sahashop_user/data/remote/response/marketing_chanel_response/delete_program_response.dart';
-import 'package:sahashop_user/data/remote/response/marketing_chanel_response/discount/my_program_reponse.dart';
-import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/end_voucher_response.dart';
-import 'package:sahashop_user/data/remote/response/marketing_chanel_response/voucher/my_voucher_response.dart';
-import 'package:sahashop_user/data/remote/response/post/all_post_response.dart';
+import 'package:sahashop_user/data/remote/response-request/address/address_respone.dart';
+import 'package:sahashop_user/data/remote/response-request/address/all_address_store_response.dart';
+import 'package:sahashop_user/data/remote/response-request/address/create_address_store_response.dart';
+import 'package:sahashop_user/data/remote/response-request/auth/login_response.dart';
+import 'package:sahashop_user/data/remote/response-request/config_ui/app_theme_response.dart';
+import 'package:sahashop_user/data/remote/response-request/config_ui/create_app_theme_response.dart';
+import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/create_combo_reponse.dart';
+import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/my_combo_response.dart';
+import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/discount/create_discount_respone.dart';
+import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/discount/end_discount_response.dart';
+import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/voucher/create_voucher_reponse.dart';
+import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/delete_program_response.dart';
+import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/discount/my_program_reponse.dart';
+import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/voucher/end_voucher_response.dart';
+import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/voucher/my_voucher_response.dart';
+import 'package:sahashop_user/data/remote/response-request/post/all_post_response.dart';
 
-import 'response/auth/register_response.dart';
-import 'response/category/all_category_response.dart';
-import 'response/category/create_category_response.dart';
-import 'response/device_token/device_token_user_response.dart';
-import 'response/image/upload_image_response.dart';
-import 'response/post/all_category_post_response.dart';
-import 'response/post/create_category_post_response.dart';
-import 'response/post/create_post_response.dart';
-import 'response/product/all_product_response.dart';
-import 'response/product/product_response.dart';
-import 'response/store/all_store_response.dart';
-import 'response/store/create_store_response.dart';
-import 'response/store/type_store_respones.dart';
+import 'response-request/auth/register_response.dart';
+import 'response-request/category/all_category_response.dart';
+import 'response-request/category/create_category_response.dart';
+import 'response-request/device_token/device_token_user_response.dart';
+import 'response-request/image/upload_image_response.dart';
+import 'response-request/post/all_category_post_response.dart';
+import 'response-request/post/create_category_post_response.dart';
+import 'response-request/post/create_post_response.dart';
+import 'response-request/product/all_product_response.dart';
+import 'response-request/product/product_response.dart';
+import 'response-request/store/all_store_response.dart';
+import 'response-request/store/create_store_response.dart';
+import 'response-request/store/type_store_respones.dart';
 
 part 'service.g.dart';
 
@@ -153,4 +156,20 @@ abstract class SahaService {
   @PUT("store/{storeCode}/combos/{idCombo}")
   Future<CreateComboResponse> updateCombo(@Path() String storeCode,
       @Path() int idCombo, @Body() Map<String, dynamic> body);
+
+  @GET("place/vn/province")
+  Future<AddressResponse> getProvince();
+
+  @GET("place/vn/district/{idProvince}")
+  Future<AddressResponse> getDistrict(@Path() int idProvince);
+
+  @GET("place/vn/wards/{idDistrict}")
+  Future<AddressResponse> getWard(@Path() int idDistrict);
+
+  @POST("store/{storeCode}/store_address")
+  Future<CreateAddressStoreResponse> createAddressStore(
+      @Path() String storeCode, @Body() Map<String, dynamic> body);
+
+  @GET("store/{storeCode}/store_address")
+  Future<AllAddressStoreResponse> getAllAddressStore(@Path() String storeCode);
 }

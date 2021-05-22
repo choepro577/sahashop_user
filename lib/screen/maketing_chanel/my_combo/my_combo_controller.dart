@@ -4,10 +4,10 @@ import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/data/repository/handle_error.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/model/combo.dart';
-import 'package:sahashop_user/model/combo_request.dart';
+import 'package:sahashop_user/data/remote/response-request/combo_request.dart';
 
 import 'package:sahashop_user/model/voucher.dart';
-import 'package:sahashop_user/model/voucher_request.dart';
+import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/voucher_request.dart';
 
 class MyComboController extends GetxController {
   var isRefreshingData = false.obs;

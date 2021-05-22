@@ -6,11 +6,10 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/dialog/dialog.dart';
 import 'package:sahashop_user/components/saha_user/text_field/sahashopTextField.dart';
-import 'package:sahashop_user/data/remote/response/store/type_store_respones.dart';
+import 'package:sahashop_user/data/remote/response-request/store/type_store_respones.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
 import 'package:sahashop_user/screen/home/home_screen.dart';
 import 'package:sahashop_user/screen/sign_up/signUpScreen_controller.dart';
-
 
 import 'setup_info_shop_controller.dart';
 
@@ -20,8 +19,10 @@ class SetUpInfoShop extends StatefulWidget {
 }
 
 class _SetUpInfoShopState extends State<SetUpInfoShop> {
-  TextEditingController textEditingControllerNameShop = new TextEditingController();
-  TextEditingController textEditingControllerAddress = new TextEditingController();
+  TextEditingController textEditingControllerNameShop =
+      new TextEditingController();
+  TextEditingController textEditingControllerAddress =
+      new TextEditingController();
 
   SetUpInfoShopController setUpInfoShopController = SetUpInfoShopController();
 
@@ -48,7 +49,7 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
     super.didChangeDependencies();
     sub ??= setUpInfoShopController.stateCreate.listen((state) {
       if (state != "success") {
-        SahaDialogApp.showDialogError(context: context,errorMess: state);
+        SahaDialogApp.showDialogError(context: context, errorMess: state);
         EasyLoading.dismiss();
       }
 
@@ -70,7 +71,7 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
             Get.back();
           },
         ),
-       titleText: "Sign In",
+        titleText: "Sign In",
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -133,7 +134,8 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
                   style: TextStyle(color: Colors.white),
                   iconEnabledColor: Colors.black,
                   items: setUpInfoShopController.mapTypeShop
-                      .map<DropdownMenuItem<Map<String, String>>>((Map<String, String> value) {
+                      .map<DropdownMenuItem<Map<String, String>>>(
+                          (Map<String, String> value) {
                     return DropdownMenuItem<Map<String, String>>(
                       value: value,
                       child: Text(
@@ -158,21 +160,21 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
                 ),
               ),
               TextButton(
-                 // signUpController.shopPhones.toString()
+                // signUpController.shopPhones.toString()
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
                     KeyboardUtil.hideKeyboard(context);
-                    setUpInfoShopController.createShop(textEditingControllerNameShop.text,
+                    setUpInfoShopController.createShop(
+                        textEditingControllerNameShop.text,
                         textEditingControllerAddress.text,
                         _chosenValue,
-                        textEditingControllerNameShop.text + signUpController.shopPhones.toString());
+                        textEditingControllerNameShop.text +
+                            signUpController.shopPhones.toString());
                     EasyLoading.show();
                   }
                 },
-                style: ButtonStyle(
-
-                ),
+                style: ButtonStyle(),
                 child: Text(
                   "Continue",
                   style: TextStyle(fontSize: 18),

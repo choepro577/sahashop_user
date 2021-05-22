@@ -74,7 +74,7 @@ class ConfigAddressScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.grey[700], fontSize: 13),
                     ),
                     Text(
-                      "${infoAddress.district}, ${infoAddress.wards}, ${infoAddress.city}",
+                      "${infoAddress.district}, ${infoAddress.wards}, ${infoAddress.province}",
                       style: TextStyle(color: Colors.grey[700], fontSize: 13),
                     ),
                   ],

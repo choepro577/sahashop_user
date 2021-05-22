@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:sahashop_user/data/remote/response/category/create_category_response.dart';
+import 'package:sahashop_user/data/remote/response-request/category/create_category_response.dart';
 import 'package:sahashop_user/data/remote/saha_service_manager.dart';
 import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/utils/user_info.dart';

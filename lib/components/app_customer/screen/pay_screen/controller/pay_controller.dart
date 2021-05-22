@@ -4,7 +4,7 @@ import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/components/utils/storage_order.dart';
 import 'package:sahashop_user/model/info_address.dart';
 import 'package:sahashop_user/model/order.dart';
-import 'package:sahashop_user/model/order_request.dart';
+import 'package:sahashop_user/data/remote/response-request/order_request.dart';
 
 class PayController extends GetxController {
   var listOrder = RxList<Order>().obs;

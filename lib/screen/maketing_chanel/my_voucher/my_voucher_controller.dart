@@ -5,7 +5,7 @@ import 'package:sahashop_user/data/repository/handle_error.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 
 import 'package:sahashop_user/model/voucher.dart';
-import 'package:sahashop_user/model/voucher_request.dart';
+import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/voucher_request.dart';
 
 class MyVoucherController extends GetxController {
   var isRefreshingData = false.obs;

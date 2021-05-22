@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:device_info/device_info.dart';
-import 'package:sahashop_user/data/remote/response/device_token/device_token_user_response.dart';
+import 'package:sahashop_user/data/remote/response-request/device_token/device_token_user_response.dart';
 import 'package:sahashop_user/data/remote/saha_service_manager.dart';
 import 'package:sahashop_user/model/config_app.dart';
 import 'package:sahashop_user/utils/user_info.dart';
