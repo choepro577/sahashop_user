@@ -158,10 +158,11 @@ class CreateMyVoucherController extends GetxController {
             products: addProductToVoucherController.listProductParam),
       );
       SahaAlert.showSuccess(message: "Lưu thành công");
+      Get.back();
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
     isLoadingCreate.value = false;
-    Get.back();
+
   }
 }
