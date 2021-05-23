@@ -87,9 +87,9 @@ class CreateMyComboController extends GetxController {
     }
     discountType.value = v;
     if (discountType.value == DiscountType.k1) {
-      discountTypeRequest.value = 0;
-    } else {
       discountTypeRequest.value = 1;
+    } else {
+      discountTypeRequest.value = 0;
     }
     print(discountTypeRequest.value);
   }

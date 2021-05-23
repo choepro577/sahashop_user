@@ -230,7 +230,7 @@ class ConfigAddressStoreScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Đặt làm địa chỉ mặc định"),
+                  Text("Đặt làm địa chỉ lấy hàng"),
                   Obx(
                     () => CustomSwitch(
                       value: configAddressController.isDefaultPickup.value,
@@ -306,16 +306,21 @@ class ConfigAddressStoreScreen extends StatelessWidget {
               height: 12,
               color: Colors.grey[200],
             ),
-            Container(
-              padding: EdgeInsets.all(13.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "Xóa Địa chỉ",
-                    style: TextStyle(color: Colors.red),
-                  ),
-                ],
+            InkWell(
+              onTap: () {
+                configAddressController.deleteAddressStore();
+              },
+              child: Container(
+                padding: EdgeInsets.all(13.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Xóa Địa chỉ",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ],
+                ),
               ),
             ),
             Container(
@@ -330,10 +335,23 @@ class ConfigAddressStoreScreen extends StatelessWidget {
         color: Colors.white,
         child: Column(
           children: [
-            SahaButtonFullParent(
-              text: "LƯU",
-              onPressed: () {},
-              color: Theme.of(context).primaryColor,
+            Obx(
+              () => configAddressController.isLoadingUpdate.value == false
+                  ? SahaButtonFullParent(
+                      text: "LƯU",
+                      onPressed: () {
+                        configAddressController.updateAddressStore();
+                      },
+                      color: Theme.of(context).primaryColor,
+                    )
+                  : IgnorePointer(
+                      child: SahaButtonFullParent(
+                        text: "Lưu",
+                        textColor: Colors.grey[600],
+                        onPressed: () {},
+                        color: Colors.grey[300],
+                      ),
+                    ),
             ),
           ],
         ),

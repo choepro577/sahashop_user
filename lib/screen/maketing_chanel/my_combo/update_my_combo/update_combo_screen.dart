@@ -14,8 +14,9 @@ import 'package:sahashop_user/utils/keyboard.dart';
 
 class UpdateMyComboScreen extends StatefulWidget {
   Combo combo;
+  bool onlyWatch;
 
-  UpdateMyComboScreen({this.combo});
+  UpdateMyComboScreen({this.combo, this.onlyWatch});
 
   @override
   _UpdateMyComboScreenState createState() => _UpdateMyComboScreenState();
@@ -31,17 +32,19 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
     widget.combo.productsCombo.forEach((element) {
       updateMyComboController
           .updateProductComboController.listSelectedProduct.value
-          .addAll(element.product);
+          .add(element.product);
 
       updateMyComboController
           .updateProductComboController.listProductHasInDiscount.value
-          .addAll(element.product);
+          .add(element.product);
+
+      updateMyComboController
+          .updateProductComboController.listSelectedProductParam.value
+          .add(ComboProduct(
+              productId: element.product.id, quantity: element.quantity));
 
       updateMyComboController.amountEditingController.text =
           element.quantity == null ? "" : element.quantity.toString();
-
-      updateMyComboController.updateProductComboController
-          .listSelectedProductToComboProduct();
     });
 
     updateMyComboController.nameProgramEditingController.text =
@@ -843,27 +846,38 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
                           color: Colors.grey[300],
                         ),
                       )
-                    : SahaButtonFullParent(
-                        text: "Lưu",
-                        onPressed: () {
-                          if (_formKey.currentState.validate()) {
-                            _formKey.currentState.save();
-                            KeyboardUtil.hideKeyboard(context);
-                            if (updateMyComboController
-                                    .typeVoucherDiscount.value ==
-                                "Chọn") {
-                              updateMyComboController
-                                  .isChoosedTypeVoucherDiscount.value = false;
-                            } else {
-                              updateMyComboController
-                                  .updateCombo(widget.combo.id);
-                              updateMyComboController
-                                  .isChoosedTypeVoucherDiscount.value = true;
-                            }
-                          }
-                        },
-                        color: Theme.of(context).primaryColor,
-                      ),
+                    : widget.onlyWatch == true
+                        ? IgnorePointer(
+                            child: SahaButtonFullParent(
+                              text: "Lưu",
+                              textColor: Colors.grey[600],
+                              onPressed: () {},
+                              color: Colors.grey[300],
+                            ),
+                          )
+                        : SahaButtonFullParent(
+                            text: "Lưu",
+                            onPressed: () {
+                              if (_formKey.currentState.validate()) {
+                                _formKey.currentState.save();
+                                KeyboardUtil.hideKeyboard(context);
+                                if (updateMyComboController
+                                        .typeVoucherDiscount.value ==
+                                    "Chọn") {
+                                  updateMyComboController
+                                      .isChoosedTypeVoucherDiscount
+                                      .value = false;
+                                } else {
+                                  updateMyComboController
+                                      .updateCombo(widget.combo.id);
+                                  updateMyComboController
+                                      .isChoosedTypeVoucherDiscount
+                                      .value = true;
+                                }
+                              }
+                            },
+                            color: Theme.of(context).primaryColor,
+                          ),
               ),
             ],
           ),

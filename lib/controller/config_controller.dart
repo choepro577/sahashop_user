@@ -17,7 +17,6 @@ class ConfigController extends GetxController {
   ConfigApp configApp = ConfigApp();
   var currentTheme = ThemeData().obs;
   var indexTab = 0.obs;
-
   var isLoadingGet = false.obs;
   var isLoadingCreate = false.obs;
   var contactButton = RxList<UnicornButton>();

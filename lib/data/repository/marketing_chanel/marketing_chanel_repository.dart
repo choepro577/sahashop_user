@@ -1,4 +1,5 @@
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/create_combo_reponse.dart';
+import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/end_combo_response.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/my_combo_response.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/discount/create_discount_respone.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/discount/end_discount_response.dart';
@@ -127,6 +128,17 @@ class MarketingChanelRepository {
       var res = await SahaServiceManager()
           .service
           .getEndDiscountFromPage(UserInfo().getCurrentStoreCode(), numberPage);
+      return res;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  Future<EndComboResponse> getEndComboFromPage(int numberPage) async {
+    try {
+      var res = await SahaServiceManager()
+          .service
+          .getEndComboFromPage(UserInfo().getCurrentStoreCode(), numberPage);
       return res;
     } catch (err) {
       handleError(err);

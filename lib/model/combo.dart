@@ -97,18 +97,17 @@ class ProductsCombo {
 
   int id;
   int quantity;
-  List<Product> product;
+  Product product;
 
   factory ProductsCombo.fromJson(Map<String, dynamic> json) => ProductsCombo(
         id: json["id"],
         quantity: json["quantity"],
-        product:
-            List<Product>.from(json["product"].map((x) => Product.fromJson(x))),
+        product: Product.fromJson(json["product"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "quantity": quantity,
-        "product": List<dynamic>.from(product.map((x) => x.toJson())),
+        "product": product.toJson(),
       };
 }

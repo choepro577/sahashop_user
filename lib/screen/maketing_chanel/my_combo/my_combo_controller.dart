@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/data/repository/handle_error.dart';
@@ -6,21 +5,16 @@ import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/model/combo.dart';
 import 'package:sahashop_user/data/remote/response-request/combo_request.dart';
 
-import 'package:sahashop_user/model/voucher.dart';
-import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/voucher_request.dart';
-
 class MyComboController extends GetxController {
   var isRefreshingData = false.obs;
   var isDeletingDiscount = false.obs;
-  var isEndDiscount = false.obs;
-  var listVoucherIsComing = RxList<Combo>().obs;
-  var listVoucherIsRunning = RxList<Combo>().obs;
-  var listVoucherIsEnd = RxList<Combo>().obs;
+  var listComboIsComing = RxList<Combo>().obs;
+  var listComboIsRunning = RxList<Combo>().obs;
+  var listComboIsEnd = RxList<Combo>().obs;
   var listAll = RxList<List<Combo>>([[], [], []]).obs;
   var listAllSaveStateBefore = RxList<List<Combo>>([[], [], []]).obs;
-  var listCheckHasDiscountState = RxList<bool>([false, false, false]).obs;
   var pageLoadMore = 1;
-  var isEndPageVoucher = false;
+  var isEndPageCombo = false;
   DateTime timeNow = DateTime.now();
 
   Future<void> getAllCombo() async {
@@ -30,20 +24,20 @@ class MyComboController extends GetxController {
 
       res.data.forEach((element) {
         if (element.startTime.isAfter(timeNow)) {
-          listVoucherIsComing.value.add(element);
+          listComboIsComing.value.add(element);
         } else {
           if (element.endTime.isAfter(timeNow)) {
-            listVoucherIsRunning.value.add(element);
+            listComboIsRunning.value.add(element);
           }
           // else {
-          //   listVoucherIsEnd.value.add(element);
+          //   listComboIsEnd.value.add(element);
           // }
         }
       });
 
-      listAll.value[0] = listVoucherIsComing.value;
-      listAll.value[1] = listVoucherIsRunning.value;
-      listAll.value[2] = listVoucherIsEnd.value;
+      listAll.value[0] = listComboIsComing.value;
+      listAll.value[1] = listComboIsRunning.value;
+      listAll.value[2] = listComboIsEnd.value;
       listAllSaveStateBefore.value = listAll.value;
     } catch (err) {
       handleError(err);
@@ -52,44 +46,44 @@ class MyComboController extends GetxController {
 
   Future<void> refreshData() async {
     isRefreshingData.value = true;
-    listVoucherIsComing = RxList<Combo>().obs;
-    listVoucherIsRunning = RxList<Combo>().obs;
+    listComboIsComing = RxList<Combo>().obs;
+    listComboIsRunning = RxList<Combo>().obs;
     listAll = RxList<List<Combo>>([[], [], []]).obs;
     await getAllCombo();
     isRefreshingData.value = false;
   }
-  //
-  // void loadInitEndVoucher() {
-  //   pageLoadMore = 1;
-  //   isEndPageVoucher = false;
-  //   loadMoreEndVoucher();
-  // }
 
-  // Future<void> loadMoreEndVoucher() async {
-  //   try {
-  //     var res = await RepositoryManager.marketingChanel
-  //         .getEndVoucherFromPage(pageLoadMore);
-  //
-  //     if (!isEndPageVoucher) {
-  //       res.data.data.forEach((element) {
-  //         listVoucherIsEnd.value.add(element);
-  //       });
-  //     } else {
-  //       return;
-  //     }
-  //
-  //     listAll.value[2] = listVoucherIsEnd.value;
-  //     listAllSaveStateBefore = listAll;
-  //     if (res.data.nextPageUrl != null) {
-  //       pageLoadMore++;
-  //       isEndPageVoucher = false;
-  //     } else {
-  //       isEndPageVoucher = true;
-  //     }
-  //   } catch (err) {
-  //     SahaAlert.showError(message: err.toString());
-  //   }
-  // }
+  void loadInitEndCombo() {
+    pageLoadMore = 1;
+    isEndPageCombo = false;
+    loadMoreEndCombo();
+  }
+
+  Future<void> loadMoreEndCombo() async {
+    try {
+      var res = await RepositoryManager.marketingChanel
+          .getEndComboFromPage(pageLoadMore);
+
+      if (!isEndPageCombo) {
+        res.data.data.forEach((element) {
+          listComboIsEnd.value.add(element);
+        });
+      } else {
+        return;
+      }
+
+      listAll.value[2] = listComboIsEnd.value;
+      listAllSaveStateBefore = listAll;
+      if (res.data.nextPageUrl != null) {
+        pageLoadMore++;
+        isEndPageCombo = false;
+      } else {
+        isEndPageCombo = true;
+      }
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+  }
 
   Future<void> endCombo(int idCombo) async {
     try {

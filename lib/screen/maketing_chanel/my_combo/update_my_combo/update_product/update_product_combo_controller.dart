@@ -102,6 +102,9 @@ class UpdateProductComboController extends GetxController {
         } else {
           listSelectedProduct.value.removeWhere((element) =>
               element.id == listCheckSelectedProduct.value[i].keys.first.id);
+          listSelectedProductParam.value.removeWhere((element) =>
+              element.productId ==
+              listCheckSelectedProduct.value[i].keys.first.id);
         }
       }
     }

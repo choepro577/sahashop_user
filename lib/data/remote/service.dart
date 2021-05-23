@@ -3,10 +3,12 @@ import 'package:retrofit/retrofit.dart';
 import 'package:sahashop_user/data/remote/response-request/address/address_respone.dart';
 import 'package:sahashop_user/data/remote/response-request/address/all_address_store_response.dart';
 import 'package:sahashop_user/data/remote/response-request/address/create_address_store_response.dart';
+import 'package:sahashop_user/data/remote/response-request/address/delete_address_store_response.dart';
 import 'package:sahashop_user/data/remote/response-request/auth/login_response.dart';
 import 'package:sahashop_user/data/remote/response-request/config_ui/app_theme_response.dart';
 import 'package:sahashop_user/data/remote/response-request/config_ui/create_app_theme_response.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/create_combo_reponse.dart';
+import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/end_combo_response.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/my_combo_response.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/discount/create_discount_respone.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/discount/end_discount_response.dart';
@@ -149,6 +151,10 @@ abstract class SahaService {
   Future<EndDiscountResponse> getEndDiscountFromPage(
       @Path() String storeCode, @Query("page") int numberPage);
 
+  @GET("store/{storeCode}/combos_end")
+  Future<EndComboResponse> getEndComboFromPage(
+      @Path() String storeCode, @Query("page") int numberPage);
+
   @POST("store/{storeCode}/combos")
   Future<CreateComboResponse> createCombo(
       @Path() String storeCode, @Body() Map<String, dynamic> body);
@@ -172,4 +178,14 @@ abstract class SahaService {
 
   @GET("store/{storeCode}/store_address")
   Future<AllAddressStoreResponse> getAllAddressStore(@Path() String storeCode);
+
+  @PUT("store/{storeCode}/store_address/{idAddressStore}")
+  Future<CreateAddressStoreResponse> updateAddressStore(
+      @Path() String storeCode,
+      @Path() int idAddressStore,
+      @Body() Map<String, dynamic> body);
+
+  @DELETE("store/{storeCode}/store_address/{idAddressStore}")
+  Future<DeleteAddressStoreResponse> deleteAddressStore(
+      @Path() String storeCode, @Path() int idAddressStore);
 }

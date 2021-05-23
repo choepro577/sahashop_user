@@ -31,6 +31,7 @@ class NewAddressController extends GetxController {
         district: locationDistrict.value.id,
         wards: locationWard.value.id,
         email: "hieudeptrai@gmail.com",
+        phone: phoneTextEditingController.text,
         isDefaultPickup: isDefaultPickup.value,
         isDefaultReturn: isDefaultReturn.value,
       ));

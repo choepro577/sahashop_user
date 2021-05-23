@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
+import 'package:sahashop_user/data/remote/response-request/address/address_request.dart';
+import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/model/info_address.dart';
 import 'package:sahashop_user/model/location_address.dart';
 
@@ -13,6 +16,9 @@ class ConfigAddressController extends GetxController {
     locationProvince.value.name = infoAddress.provinceName;
     locationDistrict.value.name = infoAddress.districtName;
     locationWard.value.name = infoAddress.wardsName;
+    locationProvince.value.id = infoAddress.id;
+    locationDistrict.value.id = infoAddress.id;
+    locationWard.value.id = infoAddress.id;
     isDefaultPickup.value = infoAddress.isDefaultPickup;
     isDefaultReturn.value = infoAddress.isDefaultReturn;
   }
@@ -20,6 +26,8 @@ class ConfigAddressController extends GetxController {
   var locationProvince = LocationAddress().obs;
   var locationDistrict = LocationAddress().obs;
   var locationWard = LocationAddress().obs;
+  var isLoadingUpdate = false.obs;
+  var isDeletingAddressStore = false.obs;
 
   var isDefaultPickup = true.obs;
   var isDefaultReturn = true.obs;
@@ -28,4 +36,42 @@ class ConfigAddressController extends GetxController {
   TextEditingController phoneTextEditingController = TextEditingController();
   TextEditingController addressDetailTextEditingController =
       TextEditingController();
+
+  Future<void> updateAddressStore() async {
+    isLoadingUpdate.value = true;
+    try {
+      var res = await RepositoryManager.addressRepository.updateAddressStore(
+          infoAddress.id,
+          AddressRequest(
+            name: nameTextEditingController.text,
+            addressDetail: addressDetailTextEditingController.text,
+            country: 1,
+            province: locationProvince.value.id,
+            district: locationDistrict.value.id,
+            wards: locationWard.value.id,
+            email: "hieudeptrai@gmail.com",
+            phone: phoneTextEditingController.text,
+            isDefaultPickup: isDefaultPickup.value,
+            isDefaultReturn: isDefaultReturn.value,
+          ));
+      Get.back();
+      SahaAlert.showSuccess(message: "Lưu thành công");
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+    isLoadingUpdate.value = false;
+  }
+
+  Future<void> deleteAddressStore() async {
+    isDeletingAddressStore.value = true;
+    try {
+      var res = await RepositoryManager.addressRepository
+          .deleteAddressStore(infoAddress.id);
+      Get.back();
+      SahaAlert.showSuccess(message: "Lưu thành công");
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+    isDeletingAddressStore.value = false;
+  }
 }

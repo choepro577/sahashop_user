@@ -608,6 +608,26 @@ class _SahaService implements SahaService {
   }
 
   @override
+  Future<EndComboResponse> getEndComboFromPage(storeCode, numberPage) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(numberPage, 'numberPage');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'page': numberPage};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/combos_end',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = EndComboResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<CreateComboResponse> createCombo(storeCode, body) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(body, 'body');
@@ -743,6 +763,50 @@ class _SahaService implements SahaService {
             baseUrl: baseUrl),
         data: _data);
     final value = AllAddressStoreResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<CreateAddressStoreResponse> updateAddressStore(
+      storeCode, idAddressStore, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(idAddressStore, 'idAddressStore');
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/store_address/$idAddressStore',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'PUT',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = CreateAddressStoreResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<DeleteAddressStoreResponse> deleteAddressStore(
+      storeCode, idAddressStore) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(idAddressStore, 'idAddressStore');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/store_address/$idAddressStore',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'DELETE',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = DeleteAddressStoreResponse.fromJson(_result.data);
     return value;
   }
 }

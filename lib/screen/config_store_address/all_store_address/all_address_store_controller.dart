@@ -22,4 +22,9 @@ class AllAddressStoreController extends GetxController {
     }
     isLoadingAddress.value = false;
   }
+
+  void refreshData() async {
+    listAddressStore = new RxList<InfoAddress>().obs;
+    await getAllAddressStore();
+  }
 }

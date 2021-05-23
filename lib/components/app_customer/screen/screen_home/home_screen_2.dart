@@ -1,19 +1,17 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/components/product_item/post_item_widget.dart';
 import 'package:sahashop_user/components/app_customer/components/product_item/product_item_widget.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_box_button.dart';
-import 'package:sahashop_user/components/saha_user/special_card/special_offer_card_type1.dart';
 import 'package:sahashop_user/controller/config_controller.dart';
 import 'package:sahashop_user/model/button.dart';
 import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/screen/home/widget/section_title.dart';
 import 'package:unicorndial/unicorndial.dart';
-
 import '../data_app_controller.dart';
-import '../data_widget_config.dart';
 
 class HomeScreenStyle2 extends StatefulWidget {
   final List<Category> categories;
@@ -39,9 +37,6 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
 
   ConfigController configController = Get.find();
   DataAppCustomerController dataAppCustomerController = Get.find();
-
-  @override
-  void initState() {}
 
   @override
   Widget build(BuildContext context) {
@@ -265,8 +260,7 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                             title: "Tin tức - bài viết",
                             titleEnd: "Tất cả",
                             pressTitleEnd: () {
-                              dataAppCustomerController
-                                  .toPostAllScreen();
+                              dataAppCustomerController.toPostAllScreen();
                             }),
                       ),
                       SizedBox(height: 10),

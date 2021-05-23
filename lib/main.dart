@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
                                   "ConfigScreen",
                                   (route) =>
                                       route.settings.name == "ConfigScreen");
-
+                              Get.back();
                               sahaDataController.changeStatusPreview(false);
                             },
                             child: Container(

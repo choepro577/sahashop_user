@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/model/info_address.dart';
 import 'package:sahashop_user/screen/config_store_address/all_store_address/all_address_store_controller.dart';
@@ -22,37 +23,38 @@ class AllAddressStoreScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Obx(
-          () => allAddressStoreController.isLoadingAddress.value == true
-              ? SahaLoadingWidget()
-              : Column(
-                  children: [
-                    ...List.generate(
-                        allAddressStoreController.listAddressStore.value.length,
-                        (index) => addressSave(
-                            context,
-                            allAddressStoreController
-                                .listAddressStore.value[index])),
-                    InkWell(
-                      onTap: () {
-                        Get.to(() => NewAddressStoreScreen());
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Thêm địa chỉ mới"),
-                            Icon(Icons.add),
-                          ],
-                        ),
-                      ),
+          () => SahaSimmer(
+            isLoading: allAddressStoreController.isLoadingAddress.value,
+            child: Column(
+              children: [
+                ...List.generate(
+                    allAddressStoreController.listAddressStore.value.length,
+                    (index) => addressSave(
+                        context,
+                        allAddressStoreController
+                            .listAddressStore.value[index])),
+                InkWell(
+                  onTap: () {
+                    Get.to(() => NewAddressStoreScreen());
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Thêm địa chỉ mới"),
+                        Icon(Icons.add),
+                      ],
                     ),
-                    Container(
-                      height: 8,
-                      color: Colors.grey[200],
-                    ),
-                  ],
+                  ),
                 ),
+                Container(
+                  height: 8,
+                  color: Colors.grey[200],
+                ),
+              ],
+            ),
+          ),
         ),
       ),
       bottomNavigationBar: Container(
@@ -71,7 +73,7 @@ class AllAddressStoreScreen extends StatelessWidget {
             //Get.back();
             Get.to(() => ConfigAddressStoreScreen(
                   infoAddress: infoAddress,
-                ));
+                )).then((value) => {allAddressStoreController.refreshData()});
           },
           child: Container(
             padding: EdgeInsets.all(10),
@@ -126,7 +128,7 @@ class AllAddressStoreScreen extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    infoAddress.isDefaultPickup == true
+                    infoAddress.isDefaultReturn == true
                         ? Text(
                             "[Địa chỉ trả hàng]",
                             style: TextStyle(
@@ -136,7 +138,7 @@ class AllAddressStoreScreen extends StatelessWidget {
                             ),
                           )
                         : Container(),
-                    infoAddress.isDefaultReturn == true
+                    infoAddress.isDefaultPickup == true
                         ? Text(
                             "[Địa chỉ lấy hàng]",
                             style: TextStyle(

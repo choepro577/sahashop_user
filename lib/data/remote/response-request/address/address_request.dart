@@ -7,6 +7,7 @@ class AddressRequest {
     this.district,
     this.wards,
     this.email,
+    this.phone,
     this.isDefaultPickup,
     this.isDefaultReturn,
   });
@@ -18,6 +19,7 @@ class AddressRequest {
   int district;
   int wards;
   String email;
+  String phone;
   bool isDefaultPickup;
   bool isDefaultReturn;
 
@@ -29,6 +31,7 @@ class AddressRequest {
         "district": district,
         "wards": wards,
         "email": email,
+        "phone": phone,
         "is_default_pickup": isDefaultPickup,
         "is_default_return": isDefaultReturn,
       };

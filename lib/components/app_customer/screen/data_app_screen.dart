@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_widget_config.dart';
+import 'package:sahashop_user/components/app_customer/screen/navigation_scrren/navigation_screen.dart';
 import 'package:sahashop_user/controller/config_controller.dart';
 import 'data_app_controller.dart';
 
@@ -25,11 +26,10 @@ class _LoadAppScreenState extends State<LoadAppScreen> {
   }
 
   Future<void> loadInit(BuildContext context) async {
-
     await Future.delayed(Duration(seconds: 1));
     isInit = true;
 
-    dataAppCustomerController.toHomeScreen().then((value) {
+    Get.to(() => NavigationScreen()).then((value) {
       Get.back();
     });
   }
@@ -66,4 +66,3 @@ class _LoadAppScreenState extends State<LoadAppScreen> {
     );
   }
 }
-

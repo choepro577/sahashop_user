@@ -127,23 +127,23 @@ class _MyComboScreenState extends State<MyComboScreen>
 
           // if (mounted) setState(() {});
           if (indexState == 2) {
-            //  myComboController.loadInitEndVoucher();
+            myComboController.loadInitEndCombo();
           } else {
             myComboController.refreshData();
           }
           _refreshController.refreshCompleted();
         },
-        // onLoading: () async {
-        //   await Future.delayed(Duration(milliseconds: 300));
-        //   if (indexState == 2) {
-        //     if (!myComboController.isEndPageVoucher) {
-        //       myComboController.loadMoreEndVoucher();
-        //       _refreshController.loadComplete();
-        //     } else {
-        //       _refreshController.loadComplete();
-        //     }
-        //   }
-        // },
+        onLoading: () async {
+          await Future.delayed(Duration(milliseconds: 300));
+          if (indexState == 2) {
+            if (!myComboController.isEndPageCombo) {
+              myComboController.loadMoreEndCombo();
+              _refreshController.loadComplete();
+            } else {
+              _refreshController.loadComplete();
+            }
+          }
+        },
         child: Obx(
           () => myComboController
                   .listAllSaveStateBefore.value[indexState].isNotEmpty
@@ -303,10 +303,10 @@ class _MyComboScreenState extends State<MyComboScreen>
                       children: [
                         InkWell(
                           onTap: () {
-                            // Get.to(() => UpdateMyVoucherScreen(
-                            //       voucher: listComboState,
-                            //       onlyWatch: true,
-                            //     ));
+                            Get.to(() => UpdateMyComboScreen(
+                                  combo: listComboState,
+                                  onlyWatch: true,
+                                ));
                           },
                           child: Container(
                             height: 35,
@@ -362,8 +362,8 @@ class _MyComboScreenState extends State<MyComboScreen>
                               )
                             : InkWell(
                                 onTap: () {
-                                  // myVoucherController
-                                  //     .deleteVoucher(listComboState.id);
+                                  myComboController
+                                      .deleteCombo(listComboState.id);
                                 },
                                 child: Container(
                                   height: 35,
