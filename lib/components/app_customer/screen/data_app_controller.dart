@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/app_customer/repository/repository_customer.dart';
+import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
+import 'package:sahashop_user/components/utils/customer_info.dart';
 import 'package:sahashop_user/controller/config_controller.dart';
 import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/model/category_post.dart';
@@ -19,6 +21,9 @@ class DataAppCustomerController extends GetxController {
   CategoryPost categoryPostCurrent;
   Post postCurrent;
   HomeData homeData = HomeData();
+
+  var isLogin = false.obs;
+
   DataAppCustomerController() {
     productCurrent = LIST_PRODUCT_EXAMPLE[0];
   }
@@ -28,6 +33,25 @@ class DataAppCustomerController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     getHomeData();
+    checkLogin();
+  }
+
+  Future<void> checkLogin() async {
+    if (await CustomerInfo().hasLogged()) {
+      getInfoCustomer();
+    } else {
+      // noLogin(context);
+    }
+  }
+
+  Future<void> getInfoCustomer() async {
+    try {
+      var res = await CustomerRepositoryManager.infoCustomerRepository
+          .getInfoCustomer();
+      isLogin.value = true;
+    } catch (err) {
+      // SahaAlert.showError(message: err.toString());
+    }
   }
 
   void toSearchScreen() {

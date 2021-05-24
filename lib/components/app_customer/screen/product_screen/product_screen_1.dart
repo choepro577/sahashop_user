@@ -128,7 +128,8 @@ class _ProductScreen1State extends State<ProductScreen1> {
                                   ),
                                 ),
                                 const SizedBox(width: 5),
-                                SvgPicture.asset("assets/icons/star.svg"),
+                                SvgPicture.asset(
+                                    "assets/icons/star_around.svg"),
                               ],
                             ),
                           )

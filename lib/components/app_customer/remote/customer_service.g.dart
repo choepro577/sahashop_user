@@ -246,4 +246,64 @@ class _CustomerService implements CustomerService {
     final value = OrdersResponse.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<RegisterResponse> registerAccount(storeCode, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/register',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = RegisterResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<LoginResponse> loginAccount(storeCode, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>('$storeCode/login',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = LoginResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<InfoCustomerResponse> getInfoCustomer(storeCode) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/profile',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = InfoCustomerResponse.fromJson(_result.data);
+    return value;
+  }
 }

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 import 'package:get/get.dart' as get2;
 import 'package:sahashop_user/components/saha_user/dialog/dialog.dart';
+import 'package:sahashop_user/components/utils/customer_info.dart';
 import 'package:sahashop_user/screen/login/loginScreen.dart';
 import 'package:sahashop_user/utils/msg_code.dart';
 import 'package:sahashop_user/utils/user_info.dart';
@@ -14,13 +15,15 @@ class AuthInterceptor extends InterceptorsWrapper {
 
   @override
   Future onRequest(RequestOptions options) {
-    if (UserInfo().getToken() != null) {
-      options.headers.putIfAbsent("token", () => UserInfo().getToken());
+    if (CustomerInfo().getToken() != null) {
+      options.headers
+          .putIfAbsent("customer_token", () => CustomerInfo().getToken());
     }
     print('Header: ${options.headers}');
-    // print('Request: ${options.data}');
+    print('Request: ${options.data}');
     // print('Param: ${options.queryParameters}');
     print('Link: ${options.uri.toString()}');
+
     options.data = new FormData.fromMap(options.data);
     return super.onRequest(options);
   }
@@ -67,13 +70,13 @@ class AuthInterceptor extends InterceptorsWrapper {
     print('------Response: ${response.data}');
 
     if (response.data["code"] == 401) {
-      UserInfo().setToken(null);
-      SahaDialogApp.showDialogNotificationOneButton(
-          mess: "Hết phiên đăng nhập mời đăng nhập lại",
-          barrierDismissible: false,
-          onClose: () {
-            get2.Get.offAll(() => LoginScreen());
-          });
+      CustomerInfo().setToken(null);
+      // SahaDialogApp.showDialogNotificationOneButton(
+      //     mess: "Hết phiên đăng nhập mời đăng nhập lại",
+      //     barrierDismissible: false,
+      //     onClose: () {
+      //       get2.Get.offAll(() => LoginScreen());
+      //     });
     }
 
     if (response.statusCode != 200 && response.data["success"] == false) {

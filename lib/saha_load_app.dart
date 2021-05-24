@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:sahashop_user/components/app_customer/remote/customer_service_manager.dart';
-import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/load_data/load_login.dart';
 import 'package:sahashop_user/screen/home/home_screen.dart';
 import 'package:sahashop_user/screen/login/loginScreen.dart';
@@ -54,22 +53,20 @@ class _SahaMainScreenState extends State<SahaMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.white
-          // gradient: LinearGradient(
-          //   begin: Alignment.topRight,
-          //   end: Alignment.bottomLeft,
-          //   stops: [0.1, 0.5, 0.7, 0.9],
-          //   colors: [
-          //    SahaPrimaryColor,
-          //     SahaPrimaryLightColor
-          //   ],
-          // ),
-        ),
+        decoration: BoxDecoration(color: Colors.white
+            // gradient: LinearGradient(
+            //   begin: Alignment.topRight,
+            //   end: Alignment.bottomLeft,
+            //   stops: [0.1, 0.5, 0.7, 0.9],
+            //   colors: [
+            //    SahaPrimaryColor,
+            //     SahaPrimaryLightColor
+            //   ],
+            // ),
+            ),
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
