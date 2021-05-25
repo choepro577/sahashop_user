@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -11,7 +12,6 @@ import 'package:sahashop_user/model/theme_model.dart';
 import 'package:sahashop_user/screen/config_app/screens_config/font_type/font_data.dart';
 import 'package:sahashop_user/utils/color.dart';
 import 'package:sahashop_user/utils/user_info.dart';
-import 'package:unicorndial/unicorndial.dart';
 
 class ConfigController extends GetxController {
   ConfigApp configApp = ConfigApp();
@@ -19,7 +19,7 @@ class ConfigController extends GetxController {
   var indexTab = 0.obs;
   var isLoadingGet = false.obs;
   var isLoadingCreate = false.obs;
-  var contactButton = RxList<UnicornButton>();
+  var contactButton = RxList<SpeedDialChild>();
 
   @override
   void onInit() {
@@ -110,7 +110,6 @@ class ConfigController extends GetxController {
       configApp.isShowIconZalo = data.isShowIconZalo ?? false;
       configApp.carouselAppImages = data.carouselAppImages;
       updateTheme();
-      addButton();
       isLoadingGet.value = false;
       return true;
     } catch (err) {
@@ -131,39 +130,41 @@ class ConfigController extends GetxController {
     isLoadingCreate.value = false;
   }
 
-  void addButton() {
-    if (configApp.isShowIconHotline == true) {
-      contactButton.add(UnicornButton(
-          hasLabel: true,
-          labelText: configApp.phoneNumberHotline ?? "",
-          currentButton: FloatingActionButton(
-            heroTag: "hotline",
-            backgroundColor: currentTheme.value.primaryColor,
-            mini: true,
-            child: Icon(Icons.phone),
-            onPressed: () {},
-          )));
-    }
-    if (configApp.isShowIconEmail == true) {
-      contactButton.add(UnicornButton(
-          hasLabel: true,
-          labelText: configApp.contactEmail ?? "",
-          currentButton: FloatingActionButton(
-            heroTag: "email",
-            backgroundColor: currentTheme.value.primaryColor,
-            mini: true,
-            child: Icon(Icons.email),
-            onPressed: () {},
-          )));
-    }
-    if (configApp.isShowIconFacebook == true) {
-      contactButton.add(UnicornButton(
-          hasLabel: true,
-          labelText: configApp.idFacebook ?? "",
-          currentButton: FloatingActionButton(
-            heroTag: "facebook",
-            backgroundColor: currentTheme.value.primaryColor,
-            mini: true,
+  void addButton(BuildContext context) {
+    if (contactButton.isEmpty) {
+      if (configApp.isShowIconHotline == true) {
+        contactButton.add(
+          SpeedDialChild(
+            child: Icon(
+              Icons.phone,
+              color: Theme.of(context).primaryColor,
+            ),
+            backgroundColor: Colors.white,
+            label: configApp.phoneNumberHotline.isEmpty
+                ? null
+                : configApp.phoneNumberHotline,
+            labelStyle: TextStyle(fontSize: 14.0),
+            onTap: () => print('FIRST CHILD'),
+            onLongPress: () => print('FIRST CHILD LONG PRESS'),
+          ),
+        );
+      }
+      if (configApp.isShowIconEmail == true) {
+        contactButton.add(
+          SpeedDialChild(
+            child: Icon(Icons.email, color: Theme.of(context).primaryColor),
+            backgroundColor: Colors.white,
+            label:
+                configApp.contactEmail.isEmpty ? null : configApp.contactEmail,
+            labelStyle: TextStyle(fontSize: 14.0),
+            onTap: () => print('FIRST CHILD'),
+            onLongPress: () => print('FIRST CHILD LONG PRESS'),
+          ),
+        );
+      }
+      if (configApp.isShowIconFacebook == true) {
+        contactButton.add(
+          SpeedDialChild(
             child: Container(
               padding: EdgeInsets.all(12),
               height: 40,
@@ -174,17 +175,17 @@ class ConfigController extends GetxController {
               ),
               child: SvgPicture.asset("assets/icons/facebook-2.svg"),
             ),
-            onPressed: () {},
-          )));
-    }
-    if (configApp.isShowIconZalo == true) {
-      contactButton.add(UnicornButton(
-          hasLabel: true,
-          labelText: configApp.idZalo ?? "",
-          currentButton: FloatingActionButton(
-            heroTag: "zalo",
-            backgroundColor: currentTheme.value.primaryColor,
-            mini: true,
+            backgroundColor: Colors.white,
+            label: configApp.idFacebook.isEmpty ? null : configApp.idFacebook,
+            labelStyle: TextStyle(fontSize: 14.0),
+            onTap: () => print('FIRST CHILD'),
+            onLongPress: () => print('FIRST CHILD LONG PRESS'),
+          ),
+        );
+      }
+      if (configApp.isShowIconZalo == true) {
+        contactButton.add(
+          SpeedDialChild(
             child: Container(
               height: 40,
               width: 40,
@@ -194,13 +195,19 @@ class ConfigController extends GetxController {
               ),
               child: SvgPicture.asset("assets/icons/zalo.svg"),
             ),
-            onPressed: () {},
-          )));
+            backgroundColor: Colors.white,
+            label: configApp.idZalo.isEmpty ? null : configApp.idZalo,
+            labelStyle: TextStyle(fontSize: 14.0),
+            onTap: () => print('FIRST CHILD'),
+            onLongPress: () => print('FIRST CHILD LONG PRESS'),
+          ),
+        );
+      }
     }
   }
 
   void deleteContactButton() {
-    contactButton = RxList<UnicornButton>();
+    contactButton = new RxList<SpeedDialChild>();
   }
 
   void openBoxHiveCurrentStore() {

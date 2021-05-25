@@ -23,17 +23,16 @@ class ProductItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 250,
+      height: 270,
       width: width,
       child: Stack(
         children: [
           Container(
             padding: EdgeInsets.only(left: 4, right: 4, top: 4, bottom: 4),
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-            ),
             child: Container(
-              color: Colors.white,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.grey[400])),
               child: Stack(
                 children: [
                   InkWell(
@@ -69,7 +68,7 @@ class ProductItemWidget extends StatelessWidget {
                                       CachedNetworkImage(
                                     fit: BoxFit.cover,
                                     imageUrl:
-                                        "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
+                                        "https://scontent-sin6-2.xx.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=uUCcbPvUrGYAX89oI2i&_nc_ht=scontent-sin6-2.xx&oh=e8ad14caf2ed844857e6e4c8bf7d3ae3&oe=60D25ECA",
                                   ),
                                 ),
                               ), //product.images[0].imageUrl
@@ -97,7 +96,7 @@ class ProductItemWidget extends StatelessWidget {
                                             Text(
                                               product.name,
                                               style: TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 13,
                                                 color: Colors.black,
                                               ),
                                               maxLines: 2,
@@ -118,61 +117,76 @@ class ProductItemWidget extends StatelessWidget {
                                     width: 20,
                                     color: Colors.black87,
                                   )
-                                : Row(
-                                    children: [
-                                      product.productDiscount == null
-                                          ? Container()
-                                          : Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 5.0, right: 5.0),
-                                              child: Text(
-                                                "${FormatMoney.toVND(product.price)}",
-                                                style: TextStyle(
-                                                    decoration: TextDecoration
-                                                        .lineThrough,
-                                                    color:
-                                                        product.productDiscount ==
-                                                                null
-                                                            ? Theme.of(context)
-                                                                .primaryColor
-                                                            : Colors.grey,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize:
-                                                        product.productDiscount ==
-                                                                null
-                                                            ? 16
-                                                            : 13),
+                                : Container(
+                                    height: 35,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        product.productDiscount == null
+                                            ? Container()
+                                            : Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 5.0, right: 5.0),
+                                                child: Text(
+                                                  "${FormatMoney.toVND(product.price)}",
+                                                  style: TextStyle(
+                                                      decoration: TextDecoration
+                                                          .lineThrough,
+                                                      color:
+                                                          product.productDiscount ==
+                                                                  null
+                                                              ? Theme.of(
+                                                                      context)
+                                                                  .primaryColor
+                                                              : Colors.grey,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize:
+                                                          product.productDiscount ==
+                                                                  null
+                                                              ? 14
+                                                              : 10),
+                                                ),
                                               ),
-                                            ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 5.0, right: 5.0),
-                                        child: Text(
-                                          product.productDiscount == null
-                                              ? "${FormatMoney.toVND(product.price)}"
-                                              : "${FormatMoney.toVND(product.productDiscount.discountPrice.toInt())}",
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 16),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 5.0, right: 5.0),
+                                          child: Text(
+                                            product.productDiscount == null
+                                                ? "${FormatMoney.toVND(product.price)}"
+                                                : "${FormatMoney.toVND(product.productDiscount.discountPrice.toInt())}",
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14),
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                             Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 5.0, right: 5.0, bottom: 5.0),
-                              child: InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  height: 25,
-                                  width: 25,
-                                  child: SvgPicture.asset(
-                                    "assets/icons/gift_icon.svg",
-                                    color: true
-                                        ? Theme.of(context).primaryColor
-                                        : Color(0xFFDBDEE4),
+                              padding: const EdgeInsets.only(right: 10),
+                              child: Container(
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Theme.of(context).primaryColor),
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    height: 15,
+                                    width: 15,
+                                    child: SvgPicture.asset(
+                                      "assets/icons/cart_icon.svg",
+                                      color: true
+                                          ? Theme.of(context)
+                                              .primaryTextTheme
+                                              .headline6
+                                              .color
+                                          : Color(0xFFDBDEE4),
+                                    ),
                                   ),
                                 ),
                               ),

@@ -7,6 +7,16 @@ class ProductController extends GetxController {
   var quantity = 1.obs;
   var listOrder = RxList<Order>().obs;
   var currentIndexListOrder = 0.obs;
+  var currentImage = 0.obs;
+  var isSeeMore = false.obs;
+
+  void changeIndexImage(int value) {
+    currentImage.value = value;
+  }
+
+  void onchangeSeeMore() {
+    isSeeMore.value = !isSeeMore.value;
+  }
 
   void increaseItem() {
     quantity = quantity + 1;

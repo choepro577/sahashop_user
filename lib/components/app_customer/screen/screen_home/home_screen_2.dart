@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/components/product_item/post_item_widget.dart';
 import 'package:sahashop_user/components/app_customer/components/product_item/product_item_widget.dart';
@@ -10,7 +10,6 @@ import 'package:sahashop_user/controller/config_controller.dart';
 import 'package:sahashop_user/model/button.dart';
 import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/screen/home/widget/section_title.dart';
-import 'package:unicorndial/unicorndial.dart';
 import '../data_app_controller.dart';
 
 class HomeScreenStyle2 extends StatefulWidget {
@@ -49,26 +48,33 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
       });
     }
 
+    configController.addButton(context);
+
     return Scaffold(
-      floatingActionButton: configController.contactButton.isEmpty
-          ? Container()
-          : UnicornDialer(
-              backgroundColor: Color.fromRGBO(255, 255, 255, 0.6),
-              parentButtonBackground: Theme.of(context).primaryColor,
-              orientation: UnicornOrientation.VERTICAL,
-              parentButton: Icon(Icons.phone),
-              childButtons: configController.contactButton ??
-                  UnicornButton(
-                      hasLabel: true,
-                      labelText:
-                          configController.configApp.phoneNumberHotline ?? "",
-                      currentButton: FloatingActionButton(
-                        heroTag: "main",
-                        backgroundColor: Colors.blue,
-                        mini: true,
-                        child: Icon(Icons.add),
-                        onPressed: () {},
-                      ))),
+      floatingActionButton: configController.contactButton.isNotEmpty
+          ? SpeedDial(
+              marginEnd: 18,
+              marginBottom: 20,
+              icon: Icons.phone,
+              activeIcon: Icons.read_more_sharp,
+              buttonSize: 56.0,
+              visible: true,
+              closeManually: false,
+              renderOverlay: false,
+              curve: Curves.bounceIn,
+              overlayColor: Colors.grey[300],
+              overlayOpacity: 0.5,
+              onOpen: () => print('OPENING DIAL'),
+              onClose: () => print('DIAL CLOSED'),
+              tooltip: 'Speed Dial',
+              heroTag: 'speed-dial-hero-tag',
+              backgroundColor: Colors.white,
+              foregroundColor: Theme.of(context).primaryColor,
+              elevation: 8.0,
+              shape: CircleBorder(),
+              children: configController.contactButton,
+            )
+          : Container(),
       body: SingleChildScrollView(
         child: Column(
           children: [

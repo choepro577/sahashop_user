@@ -95,7 +95,7 @@ class SahaStringUtils {
     return !isNotEmpty(s);
   }
 
-  final CURRENCY_FORMAT = new NumberFormat("#,##0 đ", "en_US");
+  final CURRENCY_FORMAT = new NumberFormat('#,##0', 'ID');
 
   final UNIT_FORMAT = new NumberFormat("#,##0", "en_US");
 
