@@ -72,6 +72,10 @@ abstract class CustomerService {
   Future<RegisterResponse> registerAccount(
       @Path() String storeCode, @Body() Map<String, dynamic> body);
 
+  @PUT("{storeCode}/profile")
+  Future<InfoCustomerResponse> updateAccount(
+      @Path() String storeCode, @Body() Map<String, dynamic> body);
+
   @POST("{storeCode}/login")
   Future<LoginResponse> loginAccount(
       @Path() String storeCode, @Body() Map<String, dynamic> body);

@@ -56,19 +56,9 @@ class InfoCustomer {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "store_id": storeId,
-        "username": username,
-        "phone_number": phoneNumber,
-        "phone_verified_at": phoneVerifiedAt,
-        "email": email,
-        "email_verified_at": emailVerifiedAt,
         "name": name,
-        "date_of_birth": dateOfBirth,
+        "date_of_birth": dateOfBirth.toIso8601String(),
         "avatar_image": avatarImage,
-        "score": score,
         "sex": sex,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
       };
 }

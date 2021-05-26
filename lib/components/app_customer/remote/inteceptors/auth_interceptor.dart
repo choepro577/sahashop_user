@@ -21,10 +21,11 @@ class AuthInterceptor extends InterceptorsWrapper {
     }
     print('Header: ${options.headers}');
     print('Request: ${options.data}');
-    // print('Param: ${options.queryParameters}');
     print('Link: ${options.uri.toString()}');
 
-    options.data = new FormData.fromMap(options.data);
+    if (options.method == 'POST') {
+      options.data = new FormData.fromMap(options.data);
+    }
     return super.onRequest(options);
   }
 

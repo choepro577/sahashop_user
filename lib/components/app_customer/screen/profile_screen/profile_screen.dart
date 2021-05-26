@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/screen/config_profile_screen/config_profile_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/login/login_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/register/register_customer_screen.dart';
@@ -67,14 +68,65 @@ class ProfileScreen extends StatelessWidget {
                               SizedBox(
                                 width: 20,
                               ),
-                              Container(
-                                height: 70,
-                                width: 70,
-                                child: ClipRRect(
-                                  child: CachedNetworkImage(
-                                      imageUrl:
-                                          "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/118256441_2768245916792384_8843635159388304315_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=c9bnYRU10ZMAX9acx-T&_nc_ht=scontent.fvca1-1.fna&oh=db0cb804982586ff6f4d8a1ffd564860&oe=60D076EA"),
-                                  borderRadius: BorderRadius.circular(3000),
+                              InkWell(
+                                onTap: () {
+                                  Get.to(() => ConfigProfileScreen(
+                                            infoCustomer:
+                                                dataAppCustomerController
+                                                    .infoCustomer.value,
+                                          ))
+                                      .then((value) => {
+                                            dataAppCustomerController
+                                                .getInfoCustomer()
+                                          });
+                                },
+                                child: Container(
+                                  height: 70,
+                                  width: 70,
+                                  child: ClipRRect(
+                                    child: Stack(
+                                      alignment: AlignmentDirectional.center,
+                                      children: [
+                                        CachedNetworkImage(
+                                          height: 70,
+                                          width: 70,
+                                          fit: BoxFit.cover,
+                                          imageUrl: dataAppCustomerController
+                                                  .infoCustomer
+                                                  .value
+                                                  .avatarImage ??
+                                              "",
+                                          errorWidget: (context, url, error) =>
+                                              Image.asset(
+                                            "assets/saha_loading.png",
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        dataAppCustomerController.infoCustomer
+                                                    .value.avatarImage ==
+                                                null
+                                            ? Positioned(
+                                                bottom: 1,
+                                                child: Container(
+                                                  height: 20,
+                                                  width: 100,
+                                                  color: Colors.black45,
+                                                  child: Center(
+                                                      child: Text(
+                                                    "Sửa",
+                                                    style: TextStyle(
+                                                        color: Theme.of(context)
+                                                            .primaryTextTheme
+                                                            .headline6
+                                                            .color),
+                                                  )),
+                                                ),
+                                              )
+                                            : Container(),
+                                      ],
+                                    ),
+                                    borderRadius: BorderRadius.circular(3000),
+                                  ),
                                 ),
                               ),
                               SizedBox(
@@ -84,7 +136,9 @@ class ProfileScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Hieudeptrai",
+                                    dataAppCustomerController
+                                            .infoCustomer.value.name ??
+                                        "Chưa có tên",
                                     style: TextStyle(
                                       color: Theme.of(context)
                                           .primaryTextTheme
@@ -98,7 +152,7 @@ class ProfileScreen extends StatelessWidget {
                                     height: 10,
                                   ),
                                   Container(
-                                    height: 18,
+                                    height: 20,
                                     width: 150,
                                     decoration: BoxDecoration(
                                         color: Colors.white,
@@ -424,7 +478,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               Container(
                 height: 8,
-                color: Colors.grey[200],
+                color: Colors.grey[100],
               ),
               Padding(
                 padding: const EdgeInsets.all(10.0),

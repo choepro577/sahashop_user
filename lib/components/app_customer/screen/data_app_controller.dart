@@ -8,6 +8,7 @@ import 'package:sahashop_user/controller/config_controller.dart';
 import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/model/category_post.dart';
 import 'package:sahashop_user/model/home_data.dart';
+import 'package:sahashop_user/model/info_customer.dart';
 import 'package:sahashop_user/model/post.dart';
 import 'package:sahashop_user/model/product.dart';
 import 'category_post_screen/category_post_screen_1.dart';
@@ -23,6 +24,7 @@ class DataAppCustomerController extends GetxController {
   HomeData homeData = HomeData();
 
   var isLogin = false.obs;
+  var infoCustomer = InfoCustomer().obs;
 
   DataAppCustomerController() {
     productCurrent = LIST_PRODUCT_EXAMPLE[0];
@@ -48,6 +50,7 @@ class DataAppCustomerController extends GetxController {
     try {
       var res = await CustomerRepositoryManager.infoCustomerRepository
           .getInfoCustomer();
+      infoCustomer.value = res.data;
       isLogin.value = true;
     } catch (err) {
       // SahaAlert.showError(message: err.toString());

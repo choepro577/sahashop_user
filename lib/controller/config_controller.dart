@@ -12,6 +12,7 @@ import 'package:sahashop_user/model/theme_model.dart';
 import 'package:sahashop_user/screen/config_app/screens_config/font_type/font_data.dart';
 import 'package:sahashop_user/utils/color.dart';
 import 'package:sahashop_user/utils/user_info.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ConfigController extends GetxController {
   ConfigApp configApp = ConfigApp();
@@ -130,6 +131,14 @@ class ConfigController extends GetxController {
     isLoadingCreate.value = false;
   }
 
+  Future<void> makePhoneCall(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   void addButton(BuildContext context) {
     if (contactButton.isEmpty) {
       if (configApp.isShowIconHotline == true) {
@@ -144,7 +153,10 @@ class ConfigController extends GetxController {
                 ? null
                 : configApp.phoneNumberHotline,
             labelStyle: TextStyle(fontSize: 14.0),
-            onTap: () => print('FIRST CHILD'),
+            labelBackgroundColor: Colors.white,
+            onTap: () => makePhoneCall(
+              'tel:+214324234',
+            ),
             onLongPress: () => print('FIRST CHILD LONG PRESS'),
           ),
         );
@@ -157,6 +169,7 @@ class ConfigController extends GetxController {
             label:
                 configApp.contactEmail.isEmpty ? null : configApp.contactEmail,
             labelStyle: TextStyle(fontSize: 14.0),
+            labelBackgroundColor: Colors.white,
             onTap: () => print('FIRST CHILD'),
             onLongPress: () => print('FIRST CHILD LONG PRESS'),
           ),
@@ -178,6 +191,7 @@ class ConfigController extends GetxController {
             backgroundColor: Colors.white,
             label: configApp.idFacebook.isEmpty ? null : configApp.idFacebook,
             labelStyle: TextStyle(fontSize: 14.0),
+            labelBackgroundColor: Colors.white,
             onTap: () => print('FIRST CHILD'),
             onLongPress: () => print('FIRST CHILD LONG PRESS'),
           ),
@@ -198,6 +212,7 @@ class ConfigController extends GetxController {
             backgroundColor: Colors.white,
             label: configApp.idZalo.isEmpty ? null : configApp.idZalo,
             labelStyle: TextStyle(fontSize: 14.0),
+            labelBackgroundColor: Colors.white,
             onTap: () => print('FIRST CHILD'),
             onLongPress: () => print('FIRST CHILD LONG PRESS'),
           ),
