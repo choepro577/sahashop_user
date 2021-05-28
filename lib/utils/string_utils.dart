@@ -11,6 +11,37 @@ class SahaStringUtils {
     return _singleton;
   }
 
+  String displayTimeAgoFromTime(DateTime time) {
+    final int diffInHours = DateTime.now().difference(time).inHours;
+    String timeAgo = '';
+    String timeUnit = '';
+    int timeValue = 0;
+    if (diffInHours < 1) {
+      final diffInMinutes = DateTime.now().difference(time).inMinutes;
+      timeValue = diffInMinutes;
+      timeUnit = 'phút';
+    } else if (diffInHours < 24) {
+      timeValue = diffInHours;
+      timeUnit = 'giờ';
+    } else if (diffInHours >= 24 && diffInHours < 24 * 7) {
+      timeValue = (diffInHours / 24).floor();
+      timeUnit = 'ngày';
+    } else if (diffInHours >= 24 * 7 && diffInHours < 24 * 30) {
+      timeValue = (diffInHours / (24 * 7)).floor();
+      timeUnit = 'tuần';
+    } else if (diffInHours >= 24 * 30 && diffInHours < 24 * 12 * 30) {
+      timeValue = (diffInHours / (24 * 30)).floor();
+      timeUnit = 'tháng';
+    } else {
+      timeValue = (diffInHours / (24 * 365)).floor();
+      timeUnit = 'năm';
+    }
+
+    timeAgo = timeValue.toString() + ' ' + timeUnit;
+
+    return timeAgo + ' trước';
+  }
+
   String convertToMoney(dynamic price) {
     if (price is String) {
       price = double.parse(price);

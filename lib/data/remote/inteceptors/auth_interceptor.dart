@@ -46,7 +46,8 @@ class AuthInterceptor extends InterceptorsWrapper {
           break;
         case DioErrorType.RESPONSE:
           if (dioError?.response?.statusCode == 429) {
-            return errorMess('Bạn gửi quá nhiều yêu cầu xin thử lại sau 1 phút');
+            return errorMess(
+                'Bạn gửi quá nhiều yêu cầu xin thử lại sau 1 phút');
           }
 
           return errorMess(

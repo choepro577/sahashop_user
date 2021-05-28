@@ -809,4 +809,111 @@ class _SahaService implements SahaService {
     final value = DeleteAddressStoreResponse.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<AllShipmentResponse> getAllShipmentStore(storeCode) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/shipments',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = AllShipmentResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<AddTokenShipmentResponse> addTokenShipment(
+      storeCode, idShipment, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(idShipment, 'idShipment');
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/shipments/$idShipment',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'PUT',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = AddTokenShipmentResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<AllChatUserResponse> getAllChatUser(storeCode, numberPage) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(numberPage, 'numberPage');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'page': numberPage};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/message_customers',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = AllChatUserResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<AllMessageResponse> getAllMessageUser(
+      storeCode, idCustomer, numberPage) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(idCustomer, 'idCustomer');
+    ArgumentError.checkNotNull(numberPage, 'numberPage');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'page': numberPage};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/message_customers/$idCustomer',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = AllMessageResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<SendMessageResponse> sendMessageToCustomer(
+      storeCode, idCustomer, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(idCustomer, 'idCustomer');
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/message_customers/$idCustomer',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = SendMessageResponse.fromJson(_result.data);
+    return value;
+  }
 }

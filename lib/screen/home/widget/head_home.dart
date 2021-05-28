@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/const/constant.dart';
-import 'package:sahashop_user/controller/config_controller.dart';
-import 'package:sahashop_user/screen/config_app/config_screen.dart';
+import 'package:sahashop_user/screen/chat/all_message_user_screen.dart';
 import 'package:sahashop_user/screen/config_store_address/config_store_address_screen.dart';
 import 'package:sahashop_user/screen/home/choose_store/choose_store.dart';
 import 'package:sahashop_user/screen/inventory/inventory_screen.dart';
 import 'package:sahashop_user/screen/maketing_chanel/marketing_chanel_screen.dart';
-import 'package:sahashop_user/screen/posts/post/posts_screen.dart';
 import 'package:sahashop_user/screen/posts/screen.dart';
-import '../../../saha_data_controller.dart';
 import '../home_controller.dart';
 
 class HeadHome extends StatelessWidget {
@@ -66,7 +63,7 @@ class HeadHome extends StatelessWidget {
         ),
         Obx(() => AnimatedContainer(
               width: double.infinity,
-              height: homeController.isExpansion.value ? 0 : 400,
+              height: homeController.isExpansion.value ? 0 : 470,
               duration: Duration(milliseconds: 500),
               curve: Curves.easeInQuad,
               child: SingleChildScrollView(
@@ -118,6 +115,13 @@ class HeadHome extends StatelessWidget {
                               text: 'Tin tức - Bài viết',
                               press: () {
                                 Get.to(() => PostNaviScreen());
+                              },
+                            ),
+                            ItemStoreView(
+                              icon: 'assets/icons/gift_icon.svg',
+                              text: 'Chat',
+                              press: () {
+                                Get.to(() => AllMessageScreen());
                               },
                             ),
                           ]),

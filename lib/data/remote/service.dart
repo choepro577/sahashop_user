@@ -1,10 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:sahashop_user/data/remote/response-request/address/add_token_shipment_response.dart';
 import 'package:sahashop_user/data/remote/response-request/address/address_respone.dart';
 import 'package:sahashop_user/data/remote/response-request/address/all_address_store_response.dart';
+import 'package:sahashop_user/data/remote/response-request/address/all_shipment_response.dart';
 import 'package:sahashop_user/data/remote/response-request/address/create_address_store_response.dart';
 import 'package:sahashop_user/data/remote/response-request/address/delete_address_store_response.dart';
 import 'package:sahashop_user/data/remote/response-request/auth/login_response.dart';
+import 'package:sahashop_user/data/remote/response-request/chat/all_chat_user_reponse.dart';
+import 'package:sahashop_user/data/remote/response-request/chat/all_message_response.dart';
+import 'package:sahashop_user/data/remote/response-request/chat/send_message_response.dart';
 import 'package:sahashop_user/data/remote/response-request/config_ui/app_theme_response.dart';
 import 'package:sahashop_user/data/remote/response-request/config_ui/create_app_theme_response.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/create_combo_reponse.dart';
@@ -188,4 +193,31 @@ abstract class SahaService {
   @DELETE("store/{storeCode}/store_address/{idAddressStore}")
   Future<DeleteAddressStoreResponse> deleteAddressStore(
       @Path() String storeCode, @Path() int idAddressStore);
+
+  @GET("store/{storeCode}/shipments")
+  Future<AllShipmentResponse> getAllShipmentStore(@Path() String storeCode);
+
+  @PUT("store/{storeCode}/shipments/{idShipment}")
+  Future<AddTokenShipmentResponse> addTokenShipment(@Path() String storeCode,
+      @Path() int idShipment, @Body() Map<String, dynamic> body);
+
+  @GET("store/{storeCode}/message_customers")
+  Future<AllChatUserResponse> getAllChatUser(
+    @Path() String storeCode,
+    @Query("page") int numberPage,
+  );
+
+  @GET("store/{storeCode}/message_customers/{idCustomer}")
+  Future<AllMessageResponse> getAllMessageUser(
+    @Path() String storeCode,
+    @Path() int idCustomer,
+    @Query("page") int numberPage,
+  );
+
+  @POST("store/{storeCode}/message_customers/{idCustomer}")
+  Future<SendMessageResponse> sendMessageToCustomer(
+    @Path() String storeCode,
+    @Path() int idCustomer,
+    @Body() Map<String, dynamic> body,
+  );
 }

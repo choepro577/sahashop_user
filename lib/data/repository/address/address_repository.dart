@@ -1,10 +1,13 @@
+import 'package:sahashop_user/data/remote/response-request/address/add_token_shipment_response.dart';
 import 'package:sahashop_user/data/remote/response-request/address/address_request.dart';
 import 'package:sahashop_user/data/remote/response-request/address/address_respone.dart';
 import 'package:sahashop_user/data/remote/response-request/address/all_address_store_response.dart';
+import 'package:sahashop_user/data/remote/response-request/address/all_shipment_response.dart';
 import 'package:sahashop_user/data/remote/response-request/address/create_address_store_response.dart';
 import 'package:sahashop_user/data/remote/response-request/address/delete_address_store_response.dart';
 import 'package:sahashop_user/data/remote/saha_service_manager.dart';
 import 'package:sahashop_user/data/repository/handle_error.dart';
+import 'package:sahashop_user/model/shipment.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class AddressRepository {
@@ -80,6 +83,28 @@ class AddressRepository {
       var res = await SahaServiceManager().service.getAllAddressStore(
             UserInfo().getCurrentStoreCode(),
           );
+      return res;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  Future<AllShipmentResponse> getAllShipmentStore() async {
+    try {
+      var res = await SahaServiceManager().service.getAllShipmentStore(
+            UserInfo().getCurrentStoreCode(),
+          );
+      return res;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  Future<AddTokenShipmentResponse> addTokenShipment(
+      int idShipment, ShipperConfig shipperConfig) async {
+    try {
+      var res = await SahaServiceManager().service.addTokenShipment(
+          UserInfo().getCurrentStoreCode(), idShipment, shipperConfig.toJson());
       return res;
     } catch (err) {
       handleError(err);

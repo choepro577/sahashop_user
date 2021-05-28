@@ -3,7 +3,7 @@ import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/data/remote/saha_service_manager.dart';
 import 'package:sahashop_user/data/repository/handle_error.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
-import 'package:sahashop_user/data/remote/response-request/combo_request.dart';
+import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/combo_request.dart';
 import 'package:sahashop_user/model/product.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 

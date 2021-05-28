@@ -6,7 +6,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/model/combo.dart';
-import 'package:sahashop_user/data/remote/response-request/combo_request.dart';
+import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/combo_request.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_combo/update_my_combo/update_combo_controller.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_combo/update_my_combo/update_product/update_product_combo_screen.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
