@@ -118,13 +118,16 @@ class AllMessageScreen extends StatelessWidget {
                       ],
                     ),
                   )
-                : Column(
-                    children: [
-                      ...List.generate(
-                          allMessageUserController.listChatUser.length,
-                          (index) => itemChatUser(index))
-                    ],
-                  ),
+                : allMessageUserController.listBoxChatCustomer.isEmpty
+                    ? Text("khong co user")
+                    : Column(
+                        children: [
+                          ...List.generate(
+                              allMessageUserController
+                                  .listBoxChatCustomer.length,
+                              (index) => itemChatUser(index))
+                        ],
+                      ),
           ),
         ),
       ),
@@ -135,7 +138,8 @@ class AllMessageScreen extends StatelessWidget {
     return InkWell(
       onTap: () {
         Get.to(() => ChatScreen(
-              chatUser: allMessageUserController.listChatUser[index],
+              boxChatCustomer:
+                  allMessageUserController.listBoxChatCustomer[index],
             ));
       },
       child: Column(
@@ -165,12 +169,15 @@ class AllMessageScreen extends StatelessWidget {
                     children: [
                       ClipRRect(
                         child: CachedNetworkImage(
-                          imageUrl:
-                              allMessageUserController.listChatUser.length == 0
-                                  ? ""
-                                  : allMessageUserController
-                                          .listChatUser[index].avatarImage ??
-                                      "",
+                          imageUrl: allMessageUserController
+                                      .listBoxChatCustomer.length ==
+                                  0
+                              ? ""
+                              : allMessageUserController
+                                      .listBoxChatCustomer[index]
+                                      .customer
+                                      .avatarImage ??
+                                  "",
                           width: 60,
                           height: 60,
                           fit: BoxFit.cover,
@@ -188,11 +195,15 @@ class AllMessageScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            allMessageUserController.listChatUser.length == 0
+                            allMessageUserController
+                                        .listBoxChatCustomer.length ==
+                                    0
                                 ? allMessageUserController
-                                    .listChatUser[index].phoneNumber
+                                    .listBoxChatCustomer[index]
+                                    .customer
+                                    .phoneNumber
                                 : allMessageUserController
-                                    .listChatUser[index].name,
+                                    .listBoxChatCustomer[index].customer.name,
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w500),
                           ),
@@ -203,7 +214,9 @@ class AllMessageScreen extends StatelessWidget {
                             width: Get.width * 0.7,
                             child: Text(
                               allMessageUserController
-                                      .listChatUser[index].content ??
+                                      .listBoxChatCustomer[index]
+                                      .lastMessage
+                                      .content ??
                                   "",
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -218,8 +231,8 @@ class AllMessageScreen extends StatelessWidget {
                     top: 0,
                     child: Text(
                       SahaStringUtils().displayTimeAgoFromTime(
-                          allMessageUserController
-                              .listChatUser[index].createdAt),
+                          allMessageUserController.listBoxChatCustomer[index]
+                              .lastMessage.createdAt),
                       style: TextStyle(fontSize: 12, color: Colors.grey[400]),
                     ),
                   )

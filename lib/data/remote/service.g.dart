@@ -9,7 +9,7 @@ part of 'service.dart';
 class _SahaService implements SahaService {
   _SahaService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'https://sahashop.net/api/public/api/';
+    baseUrl ??= 'http://103.221.220.124/api/';
   }
 
   final Dio _dio;
@@ -853,7 +853,7 @@ class _SahaService implements SahaService {
   }
 
   @override
-  Future<AllChatUserResponse> getAllChatUser(storeCode, numberPage) async {
+  Future<AllChatCustomerResponse> getAllChatUser(storeCode, numberPage) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(numberPage, 'numberPage');
     const _extra = <String, dynamic>{};
@@ -868,7 +868,7 @@ class _SahaService implements SahaService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = AllChatUserResponse.fromJson(_result.data);
+    final value = AllChatCustomerResponse.fromJson(_result.data);
     return value;
   }
 

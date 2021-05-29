@@ -1,32 +1,30 @@
+import 'dart:ui';
+
 import 'package:bubble/bubble.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sahashop_user/components/saha_user/expanded_viewport/expanded_viewport.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
-import 'package:sahashop_user/model/chat_user.dart';
-import 'package:sahashop_user/screen/chat/wiget/select_images_chat_controller.dart';
+import 'package:sahashop_user/model/box_chat_customer.dart';
+import 'package:sahashop_user/model/info_customer.dart';
 
 import 'chat_controller.dart';
 
 class ChatScreen extends StatelessWidget {
   Function onUpload;
   Function doneUpload;
-  ChatUser chatUser;
+  BoxChatCustomer boxChatCustomer;
 
-  ChatScreen({this.chatUser}) {
-    chatController = ChatController(chatUser: chatUser);
+  ChatScreen({this.boxChatCustomer}) {
+    chatController = Get.put(ChatController(boxChatCustomer: boxChatCustomer));
     refreshController = RefreshController();
     scrollController = ScrollController();
-    selectChatImageController = new SelectChatImageController(
-        onUpload: onUpload, doneUpload: doneUpload);
   }
 
-  SelectChatImageController selectChatImageController;
   ChatController chatController;
   ScrollController scrollController;
   RefreshController refreshController;
@@ -174,7 +172,7 @@ class ChatScreen extends StatelessWidget {
                             color: Theme.of(context).primaryColor,
                           ),
                           onPressed: () {
-                            selectChatImageController.loadAssets();
+                            chatController.loadAssets();
                           }),
                       SizedBox(
                         width: 5,
@@ -213,48 +211,179 @@ class ChatScreen extends StatelessWidget {
 
   Widget itemMessage(int index) {
     return chatController.listMessage[index].isUser
-        ? Bubble(
-            borderUp: true,
-            margin: BubbleEdges.only(top: 10, left: 80, right: 5),
-            alignment: Alignment.topRight,
-            padding: BubbleEdges.all(15),
-            nip: BubbleNip.rightTop,
-            color: Color(0xff279f63),
-            child: Column(
-              children: [
-                chatController.listMessage[index].linkImages != null
-                    ? Container(
-                        height: 340,
-                        width: 220,
+        ? chatController.listMessage[index].linkImages != null
+            ? chatController.listMessage[index].linkImages == ""
+                ? Bubble(
+                    borderUp: true,
+                    margin: BubbleEdges.only(top: 10, left: 80, right: 5),
+                    alignment: Alignment.topRight,
+                    padding: BubbleEdges.only(bottom: 15),
+                    nip: BubbleNip.rightTop,
+                    elevation: 0,
+                    color: Colors.transparent,
+                    child: Obx(
+                      () => Container(
+                        height: chatController.dataImages.length == 1 ||
+                                chatController.dataImages.length == 2
+                            ? 110
+                            : chatController.dataImages.length == 3 ||
+                                    chatController.dataImages.length == 4
+                                ? 210
+                                : chatController.dataImages.length == 5 ||
+                                        chatController.dataImages.length == 6
+                                    ? 310
+                                    : chatController.dataImages.length == 7 ||
+                                            chatController.dataImages.length ==
+                                                8
+                                        ? 420
+                                        : chatController.dataImages.length ==
+                                                    9 ||
+                                                chatController
+                                                        .dataImages.length ==
+                                                    10
+                                            ? 510
+                                            : 500,
                         child: Obx(() {
-                          var dataImages =
-                              selectChatImageController.dataImages.toList();
+                          var dataImages = chatController.dataImages.toList();
 
                           if (dataImages == null || dataImages.length == 0)
                             return Container();
 
-                          return StaggeredGridView.countBuilder(
-                            crossAxisCount: 2,
-                            itemCount: dataImages.length,
-                            itemBuilder: (BuildContext context, int index) =>
-                                buildItemImageData(dataImages[index]),
-                            staggeredTileBuilder: (int index) =>
-                                new StaggeredTile.fit(1),
-                            mainAxisSpacing: 0,
-                            crossAxisSpacing: 0,
+                          return Wrap(
+                            children: [
+                              ...List.generate(
+                                  dataImages.length,
+                                  (index) =>
+                                      buildItemImageData(dataImages[index])),
+                            ],
                           );
                         }),
-                      )
-                    : Container(),
-                Text(chatController.listMessage[index].content,
+                      ),
+                    ),
+                  )
+                : Column(
+                    children: [
+                      Bubble(
+                        borderUp: true,
+                        margin: BubbleEdges.only(top: 10, left: 80, right: 5),
+                        alignment: Alignment.topRight,
+                        padding: BubbleEdges.only(bottom: 15),
+                        nip: BubbleNip.rightTop,
+                        elevation: 0,
+                        color: Colors.transparent,
+                        child: Obx(
+                          () => Container(
+                            height: chatController.allImageInMessage[index].length ==
+                                        1 ||
+                                    chatController
+                                            .allImageInMessage[index].length ==
+                                        2
+                                ? 110
+                                : chatController.allImageInMessage[index].length ==
+                                            3 ||
+                                        chatController.allImageInMessage[index]
+                                                .length ==
+                                            4
+                                    ? 210
+                                    : chatController.allImageInMessage[index]
+                                                    .length ==
+                                                5 ||
+                                            chatController
+                                                    .allImageInMessage[index]
+                                                    .length ==
+                                                6
+                                        ? 310
+                                        : chatController.allImageInMessage[index].length ==
+                                                    7 ||
+                                                chatController.allImageInMessage[index].length ==
+                                                    8
+                                            ? 420
+                                            : chatController.allImageInMessage[index].length ==
+                                                        9 ||
+                                                    chatController
+                                                            .allImageInMessage[index]
+                                                            .length ==
+                                                        10
+                                                ? 510
+                                                : 0,
+                            child: Obx(
+                              () {
+                                var listLinkImages = chatController
+                                    .allImageInMessage[index]
+                                    .toList();
+
+                                if (listLinkImages == null ||
+                                    listLinkImages.length == 0)
+                                  return Container();
+
+                                return Wrap(
+                                  children: [
+                                    ...List.generate(
+                                      listLinkImages.length,
+                                      (index) => ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                        child: CachedNetworkImage(
+                                          height: 100,
+                                          width: 100,
+                                          fit: BoxFit.cover,
+                                          imageUrl: listLinkImages[index] ?? "",
+                                          errorWidget: (context, url, error) =>
+                                              Container(
+                                            child: Icon(
+                                              Icons.error,
+                                            ),
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Colors.grey),
+                                                borderRadius:
+                                                    BorderRadius.circular(5)),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      chatController.listMessage[index].content == null
+                          ? Container()
+                          : Bubble(
+                              borderUp: true,
+                              margin:
+                                  BubbleEdges.only(top: 10, left: 80, right: 5),
+                              alignment: Alignment.topRight,
+                              padding: BubbleEdges.all(15),
+                              nip: BubbleNip.rightTop,
+                              color: Color(0xff279f63),
+                              child: Text(
+                                  chatController.listMessage[index].content ??
+                                      "",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500),
+                                  textAlign: TextAlign.right),
+                            )
+                    ],
+                  )
+            : Bubble(
+                borderUp: true,
+                margin: BubbleEdges.only(top: 10, left: 80, right: 5),
+                alignment: Alignment.topRight,
+                padding: BubbleEdges.all(15),
+                nip: BubbleNip.rightTop,
+                color: Color(0xff279f63),
+                child: Text(chatController.listMessage[index].content,
                     style: TextStyle(
                         fontSize: 16,
                         color: Colors.white,
                         fontWeight: FontWeight.w500),
                     textAlign: TextAlign.right),
-              ],
-            ),
-          )
+              )
         : Bubble(
             margin: BubbleEdges.only(top: 10, right: Get.width * 0.33, left: 5),
             padding: BubbleEdges.all(15),
@@ -273,81 +402,38 @@ class ChatScreen extends StatelessWidget {
       child: SizedBox(
         height: 100,
         width: 100,
-        child: Stack(
-          alignment: Alignment.bottomLeft,
-          children: [
-            Container(
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5.0),
-                  child: imageData.linkImage != null
-                      ? CachedNetworkImage(
-                          height: 300,
-                          width: 300,
-                          fit: BoxFit.cover,
-                          imageUrl: imageData.linkImage,
-                          placeholder: (context, url) => Stack(
-                            children: [
-                              imageData.file == null
-                                  ? Container()
-                                  : AssetThumb(
-                                      asset: imageData.file,
-                                      width: 300,
-                                      height: 300,
-                                      spinner: SahaLoadingWidget(
-                                        size: 50,
-                                      ),
-                                    ),
-                              SahaLoadingWidget(),
-                            ],
-                          ),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
-                        )
-                      : AssetThumb(
-                          asset: imageData.file,
-                          width: 300,
-                          height: 300,
-                          spinner: SahaLoadingWidget(
-                            size: 50,
-                          ),
-                        )),
-            ),
-            Positioned(
-              top: 0,
-              right: 0,
-              child: InkWell(
-                onTap: () {
-                  selectChatImageController.deleteImage(imageData.file);
-                },
-                child: Container(
-                  height: 17,
-                  width: 17,
-                  decoration: BoxDecoration(
-                    color: Colors.black54,
-                    shape: BoxShape.circle,
-                    border: Border.all(width: 1, color: Colors.white),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "x",
-                      style: TextStyle(
-                        fontSize: 10,
-                        height: 1,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
+        child: Container(
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(5.0),
+              child: imageData.linkImage != null
+                  ? CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      imageUrl: imageData.linkImage,
+                      placeholder: (context, url) => Stack(
+                        children: [
+                          imageData.file == null
+                              ? Container()
+                              : AssetThumb(
+                                  asset: imageData.file,
+                                  width: 300,
+                                  height: 300,
+                                  spinner: SahaLoadingWidget(
+                                    size: 50,
+                                  ),
+                                ),
+                          SahaLoadingWidget(),
+                        ],
                       ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            imageData.uploading
-                ? SahaLoadingWidget(
-                    size: 50,
-                  )
-                : Container(),
-            imageData.errorUpload ? Icon(Icons.error) : Container(),
-          ],
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    )
+                  : AssetThumb(
+                      asset: imageData.file,
+                      width: 300,
+                      height: 300,
+                      spinner: SahaLoadingWidget(
+                        size: 50,
+                      ),
+                    )),
         ),
       ),
     );

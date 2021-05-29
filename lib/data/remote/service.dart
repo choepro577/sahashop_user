@@ -7,7 +7,7 @@ import 'package:sahashop_user/data/remote/response-request/address/all_shipment_
 import 'package:sahashop_user/data/remote/response-request/address/create_address_store_response.dart';
 import 'package:sahashop_user/data/remote/response-request/address/delete_address_store_response.dart';
 import 'package:sahashop_user/data/remote/response-request/auth/login_response.dart';
-import 'package:sahashop_user/data/remote/response-request/chat/all_chat_user_reponse.dart';
+import 'package:sahashop_user/data/remote/response-request/chat/all_chat_customer_reponse.dart';
 import 'package:sahashop_user/data/remote/response-request/chat/all_message_response.dart';
 import 'package:sahashop_user/data/remote/response-request/chat/send_message_response.dart';
 import 'package:sahashop_user/data/remote/response-request/config_ui/app_theme_response.dart';
@@ -40,7 +40,7 @@ import 'response-request/store/type_store_respones.dart';
 
 part 'service.g.dart';
 
-@RestApi(baseUrl: "https://sahashop.net/api/public/api/")
+@RestApi(baseUrl: "http://103.221.220.124/api/")
 abstract class SahaService {
   /// Retrofit factory
   factory SahaService(Dio dio) => _SahaService(dio);
@@ -202,7 +202,7 @@ abstract class SahaService {
       @Path() int idShipment, @Body() Map<String, dynamic> body);
 
   @GET("store/{storeCode}/message_customers")
-  Future<AllChatUserResponse> getAllChatUser(
+  Future<AllChatCustomerResponse> getAllChatUser(
     @Path() String storeCode,
     @Query("page") int numberPage,
   );

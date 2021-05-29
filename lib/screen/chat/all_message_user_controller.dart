@@ -1,11 +1,12 @@
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
-import 'package:sahashop_user/model/chat_user.dart';
+import 'package:sahashop_user/model/box_chat_customer.dart';
+import 'package:sahashop_user/model/info_customer.dart';
 
 class AllMessageUserController extends GetxController {
   var isLoadingMessage = false.obs;
-  var listChatUser = RxList<ChatUser>();
+  var listBoxChatCustomer = RxList<BoxChatCustomer>();
   var pageLoadMore = 1;
   var isEndPageCombo = false;
   var isSearch = false.obs;
@@ -28,7 +29,7 @@ class AllMessageUserController extends GetxController {
       if (res.data.data == []) {
         isEndPageCombo = true;
       } else {
-        listChatUser.addAll(res.data.data);
+        listBoxChatCustomer.addAll(res.data.data);
         pageLoadMore++;
       }
     } catch (err) {
