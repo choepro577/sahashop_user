@@ -155,7 +155,7 @@ class ProductItemWidget extends StatelessWidget {
                                           child: Text(
                                             product.productDiscount == null
                                                 ? "${FormatMoney.toVND(product.price)}"
-                                                : "${FormatMoney.toVND(product.productDiscount.discountPrice.toInt())}",
+                                                : "${FormatMoney.toVND(product.productDiscount.discountPrice)}",
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .primaryColor,

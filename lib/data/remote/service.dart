@@ -40,7 +40,7 @@ import 'response-request/store/type_store_respones.dart';
 
 part 'service.g.dart';
 
-@RestApi(baseUrl: "http://103.221.220.124/api/")
+@RestApi(baseUrl: "http://103.221.220.124//api/")
 abstract class SahaService {
   /// Retrofit factory
   factory SahaService(Dio dio) => _SahaService(dio);

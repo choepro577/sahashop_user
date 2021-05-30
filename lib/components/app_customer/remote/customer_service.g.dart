@@ -9,7 +9,7 @@ part of 'customer_service.dart';
 class _CustomerService implements CustomerService {
   _CustomerService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'https://sahashop.net/api/public/api/customer/';
+    baseUrl ??= 'http://103.221.220.124/api/customer/';
   }
 
   final Dio _dio;
@@ -325,6 +325,48 @@ class _CustomerService implements CustomerService {
             baseUrl: baseUrl),
         data: _data);
     final value = InfoCustomerResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<AllMessageCustomerResponse> getAllMessageCustomer(
+      storeCode, numberPage) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(numberPage, 'numberPage');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'page': numberPage};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/messages',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = AllMessageCustomerResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<SendMessageCustomerResponse> sendMessageToUser(storeCode, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/messages',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = SendMessageCustomerResponse.fromJson(_result.data);
     return value;
   }
 }

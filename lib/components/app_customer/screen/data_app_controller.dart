@@ -140,7 +140,7 @@ class DataAppCustomerController extends GetxController {
       homeData = data;
       return true;
     } catch (err) {
-      return false;
+      SahaAlert.showError(message: err.toString());
     }
   }
 }

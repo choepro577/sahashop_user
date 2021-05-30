@@ -40,7 +40,7 @@ class Product {
   @HiveField(4)
   int indexImageAvatar;
   @HiveField(5)
-  int price;
+  double price;
   @HiveField(6)
   String barcode;
   @HiveField(7)
@@ -73,7 +73,7 @@ class Product {
             : ProductDiscount.fromJson(json["product_discount"]),
         hasInDiscount: json["has_in_discount"],
         hasInCombo: json["has_in_combo"],
-        price: json["price"],
+        price: double.parse(json["price"].toString()),
         barcode: json["barcode"],
         status: json["status"],
         createdAt: DateTime.parse(json["created_at"]),

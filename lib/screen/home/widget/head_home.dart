@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/const/constant.dart';
-import 'package:sahashop_user/screen/chat/all_message_user_screen.dart';
+import 'package:sahashop_user/saha_data_controller.dart';
+import 'package:sahashop_user/screen/chat/chat_screen/all_message_user_screen.dart';
 import 'package:sahashop_user/screen/config_store_address/config_store_address_screen.dart';
 import 'package:sahashop_user/screen/home/choose_store/choose_store.dart';
 import 'package:sahashop_user/screen/inventory/inventory_screen.dart';
@@ -18,6 +19,7 @@ class HeadHome extends StatelessWidget {
   ];
 
   final HomeController homeController = Get.find();
+  final SahaDataController sahaDataController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -117,12 +119,32 @@ class HeadHome extends StatelessWidget {
                                 Get.to(() => PostNaviScreen());
                               },
                             ),
-                            ItemStoreView(
-                              icon: 'assets/icons/gift_icon.svg',
-                              text: 'Chat',
-                              press: () {
-                                Get.to(() => AllMessageScreen());
-                              },
+                            Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                ItemStoreView(
+                                  icon: 'assets/icons/gift_icon.svg',
+                                  text: 'Chat',
+                                  press: () {
+                                    Get.to(() => AllMessageScreen());
+                                  },
+                                ),
+                                Container(
+                                  height: 30,
+                                  width: 30,
+                                  decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      shape: BoxShape.circle),
+                                  child: Center(
+                                    child: Obx(
+                                      () => Text(
+                                        "${sahaDataController.unread.value}",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                           ]),
                     ),

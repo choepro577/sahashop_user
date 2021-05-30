@@ -214,7 +214,7 @@ class AddProductScreen extends StatelessWidget {
                               SahaTextFieldNoBorder(
                                 onChanged: (value) {
                                   addProductController.productRequest.price =
-                                      int.tryParse(value);
+                                      double.tryParse(value);
                                 },
                                 validator: (value) {
                                   if (value.length == 0) {

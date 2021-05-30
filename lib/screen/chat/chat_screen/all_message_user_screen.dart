@@ -4,26 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:sahashop_user/screen/chat/all_message_user_controller.dart';
+import 'package:sahashop_user/screen/chat/chat_screen/chat_controller.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'chat_screen/chat_screen.dart';
+import 'chat_screen.dart';
 
 class AllMessageScreen extends StatelessWidget {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
-  AllMessageUserController allMessageUserController =
-      AllMessageUserController();
+  ChatController chatController = Get.put(ChatController());
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    chatController.loadInitChatUser();
+
     return Scaffold(
       appBar: AppBar(
         title: Obx(
-          () => allMessageUserController.isSearch.value
+          () => chatController.isSearch.value
               ? Container(
                   padding: EdgeInsets.only(left: 10, right: 10),
                   decoration: BoxDecoration(
@@ -47,10 +47,10 @@ class AllMessageScreen extends StatelessWidget {
           IconButton(
               icon: Icon(Icons.search),
               onPressed: () {
-                if (allMessageUserController.isSearch.value == false) {
-                  allMessageUserController.isSearch.value = true;
+                if (chatController.isSearch.value == false) {
+                  chatController.isSearch.value = true;
                 } else {
-                  allMessageUserController.isSearch.value = false;
+                  chatController.isSearch.value = false;
                 }
               }),
         ],
@@ -94,7 +94,7 @@ class AllMessageScreen extends StatelessWidget {
         },
         child: SingleChildScrollView(
           child: Obx(
-            () => allMessageUserController.isLoadingMessage.value == true
+            () => chatController.isLoadingBoxChatCustomer.value == true
                 ? Shimmer.fromColors(
                     baseColor: Colors.grey[300],
                     highlightColor: Colors.white,
@@ -118,13 +118,12 @@ class AllMessageScreen extends StatelessWidget {
                       ],
                     ),
                   )
-                : allMessageUserController.listBoxChatCustomer.isEmpty
+                : chatController.listBoxChatCustomer.isEmpty
                     ? Text("khong co user")
                     : Column(
                         children: [
                           ...List.generate(
-                              allMessageUserController
-                                  .listBoxChatCustomer.length,
+                              chatController.listBoxChatCustomer.length,
                               (index) => itemChatUser(index))
                         ],
                       ),
@@ -137,10 +136,9 @@ class AllMessageScreen extends StatelessWidget {
   Widget itemChatUser(int index) {
     return InkWell(
       onTap: () {
-        Get.to(() => ChatScreen(
-              boxChatCustomer:
-                  allMessageUserController.listBoxChatCustomer[index],
-            ));
+        chatController.idCustomerChoose =
+            chatController.listBoxChatCustomer[index].customerId;
+        Get.to(() => ChatScreen());
       },
       child: Column(
         children: [
@@ -169,15 +167,12 @@ class AllMessageScreen extends StatelessWidget {
                     children: [
                       ClipRRect(
                         child: CachedNetworkImage(
-                          imageUrl: allMessageUserController
-                                      .listBoxChatCustomer.length ==
-                                  0
-                              ? ""
-                              : allMessageUserController
-                                      .listBoxChatCustomer[index]
-                                      .customer
-                                      .avatarImage ??
-                                  "",
+                          imageUrl:
+                              chatController.listBoxChatCustomer.length == 0
+                                  ? ""
+                                  : chatController.listBoxChatCustomer[index]
+                                          .customer.avatarImage ??
+                                      "",
                           width: 60,
                           height: 60,
                           fit: BoxFit.cover,
@@ -195,14 +190,10 @@ class AllMessageScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            allMessageUserController
-                                        .listBoxChatCustomer.length ==
-                                    0
-                                ? allMessageUserController
-                                    .listBoxChatCustomer[index]
-                                    .customer
-                                    .phoneNumber
-                                : allMessageUserController
+                            chatController.listBoxChatCustomer.length == 0
+                                ? chatController.listBoxChatCustomer[index]
+                                    .customer.phoneNumber
+                                : chatController
                                     .listBoxChatCustomer[index].customer.name,
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w500),
@@ -213,10 +204,8 @@ class AllMessageScreen extends StatelessWidget {
                           SizedBox(
                             width: Get.width * 0.7,
                             child: Text(
-                              allMessageUserController
-                                      .listBoxChatCustomer[index]
-                                      .lastMessage
-                                      .content ??
+                              chatController.listBoxChatCustomer[index]
+                                      .lastMessage.content ??
                                   "",
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -230,12 +219,11 @@ class AllMessageScreen extends StatelessWidget {
                     right: 10,
                     top: 0,
                     child: Text(
-                      SahaStringUtils().displayTimeAgoFromTime(
-                          allMessageUserController.listBoxChatCustomer[index]
-                              .lastMessage.createdAt),
+                      SahaStringUtils().displayTimeAgoFromTime(chatController
+                          .listBoxChatCustomer[index].lastMessage.createdAt),
                       style: TextStyle(fontSize: 12, color: Colors.grey[400]),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

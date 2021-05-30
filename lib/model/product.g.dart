@@ -22,7 +22,7 @@ class ProductAdapter extends TypeAdapter<Product> {
       storeId: fields[2] as int,
       description: fields[3] as String,
       indexImageAvatar: fields[4] as int,
-      price: fields[5] as int,
+      price: fields[5] as double,
       barcode: fields[6] as String,
       status: fields[7] as int,
       createdAt: fields[8] as DateTime,

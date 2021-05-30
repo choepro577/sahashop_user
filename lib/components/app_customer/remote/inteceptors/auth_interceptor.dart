@@ -17,7 +17,7 @@ class AuthInterceptor extends InterceptorsWrapper {
   Future onRequest(RequestOptions options) {
     if (CustomerInfo().getToken() != null) {
       options.headers
-          .putIfAbsent("customer_token", () => CustomerInfo().getToken());
+          .putIfAbsent("customer-token", () => CustomerInfo().getToken());
     }
     print('Header: ${options.headers}');
     print('Request: ${options.data}');

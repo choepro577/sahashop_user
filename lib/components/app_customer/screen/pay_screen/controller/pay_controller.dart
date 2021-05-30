@@ -9,7 +9,7 @@ import 'package:sahashop_user/data/remote/response-request/order_request.dart';
 class PayController extends GetxController {
   var listOrder = RxList<Order>().obs;
   var listItem = RxList<LineItem>();
-  var totalMoney = 0.obs;
+  var totalMoney = 0.0.obs;
   var infoAddress = InfoAddress().obs;
   var isLoadingOrder = false.obs;
 

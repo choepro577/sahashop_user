@@ -12,17 +12,17 @@ import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/model/box_chat_customer.dart';
 import 'package:sahashop_user/model/info_customer.dart';
 
-import 'chat_controller.dart';
+import 'chat_customer_controller.dart';
 
-class ChatScreen extends StatelessWidget {
-  ChatScreen() {
-    chatController = Get.find();
+class ChatCustomerScreen extends StatelessWidget {
+  ChatCustomerScreen() {
+    chatCustomerController = Get.put(ChatCustomerController());
     refreshController = RefreshController();
     scrollController = ScrollController();
-    chatController.loadInitMessage();
+    chatCustomerController.loadInitMessage();
   }
 
-  ChatController chatController;
+  ChatCustomerController chatCustomerController;
   ScrollController scrollController;
   RefreshController refreshController;
 
@@ -102,7 +102,7 @@ class ChatScreen extends StatelessWidget {
                 ),
                 onLoading: () async {
                   await Future.delayed(Duration(milliseconds: 100));
-                  chatController.loadMoreMessage();
+                  chatCustomerController.loadMoreMessage();
                   refreshController.loadComplete();
                 },
                 enablePullDown: false,
@@ -126,7 +126,8 @@ class ChatScreen extends StatelessWidget {
                                         )
                                       ],
                                     ),
-                                childCount: chatController.listMessage.length),
+                                childCount:
+                                    chatCustomerController.listMessage.length),
                           ),
                         )
                       ],
@@ -148,10 +149,11 @@ class ChatScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TextFormField(
-                          controller:
-                              chatController.messageEditingController.value,
+                          controller: chatCustomerController
+                              .messageEditingController.value,
                           onChanged: (v) {
-                            chatController.messageEditingController.refresh();
+                            chatCustomerController.messageEditingController
+                                .refresh();
                           },
                           cursorColor: Colors.grey,
                           minLines: 1,
@@ -176,29 +178,29 @@ class ChatScreen extends StatelessWidget {
                             color: Theme.of(context).primaryColor,
                           ),
                           onPressed: () {
-                            chatController.loadAssets();
+                            chatCustomerController.loadAssets();
                           }),
                       SizedBox(
                         width: 5,
                       ),
-                      Obx(() =>
-                          chatController.messageEditingController.value.text !=
-                                  ""
-                              ? IconButton(
-                                  icon: Icon(
-                                    Icons.send,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                  onPressed: () {
-                                    scrollController.jumpTo(0.0);
-                                    chatController.sendMessageToCustomer();
-                                  })
-                              : IconButton(
-                                  icon: Icon(
-                                    Icons.send,
-                                    color: Colors.grey,
-                                  ),
-                                  onPressed: () {}))
+                      Obx(() => chatCustomerController
+                                  .messageEditingController.value.text !=
+                              ""
+                          ? IconButton(
+                              icon: Icon(
+                                Icons.send,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              onPressed: () {
+                                scrollController.jumpTo(0.0);
+                                chatCustomerController.sendMessageToUser();
+                              })
+                          : IconButton(
+                              icon: Icon(
+                                Icons.send,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {}))
                     ],
                   ),
                   SizedBox(
@@ -214,10 +216,11 @@ class ChatScreen extends StatelessWidget {
   }
 
   Widget itemMessage(int index) {
-    return chatController.listMessage[index].isUser
-        ? chatController.listMessage[index].linkImages != null
-            ? chatController.listMessage[index].linkImages == ""
+    return chatCustomerController.listMessage[index].isUser == false
+        ? chatCustomerController.listMessage[index].linkImages != null
+            ? chatCustomerController.listMessage[index].linkImages == ""
                 ? Bubble(
+                    /// add image from device
                     borderUp: true,
                     margin: BubbleEdges.only(top: 10, left: 80, right: 5),
                     alignment: Alignment.topRight,
@@ -227,45 +230,62 @@ class ChatScreen extends StatelessWidget {
                     color: Colors.transparent,
                     child: Obx(
                       () => Container(
-                        height: chatController.dataImages.length == 1 ||
-                                chatController.dataImages.length == 2
-                            ? 110
-                            : chatController.dataImages.length == 3 ||
-                                    chatController.dataImages.length == 4
-                                ? 210
-                                : chatController.dataImages.length == 5 ||
-                                        chatController.dataImages.length == 6
-                                    ? 310
-                                    : chatController.dataImages.length == 7 ||
-                                            chatController.dataImages.length ==
-                                                8
-                                        ? 420
-                                        : chatController.dataImages.length ==
-                                                    9 ||
-                                                chatController
-                                                        .dataImages.length ==
-                                                    10
-                                            ? 510
-                                            : 500,
+                        height:
+                            chatCustomerController.listSaveDataImages.length ==
+                                        1 ||
+                                    chatCustomerController
+                                            .listSaveDataImages.length ==
+                                        2
+                                ? 110
+                                : chatCustomerController
+                                                .listSaveDataImages.length ==
+                                            3 ||
+                                        chatCustomerController
+                                                .listSaveDataImages.length ==
+                                            4
+                                    ? 210
+                                    : chatCustomerController.listSaveDataImages
+                                                    .length ==
+                                                5 ||
+                                            chatCustomerController
+                                                    .listSaveDataImages
+                                                    .length ==
+                                                6
+                                        ? 310
+                                        : chatCustomerController
+                                                        .listSaveDataImages
+                                                        .length ==
+                                                    7 ||
+                                                chatCustomerController
+                                                        .listSaveDataImages
+                                                        .length ==
+                                                    8
+                                            ? 420
+                                            : chatCustomerController
+                                                            .listSaveDataImages
+                                                            .length ==
+                                                        9 ||
+                                                    chatCustomerController
+                                                            .listSaveDataImages
+                                                            .length ==
+                                                        10
+                                                ? 510
+                                                : 500,
                         child: Obx(() {
-                          var dataImages = chatController.dataImages.toList();
+                          var dataImages = chatCustomerController
+                              .listSaveDataImages
+                              .toList();
 
                           if (dataImages == null || dataImages.length == 0)
                             return Container();
 
-                          return Wrap(
-                            children: [
-                              ...List.generate(
-                                  dataImages.length,
-                                  (index) =>
-                                      buildItemImageData(dataImages[index])),
-                            ],
-                          );
+                          return buildItemImageData(dataImages[index]);
                         }),
                       ),
                     ),
                   )
                 : Column(
+                    /// get Image from Sever
                     children: [
                       Bubble(
                         borderUp: true,
@@ -277,34 +297,33 @@ class ChatScreen extends StatelessWidget {
                         color: Colors.transparent,
                         child: Obx(
                           () => Container(
-                            height: chatController.allImageInMessage[index].length ==
-                                        1 ||
-                                    chatController
+                            height: chatCustomerController.allImageInMessage[index].length == 1 ||
+                                    chatCustomerController
                                             .allImageInMessage[index].length ==
                                         2
                                 ? 85
-                                : chatController.allImageInMessage[index].length ==
-                                            3 ||
-                                        chatController.allImageInMessage[index]
+                                : chatCustomerController.allImageInMessage[index].length == 3 ||
+                                        chatCustomerController
+                                                .allImageInMessage[index]
                                                 .length ==
                                             4
                                     ? 190
-                                    : chatController.allImageInMessage[index]
+                                    : chatCustomerController
+                                                    .allImageInMessage[index]
                                                     .length ==
                                                 5 ||
-                                            chatController
+                                            chatCustomerController
                                                     .allImageInMessage[index]
                                                     .length ==
                                                 6
                                         ? 290
-                                        : chatController.allImageInMessage[index].length ==
-                                                    7 ||
-                                                chatController.allImageInMessage[index].length ==
+                                        : chatCustomerController.allImageInMessage[index].length == 7 ||
+                                                chatCustomerController.allImageInMessage[index].length ==
                                                     8
                                             ? 390
-                                            : chatController.allImageInMessage[index].length ==
+                                            : chatCustomerController.allImageInMessage[index].length ==
                                                         9 ||
-                                                    chatController
+                                                    chatCustomerController
                                                             .allImageInMessage[index]
                                                             .length ==
                                                         10
@@ -312,7 +331,7 @@ class ChatScreen extends StatelessWidget {
                                                 : 0,
                             child: Obx(
                               () {
-                                var listLinkImages = chatController
+                                var listLinkImages = chatCustomerController
                                     .allImageInMessage[index]
                                     .toList();
 
@@ -353,7 +372,7 @@ class ChatScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      chatController.listMessage[index].content == null
+                      chatCustomerController.listMessage[index].content == null
                           ? Container()
                           : Bubble(
                               borderUp: true,
@@ -364,7 +383,8 @@ class ChatScreen extends StatelessWidget {
                               nip: BubbleNip.rightTop,
                               color: Color(0xff279f63),
                               child: Text(
-                                  chatController.listMessage[index].content ??
+                                  chatCustomerController
+                                          .listMessage[index].content ??
                                       "",
                                   style: TextStyle(
                                       fontSize: 16,
@@ -381,19 +401,20 @@ class ChatScreen extends StatelessWidget {
                 padding: BubbleEdges.all(15),
                 nip: BubbleNip.rightTop,
                 color: Color(0xff279f63),
-                child: Text(chatController.listMessage[index].content,
+                child: Text(chatCustomerController.listMessage[index].content,
                     style: TextStyle(
                         fontSize: 16,
                         color: Colors.white,
                         fontWeight: FontWeight.w500),
-                    textAlign: TextAlign.right),
+                    textAlign: TextAlign.left),
               )
-        : chatController.listMessage[index].linkImages != null
-            ? chatController.listMessage[index].linkImages == ""
-                ? Bubble(
+        : chatCustomerController.listMessage[index].linkImages != null
+            ? Column(
+                children: [
+                  Bubble(
                     borderUp: true,
                     margin: BubbleEdges.only(
-                        top: 10, right: Get.width * 0.33, left: 5),
+                        top: 10, right: Get.width * 0.33, left: 0),
                     alignment: Alignment.topLeft,
                     padding: BubbleEdges.only(bottom: 15),
                     nip: BubbleNip.leftTop,
@@ -401,154 +422,102 @@ class ChatScreen extends StatelessWidget {
                     color: Colors.transparent,
                     child: Obx(
                       () => Container(
-                        height: chatController.dataImages.length == 1 ||
-                                chatController.dataImages.length == 2
-                            ? 110
-                            : chatController.dataImages.length == 3 ||
-                                    chatController.dataImages.length == 4
-                                ? 210
-                                : chatController.dataImages.length == 5 ||
-                                        chatController.dataImages.length == 6
-                                    ? 310
-                                    : chatController.dataImages.length == 7 ||
-                                            chatController.dataImages.length ==
-                                                8
-                                        ? 420
-                                        : chatController.dataImages.length ==
-                                                    9 ||
-                                                chatController
-                                                        .dataImages.length ==
-                                                    10
-                                            ? 510
-                                            : 500,
-                        child: Obx(() {
-                          var dataImages = chatController.dataImages.toList();
-
-                          if (dataImages == null || dataImages.length == 0)
-                            return Container();
-
-                          return Wrap(
-                            children: [
-                              ...List.generate(
-                                  dataImages.length,
-                                  (index) =>
-                                      buildItemImageData(dataImages[index])),
-                            ],
-                          );
-                        }),
-                      ),
-                    ),
-                  )
-                : Column(
-                    children: [
-                      Bubble(
-                        borderUp: true,
-                        margin: BubbleEdges.only(
-                            top: 10, right: Get.width * 0.33, left: 0),
-                        alignment: Alignment.topLeft,
-                        padding: BubbleEdges.only(bottom: 15),
-                        nip: BubbleNip.leftTop,
-                        elevation: 0,
-                        color: Colors.transparent,
-                        child: Obx(
-                          () => Container(
-                            height: chatController.allImageInMessage[index].length ==
-                                        1 ||
-                                    chatController
+                        height: chatCustomerController.allImageInMessage[index].length == 1 ||
+                                chatCustomerController.allImageInMessage[index].length ==
+                                    2
+                            ? 85
+                            : chatCustomerController.allImageInMessage[index].length == 3 ||
+                                    chatCustomerController
                                             .allImageInMessage[index].length ==
-                                        2
-                                ? 85
-                                : chatController.allImageInMessage[index].length ==
-                                            3 ||
-                                        chatController.allImageInMessage[index]
+                                        4
+                                ? 190
+                                : chatCustomerController
+                                                .allImageInMessage[index]
                                                 .length ==
-                                            4
-                                    ? 190
-                                    : chatController.allImageInMessage[index]
-                                                    .length ==
-                                                5 ||
-                                            chatController
+                                            5 ||
+                                        chatCustomerController
+                                                .allImageInMessage[index]
+                                                .length ==
+                                            6
+                                    ? 290
+                                    : chatCustomerController
                                                     .allImageInMessage[index]
                                                     .length ==
-                                                6
-                                        ? 290
-                                        : chatController.allImageInMessage[index].length ==
-                                                    7 ||
-                                                chatController.allImageInMessage[index].length ==
-                                                    8
-                                            ? 390
-                                            : chatController.allImageInMessage[index].length ==
-                                                        9 ||
-                                                    chatController
-                                                            .allImageInMessage[index]
-                                                            .length ==
-                                                        10
-                                                ? 490
-                                                : 0,
-                            child: Obx(
-                              () {
-                                var listLinkImages = chatController
-                                    .allImageInMessage[index]
-                                    .toList();
+                                                7 ||
+                                            chatCustomerController
+                                                    .allImageInMessage[index]
+                                                    .length ==
+                                                8
+                                        ? 390
+                                        : chatCustomerController.allImageInMessage[index].length == 9 ||
+                                                chatCustomerController
+                                                        .allImageInMessage[index]
+                                                        .length ==
+                                                    10
+                                            ? 490
+                                            : 0,
+                        child: Obx(
+                          () {
+                            var listLinkImages = chatCustomerController
+                                .allImageInMessage[index]
+                                .toList();
 
-                                if (listLinkImages == null ||
-                                    listLinkImages.length == 0)
-                                  return Container();
+                            if (listLinkImages == null ||
+                                listLinkImages.length == 0) return Container();
 
-                                return Wrap(
-                                  children: [
-                                    ...List.generate(
-                                      listLinkImages.length,
-                                      (index) => ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        child: CachedNetworkImage(
-                                          height: 100,
-                                          width: 100,
-                                          fit: BoxFit.cover,
-                                          imageUrl: listLinkImages[index] ?? "",
-                                          errorWidget: (context, url, error) =>
-                                              Container(
-                                            child: Icon(
-                                              Icons.error,
-                                            ),
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: Colors.grey),
-                                                borderRadius:
-                                                    BorderRadius.circular(5)),
-                                          ),
+                            return Wrap(
+                              children: [
+                                ...List.generate(
+                                  listLinkImages.length,
+                                  (index) => ClipRRect(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    child: CachedNetworkImage(
+                                      height: 100,
+                                      width: 100,
+                                      fit: BoxFit.cover,
+                                      imageUrl: listLinkImages[index] ?? "",
+                                      errorWidget: (context, url, error) =>
+                                          Container(
+                                        child: Icon(
+                                          Icons.error,
                                         ),
+                                        decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: Colors.grey),
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
                                       ),
                                     ),
-                                  ],
-                                );
-                              },
-                            ),
-                          ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
                         ),
                       ),
-                      chatController.listMessage[index].content == null
-                          ? Container()
-                          : Bubble(
-                              borderUp: true,
-                              margin:
-                                  BubbleEdges.only(top: 10, right: 80, left: 5),
-                              alignment: Alignment.topLeft,
-                              padding: BubbleEdges.all(15),
-                              nip: BubbleNip.leftTop,
-                              color: Color(0xff279f63),
-                              child: Text(
-                                  chatController.listMessage[index].content ??
-                                      "",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500),
-                                  textAlign: TextAlign.left),
-                            )
-                    ],
-                  )
+                    ),
+                  ),
+                  chatCustomerController.listMessage[index].content == null
+                      ? Container()
+                      : Bubble(
+                          borderUp: true,
+                          margin: BubbleEdges.only(top: 10, right: 80, left: 5),
+                          alignment: Alignment.topLeft,
+                          padding: BubbleEdges.all(15),
+                          nip: BubbleNip.leftTop,
+                          color: Color(0xff279f63),
+                          child: Text(
+                              chatCustomerController
+                                      .listMessage[index].content ??
+                                  "",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500),
+                              textAlign: TextAlign.left),
+                        )
+                ],
+              )
             : Bubble(
                 borderUp: true,
                 margin: BubbleEdges.only(top: 10, right: 80, left: 5),
@@ -556,7 +525,7 @@ class ChatScreen extends StatelessWidget {
                 padding: BubbleEdges.all(15),
                 nip: BubbleNip.leftTop,
                 color: Color(0xff279f63),
-                child: Text(chatController.listMessage[index].content,
+                child: Text(chatCustomerController.listMessage[index].content,
                     style: TextStyle(
                         fontSize: 16,
                         color: Colors.white,
@@ -565,46 +534,54 @@ class ChatScreen extends StatelessWidget {
               );
   }
 
-  Widget buildItemImageData(ImageData imageData) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: SizedBox(
-        height: 100,
-        width: 100,
-        child: Container(
-          child: ClipRRect(
-              borderRadius: BorderRadius.circular(5.0),
-              child: imageData.linkImage != null
-                  ? CachedNetworkImage(
-                      fit: BoxFit.cover,
-                      imageUrl: imageData.linkImage,
-                      placeholder: (context, url) => Stack(
-                        children: [
-                          imageData.file == null
-                              ? Container()
-                              : AssetThumb(
-                                  asset: imageData.file,
-                                  width: 300,
-                                  height: 300,
-                                  spinner: SahaLoadingWidget(
-                                    size: 50,
-                                  ),
-                                ),
-                          SahaLoadingWidget(),
-                        ],
-                      ),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                    )
-                  : AssetThumb(
-                      asset: imageData.file,
-                      width: 300,
-                      height: 300,
-                      spinner: SahaLoadingWidget(
-                        size: 50,
-                      ),
-                    )),
+  Widget buildItemImageData(List<ImageData> listImageData) {
+    return Wrap(
+      children: [
+        ...List.generate(
+          listImageData.length,
+          (index) => Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: SizedBox(
+              height: 100,
+              width: 100,
+              child: Container(
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(5.0),
+                    child: listImageData[index].linkImage != null
+                        ? CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl: listImageData[index].linkImage,
+                            placeholder: (context, url) => Stack(
+                              children: [
+                                listImageData[index].file == null
+                                    ? Container()
+                                    : AssetThumb(
+                                        asset: listImageData[index].file,
+                                        width: 300,
+                                        height: 300,
+                                        spinner: SahaLoadingWidget(
+                                          size: 50,
+                                        ),
+                                      ),
+                                SahaLoadingWidget(),
+                              ],
+                            ),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          )
+                        : AssetThumb(
+                            asset: listImageData[index].file,
+                            width: 300,
+                            height: 300,
+                            spinner: SahaLoadingWidget(
+                              size: 50,
+                            ),
+                          )),
+              ),
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 }

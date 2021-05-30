@@ -4,6 +4,8 @@ import 'package:sahashop_user/components/app_customer/remote/post/all_category_p
 import 'package:sahashop_user/components/app_customer/remote/post/all_post_response.dart';
 
 import 'package:sahashop_user/components/app_customer/remote/response-request/category/all_category_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/chat_customer/all_message_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/chat_customer/send_message_customer_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/config_ui/app_theme_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/home/home_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/info_customer/info_customer_response.dart';
@@ -17,7 +19,7 @@ import 'package:sahashop_user/components/app_customer/remote/response-request/st
 
 part 'customer_service.g.dart';
 
-@RestApi(baseUrl: "https://sahashop.net/api/public/api/customer/")
+@RestApi(baseUrl: "http://103.221.220.124/api/customer/")
 abstract class CustomerService {
   /// Retrofit factory
   factory CustomerService(Dio dio) => _CustomerService(dio);
@@ -82,4 +84,16 @@ abstract class CustomerService {
 
   @GET("{storeCode}/profile")
   Future<InfoCustomerResponse> getInfoCustomer(@Path() String storeCode);
+
+  @GET("{storeCode}/messages")
+  Future<AllMessageCustomerResponse> getAllMessageCustomer(
+    @Path() String storeCode,
+    @Query("page") int numberPage,
+  );
+
+  @POST("{storeCode}/messages")
+  Future<SendMessageCustomerResponse> sendMessageToUser(
+    @Path() String storeCode,
+    @Body() Map<String, dynamic> body,
+  );
 }

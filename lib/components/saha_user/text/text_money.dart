@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
 class SahaMoneyText extends StatelessWidget {
-  int price;
+  double price;
   double sizeVND;
   double sizeText;
   Color color;

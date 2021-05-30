@@ -4,7 +4,7 @@ import 'package:sahashop_user/model/order.dart';
 
 class CartController extends GetxController {
   var listOrder = RxList<Order>().obs;
-  var totalMoney = 0.obs;
+  var totalMoney = 0.0.obs;
 
   void getListOrder() {
     var rsListOrder = StorageOrder.getOrder();

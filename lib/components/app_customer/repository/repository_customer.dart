@@ -1,4 +1,5 @@
 import 'package:sahashop_user/components/app_customer/repository/category/category_repository.dart';
+import 'package:sahashop_user/components/app_customer/repository/chat_customer/chat_repository.dart';
 import 'package:sahashop_user/components/app_customer/repository/config_app/config_ui_respository.dart';
 import 'package:sahashop_user/components/app_customer/repository/info_customer/info_customer_repository.dart';
 import 'package:sahashop_user/components/app_customer/repository/login/login_repository.dart';
@@ -28,4 +29,6 @@ class CustomerRepositoryManager {
       LoginCustomerRepository();
   static InfoCustomerRepository get infoCustomerRepository =>
       InfoCustomerRepository();
+  static ChatCustomerRepository get chatCustomerRepository =>
+      ChatCustomerRepository();
 }

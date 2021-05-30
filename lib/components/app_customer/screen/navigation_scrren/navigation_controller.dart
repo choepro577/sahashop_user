@@ -5,7 +5,7 @@ import 'package:sahashop_user/components/app_customer/screen/profile_screen/prof
 import 'package:sahashop_user/controller/config_controller.dart';
 
 class NavigationController extends GetxController {
-  var selectedIndexBottomBar = 1.obs;
+  var selectedIndexBottomBar = 0.obs;
   ConfigController configController;
   List<Widget> navigationHome = [];
 
