@@ -136,9 +136,12 @@ class AllMessageScreen extends StatelessWidget {
   Widget itemChatUser(int index) {
     return InkWell(
       onTap: () {
-        chatController.idCustomerChoose =
-            chatController.listBoxChatCustomer[index].customerId;
-        Get.to(() => ChatScreen());
+        chatController.boxChatCustomer.value =
+            chatController.listBoxChatCustomer[index];
+        Get.to(() => ChatScreen()).then((value) => {
+              chatController.refreshDataMessage(),
+              chatController.refreshDataAllChat()
+            });
       },
       child: Column(
         children: [
@@ -192,9 +195,11 @@ class AllMessageScreen extends StatelessWidget {
                           Text(
                             chatController.listBoxChatCustomer.length == 0
                                 ? chatController.listBoxChatCustomer[index]
-                                    .customer.phoneNumber
-                                : chatController
-                                    .listBoxChatCustomer[index].customer.name,
+                                        .customer.phoneNumber ??
+                                    "Chưa đặt tên"
+                                : chatController.listBoxChatCustomer[index]
+                                        .customer.name ??
+                                    "Chưa đặt tên",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w500),
                           ),

@@ -4,13 +4,17 @@ import 'package:bubble/bubble.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sahashop_user/components/saha_user/expanded_viewport/expanded_viewport.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/model/box_chat_customer.dart';
 import 'package:sahashop_user/model/info_customer.dart';
+import 'package:sahashop_user/utils/date_utils.dart';
 
 import 'chat_customer_controller.dart';
 
@@ -19,7 +23,6 @@ class ChatCustomerScreen extends StatelessWidget {
     chatCustomerController = Get.put(ChatCustomerController());
     refreshController = RefreshController();
     scrollController = ScrollController();
-    chatCustomerController.loadInitMessage();
   }
 
   ChatCustomerController chatCustomerController;
@@ -44,7 +47,8 @@ class ChatCustomerScreen extends StatelessWidget {
             children: [
               ClipRRect(
                 child: CachedNetworkImage(
-                  imageUrl: "",
+                  imageUrl:
+                      "${chatCustomerController.configController.configApp.logoUrl ?? ""}",
                   width: 45,
                   height: 45,
                   fit: BoxFit.cover,
@@ -62,7 +66,7 @@ class ChatCustomerScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "hieudeptrai",
+                    "${chatCustomerController.homeController.storeCurrent.value.name ?? ""}",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
@@ -118,14 +122,7 @@ class ChatCustomerScreen extends StatelessWidget {
                         Obx(
                           () => SliverList(
                             delegate: SliverChildBuilderDelegate(
-                                (c, i) => Column(
-                                      children: [
-                                        itemMessage(i),
-                                        SizedBox(
-                                          height: 20,
-                                        )
-                                      ],
-                                    ),
+                                (c, i) => itemMessage(i, context),
                                 childCount:
                                     chatCustomerController.listMessage.length),
                           ),
@@ -215,12 +212,13 @@ class ChatCustomerScreen extends StatelessWidget {
     );
   }
 
-  Widget itemMessage(int index) {
+  Widget itemMessage(int index, BuildContext context) {
     return chatCustomerController.listMessage[index].isUser == false
         ? chatCustomerController.listMessage[index].linkImages != null
             ? chatCustomerController.listMessage[index].linkImages == ""
                 ? Bubble(
-                    /// add image from device
+                    /// right is Customer
+                    /// add image from device Customer
                     borderUp: true,
                     margin: BubbleEdges.only(top: 10, left: 80, right: 5),
                     alignment: Alignment.topRight,
@@ -230,58 +228,40 @@ class ChatCustomerScreen extends StatelessWidget {
                     color: Colors.transparent,
                     child: Obx(
                       () => Container(
-                        height:
-                            chatCustomerController.listSaveDataImages.length ==
-                                        1 ||
-                                    chatCustomerController
-                                            .listSaveDataImages.length ==
-                                        2
-                                ? 110
-                                : chatCustomerController
-                                                .listSaveDataImages.length ==
-                                            3 ||
-                                        chatCustomerController
-                                                .listSaveDataImages.length ==
-                                            4
-                                    ? 210
-                                    : chatCustomerController.listSaveDataImages
-                                                    .length ==
-                                                5 ||
-                                            chatCustomerController
-                                                    .listSaveDataImages
-                                                    .length ==
-                                                6
-                                        ? 310
-                                        : chatCustomerController
-                                                        .listSaveDataImages
-                                                        .length ==
-                                                    7 ||
-                                                chatCustomerController
-                                                        .listSaveDataImages
-                                                        .length ==
-                                                    8
-                                            ? 420
-                                            : chatCustomerController
-                                                            .listSaveDataImages
-                                                            .length ==
-                                                        9 ||
-                                                    chatCustomerController
-                                                            .listSaveDataImages
-                                                            .length ==
-                                                        10
-                                                ? 510
-                                                : 500,
-                        child: Obx(() {
-                          var dataImages = chatCustomerController
-                              .listSaveDataImages
-                              .toList();
-
-                          if (dataImages == null || dataImages.length == 0)
-                            return Container();
-
-                          return buildItemImageData(dataImages[index]);
-                        }),
-                      ),
+                          height: chatCustomerController
+                                      .listSaveDataImages[index].length ==
+                                  1
+                              ? Get.height * 0.3
+                              : chatCustomerController.listSaveDataImages[index].length ==
+                                      2
+                                  ? 100
+                                  : chatCustomerController.listSaveDataImages[index].length == 3 ||
+                                          chatCustomerController
+                                                  .listSaveDataImages[index]
+                                                  .length ==
+                                              4
+                                      ? 200
+                                      : chatCustomerController
+                                                      .listSaveDataImages[index]
+                                                      .length ==
+                                                  5 ||
+                                              chatCustomerController
+                                                      .listSaveDataImages[index]
+                                                      .length ==
+                                                  6
+                                          ? 300
+                                          : chatCustomerController.listSaveDataImages[index].length == 7 ||
+                                                  chatCustomerController.listSaveDataImages[index].length ==
+                                                      8
+                                              ? 400
+                                              : chatCustomerController.listSaveDataImages[index].length == 9 ||
+                                                      chatCustomerController
+                                                              .listSaveDataImages[index]
+                                                              .length ==
+                                                          10
+                                                  ? 500
+                                                  : 0,
+                          child: buildItemImageData(chatCustomerController.listSaveDataImages[index], context)),
                     ),
                   )
                 : Column(
@@ -297,38 +277,40 @@ class ChatCustomerScreen extends StatelessWidget {
                         color: Colors.transparent,
                         child: Obx(
                           () => Container(
-                            height: chatCustomerController.allImageInMessage[index].length == 1 ||
-                                    chatCustomerController
-                                            .allImageInMessage[index].length ==
+                            height: chatCustomerController
+                                        .allImageInMessage[index].length ==
+                                    1
+                                ? Get.height * 0.3
+                                : chatCustomerController.allImageInMessage[index].length ==
                                         2
-                                ? 85
-                                : chatCustomerController.allImageInMessage[index].length == 3 ||
-                                        chatCustomerController
-                                                .allImageInMessage[index]
-                                                .length ==
-                                            4
-                                    ? 190
+                                    ? 100
                                     : chatCustomerController
                                                     .allImageInMessage[index]
                                                     .length ==
-                                                5 ||
+                                                3 ||
                                             chatCustomerController
                                                     .allImageInMessage[index]
                                                     .length ==
-                                                6
-                                        ? 290
-                                        : chatCustomerController.allImageInMessage[index].length == 7 ||
+                                                4
+                                        ? 200
+                                        : chatCustomerController.allImageInMessage[index].length == 5 ||
                                                 chatCustomerController.allImageInMessage[index].length ==
-                                                    8
-                                            ? 390
-                                            : chatCustomerController.allImageInMessage[index].length ==
-                                                        9 ||
+                                                    6
+                                            ? 300
+                                            : chatCustomerController.allImageInMessage[index].length == 7 ||
                                                     chatCustomerController
-                                                            .allImageInMessage[index]
+                                                            .allImageInMessage[
+                                                                index]
                                                             .length ==
-                                                        10
-                                                ? 490
-                                                : 0,
+                                                        8
+                                                ? 400
+                                                : chatCustomerController.allImageInMessage[index].length == 9 ||
+                                                        chatCustomerController
+                                                                .allImageInMessage[index]
+                                                                .length ==
+                                                            10
+                                                    ? 500
+                                                    : 0,
                             child: Obx(
                               () {
                                 var listLinkImages = chatCustomerController
@@ -343,24 +325,96 @@ class ChatCustomerScreen extends StatelessWidget {
                                   children: [
                                     ...List.generate(
                                       listLinkImages.length,
-                                      (index) => ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        child: CachedNetworkImage(
-                                          height: 100,
-                                          width: 100,
-                                          fit: BoxFit.cover,
-                                          imageUrl: listLinkImages[index] ?? "",
-                                          errorWidget: (context, url, error) =>
-                                              Container(
-                                            child: Icon(
-                                              Icons.error,
+                                      (index) => InkWell(
+                                        onTap: () {
+                                          showModalBottomSheet<void>(
+                                            isScrollControlled: true,
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return Stack(
+                                                children: [
+                                                  Container(
+                                                    child: PhotoViewGallery
+                                                        .builder(
+                                                      scrollPhysics:
+                                                          const BouncingScrollPhysics(),
+                                                      builder:
+                                                          (BuildContext context,
+                                                              int index) {
+                                                        return PhotoViewGalleryPageOptions(
+                                                          imageProvider:
+                                                              NetworkImage(
+                                                                  listLinkImages[
+                                                                      index]),
+                                                          initialScale:
+                                                              PhotoViewComputedScale
+                                                                      .contained *
+                                                                  1,
+                                                          heroAttributes:
+                                                              PhotoViewHeroAttributes(
+                                                                  tag: listLinkImages[
+                                                                      index]),
+                                                        );
+                                                      },
+                                                      itemCount:
+                                                          listLinkImages.length,
+                                                      loadingBuilder:
+                                                          (context, event) =>
+                                                              Center(
+                                                        child: Container(
+                                                          width: 20.0,
+                                                          height: 20.0,
+                                                          child:
+                                                              CupertinoActivityIndicator(),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                    child: IconButton(
+                                                      icon: Icon(Icons.close),
+                                                      onPressed: () {
+                                                        Get.back();
+                                                      },
+                                                      color: Colors.white,
+                                                    ),
+                                                    top: 60,
+                                                    right: 20,
+                                                  )
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(5.0),
+                                            child: CachedNetworkImage(
+                                              height: listLinkImages.length == 1
+                                                  ? Get.height * 0.3
+                                                  : 100,
+                                              width: listLinkImages.length == 1
+                                                  ? Get.width * 0.4
+                                                  : 100,
+                                              fit: BoxFit.cover,
+                                              imageUrl:
+                                                  listLinkImages[index] ?? "",
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Container(
+                                                child: Icon(
+                                                  Icons.error,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: Colors.grey),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5)),
+                                              ),
                                             ),
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: Colors.grey),
-                                                borderRadius:
-                                                    BorderRadius.circular(5)),
                                           ),
                                         ),
                                       ),
@@ -410,7 +464,86 @@ class ChatCustomerScreen extends StatelessWidget {
               )
         : chatCustomerController.listMessage[index].linkImages != null
             ? Column(
+                /// left is User
+                /// get image from User
                 children: [
+                  chatCustomerController.listMessage[index].createdAt.day -
+                              chatCustomerController
+                                  .listMessage[(index + 1) >=
+                                          chatCustomerController
+                                              .listMessage.length
+                                      ? index
+                                      : index + 1]
+                                  .createdAt
+                                  .day >=
+                          1
+                      ? SizedBox(
+                          height: 70,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 30,
+                              ),
+                              chatCustomerController.timeNow.value.day -
+                                          chatCustomerController
+                                              .listMessage[(index + 1) >=
+                                                      chatCustomerController
+                                                          .listMessage.length
+                                                  ? index
+                                                  : index + 1]
+                                              .createdAt
+                                              .day >
+                                      1
+                                  ? Bubble(
+                                      margin: BubbleEdges.only(top: 10),
+                                      alignment: Alignment.center,
+                                      nip: BubbleNip.no,
+                                      color: Color.fromRGBO(212, 234, 244, 1.0),
+                                      child: Text(
+                                          "${SahaDateUtils().getDDMM(chatCustomerController.listMessage[index + 1].createdAt)}",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 11.0,
+                                          )),
+                                    )
+                                  : Bubble(
+                                      margin: BubbleEdges.only(top: 10),
+                                      alignment: Alignment.center,
+                                      nip: BubbleNip.no,
+                                      color: Color.fromRGBO(212, 234, 244, 1.0),
+                                      child: Text('Hôm qua',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 11.0,
+                                          )),
+                                    )
+                            ],
+                          ),
+                        )
+                      : chatCustomerController
+                                      .listMessage[index].createdAt.minute -
+                                  chatCustomerController
+                                      .listMessage[(index + 1) >=
+                                              chatCustomerController
+                                                  .listMessage.length
+                                          ? index
+                                          : index + 1]
+                                      .createdAt
+                                      .minute >
+                              2
+                          ? SizedBox(
+                              height: 50,
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 22,
+                                  ),
+                                  Text(
+                                      "${SahaDateUtils().getHHMM(chatCustomerController.listMessage[index].createdAt)}"),
+                                ],
+                              ),
+                            )
+                          : SizedBox(),
                   Bubble(
                     borderUp: true,
                     margin: BubbleEdges.only(
@@ -422,40 +555,43 @@ class ChatCustomerScreen extends StatelessWidget {
                     color: Colors.transparent,
                     child: Obx(
                       () => Container(
-                        height: chatCustomerController.allImageInMessage[index].length == 1 ||
-                                chatCustomerController.allImageInMessage[index].length ==
+                        height: chatCustomerController
+                                    .allImageInMessage[index].length ==
+                                1
+                            ? Get.height * 0.3
+                            : chatCustomerController
+                                        .allImageInMessage[index].length ==
                                     2
-                            ? 85
-                            : chatCustomerController.allImageInMessage[index].length == 3 ||
-                                    chatCustomerController
-                                            .allImageInMessage[index].length ==
-                                        4
-                                ? 190
+                                ? 100
                                 : chatCustomerController
                                                 .allImageInMessage[index]
                                                 .length ==
-                                            5 ||
+                                            3 ||
                                         chatCustomerController
                                                 .allImageInMessage[index]
                                                 .length ==
-                                            6
-                                    ? 290
+                                            4
+                                    ? 200
                                     : chatCustomerController
                                                     .allImageInMessage[index]
                                                     .length ==
-                                                7 ||
+                                                5 ||
                                             chatCustomerController
                                                     .allImageInMessage[index]
                                                     .length ==
-                                                8
-                                        ? 390
-                                        : chatCustomerController.allImageInMessage[index].length == 9 ||
-                                                chatCustomerController
-                                                        .allImageInMessage[index]
-                                                        .length ==
-                                                    10
-                                            ? 490
-                                            : 0,
+                                                6
+                                        ? 300
+                                        : chatCustomerController.allImageInMessage[index].length == 7 ||
+                                                chatCustomerController.allImageInMessage[index].length ==
+                                                    8
+                                            ? 400
+                                            : chatCustomerController.allImageInMessage[index].length == 9 ||
+                                                    chatCustomerController
+                                                            .allImageInMessage[index]
+                                                            .length ==
+                                                        10
+                                                ? 500
+                                                : 0,
                         child: Obx(
                           () {
                             var listLinkImages = chatCustomerController
@@ -469,23 +605,93 @@ class ChatCustomerScreen extends StatelessWidget {
                               children: [
                                 ...List.generate(
                                   listLinkImages.length,
-                                  (index) => ClipRRect(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    child: CachedNetworkImage(
-                                      height: 100,
-                                      width: 100,
-                                      fit: BoxFit.cover,
-                                      imageUrl: listLinkImages[index] ?? "",
-                                      errorWidget: (context, url, error) =>
-                                          Container(
-                                        child: Icon(
-                                          Icons.error,
+                                  (index) => InkWell(
+                                    onTap: () {
+                                      showModalBottomSheet<void>(
+                                        isScrollControlled: true,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return Stack(
+                                            children: [
+                                              Container(
+                                                child: PhotoViewGallery.builder(
+                                                  scrollPhysics:
+                                                      const BouncingScrollPhysics(),
+                                                  builder:
+                                                      (BuildContext context,
+                                                          int index) {
+                                                    return PhotoViewGalleryPageOptions(
+                                                      imageProvider:
+                                                          NetworkImage(
+                                                              listLinkImages[
+                                                                  index]),
+                                                      initialScale:
+                                                          PhotoViewComputedScale
+                                                                  .contained *
+                                                              1,
+                                                      heroAttributes:
+                                                          PhotoViewHeroAttributes(
+                                                              tag:
+                                                                  listLinkImages[
+                                                                      index]),
+                                                    );
+                                                  },
+                                                  itemCount:
+                                                      listLinkImages.length,
+                                                  loadingBuilder:
+                                                      (context, event) =>
+                                                          Center(
+                                                    child: Container(
+                                                      width: 20.0,
+                                                      height: 20.0,
+                                                      child:
+                                                          CupertinoActivityIndicator(),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                child: IconButton(
+                                                  icon: Icon(Icons.close),
+                                                  onPressed: () {
+                                                    Get.back();
+                                                  },
+                                                  color: Colors.white,
+                                                ),
+                                                top: 60,
+                                                right: 20,
+                                              )
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                        child: CachedNetworkImage(
+                                          height: listLinkImages.length == 1
+                                              ? Get.height * 0.3
+                                              : 100,
+                                          width: listLinkImages.length == 1
+                                              ? Get.width * 0.4
+                                              : 100,
+                                          fit: BoxFit.cover,
+                                          imageUrl: listLinkImages[index] ?? "",
+                                          errorWidget: (context, url, error) =>
+                                              Container(
+                                            child: Icon(
+                                              Icons.error,
+                                            ),
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Colors.grey),
+                                                borderRadius:
+                                                    BorderRadius.circular(5)),
+                                          ),
                                         ),
-                                        decoration: BoxDecoration(
-                                            border:
-                                                Border.all(color: Colors.grey),
-                                            borderRadius:
-                                                BorderRadius.circular(5)),
                                       ),
                                     ),
                                   ),
@@ -515,7 +721,7 @@ class ChatCustomerScreen extends StatelessWidget {
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500),
                               textAlign: TextAlign.left),
-                        )
+                        ),
                 ],
               )
             : Bubble(
@@ -534,50 +740,108 @@ class ChatCustomerScreen extends StatelessWidget {
               );
   }
 
-  Widget buildItemImageData(List<ImageData> listImageData) {
+  Widget buildItemImageData(
+      List<ImageData> listImageData, BuildContext context) {
     return Wrap(
       children: [
         ...List.generate(
           listImageData.length,
-          (index) => Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: SizedBox(
-              height: 100,
-              width: 100,
-              child: Container(
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(5.0),
-                    child: listImageData[index].linkImage != null
-                        ? CachedNetworkImage(
-                            fit: BoxFit.cover,
-                            imageUrl: listImageData[index].linkImage,
-                            placeholder: (context, url) => Stack(
-                              children: [
-                                listImageData[index].file == null
-                                    ? Container()
-                                    : AssetThumb(
-                                        asset: listImageData[index].file,
-                                        width: 300,
-                                        height: 300,
-                                        spinner: SahaLoadingWidget(
-                                          size: 50,
-                                        ),
+          (index) => InkWell(
+            onTap: () {
+              showModalBottomSheet<void>(
+                isScrollControlled: true,
+                context: context,
+                builder: (BuildContext context) {
+                  return Stack(
+                    children: [
+                      Container(
+                        child: PhotoViewGallery.builder(
+                          scrollPhysics: const BouncingScrollPhysics(),
+                          builder: (BuildContext context, int index) {
+                            return PhotoViewGalleryPageOptions(
+                              imageProvider:
+                                  NetworkImage(listImageData[index].linkImage),
+                              initialScale:
+                                  PhotoViewComputedScale.contained * 1,
+                              heroAttributes: PhotoViewHeroAttributes(
+                                  tag: listImageData[index].linkImage),
+                            );
+                          },
+                          itemCount: listImageData.length,
+                          loadingBuilder: (context, event) => Center(
+                            child: Container(
+                              width: 20.0,
+                              height: 20.0,
+                              child: CupertinoActivityIndicator(),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        child: IconButton(
+                          icon: Icon(Icons.close),
+                          onPressed: () {
+                            Get.back();
+                          },
+                          color: Colors.white,
+                        ),
+                        top: 60,
+                        right: 20,
+                      )
+                    ],
+                  );
+                },
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5.0),
+                  child: listImageData[index].linkImage != null
+                      ? CachedNetworkImage(
+                          height: listImageData.length == 1
+                              ? Get.height * 0.3
+                              : 100,
+                          width:
+                              listImageData.length == 1 ? Get.width * 0.4 : 100,
+                          fit: BoxFit.cover,
+                          imageUrl: listImageData[index].linkImage ?? "",
+                          placeholder: (context, url) => Stack(
+                            children: [
+                              listImageData[index].file == null
+                                  ? Container()
+                                  : AssetThumb(
+                                      asset: listImageData[index].file,
+                                      height: listImageData.length == 1
+                                          ? int.parse((Get.height * 0.3)
+                                              .toStringAsFixed(0))
+                                          : 100,
+                                      width: listImageData.length == 1
+                                          ? int.parse((Get.width * 0.4)
+                                              .toStringAsFixed(0))
+                                          : 100,
+                                      spinner: SahaLoadingWidget(
+                                        size: 50,
                                       ),
-                                SahaLoadingWidget(),
-                              ],
-                            ),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
-                          )
-                        : AssetThumb(
-                            asset: listImageData[index].file,
-                            width: 300,
-                            height: 300,
-                            spinner: SahaLoadingWidget(
-                              size: 50,
-                            ),
-                          )),
-              ),
+                                    ),
+                              SahaLoadingWidget(),
+                            ],
+                          ),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        )
+                      : AssetThumb(
+                          asset: listImageData[index].file,
+                          height: listImageData.length == 1
+                              ? int.parse((Get.height * 0.3).toStringAsFixed(0))
+                              : 100,
+                          width: listImageData.length == 1
+                              ? int.parse((Get.width * 0.4).toStringAsFixed(0))
+                              : 100,
+                          spinner: SahaLoadingWidget(
+                            size: 50,
+                          ),
+                        )),
             ),
           ),
         ),

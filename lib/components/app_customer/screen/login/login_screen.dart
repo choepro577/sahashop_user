@@ -184,6 +184,15 @@ class LoginScreenCustomer extends StatelessWidget {
                         ),
                       ),
               ),
+              SizedBox(
+                height: 50,
+                child: TextButton(
+                  onPressed: () {
+                    Get.to(() => RegisterCustomerScreen());
+                  },
+                  child: Text("Đăng ký"),
+                ),
+              )
             ],
           ),
         ),

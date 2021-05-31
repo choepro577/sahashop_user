@@ -162,7 +162,7 @@ class ConfigProfileScreen extends StatelessWidget {
                       child: TextField(
                         controller:
                             configProfileController.nameEditingController.value,
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.name,
                         style: TextStyle(fontSize: 14),
                         textAlign: TextAlign.end,
                         decoration: InputDecoration(

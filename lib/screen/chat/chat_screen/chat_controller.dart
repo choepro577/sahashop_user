@@ -20,6 +20,7 @@ class ChatController extends GetxController {
   var isEndPageBoxChatCustomer = false;
   var isSearch = false.obs;
   var unread = 0.obs;
+  var limitedSocket = 0.obs;
 
   SahaDataController sahaDataController = Get.find();
 
@@ -36,22 +37,10 @@ class ChatController extends GetxController {
   }
 
   void refreshWhenRealtime() {
+    timeNow.value = DateTime.now();
     sahaDataController.unread.listen((unread) {
       if (unread != 0) {
-        loadInitChatUser();
-      }
-    });
-  }
-
-  void getDataMessageCustomer() {
-    SocketUser().listenCustomerWithId(idCustomerChoose, (data) {
-      print("------------------------------$data");
-      listMessage.insert(0, Message.fromJson(data));
-      try {
-        var listImage = (jsonDecode(listMessage[0].linkImages));
-        allImageInMessage.insert(0, listImage);
-      } catch (err) {
-        allImageInMessage.insert(0, [listMessage[0].linkImages]);
+        refreshDataAllChat();
       }
     });
   }
@@ -90,17 +79,17 @@ class ChatController extends GetxController {
 
 ////////////////////////////////////////////////////////////
 
-  int idCustomerChoose;
+  var boxChatCustomer = BoxChatCustomer().obs;
 
   var messageEditingController = new TextEditingController(text: "").obs;
-  var isLoadingMessage = false.obs;
   var pageLoadMore = 1;
   var isEndPageCombo = false;
-  var isInput = false.obs;
   var listMessage = RxList<Message>();
   var allImageInMessage = RxList<List<dynamic>>();
   var listImageResponse = [];
   var listImageRequest = [];
+  var listSaveDataImages = RxList<List<ImageData>>();
+  var timeNow = DateTime.now().obs;
 
   void loadInitMessage() {
     pageLoadMore = 1;
@@ -109,16 +98,38 @@ class ChatController extends GetxController {
     getDataMessageCustomer();
   }
 
+  void getDataMessageCustomer() {
+    SocketUser().listenCustomerWithId(boxChatCustomer.value.customerId, (data) {
+      timeNow.value = DateTime.now();
+      limitedSocket.value++;
+      if (limitedSocket.value == 1) {
+        print("------------------------------$data");
+        listSaveDataImages.add([]);
+        listMessage.insert(0, Message.fromJson(data));
+        try {
+          var listImage = (jsonDecode(listMessage[0].linkImages));
+          allImageInMessage.insert(0, listImage);
+        } catch (err) {
+          allImageInMessage.insert(0, [listMessage[0].linkImages]);
+        }
+      }
+      Future.delayed(Duration(seconds: 1), () {
+        limitedSocket.value = 0;
+      });
+    });
+  }
+
   Future<void> loadMoreMessage() async {
-    isLoadingMessage.value = true;
+    timeNow.value = DateTime.now();
     try {
       if (!isEndPageCombo) {
         var res = await RepositoryManager.chatRepository
-            .getAllMessageUser(idCustomerChoose, pageLoadMore);
+            .getAllMessageUser(boxChatCustomer.value.customerId, pageLoadMore);
         listMessage.addAll(res.data.data);
 
         listMessage.forEach((e) {
           allImageInMessage.add([]);
+          listSaveDataImages.add([]);
         });
 
         for (int i = 0; i < listMessage.length; i++) {
@@ -142,21 +153,34 @@ class ChatController extends GetxController {
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
-    isLoadingMessage.value = false;
+  }
+
+  void refreshDataMessage() {
+    messageEditingController.value.text = "";
+    pageLoadMore = 1;
+    isEndPageCombo = false;
+    listMessage([]);
+    allImageInMessage([]);
+    listImageResponse = [];
+    listImageRequest = [];
+    listSaveDataImages([]);
+    timeNow.value = DateTime.now();
   }
 
   Future<SendMessageResponse> sendMessageToCustomer() async {
+    timeNow.value = DateTime.now();
     try {
       listMessage.insert(
           0,
           Message(
             isUser: true,
             content: messageEditingController.value.text,
+            createdAt: timeNow.value,
           ));
       allImageInMessage.insert(0, null);
-
+      listSaveDataImages.insert(0, null);
       var res = await RepositoryManager.chatRepository.sendMessageToCustomer(
-          idCustomerChoose,
+          boxChatCustomer.value.customerId,
           SendMessageRequest(
             content: messageEditingController.value.text,
           ));
@@ -170,16 +194,19 @@ class ChatController extends GetxController {
   }
 
   Future<SendMessageResponse> sendImageToCustomer() async {
+    timeNow.value = DateTime.now();
     try {
+      listSaveDataImages.insert(0, dataImages);
       listMessage.insert(
           0,
           Message(
             isUser: true,
             linkImages: "",
+            createdAt: timeNow.value,
           ));
       allImageInMessage.insert(0, null);
       var res = await RepositoryManager.chatRepository.sendMessageToCustomer(
-          idCustomerChoose,
+          boxChatCustomer.value.customerId,
           SendMessageRequest(
             linkImages: jsonEncode(listImageRequest),
           ));
@@ -189,14 +216,10 @@ class ChatController extends GetxController {
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
-    listImageRequest = null;
-    dataImages(null);
-    print("------------------------------------$listImageRequest");
-    print("------------------------------------$dataImages");
   }
 
   var MAX_SELECT = 10;
-  var dataImages = <ImageData>[].obs;
+  var dataImages = <ImageData>[];
 
   void updateListImage(List<Asset> listAsset) {
     // print(listAsset);
@@ -219,7 +242,8 @@ class ChatController extends GetxController {
             uploading: false));
       }
     }
-    dataImages(newList);
+    dataImages = newList;
+
     uploadListImage();
   }
 
@@ -243,12 +267,13 @@ class ChatController extends GetxController {
       listImageRequest.add(element.linkImage);
     });
     sendImageToCustomer();
+    listImageRequest = [];
   }
 
   Future<void> uploadImageData({int indexImage, Function onOK}) async {
     try {
-      dataImages[indexImage].uploading = true;
-      dataImages.refresh();
+      //  dataImages[indexImage].uploading = true;
+      //  dataImages.refresh();
 
       var fileUp =
           await ImageUtils.getImageFileFromAsset(dataImages[indexImage].file);
@@ -258,27 +283,25 @@ class ChatController extends GetxController {
           .uploadImage(fileUpImageCompress);
 
       dataImages[indexImage].linkImage = link;
-      dataImages[indexImage].errorUpload = false;
-      dataImages[indexImage].uploading = false;
-      dataImages.refresh();
     } catch (err) {
       print(err);
       dataImages[indexImage].linkImage = null;
-      dataImages[indexImage].errorUpload = true;
-      dataImages[indexImage].uploading = false;
-      dataImages.refresh();
+      //  dataImages[indexImage].errorUpload = true;
+      //    dataImages[indexImage].uploading = false;
+      //  dataImages.refresh();
     }
     onOK();
   }
 
   Future<void> loadAssets() async {
+    dataImages = [];
     List<Asset> resultList = <Asset>[];
     String error = 'No Error Detected';
     try {
       resultList = await MultiImagePicker.pickImages(
         maxImages: MAX_SELECT - resultList.length,
         enableCamera: true,
-        selectedAssets: dataImages.toList().map((e) => e.file).toList(),
+        //selectedAssets: dataImages.toList().map((e) => e.file).toList(),
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: MaterialOptions(
           actionBarColor: "#abcdef",
