@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:easycartanimation/easycartanimation.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,9 +38,6 @@ class _ProductScreen1State extends State<ProductScreen1> {
   DataAppCustomerController dataAppCustomerController;
   ProductController productController;
   var discountProducts = [];
-  Offset _startOffset;
-  GlobalKey _addCart = GlobalKey();
-  GlobalKey _keyCart = GlobalKey();
 
   @override
   void initState() {
@@ -65,11 +61,6 @@ class _ProductScreen1State extends State<ProductScreen1> {
       });
     }
     rating = widget.rating ?? 4.9;
-    WidgetsBinding.instance.addPostFrameCallback((c) {
-      /// Get the location of the "shopping cart"
-      _startOffset = Offset(Get.width * 0.5, 300);
-      print(_startOffset);
-    });
   }
 
   @override
@@ -114,7 +105,6 @@ class _ProductScreen1State extends State<ProductScreen1> {
                                                 "assets/saha_loading.png"),
                                       ),
                                       Positioned(
-                                        key: _addCart,
                                         bottom: 0.0,
                                         left: 0.0,
                                         right: 0.0,
@@ -623,7 +613,6 @@ class _ProductScreen1State extends State<ProductScreen1> {
                         shape: BoxShape.circle,
                         color: Theme.of(context).primaryColor),
                     child: Container(
-                      key: _keyCart,
                       height: 25,
                       width: 25,
                       child: SvgPicture.asset(
