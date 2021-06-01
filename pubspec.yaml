@@ -41,6 +41,7 @@ dependencies:
   dotted_border: ^1.0.7
   empty_widget: ^0.0.1
   expandable: ^5.0.1
+  easycartanimation: ^1.0.0+1
   multi_image_picker: ^4.8.0
   flash: ^1.5.1
   flutter_absolute_path: ^1.0.6

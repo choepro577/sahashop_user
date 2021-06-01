@@ -82,8 +82,8 @@ class ChatCustomerController extends GetxController {
         listMessage.addAll(res.data.data);
 
         listMessage.forEach((e) {
-          allImageInMessage.add([]);
           listSaveDataImages.add([]);
+          allImageInMessage.add([]);
         });
 
         for (int i = 0; i < listMessage.length; i++) {
@@ -111,14 +111,14 @@ class ChatCustomerController extends GetxController {
   Future<SendMessageResponse> sendMessageToUser() async {
     timeNow.value = DateTime.now();
     try {
+      listSaveDataImages.insert(0, null);
+      allImageInMessage.insert(0, null);
       listMessage.insert(
           0,
           Message(
               isUser: false,
               content: messageEditingController.value.text,
               createdAt: timeNow.value));
-      allImageInMessage.insert(0, null);
-      listSaveDataImages.insert(0, null);
       var res = await CustomerRepositoryManager.chatCustomerRepository
           .sendMessageToUser(SendMessageCustomerRequest(
         content: messageEditingController.value.text,
@@ -135,6 +135,7 @@ class ChatCustomerController extends GetxController {
     timeNow.value = DateTime.now();
     try {
       listSaveDataImages.insert(0, dataImages);
+      allImageInMessage.insert(0, null);
       listMessage.insert(
           0,
           Message(
@@ -142,8 +143,6 @@ class ChatCustomerController extends GetxController {
             linkImages: "",
             createdAt: timeNow.value,
           ));
-      allImageInMessage.insert(0, null);
-
       var res = await CustomerRepositoryManager.chatCustomerRepository
           .sendMessageToUser(SendMessageCustomerRequest(
         linkImages: jsonEncode(listImageRequest),

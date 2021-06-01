@@ -255,7 +255,7 @@ class ChatScreen extends StatelessWidget {
                                               : chatController.listSaveDataImages[index].length == 9 ||
                                                       chatController.listSaveDataImages[index].length ==
                                                           10
-                                                  ? 500
+                                                  ? 520
                                                   : 0,
                           child: buildItemImageData(
                               chatController.listSaveDataImages[index], context)),
@@ -307,7 +307,7 @@ class ChatScreen extends StatelessWidget {
                                                                 .allImageInMessage[index]
                                                                 .length ==
                                                             10
-                                                    ? 500
+                                                    ? 520
                                                     : 0,
                             child: Obx(
                               () {
@@ -582,7 +582,7 @@ class ChatScreen extends StatelessWidget {
                                                             .allImageInMessage[index]
                                                             .length ==
                                                         10
-                                                ? 500
+                                                ? 520
                                                 : 0,
                         child: Obx(
                           () {

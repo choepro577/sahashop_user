@@ -259,7 +259,7 @@ class ChatCustomerScreen extends StatelessWidget {
                                                               .listSaveDataImages[index]
                                                               .length ==
                                                           10
-                                                  ? 500
+                                                  ? 520
                                                   : 0,
                           child: buildItemImageData(chatCustomerController.listSaveDataImages[index], context)),
                     ),
@@ -309,7 +309,7 @@ class ChatCustomerScreen extends StatelessWidget {
                                                                 .allImageInMessage[index]
                                                                 .length ==
                                                             10
-                                                    ? 500
+                                                    ? 520
                                                     : 0,
                             child: Obx(
                               () {
@@ -590,7 +590,7 @@ class ChatCustomerScreen extends StatelessWidget {
                                                             .allImageInMessage[index]
                                                             .length ==
                                                         10
-                                                ? 500
+                                                ? 520
                                                 : 0,
                         child: Obx(
                           () {

@@ -3,13 +3,13 @@ import 'package:sahashop_user/components/utils/storage_order.dart';
 import 'package:sahashop_user/model/order.dart';
 
 class CartController extends GetxController {
-  var listOrder = RxList<Order>().obs;
+  var listOrder = RxList<Order>();
   var totalMoney = 0.0.obs;
 
   void getListOrder() {
     var rsListOrder = StorageOrder.getOrder();
-    listOrder.value.assignAll(rsListOrder);
-    listOrder.value.forEach((e) {
+    listOrder.assignAll(rsListOrder);
+    listOrder.forEach((e) {
       totalMoney = totalMoney + (e.product.price * e.quantity);
     });
   }

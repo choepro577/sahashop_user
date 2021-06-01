@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:easycartanimation/easycartanimation.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,15 +9,14 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/components/product_item/product_item_widget.dart';
 import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/cart_screen_1.dart';
+import 'package:sahashop_user/components/app_customer/screen/chat_customer/chat_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/product_screen/controller/product_controller.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/text/text_money.dart';
-import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/model/product.dart';
 import 'package:sahashop_user/screen/home/widget/section_title.dart';
-import 'package:sahashop_user/utils/string_utils.dart';
 
 class ProductScreen1 extends StatefulWidget {
   final double rating;
@@ -39,6 +39,9 @@ class _ProductScreen1State extends State<ProductScreen1> {
   DataAppCustomerController dataAppCustomerController;
   ProductController productController;
   var discountProducts = [];
+  Offset _startOffset;
+  GlobalKey _addCart = GlobalKey();
+  GlobalKey _keyCart = GlobalKey();
 
   @override
   void initState() {
@@ -52,6 +55,7 @@ class _ProductScreen1State extends State<ProductScreen1> {
 
     productController = Get.put(ProductController());
 
+    productController.getListOrder();
     product = dataAppCustomerController.productCurrent ?? LIST_PRODUCT_EXAMPLE;
 
     if (dataAppCustomerController.homeData?.discountProducts?.list != null) {
@@ -61,6 +65,11 @@ class _ProductScreen1State extends State<ProductScreen1> {
       });
     }
     rating = widget.rating ?? 4.9;
+    WidgetsBinding.instance.addPostFrameCallback((c) {
+      /// Get the location of the "shopping cart"
+      _startOffset = Offset(Get.width * 0.5, 300);
+      print(_startOffset);
+    });
   }
 
   @override
@@ -105,6 +114,7 @@ class _ProductScreen1State extends State<ProductScreen1> {
                                                 "assets/saha_loading.png"),
                                       ),
                                       Positioned(
+                                        key: _addCart,
                                         bottom: 0.0,
                                         left: 0.0,
                                         right: 0.0,
@@ -603,14 +613,17 @@ class _ProductScreen1State extends State<ProductScreen1> {
                     child: Icon(Icons.arrow_back_ios,
                         color: Theme.of(context).primaryColor)),
                 Spacer(),
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).primaryColor),
-                  child: InkWell(
-                    onTap: () {},
+                InkWell(
+                  onTap: () {
+                    Get.to(() => CartScreen1());
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Theme.of(context).primaryColor),
                     child: Container(
+                      key: _keyCart,
                       height: 25,
                       width: 25,
                       child: SvgPicture.asset(
@@ -625,6 +638,34 @@ class _ProductScreen1State extends State<ProductScreen1> {
               ],
             ),
           ),
+          Obx(
+            () => AnimatedPositioned(
+                top: productController.animateAddCart.value
+                    ? 45
+                    : Get.height - SahaAppBar().preferredSize.height,
+                left: productController.animateAddCart.value
+                    ? Get.width - 25
+                    : 10,
+                height: productController.animateAddCart.value
+                    ? 0
+                    : Get.width * 0.5,
+                width: productController.animateAddCart.value
+                    ? 0
+                    : Get.width * 0.5,
+                child: productController.animateAddCart.value
+                    ? CachedNetworkImage(
+                        imageUrl: product.images.length != 0
+                            ? product.images[0].imageUrl
+                            : "",
+                        fit: BoxFit.cover,
+                        width: 1000.0,
+                        height: Get.height * 0.45,
+                        errorWidget: (context, url, error) =>
+                            Image.asset("assets/saha_loading.png"),
+                      )
+                    : Container(),
+                duration: Duration(milliseconds: 500)),
+          )
         ],
       ),
       bottomNavigationBar: Container(
@@ -639,13 +680,20 @@ class _ProductScreen1State extends State<ProductScreen1> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      height: 25,
-                      width: Get.width / 4 - 1,
-                      child: SvgPicture.asset(
-                        "assets/icons/chat.svg",
-                        color:
-                            Theme.of(context).primaryTextTheme.headline6.color,
+                    InkWell(
+                      onTap: () {
+                        Get.to(() => ChatCustomerScreen());
+                      },
+                      child: Container(
+                        height: 25,
+                        width: Get.width / 4 - 1,
+                        child: SvgPicture.asset(
+                          "assets/icons/chat.svg",
+                          color: Theme.of(context)
+                              .primaryTextTheme
+                              .headline6
+                              .color,
+                        ),
                       ),
                     ),
                     Container(
@@ -653,14 +701,38 @@ class _ProductScreen1State extends State<ProductScreen1> {
                       width: 1,
                       height: 30,
                     ),
-                    Container(
-                      height: 25,
-                      width: Get.width / 4 - 1,
-                      child: SvgPicture.asset(
-                        "assets/icons/add_to_cart.svg",
-                        color:
-                            Theme.of(context).primaryTextTheme.headline6.color,
-                      ),
+                    Obx(
+                      () => !productController.animateAddCart.value
+                          ? InkWell(
+                              onTap: () {
+                                // Get the position of the current widget when clicked, and pass in overlayEntry
+                                productController.animatedAddCard();
+                              },
+                              child: Container(
+                                height: 25,
+                                width: Get.width / 4 - 1,
+                                child: SvgPicture.asset(
+                                  "assets/icons/add_to_cart.svg",
+                                  color: Theme.of(context)
+                                      .primaryTextTheme
+                                      .headline6
+                                      .color,
+                                ),
+                              ),
+                            )
+                          : IgnorePointer(
+                              child: Container(
+                                height: 25,
+                                width: Get.width / 4 - 1,
+                                child: SvgPicture.asset(
+                                  "assets/icons/add_to_cart.svg",
+                                  color: Theme.of(context)
+                                      .primaryTextTheme
+                                      .headline6
+                                      .color,
+                                ),
+                              ),
+                            ),
                     ),
                   ],
                 ),
@@ -797,8 +869,7 @@ class _ProductScreen1State extends State<ProductScreen1> {
                               onPressed: () {
                                 productController.addOrder(
                                     product, productController.quantity.value);
-                                productController.getListOrder();
-                                Get.to(() => CartScreen1());
+                                //productController.getListOrder();
                               },
                             ),
                           ],

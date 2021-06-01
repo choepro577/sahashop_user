@@ -149,7 +149,7 @@ class ProductItemWidget extends StatelessWidget {
                                                               : 10),
                                                 ),
                                               ),
-                                        Padding(
+                                        Container(
                                           padding: const EdgeInsets.only(
                                               left: 5.0, right: 5.0),
                                           child: Text(
@@ -161,6 +161,7 @@ class ProductItemWidget extends StatelessWidget {
                                                     .primaryColor,
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 14),
+                                            maxLines: 1,
                                           ),
                                         ),
                                       ],

@@ -128,8 +128,8 @@ class ChatController extends GetxController {
         listMessage.addAll(res.data.data);
 
         listMessage.forEach((e) {
-          allImageInMessage.add([]);
           listSaveDataImages.add([]);
+          allImageInMessage.add([]);
         });
 
         for (int i = 0; i < listMessage.length; i++) {
@@ -170,6 +170,8 @@ class ChatController extends GetxController {
   Future<SendMessageResponse> sendMessageToCustomer() async {
     timeNow.value = DateTime.now();
     try {
+      listSaveDataImages.insert(0, null);
+      allImageInMessage.insert(0, null);
       listMessage.insert(
           0,
           Message(
@@ -177,8 +179,6 @@ class ChatController extends GetxController {
             content: messageEditingController.value.text,
             createdAt: timeNow.value,
           ));
-      allImageInMessage.insert(0, null);
-      listSaveDataImages.insert(0, null);
       var res = await RepositoryManager.chatRepository.sendMessageToCustomer(
           boxChatCustomer.value.customerId,
           SendMessageRequest(
@@ -197,6 +197,7 @@ class ChatController extends GetxController {
     timeNow.value = DateTime.now();
     try {
       listSaveDataImages.insert(0, dataImages);
+      allImageInMessage.insert(0, null);
       listMessage.insert(
           0,
           Message(
@@ -204,7 +205,6 @@ class ChatController extends GetxController {
             linkImages: "",
             createdAt: timeNow.value,
           ));
-      allImageInMessage.insert(0, null);
       var res = await RepositoryManager.chatRepository.sendMessageToCustomer(
           boxChatCustomer.value.customerId,
           SendMessageRequest(
@@ -272,9 +272,6 @@ class ChatController extends GetxController {
 
   Future<void> uploadImageData({int indexImage, Function onOK}) async {
     try {
-      //  dataImages[indexImage].uploading = true;
-      //  dataImages.refresh();
-
       var fileUp =
           await ImageUtils.getImageFileFromAsset(dataImages[indexImage].file);
       var fileUpImageCompress = await ImageUtils.getImageCompress(fileUp);

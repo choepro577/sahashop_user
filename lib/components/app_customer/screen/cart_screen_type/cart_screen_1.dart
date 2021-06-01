@@ -45,15 +45,15 @@ class _CartScreen1State extends State<CartScreen1> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: SahaAppBar(
-        titleChild: Column(
+      appBar: AppBar(
+        title: Column(
           children: [
             Text(
               "Your Cart",
             ),
             Obx(
               () => Text(
-                "${cartController.listOrder.value.length} items",
+                "${cartController.listOrder.length} items",
                 style: TextStyle(fontSize: 14),
               ),
             ),
