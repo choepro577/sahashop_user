@@ -3,8 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/controller/cart_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/choose_address_screen/choose_address_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/pay_screen/controller/pay_controller.dart';
 import 'package:sahashop_user/components/utils/money.dart';

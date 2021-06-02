@@ -3,13 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/controller/cart_controller.dart';
+import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/pay_screen/pay_screen.dart';
-import 'package:sahashop_user/components/app_customer/screen/product_screen/controller/product_controller.dart';
+import 'package:sahashop_user/components/saha_user/switch_button/switch_button.dart';
 import 'package:sahashop_user/components/utils/money.dart';
-import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/const/constant.dart';
-import 'package:sahashop_user/model/order.dart';
 
 class CartScreen1 extends StatefulWidget {
   @override
@@ -17,28 +15,12 @@ class CartScreen1 extends StatefulWidget {
 }
 
 class _CartScreen1State extends State<CartScreen1> {
-  CartController cartController;
-  ProductController productController = Get.find();
-  List<Order> listOrder;
+  DataAppCustomerController dataAppCustomerController = Get.find();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    try {
-      cartController = Get.find();
-    } catch (e) {
-      cartController = Get.put(CartController());
-    }
-    cartController.getListOrder();
-    // listOrder = cartController.listOrder.value;
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    cartController.dispose();
+    // dataAppCustomerController.getListOrder();
   }
 
   @override
@@ -49,11 +31,11 @@ class _CartScreen1State extends State<CartScreen1> {
         title: Column(
           children: [
             Text(
-              "Your Cart",
+              "Giỏ hàng",
             ),
             Obx(
               () => Text(
-                "${cartController.listOrder.length} items",
+                "${dataAppCustomerController.listOrder.length} sản phẩm",
                 style: TextStyle(fontSize: 14),
               ),
             ),
@@ -64,17 +46,15 @@ class _CartScreen1State extends State<CartScreen1> {
         () => Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: ListView.builder(
-            itemCount: cartController.listOrder.value.length,
+            itemCount: dataAppCustomerController.listOrder.length,
             itemBuilder: (context, index) => Padding(
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Dismissible(
                 key: UniqueKey(),
                 direction: DismissDirection.endToStart,
                 onDismissed: (direction) {
-                  // cartController.listOrder.value.removeAt(index);
-                  cartController.removeProduct(index);
-                  cartController.getListOrder();
-                  productController.getListOrder();
+                  dataAppCustomerController.removeProduct(index);
+                  dataAppCustomerController.getListOrder();
                 },
                 background: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -105,8 +85,8 @@ class _CartScreen1State extends State<CartScreen1> {
                             borderRadius: BorderRadius.circular(10),
                             child: CachedNetworkImage(
                               fit: BoxFit.cover,
-                              imageUrl: cartController.listOrder.value[index]
-                                  .product.images[0].imageUrl,
+                              imageUrl: dataAppCustomerController
+                                  .listOrder[index].product.images[0].imageUrl,
                               errorWidget: (context, url, error) => ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: Container(
@@ -130,8 +110,8 @@ class _CartScreen1State extends State<CartScreen1> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            cartController
-                                    .listOrder.value[index].product.name ??
+                            dataAppCustomerController
+                                    .listOrder[index].product.name ??
                                 "Loi san pham",
                             style: TextStyle(color: Colors.black, fontSize: 16),
                             maxLines: 2,
@@ -140,14 +120,14 @@ class _CartScreen1State extends State<CartScreen1> {
                           Text.rich(
                             TextSpan(
                               text:
-                                  "\$${FormatMoney.toVND(cartController.listOrder.value[index].product.price)}",
+                                  "\$${FormatMoney.toVND(dataAppCustomerController.listOrder[index].product.price)}",
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: SahaPrimaryColor),
                               children: [
                                 TextSpan(
                                     text:
-                                        " x ${cartController.listOrder.value[index].quantity}",
+                                        " x ${dataAppCustomerController.listOrder[index].quantity}",
                                     style:
                                         Theme.of(context).textTheme.bodyText1),
                               ],
@@ -164,17 +144,8 @@ class _CartScreen1State extends State<CartScreen1> {
         ),
       ),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: 15,
-          horizontal: 30,
-        ),
-        // height: 174,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-          ),
           boxShadow: [
             BoxShadow(
               offset: Offset(0, -15),
@@ -188,69 +159,146 @@ class _CartScreen1State extends State<CartScreen1> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFF5F6F9),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: SvgPicture.asset("assets/icons/receipt.svg"),
-                  ),
-                  Spacer(),
-                  Text("Add voucher code"),
-                  const SizedBox(width: 10),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: 12,
-                    color: SahaPrimaryColor,
-                  )
-                ],
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Obx(
-                    () => Text.rich(
-                      TextSpan(
-                        text: "Total:\n",
-                        children: [
-                          TextSpan(
-                            text:
-                                "${FormatMoney.toVND(cartController.totalMoney.value)}",
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                        ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(4),
+                      height: 30,
+                      width: 30,
+                      child: SvgPicture.asset(
+                        "assets/icons/receipt.svg",
+                        color: Theme.of(context).primaryColor,
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 190,
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 56,
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        color: SahaPrimaryColor,
-                        onPressed: () {
-                          Get.to(() => PayScreen());
-                        },
-                        child: Text(
-                          "Check Out",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text("Voucher"),
+                    Spacer(),
+                    Text("Chọn hoặc nhập mã"),
+                    const SizedBox(width: 10),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 12,
+                      color: Theme.of(context).primaryColor,
+                    )
+                  ],
+                ),
+              ),
+              Divider(
+                height: 1,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(4),
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFF5F6F9),
+                        shape: BoxShape.circle,
+                      ),
+                      child: SvgPicture.asset(
+                        "assets/icons/money.svg",
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text("Dùng 5000 xu "),
+                    Spacer(),
+                    CustomSwitch(
+                      value: true,
+                      onChanged: (v) {},
+                    ),
+                    const SizedBox(width: 10),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 12,
+                      color: Theme.of(context).primaryColor,
+                    )
+                  ],
+                ),
+              ),
+              Divider(
+                height: 1,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 18,
+                  right: 18,
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text("Tổng thanh toán"),
+                        Obx(
+                          () => Text(
+                            "${FormatMoney.toVND(dataAppCustomerController.totalMoney.value)}",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      width: 20,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Get.to(() => PayScreen());
+                      },
+                      child: Container(
+                        width: 120,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Đặt hàng ",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Theme.of(context)
+                                      .primaryTextTheme
+                                      .headline6
+                                      .color,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Obx(
+                              () => Text(
+                                "(${dataAppCustomerController.listOrder.length})",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Theme.of(context)
+                                      .primaryTextTheme
+                                      .headline6
+                                      .color,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ],
           ),

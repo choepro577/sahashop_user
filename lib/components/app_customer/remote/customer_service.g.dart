@@ -9,7 +9,7 @@ part of 'customer_service.dart';
 class _CustomerService implements CustomerService {
   _CustomerService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'http://103.221.220.124/api/customer/';
+    baseUrl ??= 'https://sahashop.net/api/customer/';
   }
 
   final Dio _dio;
@@ -160,6 +160,26 @@ class _CustomerService implements CustomerService {
   }
 
   @override
+  Future<DetailProductResponse> getDetailProduct(storeCode, idProduct) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(idProduct, 'idProduct');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/products/$idProduct',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = DetailProductResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<AllCategoryPostResponse> getAllCategoryPost(storeCode) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     const _extra = <String, dynamic>{};
@@ -223,6 +243,25 @@ class _CustomerService implements CustomerService {
             baseUrl: baseUrl),
         data: _data);
     final value = HomeResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<CustomerComboResponse> getComboCustomer(storeCode) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/combos',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = CustomerComboResponse.fromJson(_result.data);
     return value;
   }
 

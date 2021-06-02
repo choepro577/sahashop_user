@@ -4,11 +4,13 @@ import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/app_customer/repository/repository_customer.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/components/utils/customer_info.dart';
+import 'package:sahashop_user/components/utils/storage_order.dart';
 import 'package:sahashop_user/controller/config_controller.dart';
 import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/model/category_post.dart';
 import 'package:sahashop_user/model/home_data.dart';
 import 'package:sahashop_user/model/info_customer.dart';
+import 'package:sahashop_user/model/order.dart';
 import 'package:sahashop_user/model/post.dart';
 import 'package:sahashop_user/model/product.dart';
 import 'category_post_screen/category_post_screen_1.dart';
@@ -36,6 +38,7 @@ class DataAppCustomerController extends GetxController {
     super.onInit();
     getHomeData();
     checkLogin();
+    getListOrder();
   }
 
   Future<void> checkLogin() async {
@@ -93,10 +96,10 @@ class DataAppCustomerController extends GetxController {
 
     if (configController.configApp.productPageType <
         LIST_WIDGET_PRODUCT_SCREEN.length) {
-      Get.to(LIST_WIDGET_PRODUCT_SCREEN[
+      Get.to(() => LIST_WIDGET_PRODUCT_SCREEN[
           configController.configApp.productPageType]);
     } else {
-      Get.to(LIST_WIDGET_PRODUCT_SCREEN[0]);
+      Get.to(() => LIST_WIDGET_PRODUCT_SCREEN[0]);
     }
   }
 
@@ -142,5 +145,22 @@ class DataAppCustomerController extends GetxController {
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
+  }
+
+  /// Cart
+  var totalMoney = 0.0.obs;
+  var listOrder = RxList<Order>();
+
+  void getListOrder() {
+    var rsListOrder = StorageOrder.getOrder();
+    listOrder.assignAll(rsListOrder);
+    listOrder.forEach((e) {
+      totalMoney = totalMoney + (e.product.price * e.quantity);
+    });
+  }
+
+  void removeProduct(int index) {
+    StorageOrder.removeProductInCart(index);
+    totalMoney.value = 0;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/cart_screen_1.dart';
 import 'package:sahashop_user/components/app_customer/screen/chat_customer/chat_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/login/login_screen.dart';
@@ -38,9 +39,14 @@ class SearchBarType1 extends StatelessWidget {
         ),
         Row(
           children: [
-            IconBtnWithCounter(
-              svgSrc: "assets/icons/cart_icon.svg",
-              press: () {},
+            Obx(
+              () => IconBtnWithCounter(
+                svgSrc: "assets/icons/cart_icon.svg",
+                press: () {
+                  Get.to(() => CartScreen1());
+                },
+                numOfitem: dataAppCustomerController.listOrder.length,
+              ),
             ),
             SizedBox(
               width: 10,

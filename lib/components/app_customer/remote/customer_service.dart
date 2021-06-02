@@ -10,8 +10,10 @@ import 'package:sahashop_user/components/app_customer/remote/response-request/co
 import 'package:sahashop_user/components/app_customer/remote/response-request/home/home_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/info_customer/info_customer_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/login/login_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/marketing_chanel/combo_customer_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/orders/order_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/product/all_product_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/product/detail_product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/product/query_product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/register/register_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/store/all_store_response.dart';
@@ -19,7 +21,7 @@ import 'package:sahashop_user/components/app_customer/remote/response-request/st
 
 part 'customer_service.g.dart';
 
-@RestApi(baseUrl: "http://103.221.220.124/api/customer/")
+@RestApi(baseUrl: "https://sahashop.net/api/customer/")
 abstract class CustomerService {
   /// Retrofit factory
   factory CustomerService(Dio dio) => _CustomerService(dio);
@@ -52,6 +54,12 @@ abstract class CustomerService {
       @Query("details") String details,
       @Query("sort_by") String sortBy);
 
+  @GET("{storeCode}/products/{idProduct}")
+  Future<DetailProductResponse> getDetailProduct(
+    @Path() String storeCode,
+    @Path() int idProduct,
+  );
+
   @GET("{storeCode}/post_categories")
   Future<AllCategoryPostResponse> getAllCategoryPost(@Path() String storeCode);
 
@@ -65,6 +73,9 @@ abstract class CustomerService {
 
   @GET("{storeCode}/home_app")
   Future<HomeResponse> getHomeApp(@Path() String storeCode);
+
+  @GET("{storeCode}/combos")
+  Future<CustomerComboResponse> getComboCustomer(@Path() String storeCode);
 
   @POST("{storeCode}/orders")
   Future<OrdersResponse> createOrder(
