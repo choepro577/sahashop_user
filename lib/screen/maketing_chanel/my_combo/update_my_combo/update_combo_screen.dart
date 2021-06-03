@@ -30,6 +30,8 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
 
   @override
   void initState() {
+    updateMyComboController.discountTypeRequest.value =
+        widget.combo.discountType;
     widget.combo.productsCombo.forEach((element) {
       updateMyComboController
           .updateProductComboController.listSelectedProduct.value

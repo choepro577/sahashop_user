@@ -2,33 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/screen/choose_address_screen/config_address_customer/config_address_customer_controller.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/switch_button/switch_button.dart';
 import 'package:sahashop_user/model/info_address.dart';
+import 'package:sahashop_user/model/info_address_customer.dart';
 
-class SetAddressScreen extends StatefulWidget {
-  final InfoAddress infoAddress;
-  @override
-  _SetAddressScreenState createState() => _SetAddressScreenState();
+class SetAddressScreen extends StatelessWidget {
+  final InfoAddressCustomer infoAddressCustomer;
 
-  SetAddressScreen({this.infoAddress});
-}
-
-class _SetAddressScreenState extends State<SetAddressScreen> {
-  bool _enable = true;
-  InfoAddress infoAddress;
-  TextEditingController nameTextEditingController = TextEditingController();
-  TextEditingController phoneTextEditingController = TextEditingController();
-  TextEditingController addressDetailTextEditingController =
-      TextEditingController();
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    infoAddress = widget.infoAddress;
-    nameTextEditingController.text = widget.infoAddress.name;
-    phoneTextEditingController.text = widget.infoAddress.phone;
-    addressDetailTextEditingController.text = widget.infoAddress.addressDetail;
+  ConfigAddressCustomerController configAddressCustomerController;
+  SetAddressScreen({this.infoAddressCustomer}) {
+    configAddressCustomerController = ConfigAddressCustomerController(
+      infoAddressCustomer: infoAddressCustomer,
+    );
   }
 
   @override
@@ -52,7 +39,8 @@ class _SetAddressScreenState extends State<SetAddressScreen> {
                     height: 25,
                     child: TextField(
                       style: TextStyle(fontSize: 14),
-                      controller: nameTextEditingController,
+                      controller: configAddressCustomerController
+                          .nameTextEditingController.value,
                       textAlign: TextAlign.end,
                       decoration: InputDecoration(
                         isDense: true,
@@ -80,7 +68,8 @@ class _SetAddressScreenState extends State<SetAddressScreen> {
                     child: TextField(
                       keyboardType: TextInputType.phone,
                       style: TextStyle(fontSize: 14),
-                      controller: phoneTextEditingController,
+                      controller: configAddressCustomerController
+                          .phoneTextEditingController.value,
                       textAlign: TextAlign.end,
                       decoration: InputDecoration(
                         isDense: true,
@@ -106,7 +95,7 @@ class _SetAddressScreenState extends State<SetAddressScreen> {
                     Text("Tỉnh/Thành phố"),
                     Row(
                       children: [
-                        Text("${infoAddress.province}"),
+                        Text("${infoAddressCustomer.provinceName}"),
                         Icon(Icons.arrow_forward_ios_rounded),
                       ],
                     ),
@@ -127,7 +116,7 @@ class _SetAddressScreenState extends State<SetAddressScreen> {
                     Text("Quận/Huyện"),
                     Row(
                       children: [
-                        Text("${infoAddress.district}"),
+                        Text("${infoAddressCustomer.districtName}"),
                         Icon(Icons.arrow_forward_ios_rounded),
                       ],
                     ),
@@ -148,7 +137,7 @@ class _SetAddressScreenState extends State<SetAddressScreen> {
                     Text("Phường/Xã"),
                     Row(
                       children: [
-                        Text("${infoAddress.wards}"),
+                        Text("${infoAddressCustomer.wardsName}"),
                         Icon(Icons.arrow_forward_ios_rounded),
                       ],
                     ),
@@ -180,7 +169,8 @@ class _SetAddressScreenState extends State<SetAddressScreen> {
                       Container(
                         width: Get.width * 0.9,
                         child: TextField(
-                          controller: addressDetailTextEditingController,
+                          controller: configAddressCustomerController
+                              .addressDetailTextEditingController.value,
                           decoration: InputDecoration(
                             isDense: true,
                             border: InputBorder.none,
@@ -206,11 +196,9 @@ class _SetAddressScreenState extends State<SetAddressScreen> {
                 children: [
                   Text("Đặt làm địa chỉ mặc định"),
                   CustomSwitch(
-                    value: _enable,
+                    value: configAddressCustomerController.isDefault.value,
                     onChanged: (bool val) {
-                      setState(() {
-                        _enable = val;
-                      });
+                      configAddressCustomerController.isDefault.value = val;
                     },
                   )
                 ],

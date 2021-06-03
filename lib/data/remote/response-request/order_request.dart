@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:sahashop_user/model/info_address.dart';
+import 'package:sahashop_user/model/info_address_customer.dart';
 
 OrderRequest orderRequestFromJson(String str) =>
     OrderRequest.fromJson(json.decode(str));
@@ -14,13 +15,13 @@ class OrderRequest {
     this.lineItems,
   });
 
-  InfoAddress infoReceiver;
-  InfoAddress infoContact;
+  InfoAddressCustomer infoReceiver;
+  InfoAddressCustomer infoContact;
   List<LineItem> lineItems;
 
   factory OrderRequest.fromJson(Map<String, dynamic> json) => OrderRequest(
-        infoReceiver: InfoAddress.fromJson(json["info_receiver"]),
-        infoContact: InfoAddress.fromJson(json["info_contact"]),
+        infoReceiver: InfoAddressCustomer.fromJson(json["info_receiver"]),
+        infoContact: InfoAddressCustomer.fromJson(json["info_contact"]),
         lineItems: List<LineItem>.from(
             json["line_items"].map((x) => LineItem.fromJson(x))),
       );

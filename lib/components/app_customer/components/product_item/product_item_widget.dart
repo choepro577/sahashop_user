@@ -22,6 +22,7 @@ class ProductItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DataAppCustomerController dataAppCustomerController = Get.find();
     return Container(
       height: 270,
       width: width,
@@ -175,7 +176,10 @@ class ProductItemWidget extends StatelessWidget {
                                     shape: BoxShape.circle,
                                     color: Theme.of(context).primaryColor),
                                 child: InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    dataAppCustomerController
+                                        .addItemCart(product.id);
+                                  },
                                   child: Container(
                                     height: 15,
                                     width: 15,

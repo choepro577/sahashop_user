@@ -38,7 +38,7 @@ class DataAppCustomerController extends GetxController {
     super.onInit();
     getHomeData();
     checkLogin();
-    getListOrder();
+    getItemCart();
   }
 
   Future<void> checkLogin() async {
@@ -148,19 +148,37 @@ class DataAppCustomerController extends GetxController {
   }
 
   /// Cart
+
   var totalMoney = 0.0.obs;
   var listOrder = RxList<Order>();
 
-  void getListOrder() {
-    var rsListOrder = StorageOrder.getOrder();
-    listOrder.assignAll(rsListOrder);
-    listOrder.forEach((e) {
-      totalMoney = totalMoney + (e.product.price * e.quantity);
-    });
+  Future<void> getItemCart() async {
+    try {
+      var res = await CustomerRepositoryManager.cartRepository.getItemCart();
+      listOrder(res.data.lineItems);
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
   }
 
-  void removeProduct(int index) {
-    StorageOrder.removeProductInCart(index);
-    totalMoney.value = 0;
+  Future<void> updateItemCart(int idProduct, int quantity) async {
+    try {
+      var res = await CustomerRepositoryManager.cartRepository
+          .updateItemCart(idProduct, quantity);
+
+      listOrder(res.data.lineItems);
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+  }
+
+  Future<void> addItemCart(int idProduct) async {
+    try {
+      var res =
+          await CustomerRepositoryManager.cartRepository.addItemCart(idProduct);
+      listOrder(res.data.lineItems);
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
   }
 }

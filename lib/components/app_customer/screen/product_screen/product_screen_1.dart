@@ -169,14 +169,43 @@ class ProductScreen1 extends StatelessWidget {
                                                 SizedBox(
                                                   width: 3,
                                                 ),
-                                                Text(
-                                                  "Combo đủ giảm 69%",
-                                                  style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
-                                                    fontSize: 12,
-                                                  ),
-                                                ),
+                                                productController
+                                                            .discountComboType
+                                                            .value ==
+                                                        1
+                                                    ? Text(
+                                                        "Combo giảm ${productController.valueComboType.value}%",
+                                                        style: TextStyle(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
+                                                          fontSize: 12,
+                                                        ),
+                                                      )
+                                                    : Row(
+                                                        children: [
+                                                          Text(
+                                                            "Combo giảm ",
+                                                            style: TextStyle(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor,
+                                                              fontSize: 12,
+                                                            ),
+                                                          ),
+                                                          SahaMoneyText(
+                                                            sizeText: 12,
+                                                            sizeVND: 10,
+                                                            price: productController
+                                                                .valueComboType
+                                                                .value
+                                                                .toDouble(),
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                          ),
+                                                        ],
+                                                      ),
                                                 SizedBox(
                                                   width: 3,
                                                 ),
@@ -281,15 +310,39 @@ class ProductScreen1 extends StatelessWidget {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              "Combo đủ giảm 69%",
-                                            ),
+                                            productController.discountComboType
+                                                        .value ==
+                                                    1
+                                                ? Text(
+                                                    "Mua đủ Combo giảm ${productController.valueComboType.value}%",
+                                                  )
+                                                : Row(
+                                                    children: [
+                                                      Text(
+                                                        "Mua đủ Combo giảm ",
+                                                      ),
+                                                      SahaMoneyText(
+                                                        sizeText: 14,
+                                                        sizeVND: 12,
+                                                        price: productController
+                                                            .valueComboType
+                                                            .value
+                                                            .toDouble(),
+                                                      ),
+                                                    ],
+                                                  ),
                                             Row(
                                               children: [
                                                 TextButton(
                                                     onPressed: () {
                                                       Get.to(() =>
-                                                          ComboDetailScreen());
+                                                          ComboDetailScreen(
+                                                            idProduct:
+                                                                productController
+                                                                    .productDetailRequest
+                                                                    .value
+                                                                    .id,
+                                                          ));
                                                     },
                                                     child: Text("Xem tất cả")),
                                                 Container(
@@ -323,7 +376,10 @@ class ProductScreen1 extends StatelessWidget {
                                                     right: 5),
                                                 child: CachedNetworkImage(
                                                   imageUrl: productController
-                                                              .listProductCombo
+                                                              .listProductCombo[
+                                                                  index]
+                                                              .product
+                                                              .images
                                                               .length !=
                                                           0
                                                       ? productController
@@ -718,12 +774,12 @@ class ProductScreen1 extends StatelessWidget {
             right: 20,
             child: Row(
               children: [
-                InkWell(
-                    onTap: () {
+                IconButton(
+                    icon: Icon(Icons.arrow_back_ios,
+                        color: Theme.of(context).primaryColor),
+                    onPressed: () {
                       Get.back();
-                    },
-                    child: Icon(Icons.arrow_back_ios,
-                        color: Theme.of(context).primaryColor)),
+                    }),
                 Spacer(),
                 Stack(
                   overflow: Overflow.visible,
@@ -860,7 +916,7 @@ class ProductScreen1 extends StatelessWidget {
                               onTap: () {
                                 // Get the position of the current widget when clicked, and pass in overlayEntry
                                 productController.animatedAddCard();
-                                productController.addOneItem();
+                                productController.addItemCart();
                               },
                               child: Container(
                                 height: 25,
@@ -1031,7 +1087,7 @@ class ProductScreen1 extends StatelessWidget {
                                   .color,
                               color: Theme.of(context).primaryColor,
                               onPressed: () {
-                                productController.addOrder();
+                                productController.addManyItemOrUpdate();
                                 //productController.getListOrder();
                               },
                             ),

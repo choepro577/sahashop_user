@@ -1,14 +1,33 @@
-import 'package:hive/hive.dart';
 import 'package:sahashop_user/model/product.dart';
-part 'order.g.dart';
 
-@HiveType(typeId: 0)
 class Order {
-  @HiveField(0)
-  final int quantity;
+  Order({
+    this.id,
+    this.quantity,
+    this.createdAt,
+    this.updatedAt,
+    this.product,
+  });
 
-  @HiveField(1)
-  final Product product;
+  int id;
+  int quantity;
+  DateTime createdAt;
+  DateTime updatedAt;
+  Product product;
 
-  Order({this.product, this.quantity});
+  factory Order.fromJson(Map<String, dynamic> json) => Order(
+        id: json["id"],
+        quantity: json["quantity"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+        product: Product.fromJson(json["product"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "quantity": quantity,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+        "product": product.toJson(),
+      };
 }

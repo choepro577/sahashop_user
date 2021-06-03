@@ -34,14 +34,16 @@ class UpdateMyComboController extends GetxController {
   var typeVoucherDiscount = "Chọn".obs;
   var isChoosedTypeVoucherDiscount = true.obs;
   var discountType = DiscountType.k1.obs;
-  var discountTypeRequest = 0.obs;
+  var discountTypeRequest = 1.obs;
   var validateComboPercent = false.obs;
 
   void checkTypeDiscountInput() {
     if (discountTypeInput.value == 1) {
       typeVoucherDiscount.value = "Giảm ${valueEditingController.text} %";
+      discountType.value = DiscountType.k1;
     } else {
       typeVoucherDiscount.value = "Giảm đ${valueEditingController.text}";
+      discountType.value = DiscountType.k0;
     }
   }
 
@@ -93,9 +95,9 @@ class UpdateMyComboController extends GetxController {
     }
     discountType.value = v;
     if (discountType.value == DiscountType.k1) {
-      discountTypeRequest.value = 0;
-    } else {
       discountTypeRequest.value = 1;
+    } else {
+      discountTypeRequest.value = 0;
     }
     print(discountTypeRequest.value);
   }

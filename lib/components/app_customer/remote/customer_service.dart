@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:sahashop_user/components/app_customer/remote/post/all_category_post_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/post/all_post_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/address_customer/all_address_customer_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/cart/cart_response.dart';
 
 import 'package:sahashop_user/components/app_customer/remote/response-request/category/all_category_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/chat_customer/all_message_response.dart';
@@ -107,4 +109,23 @@ abstract class CustomerService {
     @Path() String storeCode,
     @Body() Map<String, dynamic> body,
   );
+
+  /// cart
+
+  @POST("{storeCode}/carts")
+  Future<CartCustomerResponse> getItemCart(@Path() String storeCode);
+
+  @PUT("{storeCode}/carts/items")
+  Future<CartCustomerResponse> updateItemCart(
+      @Path() String storeCode, @Body() Map<String, dynamic> body);
+
+  @POST("{storeCode}/carts/items")
+  Future<CartCustomerResponse> addItemCart(
+      @Path() String storeCode, @Body() Map<String, dynamic> body);
+
+  /// address customer
+
+  @GET("{storeCode}/address")
+  Future<AllIAddressCustomerResponse> getAllAddressCustomer(
+      @Path() String storeCode);
 }

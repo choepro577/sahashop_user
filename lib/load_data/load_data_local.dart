@@ -11,7 +11,6 @@ class LoadDataLocal {
     final appDocumentDirectory =
         await path_provider.getApplicationDocumentsDirectory();
     Hive.init(appDocumentDirectory.path);
-    Hive.registerAdapter(OrderAdapter());
     Hive.registerAdapter(ProductAdapter());
     Hive.registerAdapter(DetailsAdapter());
     Hive.registerAdapter(AttributesAdapter());

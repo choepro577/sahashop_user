@@ -53,8 +53,9 @@ class _CartScreen1State extends State<CartScreen1> {
                 key: UniqueKey(),
                 direction: DismissDirection.endToStart,
                 onDismissed: (direction) {
-                  dataAppCustomerController.removeProduct(index);
-                  dataAppCustomerController.getListOrder();
+                  /// remove item product in cart on sever
+                  dataAppCustomerController.updateItemCart(
+                      dataAppCustomerController.listOrder[index].product.id, 0);
                 },
                 background: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -86,7 +87,14 @@ class _CartScreen1State extends State<CartScreen1> {
                             child: CachedNetworkImage(
                               fit: BoxFit.cover,
                               imageUrl: dataAppCustomerController
-                                  .listOrder[index].product.images[0].imageUrl,
+                                          .listOrder[index]
+                                          .product
+                                          .images
+                                          .length ==
+                                      0
+                                  ? ""
+                                  : dataAppCustomerController.listOrder[index]
+                                      .product.images[0].imageUrl,
                               errorWidget: (context, url, error) => ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: Container(

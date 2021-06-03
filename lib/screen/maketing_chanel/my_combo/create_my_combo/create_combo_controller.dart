@@ -35,7 +35,7 @@ class CreateMyComboController extends GetxController {
   var isCheckMinimumOrderDiscount = true.obs;
 
   var discountType = DiscountType.k1.obs;
-  var discountTypeRequest = 0.obs;
+  var discountTypeRequest = 1.obs;
 
   var validateComboPercent = false.obs;
 

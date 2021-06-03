@@ -4,9 +4,7 @@ import 'package:sahashop_user/components/app_customer/repository/repository_cust
 import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/cart_screen_1.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
-import 'package:sahashop_user/components/utils/storage_order.dart';
 import 'package:sahashop_user/model/combo.dart';
-import 'package:sahashop_user/model/order.dart';
 import 'package:sahashop_user/model/product.dart';
 
 class ProductController extends GetxController {
@@ -21,6 +19,8 @@ class ProductController extends GetxController {
   var isLoadingProduct = false.obs;
   var listProductCombo = RxList<ProductsCombo>();
   var hasInCombo = false.obs;
+  var discountComboType = 0.obs;
+  var valueComboType = 0.0.obs;
 
   DataAppCustomerController dataAppCustomerController = Get.find();
 
@@ -58,8 +58,12 @@ class ProductController extends GetxController {
             (element) => element.product.id == productDetailRequest.value.id);
         if (checkHasInCombo != -1) {
           hasInCombo.value = true;
+
+          /// 0 Co dinh, 1 theo %,
+          discountComboType.value = e.discountType;
+          valueComboType.value = e.valueDiscount.toDouble();
+          listProductCombo(e.productsCombo);
         }
-        listProductCombo(e.productsCombo);
       });
     } catch (err) {
       SahaAlert.showError(message: err.toString());
@@ -95,55 +99,16 @@ class ProductController extends GetxController {
     }
   }
 
-  void addOrder() {
-    var order =
-        Order(product: productDetailRequest.value, quantity: quantity.value);
-
-    int idCurrent = dataAppCustomerController.listOrder.indexWhere(
-        (element) => element.product.id == productDetailRequest.value.id);
-
-    print(idCurrent);
-
-    if (idCurrent != -1) {
-      var orderUpdate = Order(
-          product: productDetailRequest.value,
-          quantity: dataAppCustomerController.listOrder[idCurrent].quantity +
-              quantity.value);
-      StorageOrder.updateOrder(orderUpdate, idCurrent);
-      dataAppCustomerController.getListOrder();
-
-      /// back sheet
-      Get.back();
-      Get.to(() => CartScreen1());
-    } else {
-      StorageOrder.addOrder(order);
-      dataAppCustomerController.getListOrder();
-
-      /// back sheet
-      Get.back();
-      Get.to(() => CartScreen1());
-    }
+  void addItemCart() {
+    dataAppCustomerController.addItemCart(productDetailRequest.value.id);
   }
 
-  void addOneItem() {
-    var order =
-        Order(product: productDetailRequest.value, quantity: quantity.value);
+  void addManyItemOrUpdate() {
+    dataAppCustomerController.updateItemCart(
+        productDetailRequest.value.id, quantity.value);
 
-    int idCurrent = dataAppCustomerController.listOrder.indexWhere(
-        (element) => element.product.id == productDetailRequest.value.id);
-
-    print(idCurrent);
-
-    if (idCurrent != -1) {
-      var orderUpdate = Order(
-          product: productDetailRequest.value,
-          quantity:
-              dataAppCustomerController.listOrder[idCurrent].quantity + 1);
-      StorageOrder.updateOrder(orderUpdate, idCurrent);
-      dataAppCustomerController.getListOrder();
-    } else {
-      StorageOrder.addOrder(order);
-      dataAppCustomerController.getListOrder();
-    }
+    /// back sheet
+    Get.back();
+    Get.to(() => CartScreen1());
   }
 }

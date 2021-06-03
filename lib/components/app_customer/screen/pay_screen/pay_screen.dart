@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/app_customer/screen/choose_address_screen/choose_address_screen.dart';
+import 'package:sahashop_user/components/app_customer/screen/choose_address_screen/choose_address_receiver/choose_address_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/pay_screen/controller/pay_controller.dart';
+
 import 'package:sahashop_user/components/utils/money.dart';
 import 'package:sahashop_user/const/constant.dart';
+import 'package:sahashop_user/model/info_address_customer.dart';
 
 class PayScreen extends StatefulWidget {
   @override
@@ -23,7 +25,6 @@ class _PayScreenState extends State<PayScreen>
   @override
   void initState() {
     payController = Get.put(PayController());
-    payController.getListOrder();
     super.initState();
   }
 
@@ -45,11 +46,19 @@ class _PayScreenState extends State<PayScreen>
               Obx(
                 () => Column(
                   children: [
-                    if (payController.infoAddress.value != null)
+                    if (payController.infoAddressCustomer.value != null)
                       Card(
                         child: InkWell(
                           onTap: () {
-                            Get.to(() => ChooseAddressScreen());
+                            Get.to(() => ChooseAddressCustomerScreen(
+                                  infoAddressCustomers:
+                                      payController.infoAddressCustomer.value,
+                                  callback: (InfoAddressCustomer
+                                      infoAddressCustomer) {
+                                    payController.infoAddressCustomer.value =
+                                        infoAddressCustomer;
+                                  },
+                                ));
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(15.0),
@@ -83,21 +92,21 @@ class _PayScreenState extends State<PayScreen>
                                         Container(
                                           width: Get.width * 0.7,
                                           child: Text(
-                                            "${payController.infoAddress.value.name}  | ${payController.infoAddress.value.phone}",
+                                            "${payController.infoAddressCustomer.value.name}  | ${payController.infoAddressCustomer.value.phone}",
                                             maxLines: 2,
                                           ),
                                         ),
                                         Container(
                                           width: Get.width * 0.7,
                                           child: Text(
-                                            "${payController.infoAddress.value.addressDetail}",
+                                            "${payController.infoAddressCustomer.value.addressDetail}",
                                             maxLines: 2,
                                           ),
                                         ),
                                         Container(
                                           width: Get.width * 0.7,
                                           child: Text(
-                                            "${payController.infoAddress.value.district}, ${payController.infoAddress.value.wards}, ${payController.infoAddress.value.province}",
+                                            "${payController.infoAddressCustomer.value.districtName}, ${payController.infoAddressCustomer.value.wardsName}, ${payController.infoAddressCustomer.value.provinceName}",
                                             style: TextStyle(
                                                 color: Colors.grey[700],
                                                 fontSize: 13),
@@ -132,7 +141,15 @@ class _PayScreenState extends State<PayScreen>
                             child: Card(
                               child: InkWell(
                                 onTap: () {
-                                  Get.to(() => ChooseAddressScreen());
+                                  Get.to(() => ChooseAddressCustomerScreen(
+                                        infoAddressCustomers: payController
+                                            .infoAddressCustomer.value,
+                                        callback: (InfoAddressCustomer
+                                            infoAddressCustomer) {
+                                          payController.infoAddressCustomer
+                                              .value = infoAddressCustomer;
+                                        },
+                                      ));
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(15.0),
@@ -214,7 +231,7 @@ class _PayScreenState extends State<PayScreen>
                 ),
               ),
               ...List.generate(
-                payController.listOrder.value.length,
+                payController.dataAppCustomerController.listOrder.length,
                 (index) => Container(
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
@@ -236,8 +253,20 @@ class _PayScreenState extends State<PayScreen>
                               borderRadius: BorderRadius.circular(10),
                               child: CachedNetworkImage(
                                 fit: BoxFit.cover,
-                                imageUrl: payController.listOrder.value[index]
-                                    .product.images[0].imageUrl,
+                                imageUrl: payController
+                                            .dataAppCustomerController
+                                            .listOrder[index]
+                                            .product
+                                            .images
+                                            .length ==
+                                        0
+                                    ? ""
+                                    : payController
+                                        .dataAppCustomerController
+                                        .listOrder[index]
+                                        .product
+                                        .images[0]
+                                        .imageUrl,
                                 errorWidget: (context, url, error) => ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
                                   child: Container(
@@ -261,8 +290,8 @@ class _PayScreenState extends State<PayScreen>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              payController
-                                      .listOrder.value[index].product.name ??
+                              payController.dataAppCustomerController
+                                      .listOrder[index].product.name ??
                                   "Loi san pham",
                               style:
                                   TextStyle(color: Colors.black, fontSize: 16),
@@ -272,14 +301,14 @@ class _PayScreenState extends State<PayScreen>
                             Text.rich(
                               TextSpan(
                                 text:
-                                    "\$${FormatMoney.toVND(payController.listOrder.value[index].product.price)}",
+                                    "\$${FormatMoney.toVND(payController.dataAppCustomerController.listOrder[index].product.price)}",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     color: SahaPrimaryColor),
                                 children: [
                                   TextSpan(
                                       text:
-                                          " x ${payController.listOrder.value[index].quantity}",
+                                          " x ${payController.dataAppCustomerController.listOrder[index].quantity}",
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1),
@@ -383,7 +412,7 @@ class _PayScreenState extends State<PayScreen>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Tổng số tiền (${payController.listOrder.value.length} sản phẩm) : ',
+                      'Tổng số tiền (${payController.dataAppCustomerController.listOrder.length} sản phẩm) : ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Obx(
@@ -612,7 +641,7 @@ class _PayScreenState extends State<PayScreen>
               ),
               InkWell(
                 onTap: () {
-                  if (payController.infoAddress.value == null) {
+                  if (payController.infoAddressCustomer.value == null) {
                     Scrollable.ensureVisible(dataKey.currentContext,
                         duration: Duration(milliseconds: 500));
                     setState(() {
