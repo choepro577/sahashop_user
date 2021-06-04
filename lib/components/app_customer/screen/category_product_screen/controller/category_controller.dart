@@ -1,15 +1,12 @@
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/repository/handle_error.dart';
 import 'package:sahashop_user/components/app_customer/repository/repository_customer.dart';
-import 'package:sahashop_user/components/utils/storage_order.dart';
 import 'package:sahashop_user/model/category.dart';
-import 'package:sahashop_user/model/order.dart';
 import 'package:sahashop_user/model/product.dart';
 
 import '../../data_app_controller.dart';
 
 class CategoryController extends GetxController {
-
   var isLoadingScreen = false.obs;
   var isLoadingCategory = false.obs;
   var isLoadingProduct = true.obs;
@@ -39,7 +36,8 @@ class CategoryController extends GetxController {
   Future<void> getProductWithCategory(int idCategory) async {
     try {
       var res = await CustomerRepositoryManager.productCustomerRepository
-          .searchProduct(idCategory: idCategory == null ? "" : idCategory.toString());
+          .searchProduct(
+              idCategory: idCategory == null ? "" : idCategory.toString());
       products(res);
     } catch (err) {
       print(err);
@@ -58,10 +56,7 @@ class CategoryController extends GetxController {
       categories(res);
 
       if (categoryCurrent.value != null) {
-
         setCategoryCurrent(categoryCurrent.value);
-
-
       } else if (categories.length > 0) {
         getProductWithCategory(categories.toList()[0].id);
         setCategoryCurrent(categories.toList()[0]);

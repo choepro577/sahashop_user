@@ -3,28 +3,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/app_customer/screen/choose_address_screen/choose_address_receiver/choose_address_screen.dart';
-import 'package:sahashop_user/components/app_customer/screen/pay_screen/controller/pay_controller.dart';
-
+import 'package:sahashop_user/components/app_customer/screen/address_screen/choose_address_receiver/receiver_address_screen.dart';
+import 'package:sahashop_user/components/app_customer/screen/confirm_screen/controller/confirm_controller.dart';
 import 'package:sahashop_user/components/utils/money.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/model/info_address_customer.dart';
 
-class PayScreen extends StatefulWidget {
+class ConfirmScreen extends StatefulWidget {
   @override
-  _PayScreenState createState() => _PayScreenState();
+  _ConfirmScreenState createState() => _ConfirmScreenState();
 }
 
-class _PayScreenState extends State<PayScreen>
+class _ConfirmScreenState extends State<ConfirmScreen>
     with SingleTickerProviderStateMixin {
-  PayController payController;
+  ConfirmController confirmController;
   final dataKey = new GlobalKey();
   Color _color = Colors.transparent;
   double _opacityCurrent = 1;
 
   @override
   void initState() {
-    payController = Get.put(PayController());
+    confirmController = Get.put(ConfirmController());
     super.initState();
   }
 
@@ -33,7 +32,7 @@ class _PayScreenState extends State<PayScreen>
     // TODO: implement build
     return Scaffold(
         appBar: AppBar(
-          title: Text("Thanh toán"),
+          title: Text("Xác nhận đơn hàng"),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -46,17 +45,17 @@ class _PayScreenState extends State<PayScreen>
               Obx(
                 () => Column(
                   children: [
-                    if (payController.infoAddressCustomer.value != null)
+                    if (confirmController.infoAddressCustomer.value != null)
                       Card(
                         child: InkWell(
                           onTap: () {
-                            Get.to(() => ChooseAddressCustomerScreen(
-                                  infoAddressCustomers:
-                                      payController.infoAddressCustomer.value,
+                            Get.to(() => ReceiverAddressCustomerScreen(
+                                  infoAddressCustomers: confirmController
+                                      .infoAddressCustomer.value,
                                   callback: (InfoAddressCustomer
                                       infoAddressCustomer) {
-                                    payController.infoAddressCustomer.value =
-                                        infoAddressCustomer;
+                                    confirmController.infoAddressCustomer
+                                        .value = infoAddressCustomer;
                                   },
                                 ));
                           },
@@ -92,21 +91,21 @@ class _PayScreenState extends State<PayScreen>
                                         Container(
                                           width: Get.width * 0.7,
                                           child: Text(
-                                            "${payController.infoAddressCustomer.value.name}  | ${payController.infoAddressCustomer.value.phone}",
+                                            "${confirmController.infoAddressCustomer.value.name ?? "Chưa có tên"}  | ${confirmController.infoAddressCustomer.value.phone ?? "Chưa có số điện thoại"}",
                                             maxLines: 2,
                                           ),
                                         ),
                                         Container(
                                           width: Get.width * 0.7,
                                           child: Text(
-                                            "${payController.infoAddressCustomer.value.addressDetail}",
+                                            "${confirmController.infoAddressCustomer.value.addressDetail ?? "Chưa có địa chỉ chi tiết"}",
                                             maxLines: 2,
                                           ),
                                         ),
                                         Container(
                                           width: Get.width * 0.7,
                                           child: Text(
-                                            "${payController.infoAddressCustomer.value.districtName}, ${payController.infoAddressCustomer.value.wardsName}, ${payController.infoAddressCustomer.value.provinceName}",
+                                            "${confirmController.infoAddressCustomer.value.districtName ?? "Chưa có Quận/Huyện"}, ${confirmController.infoAddressCustomer.value.wardsName ?? "Chưa có Phường/Xã"}, ${confirmController.infoAddressCustomer.value.provinceName ?? "Chưa có Tỉnh/Thành phố"}",
                                             style: TextStyle(
                                                 color: Colors.grey[700],
                                                 fontSize: 13),
@@ -141,12 +140,12 @@ class _PayScreenState extends State<PayScreen>
                             child: Card(
                               child: InkWell(
                                 onTap: () {
-                                  Get.to(() => ChooseAddressCustomerScreen(
-                                        infoAddressCustomers: payController
+                                  Get.to(() => ReceiverAddressCustomerScreen(
+                                        infoAddressCustomers: confirmController
                                             .infoAddressCustomer.value,
                                         callback: (InfoAddressCustomer
                                             infoAddressCustomer) {
-                                          payController.infoAddressCustomer
+                                          confirmController.infoAddressCustomer
                                               .value = infoAddressCustomer;
                                         },
                                       ));
@@ -231,7 +230,7 @@ class _PayScreenState extends State<PayScreen>
                 ),
               ),
               ...List.generate(
-                payController.dataAppCustomerController.listOrder.length,
+                confirmController.dataAppCustomerController.listOrder.length,
                 (index) => Container(
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
@@ -253,7 +252,7 @@ class _PayScreenState extends State<PayScreen>
                               borderRadius: BorderRadius.circular(10),
                               child: CachedNetworkImage(
                                 fit: BoxFit.cover,
-                                imageUrl: payController
+                                imageUrl: confirmController
                                             .dataAppCustomerController
                                             .listOrder[index]
                                             .product
@@ -261,7 +260,7 @@ class _PayScreenState extends State<PayScreen>
                                             .length ==
                                         0
                                     ? ""
-                                    : payController
+                                    : confirmController
                                         .dataAppCustomerController
                                         .listOrder[index]
                                         .product
@@ -290,7 +289,7 @@ class _PayScreenState extends State<PayScreen>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              payController.dataAppCustomerController
+                              confirmController.dataAppCustomerController
                                       .listOrder[index].product.name ??
                                   "Loi san pham",
                               style:
@@ -301,14 +300,14 @@ class _PayScreenState extends State<PayScreen>
                             Text.rich(
                               TextSpan(
                                 text:
-                                    "\$${FormatMoney.toVND(payController.dataAppCustomerController.listOrder[index].product.price)}",
+                                    "\$${FormatMoney.toVND(confirmController.dataAppCustomerController.listOrder[index].product.price)}",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     color: SahaPrimaryColor),
                                 children: [
                                   TextSpan(
                                       text:
-                                          " x ${payController.dataAppCustomerController.listOrder[index].quantity}",
+                                          " x ${confirmController.dataAppCustomerController.listOrder[index].quantity}",
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1),
@@ -412,12 +411,12 @@ class _PayScreenState extends State<PayScreen>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Tổng số tiền (${payController.dataAppCustomerController.listOrder.length} sản phẩm) : ',
+                      'Tổng số tiền (${confirmController.dataAppCustomerController.listOrder.length} sản phẩm) : ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Obx(
                       () => Text(
-                          "${FormatMoney.toVND(payController.totalMoney.value + 45000)}"),
+                          "${FormatMoney.toVND(confirmController.totalMoney.value + 45000)}"),
                     )
                   ],
                 ),
@@ -526,7 +525,7 @@ class _PayScreenState extends State<PayScreen>
                               style: TextStyle(
                                   fontSize: 13, color: Colors.grey[700])),
                           Text(
-                              "${FormatMoney.toVND(payController.totalMoney.value)}",
+                              "${FormatMoney.toVND(confirmController.totalMoney.value)}",
                               style: TextStyle(
                                   fontSize: 13, color: Colors.grey[800])),
                         ],
@@ -555,7 +554,7 @@ class _PayScreenState extends State<PayScreen>
                             'Tổng thanh toán :',
                           ),
                           Text(
-                              "${FormatMoney.toVND(payController.totalMoney.value + 45000)}",
+                              "${FormatMoney.toVND(confirmController.totalMoney.value + 45000)}",
                               style: TextStyle(
                                   fontSize: 13, color: Colors.grey[800])),
                         ],
@@ -628,7 +627,7 @@ class _PayScreenState extends State<PayScreen>
                   ),
                   Text("Tổng thanh toán"),
                   Text(
-                    "${FormatMoney.toVND(payController.totalMoney.value + 45000)}",
+                    "${FormatMoney.toVND(confirmController.totalMoney.value + 45000)}",
                     style: TextStyle(
                         fontSize: 16,
                         color: Colors.red,
@@ -641,7 +640,7 @@ class _PayScreenState extends State<PayScreen>
               ),
               InkWell(
                 onTap: () {
-                  if (payController.infoAddressCustomer.value == null) {
+                  if (confirmController.infoAddressCustomer.value == null) {
                     Scrollable.ensureVisible(dataKey.currentContext,
                         duration: Duration(milliseconds: 500));
                     setState(() {
@@ -666,7 +665,7 @@ class _PayScreenState extends State<PayScreen>
                       });
                     });
                   } else {
-                    payController.createOrders();
+                    confirmController.createOrders();
                   }
                 },
                 child: Container(

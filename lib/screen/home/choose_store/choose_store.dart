@@ -48,8 +48,6 @@ class ChooseStoreScreen extends StatelessWidget {
                                     index: index + 1,
                                     onChange: (store) {
                                       homeController.setNewStoreCurrent(store);
-                                      homeController
-                                          .removeAndCloseHiveBox(store);
                                     },
                                   ),
                                 ],

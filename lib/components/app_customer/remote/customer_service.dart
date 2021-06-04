@@ -3,6 +3,8 @@ import 'package:retrofit/retrofit.dart';
 import 'package:sahashop_user/components/app_customer/remote/post/all_category_post_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/post/all_post_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/address_customer/all_address_customer_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/address_customer/create_update_address_customer_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/address_customer/delete_address_customer_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/cart/cart_response.dart';
 
 import 'package:sahashop_user/components/app_customer/remote/response-request/category/all_category_response.dart';
@@ -128,4 +130,18 @@ abstract class CustomerService {
   @GET("{storeCode}/address")
   Future<AllIAddressCustomerResponse> getAllAddressCustomer(
       @Path() String storeCode);
+
+  @POST("{storeCode}/address")
+  Future<CreateUpdateAddressCustomerResponse> createAddressCustomer(
+      @Path() String storeCode, @Body() Map<String, dynamic> body);
+
+  @PUT("{storeCode}/address/{idAddressCustomer}")
+  Future<CreateUpdateAddressCustomerResponse> updateAddressCustomer(
+      @Path() String storeCode,
+      @Path() int idAddressCustomer,
+      @Body() Map<String, dynamic> body);
+
+  @DELETE("{storeCode}/address/{idAddressCustomer}")
+  Future<DeleteAddressCustomerResponse> deleteAddressCustomer(
+      @Path() String storeCode, @Path() int idAddressCustomer);
 }

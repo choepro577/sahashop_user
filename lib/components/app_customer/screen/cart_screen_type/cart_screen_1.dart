@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/screen/confirm_screen/confirm_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
-import 'package:sahashop_user/components/app_customer/screen/pay_screen/pay_screen.dart';
 import 'package:sahashop_user/components/saha_user/switch_button/switch_button.dart';
 import 'package:sahashop_user/components/utils/money.dart';
 import 'package:sahashop_user/const/constant.dart';
@@ -268,7 +268,7 @@ class _CartScreen1State extends State<CartScreen1> {
                     ),
                     InkWell(
                       onTap: () {
-                        Get.to(() => PayScreen());
+                        Get.to(() => ConfirmScreen());
                       },
                       child: Container(
                         width: 120,

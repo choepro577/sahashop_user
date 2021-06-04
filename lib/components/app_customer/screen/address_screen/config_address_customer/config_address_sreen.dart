@@ -2,17 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/app_customer/screen/choose_address_screen/config_address_customer/config_address_customer_controller.dart';
+import 'package:sahashop_user/components/app_customer/screen/address_screen/choose_address_customer_screen/choose_address_customer_screen.dart';
+import 'package:sahashop_user/components/app_customer/screen/address_screen/config_address_customer/config_address_customer_controller.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/switch_button/switch_button.dart';
-import 'package:sahashop_user/model/info_address.dart';
+import 'package:sahashop_user/const/type_address.dart';
 import 'package:sahashop_user/model/info_address_customer.dart';
+import 'package:sahashop_user/model/location_address.dart';
 
-class SetAddressScreen extends StatelessWidget {
+class ConfigAddressCustomerScreen extends StatelessWidget {
   final InfoAddressCustomer infoAddressCustomer;
 
   ConfigAddressCustomerController configAddressCustomerController;
-  SetAddressScreen({this.infoAddressCustomer}) {
+  ConfigAddressCustomerScreen({this.infoAddressCustomer}) {
     configAddressCustomerController = ConfigAddressCustomerController(
       infoAddressCustomer: infoAddressCustomer,
     );
@@ -86,7 +88,19 @@ class SetAddressScreen extends StatelessWidget {
               height: 1,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.to(() => ChooseAddressCustomerScreen(
+                      typeAddress: TypeAddress.Province,
+                      callback: (LocationAddress location) {
+                        configAddressCustomerController.locationProvince.value =
+                            location;
+                        configAddressCustomerController.locationDistrict.value =
+                            new LocationAddress();
+                        configAddressCustomerController.locationWard.value =
+                            new LocationAddress();
+                      },
+                    ));
+              },
               child: Container(
                 padding: EdgeInsets.all(10),
                 child: Row(
@@ -95,7 +109,8 @@ class SetAddressScreen extends StatelessWidget {
                     Text("Tỉnh/Thành phố"),
                     Row(
                       children: [
-                        Text("${infoAddressCustomer.provinceName}"),
+                        Obx(() => Text(
+                            "${configAddressCustomerController.locationProvince.value.name ?? "Chưa chọn Tỉnh/Thành phố"}")),
                         Icon(Icons.arrow_forward_ios_rounded),
                       ],
                     ),
@@ -107,7 +122,17 @@ class SetAddressScreen extends StatelessWidget {
               height: 1,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.to(() => ChooseAddressCustomerScreen(
+                      typeAddress: TypeAddress.District,
+                      idProvince: configAddressCustomerController
+                          .locationProvince.value.id,
+                      callback: (LocationAddress location) {
+                        configAddressCustomerController.locationDistrict.value =
+                            location;
+                      },
+                    ));
+              },
               child: Container(
                 padding: EdgeInsets.all(10),
                 child: Row(
@@ -116,7 +141,10 @@ class SetAddressScreen extends StatelessWidget {
                     Text("Quận/Huyện"),
                     Row(
                       children: [
-                        Text("${infoAddressCustomer.districtName}"),
+                        Obx(
+                          () => Text(
+                              "${configAddressCustomerController.locationDistrict.value.name ?? "Chưa chọn Quận/Huyện"}"),
+                        ),
                         Icon(Icons.arrow_forward_ios_rounded),
                       ],
                     ),
@@ -128,7 +156,17 @@ class SetAddressScreen extends StatelessWidget {
               height: 1,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.to(() => ChooseAddressCustomerScreen(
+                      typeAddress: TypeAddress.Wards,
+                      idDistrict: configAddressCustomerController
+                          .locationDistrict.value.id,
+                      callback: (LocationAddress location) {
+                        configAddressCustomerController.locationWard.value =
+                            location;
+                      },
+                    ));
+              },
               child: Container(
                 padding: EdgeInsets.all(10),
                 child: Row(
@@ -137,7 +175,10 @@ class SetAddressScreen extends StatelessWidget {
                     Text("Phường/Xã"),
                     Row(
                       children: [
-                        Text("${infoAddressCustomer.wardsName}"),
+                        Obx(
+                          () => Text(
+                              "${configAddressCustomerController.locationWard.value.name ?? "Chưa chọn Phường/Xã"}"),
+                        ),
                         Icon(Icons.arrow_forward_ios_rounded),
                       ],
                     ),
@@ -195,11 +236,13 @@ class SetAddressScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Đặt làm địa chỉ mặc định"),
-                  CustomSwitch(
-                    value: configAddressCustomerController.isDefault.value,
-                    onChanged: (bool val) {
-                      configAddressCustomerController.isDefault.value = val;
-                    },
+                  Obx(
+                    () => CustomSwitch(
+                      value: configAddressCustomerController.isDefault.value,
+                      onChanged: (bool val) {
+                        configAddressCustomerController.isDefault.value = val;
+                      },
+                    ),
                   )
                 ],
               ),
@@ -251,16 +294,21 @@ class SetAddressScreen extends StatelessWidget {
               height: 12,
               color: Colors.grey[200],
             ),
-            Container(
-              padding: EdgeInsets.all(13.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "Xóa Địa chỉ",
-                    style: TextStyle(color: Colors.red),
-                  ),
-                ],
+            InkWell(
+              onTap: () {
+                configAddressCustomerController.deleteAddressCustomer();
+              },
+              child: Container(
+                padding: EdgeInsets.all(13.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Xóa Địa chỉ",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ],
+                ),
               ),
             ),
             Container(
@@ -275,10 +323,24 @@ class SetAddressScreen extends StatelessWidget {
         color: Colors.white,
         child: Column(
           children: [
-            SahaButtonFullParent(
-              text: "CHỌN",
-              onPressed: () {},
-              color: Theme.of(context).primaryColor,
+            Obx(
+              () => configAddressCustomerController.isLoadingUpdate.value ==
+                      false
+                  ? SahaButtonFullParent(
+                      text: "LƯU",
+                      onPressed: () {
+                        configAddressCustomerController.updateAddressCustomer();
+                      },
+                      color: Theme.of(context).primaryColor,
+                    )
+                  : IgnorePointer(
+                      child: SahaButtonFullParent(
+                        text: "Lưu",
+                        textColor: Colors.grey[600],
+                        onPressed: () {},
+                        color: Colors.grey[300],
+                      ),
+                    ),
             ),
           ],
         ),

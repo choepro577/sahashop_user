@@ -5,9 +5,7 @@ import 'package:sahashop_user/load_data/load_login.dart';
 import 'package:sahashop_user/screen/home/home_screen.dart';
 import 'package:sahashop_user/screen/login/loginScreen.dart';
 import 'package:sahashop_user/utils/user_info.dart';
-
 import 'data/remote/saha_service_manager.dart';
-import 'load_data/load_data_local.dart';
 import 'load_data/load_firebase.dart';
 
 class SahaMainScreen extends StatefulWidget {
@@ -26,7 +24,6 @@ class _SahaMainScreenState extends State<SahaMainScreen> {
     SahaServiceManager.initialize();
     CustomerServiceManager.initialize();
     LoadLogin.load();
-    LoadDataLocal.load();
     LoadFirebase.initFirebase();
 
     checkLogin(context);

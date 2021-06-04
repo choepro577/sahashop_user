@@ -5,16 +5,35 @@ import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/data/remote/response-request/order_request.dart';
 import 'package:sahashop_user/model/info_address_customer.dart';
 
-class PayController extends GetxController {
+class ConfirmController extends GetxController {
   var listItem = RxList<LineItem>();
   var totalMoney = 0.0.obs;
-  var infoAddressCustomer = InfoAddressCustomer().obs;
   var isLoadingOrder = false.obs;
+  var infoAddressCustomer = InfoAddressCustomer().obs;
+  var isLoadingAddress = false.obs;
 
   DataAppCustomerController dataAppCustomerController = Get.find();
 
-  PayController() {
+  ConfirmController() {
     infoAddressCustomer.value = null;
+    getAllAddressCustomer();
+  }
+
+  Future<void> getAllAddressCustomer() async {
+    isLoadingAddress.value = true;
+    try {
+      var res = await CustomerRepositoryManager.addressRepository
+          .getAllAddressCustomer();
+      infoAddressCustomer.value = res.data[0];
+      res.data.forEach((element) {
+        if (element.isDefault) {
+          infoAddressCustomer.value = element;
+        }
+      });
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+    isLoadingAddress.value = false;
   }
 
   Future<void> createOrders() async {

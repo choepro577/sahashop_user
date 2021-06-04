@@ -487,4 +487,70 @@ class _CustomerService implements CustomerService {
     final value = AllIAddressCustomerResponse.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<CreateUpdateAddressCustomerResponse> createAddressCustomer(
+      storeCode, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/address',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = CreateUpdateAddressCustomerResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<CreateUpdateAddressCustomerResponse> updateAddressCustomer(
+      storeCode, idAddressCustomer, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(idAddressCustomer, 'idAddressCustomer');
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/address/$idAddressCustomer',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'PUT',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = CreateUpdateAddressCustomerResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<DeleteAddressCustomerResponse> deleteAddressCustomer(
+      storeCode, idAddressCustomer) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(idAddressCustomer, 'idAddressCustomer');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/address/$idAddressCustomer',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'DELETE',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = DeleteAddressCustomerResponse.fromJson(_result.data);
+    return value;
+  }
 }

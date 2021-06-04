@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/app_customer/screen/choose_address_screen/all_address_customer/all_address_customer_controller.dart';
-import 'package:sahashop_user/components/app_customer/screen/choose_address_screen/config_address_customer/config_address_sreen.dart';
+import 'package:sahashop_user/components/app_customer/screen/address_screen/all_address_customer/all_address_customer_controller.dart';
+import 'package:sahashop_user/components/app_customer/screen/address_screen/config_address_customer/config_address_sreen.dart';
+import 'package:sahashop_user/components/app_customer/screen/address_screen/new_address_customer_screen.dart';
 import 'package:sahashop_user/model/info_address_customer.dart';
 
 // ignore: must_be_immutable
@@ -28,14 +29,20 @@ class AllAddressCustomerScreen extends StatelessWidget {
                         context,
                         allAddressCustomerController
                             .listInfoAddressCustomer[index])),
-                Container(
-                  padding: EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Thêm địa chỉ mới"),
-                      Icon(Icons.add),
-                    ],
+                InkWell(
+                  onTap: () {
+                    Get.to(() => NewAddressCustomerScreen()).then((value) =>
+                        {allAddressCustomerController.getAllAddressCustomer()});
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Thêm địa chỉ mới"),
+                        Icon(Icons.add),
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -58,35 +65,43 @@ class AllAddressCustomerScreen extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            Get.to(() => SetAddressScreen(
-                  infoAddressCustomer: infoAddressCustomer,
-                ));
+            Get.to(() => ConfigAddressCustomerScreen(
+                      infoAddressCustomer: infoAddressCustomer,
+                    ))
+                .then((value) =>
+                    {allAddressCustomerController.getAllAddressCustomer()});
+
+            print(
+                "${infoAddressCustomer.wards} ${infoAddressCustomer.district} ${infoAddressCustomer.province}");
           },
           child: Container(
             padding: EdgeInsets.all(10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "${infoAddressCustomer.name}",
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    Text(
-                      "${infoAddressCustomer.phone}",
-                      style: TextStyle(color: Colors.grey[700], fontSize: 13),
-                    ),
-                    Text(
-                      "${infoAddressCustomer.addressDetail}",
-                      style: TextStyle(color: Colors.grey[700], fontSize: 13),
-                    ),
-                    Text(
-                      "${infoAddressCustomer.districtName}, ${infoAddressCustomer.wardsName}, ${infoAddressCustomer.provinceName}",
-                      style: TextStyle(color: Colors.grey[700], fontSize: 13),
-                    ),
-                  ],
+                Container(
+                  width: Get.width * 0.7,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${infoAddressCustomer.name ?? "Chưa có tên"}",
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      Text(
+                        "${infoAddressCustomer.phone ?? "Chưa có số điện thoại"}",
+                        style: TextStyle(color: Colors.grey[700], fontSize: 13),
+                      ),
+                      Text(
+                        "${infoAddressCustomer.addressDetail ?? "Chưa có địa chỉ chi tiết"}",
+                        style: TextStyle(color: Colors.grey[700], fontSize: 13),
+                      ),
+                      Text(
+                        "${infoAddressCustomer.districtName ?? "Chưa có Quận/Huyện"}, ${infoAddressCustomer.wardsName ?? "Chưa có Phường/Xã"}, ${infoAddressCustomer.provinceName ?? "Chưa có Tỉnh/Thành phố"}",
+                        style: TextStyle(color: Colors.grey[700], fontSize: 13),
+                      ),
+                    ],
+                  ),
                 ),
                 infoAddressCustomer.isDefault
                     ? Column(

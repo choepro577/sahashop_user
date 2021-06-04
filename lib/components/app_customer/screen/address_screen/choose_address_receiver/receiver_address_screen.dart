@@ -2,27 +2,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/app_customer/screen/choose_address_screen/choose_address_receiver/choose_address_controller.dart';
-import 'package:sahashop_user/components/app_customer/screen/choose_address_screen/all_address_customer/all_address_customer_screen.dart';
-import 'package:sahashop_user/components/app_customer/screen/choose_address_screen/new_address_screen.dart';
-import 'package:sahashop_user/components/app_customer/screen/pay_screen/controller/pay_controller.dart';
+import 'package:sahashop_user/components/app_customer/screen/address_screen/all_address_customer/all_address_customer_screen.dart';
+import 'package:sahashop_user/components/app_customer/screen/address_screen/choose_address_receiver/receiver_address_controller.dart';
+import 'package:sahashop_user/components/app_customer/screen/address_screen/new_address_customer_screen.dart';
+import 'package:sahashop_user/components/app_customer/screen/confirm_screen/controller/confirm_controller.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/model/info_address_customer.dart';
 
-class ChooseAddressCustomerScreen extends StatelessWidget {
+class ReceiverAddressCustomerScreen extends StatelessWidget {
   final InfoAddressCustomer infoAddressCustomers;
   final Function callback;
 
-  PayController payController;
+  ConfirmController payController;
 
-  ChooseAddressCustomerScreen(
+  ReceiverAddressCustomerScreen(
       {Key key, this.infoAddressCustomers, this.callback})
       : super(key: key) {
-    chooseAddressCustomerController = ChooseAddressCustomerController();
+    chooseAddressCustomerController = ReceiverAddressCustomerController();
     payController = Get.find();
   }
 
-  ChooseAddressCustomerController chooseAddressCustomerController;
+  ReceiverAddressCustomerController chooseAddressCustomerController;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,8 @@ class ChooseAddressCustomerScreen extends StatelessWidget {
         actions: [
           GestureDetector(
             onTap: () {
-              Get.to(() => AllAddressCustomerScreen());
+              Get.to(() => AllAddressCustomerScreen()).then((value) =>
+                  {chooseAddressCustomerController.getAllAddressCustomer()});
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -61,7 +62,10 @@ class ChooseAddressCustomerScreen extends StatelessWidget {
                     (index) => addressSave(context, index)),
                 InkWell(
                   onTap: () {
-                    Get.to(() => NewAddressScreen());
+                    Get.to(() => NewAddressCustomerScreen()).then((value) => {
+                          chooseAddressCustomerController
+                              .getAllAddressCustomer()
+                        });
                   },
                   child: Container(
                     padding: EdgeInsets.all(10.0),
@@ -106,26 +110,29 @@ class ChooseAddressCustomerScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "${chooseAddressCustomerController.listInfoAddressCustomer[index].name}",
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    Text(
-                      "${chooseAddressCustomerController.listInfoAddressCustomer[index].phone}",
-                      style: TextStyle(color: Colors.grey[700], fontSize: 13),
-                    ),
-                    Text(
-                      "${chooseAddressCustomerController.listInfoAddressCustomer[index].addressDetail}",
-                      style: TextStyle(color: Colors.grey[700], fontSize: 13),
-                    ),
-                    Text(
-                      "${chooseAddressCustomerController.listInfoAddressCustomer[index].districtName}, ${chooseAddressCustomerController.listInfoAddressCustomer[index].wardsName}, ${chooseAddressCustomerController.listInfoAddressCustomer[index].provinceName}",
-                      style: TextStyle(color: Colors.grey[700], fontSize: 13),
-                    ),
-                  ],
+                Container(
+                  width: Get.width * 0.7,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${chooseAddressCustomerController.listInfoAddressCustomer[index].name ?? "Chưa có tên"}",
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      Text(
+                        "${chooseAddressCustomerController.listInfoAddressCustomer[index].phone ?? "Chưa có số điện thoại"}",
+                        style: TextStyle(color: Colors.grey[700], fontSize: 13),
+                      ),
+                      Text(
+                        "${chooseAddressCustomerController.listInfoAddressCustomer[index].addressDetail ?? "Chưa có địa chỉ chi tiết"}",
+                        style: TextStyle(color: Colors.grey[700], fontSize: 13),
+                      ),
+                      Text(
+                        "${chooseAddressCustomerController.listInfoAddressCustomer[index].districtName ?? "Chưa có Quận/Huyện"}, ${chooseAddressCustomerController.listInfoAddressCustomer[index].wardsName ?? "Chưa có Phường/Xã"}, ${chooseAddressCustomerController.listInfoAddressCustomer[index].provinceName ?? "Chưa có Tỉnh/Thành phố"}",
+                        style: TextStyle(color: Colors.grey[700], fontSize: 13),
+                      ),
+                    ],
+                  ),
                 ),
                 Column(
                   children: [

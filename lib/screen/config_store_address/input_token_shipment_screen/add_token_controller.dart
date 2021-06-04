@@ -17,6 +17,7 @@ class AddTokenShipment extends GetxController {
           shipment.id,
           ShipperConfig(
               token: tokenEditingController.value.text, use: true, cod: true));
+      Get.back();
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }

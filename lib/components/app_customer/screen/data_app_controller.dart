@@ -4,7 +4,6 @@ import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/app_customer/repository/repository_customer.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/components/utils/customer_info.dart';
-import 'package:sahashop_user/components/utils/storage_order.dart';
 import 'package:sahashop_user/controller/config_controller.dart';
 import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/model/category_post.dart';
@@ -156,6 +155,7 @@ class DataAppCustomerController extends GetxController {
     try {
       var res = await CustomerRepositoryManager.cartRepository.getItemCart();
       listOrder(res.data.lineItems);
+      totalMoney.value = res.data.totalAfterDiscount.toDouble();
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
