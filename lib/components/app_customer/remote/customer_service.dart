@@ -20,6 +20,7 @@ import 'package:sahashop_user/components/app_customer/remote/response-request/pr
 import 'package:sahashop_user/components/app_customer/remote/response-request/product/detail_product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/product/query_product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/register/register_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/shipment/shipment_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/store/all_store_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/store/type_store_respones.dart';
 
@@ -144,4 +145,10 @@ abstract class CustomerService {
   @DELETE("{storeCode}/address/{idAddressCustomer}")
   Future<DeleteAddressCustomerResponse> deleteAddressCustomer(
       @Path() String storeCode, @Path() int idAddressCustomer);
+
+  /// shipment
+
+  @POST("{storeCode}/shipment/fee")
+  Future<ShipmentCustomerResponse> chargeShipmentFee(
+      @Path() String storeCode, @Body() Map<String, dynamic> body);
 }

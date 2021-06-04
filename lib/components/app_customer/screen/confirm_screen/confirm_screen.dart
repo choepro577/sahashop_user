@@ -5,9 +5,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/address_screen/choose_address_receiver/receiver_address_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/confirm_screen/controller/confirm_controller.dart';
+import 'package:sahashop_user/components/app_customer/screen/shipment_screen/shipment_customer_screen.dart';
 import 'package:sahashop_user/components/utils/money.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/model/info_address_customer.dart';
+import 'package:sahashop_user/model/shipment_method.dart';
 
 class ConfirmScreen extends StatefulWidget {
   @override
@@ -322,60 +324,87 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                 ),
               ),
               InkWell(
-                onTap: () {},
-                child: Container(
-                  padding: const EdgeInsets.all(10.0),
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.green)),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Đơn vị vận chuyển ( Nhấn để chọn )',
-                            style: TextStyle(fontSize: 14, color: Colors.green),
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        height: 15,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Vận chuyển nhanh',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text("SahaPost Nhanh"),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                "Nhận hàng sau 1 - 2 ngày nội thành",
-                                style: TextStyle(color: Colors.grey[700]),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text('45,000 đ'),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Icon(Icons.arrow_forward_ios_rounded)
-                            ],
-                          )
-                        ],
-                      )
-                    ],
+                onTap: () {
+                  Get.to(() => ShipmentCustomerScreen(
+                        infoAddressCustomer:
+                            confirmController.infoAddressCustomer.value,
+                        callback: (ShipmentMethod shipmentMethod) {
+                          confirmController.shipmentMethod.value =
+                              shipmentMethod;
+                        },
+                        isShipmentFast:
+                            confirmController.shipmentMethod.value.shipType == 0
+                                ? true
+                                : false,
+                      ));
+                },
+                child: Obx(
+                  () => Container(
+                    padding: const EdgeInsets.all(10.0),
+                    decoration:
+                        BoxDecoration(border: Border.all(color: Colors.green)),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Đơn vị vận chuyển ( Nhấn để chọn )',
+                              style:
+                                  TextStyle(fontSize: 14, color: Colors.green),
+                            ),
+                          ],
+                        ),
+                        Divider(
+                          height: 15,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                confirmController
+                                            .shipmentMethod.value.shipType ==
+                                        0
+                                    ? Text(
+                                        'Vận chuyển nhanh',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    : Text(
+                                        'Vận chuyển siêu tốc',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                    "${confirmController.shipmentMethod.value.name ?? "Chưa chọn đơn vị vẩn chuyển"}"),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  "Nhận hàng sau 1 - 2 ngày nội thành",
+                                  style: TextStyle(color: Colors.grey[700]),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                    '${confirmController.shipmentMethod.value.fee ?? ""} đ'),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Icon(Icons.arrow_forward_ios_rounded)
+                              ],
+                            )
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -416,7 +445,7 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                     ),
                     Obx(
                       () => Text(
-                          "${FormatMoney.toVND(confirmController.totalMoney.value + 45000)}"),
+                          "${FormatMoney.toVND(confirmController.dataAppCustomerController.totalMoney.value + confirmController.shipmentMethod.value.fee)}"),
                     )
                   ],
                 ),
@@ -465,102 +494,105 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                 height: 8,
                 color: Colors.grey[200],
               ),
-              Container(
-                padding: const EdgeInsets.all(5.0),
-                child: Column(
-                  children: [
-                    InkWell(
-                      onTap: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(4),
-                                height: 30,
-                                width: 30,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFF5F6F9),
-                                  shape: BoxShape.circle,
+              Obx(
+                () => Container(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Column(
+                    children: [
+                      InkWell(
+                        onTap: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(4),
+                                  height: 30,
+                                  width: 30,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFF5F6F9),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: SvgPicture.asset(
+                                    "assets/icons/money.svg",
+                                    color: Theme.of(context).primaryColor,
+                                  ),
                                 ),
-                                child: SvgPicture.asset(
-                                  "assets/icons/money.svg",
-                                  color: Theme.of(context).primaryColor,
+                                SizedBox(
+                                  width: 10,
                                 ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Phương thức thanh toán',
-                                maxLines: 2,
-                                style: TextStyle(fontSize: 13),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                width: 120,
-                                child: Text(
-                                  "Chọn phương thức thanh toán",
+                                Text(
+                                  'Phương thức thanh toán',
                                   maxLines: 2,
                                   style: TextStyle(fontSize: 13),
                                 ),
-                              ),
-                              Icon(Icons.arrow_forward_ios_rounded)
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  width: 120,
+                                  child: Text(
+                                    "Chọn phương thức thanh toán",
+                                    maxLines: 2,
+                                    style: TextStyle(fontSize: 13),
+                                  ),
+                                ),
+                                Icon(Icons.arrow_forward_ios_rounded)
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Tổng tiền hàng :',
-                              style: TextStyle(
-                                  fontSize: 13, color: Colors.grey[700])),
-                          Text(
-                              "${FormatMoney.toVND(confirmController.totalMoney.value)}",
-                              style: TextStyle(
-                                  fontSize: 13, color: Colors.grey[800])),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Tổng tiền hàng :',
+                                style: TextStyle(
+                                    fontSize: 13, color: Colors.grey[700])),
+                            Text(
+                                "${FormatMoney.toVND(confirmController.dataAppCustomerController.totalMoney.value)}",
+                                style: TextStyle(
+                                    fontSize: 13, color: Colors.grey[800])),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Tổng tiền vận chuyển :',
-                              style: TextStyle(
-                                  fontSize: 13, color: Colors.grey[700])),
-                          Text("${FormatMoney.toVND(45000)}",
-                              style: TextStyle(
-                                  fontSize: 13, color: Colors.grey[800])),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Tổng tiền vận chuyển :',
+                                style: TextStyle(
+                                    fontSize: 13, color: Colors.grey[700])),
+                            Text(
+                                "${FormatMoney.toVND(confirmController.shipmentMethod.value.fee.toDouble())}",
+                                style: TextStyle(
+                                    fontSize: 13, color: Colors.grey[800])),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Tổng thanh toán :',
-                          ),
-                          Text(
-                              "${FormatMoney.toVND(confirmController.totalMoney.value + 45000)}",
-                              style: TextStyle(
-                                  fontSize: 13, color: Colors.grey[800])),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Tổng thanh toán :',
+                            ),
+                            Text(
+                                "${FormatMoney.toVND(confirmController.dataAppCustomerController.totalMoney.value + confirmController.shipmentMethod.value.fee.toDouble())}",
+                                style: TextStyle(
+                                    fontSize: 13, color: Colors.grey[800])),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Container(
@@ -606,92 +638,94 @@ class _ConfirmScreenState extends State<ConfirmScreen>
             ],
           ),
         ),
-        bottomNavigationBar: Container(
-          height: 100,
-          decoration: BoxDecoration(color: Colors.white, boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 5,
-              offset: Offset(0, 0.1), // Shadow position
-            ),
-          ]),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text("Tổng thanh toán"),
-                  Text(
-                    "${FormatMoney.toVND(confirmController.totalMoney.value + 45000)}",
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
+        bottomNavigationBar: Obx(
+          () => Container(
+            height: 100,
+            decoration: BoxDecoration(color: Colors.white, boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                blurRadius: 5,
+                offset: Offset(0, 0.1), // Shadow position
               ),
-              SizedBox(
-                width: 20,
-              ),
-              InkWell(
-                onTap: () {
-                  if (confirmController.infoAddressCustomer.value == null) {
-                    Scrollable.ensureVisible(dataKey.currentContext,
-                        duration: Duration(milliseconds: 500));
-                    setState(() {
-                      _color = Colors.red;
-                      _opacityCurrent = 0;
-                      Future.delayed(const Duration(milliseconds: 1000), () {
-                        setState(() {
-                          _opacityCurrent = 1;
-                          Future.delayed(const Duration(milliseconds: 1000),
-                              () {
-                            setState(() {
-                              _opacityCurrent = 0;
-                              Future.delayed(const Duration(milliseconds: 1000),
-                                  () {
-                                setState(() {
-                                  _opacityCurrent = 1;
+            ]),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text("Tổng thanh toán"),
+                    Text(
+                      "${FormatMoney.toVND(confirmController.dataAppCustomerController.totalMoney.value + confirmController.shipmentMethod.value.fee.toDouble())}",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                InkWell(
+                  onTap: () {
+                    if (confirmController.infoAddressCustomer.value == null) {
+                      Scrollable.ensureVisible(dataKey.currentContext,
+                          duration: Duration(milliseconds: 500));
+                      setState(() {
+                        _color = Colors.red;
+                        _opacityCurrent = 0;
+                        Future.delayed(const Duration(milliseconds: 1000), () {
+                          setState(() {
+                            _opacityCurrent = 1;
+                            Future.delayed(const Duration(milliseconds: 1000),
+                                () {
+                              setState(() {
+                                _opacityCurrent = 0;
+                                Future.delayed(
+                                    const Duration(milliseconds: 1000), () {
+                                  setState(() {
+                                    _opacityCurrent = 1;
+                                  });
                                 });
                               });
                             });
                           });
                         });
                       });
-                    });
-                  } else {
-                    confirmController.createOrders();
-                  }
-                },
-                child: Container(
-                  width: 120,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
+                    } else {
+                      confirmController.createOrders();
+                    }
+                  },
+                  child: Container(
+                    width: 120,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Đặt hàng",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Theme.of(context)
+                                  .primaryTextTheme
+                                  .headline6
+                                  .color,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Đặt hàng",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Theme.of(context)
-                                .primaryTextTheme
-                                .headline6
-                                .color,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ));
   }
