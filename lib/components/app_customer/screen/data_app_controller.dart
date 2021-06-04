@@ -165,8 +165,8 @@ class DataAppCustomerController extends GetxController {
     try {
       var res = await CustomerRepositoryManager.cartRepository
           .updateItemCart(idProduct, quantity);
-
       listOrder(res.data.lineItems);
+      totalMoney.value = res.data.totalAfterDiscount.toDouble();
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
@@ -177,6 +177,7 @@ class DataAppCustomerController extends GetxController {
       var res =
           await CustomerRepositoryManager.cartRepository.addItemCart(idProduct);
       listOrder(res.data.lineItems);
+      totalMoney.value = res.data.totalAfterDiscount.toDouble();
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
