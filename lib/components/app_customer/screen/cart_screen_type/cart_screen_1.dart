@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/screen/choose_voucher/choose_voucher_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/confirm_screen/confirm_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/saha_user/switch_button/switch_button.dart';
@@ -167,32 +168,37 @@ class _CartScreen1State extends State<CartScreen1> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(4),
-                      height: 30,
-                      width: 30,
-                      child: SvgPicture.asset(
-                        "assets/icons/receipt.svg",
-                        color: Theme.of(context).primaryColor,
+              InkWell(
+                onTap: () {
+                  Get.to(() => ChooseVoucherCustomerScreen());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(4),
+                        height: 30,
+                        width: 30,
+                        child: SvgPicture.asset(
+                          "assets/icons/receipt.svg",
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text("Voucher"),
-                    Spacer(),
-                    Text("Chọn hoặc nhập mã"),
-                    const SizedBox(width: 10),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 12,
-                      color: Theme.of(context).primaryColor,
-                    )
-                  ],
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text("Voucher"),
+                      Spacer(),
+                      Text("Chọn hoặc nhập mã"),
+                      const SizedBox(width: 10),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 12,
+                        color: Theme.of(context).primaryColor,
+                      )
+                    ],
+                  ),
                 ),
               ),
               Divider(

@@ -553,4 +553,25 @@ class _CustomerService implements CustomerService {
     final value = DeleteAddressCustomerResponse.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<ShipmentCustomerResponse> chargeShipmentFee(storeCode, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/shipment/fee',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ShipmentCustomerResponse.fromJson(_result.data);
+    return value;
+  }
 }
