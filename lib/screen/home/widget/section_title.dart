@@ -28,7 +28,7 @@ class SectionTitle extends StatelessWidget {
         pressTitleEnd == null ?Container() :  GestureDetector(
           onTap: pressTitleEnd,
           child: Text(
-            "$titleEnd",
+            "${titleEnd==null?"":titleEnd}",
             style: TextStyle(color: Color(0xFFBBBBBB)),
           ),
         ),
