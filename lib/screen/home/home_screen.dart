@@ -36,222 +36,215 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final double itemHeight = ITEM_HEIGHT;
     final double itemWidth = ITEM_WIDTH;
-    var childAspectRatio = 100/itemWidth;
+    var childAspectRatio = 100 / itemWidth;
     return Scaffold(
-        body: NestedScrollView(
-          headerSliverBuilder:
-              (BuildContext context, bool innerBoxIsScrolled) => <Widget>[
-            SliverAppBar(
-              pinned: true,
-              floating: false,
-              title: Obx(
-                  ()=> Text(homeController.storeCurrent?.value?.name == null
-                    ? "Xin chào"
-                    : homeController.storeCurrent.value.name),
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) =>
+            <Widget>[
+          SliverAppBar(
+            pinned: true,
+            floating: false,
+            title: Obx(
+              () => Text(homeController.storeCurrent?.value?.name == null
+                  ? "Xin chào"
+                  : homeController.storeCurrent.value.name),
+            ),
+            actions: <Widget>[
+              new IconButton(
+                icon: new Icon(Icons.notifications),
+                highlightColor: Colors.white,
+                onPressed: () {},
               ),
-              actions: <Widget>[
-                new IconButton(
-                  icon: new Icon(Icons.notifications),
-                  highlightColor: Colors.white,
-                  onPressed: () {},
-                ),
-              ],
-
-              expandedHeight: 250.0,
-
-              flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
-                  background: Container(
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                                SizedBox(
-                                  height: 50,
+            ],
+            expandedHeight: 250.0,
+            flexibleSpace: FlexibleSpaceBar(
+                centerTitle: true,
+                background: Container(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 50,
+                              ),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(50.0),
+                                child: CachedNetworkImage(
+                                    height: 70,
+                                    width: 70,
+                                    fit: BoxFit.cover,
+                                    imageUrl:
+                                        "https://pdp.edu.vn/wp-content/uploads/2021/01/hinh-anh-girl-xinh-toc-ngan-de-thuong.jpg",
+                                    errorWidget: (context, url, error) =>
+                                        Icon(Icons.error)),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(3),
+                                child: Text(
+                                  'Shop của bạn chưa có trên CHPlay và Appstore?',
+                                  style: TextStyle(color: Colors.white),
                                 ),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(50.0),
-                                  child: CachedNetworkImage(
-                                      height: 70,
-                                      width: 70,
-                                      fit: BoxFit.cover,
-                                      imageUrl:
-                                          "https://pdp.edu.vn/wp-content/uploads/2021/01/hinh-anh-girl-xinh-toc-ngan-de-thuong.jpg",
-                                      errorWidget: (context, url, error) =>
-                                          Icon(Icons.error)),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(3),
-                                  child: Text(
-                                    'Shop của bạn chưa có trên CHPlay và Appstore?',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(8)),
-                                      border: Border.all(color: Colors.white)),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Get.to(ChooseStoreScreen());
-                                  },
-                                  style: ButtonStyle(
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(18.0),
-                                              side: BorderSide(
-                                                  color: Colors.white)))),
-                                  child: Text("Chuyển shop"),
-                                ),
-                              ],
-                            ),
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8)),
+                                    border: Border.all(color: Colors.white)),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Get.to(ChooseStoreScreen());
+                                },
+                                style: ButtonStyle(
+                                    shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(18.0),
+                                            side: BorderSide(
+                                                color: Colors.white)))),
+                                child: Text("Chuyển shop"),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  )),
-            ),
-
-          ],
-          body: CustomScrollView(
-            slivers: [
-
-              SliverList(
-                  delegate: SliverChildListDelegate([
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Cửa hàng",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600),
+                      ),
+                    ],
                   ),
-                ),
-              ])),
-              SliverList(
-                  delegate: SliverChildListDelegate([
-                GridView.count(
-                  childAspectRatio: childAspectRatio,
-                  crossAxisCount: (Get.width / itemWidth).floor(),
-                  padding: EdgeInsets.all(5),
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    ItemStoreView(
-                      icon: 'assets/icons/flash_icon.svg',
-                      text: 'Đơn hàng',
-                      press: () {},
-                    ),
-                    ItemStoreView(
-                      icon: 'assets/icons/flash_icon.svg',
-                      text: 'Báo cáo',
-                      press: () {
-                        Get.to(InventoryScreen());
-                      },
-                    ),
-                    ItemStoreView(
-                      icon: 'assets/icons/flash_icon.svg',
-                      text: 'Chỉnh sửa mặt hàng',
-                      press: () {
-                        Get.to(InventoryScreen());
-                      },
-                    ),
-                    ItemStoreView(
-                      icon: 'assets/icons/flash_icon.svg',
-                      text: 'Khách hàng',
-                      press: () {},
-                    ),
-                    ItemStoreView(
-                      icon: 'assets/icons/gift_icon.svg',
-                      text: 'Chương trình khuyến mãi',
-                      press: () {
-                        Get.to(() => MarketingChanelScreen());
-                      },
-                    ),
-                    ItemStoreView(
-                      icon: 'assets/icons/gift_icon.svg',
-                      text: 'Chat',
-                      press: () {
-                        Get.to(() => AllMessageScreen());
-                      },
-                    ),
-                    ItemStoreView(
-                      icon: 'assets/icons/gift_icon.svg',
-                      text: 'Tin tức - Bài viết',
-                      press: () {
-                        Get.to(() => PostNaviScreen());
-                      },
-                    ),
-                  ],
-                ),
-              ])),
-
-              SliverList(
-                  delegate: SliverChildListDelegate([
-                   Divider(),
-                  ])),
-
-              SliverList(
-                  delegate: SliverChildListDelegate([
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Cài đặt",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ),
-              ])),
-              SliverList(
-                  delegate: SliverChildListDelegate([
-                GridView.count(
-                  childAspectRatio:childAspectRatio,
-                  crossAxisCount: (Get.width / itemWidth).floor(),
-                  padding: EdgeInsets.all(5),
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    ItemStoreView(
-                      icon: 'assets/icons/gift_icon.svg',
-                      text: 'Chỉnh sửa giao diện',
-                      press: () {
-                        Get.toNamed("ConfigScreen");
-                      },
-                    ),
-                    ItemStoreView(
-                      icon: 'assets/icons/gift_icon.svg',
-                      text: 'Cài đặt vận chuyển',
-                      press: () {
-                        Get.to(() => ConfigStoreAddressScreen());
-                      },
-                    ),
-                  ],
-                ),
-              ])),
-              SliverList(
-                  delegate: SliverChildListDelegate([
-                SpecialOffers(),
-              ])),
-            ],
+                )),
           ),
+        ],
+        body: CustomScrollView(
+          slivers: [
+            SliverList(
+                delegate: SliverChildListDelegate([
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Cửa hàng",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+            ])),
+            SliverList(
+                delegate: SliverChildListDelegate([
+              GridView.count(
+                childAspectRatio: childAspectRatio,
+                crossAxisCount: (Get.width / itemWidth).floor(),
+                padding: EdgeInsets.all(5),
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                children: [
+                  ItemStoreView(
+                    icon: 'assets/icons/flash_icon.svg',
+                    text: 'Đơn hàng',
+                    press: () {},
+                  ),
+                  ItemStoreView(
+                    icon: 'assets/icons/flash_icon.svg',
+                    text: 'Báo cáo',
+                    press: () {
+                      Get.to(InventoryScreen());
+                    },
+                  ),
+                  ItemStoreView(
+                    icon: 'assets/icons/flash_icon.svg',
+                    text: 'Chỉnh sửa mặt hàng',
+                    press: () {
+                      Get.to(InventoryScreen());
+                    },
+                  ),
+                  ItemStoreView(
+                    icon: 'assets/icons/flash_icon.svg',
+                    text: 'Khách hàng',
+                    press: () {},
+                  ),
+                  ItemStoreView(
+                    icon: 'assets/icons/gift_icon.svg',
+                    text: 'Chương trình khuyến mãi',
+                    press: () {
+                      Get.to(() => MarketingChanelScreen());
+                    },
+                  ),
+                  ItemStoreView(
+                    icon: 'assets/icons/gift_icon.svg',
+                    text: 'Chat',
+                    press: () {
+                      Get.to(() => AllMessageScreen());
+                    },
+                  ),
+                  ItemStoreView(
+                    icon: 'assets/icons/gift_icon.svg',
+                    text: 'Tin tức - Bài viết',
+                    press: () {
+                      Get.to(() => PostNaviScreen());
+                    },
+                  ),
+                ],
+              ),
+            ])),
+            SliverList(
+                delegate: SliverChildListDelegate([
+              Divider(),
+            ])),
+            SliverList(
+                delegate: SliverChildListDelegate([
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Cài đặt",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+            ])),
+            SliverList(
+                delegate: SliverChildListDelegate([
+              GridView.count(
+                childAspectRatio: childAspectRatio,
+                crossAxisCount: (Get.width / itemWidth).floor(),
+                padding: EdgeInsets.all(5),
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                children: [
+                  ItemStoreView(
+                    icon: 'assets/icons/gift_icon.svg',
+                    text: 'Chỉnh sửa giao diện',
+                    press: () {
+                      Get.toNamed("ConfigScreen");
+                    },
+                  ),
+                  ItemStoreView(
+                    icon: 'assets/icons/gift_icon.svg',
+                    text: 'Cài đặt vận chuyển',
+                    press: () {
+                      Get.to(() => ConfigStoreAddressScreen());
+                    },
+                  ),
+                ],
+              ),
+            ])),
+            SliverList(
+                delegate: SliverChildListDelegate([
+              SpecialOffers(),
+            ])),
+          ],
         ),
-      );
-
+      ),
+    );
   }
 }
 
@@ -269,39 +262,38 @@ class ItemStoreView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-        onPressed: press,
-        child: SizedBox(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 5,
+      onPressed: press,
+      child: SizedBox(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              padding: EdgeInsets.all(10),
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                gradient: LinearGradient(
+                    colors: [SahaPrimaryColor, SahaPrimaryLightColor],
+                    begin: const FractionalOffset(0.0, 0.0),
+                    end: const FractionalOffset(0.5, 0.0),
+                    stops: [0.0, 1.0],
+                    tileMode: TileMode.clamp),
               ),
-              Container(
-                padding: EdgeInsets.all(10),
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  gradient: LinearGradient(
-                      colors: [SahaPrimaryColor, SahaPrimaryLightColor],
-                      begin: const FractionalOffset(0.0, 0.0),
-                      end: const FractionalOffset(0.5, 0.0),
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
-                ),
-                child: SvgPicture.asset(
-                  icon,
-                  color: Colors.white,
-                ),
+              child: SvgPicture.asset(
+                icon,
+                color: Colors.white,
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Expanded(
-                  child: AutoSizeText(text, textAlign: TextAlign.center)),
-            ],
-          ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Expanded(child: AutoSizeText(text, textAlign: TextAlign.center)),
+          ],
         ),
+      ),
     );
   }
 }
