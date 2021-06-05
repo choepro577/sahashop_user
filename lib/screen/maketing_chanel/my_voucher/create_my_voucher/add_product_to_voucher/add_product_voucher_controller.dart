@@ -41,12 +41,6 @@ class AddProductToVoucherController extends GetxController {
         });
       }
 
-      for (int i = 0; i < res.data.data.length; i++) {
-        if (res.data.data[i].hasInDiscount == true) {
-          listIsSave.value[i] = true;
-        }
-      }
-
       isLoadingProduct.value = false;
       return res.data.data;
     } catch (err) {

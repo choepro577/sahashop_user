@@ -71,14 +71,9 @@ class ProfileScreen extends StatelessWidget {
                               InkWell(
                                 onTap: () {
                                   Get.to(() => ConfigProfileScreen(
-                                            infoCustomer:
-                                                dataAppCustomerController
-                                                    .infoCustomer.value,
-                                          ))
-                                      .then((value) => {
-                                            dataAppCustomerController
-                                                .getInfoCustomer()
-                                          });
+                                        infoCustomer: dataAppCustomerController
+                                            .infoCustomer.value,
+                                      ));
                                 },
                                 child: Container(
                                   height: 70,

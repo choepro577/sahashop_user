@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import 'package:get/get.dart' as get2;
+import 'package:sahashop_user/components/app_customer/screen/login/login_screen.dart';
 import 'package:sahashop_user/components/saha_user/dialog/dialog.dart';
 import 'package:sahashop_user/components/utils/customer_info.dart';
 import 'package:sahashop_user/screen/login/loginScreen.dart';
@@ -36,23 +37,25 @@ class AuthInterceptor extends InterceptorsWrapper {
       var dioError = error;
       switch (dioError.type) {
         case DioErrorType.CANCEL:
-          return errorMess('Request to API server was cancelled');
+          return errorMess('Đã hủy kết nối');
           break;
         case DioErrorType.CONNECT_TIMEOUT:
-          return errorMess('Connection timeout with API server');
+          return errorMess('Không thể kết nối đến server');
           break;
         case DioErrorType.RECEIVE_TIMEOUT:
-          return errorMess('Receive timeout in connection with API server');
+          return errorMess('Không thể nhận dữ liệu từ server');
           break;
         case DioErrorType.RESPONSE:
+          if (dioError?.response?.statusCode == 429) {
+            return errorMess(
+                'Bạn gửi quá nhiều yêu cầu xin thử lại sau 1 phút');
+          }
+
           return errorMess(
-              'Received invalid status code: ${dioError.response.statusCode}');
+              '${dioError?.response?.data["msg"] != null ? dioError?.response?.data["msg"] : "Có lỗi xảy ra"}');
           break;
         case DioErrorType.SEND_TIMEOUT:
-          return errorMess('Send timeout in connection with API server');
-          break;
-        case DioErrorType.SEND_TIMEOUT:
-          return errorMess('Send timeout in connection with API server');
+          return errorMess('Không thể gửi dữ liệu đến server');
           break;
         case DioErrorType.DEFAULT:
           return errorMess(error.message);
@@ -66,18 +69,17 @@ class AuthInterceptor extends InterceptorsWrapper {
     return mess;
   }
 
+  void printWrapped(String text) {
+    final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
+    pattern.allMatches(text).forEach((match) => print(match.group(0)));
+  }
+
   @override
   Future onResponse(Response response) async {
     print('------Response: ${response.data}');
 
     if (response.data["code"] == 401) {
-      CustomerInfo().setToken(null);
-      // SahaDialogApp.showDialogNotificationOneButton(
-      //     mess: "Hết phiên đăng nhập mời đăng nhập lại",
-      //     barrierDismissible: false,
-      //     onClose: () {
-      //       get2.Get.offAll(() => LoginScreen());
-      //     });
+      get2.Get.to(() => LoginScreenCustomer());
     }
 
     if (response.statusCode != 200 && response.data["success"] == false) {

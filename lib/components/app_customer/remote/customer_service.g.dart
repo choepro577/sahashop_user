@@ -247,25 +247,6 @@ class _CustomerService implements CustomerService {
   }
 
   @override
-  Future<CustomerComboResponse> getComboCustomer(storeCode) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/combos',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = CustomerComboResponse.fromJson(_result.data);
-    return value;
-  }
-
-  @override
   Future<OrdersResponse> createOrder(storeCode, body) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(body, 'body');
@@ -368,6 +349,44 @@ class _CustomerService implements CustomerService {
   }
 
   @override
+  Future<CustomerComboResponse> getComboCustomer(storeCode) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/combos',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = CustomerComboResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<VoucherCustomerResponse> getVoucherCustomer(storeCode) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/vouchers',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = VoucherCustomerResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<AllMessageCustomerResponse> getAllMessageCustomer(
       storeCode, numberPage) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
@@ -415,6 +434,26 @@ class _CustomerService implements CustomerService {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>('$storeCode/carts',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = CartCustomerResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<CartCustomerResponse> addVoucherCart(storeCode, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
     final _result = await _dio.request<Map<String, dynamic>>('$storeCode/carts',
         queryParameters: queryParameters,
         options: RequestOptions(

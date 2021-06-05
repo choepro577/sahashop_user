@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/app_customer/repository/repository_customer.dart';
+import 'package:sahashop_user/components/app_customer/screen/login/login_screen.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/components/utils/customer_info.dart';
 import 'package:sahashop_user/controller/config_controller.dart';
@@ -37,25 +38,27 @@ class DataAppCustomerController extends GetxController {
     super.onInit();
     getHomeData();
     checkLogin();
-    getItemCart();
   }
 
   Future<void> checkLogin() async {
     if (await CustomerInfo().hasLogged()) {
       getInfoCustomer();
+      getItemCart();
     } else {
       // noLogin(context);
     }
   }
 
   Future<void> getInfoCustomer() async {
-    try {
-      var res = await CustomerRepositoryManager.infoCustomerRepository
-          .getInfoCustomer();
-      infoCustomer.value = res.data;
-      isLogin.value = true;
-    } catch (err) {
-      // SahaAlert.showError(message: err.toString());
+    if (await CustomerInfo().hasLogged()) {
+      try {
+        var res = await CustomerRepositoryManager.infoCustomerRepository
+            .getInfoCustomer();
+        infoCustomer.value = res.data;
+        isLogin.value = true;
+      } catch (err) {
+        // SahaAlert.showError(message: err.toString());
+      }
     }
   }
 
@@ -150,6 +153,17 @@ class DataAppCustomerController extends GetxController {
 
   var totalMoney = 0.0.obs;
   var listOrder = RxList<Order>();
+  var voucherDiscountAmount = 0.0.obs;
+  var voucherCodeChoose = "".obs;
+
+  Future<void> checkLoginToCartScreen() async {
+    if (await CustomerInfo().hasLogged()) {
+      getItemCart();
+    } else {
+      Get.back();
+      Get.to(() => LoginScreenCustomer());
+    }
+  }
 
   Future<void> getItemCart() async {
     try {
@@ -158,6 +172,18 @@ class DataAppCustomerController extends GetxController {
       totalMoney.value = res.data.totalAfterDiscount.toDouble();
     } catch (err) {
       SahaAlert.showError(message: err.toString());
+    }
+  }
+
+  Future<void> addVoucherCart(String codeVoucher) async {
+    try {
+      var res = await CustomerRepositoryManager.cartRepository
+          .addVoucherCart(codeVoucher);
+      listOrder(res.data.lineItems);
+      totalMoney.value = res.data.totalAfterDiscount.toDouble();
+      voucherDiscountAmount.value = res.data.voucherDiscountAmount;
+    } catch (err) {
+      // SahaAlert.showError(message: err.toString());
     }
   }
 

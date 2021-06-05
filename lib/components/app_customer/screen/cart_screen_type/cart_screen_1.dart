@@ -10,23 +10,13 @@ import 'package:sahashop_user/components/saha_user/switch_button/switch_button.d
 import 'package:sahashop_user/components/utils/money.dart';
 import 'package:sahashop_user/const/constant.dart';
 
-class CartScreen1 extends StatefulWidget {
-  @override
-  _CartScreen1State createState() => _CartScreen1State();
-}
-
-class _CartScreen1State extends State<CartScreen1> {
-  DataAppCustomerController dataAppCustomerController = Get.find();
-
-  @override
-  void initState() {
-    super.initState();
-    // dataAppCustomerController.getListOrder();
-  }
+class CartScreen1 extends StatelessWidget {
+  DataAppCustomerController dataAppCustomerController;
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    dataAppCustomerController = Get.find();
+    dataAppCustomerController.checkLoginToCartScreen();
     return Scaffold(
       appBar: AppBar(
         title: Column(
@@ -190,7 +180,12 @@ class _CartScreen1State extends State<CartScreen1> {
                       ),
                       Text("Voucher"),
                       Spacer(),
-                      Text("Chọn hoặc nhập mã"),
+                      Obx(() => dataAppCustomerController
+                                  .voucherCodeChoose.value ==
+                              ""
+                          ? Text("Chọn hoặc nhập mã")
+                          : Text(
+                              "${dataAppCustomerController.voucherCodeChoose.value}")),
                       const SizedBox(width: 10),
                       Icon(
                         Icons.arrow_forward_ios,

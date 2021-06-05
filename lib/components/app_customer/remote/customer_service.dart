@@ -15,6 +15,7 @@ import 'package:sahashop_user/components/app_customer/remote/response-request/ho
 import 'package:sahashop_user/components/app_customer/remote/response-request/info_customer/info_customer_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/login/login_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/marketing_chanel/combo_customer_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/marketing_chanel/voucher_customer_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/orders/order_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/product/all_product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/product/detail_product_response.dart';
@@ -79,9 +80,6 @@ abstract class CustomerService {
   @GET("{storeCode}/home_app")
   Future<HomeResponse> getHomeApp(@Path() String storeCode);
 
-  @GET("{storeCode}/combos")
-  Future<CustomerComboResponse> getComboCustomer(@Path() String storeCode);
-
   @POST("{storeCode}/orders")
   Future<OrdersResponse> createOrder(
       @Path() String storeCode, @Body() Map<String, dynamic> body);
@@ -101,6 +99,16 @@ abstract class CustomerService {
   @GET("{storeCode}/profile")
   Future<InfoCustomerResponse> getInfoCustomer(@Path() String storeCode);
 
+  /// marketing chanel
+
+  @GET("{storeCode}/combos")
+  Future<CustomerComboResponse> getComboCustomer(@Path() String storeCode);
+
+  @GET("{storeCode}/vouchers")
+  Future<VoucherCustomerResponse> getVoucherCustomer(@Path() String storeCode);
+
+  /// chat customer
+
   @GET("{storeCode}/messages")
   Future<AllMessageCustomerResponse> getAllMessageCustomer(
     @Path() String storeCode,
@@ -117,6 +125,10 @@ abstract class CustomerService {
 
   @POST("{storeCode}/carts")
   Future<CartCustomerResponse> getItemCart(@Path() String storeCode);
+
+  @POST("{storeCode}/carts")
+  Future<CartCustomerResponse> addVoucherCart(
+      @Path() String storeCode, @Body() Map<String, dynamic> body);
 
   @PUT("{storeCode}/carts/items")
   Future<CartCustomerResponse> updateItemCart(

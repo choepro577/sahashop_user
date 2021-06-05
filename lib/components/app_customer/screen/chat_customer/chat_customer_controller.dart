@@ -35,9 +35,18 @@ class ChatCustomerController extends GetxController {
 
   @override
   void onInit() async {
-    loadInitMessage();
-    getDataMessageUser();
+    await checkLoginToCartScreen();
     super.onInit();
+  }
+
+  Future<void> checkLoginToCartScreen() async {
+    if (await CustomerInfo().hasLogged()) {
+      loadInitMessage();
+      getDataMessageUser();
+    } else {
+      Get.back();
+      Get.to(() => LoginScreenCustomer());
+    }
   }
 
   @override

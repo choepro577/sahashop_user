@@ -54,12 +54,8 @@ class SearchBarType1 extends StatelessWidget {
             IconBtnWithCounter(
               svgSrc: "assets/icons/chat.svg",
               numOfitem: 3,
-              press: () async {
-                if (await CustomerInfo().hasLogged()) {
-                  Get.to(() => ChatCustomerScreen());
-                } else {
-                  Get.to(() => LoginScreenCustomer());
-                }
+              press: () {
+                Get.to(() => ChatCustomerScreen());
               },
             ),
           ],
