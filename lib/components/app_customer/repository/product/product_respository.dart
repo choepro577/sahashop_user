@@ -39,7 +39,7 @@ class ProductCustomerRepository {
           .getDetailProduct(UserInfo().getCurrentStoreCode(), idProduct);
       return res;
     } catch (err) {
-      SahaAlert.showError(message: err.toString());
+      // SahaAlert.showError(message: err.toString());
     }
   }
 }

@@ -26,7 +26,9 @@ class ProductController extends GetxController {
 
   ProductController() {
     currentProduct =
-        dataAppCustomerController.productCurrent ?? LIST_PRODUCT_EXAMPLE;
+        dataAppCustomerController.productCurrent ?? LIST_PRODUCT_EXAMPLE[0];
+    productDetailRequest.value =
+        dataAppCustomerController.productCurrent ?? LIST_PRODUCT_EXAMPLE[0];
     getDetailProduct();
     getComboCustomer();
     if (dataAppCustomerController.homeData?.discountProducts?.list != null) {
@@ -44,7 +46,7 @@ class ProductController extends GetxController {
           .getDetailProduct(currentProduct.id);
       productDetailRequest.value = res.data ?? currentProduct;
     } catch (err) {
-      SahaAlert.showError(message: err.toString());
+      //  SahaAlert.showError(message: err.toString());
     }
     isLoadingProduct.value = false;
   }

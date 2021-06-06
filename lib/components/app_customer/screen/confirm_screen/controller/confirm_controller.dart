@@ -28,9 +28,7 @@ class ConfirmController extends GetxController {
     try {
       var res = await CustomerRepositoryManager.shipmentRepository
           .chargeShipmentFee(idAddressCustomer);
-
-      var index = res.data.data.indexWhere((element) => element.shipType == 0);
-      shipmentMethod.value = res.data.data[index];
+      shipmentMethod.value = res.data.data[0];
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }

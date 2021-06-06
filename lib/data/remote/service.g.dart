@@ -916,4 +916,46 @@ class _SahaService implements SahaService {
     final value = SendMessageResponse.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<PaymentMethodResponse> getPaymentMethod(storeCode) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/payment_methods',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = PaymentMethodResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<UpdatePaymentResponse> upDatePaymentMethod(
+      storeCode, idPaymentMethod, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(idPaymentMethod, 'idPaymentMethod');
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/payment_methods/$idPaymentMethod',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'PUT',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = UpdatePaymentResponse.fromJson(_result.data);
+    return value;
+  }
 }

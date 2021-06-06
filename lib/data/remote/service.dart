@@ -22,6 +22,8 @@ import 'package:sahashop_user/data/remote/response-request/marketing_chanel_resp
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/discount/my_program_reponse.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/voucher/end_voucher_response.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/voucher/my_voucher_response.dart';
+import 'package:sahashop_user/data/remote/response-request/payment_method/payment_method_response.dart';
+import 'package:sahashop_user/data/remote/response-request/payment_method/update_payment_response.dart';
 import 'package:sahashop_user/data/remote/response-request/post/all_post_response.dart';
 
 import 'response-request/auth/register_response.dart';
@@ -218,6 +220,18 @@ abstract class SahaService {
   Future<SendMessageResponse> sendMessageToCustomer(
     @Path() String storeCode,
     @Path() int idCustomer,
+    @Body() Map<String, dynamic> body,
+  );
+
+  @GET("store/{storeCode}/payment_methods")
+  Future<PaymentMethodResponse> getPaymentMethod(
+    @Path() String storeCode,
+  );
+
+  @PUT("store/{storeCode}/payment_methods/{idPaymentMethod}")
+  Future<UpdatePaymentResponse> upDatePaymentMethod(
+    @Path() String storeCode,
+    @Path() int idPaymentMethod,
     @Body() Map<String, dynamic> body,
   );
 }

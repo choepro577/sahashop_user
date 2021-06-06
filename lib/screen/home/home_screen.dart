@@ -10,6 +10,7 @@ import 'package:sahashop_user/components/saha_user/loading/loading_full_screen.d
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/screen/chat/chat_screen/all_message_user_screen.dart';
 import 'package:sahashop_user/screen/config_app/config_screen.dart';
+import 'package:sahashop_user/screen/config_payment/config_payment_screen.dart';
 import 'package:sahashop_user/screen/config_store_address/config_store_address_screen.dart';
 import 'package:sahashop_user/screen/home/home_controller.dart';
 import 'package:sahashop_user/screen/inventory/inventory_screen.dart';
@@ -232,6 +233,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     text: 'Cài đặt vận chuyển',
                     press: () {
                       Get.to(() => ConfigStoreAddressScreen());
+                    },
+                  ),
+                  ItemStoreView(
+                    icon: 'assets/icons/gift_icon.svg',
+                    text: 'Cài đặt thanh toán',
+                    press: () {
+                      Get.to(() => ConfigPayment());
                     },
                   ),
                 ],

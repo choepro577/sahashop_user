@@ -10,12 +10,10 @@ class ShipmentCustomerController extends GetxController {
 
   ShipmentCustomerController({this.infoAddressCustomer, this.isShipmentInput}) {
     chargeShipmentFee(infoAddressCustomer.id);
-    isShipmentFast.value = isShipmentInput;
+    // isShipmentFast.value = isShipmentInput;
   }
 
-  var isShipmentFast = true.obs;
-  var listShipmentFast = RxList<ShipmentMethod>();
-  var listShipmentSupperSpeed = RxList<ShipmentMethod>();
+  var listShipment = RxList<ShipmentMethod>();
   var isLoadingShipmentMethod = false.obs;
   var shipmentMethodChoose = ShipmentMethod().obs;
 
@@ -25,11 +23,7 @@ class ShipmentCustomerController extends GetxController {
       var res = await CustomerRepositoryManager.shipmentRepository
           .chargeShipmentFee(idAddressCustomer);
       res.data.data.forEach((element) {
-        if (element.shipType == 0) {
-          listShipmentFast.add(element);
-        } else {
-          listShipmentSupperSpeed.add(element);
-        }
+        listShipment.add(element);
       });
     } catch (err) {
       SahaAlert.showError(message: err.toString());
@@ -37,13 +31,13 @@ class ShipmentCustomerController extends GetxController {
     isLoadingShipmentMethod.value = false;
   }
 
-  void changeShipmentMethod(bool value) {
-    if (value == true) {
-      isShipmentFast.value = true;
-      shipmentMethodChoose.value = listShipmentFast[0];
-    } else {
-      isShipmentFast.value = false;
-      shipmentMethodChoose.value = listShipmentSupperSpeed[0];
-    }
-  }
+  // void changeShipmentMethod(bool value) {
+  //   if (value == true) {
+  //     isShipmentFast.value = true;
+  //     shipmentMethodChoose.value = listShipmentFast[0];
+  //   } else {
+  //     isShipmentFast.value = false;
+  //     shipmentMethodChoose.value = listShipmentSupperSpeed[0];
+  //   }
+  // }
 }

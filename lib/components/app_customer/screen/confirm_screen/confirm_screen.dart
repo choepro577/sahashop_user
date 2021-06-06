@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/address_screen/choose_address_receiver/receiver_address_screen.dart';
+import 'package:sahashop_user/components/app_customer/screen/choose_voucher/choose_voucher_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/confirm_screen/controller/confirm_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/shipment_screen/shipment_customer_screen.dart';
 import 'package:sahashop_user/components/utils/money.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/model/info_address_customer.dart';
 import 'package:sahashop_user/model/shipment_method.dart';
+import 'package:sahashop_user/utils/string_utils.dart';
 
 class ConfirmScreen extends StatefulWidget {
   @override
@@ -58,6 +60,8 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                                       infoAddressCustomer) {
                                     confirmController.infoAddressCustomer
                                         .value = infoAddressCustomer;
+                                    confirmController.chargeShipmentFee(
+                                        infoAddressCustomer.id);
                                   },
                                 ));
                           },
@@ -121,7 +125,10 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.arrow_forward_ios_rounded)
+                                    Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      size: 14,
+                                    )
                                   ],
                                 ),
                               ],
@@ -150,7 +157,11 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                                           confirmController.infoAddressCustomer
                                               .value = infoAddressCustomer;
                                         },
-                                      ));
+                                      )).then((value) => {
+                                        confirmController.chargeShipmentFee(
+                                            confirmController
+                                                .infoAddressCustomer.value.id)
+                                      });
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(15.0),
@@ -199,7 +210,10 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Icon(Icons.arrow_forward_ios_rounded)
+                                          Icon(
+                                            Icons.arrow_forward_ios_rounded,
+                                            size: 14,
+                                          )
                                         ],
                                       ),
                                     ],
@@ -394,7 +408,7 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                             Row(
                               children: [
                                 Text(
-                                    '${confirmController.shipmentMethod.value.fee ?? ""} đ'),
+                                    '${SahaStringUtils().convertToMoney(confirmController.shipmentMethod.value.fee) ?? ""}đ'),
                                 SizedBox(
                                   width: 5,
                                 ),
@@ -423,6 +437,7 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                           border: InputBorder.none,
                           hintText: "Lưu ý cho người bán ...",
                         ),
+                        style: TextStyle(fontSize: 14),
                         minLines: 1,
                         maxLines: 1,
                       ),
@@ -455,7 +470,9 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                 color: Colors.grey[200],
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Get.to(() => ChooseVoucherCustomerScreen());
+                },
                 child: Container(
                   height: 55,
                   padding: const EdgeInsets.all(10.0),
