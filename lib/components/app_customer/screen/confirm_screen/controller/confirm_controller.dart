@@ -14,6 +14,8 @@ class ConfirmController extends GetxController {
   var shipmentMethod = ShipmentMethod().obs;
   var listShipmentFast = RxList<ShipmentMethod>();
   var isLoadingShipmentMethod = false.obs;
+  var idPaymentCurrent = 0.obs;
+  var paymentMethodName = "".obs;
 
   DataAppCustomerController dataAppCustomerController = Get.find();
 

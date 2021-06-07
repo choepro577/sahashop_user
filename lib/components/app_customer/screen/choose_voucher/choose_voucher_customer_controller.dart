@@ -78,9 +78,12 @@ class ChooseCustomerController extends GetxController {
           builder: (_) => AlertDialog(
                 title: Text(
                   "Bạn chưa đủ điều kiện sử dụng Voucher này !",
+                  style: TextStyle(fontSize: 17),
                 ),
                 content: Text(
-                    "Vui lòng xem điều kiện sử dụng Voucher, hoặc sử dụng Voucher khác !"),
+                  "Vui lòng xem điều kiện sử dụng Voucher, hoặc sử dụng Voucher khác !",
+                  style: TextStyle(fontSize: 15),
+                ),
                 actions: [
                   GestureDetector(
                     onTap: () {
@@ -99,9 +102,11 @@ class ChooseCustomerController extends GetxController {
                   )
                 ],
               ));
+      dataAppCustomerController.voucherCodeChoose.value = "";
     } else {
       dataAppCustomerController.voucherCodeChoose.value =
           voucherCodeChoose.value;
+      Get.back();
     }
   }
 

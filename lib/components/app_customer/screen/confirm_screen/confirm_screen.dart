@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/address_screen/choose_address_receiver/receiver_address_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/choose_voucher/choose_voucher_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/confirm_screen/controller/confirm_controller.dart';
+import 'package:sahashop_user/components/app_customer/screen/payment_method/payment_method_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/shipment_screen/shipment_customer_screen.dart';
 import 'package:sahashop_user/components/utils/money.dart';
 import 'package:sahashop_user/const/constant.dart';
@@ -412,7 +413,10 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                                 SizedBox(
                                   width: 5,
                                 ),
-                                Icon(Icons.arrow_forward_ios_rounded)
+                                Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  size: 13,
+                                )
                               ],
                             )
                           ],
@@ -494,15 +498,23 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          Text("Chọn hoặc nhập mã"),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Icon(Icons.arrow_forward_ios_rounded)
-                        ],
+                      Spacer(),
+                      Obx(
+                        () => confirmController.dataAppCustomerController
+                                    .voucherCodeChoose.value ==
+                                ""
+                            ? Text("Chọn hoặc nhập mã")
+                            : Text(
+                                "Mã: ${confirmController.dataAppCustomerController.voucherCodeChoose.value} - đ${SahaStringUtils().convertToMoney(confirmController.dataAppCustomerController.voucherDiscountAmount.value)}",
+                                style: TextStyle(fontSize: 13),
+                              ),
                       ),
+                      const SizedBox(width: 10),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 12,
+                        color: Theme.of(context).primaryColor,
+                      )
                     ],
                   ),
                 ),
@@ -517,7 +529,19 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                   child: Column(
                     children: [
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Get.to(() => PaymentMethodCustomerScreen(
+                                idPaymentCurrent:
+                                    confirmController.idPaymentCurrent.value,
+                                callback: (String paymentMethodName,
+                                    int idPaymentCurrent) {
+                                  confirmController.paymentMethodName.value =
+                                      paymentMethodName;
+                                  confirmController.idPaymentCurrent.value =
+                                      idPaymentCurrent;
+                                },
+                              ));
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -547,19 +571,33 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                                 ),
                               ],
                             ),
-                            Row(
-                              children: [
-                                Container(
+                            Spacer(),
+                            Obx(
+                              () => Container(
                                   width: 120,
-                                  child: Text(
-                                    "Chọn phương thức thanh toán",
-                                    maxLines: 2,
-                                    style: TextStyle(fontSize: 13),
-                                  ),
-                                ),
-                                Icon(Icons.arrow_forward_ios_rounded)
-                              ],
+                                  child: confirmController
+                                              .paymentMethodName.value ==
+                                          ""
+                                      ? Text(
+                                          "Chọn phương thức thanh toán",
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: Theme.of(context)
+                                                  .primaryColor),
+                                        )
+                                      : Text(
+                                          "${confirmController.paymentMethodName.value}",
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: Theme.of(context)
+                                                  .primaryColor),
+                                        )),
                             ),
+                            Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              size: 14,
+                            )
                           ],
                         ),
                       ),

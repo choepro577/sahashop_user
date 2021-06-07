@@ -17,6 +17,7 @@ import 'package:sahashop_user/components/app_customer/remote/response-request/lo
 import 'package:sahashop_user/components/app_customer/remote/response-request/marketing_chanel/combo_customer_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/marketing_chanel/voucher_customer_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/orders/order_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/payment_customer/payment_method_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/product/all_product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/product/detail_product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/product/query_product_response.dart';
@@ -24,6 +25,7 @@ import 'package:sahashop_user/components/app_customer/remote/response-request/re
 import 'package:sahashop_user/components/app_customer/remote/response-request/shipment/shipment_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/store/all_store_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/store/type_store_respones.dart';
+import 'package:sahashop_user/model/cart.dart';
 
 part 'customer_service.g.dart';
 
@@ -124,18 +126,18 @@ abstract class CustomerService {
   /// cart
 
   @POST("{storeCode}/carts")
-  Future<CartCustomerResponse> getItemCart(@Path() String storeCode);
+  Future<Cart> getItemCart(@Path() String storeCode);
 
   @POST("{storeCode}/carts")
-  Future<CartCustomerResponse> addVoucherCart(
+  Future<Cart> addVoucherCart(
       @Path() String storeCode, @Body() Map<String, dynamic> body);
 
   @PUT("{storeCode}/carts/items")
-  Future<CartCustomerResponse> updateItemCart(
+  Future<Cart> updateItemCart(
       @Path() String storeCode, @Body() Map<String, dynamic> body);
 
   @POST("{storeCode}/carts/items")
-  Future<CartCustomerResponse> addItemCart(
+  Future<Cart> addItemCart(
       @Path() String storeCode, @Body() Map<String, dynamic> body);
 
   /// address customer
@@ -163,4 +165,9 @@ abstract class CustomerService {
   @POST("{storeCode}/shipment/fee")
   Future<ShipmentCustomerResponse> chargeShipmentFee(
       @Path() String storeCode, @Body() Map<String, dynamic> body);
+
+  /// payment
+  @GET("{storeCode}/payment_methods")
+  Future<PaymentMethodCustomerResponse> getPaymentMethod(
+      @Path() String storeCode);
 }

@@ -429,7 +429,7 @@ class _CustomerService implements CustomerService {
   }
 
   @override
-  Future<CartCustomerResponse> getItemCart(storeCode) async {
+  Future<Cart> getItemCart(storeCode) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -442,12 +442,12 @@ class _CustomerService implements CustomerService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = CartCustomerResponse.fromJson(_result.data);
+    final value = Cart.fromJson(_result.data);
     return value;
   }
 
   @override
-  Future<CartCustomerResponse> addVoucherCart(storeCode, body) async {
+  Future<Cart> addVoucherCart(storeCode, body) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
@@ -462,12 +462,12 @@ class _CustomerService implements CustomerService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = CartCustomerResponse.fromJson(_result.data);
+    final value = Cart.fromJson(_result.data);
     return value;
   }
 
   @override
-  Future<CartCustomerResponse> updateItemCart(storeCode, body) async {
+  Future<Cart> updateItemCart(storeCode, body) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
@@ -483,12 +483,12 @@ class _CustomerService implements CustomerService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = CartCustomerResponse.fromJson(_result.data);
+    final value = Cart.fromJson(_result.data);
     return value;
   }
 
   @override
-  Future<CartCustomerResponse> addItemCart(storeCode, body) async {
+  Future<Cart> addItemCart(storeCode, body) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
@@ -504,7 +504,7 @@ class _CustomerService implements CustomerService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = CartCustomerResponse.fromJson(_result.data);
+    final value = Cart.fromJson(_result.data);
     return value;
   }
 
@@ -611,6 +611,25 @@ class _CustomerService implements CustomerService {
             baseUrl: baseUrl),
         data: _data);
     final value = ShipmentCustomerResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<PaymentMethodCustomerResponse> getPaymentMethod(storeCode) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/payment_methods',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = PaymentMethodCustomerResponse.fromJson(_result.data);
     return value;
   }
 }

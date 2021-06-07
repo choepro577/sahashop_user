@@ -6,7 +6,6 @@ import 'package:sahashop_user/components/app_customer/components/product_item/pr
 import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/cart_screen_1.dart';
 import 'package:sahashop_user/components/app_customer/screen/combo_detail_screen/combo_detail_controller.dart';
-import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/components/saha_user/text/text_money.dart';
 
@@ -23,20 +22,28 @@ class ComboDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Obx(
           () => Row(
             children: [
+              GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Icon(Icons.arrow_back_ios)),
               SizedBox(
                 width: 3,
               ),
               comboDetailController.discountComboType.value == 1
                   ? Text(
                       "Combo giảm ${comboDetailController.valueComboType.value}%",
+                      style: TextStyle(fontSize: 18),
                     )
                   : Row(
                       children: [
                         Text(
                           "Combo giảm ",
+                          style: TextStyle(fontSize: 18),
                         ),
                         SahaMoneyText(
                           sizeText: 16,
@@ -46,9 +53,6 @@ class ComboDetailScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-              SizedBox(
-                width: 3,
-              ),
             ],
           ),
         ),
@@ -57,7 +61,9 @@ class ComboDetailScreen extends StatelessWidget {
             overflow: Overflow.visible,
             children: [
               IconButton(
-                  icon: Icon(Icons.shopping_cart_outlined),
+                  icon: Icon(
+                    Icons.shopping_cart_outlined,
+                  ),
                   onPressed: () {
                     Get.to(() => CartScreen1());
                   }),
@@ -119,8 +125,8 @@ class ComboDetailScreen extends StatelessWidget {
                                         "Bạn đã đủ điều kiện sử dụng Combo giảm ",
                                       ),
                                       SahaMoneyText(
-                                        sizeText: 16,
-                                        sizeVND: 14,
+                                        sizeText: 14,
+                                        sizeVND: 12,
                                         price: comboDetailController
                                             .valueComboType.value
                                             .toDouble(),
