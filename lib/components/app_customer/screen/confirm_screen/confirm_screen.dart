@@ -344,13 +344,11 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                         infoAddressCustomer:
                             confirmController.infoAddressCustomer.value,
                         callback: (ShipmentMethod shipmentMethod) {
-                          confirmController.shipmentMethod.value =
+                          confirmController.shipmentMethodCurrent.value =
                               shipmentMethod;
                         },
-                        isShipmentFast:
-                            confirmController.shipmentMethod.value.shipType == 0
-                                ? true
-                                : false,
+                        shipmentMethodCurrent:
+                            confirmController.shipmentMethodCurrent.value,
                       ));
                 },
                 child: Obx(
@@ -379,8 +377,8 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                confirmController
-                                            .shipmentMethod.value.shipType ==
+                                confirmController.shipmentMethodCurrent.value
+                                            .shipType ==
                                         0
                                     ? Text(
                                         'Vận chuyển nhanh',
@@ -396,7 +394,7 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                                   height: 5,
                                 ),
                                 Text(
-                                    "${confirmController.shipmentMethod.value.name ?? "Chưa chọn đơn vị vẩn chuyển"}"),
+                                    "${confirmController.shipmentMethodCurrent.value.name ?? "Chưa chọn đơn vị vẩn chuyển"}"),
                                 SizedBox(
                                   height: 5,
                                 ),
@@ -409,7 +407,7 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                             Row(
                               children: [
                                 Text(
-                                    '${SahaStringUtils().convertToMoney(confirmController.shipmentMethod.value.fee) ?? ""}đ'),
+                                    '${SahaStringUtils().convertToMoney(confirmController.shipmentMethodCurrent.value.fee) ?? ""}đ'),
                                 SizedBox(
                                   width: 5,
                                 ),
@@ -436,6 +434,8 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                     ),
                     Expanded(
                       child: TextField(
+                        controller:
+                            confirmController.noteCustomerEditingController,
                         decoration: InputDecoration(
                           isDense: true,
                           border: InputBorder.none,
@@ -464,7 +464,7 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                     ),
                     Obx(
                       () => Text(
-                          "${FormatMoney.toVND(confirmController.dataAppCustomerController.totalMoney.value + confirmController.shipmentMethod.value.fee)}"),
+                          "${FormatMoney.toVND(confirmController.dataAppCustomerController.totalMoneyAfterDiscount.value + confirmController.shipmentMethodCurrent.value.fee)}"),
                     )
                   ],
                 ),
@@ -606,11 +606,95 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            Text('Tạm tính :',
+                                style: TextStyle(
+                                    fontSize: 13, color: Colors.grey[700])),
+                            Text(
+                                "${SahaStringUtils().convertToMoney(confirmController.dataAppCustomerController.totalBeforeDiscount.value)} đ",
+                                style: TextStyle(
+                                    fontSize: 13, color: Colors.grey[800])),
+                          ],
+                        ),
+                      ),
+                      confirmController.dataAppCustomerController
+                                  .productDiscountAmount.value ==
+                              0
+                          ? Container()
+                          : Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Giảm giá sản phẩm :',
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.grey[700])),
+                                  Text(
+                                      "- ${SahaStringUtils().convertToMoney(confirmController.dataAppCustomerController.productDiscountAmount.value)} đ",
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.grey[800])),
+                                ],
+                              ),
+                            ),
+                      confirmController.dataAppCustomerController
+                                  .comboDiscountAmount.value ==
+                              0
+                          ? Container()
+                          : Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Giảm giá combo :',
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.grey[700])),
+                                  Text(
+                                      "- ${SahaStringUtils().convertToMoney(confirmController.dataAppCustomerController.comboDiscountAmount.value)} đ",
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.grey[800])),
+                                ],
+                              ),
+                            ),
+                      confirmController.dataAppCustomerController
+                                  .voucherDiscountAmount.value ==
+                              0
+                          ? Container()
+                          : Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Giảm giá voucher :',
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.grey[700])),
+                                  Text(
+                                      "- ${SahaStringUtils().convertToMoney(confirmController.dataAppCustomerController.voucherDiscountAmount.value)} đ",
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.grey[800])),
+                                ],
+                              ),
+                            ),
+                      Divider(
+                        height: 1,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
                             Text('Tổng tiền hàng :',
                                 style: TextStyle(
                                     fontSize: 13, color: Colors.grey[700])),
                             Text(
-                                "${FormatMoney.toVND(confirmController.dataAppCustomerController.totalMoney.value)}",
+                                "${SahaStringUtils().convertToMoney(confirmController.dataAppCustomerController.totalMoneyAfterDiscount.value)} đ",
                                 style: TextStyle(
                                     fontSize: 13, color: Colors.grey[800])),
                           ],
@@ -625,7 +709,7 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                                 style: TextStyle(
                                     fontSize: 13, color: Colors.grey[700])),
                             Text(
-                                "${FormatMoney.toVND(confirmController.shipmentMethod.value.fee.toDouble())}",
+                                "+ ${SahaStringUtils().convertToMoney(confirmController.shipmentMethodCurrent.value.fee.toDouble())} đ",
                                 style: TextStyle(
                                     fontSize: 13, color: Colors.grey[800])),
                           ],
@@ -640,7 +724,7 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                               'Tổng thanh toán :',
                             ),
                             Text(
-                                "${FormatMoney.toVND(confirmController.dataAppCustomerController.totalMoney.value + confirmController.shipmentMethod.value.fee.toDouble())}",
+                                "${SahaStringUtils().convertToMoney(confirmController.dataAppCustomerController.totalMoneyAfterDiscount.value + confirmController.shipmentMethodCurrent.value.fee.toDouble())} đ",
                                 style: TextStyle(
                                     fontSize: 13, color: Colors.grey[800])),
                           ],
@@ -715,7 +799,7 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                     ),
                     Text("Tổng thanh toán"),
                     Text(
-                      "${FormatMoney.toVND(confirmController.dataAppCustomerController.totalMoney.value + confirmController.shipmentMethod.value.fee.toDouble())}",
+                      "${FormatMoney.toVND(confirmController.dataAppCustomerController.totalMoneyAfterDiscount.value + confirmController.shipmentMethodCurrent.value.fee.toDouble())}",
                       style: TextStyle(
                           fontSize: 16,
                           color: Colors.red,

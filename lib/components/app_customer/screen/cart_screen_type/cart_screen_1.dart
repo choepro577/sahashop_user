@@ -7,6 +7,7 @@ import 'package:sahashop_user/components/app_customer/screen/choose_voucher/choo
 import 'package:sahashop_user/components/app_customer/screen/combo_detail_screen/combo_detail_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/confirm_screen/confirm_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
+import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/switch_button/switch_button.dart';
 import 'package:sahashop_user/components/saha_user/text/text_money.dart';
 import 'package:sahashop_user/components/utils/money.dart';
@@ -107,8 +108,8 @@ class CartScreen1 extends StatelessWidget {
                               ],
                             )
                           : Text(
-                              "Mua thêm để giảm giá",
-                              style: TextStyle(fontSize: 13),
+                              "Mua thêm để giảm giá !",
+                              style: TextStyle(fontSize: 13, color: Colors.red),
                             ),
                       Spacer(),
                       Text(
@@ -159,41 +160,85 @@ class CartScreen1 extends StatelessWidget {
                           ),
                           child: Row(
                             children: [
-                              SizedBox(
-                                width: 88,
-                                child: AspectRatio(
-                                  aspectRatio: 1,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(2),
-                                    child: CachedNetworkImage(
-                                      fit: BoxFit.cover,
-                                      imageUrl: dataAppCustomerController
-                                                  .listOrder[index]
-                                                  .product
-                                                  .images
-                                                  .length ==
-                                              0
-                                          ? ""
-                                          : dataAppCustomerController
-                                              .listOrder[index]
-                                              .product
-                                              .images[0]
-                                              .imageUrl,
-                                      errorWidget: (context, url, error) =>
-                                          ClipRRect(
-                                        borderRadius: BorderRadius.circular(2),
-                                        child: Container(
-                                          height: 100,
+                              Stack(
+                                children: [
+                                  SizedBox(
+                                    width: 88,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(2),
                                           child: CachedNetworkImage(
                                             fit: BoxFit.cover,
-                                            imageUrl:
-                                                "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
+                                            imageUrl: dataAppCustomerController
+                                                        .listOrder[index]
+                                                        .product
+                                                        .images
+                                                        .length ==
+                                                    0
+                                                ? ""
+                                                : dataAppCustomerController
+                                                    .listOrder[index]
+                                                    .product
+                                                    .images[0]
+                                                    .imageUrl,
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(2),
+                                              child: Container(
+                                                height: 100,
+                                                child: CachedNetworkImage(
+                                                  fit: BoxFit.cover,
+                                                  imageUrl:
+                                                      "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
+                                                ),
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
+                                  dataAppCustomerController.listOrder[index]
+                                              .product.productDiscount ==
+                                          null
+                                      ? Container()
+                                      : Positioned(
+                                          top: -10,
+                                          left: 2,
+                                          child: Stack(
+                                            overflow: Overflow.visible,
+                                            children: [
+                                              Container(
+                                                height: 40,
+                                                width: 40,
+                                                child: SvgPicture.asset(
+                                                  "assets/icons/ribbon.svg",
+                                                  color: Color(0xfffdd100),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                top: 13,
+                                                left: 3,
+                                                child: Text(
+                                                  "-${dataAppCustomerController.listOrder[index].product.productDiscount.value} %",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Color(0xfffd5800)),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                ],
                               ),
                               SizedBox(width: 20),
                               Container(
@@ -210,14 +255,42 @@ class CartScreen1 extends StatelessWidget {
                                       maxLines: 2,
                                     ),
                                     SizedBox(height: 10),
-                                    Text.rich(
-                                      TextSpan(
-                                        text:
-                                            "\đ${SahaStringUtils().convertToMoney(dataAppCustomerController.listOrder[index].product.price)}",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            color: SahaPrimaryColor),
-                                      ),
+                                    Row(
+                                      children: [
+                                        Text.rich(
+                                          TextSpan(
+                                            text: dataAppCustomerController
+                                                        .listOrder[index]
+                                                        .product
+                                                        .productDiscount ==
+                                                    null
+                                                ? "đ${SahaStringUtils().convertToMoney(dataAppCustomerController.listOrder[index].product.price)}"
+                                                : "đ${SahaStringUtils().convertToMoney(dataAppCustomerController.listOrder[index].product.productDiscount.discountPrice)}",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                color: SahaPrimaryColor),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          dataAppCustomerController
+                                                      .listOrder[index]
+                                                      .product
+                                                      .productDiscount ==
+                                                  null
+                                              ? ""
+                                              : "đ${SahaStringUtils().convertToMoney(dataAppCustomerController.listOrder[index].product.price)}",
+                                          style: TextStyle(
+                                              decoration:
+                                                  TextDecoration.lineThrough,
+                                              color: Colors.grey[400],
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12),
+                                          maxLines: 1,
+                                        ),
+                                      ],
                                     ),
                                     SizedBox(height: 10),
                                     Row(
@@ -416,23 +489,193 @@ class CartScreen1 extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text("Tổng thanh toán"),
-                        Obx(
-                          () => Text(
-                            "đ${SahaStringUtils().convertToMoney(dataAppCustomerController.totalMoney.value)}",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.red,
-                                fontWeight: FontWeight.bold),
+                    InkWell(
+                      onTap: () {
+                        showModalBottomSheet<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Stack(
+                                children: [
+                                  Container(
+                                    height: 450,
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Text(
+                                          "Chi tiết đơn hàng",
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text("Tạm tính"),
+                                              Text(
+                                                  "${SahaStringUtils().convertToMoney(dataAppCustomerController.totalBeforeDiscount.value)} đ"),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text("Giảm giá Sản phẩm"),
+                                              Text(
+                                                  "- ${SahaStringUtils().convertToMoney(dataAppCustomerController.productDiscountAmount.value)} đ"),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text("Giảm giá Voucher"),
+                                              Text(
+                                                  "- ${SahaStringUtils().convertToMoney(dataAppCustomerController.voucherDiscountAmount.value)} đ"),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text("Giảm giá Combo"),
+                                              Text(
+                                                  "- ${SahaStringUtils().convertToMoney(dataAppCustomerController.comboDiscountAmount.value)} đ"),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text("Tổng giảm"),
+                                              Text(
+                                                  "- ${SahaStringUtils().convertToMoney(dataAppCustomerController.productDiscountAmount.value + dataAppCustomerController.voucherDiscountAmount.value + dataAppCustomerController.comboDiscountAmount.value)} đ"),
+                                            ],
+                                          ),
+                                        ),
+                                        Divider(
+                                          height: 1,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text("Tổng tiền"),
+                                              Text(
+                                                  "${SahaStringUtils().convertToMoney(dataAppCustomerController.totalMoneyAfterDiscount.value)} đ"),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Container(
+                                          height: 8,
+                                          color: Colors.grey[200],
+                                        ),
+                                        SahaButtonFullParent(
+                                          text: "Đóng",
+                                          textColor: Theme.of(context)
+                                              .primaryTextTheme
+                                              .headline6
+                                              .color,
+                                          color: Theme.of(context).primaryColor,
+                                          onPressed: () {
+                                            Get.back();
+                                          },
+                                        ),
+                                        Container(
+                                          height: 8,
+                                          color: Colors.grey[200],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Positioned(
+                                      height: 45,
+                                      width: 45,
+                                      top: 10,
+                                      right: 10,
+                                      child: IconButton(
+                                        icon: Icon(Icons.close),
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                      ))
+                                ],
+                              );
+                            });
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                            height: 10,
                           ),
-                        ),
-                      ],
+                          Row(
+                            children: [
+                              Text(
+                                "Tổng cộng: ",
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.w500),
+                              ),
+                              Obx(
+                                () => Text(
+                                  "${SahaStringUtils().convertToMoney(dataAppCustomerController.totalMoneyAfterDiscount.value)} đ",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Obx(
+                            () => Container(
+                              padding: EdgeInsets.all(3),
+                              height: 20,
+                              decoration: BoxDecoration(
+                                  color: Colors.red.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(3)),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Khuyến mãi: ${SahaStringUtils().convertToMoney(dataAppCustomerController.totalBeforeDiscount.value - dataAppCustomerController.totalMoneyAfterDiscount.value)} đ",
+                                    style: TextStyle(
+                                        fontSize: 10,
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Icon(
+                                    Icons.keyboard_arrow_down,
+                                    size: 16,
+                                    color: Colors.red,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       width: 20,

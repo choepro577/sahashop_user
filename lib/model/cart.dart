@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:sahashop_user/model/combo.dart';
+import 'package:sahashop_user/model/order.dart';
 import 'package:sahashop_user/model/product.dart';
 
 Cart cartFromJson(String str) => Cart.fromJson(json.decode(str));
@@ -90,38 +91,6 @@ class Data {
         "used_voucher": usedVoucher.toJson(),
         "total_after_discount": totalAfterDiscount,
         "line_items": List<dynamic>.from(lineItems.map((x) => x.toJson())),
-      };
-}
-
-class LineItem {
-  LineItem({
-    this.id,
-    this.quantity,
-    this.createdAt,
-    this.updatedAt,
-    this.product,
-  });
-
-  int id;
-  int quantity;
-  DateTime createdAt;
-  DateTime updatedAt;
-  Product product;
-
-  factory LineItem.fromJson(Map<String, dynamic> json) => LineItem(
-        id: json["id"],
-        quantity: json["quantity"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-        product: Product.fromJson(json["product"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "quantity": quantity,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-        "product": product.toJson(),
       };
 }
 

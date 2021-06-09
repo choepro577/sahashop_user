@@ -15,6 +15,7 @@ import 'package:sahashop_user/screen/config_store_address/config_store_address_s
 import 'package:sahashop_user/screen/home/home_controller.dart';
 import 'package:sahashop_user/screen/inventory/inventory_screen.dart';
 import 'package:sahashop_user/screen/maketing_chanel/marketing_chanel_screen.dart';
+import 'package:sahashop_user/screen/order_manage/order_manage_screen.dart';
 import 'package:sahashop_user/screen/posts/screen.dart';
 
 import 'choose_store/choose_store.dart';
@@ -150,7 +151,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ItemStoreView(
                     icon: 'assets/icons/flash_icon.svg',
                     text: 'Đơn hàng',
-                    press: () {},
+                    press: () {
+                      Get.to(() => OrderManageScreen());
+                    },
                   ),
                   ItemStoreView(
                     icon: 'assets/icons/flash_icon.svg',

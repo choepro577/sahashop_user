@@ -82,8 +82,8 @@ abstract class CustomerService {
   @GET("{storeCode}/home_app")
   Future<HomeResponse> getHomeApp(@Path() String storeCode);
 
-  @POST("{storeCode}/orders")
-  Future<OrdersResponse> createOrder(
+  @POST("{storeCode}/carts/orders")
+  Future<OrderResponse> createOrder(
       @Path() String storeCode, @Body() Map<String, dynamic> body);
 
   @POST("{storeCode}/register")

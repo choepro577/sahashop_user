@@ -958,4 +958,41 @@ class _SahaService implements SahaService {
     final value = UpdatePaymentResponse.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<AllOrderResponse> getAllOrder(storeCode, numberPage, search, fieldBy,
+      fieldByValue, sortBy, descending, dateFrom, dateTo) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(numberPage, 'numberPage');
+    ArgumentError.checkNotNull(search, 'search');
+    ArgumentError.checkNotNull(fieldBy, 'fieldBy');
+    ArgumentError.checkNotNull(fieldByValue, 'fieldByValue');
+    ArgumentError.checkNotNull(sortBy, 'sortBy');
+    ArgumentError.checkNotNull(descending, 'descending');
+    ArgumentError.checkNotNull(dateFrom, 'dateFrom');
+    ArgumentError.checkNotNull(dateTo, 'dateTo');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'page': numberPage,
+      r'search': search,
+      r'field_by': fieldBy,
+      r'field_by_value': fieldByValue,
+      r'sort_by': sortBy,
+      r'descending': descending,
+      r'date_from': dateFrom,
+      r'date_to': dateTo
+    };
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/orders',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = AllOrderResponse.fromJson(_result.data);
+    return value;
+  }
 }

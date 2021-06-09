@@ -16,9 +16,9 @@ class ConfigAddressController extends GetxController {
     locationProvince.value.name = infoAddress.provinceName;
     locationDistrict.value.name = infoAddress.districtName;
     locationWard.value.name = infoAddress.wardsName;
-    locationProvince.value.id = infoAddress.id;
-    locationDistrict.value.id = infoAddress.id;
-    locationWard.value.id = infoAddress.id;
+    locationProvince.value.id = infoAddress.province;
+    locationDistrict.value.id = infoAddress.district;
+    locationWard.value.id = infoAddress.wards;
     isDefaultPickup.value = infoAddress.isDefaultPickup;
     isDefaultReturn.value = infoAddress.isDefaultReturn;
   }

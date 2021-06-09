@@ -22,6 +22,7 @@ import 'package:sahashop_user/data/remote/response-request/marketing_chanel_resp
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/discount/my_program_reponse.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/voucher/end_voucher_response.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/voucher/my_voucher_response.dart';
+import 'package:sahashop_user/data/remote/response-request/order/all_order_response.dart';
 import 'package:sahashop_user/data/remote/response-request/payment_method/payment_method_response.dart';
 import 'package:sahashop_user/data/remote/response-request/payment_method/update_payment_response.dart';
 import 'package:sahashop_user/data/remote/response-request/post/all_post_response.dart';
@@ -233,5 +234,20 @@ abstract class SahaService {
     @Path() String storeCode,
     @Path() int idPaymentMethod,
     @Body() Map<String, dynamic> body,
+  );
+
+  /// order manage
+
+  @GET("store/{storeCode}/orders")
+  Future<AllOrderResponse> getAllOrder(
+    @Path() String storeCode,
+    @Query("page") int numberPage,
+    @Query("search") String search,
+    @Query("field_by") String fieldBy,
+    @Query("field_by_value") String fieldByValue,
+    @Query("sort_by") String sortBy,
+    @Query("descending") String descending,
+    @Query("date_from") String dateFrom,
+    @Query("date_to") String dateTo,
   );
 }

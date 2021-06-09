@@ -1,9 +1,4 @@
-// To parse this JSON data, do
-//
-//     final cartCustomerResponse = cartCustomerResponseFromJson(jsonString);
-
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:sahashop_user/model/order.dart';
 
@@ -61,7 +56,7 @@ class Data {
   double productDiscountAmount;
   double voucherDiscountAmount;
   double totalAfterDiscount;
-  List<Order> lineItems;
+  List<LineItem> lineItems;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         totalBeforeDiscount:
@@ -74,8 +69,8 @@ class Data {
             double.parse(json["voucher_discount_amount"].toString()),
         totalAfterDiscount:
             double.parse(json["total_after_discount"].toString()),
-        lineItems:
-            List<Order>.from(json["line_items"].map((x) => Order.fromJson(x))),
+        lineItems: List<LineItem>.from(
+            json["line_items"].map((x) => LineItem.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

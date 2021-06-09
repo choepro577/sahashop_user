@@ -12,6 +12,7 @@ import 'package:sahashop_user/model/category_post.dart';
 import 'package:sahashop_user/model/combo.dart';
 import 'package:sahashop_user/model/home_data.dart';
 import 'package:sahashop_user/model/info_customer.dart';
+import 'package:sahashop_user/model/order.dart';
 import 'package:sahashop_user/model/post.dart';
 import 'package:sahashop_user/model/product.dart';
 import 'category_post_screen/category_post_screen_1.dart';
@@ -152,7 +153,9 @@ class DataAppCustomerController extends GetxController {
 
   /// Cart
 
-  var totalMoney = 0.0.obs;
+  var totalMoneyAfterDiscount = 0.0.obs;
+  var totalBeforeDiscount = 0.0.obs;
+  var productDiscountAmount = 0.0.obs;
   var listOrder = RxList<LineItem>();
   var voucherDiscountAmount = 0.0.obs;
   var comboDiscountAmount = 0.0.obs;
@@ -236,7 +239,9 @@ class DataAppCustomerController extends GetxController {
       });
       comboDiscountAmount.value = res.data.comboDiscountAmount;
       listQuantityProduct(listQuantityProductNew);
-      totalMoney.value = res.data.totalAfterDiscount;
+      totalMoneyAfterDiscount.value = res.data.totalAfterDiscount;
+      totalBeforeDiscount.value = res.data.totalBeforeDiscount;
+      productDiscountAmount.value = res.data.productDiscountAmount;
       getComboCustomer();
     } catch (err) {
       SahaAlert.showError(message: err.toString());
@@ -256,7 +261,9 @@ class DataAppCustomerController extends GetxController {
       });
       listQuantityProduct(listQuantityProductNew);
       comboDiscountAmount.value = res.data.comboDiscountAmount;
-      totalMoney.value = res.data.totalAfterDiscount;
+      totalMoneyAfterDiscount.value = res.data.totalAfterDiscount;
+      totalBeforeDiscount.value = res.data.totalBeforeDiscount;
+      productDiscountAmount.value = res.data.productDiscountAmount;
       voucherDiscountAmount.value = res.data.voucherDiscountAmount;
       getComboCustomer();
     } catch (err) {
@@ -276,7 +283,9 @@ class DataAppCustomerController extends GetxController {
       });
       listQuantityProduct(listQuantityProductNew);
       comboDiscountAmount.value = res.data.comboDiscountAmount;
-      totalMoney.value = res.data.totalAfterDiscount;
+      totalMoneyAfterDiscount.value = res.data.totalAfterDiscount;
+      totalBeforeDiscount.value = res.data.totalBeforeDiscount;
+      productDiscountAmount.value = res.data.productDiscountAmount;
       getComboCustomer();
     } catch (err) {
       SahaAlert.showError(message: err.toString());
@@ -295,7 +304,9 @@ class DataAppCustomerController extends GetxController {
       });
       listQuantityProduct(listQuantityProductNew);
       comboDiscountAmount.value = res.data.comboDiscountAmount;
-      totalMoney.value = res.data.totalAfterDiscount;
+      totalMoneyAfterDiscount.value = res.data.totalAfterDiscount;
+      totalBeforeDiscount.value = res.data.totalBeforeDiscount;
+      productDiscountAmount.value = res.data.productDiscountAmount;
       getComboCustomer();
     } catch (err) {
       SahaAlert.showError(message: err.toString());

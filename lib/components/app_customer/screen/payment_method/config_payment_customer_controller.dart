@@ -39,6 +39,8 @@ class ConfigPaymentCustomerController extends GetxController {
           .indexWhere((element) => element == idPaymentCurrent);
       if (index != -1) {
         listChoosePaymentMethod[index] = true;
+        namePaymentCurrent = listNamePaymentMethod[index];
+        idPaymentCurrentCallBack = listIdPaymentMethod[index];
       }
 
       // listConfig.forEach((e) {

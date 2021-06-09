@@ -247,7 +247,7 @@ class _CustomerService implements CustomerService {
   }
 
   @override
-  Future<OrdersResponse> createOrder(storeCode, body) async {
+  Future<OrderResponse> createOrder(storeCode, body) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
@@ -255,7 +255,7 @@ class _CustomerService implements CustomerService {
     final _data = <String, dynamic>{};
     _data.addAll(body ?? <String, dynamic>{});
     final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/orders',
+        '$storeCode/carts/orders',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -263,7 +263,7 @@ class _CustomerService implements CustomerService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = OrdersResponse.fromJson(_result.data);
+    final value = OrderResponse.fromJson(_result.data);
     return value;
   }
 
