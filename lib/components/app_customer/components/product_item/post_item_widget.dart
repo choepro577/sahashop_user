@@ -1,14 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
-import 'package:sahashop_user/components/utils/money.dart';
 import 'package:sahashop_user/model/post.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
-import 'package:sahashop_user/utils/string_utils.dart';
 
 class PostItemWidget extends StatelessWidget {
   const PostItemWidget({

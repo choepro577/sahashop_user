@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/address_screen/all_address_customer/all_address_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/address_screen/choose_address_receiver/receiver_address_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/address_screen/new_address_customer_screen.dart';
-import 'package:sahashop_user/components/app_customer/screen/confirm_screen/controller/confirm_controller.dart';
+import 'package:sahashop_user/components/app_customer/screen/confirm_screen/confirm_controller.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/model/info_address_customer.dart';
 

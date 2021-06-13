@@ -28,8 +28,8 @@ class _LoadAppScreenState extends State<LoadAppScreen> {
     await Future.delayed(Duration(seconds: 1));
     isInit = true;
 
-    Get.to(() => NavigationScreen()).then((value) {
-      Get.back();
+    Get.offNamed('customer_home').then((value) {
+      //Get.back();
     });
   }
 

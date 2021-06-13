@@ -22,7 +22,7 @@ class CustomerRepositoryManager {
       ConfigUICustomerRepository();
   static ProductCustomerRepository get productCustomerRepository =>
       ProductCustomerRepository();
-  static OrderCustomerRepository get createOrderCustomerRepository =>
+  static OrderCustomerRepository get orderCustomerRepository =>
       OrderCustomerRepository();
   static HomeDataRepository get homeDataCustomerRepository =>
       HomeDataRepository();

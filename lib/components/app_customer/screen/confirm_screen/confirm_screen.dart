@@ -5,7 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/address_screen/choose_address_receiver/receiver_address_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/choose_voucher/choose_voucher_customer_screen.dart';
-import 'package:sahashop_user/components/app_customer/screen/confirm_screen/controller/confirm_controller.dart';
+import 'package:sahashop_user/components/app_customer/screen/confirm_screen/confirm_controller.dart';
+import 'package:sahashop_user/components/app_customer/screen/confirm_screen/widget/widget_animate_check.dart';
 import 'package:sahashop_user/components/app_customer/screen/payment_method/payment_method_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/shipment_screen/shipment_customer_screen.dart';
 import 'package:sahashop_user/components/utils/money.dart';
@@ -14,27 +15,15 @@ import 'package:sahashop_user/model/info_address_customer.dart';
 import 'package:sahashop_user/model/shipment_method.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
-class ConfirmScreen extends StatefulWidget {
-  @override
-  _ConfirmScreenState createState() => _ConfirmScreenState();
-}
-
-class _ConfirmScreenState extends State<ConfirmScreen>
-    with SingleTickerProviderStateMixin {
+// ignore: must_be_immutable
+class ConfirmScreen extends StatelessWidget {
   ConfirmController confirmController;
   final dataKey = new GlobalKey();
-  Color _color = Colors.transparent;
-  double _opacityCurrent = 1;
-
-  @override
-  void initState() {
-    confirmController = Get.put(ConfirmController());
-    super.initState();
-  }
+  final dataKeyPayment = new GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    confirmController = Get.put(ConfirmController());
     return Scaffold(
         appBar: AppBar(
           title: Text("Xác nhận đơn hàng"),
@@ -50,181 +39,181 @@ class _ConfirmScreenState extends State<ConfirmScreen>
               Obx(
                 () => Column(
                   children: [
-                    if (confirmController.infoAddressCustomer.value != null)
-                      Card(
-                        child: InkWell(
-                          onTap: () {
-                            Get.to(() => ReceiverAddressCustomerScreen(
-                                  infoAddressCustomers: confirmController
-                                      .infoAddressCustomer.value,
-                                  callback: (InfoAddressCustomer
-                                      infoAddressCustomer) {
-                                    confirmController.infoAddressCustomer
-                                        .value = infoAddressCustomer;
-                                    confirmController.chargeShipmentFee(
-                                        infoAddressCustomer.id);
-                                  },
-                                ));
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                    confirmController.infoAddressCustomer.value != null
+                        ? Card(
+                            child: InkWell(
+                              onTap: () {
+                                Get.to(() => ReceiverAddressCustomerScreen(
+                                      infoAddressCustomers: confirmController
+                                          .infoAddressCustomer.value,
+                                      callback: (InfoAddressCustomer
+                                          infoAddressCustomer) {
+                                        confirmController.infoAddressCustomer
+                                            .value = infoAddressCustomer;
+                                        confirmController.chargeShipmentFee(
+                                            infoAddressCustomer.id);
+                                      },
+                                    ));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Container(
-                                      padding: EdgeInsets.all(6),
-                                      height: 30,
-                                      width: 30,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFF5F6F9),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: SvgPicture.asset(
-                                        "assets/icons/location.svg",
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Column(
+                                    Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text("Địa chỉ nhận hàng :"),
                                         Container(
-                                          width: Get.width * 0.7,
-                                          child: Text(
-                                            "${confirmController.infoAddressCustomer.value.name ?? "Chưa có tên"}  | ${confirmController.infoAddressCustomer.value.phone ?? "Chưa có số điện thoại"}",
-                                            maxLines: 2,
+                                          padding: EdgeInsets.all(6),
+                                          height: 30,
+                                          width: 30,
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFFF5F6F9),
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: SvgPicture.asset(
+                                            "assets/icons/location.svg",
+                                            color:
+                                                Theme.of(context).primaryColor,
                                           ),
                                         ),
-                                        Container(
-                                          width: Get.width * 0.7,
-                                          child: Text(
-                                            "${confirmController.infoAddressCustomer.value.addressDetail ?? "Chưa có địa chỉ chi tiết"}",
-                                            maxLines: 2,
-                                          ),
+                                        SizedBox(
+                                          width: 10,
                                         ),
-                                        Container(
-                                          width: Get.width * 0.7,
-                                          child: Text(
-                                            "${confirmController.infoAddressCustomer.value.districtName ?? "Chưa có Quận/Huyện"}, ${confirmController.infoAddressCustomer.value.wardsName ?? "Chưa có Phường/Xã"}, ${confirmController.infoAddressCustomer.value.provinceName ?? "Chưa có Tỉnh/Thành phố"}",
-                                            style: TextStyle(
-                                                color: Colors.grey[700],
-                                                fontSize: 13),
-                                            maxLines: 2,
-                                          ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text("Địa chỉ nhận hàng :"),
+                                            Container(
+                                              width: Get.width * 0.7,
+                                              child: Text(
+                                                "${confirmController.infoAddressCustomer.value.name ?? "Chưa có tên"}  | ${confirmController.infoAddressCustomer.value.phone ?? "Chưa có số điện thoại"}",
+                                                maxLines: 2,
+                                              ),
+                                            ),
+                                            Container(
+                                              width: Get.width * 0.7,
+                                              child: Text(
+                                                "${confirmController.infoAddressCustomer.value.addressDetail ?? "Chưa có địa chỉ chi tiết"}",
+                                                maxLines: 2,
+                                              ),
+                                            ),
+                                            Container(
+                                              width: Get.width * 0.7,
+                                              child: Text(
+                                                "${confirmController.infoAddressCustomer.value.districtName ?? "Chưa có Quận/Huyện"}, ${confirmController.infoAddressCustomer.value.wardsName ?? "Chưa có Phường/Xã"}, ${confirmController.infoAddressCustomer.value.provinceName ?? "Chưa có Tỉnh/Thành phố"}",
+                                                style: TextStyle(
+                                                    color: Colors.grey[700],
+                                                    fontSize: 13),
+                                                maxLines: 2,
+                                              ),
+                                            ),
+                                          ],
                                         ),
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.arrow_forward_ios_rounded,
+                                          size: 14,
+                                        )
                                       ],
                                     ),
                                   ],
                                 ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.arrow_forward_ios_rounded,
-                                      size: 14,
-                                    )
-                                  ],
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      )
-                    else
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: AnimatedOpacity(
-                          opacity: _opacityCurrent,
-                          duration: const Duration(seconds: 1),
-                          child: AnimatedContainer(
-                            decoration: BoxDecoration(
-                                border: Border.all(color: _color)),
-                            duration: Duration(seconds: 1),
-                            child: Card(
-                              child: InkWell(
-                                onTap: () {
-                                  Get.to(() => ReceiverAddressCustomerScreen(
-                                        infoAddressCustomers: confirmController
-                                            .infoAddressCustomer.value,
-                                        callback: (InfoAddressCustomer
-                                            infoAddressCustomer) {
-                                          confirmController.infoAddressCustomer
-                                              .value = infoAddressCustomer;
-                                        },
-                                      )).then((value) => {
-                                        confirmController.chargeShipmentFee(
+                          )
+                        : Obx(
+                            () => AnimateCheck(
+                              opacity: confirmController.opacityCurrent.value,
+                              color:
+                                  confirmController.colorAnimateAddress.value,
+                              child: Card(
+                                child: InkWell(
+                                  onTap: () {
+                                    Get.to(() => ReceiverAddressCustomerScreen(
+                                          infoAddressCustomers:
+                                              confirmController
+                                                  .infoAddressCustomer.value,
+                                          callback: (InfoAddressCustomer
+                                              infoAddressCustomer) {
                                             confirmController
-                                                .infoAddressCustomer.value.id)
-                                      });
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(15.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            padding: EdgeInsets.all(6),
-                                            height: 30,
-                                            width: 30,
-                                            decoration: BoxDecoration(
-                                              color: Color(0xFFF5F6F9),
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: SvgPicture.asset(
-                                              "assets/icons/location.svg",
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text("Địa chỉ nhận hàng :"),
-                                              Container(
-                                                width: Get.width * 0.7,
-                                                child: Text(
-                                                  "Chưa chọn địa chỉ nhận hàng (nhấn để chọn)",
-                                                  maxLines: 2,
-                                                ),
+                                                .infoAddressCustomer
+                                                .value = infoAddressCustomer;
+                                          },
+                                        )).then((value) => {
+                                          confirmController.chargeShipmentFee(
+                                              confirmController
+                                                  .infoAddressCustomer.value.id)
+                                        });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.all(6),
+                                              height: 30,
+                                              width: 30,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xFFF5F6F9),
+                                                shape: BoxShape.circle,
                                               ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.arrow_forward_ios_rounded,
-                                            size: 14,
-                                          )
-                                        ],
-                                      ),
-                                    ],
+                                              child: SvgPicture.asset(
+                                                "assets/icons/location.svg",
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text("Địa chỉ nhận hàng :"),
+                                                Container(
+                                                  width: Get.width * 0.7,
+                                                  child: Text(
+                                                    "Chưa chọn địa chỉ nhận hàng (nhấn để chọn)",
+                                                    maxLines: 2,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.arrow_forward_ios_rounded,
+                                              size: 14,
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
                   ],
                 ),
               ),
@@ -478,6 +467,7 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                   Get.to(() => ChooseVoucherCustomerScreen());
                 },
                 child: Container(
+                  key: dataKeyPayment,
                   height: 55,
                   padding: const EdgeInsets.all(10.0),
                   child: Row(
@@ -523,12 +513,10 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                 height: 8,
                 color: Colors.grey[200],
               ),
-              Obx(
-                () => Container(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Column(
-                    children: [
-                      InkWell(
+              confirmController.paymentMethodName.value != ""
+                  ? Container(
+                      padding: const EdgeInsets.all(5.0),
+                      child: InkWell(
                         onTap: () {
                           Get.to(() => PaymentMethodCustomerScreen(
                                 idPaymentCurrent:
@@ -601,6 +589,91 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                           ],
                         ),
                       ),
+                    )
+                  : Obx(
+                      () => AnimateCheck(
+                        opacity: confirmController.opacityPaymentCurrent.value,
+                        color: confirmController.colorAnimatePayment.value,
+                        child: InkWell(
+                          onTap: () {
+                            Get.to(() => PaymentMethodCustomerScreen(
+                                  idPaymentCurrent:
+                                      confirmController.idPaymentCurrent.value,
+                                  callback: (String paymentMethodName,
+                                      int idPaymentCurrent) {
+                                    confirmController.paymentMethodName.value =
+                                        paymentMethodName;
+                                    confirmController.idPaymentCurrent.value =
+                                        idPaymentCurrent;
+                                  },
+                                ));
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(4),
+                                    height: 30,
+                                    width: 30,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFF5F6F9),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: SvgPicture.asset(
+                                      "assets/icons/money.svg",
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'Phương thức thanh toán',
+                                    maxLines: 2,
+                                    style: TextStyle(fontSize: 13),
+                                  ),
+                                ],
+                              ),
+                              Spacer(),
+                              Obx(
+                                () => Container(
+                                    width: 120,
+                                    child: confirmController
+                                                .paymentMethodName.value ==
+                                            ""
+                                        ? Text(
+                                            "Chọn phương thức thanh toán",
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                color: Theme.of(context)
+                                                    .primaryColor),
+                                          )
+                                        : Text(
+                                            "${confirmController.paymentMethodName.value}",
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                color: Theme.of(context)
+                                                    .primaryColor),
+                                          )),
+                              ),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 14,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+              Obx(
+                () => Container(
+                  padding: EdgeInsets.all(5),
+                  child: Column(
+                    children: [
                       Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: Row(
@@ -815,29 +888,39 @@ class _ConfirmScreenState extends State<ConfirmScreen>
                     if (confirmController.infoAddressCustomer.value == null) {
                       Scrollable.ensureVisible(dataKey.currentContext,
                           duration: Duration(milliseconds: 500));
-                      setState(() {
-                        _color = Colors.red;
-                        _opacityCurrent = 0;
+                      confirmController.colorAnimateAddress.value = Colors.red;
+                      confirmController.opacityCurrent.value = 0;
+                      Future.delayed(const Duration(milliseconds: 1000), () {
+                        confirmController.opacityCurrent.value = 1;
                         Future.delayed(const Duration(milliseconds: 1000), () {
-                          setState(() {
-                            _opacityCurrent = 1;
-                            Future.delayed(const Duration(milliseconds: 1000),
-                                () {
-                              setState(() {
-                                _opacityCurrent = 0;
-                                Future.delayed(
-                                    const Duration(milliseconds: 1000), () {
-                                  setState(() {
-                                    _opacityCurrent = 1;
-                                  });
-                                });
-                              });
-                            });
+                          confirmController.opacityCurrent.value = 0;
+                          Future.delayed(const Duration(milliseconds: 1000),
+                              () {
+                            confirmController.opacityCurrent.value = 1;
                           });
                         });
                       });
                     } else {
-                      confirmController.createOrders();
+                      if (confirmController.paymentMethodName.value == "") {
+                        Scrollable.ensureVisible(dataKeyPayment.currentContext,
+                            duration: Duration(milliseconds: 500));
+                        confirmController.colorAnimatePayment.value =
+                            Colors.red;
+                        confirmController.opacityPaymentCurrent.value = 0;
+                        Future.delayed(const Duration(milliseconds: 1000), () {
+                          confirmController.opacityPaymentCurrent.value = 1;
+                          Future.delayed(const Duration(milliseconds: 1000),
+                              () {
+                            confirmController.opacityPaymentCurrent.value = 0;
+                            Future.delayed(const Duration(milliseconds: 1000),
+                                () {
+                              confirmController.opacityPaymentCurrent.value = 1;
+                            });
+                          });
+                        });
+                      } else {
+                        confirmController.createOrders();
+                      }
                     }
                   },
                   child: Container(

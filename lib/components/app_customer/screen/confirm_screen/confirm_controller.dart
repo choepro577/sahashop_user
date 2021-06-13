@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/orders/order_request.dart';
 import 'package:sahashop_user/components/app_customer/repository/repository_customer.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
+import 'package:sahashop_user/components/app_customer/screen/order_completed_screen/order_completed_screen.dart';
+import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_screen.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/model/cart.dart';
 import 'package:sahashop_user/model/info_address_customer.dart';
@@ -17,6 +19,10 @@ class ConfirmController extends GetxController {
   var isLoadingShipmentMethod = false.obs;
   var idPaymentCurrent = 0.obs;
   var paymentMethodName = "".obs;
+  var opacityCurrent = 1.0.obs;
+  var opacityPaymentCurrent = 1.0.obs;
+  var colorAnimateAddress = Colors.transparent.obs;
+  var colorAnimatePayment = Colors.transparent.obs;
   TextEditingController noteCustomerEditingController = TextEditingController();
   int partnerShipperId = 0;
   int shipperType = 0;
@@ -75,9 +81,15 @@ class ConfirmController extends GetxController {
       );
       try {
         var resultOrder = await CustomerRepositoryManager
-            .createOrderCustomerRepository
+            .orderCustomerRepository
             .createOrder(orderRequest);
         isLoadingOrder.value = false;
+        Get.offNamedUntil(
+            "customer_home", (route) => route.settings.name == "customer_home");
+        Get.to(() => OrderHistoryScreen());
+        Get.to(() => OrderCompletedScreen(
+              orderCode: resultOrder.data.orderCode,
+            ));
       } catch (err) {
         SahaAlert.showError(message: err.toString());
       }

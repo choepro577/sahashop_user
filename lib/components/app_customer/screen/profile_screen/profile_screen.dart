@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/config_profile_screen/config_profile_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/login/login_screen.dart';
+import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/register/register_customer_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -107,14 +108,16 @@ class ProfileScreen extends StatelessWidget {
                                                   width: 100,
                                                   color: Colors.black45,
                                                   child: Center(
-                                                      child: Text(
-                                                    "Sửa",
-                                                    style: TextStyle(
-                                                        color: Theme.of(context)
-                                                            .primaryTextTheme
-                                                            .headline6
-                                                            .color),
-                                                  )),
+                                                    child: Text(
+                                                      "Sửa",
+                                                      style: TextStyle(
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .primaryTextTheme
+                                                              .headline6
+                                                              .color),
+                                                    ),
+                                                  ),
                                                 ),
                                               )
                                             : Container(),
@@ -281,47 +284,52 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: 25,
-                          width: 25,
-                          child: SvgPicture.asset(
-                            "assets/icons/check_list.svg",
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          "Đơn mua",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          "Xem lịch xử mua hàng",
-                          style:
-                              TextStyle(fontSize: 13, color: Colors.grey[700]),
-                        ),
-                        Container(
-                            height: 13,
-                            width: 13,
+              InkWell(
+                onTap: () {
+                  Get.to(() => OrderHistoryScreen());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            height: 25,
+                            width: 25,
                             child: SvgPicture.asset(
-                              "assets/icons/right_arrow.svg",
-                              color: Colors.black,
-                            ))
-                      ],
-                    )
-                  ],
+                              "assets/icons/check_list.svg",
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            "Đơn mua",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "Xem lịch xử mua hàng",
+                            style: TextStyle(
+                                fontSize: 13, color: Colors.grey[700]),
+                          ),
+                          Container(
+                              height: 13,
+                              width: 13,
+                              child: SvgPicture.asset(
+                                "assets/icons/right_arrow.svg",
+                                color: Colors.black,
+                              ))
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
               Divider(

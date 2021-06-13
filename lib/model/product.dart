@@ -58,8 +58,8 @@ class Product {
         status: json["status"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        details:
-            List<Details>.from(json["details"].map((x) => Details.fromJson(x))),
+        // details:
+        //      List<Details>.from(json["details"].map((x) => Details.fromJson(x))),
         images: List<ImageProduct>.from(
             json["images"].map((x) => ImageProduct.fromJson(x))),
         categories: List<Category>.from(

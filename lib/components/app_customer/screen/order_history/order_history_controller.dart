@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/repository/repository_customer.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/model/order.dart';
 
-class OrderManageController extends GetxController {
+class OrderHistoryController extends GetxController {
   var listOrder = RxList<Order>();
   var pageLoadMore = 1;
   var isEndPageVoucher = false;
@@ -31,8 +32,8 @@ class OrderManageController extends GetxController {
     isDoneLoadMore = false;
     try {
       if (!isEndPageVoucher) {
-        var res = await RepositoryManager.orderRepository
-            .getAllOrder(pageLoadMore, "", "", "", "", "", "", "");
+        var res = await CustomerRepositoryManager.orderCustomerRepository
+            .getOrderHistory(pageLoadMore, "", "", "", "", "", "", "");
         listOrder.addAll(res.data.data);
         if (res.data.nextPageUrl != null) {
           pageLoadMore++;

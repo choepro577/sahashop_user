@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:sahashop_user/model/combo.dart';
 import 'package:sahashop_user/model/info_address_customer.dart';
+import 'package:sahashop_user/model/info_customer.dart';
 import 'package:sahashop_user/model/product.dart';
 
 Order orderFromJson(String str) => Order.fromJson(json.decode(str));
@@ -18,6 +19,35 @@ const DELIVERY_ERROR = "DELIVERY_ERROR";
 const COMPLETED = "COMPLETED";
 const CUSTOMER_RETURNING = "CUSTOMER_RETURNING";
 const CUSTOMER_HAS_RETURNS = "CUSTOMER_HAS_RETURNS";
+
+/// status payment
+const UNPAID = "UNPAID";
+const PAID = "PAID";
+const PARTIALLY_PAID = "PARTIALLY_PAID";
+const CANCELLED = "CANCELLED";
+const REFUNDS = "REFUNDS";
+
+Map<String, String> ORDER_STATUS_DEFINE = {
+  WAITING_FOR_PROGRESSING: "Chờ xử lý",
+  PACKING: "Đang chuẩn bị hàng",
+  OUT_OF_STOCK: "Hết hàng",
+  USER_CANCELLED: "Shop huỷ",
+  CUSTOMER_CANCELLED: "Khách đã hủy",
+  SHIPPING: "Đang giao hàng",
+  DELIVERY_ERROR: "Lỗi giao hàng",
+  COMPLETED: "Đã hoàn thành",
+  CUSTOMER_RETURNING: "Chờ trả hàng",
+  CUSTOMER_HAS_RETURNS: "Đã trả hàng",
+};
+
+Map<String, String> ORDER_PAYMENT_DEFINE = {
+  WAITING_FOR_PROGRESSING: "Chờ xử lý",
+  UNPAID: "Chưa thanh toán",
+  PAID: "Đã thanh toán",
+  PARTIALLY_PAID: "Đã thanh toán một phần",
+  CANCELLED: "Đã hủy",
+  REFUNDS: "Đã hoàn tiền",
+};
 
 class Order {
   Order({
@@ -51,6 +81,7 @@ class Order {
     this.customerUsedCombos,
     this.customerUsedVoucher,
     this.lineItemsAtTime,
+    this.infoCustomer,
   });
 
   int id;
@@ -83,6 +114,7 @@ class Order {
   List<CustomerUsedCombo> customerUsedCombos;
   dynamic customerUsedVoucher;
   List<LineItemsAtTime> lineItemsAtTime;
+  InfoCustomer infoCustomer;
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
         id: json["id"],
@@ -129,6 +161,7 @@ class Order {
             ? null
             : List<LineItemsAtTime>.from(json["line_items_at_time"]
                 .map((x) => LineItemsAtTime.fromJson(x))),
+        infoCustomer: InfoCustomer.fromJson(json["customer"]),
       );
 
   Map<String, dynamic> toJson() => {

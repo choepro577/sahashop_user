@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/repository/repository_customer.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
-import 'package:sahashop_user/data/repository/repository_manager.dart';
 
 class ConfigPaymentCustomerController extends GetxController {
   var listNamePaymentMethod = RxList<String>();

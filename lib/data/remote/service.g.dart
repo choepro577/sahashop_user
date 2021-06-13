@@ -995,4 +995,46 @@ class _SahaService implements SahaService {
     final value = AllOrderResponse.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<StateHistoryOrderResponse> getStateHistoryOrder(
+      storeCode, idOrder) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(idOrder, 'idOrder');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/orders/status_records/$idOrder',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = StateHistoryOrderResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<ChangeOrderStatusResponse> changeOrderStatus(storeCode, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/orders/change_order_status',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ChangeOrderStatusResponse.fromJson(_result.data);
+    return value;
+  }
 }

@@ -30,7 +30,7 @@ class NewAddressController extends GetxController {
         province: locationProvince.value.id,
         district: locationDistrict.value.id,
         wards: locationWard.value.id,
-        email: "hieudeptrai@gmail.com",
+        email: "",
         phone: phoneTextEditingController.text,
         isDefaultPickup: isDefaultPickup.value,
         isDefaultReturn: isDefaultReturn.value,
