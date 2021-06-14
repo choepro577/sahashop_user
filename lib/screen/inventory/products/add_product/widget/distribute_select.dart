@@ -9,30 +9,30 @@ import 'package:sahashop_user/screen/inventory/products/add_product/widget/dropd
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/model/product.dart';
 
-import 'detail_select_controller.dart';
+import 'distribute_select_controller.dart';
 
-class DetailSelect extends StatefulWidget {
+class DistributeSelect extends StatefulWidget {
 
   final Function onData;
 
-  const DetailSelect({Key key, this.onData}) : super(key: key);
+  const DistributeSelect({Key key, this.onData}) : super(key: key);
 
   @override
-  _DetailSelectState createState() => _DetailSelectState();
+  _DistributeSelectState createState() => _DistributeSelectState();
 }
 
-class _DetailSelectState extends State<DetailSelect> {
-  final DetailSelectController detailSelectController = Get.find();
+class _DistributeSelectState extends State<DistributeSelect> {
+  final DistributeSelectController distributeSelectController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        var valid = detailSelectController.checkValidParam();
+        var valid = distributeSelectController.checkValidParam();
         if(valid) {
-          widget.onData(detailSelectController.getFinalDetail());
+          widget.onData(distributeSelectController.getFinalDistribute());
         }
-        return detailSelectController.checkValidParam();
+        return distributeSelectController.checkValidParam();
       },
       child: Scaffold(
         appBar: SahaAppBar(
@@ -48,14 +48,14 @@ class _DetailSelectState extends State<DetailSelect> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: detailSelectController.listDetail
+                    children: distributeSelectController.listDistribute
                         .toList()
-                        .map((e) => buildDetail(e))
+                        .map((e) => buildDistribute(e))
                         .toList(),
                   ),
                   MaterialButton(
                     onPressed: () {
-                      detailSelectController.addDetail(null);
+                      distributeSelectController.addDistribute(null);
                     },
                     padding: EdgeInsets.all(0),
                     child: DottedBorder(
@@ -83,7 +83,7 @@ class _DetailSelectState extends State<DetailSelect> {
     );
   }
 
-  Widget buildDetail(Details details) {
+  Widget buildDistribute(Distributes distributes) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -99,38 +99,38 @@ class _DetailSelectState extends State<DetailSelect> {
                     height: 7,
                   ),
                   CustomDropDownString(
-                      value: !detailSelectController.listSuggestion
-                              .contains(details.name)
-                          ? detailSelectController.listSuggestion.last
-                          : details.name,
+                      value: !distributeSelectController.listSuggestion
+                              .contains(distributes.name)
+                          ? distributeSelectController.listSuggestion.last
+                          : distributes.name,
                       hint: "",
                       errorText: "",
                       onChanged: (name) {
-                        details.name = name;
-                        detailSelectController.refresh();
+                        distributes.name = name;
+                        distributeSelectController.refresh();
                       },
-                      items: detailSelectController
-                          .getListStringBuild(details)
+                      items: distributeSelectController
+                          .getListStringBuild(distributes)
                           .map((e) {
                         return DropdownMenuItem<String>(
                           value: e,
                           child: Text(e),
                         );
                       }).toList()),
-                  !detailSelectController.listSuggestion
+                  !distributeSelectController.listSuggestion
                           .sublist(0,
-                              detailSelectController.listSuggestion.length - 1)
-                          .contains(details.name)
+                              distributeSelectController.listSuggestion.length - 1)
+                          .contains(distributes.name)
                       ? Padding(
                           padding: const EdgeInsets.only(top: 8),
                           child: SizedBox(
                             height: 40,
                             child: SahaTextField(
-                              hintText: details.name ?? "Tên phân loại",
+                              hintText: distributes.name ?? "Tên phân loại",
                               onSubmitted: (text) {
-                                detailSelectController.editNameDetail(
-                                    detailSelectController.listDetail
-                                        .indexOf(details),
+                                distributeSelectController.editNameDistribute(
+                                    distributeSelectController.listDistribute
+                                        .indexOf(distributes),
                                     text);
                               },
                             ),
@@ -147,21 +147,18 @@ class _DetailSelectState extends State<DetailSelect> {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Wrap(
-                  children: buildListAttributes(
-                    list: details.attributes,
-                    onRemove: (attribute) {
-                      detailSelectController.removeAttribute(
-                          detailSelectController.listDetail.indexOf(details),
-                          attribute);
-                      detailSelectController.refresh();
+                  children: buildListDistributes(
+                    list: distributes.elementDistributes,
+                    onRemove: (distribute) {
+                      distributeSelectController.removeDistribute(
+                          distributeSelectController.listDistribute.indexOf(distributes));
+                      distributeSelectController.refresh();
                     },
                     onAdd: () {
                       inputDialog().then((value) {
-                        detailSelectController.addAttribute(
-                            detailSelectController.listDetail.indexOf(details),
-                            value);
+                        distributeSelectController.addDistribute(value);
 
-                        detailSelectController.refresh();
+                        distributeSelectController.refresh();
                       });
                     },
                   ),
@@ -177,8 +174,8 @@ class _DetailSelectState extends State<DetailSelect> {
                       size: 15,
                     ),
                     onTap: () {
-                      detailSelectController.removeDetail(
-                          detailSelectController.listDetail.indexOf(details));
+                      distributeSelectController.removeDistribute(
+                          distributeSelectController.listDistribute.indexOf(distributes));
                     })
               ],
             )
@@ -192,17 +189,17 @@ class _DetailSelectState extends State<DetailSelect> {
     );
   }
 
-  List<Widget> buildListAttributes(
-      {List<Attributes> list, Function onRemove, Function onAdd}) {
+  List<Widget> buildListDistributes(
+      {List<ElementDistributes> list, Function onRemove, Function onAdd}) {
     var rtList = list
-        .map((e) => buildItemAttribute(attribute: e, onRemove: onRemove))
+        .map((e) => buildItemDistribute(distribute: e, onRemove: onRemove))
         .toList();
-    rtList.add(buildItemAttribute(onAdd: onAdd, isAdd: true));
+    rtList.add(buildItemDistribute(onAdd: onAdd, isAdd: true));
     return rtList;
   }
 
-  Widget buildItemAttribute(
-      {Attributes attribute,
+  Widget buildItemDistribute(
+      {ElementDistributes distribute,
       Function onRemove,
       Function onAdd,
       bool isAdd = false}) {
@@ -217,14 +214,14 @@ class _DetailSelectState extends State<DetailSelect> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(isAdd ? "Thêm" : attribute.name ?? ""),
+            Text(isAdd ? "Thêm" : distribute.name ?? ""),
             InkWell(
                 child: Icon(
                   isAdd ? Icons.add : Icons.clear,
                   size: 15,
                 ),
                 onTap: () {
-                  isAdd ? onAdd() : onRemove(attribute);
+                  isAdd ? onAdd() : onRemove(distribute);
                 })
           ],
         ),

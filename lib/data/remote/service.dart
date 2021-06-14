@@ -6,6 +6,7 @@ import 'package:sahashop_user/data/remote/response-request/address/all_address_s
 import 'package:sahashop_user/data/remote/response-request/address/all_shipment_response.dart';
 import 'package:sahashop_user/data/remote/response-request/address/create_address_store_response.dart';
 import 'package:sahashop_user/data/remote/response-request/address/delete_address_store_response.dart';
+import 'package:sahashop_user/data/remote/response-request/attributes/attributes_response.dart';
 import 'package:sahashop_user/data/remote/response-request/auth/login_response.dart';
 import 'package:sahashop_user/data/remote/response-request/chat/all_chat_customer_reponse.dart';
 import 'package:sahashop_user/data/remote/response-request/chat/all_message_response.dart';
@@ -24,6 +25,8 @@ import 'package:sahashop_user/data/remote/response-request/marketing_chanel_resp
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/voucher/my_voucher_response.dart';
 import 'package:sahashop_user/data/remote/response-request/post/all_post_response.dart';
 
+import 'response-request/attributes/add_attributes_response.dart';
+import 'response-request/attributes/remove_attributes_response.dart';
 import 'response-request/auth/register_response.dart';
 import 'response-request/category/all_category_response.dart';
 import 'response-request/category/create_category_response.dart';
@@ -220,4 +223,28 @@ abstract class SahaService {
     @Path() int idCustomer,
     @Body() Map<String, dynamic> body,
   );
+
+  @GET("store/{storeCode}/attribute_fields")
+  Future<AttributesResponse> getAllAttributeFields(
+      @Path() String storeCode,
+      );
+
+  @POST("store/{storeCode}/attribute_fields")
+  Future<AddAttributesResponse> addAttributeFields(
+      @Path() String storeCode,
+      @Body() Map<String, dynamic> body,
+      );
+
+  @DELETE("store/{storeCode}/attribute_fields/{idAttribute}")
+  Future<DeleteAttributesResponse> deleteAttributeFields(
+      @Path() String storeCode,
+      @Path() int idAttribute,
+      );
+
+  @PUT("store/{storeCode}/attribute_fields/{idAttribute}")
+  Future<AddAttributesResponse> editAttributeFields(
+      @Path() String storeCode,
+      @Path() int idAttribute,
+      @Body() Map<String, dynamic> body,
+      );
 }

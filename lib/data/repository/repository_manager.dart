@@ -1,4 +1,5 @@
 import 'package:sahashop_user/data/repository/address/address_repository.dart';
+import 'package:sahashop_user/data/repository/attributes/attributes_repository.dart';
 import 'package:sahashop_user/data/repository/chat/chat_repository.dart';
 import 'package:sahashop_user/data/repository/product/product_repository.dart';
 import 'package:sahashop_user/data/repository/register/register_repository.dart';
@@ -30,4 +31,5 @@ class RepositoryManager {
   static PostRepository get postRepository => PostRepository();
   static AddressRepository get addressRepository => AddressRepository();
   static ChatRepository get chatRepository => ChatRepository();
+  static AttributesRepository get attributesRepository => AttributesRepository();
 }

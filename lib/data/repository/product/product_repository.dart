@@ -1,3 +1,4 @@
+import 'package:sahashop_user/data/remote/response-request/product/product_request.dart';
 import 'package:sahashop_user/data/remote/saha_service_manager.dart';
 import 'package:sahashop_user/model/product.dart';
 import 'package:sahashop_user/utils/user_info.dart';
@@ -5,7 +6,7 @@ import 'package:sahashop_user/utils/user_info.dart';
 import '../handle_error.dart';
 
 class ProductRepository {
-  Future<Product> create(Product productRequest) async {
+  Future<Product> create(ProductRequest productRequest) async {
     try {
       var res = await SahaServiceManager().service.createProduct(
           UserInfo().getCurrentStoreCode(), productRequest.toJson());

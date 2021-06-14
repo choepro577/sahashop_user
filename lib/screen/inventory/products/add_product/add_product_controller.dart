@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
+import 'package:sahashop_user/data/remote/response-request/product/product_request.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/model/product.dart';
@@ -8,7 +9,7 @@ import 'package:sahashop_user/model/product.dart';
 import 'widget/select_images_controller.dart';
 
 class AddProductController extends GetxController {
-  Product productRequest = new Product();
+  ProductRequest productRequest = new ProductRequest();
   var listCategory = RxList<Category>();
   var listCategorySelected = RxList<Category>();
   var isLoadingAdd = false.obs;
@@ -49,11 +50,11 @@ class AddProductController extends GetxController {
 
   Future<void> createProduct() async {
     isLoadingAdd.value = true;
-    productRequest.categories = listCategorySelected.toList();
-    productRequest.images =
-        listImages == null ? [] : listImages.map((e) => ImageProduct(
-          imageUrl: e.linkImage
-        )).toList();
+    productRequest.categories =
+        listCategorySelected.map((element) => element.id).toList();
+    productRequest.images = listImages == null
+        ? []
+        : listImages.map((e) => ImageProduct(imageUrl: e.linkImage)).toList();
 
     try {
       var data =

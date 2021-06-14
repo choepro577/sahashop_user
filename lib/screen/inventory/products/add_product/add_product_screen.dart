@@ -14,8 +14,8 @@ import 'package:sahashop_user/screen/inventory/products/add_product/add_product_
 import 'package:smart_select/smart_select.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
 
-import 'widget/detail_select.dart';
-import 'widget/detail_select_controller.dart';
+import 'widget/distribute_select.dart';
+import 'widget/distribute_select_controller.dart';
 import 'widget/select_images_controller.dart';
 import 'widget/select_images.dart';
 
@@ -25,8 +25,8 @@ class AddProductScreen extends StatelessWidget {
       new TextEditingController();
   final AddProductController addProductController = new AddProductController();
 
-  final DetailSelectController detailSelectController =
-      Get.put(DetailSelectController());
+  final DistributeSelectController distributeSelectController =
+      Get.put(DistributeSelectController());
 
   @override
   Widget build(BuildContext context) {
@@ -179,10 +179,10 @@ class AddProductScreen extends StatelessWidget {
                               SahaDivide(),
                               InkWell(
                                 onTap: () {
-                                  Get.to(() => DetailSelect(
+                                  Get.to(() => DistributeSelect(
                                         onData: (data) {
                                           addProductController
-                                              .productRequest.details = data;
+                                              .productRequest.listDistribute = data;
                                         },
                                       ));
                                 },
