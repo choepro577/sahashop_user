@@ -65,8 +65,12 @@ class InfoAddressCustomer {
         email: json["email"],
         phone: json["phone"],
         isDefault: json["is_default"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
         provinceName: json["province_name"],
         districtName: json["district_name"],
         wardsName: json["wards_name"],

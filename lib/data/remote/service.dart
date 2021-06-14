@@ -23,6 +23,11 @@ import 'package:sahashop_user/data/remote/response-request/marketing_chanel_resp
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/discount/my_program_reponse.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/voucher/end_voucher_response.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/voucher/my_voucher_response.dart';
+import 'package:sahashop_user/data/remote/response-request/order/all_order_response.dart';
+import 'package:sahashop_user/data/remote/response-request/order/change_order_status_repose.dart';
+import 'package:sahashop_user/data/remote/response-request/order/state_history_order_response.dart';
+import 'package:sahashop_user/data/remote/response-request/payment_method/payment_method_response.dart';
+import 'package:sahashop_user/data/remote/response-request/payment_method/update_payment_response.dart';
 import 'package:sahashop_user/data/remote/response-request/post/all_post_response.dart';
 
 import 'response-request/attributes/add_attributes_response.dart';
@@ -247,4 +252,43 @@ abstract class SahaService {
       @Path() int idAttribute,
       @Body() Map<String, dynamic> body,
       );
+
+  @GET("store/{storeCode}/payment_methods")
+  Future<PaymentMethodResponse> getPaymentMethod(
+    @Path() String storeCode,
+  );
+
+  @PUT("store/{storeCode}/payment_methods/{idPaymentMethod}")
+  Future<UpdatePaymentResponse> upDatePaymentMethod(
+    @Path() String storeCode,
+    @Path() int idPaymentMethod,
+    @Body() Map<String, dynamic> body,
+  );
+
+  /// order manage
+
+  @GET("store/{storeCode}/orders")
+  Future<AllOrderResponse> getAllOrder(
+    @Path() String storeCode,
+    @Query("page") int numberPage,
+    @Query("search") String search,
+    @Query("field_by") String fieldBy,
+    @Query("field_by_value") String fieldByValue,
+    @Query("sort_by") String sortBy,
+    @Query("descending") String descending,
+    @Query("date_from") String dateFrom,
+    @Query("date_to") String dateTo,
+  );
+
+  @GET("store/{storeCode}/orders/status_records/{idOrder}")
+  Future<StateHistoryOrderResponse> getStateHistoryOrder(
+    @Path() String storeCode,
+    @Path() int idOrder,
+  );
+
+  @POST("store/{storeCode}/orders/change_order_status")
+  Future<ChangeOrderStatusResponse> changeOrderStatus(
+    @Path() String storeCode,
+    @Body() Map<String, dynamic> body,
+  );
 }

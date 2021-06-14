@@ -5,8 +5,6 @@ import 'package:sahashop_user/components/app_customer/remote/post/all_post_respo
 import 'package:sahashop_user/components/app_customer/remote/response-request/address_customer/all_address_customer_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/address_customer/create_update_address_customer_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/address_customer/delete_address_customer_response.dart';
-import 'package:sahashop_user/components/app_customer/remote/response-request/cart/cart_response.dart';
-
 import 'package:sahashop_user/components/app_customer/remote/response-request/category/all_category_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/chat_customer/all_message_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/chat_customer/send_message_customer_response.dart';
@@ -16,7 +14,11 @@ import 'package:sahashop_user/components/app_customer/remote/response-request/in
 import 'package:sahashop_user/components/app_customer/remote/response-request/login/login_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/marketing_chanel/combo_customer_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/marketing_chanel/voucher_customer_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/orders/cancel_order_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/orders/order_history_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/orders/order_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/orders/state_history_order_customer_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/payment_customer/payment_method_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/product/all_product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/product/detail_product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/product/query_product_response.dart';
@@ -24,6 +26,7 @@ import 'package:sahashop_user/components/app_customer/remote/response-request/re
 import 'package:sahashop_user/components/app_customer/remote/response-request/shipment/shipment_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/store/all_store_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/store/type_store_respones.dart';
+import 'package:sahashop_user/model/cart.dart';
 
 part 'customer_service.g.dart';
 
@@ -80,8 +83,8 @@ abstract class CustomerService {
   @GET("{storeCode}/home_app")
   Future<HomeResponse> getHomeApp(@Path() String storeCode);
 
-  @POST("{storeCode}/orders")
-  Future<OrdersResponse> createOrder(
+  @POST("{storeCode}/carts/orders")
+  Future<OrderResponse> createOrder(
       @Path() String storeCode, @Body() Map<String, dynamic> body);
 
   @POST("{storeCode}/register")
@@ -124,18 +127,18 @@ abstract class CustomerService {
   /// cart
 
   @POST("{storeCode}/carts")
-  Future<CartCustomerResponse> getItemCart(@Path() String storeCode);
+  Future<Cart> getItemCart(@Path() String storeCode);
 
   @POST("{storeCode}/carts")
-  Future<CartCustomerResponse> addVoucherCart(
+  Future<Cart> addVoucherCart(
       @Path() String storeCode, @Body() Map<String, dynamic> body);
 
   @PUT("{storeCode}/carts/items")
-  Future<CartCustomerResponse> updateItemCart(
+  Future<Cart> updateItemCart(
       @Path() String storeCode, @Body() Map<String, dynamic> body);
 
   @POST("{storeCode}/carts/items")
-  Future<CartCustomerResponse> addItemCart(
+  Future<Cart> addItemCart(
       @Path() String storeCode, @Body() Map<String, dynamic> body);
 
   /// address customer
@@ -163,4 +166,42 @@ abstract class CustomerService {
   @POST("{storeCode}/shipment/fee")
   Future<ShipmentCustomerResponse> chargeShipmentFee(
       @Path() String storeCode, @Body() Map<String, dynamic> body);
+
+  /// payment
+  @GET("{storeCode}/payment_methods")
+  Future<PaymentMethodCustomerResponse> getPaymentMethod(
+      @Path() String storeCode);
+
+  /// order history
+
+  @GET("{storeCode}/carts/orders")
+  Future<OrderHistoryResponse> getOrderHistory(
+    @Path() String storeCode,
+    @Query("page") int numberPage,
+    @Query("search") String search,
+    @Query("field_by") String fieldBy,
+    @Query("field_by_value") String fieldByValue,
+    @Query("sort_by") String sortBy,
+    @Query("descending") String descending,
+    @Query("date_from") String dateFrom,
+    @Query("date_to") String dateTo,
+  );
+
+  @GET("{storeCode}/carts/orders/{orderCode}")
+  Future<OrderResponse> getOneOrderHistory(
+      @Path() String storeCode, @Path() String orderCode);
+
+  @GET("{storeCode}/carts/orders/status_records/{idOrder}")
+  Future<StateHistoryOrderCustomerResponse> getStateHistoryCustomerOrder(
+    @Path() String storeCode,
+    @Path() int idOrder,
+  );
+
+  @POST("{storeCode}/carts/orders/cancel")
+  Future<CancelOrderResponse> cancelOrder(
+      @Path() String storeCode, @Body() Map<String, dynamic> body);
+
+  @PUT("{storeCode}/carts/orders/change_payment_method/{orderCode}")
+  Future<CancelOrderResponse> changePaymentMethod(@Path() String storeCode,
+      @Body() Map<String, dynamic> body, @Path() String orderCode);
 }

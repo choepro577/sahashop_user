@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/utils/money.dart';
 import 'package:sahashop_user/model/product.dart';
+import 'package:sahashop_user/utils/string_utils.dart';
 
 class ProductItemWidget extends StatelessWidget {
   const ProductItemWidget({
@@ -130,7 +131,7 @@ class ProductItemWidget extends StatelessWidget {
                                                 padding: const EdgeInsets.only(
                                                     left: 5.0, right: 5.0),
                                                 child: Text(
-                                                  "${FormatMoney.toVND(product.price)}",
+                                                  "${SahaStringUtils().convertToMoney(product.price)}đ",
                                                   style: TextStyle(
                                                       decoration: TextDecoration
                                                           .lineThrough,
@@ -155,8 +156,8 @@ class ProductItemWidget extends StatelessWidget {
                                               left: 5.0, right: 5.0),
                                           child: Text(
                                             product.productDiscount == null
-                                                ? "${FormatMoney.toVND(product.price)}"
-                                                : "${FormatMoney.toVND(product.productDiscount.discountPrice)}",
+                                                ? "${SahaStringUtils().convertToMoney(product.price)}đ"
+                                                : "${SahaStringUtils().convertToMoney(product.productDiscount.discountPrice)}đ",
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .primaryColor,
@@ -205,20 +206,20 @@ class ProductItemWidget extends StatelessWidget {
                       ? Container()
                       : Positioned(
                           top: -4,
-                          right: -6.75,
+                          right: -9.75,
                           child: Stack(
                             children: [
                               Container(
-                                height: 45,
-                                width: 45,
+                                height: 50,
+                                width: 50,
                                 child: SvgPicture.asset(
-                                  "assets/icons/flag.svg",
+                                  "assets/icons/tag_ribbon.svg",
                                   color: Color(0xfffdd100),
                                 ),
                               ),
                               Positioned(
                                 top: 23,
-                                right: 8,
+                                right: 10.5,
                                 child: Text(
                                   "GIẢM",
                                   style: TextStyle(
@@ -229,7 +230,7 @@ class ProductItemWidget extends StatelessWidget {
                               ),
                               Positioned(
                                 top: 7,
-                                right: 8,
+                                right: 11,
                                 child: Text(
                                   "${product.productDiscount.value} %",
                                   textAlign: TextAlign.center,

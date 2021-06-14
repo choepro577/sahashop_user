@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/utils/customer_info.dart';
 import 'package:sahashop_user/controller/config_controller.dart';
 
 import '../../saha_data_controller.dart';
@@ -22,7 +21,5 @@ void runMainAppCustomer(BuildContext context) {
     () => LoadAppScreen(
       logo: configController.configApp.logoUrl,
     ),
-  ).then((value) {
-    sahaDataController.changeStatusPreview(false);
-  });
+  ).then((value) {});
 }

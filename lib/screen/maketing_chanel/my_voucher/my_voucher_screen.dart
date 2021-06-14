@@ -59,9 +59,6 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
           title: Text('Mã giảm giá của tôi'),
           bottom: TabBar(
             controller: tabController,
-            onTap: (index) {
-              isTabOnTap = true;
-            },
             tabs: [
               Tab(text: "Sắp diễn ra"),
               Tab(text: "Đang diễn ra"),

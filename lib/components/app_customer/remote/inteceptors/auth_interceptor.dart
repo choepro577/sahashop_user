@@ -90,7 +90,7 @@ class AuthInterceptor extends InterceptorsWrapper {
       ));
     }
     if (response.data != null && response.data["success"] == false) {
-      throw MSGCODE[response.data["msg_code"]] ?? "Đã xảy ra lỗi";
+      throw MSGCODE[response.data["msg"]] ?? "Đã xảy ra lỗi";
     }
 
     if (response.data != null &&

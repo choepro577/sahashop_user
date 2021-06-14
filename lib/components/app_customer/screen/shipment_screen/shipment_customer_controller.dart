@@ -6,16 +6,16 @@ import 'package:sahashop_user/model/shipment_method.dart';
 
 class ShipmentCustomerController extends GetxController {
   var infoAddressCustomer = InfoAddressCustomer();
-  var isShipmentInput = true;
+  ShipmentMethod shipmentCurrentInput;
+  var listChooseShipmentMethod = RxList<bool>();
+  ShipmentMethod shipmentCurrentChoose;
 
-  ShipmentCustomerController({this.infoAddressCustomer, this.isShipmentInput}) {
+  ShipmentCustomerController(
+      {this.infoAddressCustomer, this.shipmentCurrentInput}) {
     chargeShipmentFee(infoAddressCustomer.id);
-    isShipmentFast.value = isShipmentInput;
   }
 
-  var isShipmentFast = true.obs;
-  var listShipmentFast = RxList<ShipmentMethod>();
-  var listShipmentSupperSpeed = RxList<ShipmentMethod>();
+  var listShipment = RxList<ShipmentMethod>();
   var isLoadingShipmentMethod = false.obs;
   var shipmentMethodChoose = ShipmentMethod().obs;
 
@@ -24,26 +24,35 @@ class ShipmentCustomerController extends GetxController {
     try {
       var res = await CustomerRepositoryManager.shipmentRepository
           .chargeShipmentFee(idAddressCustomer);
-      res.data.data.forEach((element) {
-        if (element.shipType == 0) {
-          listShipmentFast.add(element);
-        } else {
-          listShipmentSupperSpeed.add(element);
-        }
+      listShipment(res.data.data);
+
+      listShipment.forEach((element) {
+        listChooseShipmentMethod.add(false);
       });
+
+      var index = listShipment.indexWhere(
+          (element) => element.partnerId == shipmentCurrentInput.partnerId);
+      if (index != -1) {
+        listChooseShipmentMethod[index] = true;
+        shipmentCurrentChoose = listShipment[index];
+        print(shipmentCurrentChoose.fee);
+      }
+
+      listChooseShipmentMethod[0] = true;
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
     isLoadingShipmentMethod.value = false;
   }
 
-  void changeShipmentMethod(bool value) {
-    if (value == true) {
-      isShipmentFast.value = true;
-      shipmentMethodChoose.value = listShipmentFast[0];
-    } else {
-      isShipmentFast.value = false;
-      shipmentMethodChoose.value = listShipmentSupperSpeed[0];
+  void checkChooseShipment(bool value, int index) {
+    listChooseShipmentMethod([]);
+    listShipment.forEach((element) {
+      listChooseShipmentMethod.add(false);
+    });
+    if (value == false) {
+      listChooseShipmentMethod[index] = true;
+      shipmentCurrentChoose = listShipment[index];
     }
   }
 }

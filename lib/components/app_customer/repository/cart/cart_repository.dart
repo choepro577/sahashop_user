@@ -2,10 +2,11 @@ import 'package:sahashop_user/components/app_customer/remote/customer_service_ma
 import 'package:sahashop_user/components/app_customer/remote/response-request/cart/cart_response.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/data/repository/handle_error.dart';
+import 'package:sahashop_user/model/cart.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class CartRepository {
-  Future<CartCustomerResponse> getItemCart() async {
+  Future<Cart> getItemCart() async {
     try {
       var res = await CustomerServiceManager()
           .service
@@ -16,7 +17,7 @@ class CartRepository {
     }
   }
 
-  Future<CartCustomerResponse> addVoucherCart(String codeVoucher) async {
+  Future<Cart> addVoucherCart(String codeVoucher) async {
     try {
       var res = await CustomerServiceManager().service.addVoucherCart(
           UserInfo().getCurrentStoreCode(), {"code_voucher": codeVoucher});
@@ -26,8 +27,7 @@ class CartRepository {
     }
   }
 
-  Future<CartCustomerResponse> updateItemCart(
-      int idProduct, int quantity) async {
+  Future<Cart> updateItemCart(int idProduct, int quantity) async {
     try {
       var res = await CustomerServiceManager()
           .service
@@ -41,7 +41,7 @@ class CartRepository {
     }
   }
 
-  Future<CartCustomerResponse> addItemCart(int idProduct) async {
+  Future<Cart> addItemCart(int idProduct) async {
     try {
       var res = await CustomerServiceManager()
           .service

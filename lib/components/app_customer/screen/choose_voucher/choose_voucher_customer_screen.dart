@@ -340,7 +340,7 @@ class ChooseVoucherCustomerScreen extends StatelessWidget {
                                                     Text(
                                                       "${chooseCustomerController.listVoucher[index].name}",
                                                       style: TextStyle(
-                                                          fontSize: 16,
+                                                          fontSize: 14,
                                                           fontWeight:
                                                               FontWeight.w600),
                                                       maxLines: 2,
@@ -353,14 +353,14 @@ class ChooseVoucherCustomerScreen extends StatelessWidget {
                                                         ? Text(
                                                             "Giảm giá cho các sản phẩm sau:",
                                                             style: TextStyle(
-                                                              fontSize: 14,
+                                                              fontSize: 13,
                                                             ),
                                                             maxLines: 2,
                                                           )
                                                         : Text(
                                                             "Giảm giá cho toàn bộ các sản phẩm",
                                                             style: TextStyle(
-                                                              fontSize: 14,
+                                                              fontSize: 13,
                                                             ),
                                                             maxLines: 2,
                                                           ),
@@ -372,7 +372,7 @@ class ChooseVoucherCustomerScreen extends StatelessWidget {
                                                         ? Text(
                                                             "${chooseCustomerController.listVoucher[index].products[0].name}, vv...",
                                                             style: TextStyle(
-                                                              fontSize: 13,
+                                                              fontSize: 12,
                                                             ),
                                                             maxLines: 1,
                                                           )
@@ -380,7 +380,7 @@ class ChooseVoucherCustomerScreen extends StatelessWidget {
                                                     Text(
                                                       "HSD: ${SahaDateUtils().getDDMMYY(chooseCustomerController.listVoucher[index].endTime)}",
                                                       style: TextStyle(
-                                                        fontSize: 12,
+                                                        fontSize: 11,
                                                         color: Colors.grey,
                                                       ),
                                                     ),
@@ -451,7 +451,10 @@ class ChooseVoucherCustomerScreen extends StatelessWidget {
                                           .listVoucher[index],
                                     ));
                               },
-                              child: Text("Điều kiện"),
+                              child: Text(
+                                "Điều kiện",
+                                style: TextStyle(fontSize: 12),
+                              ),
                             ),
                           )
                         ],

@@ -247,7 +247,7 @@ class _CustomerService implements CustomerService {
   }
 
   @override
-  Future<OrdersResponse> createOrder(storeCode, body) async {
+  Future<OrderResponse> createOrder(storeCode, body) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
@@ -255,7 +255,7 @@ class _CustomerService implements CustomerService {
     final _data = <String, dynamic>{};
     _data.addAll(body ?? <String, dynamic>{});
     final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/orders',
+        '$storeCode/carts/orders',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -263,7 +263,7 @@ class _CustomerService implements CustomerService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = OrdersResponse.fromJson(_result.data);
+    final value = OrderResponse.fromJson(_result.data);
     return value;
   }
 
@@ -429,7 +429,7 @@ class _CustomerService implements CustomerService {
   }
 
   @override
-  Future<CartCustomerResponse> getItemCart(storeCode) async {
+  Future<Cart> getItemCart(storeCode) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -442,12 +442,12 @@ class _CustomerService implements CustomerService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = CartCustomerResponse.fromJson(_result.data);
+    final value = Cart.fromJson(_result.data);
     return value;
   }
 
   @override
-  Future<CartCustomerResponse> addVoucherCart(storeCode, body) async {
+  Future<Cart> addVoucherCart(storeCode, body) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
@@ -462,12 +462,12 @@ class _CustomerService implements CustomerService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = CartCustomerResponse.fromJson(_result.data);
+    final value = Cart.fromJson(_result.data);
     return value;
   }
 
   @override
-  Future<CartCustomerResponse> updateItemCart(storeCode, body) async {
+  Future<Cart> updateItemCart(storeCode, body) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
@@ -483,12 +483,12 @@ class _CustomerService implements CustomerService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = CartCustomerResponse.fromJson(_result.data);
+    final value = Cart.fromJson(_result.data);
     return value;
   }
 
   @override
-  Future<CartCustomerResponse> addItemCart(storeCode, body) async {
+  Future<Cart> addItemCart(storeCode, body) async {
     ArgumentError.checkNotNull(storeCode, 'storeCode');
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
@@ -504,7 +504,7 @@ class _CustomerService implements CustomerService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = CartCustomerResponse.fromJson(_result.data);
+    final value = Cart.fromJson(_result.data);
     return value;
   }
 
@@ -611,6 +611,147 @@ class _CustomerService implements CustomerService {
             baseUrl: baseUrl),
         data: _data);
     final value = ShipmentCustomerResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<PaymentMethodCustomerResponse> getPaymentMethod(storeCode) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/payment_methods',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = PaymentMethodCustomerResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<OrderHistoryResponse> getOrderHistory(storeCode, numberPage, search,
+      fieldBy, fieldByValue, sortBy, descending, dateFrom, dateTo) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(numberPage, 'numberPage');
+    ArgumentError.checkNotNull(search, 'search');
+    ArgumentError.checkNotNull(fieldBy, 'fieldBy');
+    ArgumentError.checkNotNull(fieldByValue, 'fieldByValue');
+    ArgumentError.checkNotNull(sortBy, 'sortBy');
+    ArgumentError.checkNotNull(descending, 'descending');
+    ArgumentError.checkNotNull(dateFrom, 'dateFrom');
+    ArgumentError.checkNotNull(dateTo, 'dateTo');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'page': numberPage,
+      r'search': search,
+      r'field_by': fieldBy,
+      r'field_by_value': fieldByValue,
+      r'sort_by': sortBy,
+      r'descending': descending,
+      r'date_from': dateFrom,
+      r'date_to': dateTo
+    };
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/carts/orders',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = OrderHistoryResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<OrderResponse> getOneOrderHistory(storeCode, orderCode) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(orderCode, 'orderCode');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/carts/orders/$orderCode',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = OrderResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<StateHistoryOrderCustomerResponse> getStateHistoryCustomerOrder(
+      storeCode, idOrder) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(idOrder, 'idOrder');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/carts/orders/status_records/$idOrder',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = StateHistoryOrderCustomerResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<CancelOrderResponse> cancelOrder(storeCode, body) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/carts/orders/cancel',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = CancelOrderResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<CancelOrderResponse> changePaymentMethod(
+      storeCode, body, orderCode) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(body, 'body');
+    ArgumentError.checkNotNull(orderCode, 'orderCode');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '$storeCode/carts/orders/change_payment_method/$orderCode',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'PUT',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = CancelOrderResponse.fromJson(_result.data);
     return value;
   }
 }

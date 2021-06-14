@@ -2,6 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'components/app_customer/screen/data_app_screen.dart';
+import 'components/app_customer/screen/navigation_scrren/navigation_screen.dart';
 import 'model/theme_model.dart';
 import 'saha_data_controller.dart';
 import 'saha_load_app.dart';
@@ -21,7 +23,10 @@ class MyApp extends StatelessWidget {
         title: 'SahaShop',
         theme: SahaUserPrimaryTheme,
         home: SahaMainScreen(),
-        getPages: [GetPage(name: "ConfigScreen", page: () => ConfigScreen())],
+        getPages: [
+          GetPage(name: "ConfigScreen", page: () => ConfigScreen()),
+          GetPage(name: "customer_home", page: () => NavigationScreen())
+        ],
         builder: (context, widget) => Column(
               children: [
                 Expanded(child: widget),
@@ -31,25 +36,40 @@ class MyApp extends StatelessWidget {
                       : Material(
                           child: InkWell(
                             onTap: () {
-                              Get.offNamedUntil(
-                                  "ConfigScreen",
-                                  (route) =>
-                                      route.settings.name == "ConfigScreen");
-                              Get.back();
+                              Get.until((route) =>
+                                  route.settings.name == "ConfigScreen");
+
                               sahaDataController.changeStatusPreview(false);
                             },
                             child: Container(
-                              height: 23,
+                              height: 35,
                               width: Get.width,
                               color: Colors.redAccent,
-                              child: Center(
-                                  child: AutoSizeText(
-                                "Bạn đang xem thử App, nhấp vào đây để trở về",
-                                maxFontSize: 13,
-                                style: TextStyle(
-                                    fontSize: 30, color: Colors.white),
-                                maxLines: 2,
-                              )),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Expanded(
+                                    child: Center(
+                                        child: AutoSizeText(
+                                      "Bạn đang xem thử App, nhấp vào đây để trở về",
+                                      maxFontSize: 13,
+                                      style: TextStyle(
+                                          fontSize: 30, color: Colors.white),
+                                      maxLines: 2,
+                                    )),
+                                  ),
+                                  Icon(
+                                    Icons.west,
+                                    size: 15,
+                                    color: Colors.white,
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),

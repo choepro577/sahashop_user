@@ -19,3 +19,10 @@ export PATH="$PATH:$HOME/flutter/bin"
 flutter build apk --split-per-abi
 
 BBe9228171dA87A51d2896e4210382Aa7f430B5d /// token Giao hang tiet kiem Hieudeptrai
+
+Thẻ test:
+Ngân hàng	NCB
+Số thẻ	9704198526191432198
+Tên chủ thẻ	NGUYEN VAN A
+Ngày phát hành	07/15
+Mật khẩu OTP	123456
