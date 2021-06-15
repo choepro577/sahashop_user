@@ -1037,4 +1037,24 @@ class _SahaService implements SahaService {
     final value = ChangeOrderStatusResponse.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<OrderResponse> getOneOrder(storeCode, orderCode) async {
+    ArgumentError.checkNotNull(storeCode, 'storeCode');
+    ArgumentError.checkNotNull(orderCode, 'orderCode');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'store/$storeCode/orders/$orderCode',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = OrderResponse.fromJson(_result.data);
+    return value;
+  }
 }

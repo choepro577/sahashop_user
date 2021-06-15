@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/orders/order_response.dart';
 import 'package:sahashop_user/data/remote/response-request/address/add_token_shipment_response.dart';
 import 'package:sahashop_user/data/remote/response-request/address/address_respone.dart';
 import 'package:sahashop_user/data/remote/response-request/address/all_address_store_response.dart';
@@ -263,5 +264,11 @@ abstract class SahaService {
   Future<ChangeOrderStatusResponse> changeOrderStatus(
     @Path() String storeCode,
     @Body() Map<String, dynamic> body,
+  );
+
+  @GET("store/{storeCode}/orders/{orderCode}")
+  Future<OrderResponse> getOneOrder(
+    @Path() String storeCode,
+    @Path() String orderCode,
   );
 }

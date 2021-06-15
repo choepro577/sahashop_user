@@ -7,7 +7,9 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_detail/order_detail_history_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/pay_screen/pay_screen.dart';
+import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/const/const_image_logo.dart';
+import 'package:sahashop_user/model/order.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
 class OrderHistoryScreen extends StatefulWidget {
@@ -24,9 +26,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
   void initState() {
     // TODO: implement initState
     super.initState();
-
     tabController = new TabController(length: 10, vsync: this, initialIndex: 0);
-    orderHistoryController.loadInitOrder();
   }
 
   @override
@@ -35,7 +35,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
       length: 10,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Mã giảm giá của tôi'),
+          title: Text('Đơn mua'),
           bottom: TabBar(
             isScrollable: true,
             controller: tabController,
@@ -53,18 +53,24 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
             ],
           ),
         ),
-        body: TabBarView(
-          controller: tabController,
-          children: List<Widget>.generate(10, (int index) {
-            return buildStateOrder(index);
-          }),
+        body: Obx(
+          () => TabBarView(
+            controller: tabController,
+            children: List<Widget>.generate(
+                orderHistoryController.listAllOrder.length, (int index) {
+              return buildStateOrder(index);
+            }),
+          ),
         ),
       ),
     );
   }
 
   Widget buildStateOrder(int indexState) {
-    RefreshController _refreshController = RefreshController();
+    RefreshController _refreshController = RefreshController(
+        initialRefresh: orderHistoryController.listCheckRefresh[indexState] == 1
+            ? true
+            : false);
     return SmartRefresher(
       enablePullDown: true,
       enablePullUp: true,
@@ -78,7 +84,9 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
         ) {
           Widget body;
           if (mode == LoadStatus.idle) {
-            body = Container();
+            body = Obx(() => !orderHistoryController.isDoneLoadMore.value
+                ? CupertinoActivityIndicator()
+                : Container());
           } else if (mode == LoadStatus.loading) {
             body = CupertinoActivityIndicator();
           } else if (mode == LoadStatus.failed) {
@@ -97,36 +105,57 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
       controller: _refreshController,
       onRefresh: () async {
         await Future.delayed(Duration(milliseconds: 300));
-        orderHistoryController.refreshData();
+        orderHistoryController.refreshData(
+          "order_status_code",
+          orderHistoryController.listStatusCode[indexState],
+          indexState,
+        );
+
+        // orderManageController.refreshData();
         _refreshController.refreshCompleted();
       },
       onLoading: () async {
         await Future.delayed(Duration(milliseconds: 300));
-        if (orderHistoryController.isDoneLoadMore) {
-          orderHistoryController.loadMoreOrder();
+        if (orderHistoryController.isDoneLoadMore.value) {
+          orderHistoryController.loadMoreOrder(
+            "order_status_code",
+            orderHistoryController.listStatusCode[indexState],
+            indexState,
+          );
         }
         _refreshController.loadComplete();
       },
       child: Obx(
-        () => SingleChildScrollView(
-          child: Column(
-            children: [
-              ...List.generate(
-                orderHistoryController.listOrder.length,
-                (index) => orderHistoryController
-                            .listOrder[index].orderStatusCode ==
-                        orderHistoryController.listStatusCode[indexState]
-                    ? InkWell(
+        () => orderHistoryController.isLoadInit.value
+            ? SahaSimmer(
+                isLoading: true,
+                child: Container(
+                  width: Get.width,
+                  height: Get.height,
+                  color: Colors.black,
+                ))
+            : SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ...List.generate(
+                      orderHistoryController.listAllOrder[indexState].length,
+                      (index) => InkWell(
                         onTap: () {
                           Get.to(
                             () => OrderHistoryDetailScreen(
-                              order: orderHistoryController.listOrder[index],
+                              order: orderHistoryController
+                                  .listAllOrder[indexState][index],
                             ),
                           ).then((value) => {
                                 if (value == "CANCELLED")
                                   {
                                     tabController.animateTo(6),
-                                    orderHistoryController.refreshData(),
+                                    orderHistoryController.refreshData(
+                                      "order_status_code",
+                                      orderHistoryController
+                                          .listStatusCode[indexState],
+                                      indexState,
+                                    )
                                   },
                               });
                         },
@@ -147,7 +176,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                 children: [
                                   Spacer(),
                                   Text(
-                                    "${orderHistoryController.listOrder[index].orderStatusName}",
+                                    "${orderHistoryController.listAllOrder[indexState][index].orderStatusName}",
                                     style: TextStyle(
                                         color: Theme.of(context).primaryColor),
                                   ),
@@ -165,12 +194,13 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                       height: 80,
                                       fit: BoxFit.cover,
                                       imageUrl: orderHistoryController
-                                                  .listOrder[index]
+                                                  .listAllOrder[indexState]
+                                                      [index]
                                                   .lineItemsAtTime
                                                   .length ==
                                               0
                                           ? ""
-                                          : "${orderHistoryController.listOrder[index].lineItemsAtTime[0].imageUrl}",
+                                          : "${orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime[0].imageUrl}",
                                       errorWidget: (context, url, error) =>
                                           ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
@@ -193,7 +223,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            "${orderHistoryController.listOrder[index].lineItemsAtTime[0].name}",
+                                            "${orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime[0].name}",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500),
                                           ),
@@ -203,7 +233,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                 children: [
                                                   Spacer(),
                                                   Text(
-                                                    " x ${orderHistoryController.listOrder[index].lineItemsAtTime[0].quantity}",
+                                                    " x ${orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime[0].quantity}",
                                                     style: TextStyle(
                                                         fontSize: 13,
                                                         color:
@@ -215,7 +245,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                 children: [
                                                   Spacer(),
                                                   Text(
-                                                    "đ${SahaStringUtils().convertToMoney(orderHistoryController.listOrder[index].lineItemsAtTime[0].beforePrice)}",
+                                                    "đ${SahaStringUtils().convertToMoney(orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime[0].beforePrice)}",
                                                     style: TextStyle(
                                                         decoration:
                                                             TextDecoration
@@ -225,7 +255,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                   ),
                                                   SizedBox(width: 15),
                                                   Text(
-                                                    "đ${SahaStringUtils().convertToMoney(orderHistoryController.listOrder[index].lineItemsAtTime[0].afterDiscount)}",
+                                                    "đ${SahaStringUtils().convertToMoney(orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime[0].afterDiscount)}",
                                                     style: TextStyle(
                                                         color: Theme.of(context)
                                                             .primaryColor),
@@ -244,8 +274,10 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                             Divider(
                               height: 1,
                             ),
-                            orderHistoryController.listOrder[index]
-                                        .lineItemsAtTime.length >
+                            orderHistoryController
+                                        .listAllOrder[indexState][index]
+                                        .lineItemsAtTime
+                                        .length >
                                     1
                                 ? Container(
                                     width: Get.width,
@@ -268,7 +300,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                               child: Row(
                                 children: [
                                   Text(
-                                    "${orderHistoryController.listOrder[index].lineItemsAtTime.length} sản phẩm",
+                                    "${orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime.length} sản phẩm",
                                     style: TextStyle(color: Colors.grey[600]),
                                   ),
                                   Spacer(),
@@ -292,7 +324,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                     children: [
                                       Text("Thành tiền: "),
                                       Text(
-                                        "đ${SahaStringUtils().convertToMoney(orderHistoryController.listOrder[index].totalAfterDiscount)}",
+                                        "đ${SahaStringUtils().convertToMoney(orderHistoryController.listAllOrder[indexState][index].totalFinal)}",
                                         style: TextStyle(
                                             color:
                                                 Theme.of(context).primaryColor),
@@ -309,32 +341,52 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: [
-                                  InkWell(
-                                    onTap: () {
-                                      Get.to(() => PayScreen(
-                                            orderCode: orderHistoryController
-                                                .listOrder[index].orderCode,
-                                          ));
-                                    },
-                                    child: Container(
-                                      height: 35,
-                                      width: 100,
-                                      decoration: BoxDecoration(
-                                          color: Theme.of(context).primaryColor,
-                                          borderRadius:
-                                              BorderRadius.circular(4)),
-                                      child: Center(
-                                        child: Text(
-                                          "Thanh toán",
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryTextTheme
-                                                  .headline6
-                                                  .color),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  orderHistoryController
+                                                  .listAllOrder[indexState]
+                                                      [index]
+                                                  .orderStatusCode ==
+                                              WAITING_FOR_PROGRESSING ||
+                                          orderHistoryController
+                                                  .listAllOrder[indexState]
+                                                      [index]
+                                                  .orderStatusCode ==
+                                              PACKING ||
+                                          orderHistoryController
+                                                  .listAllOrder[indexState]
+                                                      [index]
+                                                  .orderStatusCode ==
+                                              SHIPPING
+                                      ? InkWell(
+                                          onTap: () {
+                                            Get.to(() => PayScreen(
+                                                  orderCode:
+                                                      orderHistoryController
+                                                          .listAllOrder[
+                                                              indexState][index]
+                                                          .orderCode,
+                                                ));
+                                          },
+                                          child: Container(
+                                            height: 35,
+                                            width: 100,
+                                            decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(4)),
+                                            child: Center(
+                                              child: Text(
+                                                "Thanh toán",
+                                                style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .primaryTextTheme
+                                                        .headline6
+                                                        .color),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : Container(),
                                   Spacer(),
                                   Container(
                                     height: 35,
@@ -369,7 +421,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                   ),
                                   Spacer(),
                                   Text(
-                                    "${orderHistoryController.listOrder[index].orderCode}",
+                                    "${orderHistoryController.listAllOrder[indexState][index].orderCode}",
                                     style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -380,12 +432,11 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                             SizedBox(height: 15)
                           ],
                         ),
-                      )
-                    : Container(),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
       ),
     );
   }

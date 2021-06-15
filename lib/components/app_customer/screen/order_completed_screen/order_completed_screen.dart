@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/cart_screen_1.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
+import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_detail/order_detail_history_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/pay_screen/pay_screen.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
@@ -16,7 +17,7 @@ class OrderCompletedScreen extends StatelessWidget {
   OrderCompletedController orderCompletedController;
 
   DataAppCustomerController dataAppCustomerController = Get.find();
-
+  OrderHistoryController orderHistoryController = Get.find();
   OrderCompletedScreen({Key key, this.orderCode}) : super(key: key) {
     orderCompletedController = OrderCompletedController(orderCode);
   }
@@ -150,7 +151,18 @@ class OrderCompletedScreen extends StatelessWidget {
                                 Get.off(() => OrderHistoryDetailScreen(
                                       order:
                                           orderCompletedController.order.value,
-                                    ));
+                                    )).then((value) => {
+                                      //  orderHistoryController.refreshData(),
+                                      orderHistoryController.refreshData(
+                                        "order_status_code",
+                                        "WAITING_FOR_PROGRESSING",
+                                        orderHistoryController.listStatusCode
+                                            .indexWhere((element) =>
+                                                element ==
+                                                orderCompletedController.order
+                                                    .value.orderStatusCode),
+                                      ),
+                                    });
                               },
                               child: Container(
                                 height: 35,

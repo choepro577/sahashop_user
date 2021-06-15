@@ -1,3 +1,4 @@
+import 'package:sahashop_user/components/app_customer/remote/response-request/orders/order_response.dart';
 import 'package:sahashop_user/data/remote/response-request/order/all_order_response.dart';
 import 'package:sahashop_user/data/remote/response-request/order/change_order_status_repose.dart';
 import 'package:sahashop_user/data/remote/response-request/order/state_history_order_response.dart';
@@ -38,6 +39,17 @@ class OrderRepository {
       var res = await SahaServiceManager()
           .service
           .getStateHistoryOrder(UserInfo().getCurrentStoreCode(), idOrder);
+      return res;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  Future<OrderResponse> getOneOrder(String orderCode) async {
+    try {
+      var res = await SahaServiceManager()
+          .service
+          .getOneOrder(UserInfo().getCurrentStoreCode(), orderCode);
       return res;
     } catch (err) {
       handleError(err);

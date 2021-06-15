@@ -4,10 +4,27 @@ import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/model/order.dart';
 
 class OrderManageController extends GetxController {
-  var listOrder = RxList<Order>();
-  var pageLoadMore = 1;
-  var isEndPageVoucher = false;
-  var isDoneLoadMore = false;
+  // var listOrder = RxList<Order>();
+
+  List<bool> listIsEndOrder = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ];
+  List<int> listPageLoadMore = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+  var isDoneLoadMore = false.obs;
+  var isLoadInit = false.obs;
+  var listAllOrder =
+      RxList<List<Order>>([[], [], [], [], [], [], [], [], [], []]);
+
+  var listCheckRefresh = RxList<int>([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
   var listStatusCode = [
     WAITING_FOR_PROGRESSING,
     PACKING,
@@ -21,36 +38,56 @@ class OrderManageController extends GetxController {
     CUSTOMER_HAS_RETURNS,
   ];
 
-  void loadInitOrder() {
-    pageLoadMore = 1;
-    isEndPageVoucher = false;
-    loadMoreOrder();
+  Future<void> loadInitOrder(
+      String fieldBy, String fieldByValue, int indexStatus) async {
+    isLoadInit.value = true;
+    listPageLoadMore[indexStatus] = 1;
+    listIsEndOrder[indexStatus] = false;
+    loadMoreOrder(fieldBy, fieldByValue, indexStatus);
   }
 
-  Future<void> loadMoreOrder() async {
-    isDoneLoadMore = false;
+  Future<void> loadMoreOrder(
+      String fieldBy, String fieldByValue, int indexStatus) async {
+    isDoneLoadMore.value = false;
     try {
-      if (!isEndPageVoucher) {
-        var res = await RepositoryManager.orderRepository
-            .getAllOrder(pageLoadMore, "", "", "", "", "", "", "");
-        listOrder.addAll(res.data.data);
+      if (!listIsEndOrder[indexStatus]) {
+        var res = await RepositoryManager.orderRepository.getAllOrder(
+            listPageLoadMore[indexStatus],
+            "",
+            fieldBy,
+            fieldByValue,
+            "",
+            "",
+            "",
+            "");
+
+        res.data.data.forEach((element) {
+          listAllOrder[indexStatus].add(element);
+        });
+        listCheckRefresh[indexStatus]++;
+        listAllOrder.refresh();
+
         if (res.data.nextPageUrl != null) {
-          pageLoadMore++;
-          isEndPageVoucher = false;
+          listPageLoadMore[indexStatus]++;
+          listIsEndOrder[indexStatus] = false;
         } else {
-          isEndPageVoucher = true;
+          listIsEndOrder[indexStatus] = true;
         }
       } else {
+        isDoneLoadMore.value = true;
         return;
       }
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
-    isDoneLoadMore = true;
+    isDoneLoadMore.value = true;
+    isLoadInit.value = false;
   }
 
-  Future<void> refreshData() async {
-    listOrder([]);
-    loadInitOrder();
+  Future<void> refreshData(
+      String fieldBy, String fieldByValue, int indexStatus) async {
+    isLoadInit.value = true;
+    listAllOrder[indexStatus] = [];
+    loadInitOrder(fieldBy, fieldByValue, indexStatus);
   }
 }

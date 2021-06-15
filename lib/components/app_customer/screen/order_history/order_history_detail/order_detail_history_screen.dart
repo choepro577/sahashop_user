@@ -335,7 +335,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                       ),
                       Spacer(),
                       Text(
-                        "+ đ${"Chua co" ?? SahaStringUtils().convertToMoney(orderHistoryDetailController.order.totalAfterDiscount)}",
+                        "+ đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order?.totalShippingFee)}",
                         style: TextStyle(color: Colors.grey[600]),
                       )
                     ],
@@ -402,7 +402,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                       Text("Thành tiền: "),
                       Spacer(),
                       Text(
-                          "đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order.totalAfterDiscount)}")
+                          "đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order.totalFinal)}")
                     ],
                   ),
                   SizedBox(
@@ -557,8 +557,9 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                             index);
                       }, () {
                         orderHistoryDetailController.cancelOrder();
-                        Get.until(
-                            (route) => route.settings.name == "customer_home");
+                        // Get.back(result: "CANCELLED");
+                        // Get.until(
+                        //     (route) => route.settings.name == "customer_home");
                       });
                     },
                     child: Container(
@@ -592,7 +593,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                   ),
                   Spacer(),
                   Text(
-                    "đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order.totalAfterDiscount)}",
+                    "đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order.totalFinal)}",
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: Theme.of(context).primaryColor),
