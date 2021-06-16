@@ -33,8 +33,8 @@ part 'customer_service.g.dart';
 @RestApi(baseUrl: "https://sahashop.net/api/customer/")
 abstract class CustomerService {
   /// Retrofit factory
-  //factory CustomerService(Dio dio) => _CustomerService(dio);
-  factory CustomerService(Dio dio, {String baseUrl}) = _CustomerService;
+  factory CustomerService(Dio dio) => _CustomerService(dio);
+
   @GET("store")
   Future<AllStoreResponse> getAllStore();
 

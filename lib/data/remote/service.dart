@@ -49,8 +49,7 @@ part 'service.g.dart';
 @RestApi(baseUrl: "http://103.221.220.124/api/")
 abstract class SahaService {
   /// Retrofit factory
- // factory SahaService(Dio dio) => _SahaService(dio);
-  factory SahaService(Dio dio, {String baseUrl}) = _SahaService;
+  factory SahaService(Dio dio) => _SahaService(dio);
 
   @POST("register")
   Future<RegisterResponse> register(@Body() Map<String, dynamic> body);
