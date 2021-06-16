@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
+import 'package:sahashop_user/data/remote/response-request/product/product_request.dart';
+import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/model/product.dart';
+import 'package:sahashop_user/utils/image_utils.dart';
 
 class DistributeSelectController extends GetxController {
-  var listDistribute = RxList<Distributes>();
+  var listDistribute = RxList<DistributesRequest>();
   var stringTextSuggestion = "";
 
   final listSuggestion = [
@@ -14,7 +20,9 @@ class DistributeSelectController extends GetxController {
   ];
 
   DistributeSelectController() {
-    //addDistribute(listSuggestion[0]);
+    addDistribute(listSuggestion[0]);
+    addDistribute(listSuggestion[1]);
+    addDistribute(listSuggestion[2]);
   }
 
   void editNameDistribute(int indexDistribute, String name) {
@@ -31,27 +39,59 @@ class DistributeSelectController extends GetxController {
   }
 
   void removeDistribute(int indexDistribute) {
-     listDistribute.remove(listDistribute[indexDistribute]);
-
+    listDistribute.remove(listDistribute[indexDistribute]);
   }
 
+  void toggleHasImage(int indexDistribute) {
+    if (listDistribute[indexDistribute] != null) {
+      var newDistribute = listDistribute[indexDistribute];
+      newDistribute.boolHasImage = !newDistribute.boolHasImage;
+      listDistribute[indexDistribute] = newDistribute;
+    }
+  }
+
+  void chooseImage(DistributesRequest distributes,
+      ElementDistributesRequest elementDistributes) async {
+    try {
+      final picker = ImagePicker();
+      final pickedFile = await picker.getImage(source: ImageSource.gallery);
+      var file = File(pickedFile.path);
+      var fileUp = await ImageUtils.getImageCompress(file);
+
+      var link = await RepositoryManager.imageRepository.uploadImage(fileUp);
+
+      var indexElement = listDistribute[listDistribute.indexOf(distributes)]
+          .elementDistributes
+          .indexOf(elementDistributes);
+      listDistribute[listDistribute.indexOf(distributes)]
+          .elementDistributes[indexElement]
+          .imageUrl = link;
+
+      listDistribute.refresh();
+    } catch (err) {
+      SahaAlert.showError(message: "Có lỗi khi up ảnh xin thử lại");
+    }
+
+  }
 
   void addDistribute(String name) {
     if (name == null) {
       var name = getNameNewDistribute();
 
-      listDistribute.add(Distributes(name: name, elementDistributes: []));
+      listDistribute.add(DistributesRequest(
+          name: name, elementDistributes: [], boolHasImage: false));
       return;
     }
 
     for (var element in listDistribute) {
       if (element.name == name) {
-        SahaAlert.showError(message: "Thuộc tính này đã thêm từ trước");
+        SahaAlert.showError(message: "Phân loại này đã có");
         return;
       }
     }
 
-    listDistribute.add(Distributes(name: name, elementDistributes: []));
+    listDistribute.add(DistributesRequest(
+        name: name, elementDistributes: [], boolHasImage: false));
   }
 
   void addElementDistribute(int indexDistribute, String name) {
@@ -63,11 +103,14 @@ class DistributeSelectController extends GetxController {
         SahaAlert.showWarning(message: "Thuộc tính đã có");
         return;
       }
-      listDistribute[indexDistribute].elementDistributes.add(ElementDistributes(name: name));
+      listDistribute[indexDistribute]
+          .elementDistributes
+          .add(ElementDistributesRequest(name: name));
     }
   }
 
-  void removeElementDistribute(int indexDistribute, Distributes distributes) {
+  void removeElementDistribute(
+      int indexDistribute, ElementDistributesRequest distributes) {
     listDistribute[indexDistribute].elementDistributes.remove(distributes);
   }
 
@@ -100,35 +143,37 @@ class DistributeSelectController extends GetxController {
   }
 
   bool checkValidParam() {
-
     for (var itemDistribute in listDistribute) {
       var listCompare = listDistribute.toList()..remove(itemDistribute);
 
-     if( listCompare.map((element) => element.name).toList().contains(itemDistribute.name)) {
-
-       SahaAlert.showWarning(message: "Có các phân loại trùng nhau xin kiểm tra lại");
-       return false;
-     }
-
+      if (listCompare
+          .map((element) => element.name)
+          .toList()
+          .contains(itemDistribute.name)) {
+        SahaAlert.showWarning(
+            message: "Có các phân loại trùng nhau xin kiểm tra lại");
+        return false;
+      }
     }
 
     for (var itemDistribute in listDistribute) {
-      if(itemDistribute.name == null || itemDistribute.name =="") {
-
-        SahaAlert.showWarning(message: "Có các phân loại chưa nhập tên, xin kiểm tra lại");
+      if (itemDistribute.name == null || itemDistribute.name == "") {
+        SahaAlert.showWarning(
+            message: "Có các phân loại chưa nhập tên, xin kiểm tra lại");
         return false;
       }
-
     }
     return true;
   }
 
-
-  List<Distributes> getFinalDistribute() {
-    var listRT =  listDistribute.toList()..removeWhere((element) {
-      return (element.name == null || element.name == "" ||
-          element.elementDistributes == null ||element.elementDistributes.length==0);
-    });
-    return listRT;
+  List<DistributesRequest> getFinalDistribute() {
+    var listRT = listDistribute.toList()
+      ..removeWhere((element) {
+        return (element.name == null ||
+            element.name == "" ||
+            element.elementDistributes == null ||
+            element.elementDistributes.length == 0);
+      });
+    return listRT.toList();
   }
 }

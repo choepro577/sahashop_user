@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/data/remote/response-request/product/product_request.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
+import 'package:sahashop_user/model/attributes.dart';
 import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/model/product.dart';
 
@@ -12,14 +13,60 @@ class AddProductController extends GetxController {
   ProductRequest productRequest = new ProductRequest();
   var listCategory = RxList<Category>();
   var listCategorySelected = RxList<Category>();
+  var listAttribute = RxList<String>();
   var isLoadingAdd = false.obs;
   var isLoadingCategory = false.obs;
+  var isLoadingAttribute = false.obs;
+
+  var listDistribute = RxList<DistributesRequest>();
 
   List<ImageData> listImages;
   var uploadingImages = false.obs;
 
+  var attributeData = {}.obs;
+
   AddProductController() {
     getAllCategory();
+    getAllAttribute();
+  }
+
+  Future<void> getAllAttribute() async {
+    isLoadingAttribute.value = true;
+    try {
+      var list =
+          await RepositoryManager.attributesRepository.getAllAttributes();
+      listAttribute(list);
+
+      isLoadingAttribute.value = false;
+      return true;
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+    isLoadingAttribute.value = false;
+  }
+
+  void setNewListDistribute(List<DistributesRequest> list) {
+    List<DistributesRequest> listOK = [];
+    listOK = list.where((element) =>
+        element.name != null &&
+        element.elementDistributes != null &&
+        element.elementDistributes.length > 0).toList();
+
+    listDistribute(listOK);
+    refresh();
+  }
+
+  void setNewListAttribute(List<String> list) {
+    listAttribute(list);
+    list.forEach((element) {
+      if (!attributeData.keys.contains(element)) {
+        attributeData.remove(element);
+      }
+    });
+  }
+
+  void addValueToMapAttribute(String key, String value) {
+    attributeData["key"] = value;
   }
 
   void setUploadingImages(bool value) {

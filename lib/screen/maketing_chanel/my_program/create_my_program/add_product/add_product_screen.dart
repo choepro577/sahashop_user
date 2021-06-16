@@ -366,6 +366,7 @@ class _AddProductToSaleScreenState extends State<AddProductToSaleScreen> {
             children: [
               Row(
                 children: [
+
                   Text(
                     addProductToSaleController.quantityProductSelected.value
                         .toString(),

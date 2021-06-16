@@ -80,6 +80,40 @@ class SahaDialogApp {
     );
   }
 
+  static void showDialogYesNo({String mess, bool barrierDismissible = true,
+    Function onClose, Function onOK
+  }) {
+    // flutter defined function
+    showDialog(
+      barrierDismissible: barrierDismissible,
+      context: Get.context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Thông báo!"),
+          content: new Text(mess == null ? "Chú ý!" : mess),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new TextButton(
+              child: new Text("Hủy"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                onClose();
+              },
+            ),
+            new TextButton(
+              child: new Text("Đồng ý"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                onOK();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
 
 }

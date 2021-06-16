@@ -1,11 +1,9 @@
-import 'package:sahashop_user/model/attributes.dart';
-
 class AttributesResponse {
   int code;
   bool success;
   String msgCode;
   String msg;
-  List<Attribute> data;
+  List<String> data;
 
   AttributesResponse(
       {this.code, this.success, this.msgCode, this.msg, this.data});
@@ -15,12 +13,7 @@ class AttributesResponse {
     success = json['success'];
     msgCode = json['msg_code'];
     msg = json['msg'];
-    if (json['data'] != null) {
-      data = new List<Attribute>();
-      json['data'].forEach((v) {
-        data.add(new Attribute.fromJson(v));
-      });
-    }
+    data = json['data'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
@@ -29,10 +22,7 @@ class AttributesResponse {
     data['success'] = this.success;
     data['msg_code'] = this.msgCode;
     data['msg'] = this.msg;
-    if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
-    }
+    data['data'] = this.data;
     return data;
   }
 }
-

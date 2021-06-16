@@ -30,8 +30,6 @@ import 'package:sahashop_user/data/remote/response-request/payment_method/paymen
 import 'package:sahashop_user/data/remote/response-request/payment_method/update_payment_response.dart';
 import 'package:sahashop_user/data/remote/response-request/post/all_post_response.dart';
 
-import 'response-request/attributes/add_attributes_response.dart';
-import 'response-request/attributes/remove_attributes_response.dart';
 import 'response-request/auth/register_response.dart';
 import 'response-request/category/all_category_response.dart';
 import 'response-request/category/create_category_response.dart';
@@ -48,10 +46,11 @@ import 'response-request/store/type_store_respones.dart';
 
 part 'service.g.dart';
 
-@RestApi(baseUrl: "http://103.221.220.124//api/")
+@RestApi(baseUrl: "http://103.221.220.124/api/")
 abstract class SahaService {
   /// Retrofit factory
-  factory SahaService(Dio dio) => _SahaService(dio);
+ // factory SahaService(Dio dio) => _SahaService(dio);
+  factory SahaService(Dio dio, {String baseUrl}) = _SahaService;
 
   @POST("register")
   Future<RegisterResponse> register(@Body() Map<String, dynamic> body);
@@ -67,11 +66,11 @@ abstract class SahaService {
 
   @POST("store/{storeCode}/products")
   Future<ProductResponse> createProduct(
-      @Path() String storeCode, @Body() Map<String, dynamic> body);
+      @Path("storeCode") String storeCode, @Body() Map<String, dynamic> body);
 
   @GET("store/{storeCode}/products")
   Future<AllProductResponse> getAllProduct(
-      @Path() String storeCode,
+      @Path("storeCode") String storeCode,
       @Query("search") String search,
       @Query("category_ids") String idCategory,
       @Query("descending") bool descending,
@@ -84,24 +83,24 @@ abstract class SahaService {
   @POST("store/{storeCode}/categories")
   @FormUrlEncoded()
   Future<CreateCategoryResponse> createCategory(
-      @Path() String storeCode, @Body() Map<String, dynamic> body);
+      @Path("storeCode") String storeCode, @Body() Map<String, dynamic> body);
 
   @POST("app-theme/{storeCode}")
   Future<CreateAppThemeResponse> createAppTheme(
-      @Path() String storeCode, @Body() Map<String, dynamic> body);
+      @Path("storeCode") String storeCode, @Body() Map<String, dynamic> body);
 
   @GET("app-theme/{storeCode}")
-  Future<GetAppThemeResponse> getAppTheme(@Path() String storeCode);
+  Future<GetAppThemeResponse> getAppTheme(@Path("storeCode") String storeCode);
 
   @GET("store/{storeCode}/categories")
-  Future<AllCategoryResponse> getAllCategory(@Path() String storeCode);
+  Future<AllCategoryResponse> getAllCategory(@Path("storeCode") String storeCode);
 
   @POST("images")
   Future<UploadImageResponse> uploadImage(@Body() Map<String, dynamic> body);
 
   @POST('store/{storeCode}/discounts')
   Future<CreateDiscountResponse> createDiscount(
-      @Path() String storeCode, @Body() Map<String, dynamic> body);
+      @Path("storeCode") String storeCode, @Body() Map<String, dynamic> body);
 
   @POST("device_token_user")
   Future<UpdateDeviceTokenResponse> updateDeviceTokenUser(
@@ -110,70 +109,70 @@ abstract class SahaService {
   @POST("store/{storeCode}/post_categories")
   @FormUrlEncoded()
   Future<CreateCategoryPostResponse> createCategoryPost(
-      @Path() String storeCode, @Body() Map<String, dynamic> body);
+      @Path("storeCode") String storeCode, @Body() Map<String, dynamic> body);
 
   @GET("store/{storeCode}/post_categories")
-  Future<AllCategoryPostResponse> getAllCategoryPost(@Path() String storeCode);
+  Future<AllCategoryPostResponse> getAllCategoryPost(@Path("storeCode") String storeCode);
 
   @POST("store/{storeCode}/posts")
   @FormUrlEncoded()
   Future<CreatePostResponse> createPost(
-      @Path() String storeCode, @Body() Map<String, dynamic> body);
+      @Path("storeCode") String storeCode, @Body() Map<String, dynamic> body);
 
   @GET("store/{storeCode}/posts")
-  Future<AllPostResponse> getAllPost(@Path() String storeCode);
+  Future<AllPostResponse> getAllPost(@Path("storeCode") String storeCode);
 
   @GET("store/{storeCode}/discounts")
-  Future<MyProgramResponse> getAllDisCount(@Path() String storeCode);
+  Future<MyProgramResponse> getAllDisCount(@Path("storeCode") String storeCode);
 
   @GET("store/{storeCode}/vouchers")
-  Future<MyVoucherResponse> getAllVoucher(@Path() String storeCode);
+  Future<MyVoucherResponse> getAllVoucher(@Path("storeCode") String storeCode);
 
   @GET("store/{storeCode}/combos")
-  Future<MyComboResponse> getAllCombo(@Path() String storeCode);
+  Future<MyComboResponse> getAllCombo(@Path("storeCode") String storeCode);
 
   @PUT("store/{storeCode}/discounts/{idDiscount}")
-  Future<MyProgramResponse> updateDiscount(@Path() String storeCode,
+  Future<MyProgramResponse> updateDiscount(@Path("storeCode") String storeCode,
       @Path() int idDiscount, @Body() Map<String, dynamic> body);
 
   @DELETE("store/{storeCode}/discounts/{idDiscount}")
   Future<DeleteProgramResponse> deleteDiscount(
-      @Path() String storeCode, @Path() int idDiscount);
+      @Path("storeCode") String storeCode, @Path() int idDiscount);
 
   @DELETE("store/{storeCode}/vouchers/{idVoucher}")
   Future<DeleteProgramResponse> deleteVoucher(
-      @Path() String storeCode, @Path() int idVoucher);
+      @Path("storeCode") String storeCode, @Path() int idVoucher);
 
   @DELETE("store/{storeCode}/combos/{idCombo}")
   Future<DeleteProgramResponse> deleteCombo(
-      @Path() String storeCode, @Path() int idCombo);
+      @Path("storeCode") String storeCode, @Path() int idCombo);
 
   @POST("store/{storeCode}/vouchers")
   Future<CreateVoucherResponse> createVoucher(
-      @Path() String storeCode, @Body() Map<String, dynamic> body);
+      @Path("storeCode") String storeCode, @Body() Map<String, dynamic> body);
 
   @PUT("store/{storeCode}/vouchers/{idVoucher}")
-  Future<CreateVoucherResponse> updateVoucher(@Path() String storeCode,
+  Future<CreateVoucherResponse> updateVoucher(@Path("storeCode") String storeCode,
       @Path() int idVoucher, @Body() Map<String, dynamic> body);
 
   @GET("store/{storeCode}/vouchers_end")
   Future<EndVoucherResponse> getEndVoucherFromPage(
-      @Path() String storeCode, @Query("page") int numberPage);
+      @Path("storeCode") String storeCode, @Query("page") int numberPage);
 
   @GET("store/{storeCode}/discounts_end")
   Future<EndDiscountResponse> getEndDiscountFromPage(
-      @Path() String storeCode, @Query("page") int numberPage);
+      @Path("storeCode") String storeCode, @Query("page") int numberPage);
 
   @GET("store/{storeCode}/combos_end")
   Future<EndComboResponse> getEndComboFromPage(
-      @Path() String storeCode, @Query("page") int numberPage);
+      @Path("storeCode") String storeCode, @Query("page") int numberPage);
 
   @POST("store/{storeCode}/combos")
   Future<CreateComboResponse> createCombo(
-      @Path() String storeCode, @Body() Map<String, dynamic> body);
+      @Path("storeCode") String storeCode, @Body() Map<String, dynamic> body);
 
   @PUT("store/{storeCode}/combos/{idCombo}")
-  Future<CreateComboResponse> updateCombo(@Path() String storeCode,
+  Future<CreateComboResponse> updateCombo(@Path("storeCode") String storeCode,
       @Path() int idCombo, @Body() Map<String, dynamic> body);
 
   @GET("place/vn/province")
@@ -187,80 +186,67 @@ abstract class SahaService {
 
   @POST("store/{storeCode}/store_address")
   Future<CreateAddressStoreResponse> createAddressStore(
-      @Path() String storeCode, @Body() Map<String, dynamic> body);
+      @Path("storeCode") String storeCode, @Body() Map<String, dynamic> body);
 
   @GET("store/{storeCode}/store_address")
-  Future<AllAddressStoreResponse> getAllAddressStore(@Path() String storeCode);
+  Future<AllAddressStoreResponse> getAllAddressStore(@Path("storeCode") String storeCode);
 
   @PUT("store/{storeCode}/store_address/{idAddressStore}")
   Future<CreateAddressStoreResponse> updateAddressStore(
-      @Path() String storeCode,
+      @Path("storeCode") String storeCode,
       @Path() int idAddressStore,
       @Body() Map<String, dynamic> body);
 
   @DELETE("store/{storeCode}/store_address/{idAddressStore}")
   Future<DeleteAddressStoreResponse> deleteAddressStore(
-      @Path() String storeCode, @Path() int idAddressStore);
+      @Path("storeCode") String storeCode, @Path() int idAddressStore);
 
   @GET("store/{storeCode}/shipments")
-  Future<AllShipmentResponse> getAllShipmentStore(@Path() String storeCode);
+  Future<AllShipmentResponse> getAllShipmentStore(@Path("storeCode") String storeCode);
 
   @PUT("store/{storeCode}/shipments/{idShipment}")
-  Future<AddTokenShipmentResponse> addTokenShipment(@Path() String storeCode,
+  Future<AddTokenShipmentResponse> addTokenShipment(@Path("storeCode") String storeCode,
       @Path() int idShipment, @Body() Map<String, dynamic> body);
 
   @GET("store/{storeCode}/message_customers")
   Future<AllChatCustomerResponse> getAllChatUser(
-    @Path() String storeCode,
+    @Path("storeCode") String storeCode,
     @Query("page") int numberPage,
   );
 
   @GET("store/{storeCode}/message_customers/{idCustomer}")
   Future<AllMessageResponse> getAllMessageUser(
-    @Path() String storeCode,
+    @Path("storeCode") String storeCode,
     @Path() int idCustomer,
     @Query("page") int numberPage,
   );
 
   @POST("store/{storeCode}/message_customers/{idCustomer}")
   Future<SendMessageResponse> sendMessageToCustomer(
-    @Path() String storeCode,
+    @Path("storeCode") String storeCode,
     @Path() int idCustomer,
     @Body() Map<String, dynamic> body,
   );
 
   @GET("store/{storeCode}/attribute_fields")
   Future<AttributesResponse> getAllAttributeFields(
-      @Path() String storeCode,
+      @Path("storeCode") String storeCode,
       );
 
-  @POST("store/{storeCode}/attribute_fields")
-  Future<AddAttributesResponse> addAttributeFields(
-      @Path() String storeCode,
-      @Body() Map<String, dynamic> body,
-      );
-
-  @DELETE("store/{storeCode}/attribute_fields/{idAttribute}")
-  Future<DeleteAttributesResponse> deleteAttributeFields(
-      @Path() String storeCode,
-      @Path() int idAttribute,
-      );
-
-  @PUT("store/{storeCode}/attribute_fields/{idAttribute}")
-  Future<AddAttributesResponse> editAttributeFields(
-      @Path() String storeCode,
-      @Path() int idAttribute,
+  @PUT("store/{storeCode}/attribute_fields")
+  Future<AttributesResponse> updateAttributeFields(
+      @Path("storeCode") String storeCode,
       @Body() Map<String, dynamic> body,
       );
 
   @GET("store/{storeCode}/payment_methods")
   Future<PaymentMethodResponse> getPaymentMethod(
-    @Path() String storeCode,
+    @Path("storeCode") String storeCode,
   );
 
   @PUT("store/{storeCode}/payment_methods/{idPaymentMethod}")
   Future<UpdatePaymentResponse> upDatePaymentMethod(
-    @Path() String storeCode,
+    @Path("storeCode") String storeCode,
     @Path() int idPaymentMethod,
     @Body() Map<String, dynamic> body,
   );
@@ -269,7 +255,7 @@ abstract class SahaService {
 
   @GET("store/{storeCode}/orders")
   Future<AllOrderResponse> getAllOrder(
-    @Path() String storeCode,
+    @Path("storeCode") String storeCode,
     @Query("page") int numberPage,
     @Query("search") String search,
     @Query("field_by") String fieldBy,
@@ -282,13 +268,13 @@ abstract class SahaService {
 
   @GET("store/{storeCode}/orders/status_records/{idOrder}")
   Future<StateHistoryOrderResponse> getStateHistoryOrder(
-    @Path() String storeCode,
+    @Path("storeCode") String storeCode,
     @Path() int idOrder,
   );
 
   @POST("store/{storeCode}/orders/change_order_status")
   Future<ChangeOrderStatusResponse> changeOrderStatus(
-    @Path() String storeCode,
+    @Path("storeCode") String storeCode,
     @Body() Map<String, dynamic> body,
   );
 }

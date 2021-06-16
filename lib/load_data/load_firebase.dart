@@ -77,9 +77,7 @@ class FCMMess {
         print("onResume: $message");
       },
     );
-    await _firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(
-            sound: true, badge: true, alert: true, provisional: false));
+    await _firebaseMessaging.requestPermission();
 
     await _firebaseMessaging.onIosSettingsRegistered
         .listen((IosNotificationSettings settings) {

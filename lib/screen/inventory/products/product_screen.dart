@@ -33,7 +33,7 @@ class ProductScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: Obx(() {
-                    var list = productController.listProduct?.toList().reversed.toList();
+                    var list = productController.listProduct.toList().toList();
                     if (list == null || list.length == 0) {
                       return SahaEmptyWidget(
                         tile: "Không có sản phẩm nào",

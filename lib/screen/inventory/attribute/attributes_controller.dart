@@ -6,7 +6,7 @@ import 'package:sahashop_user/model/attributes.dart';
 
 class AttributeController extends GetxController {
   var loading = false.obs;
-  var listAttribute = RxList<Attribute>();
+  var listAttribute = RxList<String>();
 
   AttributeController() {
     getAllAttribute();
@@ -15,7 +15,8 @@ class AttributeController extends GetxController {
   Future<void> getAllAttribute() async {
     loading.value = true;
     try {
-      var list = await RepositoryManager.attributesRepository.getAllAttributes();
+      var list =
+          await RepositoryManager.attributesRepository.getAllAttributes();
       listAttribute(list);
 
       loading.value = false;
@@ -24,5 +25,30 @@ class AttributeController extends GetxController {
       SahaAlert.showError(message: err.toString());
     }
     loading.value = false;
+  }
+
+  Future<void> updateAttribute() async {
+    loading.value = true;
+    try {
+      var list = await RepositoryManager.attributesRepository
+          .updateAttributes(listAttribute.toList());
+      listAttribute(list);
+
+      loading.value = false;
+      return true;
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+    loading.value = false;
+  }
+
+  Future<void> addAttribute(va) async {
+    listAttribute.add(va);
+    updateAttribute();
+  }
+
+  Future<void> removeAttribute(va) async {
+    listAttribute.remove(va);
+    updateAttribute();
   }
 }

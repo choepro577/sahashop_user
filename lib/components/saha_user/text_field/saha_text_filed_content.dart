@@ -23,32 +23,37 @@ class SahaTextFiledContent extends StatelessWidget {
     );
 
     return Container(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  title ?? "Nội dung",
-                  style: TextStyle(color: Colors.black54),
-                ),
-                InkWell(
-                  onTap: () {
-                    toChangeScreen();
-                  },
-                  child: Text(
-                    "Chỉnh sửa",
-                    style: TextStyle(color: Colors.blue),
+      child: InkWell(
+        onTap: () {
+          toChangeScreen();
+        },
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    title ?? "Nội dung",
+                    style: TextStyle(color: Colors.black54),
                   ),
-                )
-              ],
+                  InkWell(
+                    onTap: () {
+                      toChangeScreen();
+                    },
+                    child: Text(
+                      "Chỉnh sửa",
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-          Divider(),
-          html
-        ],
+            Divider(),
+            html
+          ],
+        ),
       ),
     );
   }

@@ -5,7 +5,7 @@ import '../handle_error.dart';
 
 class AttributesRepository {
 
-  Future<List<Attribute>> getAllAttributes() async {
+  Future<List<String>> getAllAttributes() async {
     try {
       var res = await SahaServiceManager()
           .service
@@ -16,11 +16,15 @@ class AttributesRepository {
     }
   }
 
-  Future<List<Attribute>> addAllAttributes() async {
+  Future<List<String>> updateAttributes(List<String> listAttribute) async {
     try {
       var res = await SahaServiceManager()
           .service
-          .getAllAttributeFields(UserInfo().getCurrentStoreCode());
+          .updateAttributeFields(UserInfo().getCurrentStoreCode(),
+      {
+        "list":listAttribute
+      }
+      );
       return res.data;
     } catch (err) {
       handleError(err);
