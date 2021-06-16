@@ -13,6 +13,10 @@ import 'package:sahashop_user/model/order.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
 class OrderHistoryScreen extends StatefulWidget {
+  final int initPage;
+
+  OrderHistoryScreen({this.initPage});
+
   @override
   _OrderHistoryScreenState createState() => _OrderHistoryScreenState();
 }
@@ -26,7 +30,8 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
   void initState() {
     // TODO: implement initState
     super.initState();
-    tabController = new TabController(length: 10, vsync: this, initialIndex: 0);
+    tabController = new TabController(
+        length: 10, vsync: this, initialIndex: widget.initPage ?? 0);
   }
 
   @override
@@ -426,25 +431,55 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                               )
                                             : Container(),
                                         Spacer(),
-                                        Container(
-                                          height: 35,
-                                          width: 100,
-                                          decoration: BoxDecoration(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(4)),
-                                          child: Center(
-                                            child: Text(
-                                              "Xem",
-                                              style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .primaryTextTheme
-                                                      .headline6
-                                                      .color),
-                                            ),
-                                          ),
-                                        )
+                                        orderHistoryController
+                                                    .listAllOrder[indexState]
+                                                        [index]
+                                                    .orderStatusCode !=
+                                                COMPLETED
+                                            ? Container(
+                                                height: 35,
+                                                width: 100,
+                                                decoration: BoxDecoration(
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4)),
+                                                child: Center(
+                                                  child: Text(
+                                                    "Xem",
+                                                    style: TextStyle(
+                                                        color: Theme.of(context)
+                                                            .primaryTextTheme
+                                                            .headline6
+                                                            .color),
+                                                  ),
+                                                ),
+                                              )
+                                            : InkWell(
+                                                onTap: () {},
+                                                child: Container(
+                                                  height: 35,
+                                                  width: 100,
+                                                  decoration: BoxDecoration(
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              4)),
+                                                  child: Center(
+                                                    child: Text(
+                                                      "Đánh giá",
+                                                      style: TextStyle(
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .primaryTextTheme
+                                                              .headline6
+                                                              .color),
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
                                       ],
                                     ),
                                   ),

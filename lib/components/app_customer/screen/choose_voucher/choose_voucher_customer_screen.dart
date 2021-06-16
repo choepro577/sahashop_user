@@ -6,6 +6,7 @@ import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
+// ignore: must_be_immutable
 class ChooseVoucherCustomerScreen extends StatelessWidget {
   ChooseCustomerController chooseCustomerController;
 
@@ -17,7 +18,7 @@ class ChooseVoucherCustomerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Chọn Voucher"),
+        title: Text("Ví Voucher"),
       ),
       body: Column(
         children: [
