@@ -1,5 +1,6 @@
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/const/constant.dart';
 
@@ -34,10 +35,14 @@ class SahaAlert {
               ),
               message: Text(
                 '$message',
-                style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),
+                style:
+                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
               ),
               leftBarIndicatorColor: Colors.red,
-              icon: Icon(Icons.error, color: Colors.red,),
+              icon: Icon(
+                Icons.error,
+                color: Colors.red,
+              ),
               primaryAction: TextButton(
                 onPressed: () => controller.dismiss(),
                 child: Text('Đóng'),
@@ -366,5 +371,16 @@ class SahaAlert {
             ),
           );
         });
+  }
+
+  static void showToastMiddle({String message, Color color, Color textColor}) {
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: color ?? Colors.red,
+        textColor: textColor ?? Colors.white,
+        fontSize: 16.0);
   }
 }

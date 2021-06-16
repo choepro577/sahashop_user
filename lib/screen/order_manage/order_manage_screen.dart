@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
+import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/const/const_image_logo.dart';
 import 'package:sahashop_user/screen/order_manage/order_detail_manage/order_detail_manage_screen.dart';
 import 'package:sahashop_user/screen/order_manage/order_manage_controller.dart';
@@ -137,11 +137,37 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                   color: Colors.black,
                 ))
             : SingleChildScrollView(
-                child: Column(
-                  children: [
-                    ...List.generate(
-                        orderManageController.listAllOrder[indexState].length,
-                        (index) => InkWell(
+                child: orderManageController.listCheckIsEmpty[indexState]
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(4),
+                            height: 80,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFF5F6F9),
+                              shape: BoxShape.circle,
+                            ),
+                            child: SvgPicture.asset(
+                              "assets/icons/check_list_new.svg",
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text("Không có đơn hàng nào !")
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          ...List.generate(
+                            orderManageController
+                                .listAllOrder[indexState].length,
+                            (index) => InkWell(
                               onTap: () {
                                 Get.to(() => OrderDetailScreen(
                                       order: orderManageController
@@ -425,14 +451,10 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                             Clipboard.setData(ClipboardData(
                                                 text:
                                                     "${orderManageController.listAllOrder[indexState][index].orderCode}"));
-                                            Fluttertoast.showToast(
-                                                msg: "Đã sao chép",
-                                                toastLength: Toast.LENGTH_SHORT,
-                                                gravity: ToastGravity.CENTER,
-                                                timeInSecForIosWeb: 1,
-                                                backgroundColor: Colors.red,
-                                                textColor: Colors.white,
-                                                fontSize: 16.0);
+                                            SahaAlert.showToastMiddle(
+                                              message: "Đã sao chép",
+                                              color: Colors.grey[600],
+                                            );
                                           },
                                           child: Text(
                                             "Sao chép",
@@ -448,9 +470,10 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                   SizedBox(height: 15)
                                 ],
                               ),
-                            )),
-                  ],
-                ),
+                            ),
+                          ),
+                        ],
+                      ),
               ),
       ),
     );

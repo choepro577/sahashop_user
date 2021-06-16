@@ -11,13 +11,12 @@ import 'package:photo_view/photo_view_gallery.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sahashop_user/components/saha_user/expanded_viewport/expanded_viewport.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
-import 'package:sahashop_user/model/box_chat_customer.dart';
-import 'package:sahashop_user/model/info_customer.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
 import 'chat_controller.dart';
 
+// ignore: must_be_immutable
 class ChatScreen extends StatelessWidget {
   ChatScreen() {
     chatController = Get.find();
@@ -75,7 +74,7 @@ class ChatScreen extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    "${SahaStringUtils().displayTimeAgoFromTime(chatController.boxChatCustomer.value.lastMessage.createdAt)}",
+                    "${SahaStringUtils().displayTimeAgoFromTime(chatController.boxChatCustomer.value.lastMessage?.createdAt ?? DateTime.now())}",
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 12),

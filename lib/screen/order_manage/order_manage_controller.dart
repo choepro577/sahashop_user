@@ -20,9 +20,11 @@ class OrderManageController extends GetxController {
   ];
   List<int> listPageLoadMore = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
   var isDoneLoadMore = false.obs;
-  var isLoadInit = false.obs;
+  var isLoadInit = true.obs;
   var listAllOrder =
       RxList<List<Order>>([[], [], [], [], [], [], [], [], [], []]);
+  var listCheckIsEmpty = RxList<bool>(
+      [false, false, false, false, false, false, false, false, false, false]);
 
   var listCheckRefresh = RxList<int>([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
   var listStatusCode = [
@@ -49,6 +51,7 @@ class OrderManageController extends GetxController {
   Future<void> loadMoreOrder(
       String fieldBy, String fieldByValue, int indexStatus) async {
     isDoneLoadMore.value = false;
+    listCheckIsEmpty[indexStatus] = false;
     try {
       if (!listIsEndOrder[indexStatus]) {
         var res = await RepositoryManager.orderRepository.getAllOrder(
@@ -64,6 +67,11 @@ class OrderManageController extends GetxController {
         res.data.data.forEach((element) {
           listAllOrder[indexStatus].add(element);
         });
+
+        if (listAllOrder[indexStatus].isEmpty) {
+          listCheckIsEmpty[indexStatus] = true;
+        }
+
         listCheckRefresh[indexStatus]++;
         listAllOrder.refresh();
 

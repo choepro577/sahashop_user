@@ -13,6 +13,7 @@ import 'package:sahashop_user/data/remote/response-request/chat/all_message_resp
 import 'package:sahashop_user/data/remote/response-request/chat/send_message_response.dart';
 import 'package:sahashop_user/data/remote/response-request/config_ui/app_theme_response.dart';
 import 'package:sahashop_user/data/remote/response-request/config_ui/create_app_theme_response.dart';
+import 'package:sahashop_user/data/remote/response-request/customer/all_customer_response.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/create_combo_reponse.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/end_combo_response.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/my_combo_response.dart';
@@ -270,5 +271,13 @@ abstract class SahaService {
   Future<OrderResponse> getOneOrder(
     @Path() String storeCode,
     @Path() String orderCode,
+  );
+
+  /// customer manage
+
+  @GET("store/{storeCode}/customers")
+  Future<AllCustomerResponse> getAllInfoCustomer(
+    @Path() String storeCode,
+    @Query("page") int numberPage,
   );
 }
