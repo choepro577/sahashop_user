@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 class SahaDateUtils {
   static final SahaDateUtils _singleton = SahaDateUtils._internal();
 
-  var formatYMD = DateFormat('yyyy-MM-dd');
+  var formatYMD = DateFormat('dd-MM-yyyy');
   var formatYMD_HHMMSS = DateFormat('yyyy-MM-dd HH:mm:ss');
   var formatYMD_HHMM = DateFormat('yyyy-MM-dd HH:mm');
   var formatDMY = DateFormat('dd-MM-yyyy');
@@ -184,6 +184,12 @@ class SahaDateUtils {
     return formatYMD.format(yesterday);
   }
 
+  DateTime getYesterdayDATETIME() {
+    DateTime now = DateTime.now();
+    DateTime yesterday = new DateTime(now.year, now.month, now.day - 1);
+    return yesterday;
+  }
+
   String getStringEndOfTheDay(DateTime dateTime) {
     DateTime endDate =
         DateTime(dateTime.year, dateTime.month, dateTime.day, 23, 59);
@@ -206,9 +212,16 @@ class SahaDateUtils {
 
   String getFirstDayOfWeek() {
     DateTime now = DateTime.now();
-    DateTime firtDayOfWeek = new DateTime(
+    DateTime firstDayOfWeek = new DateTime(
         now.year, now.month, now.day - now.weekday + 1); //tinh thu 2
-    return formatYMD.format(firtDayOfWeek);
+    return formatYMD.format(firstDayOfWeek);
+  }
+
+  DateTime getFirstDayOfWeekDATETIME() {
+    DateTime now = DateTime.now();
+    DateTime firstDayOfWeek = new DateTime(
+        now.year, now.month, now.day - now.weekday + 1); //tinh thu 2
+    return firstDayOfWeek;
   }
 
   String getEndDayOfWeek() {
@@ -225,6 +238,13 @@ class SahaDateUtils {
     return formatYMD.format(firtDayOfWeek);
   }
 
+  DateTime getFirstDayOfLastWeekDATETIME() {
+    DateTime now = DateTime.now();
+    DateTime firtDayOfWeek =
+        new DateTime(now.year, now.month, now.day - now.weekday + 1 - 7);
+    return firtDayOfWeek;
+  }
+
   String getEndDayOfLastWeek() {
     DateTime now = DateTime.now();
     DateTime endDayOfWeek =
@@ -232,10 +252,23 @@ class SahaDateUtils {
     return formatYMD.format(endDayOfWeek);
   }
 
+  DateTime getEndDayOfLastWeekDATETIME() {
+    DateTime now = DateTime.now();
+    DateTime endDayOfWeek =
+        new DateTime(now.year, now.month, now.day + (7 - now.weekday) - 7);
+    return endDayOfWeek;
+  }
+
   String getFirstDayOfMonth() {
     DateTime now = DateTime.now();
     DateTime first = new DateTime(now.year, now.month, 1);
     return formatYMD.format(first);
+  }
+
+  DateTime getFirstDayOfMonthDATETIME() {
+    DateTime now = DateTime.now();
+    DateTime first = new DateTime(now.year, now.month, 1);
+    return first;
   }
 
   DateTime getFirstDayOfMonthDateTime() {
@@ -262,10 +295,22 @@ class SahaDateUtils {
     return formatYMD.format(first);
   }
 
+  DateTime getFirstDayOfLastMonthDATETIME() {
+    DateTime now = DateTime.now();
+    DateTime first = new DateTime(now.year, now.month - 1, 1);
+    return first;
+  }
+
   String getEndDayOfLastMonth() {
     DateTime now = DateTime.now();
     DateTime end = new DateTime(now.year, now.month, 0);
     return formatYMD.format(end);
+  }
+
+  DateTime getEndDayOfLastMonthDATETIME() {
+    DateTime now = DateTime.now();
+    DateTime end = new DateTime(now.year, now.month, 0);
+    return end;
   }
 
   String getFirstDayOfThisQuarter() {
@@ -334,10 +379,46 @@ class SahaDateUtils {
     return formatYMD.format(first);
   }
 
+  DateTime getFirstDayOfThisYearDATETIME() {
+    DateTime now = DateTime.now();
+    DateTime first = DateTime(now.year, 1, 1);
+    return first;
+  }
+
   String getEndDayOfThisYear() {
     DateTime now = DateTime.now();
     DateTime end = DateTime(now.year + 1, 1, 0);
     return formatYMD.format(end);
+  }
+
+  DateTime getEndDayOfThisYearDATETIME() {
+    DateTime now = DateTime.now();
+    DateTime end = DateTime(now.year + 1, 1, 0);
+    return end;
+  }
+
+  String getFirstDayOfLastYear() {
+    DateTime now = DateTime.now();
+    DateTime first = DateTime(now.year - 1, 1, 1);
+    return formatYMD.format(first);
+  }
+
+  DateTime getFirstDayOfLastYearDATETIME() {
+    DateTime now = DateTime.now();
+    DateTime first = DateTime(now.year - 1, 1, 1);
+    return first;
+  }
+
+  String getEndDayOfLastYear() {
+    DateTime now = DateTime.now();
+    DateTime end = DateTime(now.year, 1, 0);
+    return formatYMD.format(end);
+  }
+
+  DateTime getEndDayOfLastYearDATETIME() {
+    DateTime now = DateTime.now();
+    DateTime end = DateTime(now.year, 1, 0);
+    return end;
   }
 
   String getDMH(String dateStr) {

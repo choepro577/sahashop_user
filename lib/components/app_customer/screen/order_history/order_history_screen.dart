@@ -79,9 +79,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
     return SmartRefresher(
       enablePullDown: true,
       enablePullUp: true,
-      header: WaterDropHeader(
-        complete: Text(""),
-      ),
+      header: MaterialClassicHeader(),
       footer: CustomFooter(
         builder: (
           BuildContext context,

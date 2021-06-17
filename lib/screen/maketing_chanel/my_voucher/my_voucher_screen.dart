@@ -5,12 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
-import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
-import 'package:sahashop_user/model/discount_product_list.dart';
 import 'package:sahashop_user/model/voucher.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/create_my_program.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_controller.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_program/update_my_program/update_my_program.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_voucher/create_my_voucher/create_my_voucher_screen.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_voucher/my_voucher_controller.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_voucher/update_voucher/update_voucher_screen.dart';
@@ -198,9 +193,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
     return SmartRefresher(
         enablePullDown: true,
         enablePullUp: true,
-        header: WaterDropHeader(
-          complete: Text(""),
-        ),
+        header: MaterialClassicHeader(),
         footer: CustomFooter(
           builder: (
             BuildContext context,

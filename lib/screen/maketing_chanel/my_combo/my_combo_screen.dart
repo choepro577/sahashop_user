@@ -18,8 +18,6 @@ class MyComboScreen extends StatefulWidget {
 
 class _MyComboScreenState extends State<MyComboScreen>
     with TickerProviderStateMixin {
-  bool isHasDiscount = false;
-  bool isTabOnTap = false;
   TabController tabController;
   MyComboController myComboController = Get.put(MyComboController());
 
@@ -53,9 +51,7 @@ class _MyComboScreenState extends State<MyComboScreen>
           title: Text('Mã giảm giá của tôi'),
           bottom: TabBar(
             controller: tabController,
-            onTap: (index) {
-              isTabOnTap = true;
-            },
+            onTap: (index) {},
             tabs: [
               Tab(text: "Sắp diễn ra"),
               Tab(text: "Đang diễn ra"),
@@ -95,9 +91,7 @@ class _MyComboScreenState extends State<MyComboScreen>
     return SmartRefresher(
         enablePullDown: true,
         enablePullUp: true,
-        header: WaterDropHeader(
-          complete: Text(""),
-        ),
+        header: MaterialClassicHeader(),
         footer: CustomFooter(
           builder: (
             BuildContext context,

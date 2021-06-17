@@ -76,9 +76,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
     return SmartRefresher(
       enablePullDown: true,
       enablePullUp: true,
-      header: WaterDropHeader(
-        complete: Text(""),
-      ),
+      header: MaterialClassicHeader(),
       footer: CustomFooter(
         builder: (
           BuildContext context,
