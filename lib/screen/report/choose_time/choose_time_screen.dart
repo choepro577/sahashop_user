@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sahashop_user/components/app_customer/remote/response-request/address_customer/delete_address_customer_response.dart';
+import 'package:get/get.dart';
+import 'package:sahashop_user/screen/report/choose_time/choose_time_controller.dart';
 import 'package:sahashop_user/screen/report/choose_time/widget/pick_date.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 
 class ChooseTimeScreen extends StatefulWidget {
+  final Function callback;
+
+  ChooseTimeScreen({this.callback});
+
   @override
   _ChooseTimeScreenState createState() => _ChooseTimeScreenState();
 }
@@ -12,7 +17,7 @@ class ChooseTimeScreen extends StatefulWidget {
 class _ChooseTimeScreenState extends State<ChooseTimeScreen>
     with TickerProviderStateMixin {
   TabController tabController;
-
+  ChooseTimeController chooseTimeController = ChooseTimeController();
   @override
   void initState() {
     // TODO: implement initState
@@ -28,7 +33,22 @@ class _ChooseTimeScreenState extends State<ChooseTimeScreen>
       child: Scaffold(
         backgroundColor: Colors.grey[200],
         appBar: AppBar(
-          title: Text('Thời gian'),
+          title: Row(
+            children: [
+              Text('Thời gian'),
+              Spacer(),
+              InkWell(
+                onTap: () {
+                  widget.callback(chooseTimeController.fromDay.value,
+                      chooseTimeController.toDay.value);
+                },
+                child: Text(
+                  'Lưu',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ],
+          ),
           bottom: TabBar(
             controller: tabController,
             isScrollable: true,
@@ -46,176 +66,160 @@ class _ChooseTimeScreenState extends State<ChooseTimeScreen>
           children: List<Widget>.generate(5, (int index) {
             return SingleChildScrollView(
               child: index == 0
-                  ? Column(
-                      children: [
-                        PickDate(
-                          text: "Hôm nay:",
-                          fromDate: DateTime.now(),
-                          onReturn: (fromDate, toDay) {
-                            print(fromDate);
-                            print(toDay);
-                          },
-                        ),
-                        PickDate(
-                          text: "Hôm qua:",
-                          fromDate: SahaDateUtils().getYesterdayDATETIME(),
-                          onReturn: (fromDate, toDay) {
-                            print(fromDate);
-                            print(toDay);
-                          },
-                        ),
-                      ],
+                  ? Obx(
+                      () => Column(
+                        children: [
+                          ...List.generate(
+                            2,
+                            (index) => PickDate(
+                              isChoose: chooseTimeController.fromDay.value ==
+                                          chooseTimeController
+                                              .listFromDateDAY[index] &&
+                                      chooseTimeController.toDay.value ==
+                                          chooseTimeController
+                                              .listToDateDAY[index]
+                                  ? true
+                                  : false,
+                              text:
+                                  chooseTimeController.listTextChooseDAY[index],
+                              fromDate:
+                                  chooseTimeController.listFromDateDAY[index],
+                              toDay: chooseTimeController.listToDateDAY[index],
+                              onReturn: (fromDate, toDay) {
+                                chooseTimeController.fromDay.value = fromDate;
+                                chooseTimeController.toDay.value = toDay;
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     )
                   : index == 1
-                      ? Column(
-                          children: [
-                            PickDate(
-                              text: "Tuần này:",
-                              fromDate:
-                                  SahaDateUtils().getFirstDayOfWeekDATETIME(),
-                              toDay: DateTime.now(),
-                              onReturn: (fromDate, toDay) {
-                                print(fromDate);
-                                print(toDay);
-                              },
-                            ),
-                            PickDate(
-                              text: "7 ngày qua:",
-                              fromDate:
-                                  DateTime.now().subtract(Duration(days: 7)),
-                              toDay: DateTime.now(),
-                              onReturn: (fromDate, toDay) {
-                                print(fromDate);
-                                print(toDay);
-                              },
-                            ),
-                            PickDate(
-                              text: "Tuần trước:",
-                              fromDate: SahaDateUtils()
-                                  .getFirstDayOfLastWeekDATETIME(),
-                              toDay:
-                                  SahaDateUtils().getEndDayOfLastWeekDATETIME(),
-                              onReturn: (fromDate, toDay) {
-                                print(fromDate);
-                                print(toDay);
-                              },
-                            ),
-                          ],
+                      ? Obx(
+                          () => Column(
+                            children: [
+                              ...List.generate(
+                                3,
+                                (index) => PickDate(
+                                  isChoose: chooseTimeController
+                                                  .fromDay.value ==
+                                              chooseTimeController
+                                                  .listFromDateWEEK[index] &&
+                                          chooseTimeController.toDay.value ==
+                                              chooseTimeController
+                                                  .listToDateWEEK[index]
+                                      ? true
+                                      : false,
+                                  text: chooseTimeController
+                                      .listTextChooseWEEK[index],
+                                  fromDate: chooseTimeController
+                                      .listFromDateWEEK[index],
+                                  toDay: chooseTimeController
+                                      .listToDateWEEK[index],
+                                  onReturn: (fromDate, toDay) {
+                                    chooseTimeController.fromDay.value =
+                                        fromDate;
+                                    chooseTimeController.toDay.value = toDay;
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         )
                       : index == 2
-                          ? Column(
-                              children: [
-                                PickDate(
-                                  text: "Tháng này:",
-                                  fromDate: SahaDateUtils()
-                                      .getFirstDayOfMonthDATETIME(),
-                                  toDay: DateTime.now(),
-                                  onReturn: (fromDate, toDay) {
-                                    print(fromDate);
-                                    print(toDay);
-                                  },
-                                ),
-                                PickDate(
-                                  text: "30 ngày qua:",
-                                  fromDate: DateTime.now()
-                                      .subtract(Duration(days: 30)),
-                                  toDay: DateTime.now(),
-                                  onReturn: (fromDate, toDay) {
-                                    print(fromDate);
-                                    print(toDay);
-                                  },
-                                ),
-                                PickDate(
-                                  text: "Tháng trước:",
-                                  fromDate: SahaDateUtils()
-                                      .getFirstDayOfLastMonthDATETIME(),
-                                  toDay: SahaDateUtils()
-                                      .getEndDayOfLastMonthDATETIME(),
-                                  onReturn: (fromDate, toDay) {
-                                    print(fromDate);
-                                    print(toDay);
-                                  },
-                                ),
-                              ],
+                          ? Obx(
+                              () => Column(
+                                children: [
+                                  ...List.generate(
+                                    3,
+                                    (index) => PickDate(
+                                      isChoose: chooseTimeController
+                                                      .fromDay.value ==
+                                                  chooseTimeController
+                                                          .listFromDateMONTH[
+                                                      index] &&
+                                              chooseTimeController
+                                                      .toDay.value ==
+                                                  chooseTimeController
+                                                      .listToDateMONTH[index]
+                                          ? true
+                                          : false,
+                                      text: chooseTimeController
+                                          .listTextChooseMONTH[index],
+                                      fromDate: chooseTimeController
+                                          .listFromDateMONTH[index],
+                                      toDay: chooseTimeController
+                                          .listToDateMONTH[index],
+                                      onReturn: (fromDate, toDay) {
+                                        chooseTimeController.fromDay.value =
+                                            fromDate;
+                                        chooseTimeController.toDay.value =
+                                            toDay;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
                             )
                           : index == 3
-                              ? Column(
-                                  children: [
-                                    PickDate(
-                                      text: "Năm này:",
-                                      fromDate: SahaDateUtils()
-                                          .getFirstDayOfThisYearDATETIME(),
-                                      toDay: DateTime.now(),
-                                      onReturn: (fromDate, toDay) {
-                                        print(fromDate);
-                                        print(toDay);
-                                      },
-                                    ),
-                                    PickDate(
-                                      text: "Năm trước:",
-                                      fromDate: SahaDateUtils()
-                                          .getFirstDayOfLastYearDATETIME(),
-                                      toDay: SahaDateUtils()
-                                          .getEndDayOfLastYearDATETIME(),
-                                      onReturn: (fromDate, toDay) {
-                                        print(fromDate);
-                                        print(toDay);
-                                      },
-                                    ),
-                                  ],
+                              ? Obx(
+                                  () => Column(
+                                    children: [
+                                      ...List.generate(
+                                        2,
+                                        (index) => PickDate(
+                                          isChoose: chooseTimeController
+                                                          .fromDay.value ==
+                                                      chooseTimeController
+                                                              .listFromDateYEAR[
+                                                          index] &&
+                                                  chooseTimeController
+                                                          .toDay.value ==
+                                                      chooseTimeController
+                                                          .listToDateYEAR[index]
+                                              ? true
+                                              : false,
+                                          text: chooseTimeController
+                                              .listTextChooseYEAR[index],
+                                          fromDate: chooseTimeController
+                                              .listFromDateYEAR[index],
+                                          toDay: chooseTimeController
+                                              .listToDateYEAR[index],
+                                          onReturn: (fromDate, toDay) {
+                                            chooseTimeController.fromDay.value =
+                                                fromDate;
+                                            chooseTimeController.toDay.value =
+                                                toDay;
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 )
                               : index == 4
                                   ? Column(
                                       children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(15.0),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                  "Tuần này: ${SahaDateUtils().getDDMMYY(DateTime.now())}"),
-                                              Spacer(),
-                                              Icon(
-                                                Icons.check,
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        Divider(
-                                          height: 1,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(15.0),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                  "7 ngày qua: ${SahaDateUtils().getYesterday()}"),
-                                              Spacer(),
-                                              Icon(
-                                                Icons.check,
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        Divider(
-                                          height: 1,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(15.0),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                  "Tuần trước: ${SahaDateUtils().getYesterday()}"),
-                                              Spacer(),
-                                              Icon(
-                                                Icons.check,
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              )
-                                            ],
+                                        InkWell(
+                                          onTap: () {
+                                            chooseTimeController
+                                                .chooseRangeTime(context);
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(15.0),
+                                            child: Row(
+                                              children: [
+                                                Obx(
+                                                  () => Text(
+                                                      "Ngày bắt đầu và kết thúc: ${SahaDateUtils().getDDMM(chooseTimeController.fromDay.value)} đến ${SahaDateUtils().getDDMM(chooseTimeController.toDay.value)}"),
+                                                ),
+                                                Spacer(),
+                                                Icon(
+                                                  Icons.check,
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ),
                                         Divider(

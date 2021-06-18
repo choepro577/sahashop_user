@@ -39,6 +39,7 @@ dependencies:
   dropdown_below: ^0.0.7
   device_info: ^2.0.0
   dotted_border: ^1.0.7
+  date_range_picker: ^1.0.7
   empty_widget: ^0.0.1
   expandable: ^5.0.1
   multi_image_picker: ^4.8.0
@@ -88,6 +89,10 @@ dev_dependencies:
 
   flutter_test:
     sdk: flutter
+
+  flutter_localizations:
+    sdk: flutter
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
