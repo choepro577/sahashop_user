@@ -31,7 +31,7 @@ class AuthInterceptor extends InterceptorsWrapper {
 
   @override
   Future onError(DioError error) {
-    print('Response: ${error.response}');
+    printWrapped('Response: ${error.response}');
     if (error is DioError) {
       var dioError = error;
       switch (dioError.type) {
@@ -75,7 +75,7 @@ class AuthInterceptor extends InterceptorsWrapper {
 
   @override
   Future onResponse(Response response) async {
-    print('------Response: ${response.data}');
+    printWrapped('------Response: ${response.data}');
 
     if (response.data["code"] == 401) {
       UserInfo().setToken(null);

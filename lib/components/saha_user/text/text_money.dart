@@ -14,7 +14,7 @@ class SahaMoneyText extends StatelessWidget {
       this.sizeVND = 16,
       this.sizeText = 19,
       this.color,
-      this.fontWeight});
+      this.fontWeight = FontWeight.w500});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,10 @@ class SahaMoneyText extends StatelessWidget {
         Text(
           "${SahaStringUtils().convertToMoney(price)}",
           style: TextStyle(
-              fontSize: sizeText, fontWeight: FontWeight.w500, color: color),
+            fontSize: sizeText,
+            fontWeight: fontWeight,
+            color: color,
+          ),
           maxLines: 2,
         ),
       ],

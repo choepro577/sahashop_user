@@ -30,6 +30,7 @@ import 'package:sahashop_user/data/remote/response-request/order/state_history_o
 import 'package:sahashop_user/data/remote/response-request/payment_method/payment_method_response.dart';
 import 'package:sahashop_user/data/remote/response-request/payment_method/update_payment_response.dart';
 import 'package:sahashop_user/data/remote/response-request/post/all_post_response.dart';
+import 'package:sahashop_user/data/remote/response-request/report/report_response.dart';
 
 import 'response-request/auth/register_response.dart';
 import 'response-request/category/all_category_response.dart';
@@ -279,5 +280,15 @@ abstract class SahaService {
   Future<AllCustomerResponse> getAllInfoCustomer(
     @Path() String storeCode,
     @Query("page") int numberPage,
+  );
+
+  /// report
+  @GET("store/{storeCode}/report/overview")
+  Future<ReportResponse> getReport(
+    @Path() String storeCode,
+    @Query("date_from") String timeFrom,
+    @Query("date_to") String timeTo,
+    @Query("date_from_compare") String dateFromCompare,
+    @Query("date_to_compare") String dateToCompare,
   );
 }
