@@ -22,7 +22,9 @@ class Chart {
   String name;
 
   factory Chart.fromJson(Map<String, dynamic> json) => Chart(
-        time: json["time"] == null ? null : DateTime.parse(json["time"]),
+        time: json["time"] == null
+            ? null
+            : DateTime.parse(json["time"].toString()),
         totalOrderCount: json["total_order_count"].toDouble(),
         totalShippingFee: json["total_shipping_fee"].toDouble(),
         totalBeforeDiscount: json["total_before_discount"].toDouble(),

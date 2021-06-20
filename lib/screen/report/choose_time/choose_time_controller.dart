@@ -30,6 +30,16 @@ class ChooseTimeController extends GetxController {
   var fromDay = DateTime.now().obs;
   var toDay = DateTime.now().obs;
 
+  /// compare
+
+  List<String> listTextChooseDAYCP = [
+    "Ngày trước đó: ",
+    "Ngày này tuần trước: ",
+    'Ngày này năm trước'
+  ];
+  List<DateTime> listFromDateDAYCP;
+  List<DateTime> listToDateDAYCP;
+
   ChooseTimeController() {
     timeNow = DateTime.now();
     listFromDateDAY = [
@@ -67,6 +77,13 @@ class ChooseTimeController extends GetxController {
     listToDateYEAR = [
       timeNow,
       SahaDateUtils().getEndDayOfLastYearDATETIME(),
+    ];
+
+    /// compare
+    listFromDateDAYCP = [
+      SahaDateUtils().getYesterdayDATETIME(),
+      SahaDateUtils().getYesterdayDATETIME().subtract(Duration(days: 7)),
+      //SahaDateUtils().getThis
     ];
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/saha_user/switch_button/switch_button.dart';
 import 'package:sahashop_user/screen/report/choose_time/choose_time_controller.dart';
 import 'package:sahashop_user/screen/report/choose_time/widget/pick_date.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
@@ -69,6 +70,49 @@ class _ChooseTimeScreenState extends State<ChooseTimeScreen>
                   ? Obx(
                       () => Column(
                         children: [
+                          ...List.generate(
+                            2,
+                            (index) => PickDate(
+                              isChoose: chooseTimeController.fromDay.value ==
+                                          chooseTimeController
+                                              .listFromDateDAY[index] &&
+                                      chooseTimeController.toDay.value ==
+                                          chooseTimeController
+                                              .listToDateDAY[index]
+                                  ? true
+                                  : false,
+                              text:
+                                  chooseTimeController.listTextChooseDAY[index],
+                              fromDate:
+                                  chooseTimeController.listFromDateDAY[index],
+                              toDay: chooseTimeController.listToDateDAY[index],
+                              onReturn: (fromDate, toDay) {
+                                chooseTimeController.fromDay.value = fromDate;
+                                chooseTimeController.toDay.value = toDay;
+                              },
+                            ),
+                          ),
+                          Container(
+                            color: Colors.grey[300],
+                            height: 4,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Row(
+                              children: [
+                                Text("So sánh với"),
+                                Spacer(),
+                                CustomSwitch(
+                                  value: true,
+                                  onChanged: (v) {},
+                                )
+                              ],
+                            ),
+                          ),
+                          Container(
+                            color: Colors.grey[300],
+                            height: 4,
+                          ),
                           ...List.generate(
                             2,
                             (index) => PickDate(

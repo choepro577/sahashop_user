@@ -55,6 +55,10 @@ class SahaDateUtils {
     return formatYMD_HHMMSS.parse(date);
   }
 
+  // DateTime getDateTFromDateTime(String dateTime) {
+  //   return formatMMyyyy.parse(dateTime);
+  // }
+
   DateTime getUtcDateTimeFormString(String date) {
     DateTime dateTime = getDateTimeFormString(date);
     return DateTime.utc(
