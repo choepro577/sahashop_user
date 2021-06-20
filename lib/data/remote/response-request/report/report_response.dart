@@ -49,8 +49,12 @@ class Data {
   DataCompareTime? dataCompareTime;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        dataPrimeTime: DataPrimeTime.fromJson(json["data_prime_time"]),
-        dataCompareTime: DataCompareTime.fromJson(json["data_compare_time"]),
+        dataPrimeTime: json["data_prime_time"] == null
+            ? null
+            : DataPrimeTime.fromJson(json["data_prime_time"]),
+        dataCompareTime: json["data_compare_time"] == null
+            ? null
+            : DataCompareTime.fromJson(json["data_compare_time"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -250,8 +254,12 @@ class DataPrimeTime {
         voucherDiscountAmount: json["voucher_discount_amount"].toDouble(),
         totalAfterDiscount: json["total_after_discount"].toDouble(),
         totalFinal: json["total_final"].toDouble(),
-        detailsByOrderStatus: DetailsByOrderStatus.fromJson(json["details_by_order_status"]),
-        detailsByPaymentStatus: DetailsByPaymentStatus.fromJson(
+        detailsByOrderStatus: json["details_by_order_status"] == null
+            ? null
+            : DetailsByOrderStatus.fromJson(json["details_by_order_status"]),
+        detailsByPaymentStatus: json["details_by_payment_status"] == null
+            ? null
+            : DetailsByPaymentStatus.fromJson(
                 json["details_by_payment_status"]),
         typeChart: json["type_chart"],
         charts: List<Chart>.from(json["charts"].map((x) => Chart.fromJson(x))),

@@ -8,7 +8,7 @@ import 'package:sahashop_user/utils/date_utils.dart';
 
 // ignore: must_be_immutable
 class ReportScreen extends StatelessWidget {
-  ReportController reportController = new ReportController();
+  ReportController? reportController;
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +22,14 @@ class ReportScreen extends StatelessWidget {
               highlightColor: Colors.transparent,
               icon: Icon(Icons.settings_outlined),
               onPressed: () {
-                print(reportController.listChooseOption);
+                print(reportController!.listChooseOption);
                 ShowChooseOrderOption.showChoose(
                     onReturn: (index) {
-                      reportController.indexOption.value = index;
-                      reportController.changeChooseOption(index);
+                      reportController!.indexOption.value = index;
+                      reportController!.changeChooseOption(index);
                       Get.back();
                     },
-                    listChooseOption: reportController.listChooseOption);
+                    listChooseOption: reportController!.listChooseOption);
               })
         ],
       ),
@@ -42,19 +42,21 @@ class ReportScreen extends StatelessWidget {
           InkWell(
             onTap: () {
               Get.to(() => ChooseTimeScreen(
-                    callback: (DateTime fromDate, DateTime toDay) {
-                      print(fromDate);
-                      print(toDay);
-                      reportController.fromDay.value = fromDate;
-                      reportController.toDay.value = toDay ?? DateTime.now();
-                    },
-                  ))!.then((value) => reportController.getReport());
+                        callback: (DateTime fromDate, DateTime toDay) {
+                          print(fromDate);
+                          print(toDay);
+                          reportController!.fromDay.value = fromDate;
+                          reportController!.toDay.value =
+                              toDay ?? DateTime.now();
+                        },
+                      ))!
+                  .then((value) => reportController!.getReport());
             },
             child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Obx(
-                  () => reportController.fromDay.value !=
-                          reportController.toDay.value
+                  () => reportController!.fromDay.value !=
+                          reportController!.toDay.value
                       ? Row(
                           children: [
                             Icon(
@@ -70,14 +72,14 @@ class ReportScreen extends StatelessWidget {
                                   color: Theme.of(context).primaryColor),
                             ),
                             Text(
-                                "${SahaDateUtils().getDDMMYY(reportController.fromDay.value)} "),
+                                "${SahaDateUtils().getDDMMYY(reportController!.fromDay.value)} "),
                             Text(
                               "Đến: ",
                               style: TextStyle(
                                   color: Theme.of(context).primaryColor),
                             ),
                             Text(
-                                "${SahaDateUtils().getDDMMYY(reportController.toDay.value)}"),
+                                "${SahaDateUtils().getDDMMYY(reportController!.toDay.value)}"),
                             SizedBox(
                               width: 10,
                             ),
@@ -88,7 +90,8 @@ class ReportScreen extends StatelessWidget {
                             )
                           ],
                         )
-                      : reportController.fromDay.value.day == DateTime.now().day
+                      : reportController!.fromDay.value.day ==
+                              DateTime.now().day
                           ? Row(
                               children: [
                                 Icon(
@@ -104,7 +107,7 @@ class ReportScreen extends StatelessWidget {
                                       color: Theme.of(context).primaryColor),
                                 ),
                                 Text(
-                                    "${SahaDateUtils().getDDMMYY(reportController.fromDay.value)} "),
+                                    "${SahaDateUtils().getDDMMYY(reportController!.fromDay.value)} "),
                                 SizedBox(
                                   width: 10,
                                 ),
@@ -130,7 +133,7 @@ class ReportScreen extends StatelessWidget {
                                       color: Theme.of(context).primaryColor),
                                 ),
                                 Text(
-                                    "${SahaDateUtils().getDDMMYY(reportController.fromDay.value)} "),
+                                    "${SahaDateUtils().getDDMMYY(reportController!.fromDay.value)} "),
                                 SizedBox(
                                   width: 10,
                                 ),
@@ -147,8 +150,8 @@ class ReportScreen extends StatelessWidget {
             height: 4,
             color: Colors.grey[200],
           ),
-          Obx(() => reportController
-              .listOptionWidget[reportController.indexOption.value]),
+          Obx(() => reportController!
+              .listOptionWidget[reportController!.indexOption.value]),
         ],
       ),
     );

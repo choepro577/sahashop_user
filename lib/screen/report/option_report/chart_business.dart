@@ -54,8 +54,10 @@ class _BusinessChartState extends State<BusinessChart> {
                                 width: (Get.width - 40) / 2,
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: Theme.of(context).primaryColor
-                                    ),
+                                        color: (reportController!
+                                                .listChooseChartType[index]
+                                            ? Theme.of(context).primaryColor
+                                            : Colors.grey[500])!),
                                     borderRadius: BorderRadius.circular(2)),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,10 +142,7 @@ class _BusinessChartState extends State<BusinessChart> {
                       ...List.generate(
                         reportController!.reportPrimeTime.value.charts!.length,
                         (index) => SalesData(
-                            '${reportController!.fromDay.value.day == DateTime.now().day ||
-                                reportController!.fromDay.value.day == DateTime.now().subtract(Duration(days: 1)).day ?
-                            "${reportController!.listChart[index]!.time!.hour}h" :
-                            "${SahaDateUtils().getDDMM(reportController!.listChart[index]!.time!)}"}',
+                            '${reportController!.fromDay.value.day == DateTime.now().day || reportController!.fromDay.value.day == DateTime.now().subtract(Duration(days: 1)).day ? "${reportController!.listChart[index]!.time!.hour}h" : "${SahaDateUtils().getDDMM(reportController!.listChart[index]!.time!)}"}',
                             (reportController!.isTotalChart.value
                                 ? reportController!.reportPrimeTime.value
                                     .charts![index]!.totalFinal
