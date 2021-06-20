@@ -9,7 +9,7 @@ class SocketUser {
     return _singleton;
   }
 
-  IO.Socket socket;
+  late IO.Socket socket;
 
   void connect() async {
     try {
@@ -26,13 +26,13 @@ class SocketUser {
     }
   }
 
-  void listenCustomerWithId(int idCustomer, Function getData) {
+  void listenCustomerWithId(int? idCustomer, Function getData) {
     socket.on('chat:message_from_customer:$idCustomer', (data) async {
       getData(data);
     });
   }
 
-  void listenUser(int idCustomer, Function getData) {
+  void listenUser(int? idCustomer, Function getData) {
     print("------------------------dang ngheeeee");
     socket.on('chat:message_from_user:$idCustomer', (data) async {
       getData(data);

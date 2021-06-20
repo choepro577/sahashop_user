@@ -13,7 +13,7 @@ import 'package:sahashop_user/model/shipment_method.dart';
 
 class ConfirmController extends GetxController {
   var isLoadingOrder = false.obs;
-  var infoAddressCustomer = InfoAddressCustomer().obs;
+  Rx<InfoAddressCustomer?> infoAddressCustomer = InfoAddressCustomer().obs;
   var isLoadingAddress = false.obs;
   var shipmentMethodCurrent = ShipmentMethod().obs;
   var listShipmentFast = RxList<ShipmentMethod>();
@@ -37,12 +37,12 @@ class ConfirmController extends GetxController {
     getAllAddressCustomer();
   }
 
-  Future<void> chargeShipmentFee(int idAddressCustomer) async {
+  Future<void> chargeShipmentFee(int? idAddressCustomer) async {
     isLoadingShipmentMethod.value = true;
     try {
       var res = await CustomerRepositoryManager.shipmentRepository
           .chargeShipmentFee(idAddressCustomer);
-      shipmentMethodCurrent.value = res.data.data[0];
+      shipmentMethodCurrent.value = res!.data!.data![0];
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
@@ -54,13 +54,13 @@ class ConfirmController extends GetxController {
     try {
       var res = await CustomerRepositoryManager.addressRepository
           .getAllAddressCustomer();
-      infoAddressCustomer.value = res.data[0];
-      res.data.forEach((element) {
-        if (element.isDefault) {
+      infoAddressCustomer.value = res!.data![0];
+      res.data!.forEach((element) {
+        if (element.isDefault!) {
           infoAddressCustomer.value = element;
         }
       });
-      chargeShipmentFee(infoAddressCustomer.value.id);
+      chargeShipmentFee(infoAddressCustomer.value!.id);
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
@@ -77,7 +77,7 @@ class ConfirmController extends GetxController {
         partnerShipperId: shipmentMethodCurrent.value.partnerId,
         shipperType: shipmentMethodCurrent.value.shipType,
         totalShippingFee: shipmentMethodCurrent.value.fee,
-        customerAddressId: infoAddressCustomer.value.id,
+        customerAddressId: infoAddressCustomer.value!.id,
         customerNote: noteCustomerEditingController.text,
       );
       try {
@@ -89,7 +89,7 @@ class ConfirmController extends GetxController {
             "customer_home", (route) => route.settings.name == "customer_home");
         Get.to(() => OrderHistoryScreen());
         Get.to(() => OrderCompletedScreen(
-              orderCode: resultOrder.data.orderCode,
+              orderCode: resultOrder!.data!.orderCode!,
             ));
       } catch (err) {
         SahaAlert.showError(message: err.toString());

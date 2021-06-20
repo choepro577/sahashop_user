@@ -98,7 +98,7 @@ class SahaStringUtils {
     }
   }
 
-  String removeDecimalIfNeeded(dynamic value, {int decimal = 1}) {
+  String? removeDecimalIfNeeded(dynamic value, {int decimal = 1}) {
     if (value is String) {
       try {
         value = double.parse(value);

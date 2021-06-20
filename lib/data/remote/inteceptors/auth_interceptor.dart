@@ -15,7 +15,7 @@ class AuthInterceptor extends InterceptorsWrapper {
   AuthInterceptor();
 
   @override
-  Future onRequest(RequestOptions options) {
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     if (UserInfo().getToken() != null) {
       options.headers.putIfAbsent("token", () => UserInfo().getToken());
     }
@@ -26,44 +26,44 @@ class AuthInterceptor extends InterceptorsWrapper {
       options.data = new FormData.fromMap(options.data);
     }
 
-    return super.onRequest(options);
+    return super.onRequest(options, handler);
   }
 
+
   @override
-  Future onError(DioError error) {
-    printWrapped('Response: ${error.response}');
+  void onError(DioError error, ErrorInterceptorHandler handler) {
+    print('Response: ${error.response}');
     if (error is DioError) {
       var dioError = error;
       switch (dioError.type) {
-        case DioErrorType.CANCEL:
+        case DioErrorType.cancel:
           return errorMess('Đã hủy kết nối');
           break;
-        case DioErrorType.CONNECT_TIMEOUT:
+        case DioErrorType.connectTimeout:
           return errorMess('Không thể kết nối đến server');
           break;
-        case DioErrorType.RECEIVE_TIMEOUT:
+        case DioErrorType.receiveTimeout:
           return errorMess('Không thể nhận dữ liệu từ server');
           break;
-        case DioErrorType.RESPONSE:
-          if (dioError?.response?.statusCode == 429) {
+        case DioErrorType.response:
+          if (dioError.response?.statusCode == 429) {
             return errorMess(
                 'Bạn gửi quá nhiều yêu cầu xin thử lại sau 1 phút');
           }
 
           return errorMess(
-              '${dioError?.response?.data["msg"] != null ? dioError?.response?.data["msg"] : "Có lỗi xảy ra"}');
+              '${dioError.response?.data["msg"] != null ? dioError.response?.data["msg"] : "Có lỗi xảy ra"}');
           break;
-        case DioErrorType.SEND_TIMEOUT:
+        case DioErrorType.sendTimeout:
           return errorMess('Không thể gửi dữ liệu đến server');
           break;
-        case DioErrorType.DEFAULT:
+        case DioErrorType.other:
           return errorMess(error.message);
           break;
       }
     }
     return errorMess("Có lỗi xảy ta");
   }
-
   errorMess(String mess) async {
     return mess;
   }
@@ -73,9 +73,10 @@ class AuthInterceptor extends InterceptorsWrapper {
     pattern.allMatches(text).forEach((match) => print(match.group(0)));
   }
 
+
   @override
-  Future onResponse(Response response) async {
-    printWrapped('------Response: ${response.data}');
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    print('------Response: ${response.data}');
 
     if (response.data["code"] == 401) {
       UserInfo().setToken(null);
@@ -87,13 +88,6 @@ class AuthInterceptor extends InterceptorsWrapper {
           });
     }
 
-    if (response.statusCode != 200 && response.data["success"] == false) {
-      return super.onError(DioError(
-        request: response.request,
-        response: response,
-        error: "Đã xảy ra lỗi ERR5000",
-      ));
-    }
     if (response.data != null && response.data["success"] == false) {
       throw response.data["msg"] ?? "Đã xảy ra lỗi";
     }
@@ -109,9 +103,9 @@ class AuthInterceptor extends InterceptorsWrapper {
       } catch (e) {
         print(e.toString());
       }
-      return super.onResponse(null);
+      return super.onResponse(response, handler);
     }
 
-    return super.onResponse(response);
+    return super.onResponse(response, handler);
   }
 }

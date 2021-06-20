@@ -5,10 +5,10 @@ import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class MarketingRepository {
-  Future<CustomerComboResponse> getComboCustomer() async {
+  Future<CustomerComboResponse?> getComboCustomer() async {
     try {
       var res = await CustomerServiceManager()
-          .service
+          .service!
           .getComboCustomer(UserInfo().getCurrentStoreCode());
       return res;
     } catch (err) {
@@ -16,10 +16,10 @@ class MarketingRepository {
     }
   }
 
-  Future<VoucherCustomerResponse> getVoucherCustomer() async {
+  Future<VoucherCustomerResponse?> getVoucherCustomer() async {
     try {
       var res = await CustomerServiceManager()
-          .service
+          .service!
           .getVoucherCustomer(UserInfo().getCurrentStoreCode());
       return res;
     } catch (err) {

@@ -11,11 +11,11 @@ class PostController extends GetxController {
     getAllPost();
   }
 
-  Future<void> getAllPost() async {
+  Future<bool?> getAllPost() async {
     loading.value = true;
     try {
       var list = await RepositoryManager.postRepository.getAllPost();
-      listPost(list);
+      listPost(list!);
 
       loading.value = false;
       return true;

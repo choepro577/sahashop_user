@@ -9,9 +9,9 @@ import 'package:sahashop_user/data/repository/handle_error.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class OrderCustomerRepository {
-  Future<OrderResponse> createOrder(OrderRequest orderRequest) async {
+  Future<OrderResponse?> createOrder(OrderRequest orderRequest) async {
     try {
-      var res = await CustomerServiceManager().service.createOrder(
+      var res = await CustomerServiceManager().service!.createOrder(
             UserInfo().getCurrentStoreCode(),
             orderRequest.toJson(),
           );
@@ -21,7 +21,7 @@ class OrderCustomerRepository {
     }
   }
 
-  Future<OrderHistoryResponse> getOrderHistory(
+  Future<OrderHistoryResponse?> getOrderHistory(
     int numberPage,
     String search,
     String fieldBy,
@@ -32,7 +32,7 @@ class OrderCustomerRepository {
     String dateTo,
   ) async {
     try {
-      var res = await CustomerServiceManager().service.getOrderHistory(
+      var res = await CustomerServiceManager().service!.getOrderHistory(
           UserInfo().getCurrentStoreCode(),
           numberPage,
           search,
@@ -48,11 +48,11 @@ class OrderCustomerRepository {
     }
   }
 
-  Future<StateHistoryOrderCustomerResponse> getStateHistoryCustomerOrder(
-      int idOrder) async {
+  Future<StateHistoryOrderCustomerResponse?> getStateHistoryCustomerOrder(
+      int? idOrder) async {
     try {
       var res = await CustomerServiceManager()
-          .service
+          .service!
           .getStateHistoryCustomerOrder(
               UserInfo().getCurrentStoreCode(), idOrder);
       return res;
@@ -61,11 +61,11 @@ class OrderCustomerRepository {
     }
   }
 
-  Future<CancelOrderResponse> cancelOrder(
-      String orderCode, String reasonCancel) async {
+  Future<CancelOrderResponse?> cancelOrder(
+      String? orderCode, String reasonCancel) async {
     try {
       var res = await CustomerServiceManager()
-          .service
+          .service!
           .cancelOrder(UserInfo().getCurrentStoreCode(), {
         "order_code": orderCode,
         "note": reasonCancel,
@@ -76,10 +76,10 @@ class OrderCustomerRepository {
     }
   }
 
-  Future<OrderResponse> getOneOrderHistory(String orderCode) async {
+  Future<OrderResponse?> getOneOrderHistory(String? orderCode) async {
     try {
       var res = await CustomerServiceManager()
-          .service
+          .service!
           .getOneOrderHistory(UserInfo().getCurrentStoreCode(), orderCode);
       return res;
     } catch (err) {
@@ -87,10 +87,10 @@ class OrderCustomerRepository {
     }
   }
 
-  Future<CancelOrderResponse> changePaymentMethod(
-      String orderCode, int paymentMethodId) async {
+  Future<CancelOrderResponse?> changePaymentMethod(
+      String? orderCode, int? paymentMethodId) async {
     try {
-      var res = await CustomerServiceManager().service.changePaymentMethod(
+      var res = await CustomerServiceManager().service!.changePaymentMethod(
           UserInfo().getCurrentStoreCode(),
           {
             "payment_method_id": paymentMethodId,

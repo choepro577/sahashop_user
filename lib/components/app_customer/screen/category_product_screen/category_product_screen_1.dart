@@ -25,7 +25,7 @@ class CategoryProductStyle1 extends StatelessWidget {
 
   );
 
-  CategoryProductStyle1({Key key}) : super(key: key);
+  CategoryProductStyle1({Key? key}) : super(key: key);
 
   @override
   void dispose() {
@@ -46,7 +46,7 @@ class CategoryProductStyle1 extends StatelessWidget {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryTextTheme.headline1.color,
+                  color: Theme.of(context).primaryTextTheme.headline1!.color,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: TextField(
@@ -126,10 +126,10 @@ class CategoryProductStyle1 extends StatelessWidget {
     });
   }
 
-  Widget buildItem({Category category}) {
+  Widget buildItem({Category? category}) {
     return Obx(
       () => Container(
-          color: categoryController.categoryCurrent?.value?.id == category.id
+          color: categoryController.categoryCurrent.value.id == category!.id
               ? Colors.white
               : Colors.transparent,
           child: InkWell(
@@ -156,12 +156,12 @@ class CategoryProductStyle1 extends StatelessWidget {
                   height: 5,
                 ),
                 Text(
-                  category.name,
+                  category.name!,
                   maxLines: 3,
                   style: TextStyle(
                       fontSize: 13,
                       color: categoryController.categoryCurrent.value == category
-                          ? Theme.of(Get.context).primaryColor
+                          ? Theme.of(Get.context!).primaryColor
                           : Colors.black54),
                   textAlign: TextAlign.center,
                 ),

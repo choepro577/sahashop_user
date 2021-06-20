@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class PickerColorButton extends StatelessWidget {
-  final Color currentColor;
-  final Function onChange;
+  final Color? currentColor;
+  final Function? onChange;
 
   const PickerColorButton({
-    Key key,
+    Key? key,
     this.currentColor,
     this.onChange,
   }) : super(key: key);
@@ -28,8 +28,8 @@ class PickerColorButton extends StatelessWidget {
                 contentPadding: const EdgeInsets.all(0.0),
                 content: SingleChildScrollView(
                   child: ColorPicker(
-                    pickerColor: currentColor,
-                    onColorChanged: onChange,
+                    pickerColor: currentColor!,
+                    onColorChanged: onChange as void Function(Color),
                     colorPickerWidth: 300.0,
                     pickerAreaHeightPercent: 0.7,
                     enableAlpha: false,
@@ -51,6 +51,6 @@ class PickerColorButton extends StatelessWidget {
           'Chọn màu',
         ),
         color: currentColor,
-        textColor: Theme.of(context).primaryTextTheme.bodyText1.color);
+        textColor: Theme.of(context).primaryTextTheme.bodyText1!.color);
   }
 }

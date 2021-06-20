@@ -34,7 +34,7 @@ class CreateMyComboController extends GetxController {
   var isChoosedTypeVoucherDiscount = true.obs;
   var isCheckMinimumOrderDiscount = true.obs;
 
-  var discountType = DiscountType.k1.obs;
+  Rx<DiscountType?> discountType = DiscountType.k1.obs;
   var discountTypeRequest = 1.obs;
 
   var validateComboPercent = false.obs;
@@ -77,7 +77,7 @@ class CreateMyComboController extends GetxController {
     }
   }
 
-  void onChangeRatio(DiscountType v) {
+  void onChangeRatio(DiscountType? v) {
     if (discountType.value == DiscountType.k1) {
       valueEditingController.text = "";
       amountEditingController.text = "";

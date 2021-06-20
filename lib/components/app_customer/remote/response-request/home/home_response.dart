@@ -14,10 +14,10 @@ class HomeResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  HomeData data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  HomeData? data;
 
   factory HomeResponse.fromJson(Map<String, dynamic> json) => HomeResponse(
     code: json["code"],
@@ -30,7 +30,7 @@ class HomeResponse {
     "code": code,
     "success": success,
     "msg_code": msgCode,
-    "data": data.toJson(),
+    "data": data!.toJson(),
   };
 }
 

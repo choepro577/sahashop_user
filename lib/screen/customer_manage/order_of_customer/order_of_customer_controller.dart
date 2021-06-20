@@ -24,9 +24,9 @@ class OrderOfCustomerController extends GetxController {
         var res = await RepositoryManager.orderRepository.getAllOrder(
             pageLoadMore, "", "customer_id", "$idCustomer", "", "", "", "");
 
-        listOrder.addAll(res.data.data);
+        listOrder.addAll(res!.data!.data!);
 
-        if (res.data.nextPageUrl != null) {
+        if (res.data!.nextPageUrl != null) {
           pageLoadMore++;
           isEndCustomer.value = false;
         } else {

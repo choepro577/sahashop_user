@@ -5,12 +5,12 @@ import 'package:sahashop_user/model/order.dart';
 import 'package:sahashop_user/model/state_order.dart';
 
 class OrderDetailController extends GetxController {
-  Order order;
+  Order order = new Order();
 
   var orderResponse = Order().obs;
   var isLoadingOrder = false.obs;
 
-  OrderDetailController({this.order}) {
+  OrderDetailController({order}) {
     getOneOrder();
     getStateHistoryOrder();
   }
@@ -21,8 +21,8 @@ class OrderDetailController extends GetxController {
     isLoadingOrder.value = true;
     try {
       var res =
-          await RepositoryManager.orderRepository.getOneOrder(order.orderCode);
-      orderResponse(res.data);
+          await RepositoryManager.orderRepository.getOneOrder(order.orderCode!);
+      orderResponse(res!.data);
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
@@ -33,7 +33,7 @@ class OrderDetailController extends GetxController {
     try {
       var res = await RepositoryManager.orderRepository
           .getStateHistoryOrder(order.id);
-      listStateOrder(res.data);
+      listStateOrder(res!.data);
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }

@@ -10,13 +10,13 @@ import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart'
 import 'package:sahashop_user/components/saha_user/text/text_money.dart';
 
 class ComboDetailScreen extends StatelessWidget {
-  int idProduct;
+  int? idProduct;
 
   ComboDetailScreen({this.idProduct}) {
     comboDetailController = ComboDetailController(idProduct: idProduct);
   }
 
-  ComboDetailController comboDetailController;
+  late ComboDetailController comboDetailController;
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +158,7 @@ class ComboDetailScreen extends StatelessWidget {
                                         width: Get.width * 0.7,
                                         child: Text(comboDetailController
                                                 .listProductCombo[index]
-                                                .product
+                                                .product!
                                                 .name ??
                                             ""),
                                       ),
@@ -188,8 +188,7 @@ class ComboDetailScreen extends StatelessWidget {
                   isLoading: false,
                   child: StaggeredGridView.countBuilder(
                     crossAxisCount: 2,
-                    itemCount: comboDetailController.listProductCombo.length ??
-                        LIST_PRODUCT_EXAMPLE.length,
+                    itemCount: comboDetailController.listProductCombo.length,
                     itemBuilder: (BuildContext context, int index) =>
                         ProductItemWidget(
                       product: comboDetailController

@@ -73,7 +73,7 @@ class AllAddressStoreScreen extends StatelessWidget {
             //Get.back();
             Get.to(() => ConfigAddressStoreScreen(
                   infoAddress: infoAddress,
-                )).then((value) => {allAddressStoreController.refreshData()});
+                ))!.then((value) => {allAddressStoreController.refreshData()});
           },
           child: Container(
             padding: EdgeInsets.all(10),

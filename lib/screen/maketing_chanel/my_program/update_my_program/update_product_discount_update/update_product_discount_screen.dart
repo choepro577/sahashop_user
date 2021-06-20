@@ -79,8 +79,7 @@ class _UpdateProductToDiscountScreenState
               : Column(
                   children: [
                     ...List.generate(
-                      updateProductToSaleController.listProduct.length ??
-                          LIST_PRODUCT_EXAMPLE.length,
+                      updateProductToSaleController.listProduct.length,
                       (index) => updateProductToSaleController
                                   .listIsSave.value[index] ==
                               true
@@ -102,8 +101,7 @@ class _UpdateProductToDiscountScreenState
                                                       .listCheckSelectedProduct
                                                       .value[index]
                                                       .values
-                                                      .first ??
-                                                  false,
+                                                      .first,
                                               onChanged: (v) {
                                                 setState(() {
                                                   updateProductToSaleController
@@ -145,15 +143,15 @@ class _UpdateProductToDiscountScreenState
                                                         updateProductToSaleController
                                                                     .listProduct[
                                                                         index]
-                                                                    .images
+                                                                    .images!
                                                                     .length ==
                                                                 0
                                                             ? ""
                                                             : updateProductToSaleController
                                                                 .listProduct[
                                                                     index]
-                                                                .images[0]
-                                                                .imageUrl,
+                                                                .images![0]
+                                                                .imageUrl!,
                                                     errorWidget:
                                                         (context, url, error) =>
                                                             ClipRRect(
@@ -196,8 +194,7 @@ class _UpdateProductToDiscountScreenState
                                                   height: 10,
                                                 ),
                                                 Text(
-                                                    "${updateProductToSaleController.listProduct[index].price} đ" ??
-                                                        "Chưa đặt giá"),
+                                                    "${updateProductToSaleController.listProduct[index].price} đ"),
                                               ],
                                             ),
                                           )
@@ -225,7 +222,7 @@ class _UpdateProductToDiscountScreenState
                                             Shadow(
                                                 offset: Offset(0, 0),
                                                 blurRadius: 10.0,
-                                                color: Colors.grey[200]),
+                                                color: Colors.grey[200]!),
                                           ],
                                         ),
                                       ),
@@ -246,8 +243,7 @@ class _UpdateProductToDiscountScreenState
                                               .listCheckSelectedProduct
                                               .value[index]
                                               .values
-                                              .first ??
-                                          false,
+                                              .first,
                                       onChanged: (v) {
                                         setState(() {
                                           updateProductToSaleController
@@ -291,14 +287,14 @@ class _UpdateProductToDiscountScreenState
                                             fit: BoxFit.cover,
                                             imageUrl: updateProductToSaleController
                                                         .listProduct[index]
-                                                        .images
+                                                        .images!
                                                         .length ==
                                                     0
                                                 ? ""
                                                 : updateProductToSaleController
                                                     .listProduct[index]
-                                                    .images[0]
-                                                    .imageUrl,
+                                                    .images![0]
+                                                    .imageUrl!,
                                             errorWidget:
                                                 (context, url, error) =>
                                                     ClipRRect(
@@ -342,8 +338,7 @@ class _UpdateProductToDiscountScreenState
                                               height: 10,
                                             ),
                                             Text(
-                                                "${updateProductToSaleController.listProduct[index].price} đ" ??
-                                                    "Chưa đặt giá"),
+                                                "${updateProductToSaleController.listProduct[index].price} đ"),
                                           ],
                                         ),
                                       ),
@@ -370,7 +365,7 @@ class _UpdateProductToDiscountScreenState
                                                         offset: Offset(0, 0),
                                                         blurRadius: 10.0,
                                                         color:
-                                                            Colors.grey[200]),
+                                                            Colors.grey[200]!),
                                                   ],
                                                 ),
                                               ),

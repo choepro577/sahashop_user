@@ -26,11 +26,11 @@ class MyVoucherController extends GetxController {
     try {
       var res = await RepositoryManager.marketingChanel.getAllVoucher();
 
-      res.data.forEach((element) {
-        if (element.startTime.isAfter(timeNow)) {
+      res!.data!.forEach((element) {
+        if (element.startTime!.isAfter(timeNow)) {
           listVoucherIsComing.value.add(element);
         } else {
-          if (element.endTime.isAfter(timeNow)) {
+          if (element.endTime!.isAfter(timeNow)) {
             listVoucherIsRunning.value.add(element);
           }
           // else {
@@ -69,7 +69,7 @@ class MyVoucherController extends GetxController {
           .getEndVoucherFromPage(pageLoadMore);
 
       if (!isEndPageVoucher) {
-        res.data.data.forEach((element) {
+        res!.data!.data!.forEach((element) {
           listVoucherIsEnd.value.add(element);
         });
       } else {
@@ -78,7 +78,7 @@ class MyVoucherController extends GetxController {
 
       listAll.value[2] = listVoucherIsEnd.value;
       listAllSaveStateBefore = listAll;
-      if (res.data.nextPageUrl != null) {
+      if (res.data!.nextPageUrl != null) {
         pageLoadMore++;
         isEndPageVoucher = false;
       } else {
@@ -89,7 +89,7 @@ class MyVoucherController extends GetxController {
     }
   }
 
-  Future<void> endVoucher(int idVoucher) async {
+  Future<void> endVoucher(int? idVoucher) async {
     try {
       var data = await RepositoryManager.marketingChanel
           .updateVoucher(idVoucher, VoucherRequest(isEnd: true));
@@ -101,7 +101,7 @@ class MyVoucherController extends GetxController {
   }
 
   Future<void> deleteVoucher(
-    int idVoucher,
+    int? idVoucher,
   ) async {
     isDeletingDiscount.value = true;
     try {

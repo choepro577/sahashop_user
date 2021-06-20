@@ -2,10 +2,10 @@
 import 'package:sahashop_user/model/config_app.dart';
 
 class GetAppThemeResponse {
-  int code;
-  bool success;
-  String msgCode;
-  ConfigApp data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  ConfigApp? data;
 
   GetAppThemeResponse({this.code, this.success, this.msgCode, this.data});
 
@@ -22,7 +22,7 @@ class GetAppThemeResponse {
     data['success'] = this.success;
     data['msg_code'] = this.msgCode;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }

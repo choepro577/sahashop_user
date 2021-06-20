@@ -19,11 +19,11 @@ class CreateUpdateAddressCustomerResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  String msg;
-  InfoAddressCustomer data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  String? msg;
+  InfoAddressCustomer? data;
 
   factory CreateUpdateAddressCustomerResponse.fromJson(
           Map<String, dynamic> json) =>
@@ -40,6 +40,6 @@ class CreateUpdateAddressCustomerResponse {
         "success": success,
         "msg_code": msgCode,
         "msg": msg,
-        "data": data.toJson(),
+        "data": data!.toJson(),
       };
 }

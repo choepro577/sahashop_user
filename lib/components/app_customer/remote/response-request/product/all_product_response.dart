@@ -1,10 +1,10 @@
 import 'package:sahashop_user/model/product.dart';
 
 class AllProductResponse {
-  int code;
-  bool success;
-  String msgCode;
-  List<Product> data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  List<Product>? data;
 
   AllProductResponse({this.code, this.success, this.msgCode, this.data});
 
@@ -13,9 +13,9 @@ class AllProductResponse {
     success = json['success'];
     msgCode = json['msg_code'];
     if (json['data'] != null) {
-      data = new List<Product>();
+      data = [];
       json['data'].forEach((v) {
-        data.add(new Product.fromJson(v));
+        data!.add(new Product.fromJson(v));
       });
     }
   }
@@ -26,7 +26,7 @@ class AllProductResponse {
     data['success'] = this.success;
     data['msg_code'] = this.msgCode;
     if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }

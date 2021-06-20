@@ -16,10 +16,10 @@ class ProductResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  Product data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  Product? data;
 
   factory ProductResponse.fromJson(json) =>
       ProductResponse(
@@ -33,6 +33,6 @@ class ProductResponse {
         "code": code,
         "success": success,
         "msg_code": msgCode,
-        "data": data.toJson(),
+        "data": data!.toJson(),
       };
 }

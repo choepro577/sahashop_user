@@ -31,7 +31,7 @@ class PostScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: Obx(() {
-                    var list = postController.listPost?.toList().reversed.toList();
+                    var list = postController.listPost.toList().reversed.toList();
                     if (list == null || list.length == 0) {
                       return SahaEmptyWidget(
                         tile: "Không có danh mục nào",
@@ -49,7 +49,7 @@ class PostScreen extends StatelessWidget {
                 ),
                 SahaButtonFullParent(
                   onPressed: () {
-                    Get.to(AddPostScreen()).then((value) {
+                    Get.to(AddPostScreen())!.then((value) {
                       if (value == "added") {
                         postController.getAllPost();
                       }
@@ -68,9 +68,9 @@ class PostScreen extends StatelessWidget {
 }
 
 class ItemPostWidget extends StatelessWidget {
-  final Post post;
+  final Post? post;
 
-  const ItemPostWidget({Key key, this.post}) : super(key: key);
+  const ItemPostWidget({Key? key, this.post}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -79,11 +79,11 @@ class ItemPostWidget extends StatelessWidget {
           height: 60,
           width: 60,
           fit: BoxFit.cover,
-          imageUrl: post.imageUrl ?? "",
+          imageUrl: post!.imageUrl ?? "",
           placeholder: (context, url) => new SahaLoadingWidget(size: 30,),
           errorWidget: (context, url, error) => new Icon(Icons.error),
         ),
-        title: Text(post.title ?? ""),
+        title: Text(post!.title ?? ""),
       ),
     );
   }

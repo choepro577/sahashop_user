@@ -23,20 +23,20 @@ class InfoCustomer {
     this.updatedAt,
   });
 
-  int id;
-  int storeId;
+  int? id;
+  int? storeId;
   dynamic username;
-  String phoneNumber;
+  String? phoneNumber;
   dynamic phoneVerifiedAt;
   dynamic email;
   dynamic emailVerifiedAt;
   dynamic name;
   dynamic dateOfBirth;
   dynamic avatarImage;
-  int score;
+  int? score;
   dynamic sex;
-  DateTime createdAt;
-  DateTime updatedAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory InfoCustomer.fromJson(Map<String, dynamic> json) => InfoCustomer(
         id: json["id"],

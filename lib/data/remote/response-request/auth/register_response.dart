@@ -16,10 +16,10 @@ class RegisterResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  DataRegister data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  DataRegister? data;
 
   factory RegisterResponse.fromJson(Map<String, dynamic> json) => RegisterResponse(
     code: json["code"],
@@ -32,7 +32,7 @@ class RegisterResponse {
     "code": code,
     "success": success,
     "msg_code": msgCode,
-    "data": data.toJson(),
+    "data": data!.toJson(),
   };
 }
 
@@ -45,11 +45,11 @@ class DataRegister {
     this.id,
   });
 
-  String phoneNumber;
-  String email;
-  DateTime updatedAt;
-  DateTime createdAt;
-  int id;
+  String? phoneNumber;
+  String? email;
+  DateTime? updatedAt;
+  DateTime? createdAt;
+  int? id;
 
   factory DataRegister.fromJson(Map<String, dynamic> json) => DataRegister(
     phoneNumber: json["phone_number"],
@@ -62,8 +62,8 @@ class DataRegister {
   Map<String, dynamic> toJson() => {
     "phone_number": phoneNumber,
     "email": email,
-    "updated_at": updatedAt.toIso8601String(),
-    "created_at": createdAt.toIso8601String(),
+    "updated_at": updatedAt!.toIso8601String(),
+    "created_at": createdAt!.toIso8601String(),
     "id": id,
   };
 }

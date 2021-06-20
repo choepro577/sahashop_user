@@ -4,13 +4,13 @@ import 'package:sahashop_user/components/app_customer/repository/handle_error.da
 import 'package:sahashop_user/utils/user_info.dart';
 
 class LoginCustomerRepository {
-  Future<LoginResponse> loginAccount(
+  Future<LoginResponse?> loginAccount(
     String phone,
     String password,
   ) async {
     try {
       var res = await CustomerServiceManager()
-          .service
+          .service!
           .loginAccount(UserInfo().getCurrentStoreCode(), {
         "phone_number": phone,
         "password": password,

@@ -65,9 +65,9 @@ class AllMessageScreen extends StatelessWidget {
         footer: CustomFooter(
           builder: (
             BuildContext context,
-            LoadStatus mode,
+            LoadStatus? mode,
           ) {
-            Widget body;
+            Widget? body;
             if (mode == LoadStatus.idle) {
             } else if (mode == LoadStatus.loading) {
               body = CupertinoActivityIndicator();
@@ -97,7 +97,7 @@ class AllMessageScreen extends StatelessWidget {
           child: Obx(
             () => chatController.isLoadingBoxChatCustomer.value == true
                 ? Shimmer.fromColors(
-                    baseColor: Colors.grey[300],
+                    baseColor: Colors.grey[300]!,
                     highlightColor: Colors.white,
                     enabled: true,
                     child: Column(
@@ -139,7 +139,7 @@ class AllMessageScreen extends StatelessWidget {
       onTap: () {
         chatController.boxChatCustomer.value =
             chatController.listBoxChatCustomer[index];
-        Get.to(() => ChatScreen()).then((value) => {
+        Get.to(() => ChatScreen())!.then((value) => {
               chatController.refreshDataMessage(),
               chatController.refreshDataAllChat()
             });
@@ -175,7 +175,7 @@ class AllMessageScreen extends StatelessWidget {
                               chatController.listBoxChatCustomer.length == 0
                                   ? ""
                                   : chatController.listBoxChatCustomer[index]
-                                          .customer.avatarImage ??
+                                          .customer!.avatarImage ??
                                       "",
                           width: 60,
                           height: 60,
@@ -196,10 +196,10 @@ class AllMessageScreen extends StatelessWidget {
                           Text(
                             chatController.listBoxChatCustomer.length == 0
                                 ? chatController.listBoxChatCustomer[index]
-                                        .customer.phoneNumber ??
+                                        .customer!.phoneNumber ??
                                     "Chưa đặt tên"
                                 : chatController.listBoxChatCustomer[index]
-                                        .customer.name ??
+                                        .customer!.name ??
                                     "Chưa đặt tên",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w500),
@@ -211,7 +211,7 @@ class AllMessageScreen extends StatelessWidget {
                             width: Get.width * 0.7,
                             child: Text(
                               chatController.listBoxChatCustomer[index]
-                                      .lastMessage.content ??
+                                      .lastMessage!.content ??
                                   "",
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -226,7 +226,7 @@ class AllMessageScreen extends StatelessWidget {
                     top: 0,
                     child: Text(
                       SahaStringUtils().displayTimeAgoFromTime(chatController
-                          .listBoxChatCustomer[index].lastMessage.createdAt),
+                          .listBoxChatCustomer[index].lastMessage!.createdAt!),
                       style: TextStyle(fontSize: 12, color: Colors.grey[400]),
                     ),
                   ),

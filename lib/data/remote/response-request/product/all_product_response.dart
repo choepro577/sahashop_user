@@ -16,10 +16,10 @@ class AllProductResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  DataPageProduct data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  DataPageProduct? data;
 
   factory AllProductResponse.fromJson(Map<String, dynamic> json) =>
       AllProductResponse(
@@ -33,7 +33,7 @@ class AllProductResponse {
     "code": code,
     "success": success,
     "msg_code": msgCode,
-    "data": data.toJson(),
+    "data": data!.toJson(),
   };
 }
 
@@ -50,15 +50,15 @@ class DataPageProduct {
     this.to,
   });
 
-  int currentPage;
-  List<Product> data;
-  String firstPageUrl;
-  int from;
+  int? currentPage;
+  List<Product>? data;
+  String? firstPageUrl;
+  int? from;
   dynamic nextPageUrl;
-  String path;
-  int perPage;
+  String? path;
+  int? perPage;
   dynamic prevPageUrl;
-  int to;
+  int? to;
 
   factory DataPageProduct.fromJson(Map<String, dynamic> json) =>
       DataPageProduct(
@@ -75,7 +75,7 @@ class DataPageProduct {
 
   Map<String, dynamic> toJson() => {
     "current_page": currentPage,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
     "first_page_url": firstPageUrl,
     "from": from,
     "next_page_url": nextPageUrl,

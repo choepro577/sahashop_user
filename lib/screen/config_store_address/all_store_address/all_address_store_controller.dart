@@ -15,7 +15,7 @@ class AllAddressStoreController extends GetxController {
     isLoadingAddress.value = true;
     try {
       var res = await RepositoryManager.addressRepository.getAllAddressStore();
-      listAddressStore.value.addAll(res.data);
+      listAddressStore.value.addAll(res!.data!);
       // SahaAlert.showSuccess(message: "Lưu thành công");
     } catch (err) {
       SahaAlert.showError(message: err.toString());

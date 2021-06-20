@@ -6,13 +6,13 @@ import 'package:sahashop_user/utils/user_info.dart';
 class AddStoreController extends GetxController {
   var stateCreate = "".obs;
   var creating = false.obs;
-  var listNameShop = RxList<String>();
-  var mapTypeShop = RxList<Map<String, String>>();
+  var listNameShop = RxList<String?>();
+  RxList<Map<String, String?>> mapTypeShop = RxList<Map<String, String>>();
 
-  Future<List<DataTypeShop>> getAllShopType() async {
+  Future<List<DataTypeShop>?> getAllShopType() async {
     try {
       var listDataTypeShop =
-          await RepositoryManager.typeOfShopRepository.getAll();
+          await (RepositoryManager.typeOfShopRepository.getAll() as Future<List<DataTypeShop>>);
 
       for (var i in listDataTypeShop) {
         listNameShop.add(i.name);
@@ -21,12 +21,12 @@ class AddStoreController extends GetxController {
       print(listNameShop);
       return listDataTypeShop;
     } catch (err) {
-      return err;
+
     }
   }
 
   Future<bool> createShop(
-      String nameShop, String address, String idType, String code) async {
+      String nameShop, String address, String? idType, String code) async {
     creating.value = true;
     try {
       var dataCreateShop = await RepositoryManager.storeRepository.create(

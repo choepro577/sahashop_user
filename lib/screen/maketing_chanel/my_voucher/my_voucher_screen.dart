@@ -21,7 +21,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
     with TickerProviderStateMixin {
   bool isHasDiscount = false;
   bool isTabOnTap = false;
-  TabController tabController;
+  TabController? tabController;
   MyVoucherController myVoucherController = Get.put(MyVoucherController());
 
   List<String> stateVoucher = [
@@ -88,7 +88,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                                 Get.back();
                                 Get.to(() => CreateMyVoucher(
                                           voucherType: 0,
-                                        ))
+                                        ))!
                                     .then((value) =>
                                         {myVoucherController.refreshData()});
                               },
@@ -197,7 +197,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
         footer: CustomFooter(
           builder: (
             BuildContext context,
-            LoadStatus mode,
+            LoadStatus? mode,
           ) {
             Widget body;
             if (mode == LoadStatus.idle) {
@@ -331,7 +331,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                         width: Get.width * 0.6,
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          listVoucherState.name,
+                          listVoucherState.name!,
                           textAlign: TextAlign.start,
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w500),
@@ -341,7 +341,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                         width: Get.width * 0.7,
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "${SahaDateUtils().getDDMMYY(listVoucherState.startTime)} ${SahaDateUtils().getHHMM(listVoucherState.startTime)} - ${SahaDateUtils().getDDMMYY(listVoucherState.endTime)} ${SahaDateUtils().getHHMM(listVoucherState.endTime)}",
+                          "${SahaDateUtils().getDDMMYY(listVoucherState.startTime!)} ${SahaDateUtils().getHHMM(listVoucherState.startTime!)} - ${SahaDateUtils().getDDMMYY(listVoucherState.endTime!)} ${SahaDateUtils().getHHMM(listVoucherState.endTime!)}",
                           style:
                               TextStyle(fontSize: 13, color: Colors.grey[700]),
                         ),
@@ -443,7 +443,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                             height: 35,
                             width: Get.width * 0.9,
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey[600]),
+                                border: Border.all(color: Colors.grey[600]!),
                                 borderRadius: BorderRadius.circular(2.0)),
                             child: Center(
                               child: Text("Xem"),
@@ -459,7 +459,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                           onTap: () {
                             Get.to(() => UpdateMyVoucherScreen(
                                       voucher: listVoucherState,
-                                    ))
+                                    ))!
                                 .then((value) =>
                                     {myVoucherController.refreshData()});
                           },
@@ -467,7 +467,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                             height: 35,
                             width: Get.width * 0.45,
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey[600]),
+                                border: Border.all(color: Colors.grey[600]!),
                                 borderRadius: BorderRadius.circular(2.0)),
                             child: Center(
                               child: Text("Thay đổi"),
@@ -484,7 +484,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                                   height: 35,
                                   width: Get.width * 0.45,
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey[600]),
+                                    border: Border.all(color: Colors.grey[600]!),
                                     borderRadius: BorderRadius.circular(2.0),
                                   ),
                                   child: Center(
@@ -501,7 +501,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                                   height: 35,
                                   width: Get.width * 0.45,
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey[600]),
+                                    border: Border.all(color: Colors.grey[600]!),
                                     borderRadius: BorderRadius.circular(2.0),
                                   ),
                                   child: Center(

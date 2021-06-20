@@ -21,5 +21,5 @@ void runMainAppCustomer(BuildContext context) {
     () => LoadAppScreen(
       logo: configController.configApp.logoUrl,
     ),
-  ).then((value) {});
+  )!.then((value) {});
 }

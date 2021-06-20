@@ -6,10 +6,10 @@ import 'package:sahashop_user/model/cart.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class CartRepository {
-  Future<Cart> getItemCart() async {
+  Future<Cart?> getItemCart() async {
     try {
       var res = await CustomerServiceManager()
-          .service
+          .service!
           .getItemCart(UserInfo().getCurrentStoreCode());
       return res;
     } catch (err) {
@@ -17,9 +17,9 @@ class CartRepository {
     }
   }
 
-  Future<Cart> addVoucherCart(String codeVoucher) async {
+  Future<Cart?> addVoucherCart(String codeVoucher) async {
     try {
-      var res = await CustomerServiceManager().service.addVoucherCart(
+      var res = await CustomerServiceManager().service!.addVoucherCart(
           UserInfo().getCurrentStoreCode(), {"code_voucher": codeVoucher});
       return res;
     } catch (err) {
@@ -27,10 +27,10 @@ class CartRepository {
     }
   }
 
-  Future<Cart> updateItemCart(int idProduct, int quantity) async {
+  Future<Cart?> updateItemCart(int? idProduct, int quantity) async {
     try {
       var res = await CustomerServiceManager()
-          .service
+          .service!
           .updateItemCart(UserInfo().getCurrentStoreCode(), {
         "product_id": idProduct,
         "quantity": quantity,
@@ -41,10 +41,10 @@ class CartRepository {
     }
   }
 
-  Future<Cart> addItemCart(int idProduct) async {
+  Future<Cart?> addItemCart(int? idProduct) async {
     try {
       var res = await CustomerServiceManager()
-          .service
+          .service!
           .addItemCart(UserInfo().getCurrentStoreCode(), {
         "product_id": idProduct,
       });

@@ -7,6 +7,6 @@ class DeviceInfo {
 
   DeviceInfo._internal();
 
-  String deviceCode;
+  String? deviceCode;
 
 }

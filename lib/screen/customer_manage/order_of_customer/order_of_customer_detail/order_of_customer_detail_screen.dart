@@ -13,13 +13,13 @@ import 'package:sahashop_user/utils/string_utils.dart';
 
 // ignore: must_be_immutable
 class OrderOfCustomerDetailScreen extends StatelessWidget {
-  final Order order;
+  final Order order = Order();
 
-  OrderOfCustomerDetailScreen({this.order}) {
+  OrderOfCustomerDetailScreen({required order}) {
     orderOfCustomerDetailController =
         OrderOfCustomerDetailController(order: order);
   }
-  OrderOfCustomerDetailController orderOfCustomerDetailController;
+  OrderOfCustomerDetailController orderOfCustomerDetailController = OrderOfCustomerDetailController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                           style: TextStyle(
                               color: Theme.of(context)
                                   .primaryTextTheme
-                                  .headline6
+                                  .headline6!
                                   .color),
                         ),
                         Spacer(),
@@ -56,7 +56,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                               "assets/icons/delivery_truck.svg",
                               color: Theme.of(context)
                                   .primaryTextTheme
-                                  .headline6
+                                  .headline6!
                                   .color),
                         ),
                       ],
@@ -75,7 +75,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                           style: TextStyle(
                               color: Theme.of(context)
                                   .primaryTextTheme
-                                  .headline6
+                                  .headline6!
                                   .color),
                         ),
                         Spacer(),
@@ -85,7 +85,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                               height: 28,
                               color: Theme.of(context)
                                   .primaryTextTheme
-                                  .headline6
+                                  .headline6!
                                   .color),
                         ),
                       ],
@@ -163,21 +163,21 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                       Container(
                         width: Get.width * 0.7,
                         child: Text(
-                          "${order.customerAddress.name ?? "Chưa có tên"}  | ${order.customerAddress.phone ?? "Chưa có số điện thoại"}",
+                          "${order.customerAddress!.name ?? "Chưa có tên"}  | ${order.customerAddress!.phone ?? "Chưa có số điện thoại"}",
                           maxLines: 2,
                         ),
                       ),
                       Container(
                         width: Get.width * 0.7,
                         child: Text(
-                          "${order.customerAddress.addressDetail ?? "Chưa có địa chỉ chi tiết"}",
+                          "${order.customerAddress!.addressDetail ?? "Chưa có địa chỉ chi tiết"}",
                           maxLines: 2,
                         ),
                       ),
                       Container(
                         width: Get.width * 0.7,
                         child: Text(
-                          "${order.customerAddress.districtName ?? "Chưa có Quận/Huyện"}, ${order.customerAddress.wardsName ?? "Chưa có Phường/Xã"}, ${order.customerAddress.provinceName ?? "Chưa có Tỉnh/Thành phố"}",
+                          "${order.customerAddress!.districtName ?? "Chưa có Quận/Huyện"}, ${order.customerAddress!.wardsName ?? "Chưa có Phường/Xã"}, ${order.customerAddress!.provinceName ?? "Chưa có Tỉnh/Thành phố"}",
                           style:
                               TextStyle(color: Colors.grey[700], fontSize: 13),
                           maxLines: 2,
@@ -195,7 +195,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
             Column(
               children: [
                 ...List.generate(
-                  order.lineItemsAtTime.length,
+                  order.lineItemsAtTime!.length,
                   (index) => Column(
                     children: [
                       Padding(
@@ -207,14 +207,14 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                               child: Container(
                                 decoration: BoxDecoration(
                                     border:
-                                        Border.all(color: Colors.grey[200])),
+                                        Border.all(color: Colors.grey[200]!)),
                                 child: CachedNetworkImage(
                                   width: 80,
                                   height: 80,
                                   fit: BoxFit.cover,
-                                  imageUrl: order.lineItemsAtTime.length == 0
+                                  imageUrl: order.lineItemsAtTime!.length == 0
                                       ? ""
-                                      : "${order.lineItemsAtTime[index].imageUrl}",
+                                      : "${order.lineItemsAtTime![index].imageUrl}",
                                   errorWidget: (context, url, error) =>
                                       ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
@@ -237,7 +237,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      "${order.lineItemsAtTime[index].name}",
+                                      "${order.lineItemsAtTime![index].name}",
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500),
                                     ),
@@ -247,7 +247,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                                           children: [
                                             Spacer(),
                                             Text(
-                                              " x ${order.lineItemsAtTime[index].quantity}",
+                                              " x ${order.lineItemsAtTime![index].quantity}",
                                               style: TextStyle(
                                                   fontSize: 13,
                                                   color: Colors.grey[600]),
@@ -258,7 +258,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                                           children: [
                                             Spacer(),
                                             Text(
-                                              "đ${SahaStringUtils().convertToMoney(order.lineItemsAtTime[index].beforePrice)}",
+                                              "đ${SahaStringUtils().convertToMoney(order.lineItemsAtTime![index].beforePrice)}",
                                               style: TextStyle(
                                                   decoration: TextDecoration
                                                       .lineThrough,
@@ -266,7 +266,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                                             ),
                                             SizedBox(width: 15),
                                             Text(
-                                              "đ${SahaStringUtils().convertToMoney(order.lineItemsAtTime[index].afterDiscount)}",
+                                              "đ${SahaStringUtils().convertToMoney(order.lineItemsAtTime![index].afterDiscount)}",
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .primaryColor),
@@ -477,7 +477,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                         ),
                         Spacer(),
                         Text(
-                          "${SahaDateUtils().getDDMMYY(order.createdAt)} ${SahaDateUtils().getHHMM(order.createdAt)}",
+                          "${SahaDateUtils().getDDMMYY(order.createdAt!)} ${SahaDateUtils().getHHMM(order.createdAt!)}",
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                       ],
@@ -500,7 +500,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                               ),
                               Spacer(),
                               Text(
-                                "${SahaDateUtils().getDDMMYY(orderOfCustomerDetailController.listStateOrder[index].createdAt)} ${SahaDateUtils().getHHMM(orderOfCustomerDetailController.listStateOrder[index].createdAt)}",
+                                "${SahaDateUtils().getDDMMYY(orderOfCustomerDetailController.listStateOrder[index].createdAt!)} ${SahaDateUtils().getHHMM(orderOfCustomerDetailController.listStateOrder[index].createdAt!)}",
                                 style: TextStyle(color: Colors.grey[600]),
                               ),
                             ],

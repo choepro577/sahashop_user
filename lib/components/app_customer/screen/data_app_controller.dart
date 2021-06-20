@@ -22,13 +22,13 @@ import 'search_screen/search_screen.dart';
 
 class DataAppCustomerController extends GetxController {
   Product productCurrent = Product();
-  Category categoryCurrent;
-  CategoryPost categoryPostCurrent;
-  Post postCurrent;
-  HomeData homeData = HomeData();
+  Category? categoryCurrent;
+  CategoryPost? categoryPostCurrent;
+  Post? postCurrent;
+  HomeData? homeData = HomeData();
 
   var isLogin = false.obs;
-  var infoCustomer = InfoCustomer().obs;
+  Rx<InfoCustomer?> infoCustomer = InfoCustomer().obs;
 
   DataAppCustomerController() {
     productCurrent = LIST_PRODUCT_EXAMPLE[0];
@@ -56,7 +56,7 @@ class DataAppCustomerController extends GetxController {
       try {
         var res = await CustomerRepositoryManager.infoCustomerRepository
             .getInfoCustomer();
-        infoCustomer.value = res.data;
+        infoCustomer.value = res!.data;
         isLogin.value = true;
       } catch (err) {
         // SahaAlert.showError(message: err.toString());
@@ -67,28 +67,28 @@ class DataAppCustomerController extends GetxController {
   void toSearchScreen() {
     Get.to(SearchScreen(
       searchText: "",
-    )).then((value) {
-      FocusScope.of(Get.context).requestFocus(FocusNode());
+    ))!.then((value) {
+      FocusScope.of(Get.context!).requestFocus(FocusNode());
     });
   }
 
-  void toPostAllScreen({CategoryPost categoryPost}) {
+  void toPostAllScreen({CategoryPost? categoryPost}) {
     categoryPostCurrent = categoryPost;
     Get.to(CategoryPostStyle1());
   }
 
-  void toPostScreen({Post post}) {
+  void toPostScreen({Post? post}) {
     postCurrent = post;
     Get.to(CategoryProductStyle1());
   }
 
-  void toCategoryProductScreen({Category category}) {
+  void toCategoryProductScreen({Category? category}) {
     ConfigController configController = Get.find();
     categoryCurrent = category;
-    if (configController.configApp.categoryPageType <
+    if (configController.configApp.categoryPageType! <
         LIST_WIDGET_CATEGORY_PRODUCT.length) {
       Get.to(LIST_WIDGET_CATEGORY_PRODUCT[
-          configController.configApp.categoryPageType]);
+          configController.configApp.categoryPageType!]);
     } else {
       Get.to(LIST_WIDGET_CATEGORY_PRODUCT[0]);
     }
@@ -98,22 +98,22 @@ class DataAppCustomerController extends GetxController {
     ConfigController configController = Get.find();
     productCurrent = product;
 
-    if (configController.configApp.productPageType <
+    if (configController.configApp.productPageType! <
         LIST_WIDGET_PRODUCT_SCREEN.length) {
       Get.to(() => LIST_WIDGET_PRODUCT_SCREEN[
-          configController.configApp.productPageType]);
+          configController.configApp.productPageType!]);
     } else {
       Get.to(() => LIST_WIDGET_PRODUCT_SCREEN[0]);
     }
   }
 
-  Future toHomeScreen() {
+  Future? toHomeScreen() {
     ConfigController configController = Get.find();
-    if (configController.configApp?.homePageType != null &&
-        configController.configApp.homePageType <
+    if (configController.configApp.homePageType != null &&
+        configController.configApp.homePageType! <
             LIST_WIDGET_HOME_SCREEN.length) {
       return Get.to(() =>
-          LIST_WIDGET_HOME_SCREEN[configController.configApp.homePageType]);
+          LIST_WIDGET_HOME_SCREEN[configController.configApp.homePageType!]);
     } else {
       return Get.to(() => LIST_WIDGET_HOME_SCREEN[0]);
     }
@@ -121,9 +121,9 @@ class DataAppCustomerController extends GetxController {
 
   Widget getSearchWidget() {
     ConfigController configController = Get.find();
-    if (configController.configApp?.searchType != null &&
-        configController.configApp.searchType < LIST_WIDGET_SEARCH_BAR.length) {
-      return LIST_WIDGET_SEARCH_BAR[configController.configApp.searchType];
+    if (configController.configApp.searchType != null &&
+        configController.configApp.searchType! < LIST_WIDGET_SEARCH_BAR.length) {
+      return LIST_WIDGET_SEARCH_BAR[configController.configApp.searchType!];
     } else {
       return LIST_WIDGET_SEARCH_BAR[0];
     }
@@ -132,15 +132,15 @@ class DataAppCustomerController extends GetxController {
   Widget getBannerWidget() {
     ConfigController configController = Get.find();
 
-    if (configController.configApp?.carouselType != null &&
-        configController.configApp.carouselType < LIST_WIDGET_BANNER.length) {
-      return LIST_WIDGET_BANNER[configController.configApp.carouselType];
+    if (configController.configApp.carouselType != null &&
+        configController.configApp.carouselType! < LIST_WIDGET_BANNER.length) {
+      return LIST_WIDGET_BANNER[configController.configApp.carouselType!];
     } else {
       return LIST_WIDGET_BANNER[0];
     }
   }
 
-  Future<void> getHomeData() async {
+  Future<bool?> getHomeData() async {
     try {
       var data = await CustomerRepositoryManager.homeDataCustomerRepository
           .getHomeData();
@@ -168,13 +168,13 @@ class DataAppCustomerController extends GetxController {
 
   void increaseItem(index) {
     listQuantityProduct[index] = listQuantityProduct[index] + 1;
-    updateItemCart(listOrder[index].product.id, listQuantityProduct[index]);
+    updateItemCart(listOrder[index].product!.id, listQuantityProduct[index]);
   }
 
   void decreaseItem(index) {
     if (listQuantityProduct[index] > 1) {
       listQuantityProduct[index] = listQuantityProduct[index] - 1;
-      updateItemCart(listOrder[index].product.id, listQuantityProduct[index]);
+      updateItemCart(listOrder[index].product!.id, listQuantityProduct[index]);
     } else {
       return;
     }
@@ -194,11 +194,11 @@ class DataAppCustomerController extends GetxController {
     try {
       var res = await CustomerRepositoryManager.marketingRepository
           .getComboCustomer();
-      res.data.forEach((e) {
+      res!.data!.forEach((e) {
         bool checkInCombo = false;
         for (int i = 0; i < listOrder.length; i++) {
-          int checkHasInCombo = e.productsCombo.indexWhere(
-              (element) => element.product.id == listOrder[i].product.id);
+          int checkHasInCombo = e.productsCombo!.indexWhere(
+              (element) => element.product!.id == listOrder[i].product!.id);
           if (checkHasInCombo != -1) {
             checkInCombo = true;
             break;
@@ -214,7 +214,7 @@ class DataAppCustomerController extends GetxController {
 
       for (int i = 0; i < listCombo.length; i++) {
         var checkEnough = listUsedCombo
-            .indexWhere((element) => element.combo.id == listCombo[i].id);
+            .indexWhere((element) => element.combo!.id == listCombo[i].id);
         if (checkEnough != -1) {
           enoughCondition[i] = true;
         } else {
@@ -229,19 +229,19 @@ class DataAppCustomerController extends GetxController {
   }
 
   Future<void> getItemCart() async {
-    List<int> listQuantityProductNew = [];
+    List<int?> listQuantityProductNew = [];
     try {
       var res = await CustomerRepositoryManager.cartRepository.getItemCart();
-      listOrder(res.data.lineItems);
-      listUsedCombo(res.data.usedCombos);
-      res.data.lineItems.forEach((element) {
+      listOrder(res!.data!.lineItems!);
+      listUsedCombo(res.data!.usedCombos!);
+      res.data!.lineItems!.forEach((element) {
         listQuantityProductNew.add(element.quantity);
       });
-      comboDiscountAmount.value = res.data.comboDiscountAmount;
-      listQuantityProduct(listQuantityProductNew);
-      totalMoneyAfterDiscount.value = res.data.totalAfterDiscount;
-      totalBeforeDiscount.value = res.data.totalBeforeDiscount;
-      productDiscountAmount.value = res.data.productDiscountAmount;
+      comboDiscountAmount.value = res.data!.comboDiscountAmount!;
+      listQuantityProduct(listQuantityProductNew as List<int>);
+      totalMoneyAfterDiscount.value = res.data!.totalAfterDiscount!;
+      totalBeforeDiscount.value = res.data!.totalBeforeDiscount!;
+      productDiscountAmount.value = res.data!.productDiscountAmount!;
       getComboCustomer();
     } catch (err) {
       SahaAlert.showError(message: err.toString());
@@ -249,64 +249,64 @@ class DataAppCustomerController extends GetxController {
   }
 
   Future<void> addVoucherCart(String codeVoucher) async {
-    List<int> listQuantityProductNew = [];
+    List<int?> listQuantityProductNew = [];
     voucherDiscountAmount.value = 0.0;
     try {
       var res = await CustomerRepositoryManager.cartRepository
           .addVoucherCart(codeVoucher);
-      listOrder(res.data.lineItems);
-      listUsedCombo(res.data.usedCombos);
-      res.data.lineItems.forEach((element) {
+      listOrder(res!.data!.lineItems!);
+      listUsedCombo(res.data!.usedCombos!);
+      res.data!.lineItems!.forEach((element) {
         listQuantityProductNew.add(element.quantity);
       });
-      listQuantityProduct(listQuantityProductNew);
-      comboDiscountAmount.value = res.data.comboDiscountAmount;
-      totalMoneyAfterDiscount.value = res.data.totalAfterDiscount;
-      totalBeforeDiscount.value = res.data.totalBeforeDiscount;
-      productDiscountAmount.value = res.data.productDiscountAmount;
-      voucherDiscountAmount.value = res.data.voucherDiscountAmount;
+      listQuantityProduct(listQuantityProductNew as List<int>);
+      comboDiscountAmount.value = res.data!.comboDiscountAmount!;
+      totalMoneyAfterDiscount.value = res.data!.totalAfterDiscount!;
+      totalBeforeDiscount.value = res.data!.totalBeforeDiscount!;
+      productDiscountAmount.value = res.data!.productDiscountAmount!;
+      voucherDiscountAmount.value = res.data!.voucherDiscountAmount!;
       getComboCustomer();
     } catch (err) {
       // SahaAlert.showError(message: err.toString());
     }
   }
 
-  Future<void> updateItemCart(int idProduct, int quantity) async {
-    List<int> listQuantityProductNew = [];
+  Future<void> updateItemCart(int? idProduct, int quantity) async {
+    List<int?> listQuantityProductNew = [];
     try {
       var res = await CustomerRepositoryManager.cartRepository
           .updateItemCart(idProduct, quantity);
-      listOrder(res.data.lineItems);
-      listUsedCombo(res.data.usedCombos);
-      res.data.lineItems.forEach((element) {
+      listOrder(res!.data!.lineItems!);
+      listUsedCombo(res.data!.usedCombos!);
+      res.data!.lineItems!.forEach((element) {
         listQuantityProductNew.add(element.quantity);
       });
-      listQuantityProduct(listQuantityProductNew);
-      comboDiscountAmount.value = res.data.comboDiscountAmount;
-      totalMoneyAfterDiscount.value = res.data.totalAfterDiscount;
-      totalBeforeDiscount.value = res.data.totalBeforeDiscount;
-      productDiscountAmount.value = res.data.productDiscountAmount;
+      listQuantityProduct(listQuantityProductNew as List<int>);
+      comboDiscountAmount.value = res.data!.comboDiscountAmount!;
+      totalMoneyAfterDiscount.value = res.data!.totalAfterDiscount!;
+      totalBeforeDiscount.value = res.data!.totalBeforeDiscount!;
+      productDiscountAmount.value = res.data!.productDiscountAmount!;
       getComboCustomer();
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
   }
 
-  Future<void> addItemCart(int idProduct) async {
-    List<int> listQuantityProductNew = [];
+  Future<void> addItemCart(int? idProduct) async {
+    List<int?> listQuantityProductNew = [];
     try {
       var res =
           await CustomerRepositoryManager.cartRepository.addItemCart(idProduct);
-      listOrder(res.data.lineItems);
-      listUsedCombo(res.data.usedCombos);
-      res.data.lineItems.forEach((element) {
+      listOrder(res!.data!.lineItems!);
+      listUsedCombo(res.data!.usedCombos!);
+      res.data!.lineItems!.forEach((element) {
         listQuantityProductNew.add(element.quantity);
       });
-      listQuantityProduct(listQuantityProductNew);
-      comboDiscountAmount.value = res.data.comboDiscountAmount;
-      totalMoneyAfterDiscount.value = res.data.totalAfterDiscount;
-      totalBeforeDiscount.value = res.data.totalBeforeDiscount;
-      productDiscountAmount.value = res.data.productDiscountAmount;
+      listQuantityProduct(listQuantityProductNew as List<int>);
+      comboDiscountAmount.value = res.data!.comboDiscountAmount!;
+      totalMoneyAfterDiscount.value = res.data!.totalAfterDiscount!;
+      totalBeforeDiscount.value = res.data!.totalBeforeDiscount!;
+      productDiscountAmount.value = res.data!.productDiscountAmount!;
       getComboCustomer();
     } catch (err) {
       SahaAlert.showError(message: err.toString());

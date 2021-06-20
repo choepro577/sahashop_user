@@ -12,13 +12,14 @@ import 'order_completed_controller.dart';
 
 // ignore: must_be_immutable
 class OrderCompletedScreen extends StatelessWidget {
-  final String orderCode;
+  final String? orderCode;
 
-  OrderCompletedController orderCompletedController;
+  OrderCompletedController? orderCompletedController;
 
   DataAppCustomerController dataAppCustomerController = Get.find();
   OrderHistoryController orderHistoryController = Get.find();
-  OrderCompletedScreen({Key key, this.orderCode}) : super(key: key) {
+
+   OrderCompletedScreen({Key? key, this.orderCode}) : super(key: key) {
     orderCompletedController = OrderCompletedController(orderCode);
   }
 
@@ -38,7 +39,7 @@ class OrderCompletedScreen extends StatelessWidget {
                 width: Get.width,
                 child: Obx(
                   () {
-                    var x = orderCompletedController.refreshValue.value;
+                    var x = orderCompletedController!.refreshValue.value;
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -58,7 +59,7 @@ class OrderCompletedScreen extends StatelessWidget {
                                 size: 15.0,
                                 color: Theme.of(context)
                                     .primaryTextTheme
-                                    .headline6
+                                    .headline6!
                                     .color,
                               ),
                             ),
@@ -82,17 +83,17 @@ class OrderCompletedScreen extends StatelessWidget {
                             textAlign: TextAlign.center,
                           ),
                         ),
-                        orderCompletedController.order.value.paymentMethodId ==
+                        orderCompletedController!.order.value!.paymentMethodId ==
                                     0 ||
-                                orderCompletedController
-                                        .order.value.paymentMethodId ==
+                                orderCompletedController!
+                                        .order.value!.paymentMethodId ==
                                     null
                             ? Container()
                             : InkWell(
                                 onTap: () {
                                   Get.to(() => PayScreen(
-                                        orderCode: orderCompletedController
-                                            .order.value.orderCode,
+                                        orderCode: orderCompletedController!
+                                            .order.value!.orderCode,
                                       ));
                                 },
                                 child: Container(
@@ -110,7 +111,7 @@ class OrderCompletedScreen extends StatelessWidget {
                                       style: TextStyle(
                                           color: Theme.of(context)
                                               .primaryTextTheme
-                                              .headline6
+                                              .headline6!
                                               .color,
                                           fontWeight: FontWeight.w500),
                                     ),
@@ -150,8 +151,8 @@ class OrderCompletedScreen extends StatelessWidget {
                               onTap: () {
                                 Get.off(() => OrderHistoryDetailScreen(
                                       order:
-                                          orderCompletedController.order.value,
-                                    )).then((value) => {
+                                          orderCompletedController!.order.value,
+                                    ))!.then((value) => {
                                       //  orderHistoryController.refreshData(),
                                       orderHistoryController.refreshData(
                                         "order_status_code",
@@ -159,8 +160,8 @@ class OrderCompletedScreen extends StatelessWidget {
                                         orderHistoryController.listStatusCode
                                             .indexWhere((element) =>
                                                 element ==
-                                                orderCompletedController.order
-                                                    .value.orderStatusCode),
+                                                orderCompletedController!.order
+                                                    .value!.orderStatusCode),
                                       ),
                                     });
                               },
@@ -192,44 +193,44 @@ class OrderCompletedScreen extends StatelessWidget {
                                 color: Theme.of(context).primaryColor),
                           ),
                         ),
-                        Obx(
-                          () => orderCompletedController
-                                      .isLoadingPayment.value ==
-                                  true
-                              ? Container()
-                              : DropdownButton<Map<int, String>>(
-                                  focusColor: Colors.white,
-                                  value: orderCompletedController.paymentMethod,
-                                  //elevation: 5,
-                                  style: TextStyle(color: Colors.white),
-                                  items: orderCompletedController
-                                      .listPaymentMethod
-                                      .map<DropdownMenuItem<Map<int, String>>>(
-                                          (Map<int, String> value) {
-                                    return DropdownMenuItem<Map<int, String>>(
-                                      value: value,
-                                      child: Text(
-                                        "${value.values.first}",
-                                        style: TextStyle(color: Colors.black),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    );
-                                  }).toList(),
-                                  hint: Text(
-                                    "${orderCompletedController.order?.value?.paymentMethodName}",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  onChanged: (Map<int, String> value) {
-                                    orderCompletedController.paymentMethod =
-                                        value;
-                                    orderCompletedController
-                                        .changPaymentMethod(value.keys.first);
-                                  },
-                                ),
-                        ),
+                        // Obx(
+                        //   () => orderCompletedController!
+                        //               .isLoadingPayment.value ==
+                        //           true
+                        //       ? Container()
+                        //       : DropdownButton<Map<int, String>>(
+                        //           focusColor: Colors.white,
+                        //           value: orderCompletedController!.paymentMethod,
+                        //           //elevation: 5,
+                        //           style: TextStyle(color: Colors.white),
+                        //           items: orderCompletedController!
+                        //               .listPaymentMethod!
+                        //               .map<DropdownMenuItem<Map<int, String>> >(
+                        //                   (Map<int?, String?>? value) {
+                        //                     return DropdownMenuItem<Map<int, String>>(
+                        //                       value: value,
+                        //                       child: Text(
+                        //                         "${value!.values.first}",
+                        //                         style: TextStyle(color: Colors.black),
+                        //                         textAlign: TextAlign.center,
+                        //                       ),
+                        //                     );
+                        //           }).toList(),
+                        //           hint: Text(
+                        //             "${orderCompletedController!.order.value?.paymentMethodName}",
+                        //             style: TextStyle(
+                        //                 color: Colors.black,
+                        //                 fontSize: 14,
+                        //                 fontWeight: FontWeight.w500),
+                        //           ),
+                        //           onChanged: (Map<int, String>? value) {
+                        //             orderCompletedController!.paymentMethod =
+                        //                 value!;
+                        //             orderCompletedController!
+                        //                 .changPaymentMethod(value.keys.first);
+                        //           },
+                        //         ),
+                        // ),
                       ],
                     );
                   },
@@ -270,7 +271,7 @@ class OrderCompletedScreen extends StatelessWidget {
                             color: true
                                 ? Theme.of(context)
                                     .primaryTextTheme
-                                    .headline6
+                                    .headline6!
                                     .color
                                 : Color(0xFFDBDEE4),
                           ),

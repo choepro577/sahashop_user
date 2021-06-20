@@ -27,9 +27,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController textEditingControllerPass = new TextEditingController();
 
   LoginController loginController = LoginController();
-  String phoneShop;
+  String? phoneShop;
   // ignore: cancel_subscriptions
-  StreamSubscription sub;
+  StreamSubscription? sub;
 
   @override
   void didChangeDependencies() {
@@ -89,7 +89,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 controller: textEditingControllerPhoneShop,
                 onChanged: (value) {},
                 validator: (value) {
-                  if (value.length < 9) {
+                  if (value!.length < 9) {
                     return 'Bạn chưa nhập số điện thoại';
                   }
                   return null;
@@ -104,7 +104,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 controller: textEditingControllerPass,
                 onChanged: (value) {},
                 validator: (value) {
-                  if (value.length < 6) {
+                  if (value!.length < 6) {
                     return 'mật khẩu chứa hơn 6 kí tự';
                   }
                   return null;
@@ -118,7 +118,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SahaTextField(
                 onChanged: (value) {},
                 validator: (value) {
-                  if (value.length < 6) {
+                  if (value!.length < 6) {
                     return 'mật khẩu chứa hơn 6 kí tự';
                   }
                   return null;
@@ -131,8 +131,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  if (_formKey.currentState.validate()) {
-                    _formKey.currentState.save();
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
                     phoneShop = textEditingControllerPhoneShop.text;
                     EasyLoading.show();
                     KeyboardUtil.hideKeyboard(context);

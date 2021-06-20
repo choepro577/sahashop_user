@@ -17,11 +17,11 @@ class CartCustomerResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  String msg;
-  Data data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  String? msg;
+  Data? data;
 
   factory CartCustomerResponse.fromJson(Map<String, dynamic> json) =>
       CartCustomerResponse(
@@ -37,7 +37,7 @@ class CartCustomerResponse {
         "success": success,
         "msg_code": msgCode,
         "msg": msg,
-        "data": data.toJson(),
+        "data": data!.toJson(),
       };
 }
 
@@ -51,12 +51,12 @@ class Data {
     this.lineItems,
   });
 
-  double totalBeforeDiscount;
-  double comboDiscountAmount;
-  double productDiscountAmount;
-  double voucherDiscountAmount;
-  double totalAfterDiscount;
-  List<LineItem> lineItems;
+  double? totalBeforeDiscount;
+  double? comboDiscountAmount;
+  double? productDiscountAmount;
+  double? voucherDiscountAmount;
+  double? totalAfterDiscount;
+  List<LineItem>? lineItems;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         totalBeforeDiscount:
@@ -79,6 +79,6 @@ class Data {
         "product_discount_amount": productDiscountAmount,
         "voucher_discount_amount": voucherDiscountAmount,
         "total_after_discount": totalAfterDiscount,
-        "line_items": List<dynamic>.from(lineItems.map((x) => x.toJson())),
+        "line_items": List<dynamic>.from(lineItems!.map((x) => x.toJson())),
       };
 }

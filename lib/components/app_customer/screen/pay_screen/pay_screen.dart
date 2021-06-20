@@ -4,7 +4,7 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class PayScreen extends StatelessWidget {
-  final String orderCode;
+  final String? orderCode;
   PayScreen({this.orderCode});
 
   @override

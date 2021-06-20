@@ -17,7 +17,8 @@ class Product {
     this.status,
     this.createdAt,
     this.updatedAt,
-    this.details,
+    this.distributes,
+    this.attributes,
     this.images,
     this.categories,
     this.productDiscount,
@@ -25,22 +26,23 @@ class Product {
     this.hasInCombo,
   });
 
-  int id;
-  String name;
-  int storeId;
-  String description;
-  int indexImageAvatar;
-  double price;
-  String barcode;
-  int status;
-  DateTime createdAt;
-  DateTime updatedAt;
-  List<Details> details;
-  List<ImageProduct> images;
-  List<Category> categories;
-  ProductDiscount productDiscount;
-  bool hasInDiscount;
-  bool hasInCombo;
+  int? id;
+  String? name;
+  int? storeId;
+  String? description;
+  int? indexImageAvatar;
+  double? price;
+  String? barcode;
+  int? status;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  List<Distributes>? distributes;
+  List<Attributes>? attributes;
+  List<ImageProduct>? images;
+  List<Category>? categories;
+  ProductDiscount? productDiscount;
+  bool? hasInDiscount;
+  bool? hasInCombo;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
@@ -58,8 +60,14 @@ class Product {
         status: json["status"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        // details:
-        //      List<Details>.from(json["details"].map((x) => Details.fromJson(x))),
+        distributes: json['distributes'] != null
+            ? List<Distributes>.from(
+                json["distributes"].map((x) => Distributes.fromJson(x)))
+            : [],
+        attributes: json['attributes'] != null
+            ? List<Attributes>.from(
+                json["attributes"].map((x) => Attributes.fromJson(x)))
+            : [],
         images: List<ImageProduct>.from(
             json["images"].map((x) => ImageProduct.fromJson(x))),
         categories: List<Category>.from(
@@ -76,61 +84,19 @@ class Product {
         "barcode": name,
         "status": status,
         "product_discount":
-            productDiscount == null ? null : productDiscount.toJson(),
+            productDiscount == null ? null : productDiscount!.toJson(),
         "has_in_discount": hasInDiscount,
         "has_in_combo": hasInCombo,
-        "details": details == null
+        "distributes": distributes == null
             ? null
-            : List<dynamic>.from(details.map((x) => x.toJson())),
+            : List<dynamic>.from(distributes!.map((x) => x.toJson())),
+        "attributes": attributes == null
+            ? null
+            : List<dynamic>.from(attributes!.map((x) => x.toJson())),
         "images":
-            images == null ? null : images.map((e) => e.imageUrl).toList(),
+            images == null ? null : images!.map((e) => e.imageUrl).toList(),
         "categories":
-            categories == null ? null : categories.map((e) => e.id).toList(),
-      };
-}
-
-class Details {
-  Details({
-    this.id,
-    this.name,
-    this.attributes,
-  });
-
-  int id;
-
-  String name;
-
-  List<Attributes> attributes;
-
-  factory Details.fromJson(Map<String, dynamic> json) => Details(
-        name: json["name"],
-        attributes: List<Attributes>.from(
-            json["attributes"].map((x) => Attributes.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "name": name,
-        "attributes": List<dynamic>.from(attributes.map((x) => x.toJson())),
-      };
-}
-
-class Attributes {
-  Attributes({
-    this.id,
-    this.name,
-  });
-
-  int id;
-
-  String name;
-
-  factory Attributes.fromJson(Map<String, dynamic> json) => Attributes(
-        id: json["id"],
-        name: json["name"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "name": name,
+            categories == null ? null : categories!.map((e) => e.id).toList(),
       };
 }
 
@@ -140,9 +106,9 @@ class ImageProduct {
     this.imageUrl,
   });
 
-  int id;
+  int? id;
 
-  String imageUrl;
+  String? imageUrl;
 
   factory ImageProduct.fromJson(Map<String, dynamic> json) => ImageProduct(
         id: json["id"],
@@ -161,19 +127,127 @@ class ProductDiscount {
     this.discountPrice,
   });
 
-  int value;
+  int? value;
 
-  double discountPrice;
+  double? discountPrice;
 
   factory ProductDiscount.fromJson(Map<String, dynamic> json) =>
       ProductDiscount(
         value: json["value"],
         discountPrice:
-            double.tryParse(json["discount_price"].toString()).toDouble(),
+            double.tryParse(json["discount_price"].toString())!.toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
         "value": value,
         "discount_price": discountPrice,
       };
+}
+
+class Distributes {
+  int? id;
+  String? name;
+  String? createdAt;
+  String? updatedAt;
+  List<ElementDistributes>? elementDistributes;
+
+  Distributes(
+      {this.id,
+      this.name,
+      this.createdAt,
+      this.updatedAt,
+      this.elementDistributes});
+
+  Distributes.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    if (json['element_distributes'] != null) {
+      elementDistributes = [];
+      json['element_distributes'].forEach((v) {
+        elementDistributes!.add(new ElementDistributes.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    if (this.elementDistributes != null) {
+      data['element_distributes'] =
+          this.elementDistributes!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class ElementDistributes {
+  String? name;
+  String? imageUrl;
+  String? createdAt;
+  String? updatedAt;
+
+  ElementDistributes(
+      {this.name, this.imageUrl, this.createdAt, this.updatedAt});
+
+  ElementDistributes.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    imageUrl = json['image_url'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['image_url'] = this.imageUrl;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    return data;
+  }
+}
+
+class Attributes {
+  int? id;
+  int? storeId;
+  int? productId;
+  String? name;
+  String? value;
+  String? createdAt;
+  String? updatedAt;
+
+  Attributes(
+      {this.id,
+      this.storeId,
+      this.productId,
+      this.name,
+      this.value,
+      this.createdAt,
+      this.updatedAt});
+
+  Attributes.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    storeId = json['store_id'];
+    productId = json['product_id'];
+    name = json['name'];
+    value = json['value'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['store_id'] = this.storeId;
+    data['product_id'] = this.productId;
+    data['name'] = this.name;
+    data['value'] = this.value;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    return data;
+  }
 }

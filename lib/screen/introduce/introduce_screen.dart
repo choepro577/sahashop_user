@@ -99,10 +99,10 @@ class _IntroduceScreenState extends State<IntroduceScreen> {
 }
 
 class PageViewSplash extends StatelessWidget {
-  final String content;
-  final String splashImage;
+  final String? content;
+  final String? splashImage;
 
-  const PageViewSplash({Key key, this.content, this.splashImage})
+  const PageViewSplash({Key? key, this.content, this.splashImage})
       : super(key: key);
 
   @override
@@ -121,7 +121,7 @@ class PageViewSplash extends StatelessWidget {
           height: 10,
         ),
         Text(
-          content,
+          content!,
           style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,
@@ -131,7 +131,7 @@ class PageViewSplash extends StatelessWidget {
           height: 30,
         ),
         Expanded(
-          child: Image.asset(splashImage,
+          child: Image.asset(splashImage!,
               height: MediaQuery.of(context).size.height / 3,
               width: MediaQuery.of(context).size.width),
         ),

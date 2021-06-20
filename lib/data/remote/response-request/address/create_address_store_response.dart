@@ -16,10 +16,10 @@ class CreateAddressStoreResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  InfoAddress data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  InfoAddress? data;
 
   factory CreateAddressStoreResponse.fromJson(Map<String, dynamic> json) =>
       CreateAddressStoreResponse(
@@ -33,6 +33,6 @@ class CreateAddressStoreResponse {
         "code": code,
         "success": success,
         "msg_code": msgCode,
-        "data": data.toJson(),
+        "data": data!.toJson(),
       };
 }

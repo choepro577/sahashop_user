@@ -18,15 +18,15 @@ class UpdateProductToDiscountController extends GetxController {
   var isLoadingCreate = false.obs;
   var listProductParam = "";
 
-  Future<List<Product>> getAllProduct(
-      {String search,
-      String idCategory,
-      bool descending,
-      String details,
-      String sortBy}) async {
+  Future<List<Product>?> getAllProduct(
+      {String? search,
+      String? idCategory,
+      bool? descending,
+      String? details,
+      String? sortBy}) async {
     isLoadingProduct.value = true;
     try {
-      var res = await SahaServiceManager().service.getAllProduct(
+      var res = await SahaServiceManager().service!.getAllProduct(
           UserInfo().getCurrentStoreCode(),
           search ?? "",
           idCategory ?? "",
@@ -34,7 +34,7 @@ class UpdateProductToDiscountController extends GetxController {
           details ?? "",
           sortBy ?? "");
 
-      listProduct.addAll(res.data.data);
+      listProduct.addAll(res.data!.data!);
 
       if (listCheckSelectedProduct.value.length == 0) {
         listProduct.forEach((product) {
@@ -45,7 +45,7 @@ class UpdateProductToDiscountController extends GetxController {
       }
 
       for (int i = 0; i < listProduct.length; i++) {
-        if (res.data.data[i].hasInDiscount == true) {
+        if (res.data!.data![i].hasInDiscount == true) {
           listIsSave.value[i] = true;
         }
 
@@ -61,7 +61,7 @@ class UpdateProductToDiscountController extends GetxController {
       }
 
       isLoadingProduct.value = false;
-      return res.data.data;
+      return res.data!.data;
     } catch (err) {
       handleError(err);
     }
@@ -104,7 +104,7 @@ class UpdateProductToDiscountController extends GetxController {
     listProductParam = "";
   }
 
-  void deleteProductSelected(int id) {
+  void deleteProductSelected(int? id) {
     listSelectedProduct.value.removeWhere((element) => element.id == id);
     listCheckSelectedProduct.value[listCheckSelectedProduct.value
             .indexWhere((e) => e.keys.first.id == id)]
@@ -156,7 +156,7 @@ class UpdateProductToDiscountController extends GetxController {
   }
 
   Future<void> updateDiscount(
-    int idDiscount,
+    int? idDiscount,
     bool isEnd,
     String name,
     String description,

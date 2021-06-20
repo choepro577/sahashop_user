@@ -16,10 +16,10 @@ class MyVoucherResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  List<Voucher> data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  List<Voucher>? data;
 
   factory MyVoucherResponse.fromJson(Map<String, dynamic> json) =>
       MyVoucherResponse(
@@ -33,6 +33,6 @@ class MyVoucherResponse {
         "code": code,
         "success": success,
         "msg_code": msgCode,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }

@@ -49,9 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
             pinned: true,
             floating: false,
             title: Obx(
-              () => Text(homeController.storeCurrent?.value?.name == null
+              () => Text(homeController.storeCurrent?.value.name == null
                   ? "Xin chào"
-                  : homeController.storeCurrent.value.name),
+                  : homeController.storeCurrent!.value.name!),
             ),
             actions: <Widget>[
               new IconButton(
@@ -265,10 +265,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class ItemStoreView extends StatelessWidget {
   const ItemStoreView({
-    Key key,
-    @required this.icon,
-    @required this.text,
-    @required this.press,
+    Key? key,
+    required this.icon,
+    required this.text,
+    required this.press,
   }) : super(key: key);
 
   final String icon, text;

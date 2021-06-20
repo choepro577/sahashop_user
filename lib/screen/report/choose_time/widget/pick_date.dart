@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 
 class PickDate extends StatelessWidget {
-  final String text;
-  final DateTime fromDate;
-  final DateTime toDay;
-  final bool isChoose;
-  final Function onReturn;
+  final String? text;
+  final DateTime? fromDate;
+  final DateTime? toDay;
+  final bool? isChoose;
+  final Function? onReturn;
 
   PickDate(
       {this.text,
@@ -23,18 +23,18 @@ class PickDate extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            onReturn(fromDate, toDay);
+            onReturn!(fromDate, toDay);
           },
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: Row(
               children: [
                 toDay == fromDate
-                    ? Text("$text ${SahaDateUtils().getDDMMYY(fromDate)}")
+                    ? Text("$text ${SahaDateUtils().getDDMMYY(fromDate!)}")
                     : Text(
-                        "$text ${SahaDateUtils().getDDMM(fromDate)} đến ${SahaDateUtils().getDDMM(toDay)}"),
+                        "$text ${SahaDateUtils().getDDMM(fromDate!)} đến ${SahaDateUtils().getDDMM(toDay!)}"),
                 Spacer(),
-                isChoose
+                isChoose!
                     ? Icon(
                         Icons.check,
                         color: Theme.of(context).primaryColor,

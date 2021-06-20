@@ -15,7 +15,7 @@ import 'package:sahashop_user/utils/user_info.dart';
 import '../handle_error.dart';
 
 class MarketingChanelRepository {
-  Future<CreateDiscountResponse> createDiscount(
+  Future<CreateDiscountResponse?> createDiscount(
     String name,
     String description,
     String imageUrl,
@@ -28,7 +28,7 @@ class MarketingChanelRepository {
   ) async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .createDiscount(UserInfo().getCurrentStoreCode(), {
         "name": name,
         "description": description,
@@ -47,8 +47,8 @@ class MarketingChanelRepository {
     }
   }
 
-  Future<MyProgramResponse> updateDiscount(
-    int idDiscount,
+  Future<MyProgramResponse?> updateDiscount(
+    int? idDiscount,
     bool isEnd,
     String name,
     String description,
@@ -62,7 +62,7 @@ class MarketingChanelRepository {
   ) async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .updateDiscount(UserInfo().getCurrentStoreCode(), idDiscount, {
         "is_end": isEnd,
         "name": name,
@@ -79,10 +79,10 @@ class MarketingChanelRepository {
     } catch (err) {}
   }
 
-  Future<MyProgramResponse> getAllDiscount() async {
+  Future<MyProgramResponse?> getAllDiscount() async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .getAllDisCount(UserInfo().getCurrentStoreCode());
       return res;
     } catch (err) {
@@ -90,10 +90,10 @@ class MarketingChanelRepository {
     }
   }
 
-  Future<MyVoucherResponse> getAllVoucher() async {
+  Future<MyVoucherResponse?> getAllVoucher() async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .getAllVoucher(UserInfo().getCurrentStoreCode());
       return res;
     } catch (err) {
@@ -101,10 +101,10 @@ class MarketingChanelRepository {
     }
   }
 
-  Future<MyComboResponse> getAllCombo() async {
+  Future<MyComboResponse?> getAllCombo() async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .getAllCombo(UserInfo().getCurrentStoreCode());
       return res;
     } catch (err) {
@@ -112,10 +112,10 @@ class MarketingChanelRepository {
     }
   }
 
-  Future<EndVoucherResponse> getEndVoucherFromPage(int numberPage) async {
+  Future<EndVoucherResponse?> getEndVoucherFromPage(int numberPage) async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .getEndVoucherFromPage(UserInfo().getCurrentStoreCode(), numberPage);
       return res;
     } catch (err) {
@@ -123,10 +123,10 @@ class MarketingChanelRepository {
     }
   }
 
-  Future<EndDiscountResponse> getEndDiscountFromPage(int numberPage) async {
+  Future<EndDiscountResponse?> getEndDiscountFromPage(int numberPage) async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .getEndDiscountFromPage(UserInfo().getCurrentStoreCode(), numberPage);
       return res;
     } catch (err) {
@@ -134,10 +134,10 @@ class MarketingChanelRepository {
     }
   }
 
-  Future<EndComboResponse> getEndComboFromPage(int numberPage) async {
+  Future<EndComboResponse?> getEndComboFromPage(int numberPage) async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .getEndComboFromPage(UserInfo().getCurrentStoreCode(), numberPage);
       return res;
     } catch (err) {
@@ -145,10 +145,10 @@ class MarketingChanelRepository {
     }
   }
 
-  Future<DeleteProgramResponse> deleteDiscount(int idDiscount) async {
+  Future<DeleteProgramResponse?> deleteDiscount(int? idDiscount) async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .deleteDiscount(UserInfo().getCurrentStoreCode(), idDiscount);
       return res;
     } catch (err) {
@@ -156,10 +156,10 @@ class MarketingChanelRepository {
     }
   }
 
-  Future<DeleteProgramResponse> deleteVoucher(int idVoucher) async {
+  Future<DeleteProgramResponse?> deleteVoucher(int? idVoucher) async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .deleteVoucher(UserInfo().getCurrentStoreCode(), idVoucher);
       return res;
     } catch (err) {
@@ -167,10 +167,10 @@ class MarketingChanelRepository {
     }
   }
 
-  Future<DeleteProgramResponse> deleteCombo(int idCombo) async {
+  Future<DeleteProgramResponse?> deleteCombo(int? idCombo) async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .deleteCombo(UserInfo().getCurrentStoreCode(), idCombo);
       return res;
     } catch (err) {
@@ -178,10 +178,10 @@ class MarketingChanelRepository {
     }
   }
 
-  Future<CreateVoucherResponse> createVoucher(
+  Future<CreateVoucherResponse?> createVoucher(
       VoucherRequest voucherRequest) async {
     try {
-      var res = await SahaServiceManager().service.createVoucher(
+      var res = await SahaServiceManager().service!.createVoucher(
           UserInfo().getCurrentStoreCode(), voucherRequest.toJson());
       return res;
     } catch (err) {
@@ -189,10 +189,10 @@ class MarketingChanelRepository {
     }
   }
 
-  Future<CreateVoucherResponse> updateVoucher(
-      int idVoucher, VoucherRequest voucherRequest) async {
+  Future<CreateVoucherResponse?> updateVoucher(
+      int? idVoucher, VoucherRequest voucherRequest) async {
     try {
-      var res = await SahaServiceManager().service.updateVoucher(
+      var res = await SahaServiceManager().service!.updateVoucher(
           UserInfo().getCurrentStoreCode(), idVoucher, voucherRequest.toJson());
       return res;
     } catch (err) {
@@ -200,10 +200,10 @@ class MarketingChanelRepository {
     }
   }
 
-  Future<CreateComboResponse> updateCombo(
-      int idCombo, ComboRequest comboRequest) async {
+  Future<CreateComboResponse?> updateCombo(
+      int? idCombo, ComboRequest comboRequest) async {
     try {
-      var res = await SahaServiceManager().service.updateCombo(
+      var res = await SahaServiceManager().service!.updateCombo(
           UserInfo().getCurrentStoreCode(), idCombo, comboRequest.toJson());
       return res;
     } catch (err) {
@@ -211,10 +211,10 @@ class MarketingChanelRepository {
     }
   }
 
-  Future<CreateComboResponse> createCombo(ComboRequest comboRequest) async {
+  Future<CreateComboResponse?> createCombo(ComboRequest comboRequest) async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .createCombo(UserInfo().getCurrentStoreCode(), comboRequest.toJson());
       return res;
     } catch (err) {

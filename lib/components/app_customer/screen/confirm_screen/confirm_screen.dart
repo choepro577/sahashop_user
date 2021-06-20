@@ -17,7 +17,7 @@ import 'package:sahashop_user/utils/string_utils.dart';
 
 // ignore: must_be_immutable
 class ConfirmScreen extends StatelessWidget {
-  ConfirmController confirmController;
+  late ConfirmController confirmController;
   final dataKey = new GlobalKey();
   final dataKeyPayment = new GlobalKey();
 
@@ -90,21 +90,21 @@ class ConfirmScreen extends StatelessWidget {
                                             Container(
                                               width: Get.width * 0.7,
                                               child: Text(
-                                                "${confirmController.infoAddressCustomer.value.name ?? "Chưa có tên"}  | ${confirmController.infoAddressCustomer.value.phone ?? "Chưa có số điện thoại"}",
+                                                "${confirmController.infoAddressCustomer.value!.name ?? "Chưa có tên"}  | ${confirmController.infoAddressCustomer.value!.phone ?? "Chưa có số điện thoại"}",
                                                 maxLines: 2,
                                               ),
                                             ),
                                             Container(
                                               width: Get.width * 0.7,
                                               child: Text(
-                                                "${confirmController.infoAddressCustomer.value.addressDetail ?? "Chưa có địa chỉ chi tiết"}",
+                                                "${confirmController.infoAddressCustomer.value!.addressDetail ?? "Chưa có địa chỉ chi tiết"}",
                                                 maxLines: 2,
                                               ),
                                             ),
                                             Container(
                                               width: Get.width * 0.7,
                                               child: Text(
-                                                "${confirmController.infoAddressCustomer.value.districtName ?? "Chưa có Quận/Huyện"}, ${confirmController.infoAddressCustomer.value.wardsName ?? "Chưa có Phường/Xã"}, ${confirmController.infoAddressCustomer.value.provinceName ?? "Chưa có Tỉnh/Thành phố"}",
+                                                "${confirmController.infoAddressCustomer.value!.districtName ?? "Chưa có Quận/Huyện"}, ${confirmController.infoAddressCustomer.value!.wardsName ?? "Chưa có Phường/Xã"}, ${confirmController.infoAddressCustomer.value!.provinceName ?? "Chưa có Tỉnh/Thành phố"}",
                                                 style: TextStyle(
                                                     color: Colors.grey[700],
                                                     fontSize: 13),
@@ -148,10 +148,10 @@ class ConfirmScreen extends StatelessWidget {
                                                 .infoAddressCustomer
                                                 .value = infoAddressCustomer;
                                           },
-                                        )).then((value) => {
+                                        ))!.then((value) => {
                                           confirmController.chargeShipmentFee(
                                               confirmController
-                                                  .infoAddressCustomer.value.id)
+                                                  .infoAddressCustomer.value!.id)
                                         });
                                   },
                                   child: Padding(
@@ -261,17 +261,17 @@ class ConfirmScreen extends StatelessWidget {
                                 imageUrl: confirmController
                                             .dataAppCustomerController
                                             .listOrder[index]
-                                            .product
-                                            .images
+                                            .product!
+                                            .images!
                                             .length ==
                                         0
                                     ? ""
                                     : confirmController
                                         .dataAppCustomerController
                                         .listOrder[index]
-                                        .product
-                                        .images[0]
-                                        .imageUrl,
+                                        .product!
+                                        .images![0]
+                                        .imageUrl!,
                                 errorWidget: (context, url, error) => ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
                                   child: Container(
@@ -296,7 +296,7 @@ class ConfirmScreen extends StatelessWidget {
                           children: [
                             Text(
                               confirmController.dataAppCustomerController
-                                      .listOrder[index].product.name ??
+                                      .listOrder[index].product!.name ??
                                   "Loi san pham",
                               style:
                                   TextStyle(color: Colors.black, fontSize: 16),
@@ -306,7 +306,7 @@ class ConfirmScreen extends StatelessWidget {
                             Text.rich(
                               TextSpan(
                                 text:
-                                    "\$${FormatMoney.toVND(confirmController.dataAppCustomerController.listOrder[index].product.price)}",
+                                    "\$${FormatMoney.toVND(confirmController.dataAppCustomerController.listOrder[index].product!.price)}",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     color: SahaPrimaryColor),
@@ -396,7 +396,7 @@ class ConfirmScreen extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                    '${SahaStringUtils().convertToMoney(confirmController.shipmentMethodCurrent.value.fee) ?? ""}đ'),
+                                    '${SahaStringUtils().convertToMoney(confirmController.shipmentMethodCurrent.value.fee)}đ'),
                                 SizedBox(
                                   width: 5,
                                 ),
@@ -453,7 +453,7 @@ class ConfirmScreen extends StatelessWidget {
                     ),
                     Obx(
                       () => Text(
-                          "${FormatMoney.toVND(confirmController.dataAppCustomerController.totalMoneyAfterDiscount.value + confirmController.shipmentMethodCurrent.value.fee)}"),
+                          "${FormatMoney.toVND(confirmController.dataAppCustomerController.totalMoneyAfterDiscount.value + confirmController.shipmentMethodCurrent.value.fee!)}"),
                     )
                   ],
                 ),
@@ -782,7 +782,7 @@ class ConfirmScreen extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 13, color: Colors.grey[700])),
                             Text(
-                                "+ ${SahaStringUtils().convertToMoney(confirmController.shipmentMethodCurrent.value.fee.toDouble())} đ",
+                                "+ ${SahaStringUtils().convertToMoney(confirmController.shipmentMethodCurrent.value.fee!.toDouble())} đ",
                                 style: TextStyle(
                                     fontSize: 13, color: Colors.grey[800])),
                           ],
@@ -797,7 +797,7 @@ class ConfirmScreen extends StatelessWidget {
                               'Tổng thanh toán :',
                             ),
                             Text(
-                                "${SahaStringUtils().convertToMoney(confirmController.dataAppCustomerController.totalMoneyAfterDiscount.value + confirmController.shipmentMethodCurrent.value.fee.toDouble())} đ",
+                                "${SahaStringUtils().convertToMoney(confirmController.dataAppCustomerController.totalMoneyAfterDiscount.value + confirmController.shipmentMethodCurrent.value.fee!.toDouble())} đ",
                                 style: TextStyle(
                                     fontSize: 13, color: Colors.grey[800])),
                           ],
@@ -872,7 +872,7 @@ class ConfirmScreen extends StatelessWidget {
                     ),
                     Text("Tổng thanh toán"),
                     Text(
-                      "${FormatMoney.toVND(confirmController.dataAppCustomerController.totalMoneyAfterDiscount.value + confirmController.shipmentMethodCurrent.value.fee.toDouble())}",
+                      "${FormatMoney.toVND(confirmController.dataAppCustomerController.totalMoneyAfterDiscount.value + confirmController.shipmentMethodCurrent.value.fee!.toDouble())}",
                       style: TextStyle(
                           fontSize: 16,
                           color: Colors.red,
@@ -886,7 +886,7 @@ class ConfirmScreen extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     if (confirmController.infoAddressCustomer.value == null) {
-                      Scrollable.ensureVisible(dataKey.currentContext,
+                      Scrollable.ensureVisible(dataKey.currentContext!,
                           duration: Duration(milliseconds: 500));
                       confirmController.colorAnimateAddress.value = Colors.red;
                       confirmController.opacityCurrent.value = 0;
@@ -902,7 +902,7 @@ class ConfirmScreen extends StatelessWidget {
                       });
                     } else {
                       if (confirmController.paymentMethodName.value == "") {
-                        Scrollable.ensureVisible(dataKeyPayment.currentContext,
+                        Scrollable.ensureVisible(dataKeyPayment.currentContext!,
                             duration: Duration(milliseconds: 500));
                         confirmController.colorAnimatePayment.value =
                             Colors.red;
@@ -938,7 +938,7 @@ class ConfirmScreen extends StatelessWidget {
                               fontSize: 16,
                               color: Theme.of(context)
                                   .primaryTextTheme
-                                  .headline6
+                                  .headline6!
                                   .color,
                               fontWeight: FontWeight.bold),
                         ),

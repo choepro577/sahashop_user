@@ -28,7 +28,7 @@ import 'package:sahashop_user/components/app_customer/remote/response-request/st
 import 'package:sahashop_user/components/app_customer/remote/response-request/store/type_store_respones.dart';
 import 'package:sahashop_user/model/cart.dart';
 
-part 'customer_service.g.dart';
+ part 'customer_service.g.dart';
 
 @RestApi(baseUrl: "https://sahashop.net/api/customer/")
 abstract class CustomerService {
@@ -39,24 +39,24 @@ abstract class CustomerService {
   Future<AllStoreResponse> getAllStore();
 
   @GET("store/{storeCode}/products")
-  Future<AllProductResponse> getAllProduct(@Path() String storeCode);
+  Future<AllProductResponse> getAllProduct(@Path("storeCode") String storeCode);
 
   @GET("type_of_store")
   Future<TypeShopResponse> getAllTypeOfStore();
 
   @GET("{storeCode}/app-theme")
-  Future<GetAppThemeResponse> getAppTheme(@Path() String storeCode);
+  Future<GetAppThemeResponse> getAppTheme(@Path("storeCode") String? storeCode);
 
   @GET("{storeCode}/categories")
-  Future<AllCategoryResponse> getAllCategory(@Path() String storeCode);
+  Future<AllCategoryResponse> getAllCategory(@Path("storeCode") String? storeCode);
 
   @GET("{storeCode}/products")
   Future<QueryProductResponse> getProductWithCategory(
-      @Path() String storeCode, int idCategory);
+      @Path("storeCode") String storeCode, int idCategory);
 
   @GET("{storeCode}/products?=")
   Future<QueryProductResponse> searchProduct(
-      @Path() String storeCode,
+      @Path("storeCode") String? storeCode,
       @Query("search") String search,
       @Query("category_ids") String idCategory,
       @Query("descending") bool descending,
@@ -65,118 +65,118 @@ abstract class CustomerService {
 
   @GET("{storeCode}/products/{idProduct}")
   Future<DetailProductResponse> getDetailProduct(
-    @Path() String storeCode,
-    @Path() int idProduct,
+    @Path("storeCode") String? storeCode,
+    @Path() int? idProduct,
   );
 
   @GET("{storeCode}/post_categories")
-  Future<AllCategoryPostResponse> getAllCategoryPost(@Path() String storeCode);
+  Future<AllCategoryPostResponse> getAllCategoryPost(@Path("storeCode") String? storeCode);
 
   @GET("{storeCode}/posts?=")
   Future<AllPostResponse> searchPost(
-      @Path() String storeCode,
+      @Path("storeCode") String? storeCode,
       @Query("search") String search,
       @Query("category_ids") String idCategory,
       @Query("descending") bool descending,
       @Query("sort_by") String sortBy);
 
   @GET("{storeCode}/home_app")
-  Future<HomeResponse> getHomeApp(@Path() String storeCode);
+  Future<HomeResponse> getHomeApp(@Path("storeCode") String? storeCode);
 
   @POST("{storeCode}/carts/orders")
   Future<OrderResponse> createOrder(
-      @Path() String storeCode, @Body() Map<String, dynamic> body);
+      @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   @POST("{storeCode}/register")
   Future<RegisterResponse> registerAccount(
-      @Path() String storeCode, @Body() Map<String, dynamic> body);
+      @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   @PUT("{storeCode}/profile")
   Future<InfoCustomerResponse> updateAccount(
-      @Path() String storeCode, @Body() Map<String, dynamic> body);
+      @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   @POST("{storeCode}/login")
   Future<LoginResponse> loginAccount(
-      @Path() String storeCode, @Body() Map<String, dynamic> body);
+      @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   @GET("{storeCode}/profile")
-  Future<InfoCustomerResponse> getInfoCustomer(@Path() String storeCode);
+  Future<InfoCustomerResponse> getInfoCustomer(@Path("storeCode") String? storeCode);
 
   /// marketing chanel
 
   @GET("{storeCode}/combos")
-  Future<CustomerComboResponse> getComboCustomer(@Path() String storeCode);
+  Future<CustomerComboResponse> getComboCustomer(@Path("storeCode") String? storeCode);
 
   @GET("{storeCode}/vouchers")
-  Future<VoucherCustomerResponse> getVoucherCustomer(@Path() String storeCode);
+  Future<VoucherCustomerResponse> getVoucherCustomer(@Path("storeCode") String? storeCode);
 
   /// chat customer
 
   @GET("{storeCode}/messages")
   Future<AllMessageCustomerResponse> getAllMessageCustomer(
-    @Path() String storeCode,
+    @Path("storeCode") String? storeCode,
     @Query("page") int numberPage,
   );
 
   @POST("{storeCode}/messages")
   Future<SendMessageCustomerResponse> sendMessageToUser(
-    @Path() String storeCode,
+    @Path("storeCode") String? storeCode,
     @Body() Map<String, dynamic> body,
   );
 
   /// cart
 
   @POST("{storeCode}/carts")
-  Future<Cart> getItemCart(@Path() String storeCode);
+  Future<Cart> getItemCart(@Path("storeCode") String? storeCode);
 
   @POST("{storeCode}/carts")
   Future<Cart> addVoucherCart(
-      @Path() String storeCode, @Body() Map<String, dynamic> body);
+      @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   @PUT("{storeCode}/carts/items")
   Future<Cart> updateItemCart(
-      @Path() String storeCode, @Body() Map<String, dynamic> body);
+      @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   @POST("{storeCode}/carts/items")
   Future<Cart> addItemCart(
-      @Path() String storeCode, @Body() Map<String, dynamic> body);
+      @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   /// address customer
 
   @GET("{storeCode}/address")
   Future<AllIAddressCustomerResponse> getAllAddressCustomer(
-      @Path() String storeCode);
+      @Path("storeCode") String? storeCode);
 
   @POST("{storeCode}/address")
   Future<CreateUpdateAddressCustomerResponse> createAddressCustomer(
-      @Path() String storeCode, @Body() Map<String, dynamic> body);
+      @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   @PUT("{storeCode}/address/{idAddressCustomer}")
   Future<CreateUpdateAddressCustomerResponse> updateAddressCustomer(
-      @Path() String storeCode,
-      @Path() int idAddressCustomer,
+      @Path("storeCode") String? storeCode,
+      @Path() int? idAddressCustomer,
       @Body() Map<String, dynamic> body);
 
   @DELETE("{storeCode}/address/{idAddressCustomer}")
   Future<DeleteAddressCustomerResponse> deleteAddressCustomer(
-      @Path() String storeCode, @Path() int idAddressCustomer);
+      @Path("storeCode") String? storeCode, @Path() int? idAddressCustomer);
 
   /// shipment
 
   @POST("{storeCode}/shipment/fee")
   Future<ShipmentCustomerResponse> chargeShipmentFee(
-      @Path() String storeCode, @Body() Map<String, dynamic> body);
+      @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   /// payment
   @GET("{storeCode}/payment_methods")
   Future<PaymentMethodCustomerResponse> getPaymentMethod(
-      @Path() String storeCode);
+      @Path("storeCode") String? storeCode);
 
   /// order history
 
   @GET("{storeCode}/carts/orders")
   Future<OrderHistoryResponse> getOrderHistory(
-    @Path() String storeCode,
+    @Path("storeCode") String? storeCode,
     @Query("page") int numberPage,
     @Query("search") String search,
     @Query("field_by") String fieldBy,
@@ -189,19 +189,19 @@ abstract class CustomerService {
 
   @GET("{storeCode}/carts/orders/{orderCode}")
   Future<OrderResponse> getOneOrderHistory(
-      @Path() String storeCode, @Path() String orderCode);
+      @Path("storeCode") String? storeCode, @Path() String? orderCode);
 
   @GET("{storeCode}/carts/orders/status_records/{idOrder}")
   Future<StateHistoryOrderCustomerResponse> getStateHistoryCustomerOrder(
-    @Path() String storeCode,
-    @Path() int idOrder,
+    @Path("storeCode") String? storeCode,
+    @Path() int? idOrder,
   );
 
   @POST("{storeCode}/carts/orders/cancel")
   Future<CancelOrderResponse> cancelOrder(
-      @Path() String storeCode, @Body() Map<String, dynamic> body);
+      @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   @PUT("{storeCode}/carts/orders/change_payment_method/{orderCode}")
-  Future<CancelOrderResponse> changePaymentMethod(@Path() String storeCode,
-      @Body() Map<String, dynamic> body, @Path() String orderCode);
+  Future<CancelOrderResponse> changePaymentMethod(@Path("storeCode") String? storeCode,
+      @Body() Map<String, dynamic> body, @Path() String? orderCode);
 }

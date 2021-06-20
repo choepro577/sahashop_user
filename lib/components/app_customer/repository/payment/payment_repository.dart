@@ -4,10 +4,10 @@ import 'package:sahashop_user/data/repository/handle_error.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class PaymentRepository {
-  Future<PaymentMethodCustomerResponse> getPaymentMethod() async {
+  Future<PaymentMethodCustomerResponse?> getPaymentMethod() async {
     try {
       var res = await CustomerServiceManager()
-          .service
+          .service!
           .getPaymentMethod(UserInfo().getCurrentStoreCode());
       return res;
     } catch (err) {

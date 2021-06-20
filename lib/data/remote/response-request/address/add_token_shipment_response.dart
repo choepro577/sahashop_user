@@ -18,10 +18,10 @@ class AddTokenShipmentResponse {
     this.msg,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  String msg;
+  int? code;
+  bool? success;
+  String? msgCode;
+  String? msg;
 
   factory AddTokenShipmentResponse.fromJson(Map<String, dynamic> json) =>
       AddTokenShipmentResponse(

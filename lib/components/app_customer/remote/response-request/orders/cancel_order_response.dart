@@ -6,10 +6,10 @@ class CancelOrderResponse {
     this.msg,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  String msg;
+  int? code;
+  bool? success;
+  String? msgCode;
+  String? msg;
 
   factory CancelOrderResponse.fromJson(Map<String, dynamic> json) =>
       CancelOrderResponse(

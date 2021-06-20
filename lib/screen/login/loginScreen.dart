@@ -22,14 +22,14 @@ class LoginScreen extends StatefulWidget {
 class _SignInState extends State<LoginScreen> {
   LoginController loginController = LoginController();
   final _formKey = GlobalKey<FormState>();
-  bool remember = false;
+  bool? remember = false;
 
   TextEditingController textEditingControllerPhoneShop =
       new TextEditingController();
   TextEditingController textEditingControllerPass = new TextEditingController();
 
   // ignore: cancel_subscriptions
-  StreamSubscription sub;
+  StreamSubscription? sub;
 
   @override
   void didChangeDependencies() {
@@ -88,7 +88,7 @@ class _SignInState extends State<LoginScreen> {
                 //   return null;
                 // },
                 validator: (value) {
-                  if (value.length < 6) {
+                  if (value!.length < 6) {
                     return 'mật khẩu chứa hơn 6 kí tự';
                   }
                   return null;
@@ -103,7 +103,7 @@ class _SignInState extends State<LoginScreen> {
                 controller: textEditingControllerPass,
                 onChanged: (value) {},
                 validator: (value) {
-                  if (value.length < 3) {
+                  if (value!.length < 3) {
                     return 'mật khẩu chứa hơn 6 kí tự';
                   }
                   return null;
@@ -143,8 +143,8 @@ class _SignInState extends State<LoginScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  if (_formKey.currentState.validate()) {
-                    _formKey.currentState.save();
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
                     KeyboardUtil.hideKeyboard(context);
                     EasyLoading.show(status: 'loading...',
                       maskType: EasyLoadingMaskType.black,
@@ -225,6 +225,6 @@ class _SignInState extends State<LoginScreen> {
 bool validateEmail(String value) {
   Pattern pattern =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-  RegExp regex = new RegExp(pattern);
+  RegExp regex = new RegExp(pattern as String);
   return (!regex.hasMatch(value)) ? false : true;
 }

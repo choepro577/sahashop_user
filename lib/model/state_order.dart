@@ -16,13 +16,13 @@ class StateOrder {
     this.updatedAt,
   });
 
-  int id;
-  int orderId;
-  int author;
-  String note;
-  bool customerCantSee;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? id;
+  int? orderId;
+  int? author;
+  String? note;
+  bool? customerCantSee;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory StateOrder.fromJson(Map<String, dynamic> json) => StateOrder(
         id: json["id"],
@@ -40,7 +40,7 @@ class StateOrder {
         "author": author,
         "note": note,
         "customer_cant_see": customerCantSee,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
       };
 }

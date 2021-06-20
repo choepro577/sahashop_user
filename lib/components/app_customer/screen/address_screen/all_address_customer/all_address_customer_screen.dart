@@ -9,7 +9,7 @@ import 'package:sahashop_user/model/info_address_customer.dart';
 
 // ignore: must_be_immutable
 class AllAddressCustomerScreen extends StatelessWidget {
-  AllAddressCustomerController allAddressCustomerController;
+  late AllAddressCustomerController allAddressCustomerController;
 
   bool isChoose = true;
   @override
@@ -31,7 +31,7 @@ class AllAddressCustomerScreen extends StatelessWidget {
                             .listInfoAddressCustomer[index])),
                 InkWell(
                   onTap: () {
-                    Get.to(() => NewAddressCustomerScreen()).then((value) =>
+                    Get.to(() => NewAddressCustomerScreen())!.then((value) =>
                         {allAddressCustomerController.getAllAddressCustomer()});
                   },
                   child: Container(
@@ -67,7 +67,7 @@ class AllAddressCustomerScreen extends StatelessWidget {
           onTap: () {
             Get.to(() => ConfigAddressCustomerScreen(
                       infoAddressCustomer: infoAddressCustomer,
-                    ))
+                    ))!
                 .then((value) =>
                     {allAddressCustomerController.getAllAddressCustomer()});
 
@@ -103,7 +103,7 @@ class AllAddressCustomerScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                infoAddressCustomer.isDefault
+                infoAddressCustomer.isDefault!
                     ? Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

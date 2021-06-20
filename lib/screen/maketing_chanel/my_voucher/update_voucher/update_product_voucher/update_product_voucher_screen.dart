@@ -83,8 +83,7 @@ class _UpdateProductToVoucherScreenState
               : Column(
                   children: [
                     ...List.generate(
-                      updateProductToSaleController.listProduct.length ??
-                          LIST_PRODUCT_EXAMPLE.length,
+                      updateProductToSaleController.listProduct.length,
                       (index) => Container(
                         padding: const EdgeInsets.all(8.0),
                         decoration: BoxDecoration(
@@ -97,8 +96,7 @@ class _UpdateProductToVoucherScreenState
                                         .listCheckSelectedProduct
                                         .value[index]
                                         .values
-                                        .first ??
-                                    false,
+                                        .first,
                                 onChanged: (v) {
                                   setState(() {
                                     updateProductToSaleController
@@ -139,14 +137,14 @@ class _UpdateProductToVoucherScreenState
                                       fit: BoxFit.cover,
                                       imageUrl: updateProductToSaleController
                                                   .listProduct[index]
-                                                  .images
+                                                  .images!
                                                   .length ==
                                               0
                                           ? ""
                                           : updateProductToSaleController
                                               .listProduct[index]
-                                              .images[0]
-                                              .imageUrl,
+                                              .images![0]
+                                              .imageUrl!,
                                       errorWidget: (context, url, error) =>
                                           ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
@@ -182,8 +180,7 @@ class _UpdateProductToVoucherScreenState
                                     height: 10,
                                   ),
                                   Text(
-                                      "${updateProductToSaleController.listProduct[index].price} đ" ??
-                                          "Chưa đặt giá"),
+                                      "${updateProductToSaleController.listProduct[index].price ?? ""} đ"),
                                 ],
                               ),
                             )

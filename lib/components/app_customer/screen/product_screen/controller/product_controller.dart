@@ -26,15 +26,15 @@ class ProductController extends GetxController {
 
   ProductController() {
     currentProduct =
-        dataAppCustomerController.productCurrent ?? LIST_PRODUCT_EXAMPLE[0];
+        dataAppCustomerController.productCurrent;
     productDetailRequest.value =
-        dataAppCustomerController.productCurrent ?? LIST_PRODUCT_EXAMPLE[0];
+        dataAppCustomerController.productCurrent;
     getDetailProduct();
     getComboCustomer();
     if (dataAppCustomerController.homeData?.discountProducts?.list != null) {
-      dataAppCustomerController.homeData.discountProducts.list
+      dataAppCustomerController.homeData!.discountProducts!.list!
           .forEach((listDiscount) {
-        listProductsDiscount.addAll(listDiscount.products);
+        listProductsDiscount.addAll(listDiscount.products!);
       });
     }
   }
@@ -44,7 +44,7 @@ class ProductController extends GetxController {
     try {
       var res = await CustomerRepositoryManager.productCustomerRepository
           .getDetailProduct(currentProduct.id);
-      productDetailRequest.value = res.data ?? currentProduct;
+      productDetailRequest.value = res!.data ?? currentProduct;
     } catch (err) {
       //  SahaAlert.showError(message: err.toString());
     }
@@ -55,16 +55,16 @@ class ProductController extends GetxController {
     try {
       var res = await CustomerRepositoryManager.marketingRepository
           .getComboCustomer();
-      res.data.forEach((e) {
-        int checkHasInCombo = e.productsCombo.indexWhere(
-            (element) => element.product.id == productDetailRequest.value.id);
+      res!.data!.forEach((e) {
+        int checkHasInCombo = e.productsCombo!.indexWhere(
+            (element) => element.product!.id == productDetailRequest.value.id);
         if (checkHasInCombo != -1) {
           hasInCombo.value = true;
 
           /// 0 Co dinh, 1 theo %,
-          discountComboType.value = e.discountType;
-          valueComboType.value = e.valueDiscount.toDouble();
-          listProductCombo(e.productsCombo);
+          discountComboType.value = e.discountType!;
+          valueComboType.value = e.valueDiscount!.toDouble();
+          listProductCombo(e.productsCombo!);
         }
       });
     } catch (err) {

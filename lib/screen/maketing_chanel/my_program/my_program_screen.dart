@@ -13,7 +13,7 @@ import 'package:sahashop_user/screen/maketing_chanel/my_program/update_my_progra
 import 'package:sahashop_user/utils/date_utils.dart';
 
 class MyProgram extends StatefulWidget {
-  Function onChange;
+  Function? onChange;
 
   MyProgram({this.onChange});
 
@@ -24,7 +24,7 @@ class MyProgram extends StatefulWidget {
 class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
   bool isHasDiscount = false;
   bool isTabOnTap = false;
-  TabController tabController;
+  TabController? tabController;
   MyProgramController myProgramController = Get.put(MyProgramController());
 
   List<String> stateProgram = [
@@ -81,7 +81,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
               SahaButtonFullParent(
                 text: "Tạo chương trình khuyến mãi",
                 onPressed: () {
-                  Get.to(() => CreateMyProgram()).then((value) => {
+                  Get.to(() => CreateMyProgram())!.then((value) => {
                         myProgramController.refreshData(),
                       });
                 },
@@ -104,7 +104,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
         footer: CustomFooter(
           builder: (
             BuildContext context,
-            LoadStatus mode,
+            LoadStatus? mode,
           ) {
             Widget body;
             if (mode == LoadStatus.idle) {
@@ -239,7 +239,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                         width: Get.width * 0.6,
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          listProgramState.name,
+                          listProgramState.name!,
                           textAlign: TextAlign.start,
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w500),
@@ -249,7 +249,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                         width: Get.width * 0.7,
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "${SahaDateUtils().getDDMMYY(listProgramState.startTime)} ${SahaDateUtils().getHHMM(listProgramState.startTime)} - ${SahaDateUtils().getDDMMYY(listProgramState.endTime)} ${SahaDateUtils().getHHMM(listProgramState.endTime)}",
+                          "${SahaDateUtils().getDDMMYY(listProgramState.startTime!)} ${SahaDateUtils().getHHMM(listProgramState.startTime!)} - ${SahaDateUtils().getDDMMYY(listProgramState.endTime!)} ${SahaDateUtils().getHHMM(listProgramState.endTime!)}",
                           style:
                               TextStyle(fontSize: 13, color: Colors.grey[700]),
                         ),
@@ -262,9 +262,9 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                       width: 80,
                       height: 80,
                       fit: BoxFit.cover,
-                      imageUrl: listProgramState.products[0].images.length == 0
+                      imageUrl: listProgramState.products![0].images!.length == 0
                           ? ""
-                          : "${listProgramState.products[0].images[0].imageUrl}",
+                          : "${listProgramState.products![0].images![0].imageUrl}",
                       errorWidget: (context, url, error) => ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: CachedNetworkImage(
@@ -295,7 +295,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                             height: 35,
                             width: Get.width * 0.9,
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey[600]),
+                                border: Border.all(color: Colors.grey[600]!),
                                 borderRadius: BorderRadius.circular(2.0)),
                             child: Center(
                               child: Text("Xem"),
@@ -311,7 +311,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                           onTap: () {
                             Get.to(() => UpdateMyProgram(
                                       programDiscount: listProgramState,
-                                    ))
+                                    ))!
                                 .then((value) =>
                                     {myProgramController.refreshData()});
                           },
@@ -319,7 +319,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                             height: 35,
                             width: Get.width * 0.45,
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey[600]),
+                                border: Border.all(color: Colors.grey[600]!),
                                 borderRadius: BorderRadius.circular(2.0)),
                             child: Center(
                               child: Text("Thay đổi"),
@@ -346,7 +346,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                                   height: 35,
                                   width: Get.width * 0.45,
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey[600]),
+                                    border: Border.all(color: Colors.grey[600]!),
                                     borderRadius: BorderRadius.circular(2.0),
                                   ),
                                   child: Center(
@@ -364,7 +364,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                                   height: 35,
                                   width: Get.width * 0.45,
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey[600]),
+                                    border: Border.all(color: Colors.grey[600]!),
                                     borderRadius: BorderRadius.circular(2.0),
                                   ),
                                   child: Center(

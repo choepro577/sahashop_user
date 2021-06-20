@@ -17,15 +17,15 @@ class AddProductToSaleController extends GetxController {
   var isLoadingCreate = false.obs;
   var listProductParam = "";
 
-  Future<List<Product>> getAllProduct(
-      {String search,
-      String idCategory,
-      bool descending,
-      String details,
-      String sortBy}) async {
+  Future<List<Product>?> getAllProduct(
+      {String? search,
+      String? idCategory,
+      bool? descending,
+      String? details,
+      String? sortBy}) async {
     isLoadingProduct.value = true;
     try {
-      var res = await SahaServiceManager().service.getAllProduct(
+      var res = await SahaServiceManager().service!.getAllProduct(
           UserInfo().getCurrentStoreCode(),
           search ?? "",
           idCategory ?? "",
@@ -33,7 +33,7 @@ class AddProductToSaleController extends GetxController {
           details ?? "",
           sortBy ?? "");
 
-      listProduct.addAll(res.data.data);
+      listProduct.addAll(res.data!.data!);
 
       if (listCheckSelectedProduct.value.length == 0) {
         listProduct.forEach((product) {
@@ -42,14 +42,14 @@ class AddProductToSaleController extends GetxController {
         });
       }
 
-      for (int i = 0; i < res.data.data.length; i++) {
-        if (res.data.data[i].hasInDiscount == true) {
+      for (int i = 0; i < res.data!.data!.length; i++) {
+        if (res.data!.data![i].hasInDiscount == true) {
           listIsSave.value[i] = true;
         }
       }
 
       isLoadingProduct.value = false;
-      return res.data.data;
+      return res.data!.data;
     } catch (err) {
       handleError(err);
     }
@@ -92,7 +92,7 @@ class AddProductToSaleController extends GetxController {
     listProductParam = "";
   }
 
-  void deleteProductSelected(int id) {
+  void deleteProductSelected(int? id) {
     listSelectedProduct.value.removeWhere((element) => element.id == id);
     listCheckSelectedProduct.value[listCheckSelectedProduct.value
             .indexWhere((e) => e.keys.first.id == id)]

@@ -16,14 +16,14 @@ class CustomerServiceManager {
   CustomerServiceManager._internal();
 
   /// Service getter
-  CustomerService get service => _service;
+  CustomerService? get service => _service;
 
   /// Dio client uses to perform normal requests
-  Dio dioClient;
+  Dio? dioClient;
 
   /// Dio client uses to perform upload requests
-  Dio uploadClient;
-  CustomerService _service;
+  Dio? uploadClient;
+  CustomerService? _service;
 
   /// Initialzation function
   static void initialize() {
@@ -42,7 +42,7 @@ class CustomerServiceManager {
     uploadClient = Dio(options);
 
     _service = CustomerService(
-      dioClient,
+        dioClient!
     );
   }
 }

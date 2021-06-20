@@ -19,7 +19,7 @@ class OrderManageScreen extends StatefulWidget {
 
 class _OrderManageScreenState extends State<OrderManageScreen>
     with TickerProviderStateMixin {
-  TabController tabController;
+  TabController? tabController;
   OrderManageController orderManageController =
       Get.put(OrderManageController());
   @override
@@ -80,7 +80,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
       footer: CustomFooter(
         builder: (
           BuildContext context,
-          LoadStatus mode,
+          LoadStatus? mode,
         ) {
           Widget body;
           if (mode == LoadStatus.idle) {
@@ -199,11 +199,11 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                             imageUrl: orderManageController
                                                         .listAllOrder[
                                                             indexState][index]
-                                                        .lineItemsAtTime
+                                                        .lineItemsAtTime!
                                                         .length ==
                                                     0
                                                 ? ""
-                                                : "${orderManageController.listAllOrder[indexState][index].infoCustomer.avatarImage}",
+                                                : "${orderManageController.listAllOrder[indexState][index].infoCustomer!.avatarImage}",
                                             errorWidget:
                                                 (context, url, error) =>
                                                     ClipRRect(
@@ -219,7 +219,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                           width: 15,
                                         ),
                                         Text(
-                                            "${orderManageController.listAllOrder[indexState][index].infoCustomer.name}"),
+                                            "${orderManageController.listAllOrder[indexState][index].infoCustomer!.name}"),
                                         Spacer(),
                                         Text(
                                           "${orderManageController.listAllOrder[indexState][index].orderStatusName}",
@@ -248,11 +248,11 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                             imageUrl: orderManageController
                                                         .listAllOrder[
                                                             indexState][index]
-                                                        .lineItemsAtTime
+                                                        .lineItemsAtTime!
                                                         .length ==
                                                     0
                                                 ? ""
-                                                : "${orderManageController.listAllOrder[indexState][index].lineItemsAtTime[0].imageUrl}",
+                                                : "${orderManageController.listAllOrder[indexState][index].lineItemsAtTime![0].imageUrl}",
                                             errorWidget:
                                                 (context, url, error) =>
                                                     ClipRRect(
@@ -278,7 +278,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                  "${orderManageController.listAllOrder[indexState][index].lineItemsAtTime[0].name}",
+                                                  "${orderManageController.listAllOrder[indexState][index].lineItemsAtTime![0].name}",
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.w500),
@@ -289,7 +289,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                                       children: [
                                                         Spacer(),
                                                         Text(
-                                                          " x ${orderManageController.listAllOrder[indexState][index].lineItemsAtTime[0].quantity}",
+                                                          " x ${orderManageController.listAllOrder[indexState][index].lineItemsAtTime![0].quantity}",
                                                           style: TextStyle(
                                                               fontSize: 13,
                                                               color: Colors
@@ -301,7 +301,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                                       children: [
                                                         Spacer(),
                                                         Text(
-                                                          "đ${SahaStringUtils().convertToMoney(orderManageController.listAllOrder[indexState][index].lineItemsAtTime[0].beforePrice)}",
+                                                          "đ${SahaStringUtils().convertToMoney(orderManageController.listAllOrder[indexState][index].lineItemsAtTime![0].beforePrice)}",
                                                           style: TextStyle(
                                                               decoration:
                                                                   TextDecoration
@@ -311,7 +311,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                                         ),
                                                         SizedBox(width: 15),
                                                         Text(
-                                                          "đ${SahaStringUtils().convertToMoney(orderManageController.listAllOrder[indexState][index].lineItemsAtTime[0].afterDiscount)}",
+                                                          "đ${SahaStringUtils().convertToMoney(orderManageController.listAllOrder[indexState][index].lineItemsAtTime![0].afterDiscount)}",
                                                           style: TextStyle(
                                                               color: Theme.of(
                                                                       context)
@@ -333,7 +333,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                   ),
                                   orderManageController
                                               .listAllOrder[indexState][index]
-                                              .lineItemsAtTime
+                                              .lineItemsAtTime!
                                               .length >
                                           1
                                       ? Container(
@@ -357,7 +357,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                     child: Row(
                                       children: [
                                         Text(
-                                          "${orderManageController.listAllOrder[indexState][index].lineItemsAtTime.length} sản phẩm",
+                                          "${orderManageController.listAllOrder[indexState][index].lineItemsAtTime!.length} sản phẩm",
                                           style: TextStyle(
                                               color: Colors.grey[600]),
                                         ),
@@ -415,7 +415,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .primaryTextTheme
-                                                      .headline6
+                                                      .headline6!
                                                       .color),
                                             ),
                                           ),

@@ -16,7 +16,7 @@ class LoginScreenCustomer extends StatelessWidget {
   @override
   ConfigController configController = Get.find();
   LoginController loginController = LoginController();
-  StreamSubscription sub;
+  StreamSubscription? sub;
 
   Widget build(BuildContext context) {
     // TODO: implement build

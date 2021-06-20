@@ -2,20 +2,13 @@ import 'package:dio/dio.dart';
 
 import 'package:get/get.dart' as get2;
 import 'package:sahashop_user/components/app_customer/screen/login/login_screen.dart';
-import 'package:sahashop_user/components/saha_user/dialog/dialog.dart';
 import 'package:sahashop_user/components/utils/customer_info.dart';
-import 'package:sahashop_user/screen/login/loginScreen.dart';
 import 'package:sahashop_user/utils/msg_code.dart';
-import 'package:sahashop_user/utils/user_info.dart';
-
-/// Inteceptor which used in Dio to add authentication
-/// token, device code before perform any request
-///
 class AuthInterceptor extends InterceptorsWrapper {
   AuthInterceptor();
 
   @override
-  Future onRequest(RequestOptions options) {
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     if (CustomerInfo().getToken() != null) {
       options.headers
           .putIfAbsent("customer-token", () => CustomerInfo().getToken());
@@ -27,39 +20,39 @@ class AuthInterceptor extends InterceptorsWrapper {
     if (options.method == 'POST') {
       options.data = new FormData.fromMap(options.data);
     }
-    return super.onRequest(options);
+    return super.onRequest(options, handler);
   }
 
   @override
-  Future onError(DioError error) {
+  void onError(DioError error, ErrorInterceptorHandler handler) {
     print('Response: ${error.response}');
     if (error is DioError) {
       var dioError = error;
       switch (dioError.type) {
-        case DioErrorType.CANCEL:
+        case DioErrorType.cancel:
           return errorMess('Đã hủy kết nối');
-          break;
-        case DioErrorType.CONNECT_TIMEOUT:
+
+        case DioErrorType.connectTimeout:
           return errorMess('Không thể kết nối đến server');
-          break;
-        case DioErrorType.RECEIVE_TIMEOUT:
+
+        case DioErrorType.receiveTimeout:
           return errorMess('Không thể nhận dữ liệu từ server');
-          break;
-        case DioErrorType.RESPONSE:
-          if (dioError?.response?.statusCode == 429) {
+
+        case DioErrorType.response:
+          if (dioError.response?.statusCode == 429) {
             return errorMess(
                 'Bạn gửi quá nhiều yêu cầu xin thử lại sau 1 phút');
           }
 
           return errorMess(
-              '${dioError?.response?.data["msg"] != null ? dioError?.response?.data["msg"] : "Có lỗi xảy ra"}');
-          break;
-        case DioErrorType.SEND_TIMEOUT:
+              '${dioError.response?.data["msg"] != null ? dioError.response?.data["msg"] : "Có lỗi xảy ra"}');
+
+        case DioErrorType.sendTimeout:
           return errorMess('Không thể gửi dữ liệu đến server');
-          break;
-        case DioErrorType.DEFAULT:
+
+        case DioErrorType.other:
           return errorMess(error.message);
-          break;
+
       }
     }
     return errorMess("Có lỗi xảy ta");
@@ -75,20 +68,13 @@ class AuthInterceptor extends InterceptorsWrapper {
   }
 
   @override
-  Future onResponse(Response response) async {
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
     print('------Response: ${response.data}');
 
     if (response.data["code"] == 401) {
       get2.Get.to(() => LoginScreenCustomer());
     }
 
-    if (response.statusCode != 200 && response.data["success"] == false) {
-      return super.onError(DioError(
-        request: response.request,
-        response: response,
-        error: "Đã xảy ra lỗi ERR5000",
-      ));
-    }
     if (response.data != null && response.data["success"] == false) {
       throw MSGCODE[response.data["msg"]] ?? "Đã xảy ra lỗi";
     }
@@ -104,9 +90,9 @@ class AuthInterceptor extends InterceptorsWrapper {
       } catch (e) {
         print(e.toString());
       }
-      return super.onResponse(null);
+      return super.onResponse(response, handler);
     }
 
-    return super.onResponse(response);
+    return super.onResponse(response, handler);
   }
 }

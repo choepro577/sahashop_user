@@ -4,27 +4,27 @@ import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/model/order.dart';
 
 class OrderCompletedController extends GetxController {
-  final String orderCode;
+  final String? orderCode;
 
-  var order = Order().obs;
+  Rx<Order?> order = Order().obs;
   var loading = false.obs;
   var isLoadingPayment = false.obs;
   var refreshValue = false.obs;
-  var listPaymentMethod = RxList<Map<int, String>>();
-  Map<int, String> paymentMethod;
+  RxList<Map<int, String>>? listPaymentMethod = RxList<Map<int, String>>();
+  Map<int, String> paymentMethod = new Map<int, String>();
 
   OrderCompletedController(this.orderCode) {
     loadOrder(orderCode);
     loadPaymentMethod();
   }
 
-  Future<void> loadOrder(String orderCode) async {
+  Future<void> loadOrder(String? orderCode) async {
     loading.value = false;
     try {
       var res = await CustomerRepositoryManager.orderCustomerRepository
           .getOneOrderHistory(orderCode);
 
-      order.value = res.data;
+      order.value = res!.data;
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
@@ -36,8 +36,8 @@ class OrderCompletedController extends GetxController {
     try {
       var res =
           await CustomerRepositoryManager.paymentRepository.getPaymentMethod();
-      res.data.forEach((element) {
-        listPaymentMethod.add({element["id"]: element["name"]});
+      res!.data!.forEach((element) {
+        listPaymentMethod!.add({element["id"]: element["name"]});
       });
 
       print(listPaymentMethod);
@@ -47,14 +47,14 @@ class OrderCompletedController extends GetxController {
     isLoadingPayment.value = false;
   }
 
-  Future<void> changPaymentMethod(int idPayment) async {
+  Future<void> changPaymentMethod(int? idPayment) async {
     try {
       var res = await CustomerRepositoryManager.orderCustomerRepository
           .changePaymentMethod(orderCode, idPayment);
       refreshData();
       refresh();
     } catch (err) {
-      SahaAlert.showError(message: err);
+      SahaAlert.showError(message: err.toString());
     }
   }
 

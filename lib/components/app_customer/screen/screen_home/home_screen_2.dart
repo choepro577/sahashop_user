@@ -13,11 +13,11 @@ import 'package:sahashop_user/screen/home/widget/section_title.dart';
 import '../data_app_controller.dart';
 
 class HomeScreenStyle2 extends StatefulWidget {
-  final List<Category> categories;
-  final List<ButtonConfig> buttonConfigs;
+  final List<Category>? categories;
+  final List<ButtonConfig>? buttonConfigs;
 
   HomeScreenStyle2({
-    Key key,
+    Key? key,
     this.categories,
     this.buttonConfigs,
   }) : super(key: key);
@@ -42,9 +42,9 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
     var discountProducts = [];
 
     if (dataAppCustomerController.homeData?.discountProducts?.list != null) {
-      dataAppCustomerController.homeData.discountProducts.list
+      dataAppCustomerController.homeData!.discountProducts!.list!
           .forEach((listDiscount) {
-        discountProducts.addAll(listDiscount.products);
+        discountProducts.addAll(listDiscount.products!);
       });
     }
 
@@ -129,7 +129,7 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children:
-                            dataAppCustomerController.homeData.allCategory.list
+                            dataAppCustomerController.homeData!.allCategory!.list!
                                 .map(
                                   (category) => CategoryButton(
                                     category: category,
@@ -204,7 +204,7 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children: dataAppCustomerController
-                                  .homeData.bestSellProduct.list
+                                  .homeData!.bestSellProduct!.list!
                                   .map((product) => ProductItemWidget(
                                         width: 180,
                                         product: product,
@@ -241,7 +241,7 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children: dataAppCustomerController
-                                  .homeData.newProduct.list
+                                  .homeData!.newProduct!.list!
                                   .map((product) => ProductItemWidget(
                                         width: 180,
                                         product: product,
@@ -254,7 +254,7 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                     ],
                   ),
             dataAppCustomerController.homeData?.newPost?.list == null ||
-                    dataAppCustomerController.homeData.newPost.list.length == 0
+                    dataAppCustomerController.homeData!.newPost!.list!.length == 0
                 ? Container()
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -276,7 +276,7 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                           scrollDirection: Axis.horizontal,
                           child: Row(
                             children:
-                                dataAppCustomerController.homeData.newPost.list
+                                dataAppCustomerController.homeData!.newPost!.list!
                                     .map((post) => PostItemWidget(
                                           width: 220,
                                           post: post,
@@ -295,9 +295,9 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
 }
 
 class CategoryButton extends StatelessWidget {
-  const CategoryButton({Key key, this.category}) : super(key: key);
+  const CategoryButton({Key? key, this.category}) : super(key: key);
 
-  final Category category;
+  final Category? category;
 
   @override
   Widget build(BuildContext context) {
@@ -326,7 +326,7 @@ class CategoryButton extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                       child: CachedNetworkImage(
-                        imageUrl: category.imageUrl ?? "",
+                        imageUrl: category!.imageUrl ?? "",
                         fit: BoxFit.cover,
                         placeholder: (context, url) =>
                             CircularProgressIndicator(),
@@ -336,7 +336,7 @@ class CategoryButton extends StatelessWidget {
                   ),
                   SizedBox(height: 5),
                   AutoSizeText(
-                    category?.name,
+                    category!.name!,
                     textAlign: TextAlign.center,
                     style: TextStyle(fontWeight: FontWeight.w600),
                     maxLines: 2,

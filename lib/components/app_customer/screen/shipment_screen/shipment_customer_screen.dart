@@ -9,9 +9,9 @@ import 'package:sahashop_user/model/info_address_customer.dart';
 import 'package:sahashop_user/model/shipment_method.dart';
 
 class ShipmentCustomerScreen extends StatelessWidget {
-  final InfoAddressCustomer infoAddressCustomer;
-  final Function callback;
-  final ShipmentMethod shipmentMethodCurrent;
+  final InfoAddressCustomer? infoAddressCustomer;
+  final Function? callback;
+  final ShipmentMethod? shipmentMethodCurrent;
 
   ShipmentCustomerScreen(
       {this.infoAddressCustomer, this.callback, this.shipmentMethodCurrent}) {
@@ -20,7 +20,7 @@ class ShipmentCustomerScreen extends StatelessWidget {
         shipmentCurrentInput: shipmentMethodCurrent);
   }
 
-  ShipmentCustomerController shipmentCustomerController;
+  late ShipmentCustomerController shipmentCustomerController;
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +102,7 @@ class ShipmentCustomerScreen extends StatelessWidget {
                                             ),
                                             SahaMoneyText(
                                               price: shipmentCustomerController
-                                                  .listShipment[index].fee
+                                                  .listShipment[index].fee!
                                                   .toDouble(),
                                               sizeVND: 14,
                                               sizeText: 14,
@@ -153,7 +153,7 @@ class ShipmentCustomerScreen extends StatelessWidget {
                 : SahaButtonFullParent(
                     text: "Đồng ý",
                     onPressed: () {
-                      callback(
+                      callback!(
                           shipmentCustomerController.shipmentCurrentChoose);
                       Get.back();
                     },

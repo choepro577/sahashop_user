@@ -12,16 +12,16 @@ class AddressRequest {
     this.isDefaultReturn,
   });
 
-  String name;
-  String addressDetail;
-  int country;
-  int province;
-  int district;
-  int wards;
-  String email;
-  String phone;
-  bool isDefaultPickup;
-  bool isDefaultReturn;
+  String? name;
+  String? addressDetail;
+  int? country;
+  int? province;
+  int? district;
+  int? wards;
+  String? email;
+  String? phone;
+  bool? isDefaultPickup;
+  bool? isDefaultReturn;
 
   Map<String, dynamic> toJson() => {
         "name": name,

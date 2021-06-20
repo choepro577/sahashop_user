@@ -16,7 +16,7 @@ class NewAddressCustomerScreen extends StatefulWidget {
 }
 
 class _NewAddressCustomerScreenState extends State<NewAddressCustomerScreen> {
-  NewAddressCustomerController newAddressCustomerController;
+  late NewAddressCustomerController newAddressCustomerController;
 
   @override
   Widget build(BuildContext context) {

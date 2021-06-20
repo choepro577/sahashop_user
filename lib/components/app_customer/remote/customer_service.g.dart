@@ -8,47 +8,40 @@ part of 'customer_service.dart';
 
 class _CustomerService implements CustomerService {
   _CustomerService(this._dio, {this.baseUrl}) {
-    ArgumentError.checkNotNull(_dio, '_dio');
     baseUrl ??= 'https://sahashop.net/api/customer/';
   }
 
   final Dio _dio;
 
-  String baseUrl;
+  String? baseUrl;
 
   @override
   Future<AllStoreResponse> getAllStore() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('store',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = AllStoreResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AllStoreResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'store',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AllStoreResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<AllProductResponse> getAllProduct(storeCode) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        'store/$storeCode/products',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = AllProductResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AllProductResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'store/$storeCode/products',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AllProductResponse.fromJson(_result.data!);
     return value;
   }
 
@@ -57,86 +50,67 @@ class _CustomerService implements CustomerService {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('type_of_store',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = TypeShopResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TypeShopResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'type_of_store',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TypeShopResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<GetAppThemeResponse> getAppTheme(storeCode) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/app-theme',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = GetAppThemeResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GetAppThemeResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/app-theme',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = GetAppThemeResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<AllCategoryResponse> getAllCategory(storeCode) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/categories',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = AllCategoryResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AllCategoryResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/categories',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AllCategoryResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<QueryProductResponse> getProductWithCategory(
       storeCode, idCategory) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(idCategory, 'idCategory');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/products',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = QueryProductResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<QueryProductResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/products',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = QueryProductResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<QueryProductResponse> searchProduct(
       storeCode, search, idCategory, descending, details, sortBy) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(search, 'search');
-    ArgumentError.checkNotNull(idCategory, 'idCategory');
-    ArgumentError.checkNotNull(descending, 'descending');
-    ArgumentError.checkNotNull(details, 'details');
-    ArgumentError.checkNotNull(sortBy, 'sortBy');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'search': search,
@@ -145,67 +119,53 @@ class _CustomerService implements CustomerService {
       r'details': details,
       r'sort_by': sortBy
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/products?=',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = QueryProductResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<QueryProductResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/products?=',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = QueryProductResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<DetailProductResponse> getDetailProduct(storeCode, idProduct) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(idProduct, 'idProduct');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/products/$idProduct',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = DetailProductResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<DetailProductResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/products/$idProduct',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = DetailProductResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<AllCategoryPostResponse> getAllCategoryPost(storeCode) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/post_categories',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = AllCategoryPostResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AllCategoryPostResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/post_categories',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AllCategoryPostResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<AllPostResponse> searchPost(
       storeCode, search, idCategory, descending, sortBy) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(search, 'search');
-    ArgumentError.checkNotNull(idCategory, 'idCategory');
-    ArgumentError.checkNotNull(descending, 'descending');
-    ArgumentError.checkNotNull(sortBy, 'sortBy');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'search': search,
@@ -213,438 +173,352 @@ class _CustomerService implements CustomerService {
       r'descending': descending,
       r'sort_by': sortBy
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/posts?=',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = AllPostResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AllPostResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/posts?=',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AllPostResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<HomeResponse> getHomeApp(storeCode) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/home_app',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = HomeResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HomeResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/home_app',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = HomeResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<OrderResponse> createOrder(storeCode, body) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(body ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/carts/orders',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = OrderResponse.fromJson(_result.data);
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<OrderResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/carts/orders',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = OrderResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<RegisterResponse> registerAccount(storeCode, body) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(body ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/register',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = RegisterResponse.fromJson(_result.data);
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<RegisterResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/register',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = RegisterResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<InfoCustomerResponse> updateAccount(storeCode, body) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(body ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/profile',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'PUT',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = InfoCustomerResponse.fromJson(_result.data);
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<InfoCustomerResponse>(
+            Options(method: 'PUT', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/profile',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = InfoCustomerResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<LoginResponse> loginAccount(storeCode, body) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(body ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>('$storeCode/login',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = LoginResponse.fromJson(_result.data);
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<LoginResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/login',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = LoginResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<InfoCustomerResponse> getInfoCustomer(storeCode) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/profile',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = InfoCustomerResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<InfoCustomerResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/profile',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = InfoCustomerResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<CustomerComboResponse> getComboCustomer(storeCode) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/combos',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = CustomerComboResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<CustomerComboResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/combos',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = CustomerComboResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<VoucherCustomerResponse> getVoucherCustomer(storeCode) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/vouchers',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = VoucherCustomerResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<VoucherCustomerResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/vouchers',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = VoucherCustomerResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<AllMessageCustomerResponse> getAllMessageCustomer(
       storeCode, numberPage) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(numberPage, 'numberPage');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'page': numberPage};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/messages',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = AllMessageCustomerResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AllMessageCustomerResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/messages',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AllMessageCustomerResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<SendMessageCustomerResponse> sendMessageToUser(storeCode, body) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(body ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/messages',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = SendMessageCustomerResponse.fromJson(_result.data);
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<SendMessageCustomerResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/messages',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = SendMessageCustomerResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<Cart> getItemCart(storeCode) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('$storeCode/carts',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = Cart.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<Cart>(
+        Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            .compose(_dio.options, '$storeCode/carts',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = Cart.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<Cart> addVoucherCart(storeCode, body) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(body ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>('$storeCode/carts',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = Cart.fromJson(_result.data);
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<Cart>(
+        Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            .compose(_dio.options, '$storeCode/carts',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = Cart.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<Cart> updateItemCart(storeCode, body) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(body ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/carts/items',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'PUT',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = Cart.fromJson(_result.data);
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<Cart>(
+        Options(method: 'PUT', headers: <String, dynamic>{}, extra: _extra)
+            .compose(_dio.options, '$storeCode/carts/items',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = Cart.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<Cart> addItemCart(storeCode, body) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(body ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/carts/items',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = Cart.fromJson(_result.data);
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<Cart>(
+        Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            .compose(_dio.options, '$storeCode/carts/items',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = Cart.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<AllIAddressCustomerResponse> getAllAddressCustomer(storeCode) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/address',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = AllIAddressCustomerResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AllIAddressCustomerResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/address',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AllIAddressCustomerResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<CreateUpdateAddressCustomerResponse> createAddressCustomer(
       storeCode, body) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(body ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/address',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = CreateUpdateAddressCustomerResponse.fromJson(_result.data);
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<CreateUpdateAddressCustomerResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/address',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = CreateUpdateAddressCustomerResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<CreateUpdateAddressCustomerResponse> updateAddressCustomer(
       storeCode, idAddressCustomer, body) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(idAddressCustomer, 'idAddressCustomer');
-    ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(body ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/address/$idAddressCustomer',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'PUT',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = CreateUpdateAddressCustomerResponse.fromJson(_result.data);
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<CreateUpdateAddressCustomerResponse>(
+            Options(method: 'PUT', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/address/$idAddressCustomer',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = CreateUpdateAddressCustomerResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<DeleteAddressCustomerResponse> deleteAddressCustomer(
       storeCode, idAddressCustomer) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(idAddressCustomer, 'idAddressCustomer');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/address/$idAddressCustomer',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'DELETE',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = DeleteAddressCustomerResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<DeleteAddressCustomerResponse>(Options(
+                method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
+            .compose(_dio.options, '$storeCode/address/$idAddressCustomer',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = DeleteAddressCustomerResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<ShipmentCustomerResponse> chargeShipmentFee(storeCode, body) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(body ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/shipment/fee',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = ShipmentCustomerResponse.fromJson(_result.data);
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ShipmentCustomerResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/shipment/fee',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ShipmentCustomerResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<PaymentMethodCustomerResponse> getPaymentMethod(storeCode) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/payment_methods',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = PaymentMethodCustomerResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<PaymentMethodCustomerResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/payment_methods',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = PaymentMethodCustomerResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<OrderHistoryResponse> getOrderHistory(storeCode, numberPage, search,
       fieldBy, fieldByValue, sortBy, descending, dateFrom, dateTo) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(numberPage, 'numberPage');
-    ArgumentError.checkNotNull(search, 'search');
-    ArgumentError.checkNotNull(fieldBy, 'fieldBy');
-    ArgumentError.checkNotNull(fieldByValue, 'fieldByValue');
-    ArgumentError.checkNotNull(sortBy, 'sortBy');
-    ArgumentError.checkNotNull(descending, 'descending');
-    ArgumentError.checkNotNull(dateFrom, 'dateFrom');
-    ArgumentError.checkNotNull(dateTo, 'dateTo');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': numberPage,
@@ -656,102 +530,98 @@ class _CustomerService implements CustomerService {
       r'date_from': dateFrom,
       r'date_to': dateTo
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/carts/orders',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = OrderHistoryResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<OrderHistoryResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/carts/orders',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = OrderHistoryResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<OrderResponse> getOneOrderHistory(storeCode, orderCode) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(orderCode, 'orderCode');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/carts/orders/$orderCode',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = OrderResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<OrderResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/carts/orders/$orderCode',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = OrderResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<StateHistoryOrderCustomerResponse> getStateHistoryCustomerOrder(
       storeCode, idOrder) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(idOrder, 'idOrder');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/carts/orders/status_records/$idOrder',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = StateHistoryOrderCustomerResponse.fromJson(_result.data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<StateHistoryOrderCustomerResponse>(Options(
+                method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+            .compose(
+                _dio.options, '$storeCode/carts/orders/status_records/$idOrder',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = StateHistoryOrderCustomerResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<CancelOrderResponse> cancelOrder(storeCode, body) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(body ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/carts/orders/cancel',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = CancelOrderResponse.fromJson(_result.data);
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<CancelOrderResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/carts/orders/cancel',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = CancelOrderResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<CancelOrderResponse> changePaymentMethod(
       storeCode, body, orderCode) async {
-    ArgumentError.checkNotNull(storeCode, 'storeCode');
-    ArgumentError.checkNotNull(body, 'body');
-    ArgumentError.checkNotNull(orderCode, 'orderCode');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(body ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '$storeCode/carts/orders/change_payment_method/$orderCode',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'PUT',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = CancelOrderResponse.fromJson(_result.data);
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<CancelOrderResponse>(
+            Options(method: 'PUT', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options,
+                    '$storeCode/carts/orders/change_payment_method/$orderCode',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = CancelOrderResponse.fromJson(_result.data!);
     return value;
+  }
+
+  RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
+    if (T != dynamic &&
+        !(requestOptions.responseType == ResponseType.bytes ||
+            requestOptions.responseType == ResponseType.stream)) {
+      if (T == String) {
+        requestOptions.responseType = ResponseType.plain;
+      } else {
+        requestOptions.responseType = ResponseType.json;
+      }
+    }
+    return requestOptions;
   }
 }

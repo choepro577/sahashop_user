@@ -9,11 +9,11 @@ class OrderHistoryResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  String msg;
-  Data data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  String? msg;
+  Data? data;
 
   factory OrderHistoryResponse.fromJson(Map<String, dynamic> json) =>
       OrderHistoryResponse(
@@ -29,7 +29,7 @@ class OrderHistoryResponse {
         "success": success,
         "msg_code": msgCode,
         "msg": msg,
-        "data": data.toJson(),
+        "data": data!.toJson(),
       };
 }
 
@@ -46,15 +46,15 @@ class Data {
     this.to,
   });
 
-  int currentPage;
-  List<Order> data;
-  String firstPageUrl;
-  int from;
-  String nextPageUrl;
-  String path;
-  int perPage;
+  int? currentPage;
+  List<Order>? data;
+  String? firstPageUrl;
+  int? from;
+  String? nextPageUrl;
+  String? path;
+  int? perPage;
   dynamic prevPageUrl;
-  int to;
+  int? to;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         currentPage: json["current_page"],
@@ -70,7 +70,7 @@ class Data {
 
   Map<String, dynamic> toJson() => {
         "current_page": currentPage,
-        "data": List<Order>.from(data.map((x) => x.toJson())),
+        "data": List<Order>.from(data!.map((x) => x.toJson())),
         "first_page_url": firstPageUrl,
         "from": from,
         "next_page_url": nextPageUrl,

@@ -13,12 +13,12 @@ import 'package:sahashop_user/utils/image_utils.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 class ConfigProfileController extends GetxController {
-  InfoCustomer infoCustomer;
+  InfoCustomer? infoCustomer;
   var sex = "".obs;
   var sexIndex = 0;
   var linkAvatar = "".obs;
   var isUpdatingImage = false.obs;
-  var dataImages = ImageData().obs;
+  Rx<ImageData?> dataImages = ImageData().obs;
   var birthDate = DateTime.now().obs;
 
   var nameEditingController = new TextEditingController().obs;
@@ -30,17 +30,17 @@ class ConfigProfileController extends GetxController {
       SelectCarouselImagesController();
 
   ConfigProfileController({this.infoCustomer}) {
-    nameEditingController.value.text = infoCustomer.name ?? "";
-    phoneEditingController.value.text = infoCustomer.phoneNumber ?? "";
+    nameEditingController.value.text = infoCustomer!.name ?? "";
+    phoneEditingController.value.text = infoCustomer!.phoneNumber ?? "";
     emailEditingController.value.text =
-        infoCustomer.email ?? "contactsahatech@gmail.com";
-    passwordEditingController.value.text = infoCustomer.email ?? "";
-    linkAvatar.value = infoCustomer.avatarImage ?? "";
-    onChangeSexPicker(infoCustomer.sex ?? 0);
+        infoCustomer!.email ?? "contactsahatech@gmail.com";
+    passwordEditingController.value.text = infoCustomer!.email ?? "";
+    linkAvatar.value = infoCustomer!.avatarImage ?? "";
+    onChangeSexPicker(infoCustomer!.sex ?? 0);
     birthDate.value =
-        DateTime.parse(infoCustomer.dateOfBirth ?? "1972-05-14T16:00:00.000");
+        DateTime.parse(infoCustomer!.dateOfBirth ?? "1972-05-14T16:00:00.000");
     dataImages.value = ImageData(
-        linkImage: infoCustomer.avatarImage,
+        linkImage: infoCustomer!.avatarImage,
         uploading: false,
         errorUpload: false);
   }
@@ -76,24 +76,24 @@ class ConfigProfileController extends GetxController {
     }
   }
 
-  void updateImage({ImageData imageData}) {
+  void updateImage({ImageData? imageData}) {
     dataImages.value = imageData;
   }
 
-  Future<String> uploadImage(File file) async {
+  Future<String?> uploadImage(File file) async {
     isUpdatingImage.value = true;
     try {
       var fileUpImageCompress =
           await ImageUtils.getImageCompress(file, quality: 80);
 
-      var link = await RepositoryManager.imageRepository
-          .uploadImage(fileUpImageCompress);
+      var link = await (RepositoryManager.imageRepository
+          .uploadImage(fileUpImageCompress) as Future<String?>);
 
       //OK up load
       updateImage(
           imageData:
               ImageData(linkImage: link, uploading: false, errorUpload: false));
-      linkAvatar.value = link;
+      linkAvatar.value = link!;
     } catch (err) {
       updateImage(
           imageData:
@@ -104,11 +104,11 @@ class ConfigProfileController extends GetxController {
     isUpdatingImage.value = false;
   }
 
-  Future<String> loadAssets() async {
+  Future<String?> loadAssets() async {
     try {
       final picker = ImagePicker();
-      final pickedFile = await picker.getImage(source: ImageSource.gallery);
-      File croppedFile = await ImageCropper.cropImage(
+      final pickedFile = await (picker.getImage(source: ImageSource.gallery) as Future<PickedFile>);
+      File? croppedFile = await ImageCropper.cropImage(
           compressQuality: 10,
           sourcePath: pickedFile.path,
           aspectRatioPresets: [CropAspectRatioPreset.ratio16x9],

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import '../../../const/constant.dart';
 
 class SearchField extends StatelessWidget {
-  final Function onSearch;
-  final Function onClick;
+  final Function? onSearch;
+  final Function? onClick;
 
   const SearchField({
-    Key key,
+    Key? key,
     this.onSearch,
     this.onClick,
   }) : super(key: key);
@@ -20,10 +20,10 @@ class SearchField extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
       ),
       child: TextField(
-        onChanged: (value) => onSearch(value),
+        onChanged: (value) => onSearch!(value),
         onTap: () {
           if (onClick != null) {
-            onClick();
+            onClick!();
           }
         },
         decoration: InputDecoration(

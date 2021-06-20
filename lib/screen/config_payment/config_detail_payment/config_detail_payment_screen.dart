@@ -5,10 +5,10 @@ import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/screen/config_payment/config_payment_controller.dart';
 
 class ConfigDetailPaymentScreen extends StatelessWidget {
-  final int idPayment;
-  final List<dynamic> listDefineField;
-  final List<TextEditingController> listTextEditingController;
-  Map<String, dynamic> listFieldRequest;
+  final int? idPayment;
+  final List<dynamic>? listDefineField;
+  final List<TextEditingController>? listTextEditingController;
+  Map<String, dynamic>? listFieldRequest;
 
   ConfigDetailPaymentScreen(
       {this.idPayment,
@@ -18,7 +18,7 @@ class ConfigDetailPaymentScreen extends StatelessWidget {
     configPaymentController = Get.find();
   }
 
-  ConfigPaymentController configPaymentController;
+  late ConfigPaymentController configPaymentController;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class ConfigDetailPaymentScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: TextField(
-                            controller: listTextEditingController[0],
+                            controller: listTextEditingController![0],
                             keyboardType: TextInputType.phone,
                             decoration: InputDecoration(
                               isDense: true,
@@ -75,7 +75,7 @@ class ConfigDetailPaymentScreen extends StatelessWidget {
             : Column(
                 children: [
                   ...List.generate(
-                    listDefineField.length,
+                    listDefineField!.length,
                     (index) => Column(
                       children: [
                         Container(
@@ -92,19 +92,19 @@ class ConfigDetailPaymentScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 child: TextField(
-                                  controller: listTextEditingController[index],
+                                  controller: listTextEditingController![index],
                                   keyboardType: TextInputType.phone,
                                   decoration: InputDecoration(
                                     isDense: true,
                                     border: InputBorder.none,
-                                    hintText: "Nhập ${listDefineField[index]}",
+                                    hintText: "Nhập ${listDefineField![index]}",
                                   ),
                                   style: TextStyle(fontSize: 15),
                                   minLines: 1,
                                   maxLines: 1,
                                   onChanged: (v) {
                                     print(
-                                        listTextEditingController[index].text);
+                                        listTextEditingController![index].text);
                                   },
                                 ),
                               ),
@@ -133,13 +133,13 @@ class ConfigDetailPaymentScreen extends StatelessWidget {
                     text: "Bật",
                     onPressed: () {
                       Map<String, dynamic> listFieldRequestCheck =
-                          listFieldRequest;
+                          listFieldRequest!;
                       int i = 0;
                       listFieldRequestCheck.forEach((key, value) {
                         listFieldRequestCheck.update(
                             key,
                             (value) =>
-                                value = listTextEditingController[i].text);
+                                value = listTextEditingController![i].text);
                         i++;
                       });
                       configPaymentController.upDatePaymentMethod(

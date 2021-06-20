@@ -17,7 +17,7 @@ class CategoryPostController extends GetxController {
   CategoryPostController() {
     final DataAppCustomerController dataAppCustomerController = Get.find();
     if (dataAppCustomerController.categoryCurrent != null) {
-      categoryCurrent(dataAppCustomerController.categoryPostCurrent);
+      categoryCurrent(dataAppCustomerController.categoryPostCurrent!);
     }
   }
 
@@ -33,11 +33,11 @@ class CategoryPostController extends GetxController {
     getPostWithCategoryPost(category.id);
   }
 
-  Future<void> getPostWithCategoryPost(int idCategoryPost) async {
+  Future<void> getPostWithCategoryPost(int? idCategoryPost) async {
     try {
       var res = await CustomerRepositoryManager.postCustomerRepository
-          .searchPost(idCategory: idCategoryPost ?? "");
-      posts(res);
+          .searchPost(idCategory: idCategoryPost as String? ?? "");
+      posts(res!);
     } catch (err) {
       print(err);
       handleErrorCustomer(err);
@@ -52,7 +52,7 @@ class CategoryPostController extends GetxController {
       var res = await CustomerRepositoryManager.postCustomerRepository
           .getAllCategoryPost();
 
-      categories(res);
+      categories(res!);
       categories.insert(0, CategoryPost(id: null, title: "Tất cả"));
 
       if (categoryCurrent.value != null) {

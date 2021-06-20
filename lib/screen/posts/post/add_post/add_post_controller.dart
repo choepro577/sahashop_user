@@ -15,18 +15,18 @@ class AddPostController extends GetxController {
   RxList<CategoryPost> listCategory = new RxList<CategoryPost>();
   var postSelected = CategoryPost().obs;
 
-  String title;
-  File image;
+  String? title;
+  late File image;
   var content = "".obs;
-  String summary;
-  bool published;
-  int categoryId;
+  String? summary;
+  bool? published;
+  int? categoryId;
 
   AddPostController() {
     getAllCategory();
   }
 
-  Future<void> createPost() async {
+  Future<bool?> createPost() async {
     isLoadingAdd.value = true;
     try {
       var imageUp = await ImageUtils.getImageCompress(image);
@@ -39,7 +39,7 @@ class AddPostController extends GetxController {
           content: content.value);
 
       SahaAlert.showSuccess(message: "Thêm thành công");
-      Navigator.pop(Get.context, "added");
+      Navigator.pop(Get.context!, "added");
 
       return true;
     } catch (err) {
@@ -53,7 +53,7 @@ class AddPostController extends GetxController {
     isLoadingCategory.value = true;
     try {
       var list = await RepositoryManager.postRepository.getAllCategoryPost();
-      listCategory(list);
+      listCategory(list!);
 
       isLoadingCategory.value = false;
     } catch (err) {

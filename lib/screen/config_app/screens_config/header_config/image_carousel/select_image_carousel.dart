@@ -41,7 +41,7 @@ class SelectCarouselImages extends StatelessWidget {
               items: dataImages.map((imageData) {
                 return Builder(
                   builder: (BuildContext context) {
-                    return buildItemImageData(imageData);
+                    return buildItemImageData(imageData!);
                   },
                 );
               }).toList(),
@@ -72,13 +72,13 @@ class SelectCarouselImages extends StatelessWidget {
                           height: 300,
                           width: 300,
                           fit: BoxFit.cover,
-                          imageUrl: imageData.linkImage,
+                          imageUrl: imageData.linkImage!,
                           placeholder: (context, url) => Stack(
                             children: [
                               imageData.file == null
                                   ? Container()
                                   : Image.file(
-                                      imageData.file,
+                                      imageData.file!,
                                       width: 300,
                                       height: 300,
                                     ),
@@ -89,7 +89,7 @@ class SelectCarouselImages extends StatelessWidget {
                               Icon(Icons.error),
                         )
                       : Image.file(
-                          imageData.file,
+                          imageData.file!,
                           width: 300,
                           height: 300,
                         )),
@@ -125,12 +125,12 @@ class SelectCarouselImages extends StatelessWidget {
                 ),
               ),
             ),
-            imageData.uploading
+            imageData.uploading!
                 ? SahaLoadingWidget(
                     size: 50,
                   )
                 : Container(),
-            imageData.errorUpload ? Icon(Icons.error) : Container(),
+            imageData.errorUpload! ? Icon(Icons.error) : Container(),
           ],
         ),
       ),

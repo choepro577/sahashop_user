@@ -10,9 +10,9 @@ class MainConfigThemeColor extends StatefulWidget {
 }
 
 class _MainConfigThemeColorState extends State<MainConfigThemeColor> {
-  Map<String, dynamic> value;
+  Map<String, dynamic>? value;
 
-  Color colorButton;
+  Color? colorButton;
 
   changeColor(Color color) {
     setState(() => colorButton = color);
@@ -39,7 +39,7 @@ class _MainConfigThemeColorState extends State<MainConfigThemeColor> {
         ),
         PickerColorButton(
             currentColor:
-                HexColor(controller.configApp.colorMain1) ?? colorButton,
+                HexColor(controller.configApp.colorMain1!),
             onChange: changeColor)
       ],
     );

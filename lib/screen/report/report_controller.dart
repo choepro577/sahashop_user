@@ -12,7 +12,7 @@ class ReportController extends GetxController {
   var timeNow = DateTime.now().obs;
   var fromDay = DateTime.now().obs;
   var toDay = DateTime.now().obs;
-  var listChart = RxList<Chart>();
+  var listChart = RxList<Chart?>();
   var indexOption = 0.obs;
   var isTotalChart = true.obs;
   var listChooseChartType = RxList<bool>([true, false]);
@@ -60,8 +60,8 @@ class ReportController extends GetxController {
           toDay.value.toIso8601String(),
           "",
           "");
-      listChart(res.data.dataPrimeTime.charts);
-      reportPrimeTime.value = res.data.dataPrimeTime;
+      listChart(res!.data!.dataPrimeTime!.charts!);
+      reportPrimeTime.value = res.data!.dataPrimeTime!;
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }

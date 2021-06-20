@@ -18,7 +18,7 @@ class SearchController extends GetxController {
     try {
       var list =
           await CustomerRepositoryManager.categoryRepository.getAllCategory();
-      listCategory(list);
+      listCategory(list!);
       listCategory.forEach((cate) {
         listCategorySelected.add({cate.id.toString(): false});
       });
@@ -41,18 +41,18 @@ class SearchController extends GetxController {
 
   var listProduct = RxList<Product>();
   var isLoadingProduct = false.obs;
-  Future<void> searchProduct(
+  Future<bool?> searchProduct(
       String search, bool descending, String sortBy) async {
     isLoadingProduct.value = true;
     checkIsSelectedCategory();
     try {
-      var list = await CustomerRepositoryManager.productCustomerRepository
+      var list = await (CustomerRepositoryManager.productCustomerRepository
           .searchProduct(
               search: search,
               idCategory: selectedCategoryParam,
               descending: descending,
               details: sizeSearch,
-              sortBy: sortBy);
+              sortBy: sortBy) as Future<List<Product>>);
       listProduct.value = list;
       print(listProduct.length);
       isLoadingProduct.value = false;

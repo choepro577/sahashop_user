@@ -5,7 +5,7 @@ import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/model/location_address.dart';
 
 class ChooseAddressCustomerController extends GetxController {
-  final TypeAddress typeAddress;
+  final TypeAddress? typeAddress;
   final idProvince;
   final idDistrict;
 
@@ -44,7 +44,7 @@ class ChooseAddressCustomerController extends GetxController {
     try {
       var res = await RepositoryManager.addressRepository.getProvince();
 
-      res.data.forEach((element) {
+      res!.data!.forEach((element) {
         listLocationAddress.value.add(element);
       });
     } catch (err) {
@@ -54,13 +54,13 @@ class ChooseAddressCustomerController extends GetxController {
     isLoadingAddress.value = false;
   }
 
-  Future<void> getDistrict(int idProvince) async {
+  Future<void> getDistrict(int? idProvince) async {
     isLoadingAddress.value = true;
     try {
       var res =
           await RepositoryManager.addressRepository.getDistrict(idProvince);
 
-      res.data.forEach((element) {
+      res!.data!.forEach((element) {
         listLocationAddress.value.add(element);
       });
     } catch (err) {
@@ -70,12 +70,12 @@ class ChooseAddressCustomerController extends GetxController {
     isLoadingAddress.value = false;
   }
 
-  Future<void> getWard(int idDistrict) async {
+  Future<void> getWard(int? idDistrict) async {
     isLoadingAddress.value = true;
     try {
       var res = await RepositoryManager.addressRepository.getWard(idDistrict);
 
-      res.data.forEach((element) {
+      res!.data!.forEach((element) {
         listLocationAddress.value.add(element);
       });
     } catch (err) {

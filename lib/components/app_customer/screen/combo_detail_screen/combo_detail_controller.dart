@@ -6,11 +6,11 @@ import 'package:sahashop_user/model/combo.dart';
 
 class ComboDetailController extends GetxController {
   var listProductCombo = RxList<ProductsCombo>();
-  var listQuantityProductNeedBuy = RxList<int>();
+  var listQuantityProductNeedBuy = RxList<int?>();
   var discountComboType = 0.obs;
   var valueComboType = 0.0.obs;
   var hadEnough = false.obs;
-  int idProduct;
+  int? idProduct;
 
   DataAppCustomerController dataAppCustomerController = Get.find();
 
@@ -18,10 +18,10 @@ class ComboDetailController extends GetxController {
     getComboCustomer();
     dataAppCustomerController.listOrder.forEach((e) {
       var checkHasInCombo = listProductCombo
-          .indexWhere((element) => element.product.id == e.product.id);
+          .indexWhere((element) => element.product!.id == e.product!.id);
       if (checkHasInCombo != -1) {
         listQuantityProductNeedBuy[checkHasInCombo] =
-            listQuantityProductNeedBuy[checkHasInCombo] - e.quantity;
+            listQuantityProductNeedBuy[checkHasInCombo]! - e.quantity!;
       }
     });
     checkProductInCombo();
@@ -39,11 +39,11 @@ class ComboDetailController extends GetxController {
               listProductCombo.length) {
             dataAppCustomerController.listOrder.forEach((e) {
               var checkHasInCombo = listProductCombo
-                  .indexWhere((element) => element.product.id == e.product.id);
+                  .indexWhere((element) => element.product!.id == e.product!.id);
               if (checkHasInCombo != -1) {
-                if (listProductCombo[checkHasInCombo].quantity >= e.quantity) {
+                if (listProductCombo[checkHasInCombo].quantity! >= e.quantity!) {
                   listQuantityProductNeedBuy[checkHasInCombo] =
-                      listProductCombo[checkHasInCombo].quantity - e.quantity;
+                      listProductCombo[checkHasInCombo].quantity! - e.quantity!;
                 }
               }
             });
@@ -51,14 +51,14 @@ class ComboDetailController extends GetxController {
             for (int i = 0; i < listProductCombo.length; i++) {
               var checkHasInCombo = dataAppCustomerController.listOrder
                   .indexWhere((element) =>
-                      element.product.id == listProductCombo[i].product.id);
+                      element.product!.id == listProductCombo[i].product!.id);
               if (checkHasInCombo != -1) {
-                if (listProductCombo[i].quantity >=
+                if (listProductCombo[i].quantity! >=
                     dataAppCustomerController
-                        .listOrder[checkHasInCombo].quantity) {
-                  listQuantityProductNeedBuy[i] = listProductCombo[i].quantity -
+                        .listOrder[checkHasInCombo].quantity!) {
+                  listQuantityProductNeedBuy[i] = listProductCombo[i].quantity! -
                       dataAppCustomerController
-                          .listOrder[checkHasInCombo].quantity;
+                          .listOrder[checkHasInCombo].quantity!;
                 }
               } else {
                 listQuantityProductNeedBuy[i] = listProductCombo[i].quantity;
@@ -83,24 +83,24 @@ class ComboDetailController extends GetxController {
     try {
       var res = await CustomerRepositoryManager.marketingRepository
           .getComboCustomer();
-      res.data.forEach((e) {
-        int checkHasInCombo = e.productsCombo
-            .indexWhere((element) => element.product.id == idProduct);
+      res!.data!.forEach((e) {
+        int checkHasInCombo = e.productsCombo!
+            .indexWhere((element) => element.product!.id == idProduct);
         if (checkHasInCombo != -1) {
-          listProductCombo(e.productsCombo);
-          discountComboType.value = e.discountType;
-          valueComboType.value = e.valueDiscount.toDouble();
+          listProductCombo(e.productsCombo!);
+          discountComboType.value = e.discountType!;
+          valueComboType.value = e.valueDiscount!.toDouble();
           listProductCombo.forEach((element) {
             listQuantityProductNeedBuy.add(element.quantity);
           });
 
           dataAppCustomerController.listOrder.forEach((e) {
             var checkHasInCombos = listProductCombo
-                .indexWhere((element) => element.product.id == e.product.id);
+                .indexWhere((element) => element.product!.id == e.product!.id);
             if (checkHasInCombos != -1) {
-              if (listProductCombo[checkHasInCombos].quantity >= e.quantity) {
+              if (listProductCombo[checkHasInCombos].quantity! >= e.quantity!) {
                 listQuantityProductNeedBuy[checkHasInCombos] =
-                    listProductCombo[checkHasInCombos].quantity - e.quantity;
+                    listProductCombo[checkHasInCombos].quantity! - e.quantity!;
               } else {
                 listQuantityProductNeedBuy[checkHasInCombos] = 0;
               }

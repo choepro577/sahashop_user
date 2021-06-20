@@ -3,33 +3,33 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 
 class ShowChooseOrderOption {
-  static void showChoose({Function onReturn, List<bool> listChooseOption}) {
+  static void showChoose({Function? onReturn, List<bool>? listChooseOption}) {
     showModalBottomSheet<void>(
       isScrollControlled: true,
-      context: Get.context,
+      context: Get.context!,
       builder: (BuildContext context) {
         Widget itemOption(
-            {Icon icon,
-            String text,
-            Function onTap,
-            Color colorText,
-            int index}) {
+            {Icon? icon,
+            String? text,
+            Function? onTap,
+            Color? colorText,
+            int? index}) {
           return Column(
             children: [
               InkWell(
                 onTap: () {
-                  onTap();
+                  onTap!();
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Row(
                     children: [
-                      icon,
+                      icon!,
                       SizedBox(
                         width: 10,
                       ),
                       Text(
-                        text,
+                        text!,
                         style: TextStyle(color: colorText),
                       )
                     ],
@@ -65,7 +65,7 @@ class ShowChooseOrderOption {
             itemOption(
                 icon: Icon(
                   Icons.assignment_turned_in_outlined,
-                  color: listChooseOption[0]
+                  color: listChooseOption![0]
                       ? Theme.of(context).primaryColor
                       : Colors.grey[600],
                 ),
@@ -74,7 +74,7 @@ class ShowChooseOrderOption {
                     ? Theme.of(context).primaryColor
                     : Colors.grey[600],
                 onTap: () {
-                  onReturn(0);
+                  onReturn!(0);
                 }),
             itemOption(
                 icon: Icon(
@@ -88,7 +88,7 @@ class ShowChooseOrderOption {
                     ? Theme.of(context).primaryColor
                     : Colors.grey[600],
                 onTap: () {
-                  onReturn(1);
+                  onReturn!(1);
                 }),
             Padding(
               padding: const EdgeInsets.all(8.0),

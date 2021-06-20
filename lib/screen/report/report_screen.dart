@@ -8,7 +8,7 @@ import 'package:sahashop_user/utils/date_utils.dart';
 
 // ignore: must_be_immutable
 class ReportScreen extends StatelessWidget {
-  ReportController reportController;
+  ReportController reportController = new ReportController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class ReportScreen extends StatelessWidget {
                       reportController.fromDay.value = fromDate;
                       reportController.toDay.value = toDay ?? DateTime.now();
                     },
-                  )).then((value) => reportController.getReport());
+                  ))!.then((value) => reportController.getReport());
             },
             child: Padding(
                 padding: const EdgeInsets.all(8.0),

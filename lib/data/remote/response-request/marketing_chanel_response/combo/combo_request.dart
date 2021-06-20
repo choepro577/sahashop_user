@@ -20,17 +20,17 @@ class ComboRequest {
     this.comboProducts,
   });
 
-  bool isEnd;
-  String name;
-  String description;
-  String imageUrl;
-  String startTime;
-  String endTime;
-  int discountType;
-  int valueDiscount;
-  bool setLimitAmount;
-  int amount;
-  List<ComboProduct> comboProducts;
+  bool? isEnd;
+  String? name;
+  String? description;
+  String? imageUrl;
+  String? startTime;
+  String? endTime;
+  int? discountType;
+  int? valueDiscount;
+  bool? setLimitAmount;
+  int? amount;
+  List<ComboProduct>? comboProducts;
 
   factory ComboRequest.fromJson(Map<String, dynamic> json) => ComboRequest(
         name: json["name"],
@@ -59,7 +59,7 @@ class ComboRequest {
         "amount": amount,
         "combo_products": comboProducts == null
             ? null
-            : List<dynamic>.from(comboProducts.map((x) => x.toJson())),
+            : List<dynamic>.from(comboProducts!.map((x) => x.toJson())),
       };
 }
 
@@ -69,8 +69,8 @@ class ComboProduct {
     this.quantity,
   });
 
-  int productId;
-  int quantity;
+  int? productId;
+  int? quantity;
 
   factory ComboProduct.fromJson(Map<String, dynamic> json) => ComboProduct(
         productId: json["product_id"],

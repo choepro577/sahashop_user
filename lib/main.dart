@@ -20,24 +20,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'SahaShop',
-      theme: SahaUserPrimaryTheme,
-      home: SahaMainScreen(),
-      getPages: [
-        GetPage(name: "ConfigScreen", page: () => ConfigScreen()),
-        GetPage(name: "customer_home", page: () => NavigationScreen())
-      ],
-      builder: (context, widget) => Column(
-        children: [
-          Expanded(child: widget),
-          Obx(
-            () => !sahaDataController.isPreview.value
-                ? Container()
-                : Material(
-                    child: InkWell(
-                      onTap: () {
-                        Get.until(
-                            (route) => route.settings.name == "ConfigScreen");
+        title: 'SahaShop',
+        theme: SahaUserPrimaryTheme,
+        home: SahaMainScreen(),
+        getPages: [
+          GetPage(name: "ConfigScreen", page: () => ConfigScreen()),
+          GetPage(name: "customer_home", page: () => NavigationScreen())
+        ],
+        builder: (context, widget) => Column(
+              children: [
+                Expanded(child: widget!),
+                Obx(
+                  () => !sahaDataController.isPreview.value
+                      ? Container()
+                      : Material(
+                          child: InkWell(
+                            onTap: () {
+                              Get.until((route) =>
+                                  route.settings.name == "ConfigScreen");
 
                         sahaDataController.changeStatusPreview(false);
                       },

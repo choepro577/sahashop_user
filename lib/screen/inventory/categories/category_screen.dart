@@ -29,14 +29,13 @@ class CategoryScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Obx(() {
-                          var list = categoryController.listCategory?.toList().reversed.toList();
+                          var list = categoryController.listCategory.toList().reversed.toList();
                           if (list == null || list.length == 0) {
                             return SahaEmptyWidget(
                               tile: "Không có danh mục nào",
                             );
                           }
-                          return ListView.separated(
-                              separatorBuilder: (context, index) => Divider(),
+                          return ListView.builder(
                               itemCount: list.length,
                               itemBuilder: (context, index) {
                                 return ItemCategoryWidget(
@@ -47,7 +46,7 @@ class CategoryScreen extends StatelessWidget {
                       ),
                       SahaButtonFullParent(
                         onPressed: () {
-                          Get.to(AddCategoryScreen()).then((value) {
+                          Get.to(AddCategoryScreen())!.then((value) {
                             if (value == "added") {
                               categoryController.getAllCategory();
                             }
@@ -66,22 +65,26 @@ class CategoryScreen extends StatelessWidget {
 }
 
 class ItemCategoryWidget extends StatelessWidget {
-  final Category category;
+  final Category? category;
 
-  const ItemCategoryWidget({Key key, this.category}) : super(key: key);
+  const ItemCategoryWidget({Key? key, this.category}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Card(
       child: ListTile(
         leading: CachedNetworkImage(
           height: 60,
           width: 60,
           fit: BoxFit.cover,
-          imageUrl: category.imageUrl ?? "",
+          imageUrl: category!.imageUrl ?? "",
           placeholder: (context, url) => new SahaLoadingWidget(size: 30,),
           errorWidget: (context, url, error) => new Icon(Icons.error),
         ),
-        title: Text(category.name),
+        title: Text(category!.name!),
+        selected: true,
+        trailing: Checkbox(
+          value: true, onChanged: (bool? value) {  },
+        ),
       ),
     );
   }

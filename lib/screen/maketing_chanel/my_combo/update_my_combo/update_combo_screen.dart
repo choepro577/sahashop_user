@@ -14,8 +14,8 @@ import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
 
 class UpdateMyComboScreen extends StatefulWidget {
-  Combo combo;
-  bool onlyWatch;
+  Combo? combo;
+  bool? onlyWatch;
 
   UpdateMyComboScreen({this.combo, this.onlyWatch});
 
@@ -31,8 +31,8 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
   @override
   void initState() {
     updateMyComboController.discountTypeRequest.value =
-        widget.combo.discountType;
-    widget.combo.productsCombo.forEach((element) {
+        widget.combo!.discountType!;
+    widget.combo!.productsCombo!.forEach((element) {
       updateMyComboController
           .updateProductComboController.listSelectedProduct.value
           .add(element.product);
@@ -44,61 +44,61 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
       updateMyComboController
           .updateProductComboController.listSelectedProductParam.value
           .add(ComboProduct(
-              productId: element.product.id, quantity: element.quantity));
+              productId: element.product!.id, quantity: element.quantity));
 
       updateMyComboController.amountEditingController.text =
           element.quantity == null ? "" : element.quantity.toString();
     });
 
     updateMyComboController.nameProgramEditingController.text =
-        widget.combo.name;
+        widget.combo!.name!;
     updateMyComboController.dateStart.value = DateTime(
-      widget.combo.startTime.year,
-      widget.combo.startTime.month,
-      widget.combo.startTime.day,
-      widget.combo.startTime.hour,
-      widget.combo.startTime.minute,
-      widget.combo.startTime.second,
-      widget.combo.startTime.millisecond,
-      widget.combo.startTime.microsecond,
+      widget.combo!.startTime!.year,
+      widget.combo!.startTime!.month,
+      widget.combo!.startTime!.day,
+      widget.combo!.startTime!.hour,
+      widget.combo!.startTime!.minute,
+      widget.combo!.startTime!.second,
+      widget.combo!.startTime!.millisecond,
+      widget.combo!.startTime!.microsecond,
     );
     updateMyComboController.dateEnd.value = DateTime(
-      widget.combo.endTime.year,
-      widget.combo.endTime.month,
-      widget.combo.endTime.day,
-      widget.combo.endTime.hour,
-      widget.combo.endTime.minute,
-      widget.combo.endTime.second,
-      widget.combo.endTime.millisecond,
-      widget.combo.endTime.microsecond,
+      widget.combo!.endTime!.year,
+      widget.combo!.endTime!.month,
+      widget.combo!.endTime!.day,
+      widget.combo!.endTime!.hour,
+      widget.combo!.endTime!.minute,
+      widget.combo!.endTime!.second,
+      widget.combo!.endTime!.millisecond,
+      widget.combo!.endTime!.microsecond,
     );
     updateMyComboController.timeStart.value = DateTime(
-      widget.combo.startTime.year,
-      widget.combo.startTime.month,
-      widget.combo.startTime.day,
-      widget.combo.startTime.hour,
-      widget.combo.startTime.minute,
-      widget.combo.startTime.second,
-      widget.combo.startTime.millisecond,
-      widget.combo.startTime.microsecond,
+      widget.combo!.startTime!.year,
+      widget.combo!.startTime!.month,
+      widget.combo!.startTime!.day,
+      widget.combo!.startTime!.hour,
+      widget.combo!.startTime!.minute,
+      widget.combo!.startTime!.second,
+      widget.combo!.startTime!.millisecond,
+      widget.combo!.startTime!.microsecond,
     );
     updateMyComboController.timeEnd.value = DateTime(
-      widget.combo.endTime.year,
-      widget.combo.endTime.month,
-      widget.combo.endTime.day,
-      widget.combo.endTime.hour,
-      widget.combo.endTime.minute,
-      widget.combo.endTime.second,
-      widget.combo.endTime.millisecond,
-      widget.combo.endTime.microsecond,
+      widget.combo!.endTime!.year,
+      widget.combo!.endTime!.month,
+      widget.combo!.endTime!.day,
+      widget.combo!.endTime!.hour,
+      widget.combo!.endTime!.minute,
+      widget.combo!.endTime!.second,
+      widget.combo!.endTime!.millisecond,
+      widget.combo!.endTime!.microsecond,
     );
-    updateMyComboController.discountTypeInput.value = widget.combo.discountType;
+    updateMyComboController.discountTypeInput.value = widget.combo!.discountType!;
 
     updateMyComboController.valueEditingController.text =
-        widget.combo.valueDiscount.toString();
+        widget.combo!.valueDiscount.toString();
 
     updateMyComboController.amountCodeAvailableEditingController.text =
-        widget.combo.amount == null ? "" : widget.combo.amount.toString();
+        widget.combo!.amount == null ? "" : widget.combo!.amount.toString();
     updateMyComboController.checkTypeDiscountInput();
     super.initState();
   }
@@ -112,7 +112,7 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
         FocusScopeNode currentFocus = FocusScope.of(context);
         if (!currentFocus.hasPrimaryFocus &&
             currentFocus.focusedChild != null) {
-          FocusManager.instance.primaryFocus.unfocus();
+          FocusManager.instance.primaryFocus!.unfocus();
         }
       },
       child: Scaffold(
@@ -148,7 +148,7 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
                             controller: updateMyComboController
                                 .nameProgramEditingController,
                             validator: (value) {
-                              if (value.length < 1) {
+                              if (value!.length < 1) {
                                 return 'Chưa nhập tên chương trình';
                               }
                               return null;
@@ -353,7 +353,7 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
                                                     groupValue:
                                                         updateMyComboController
                                                             .discountType.value,
-                                                    onChanged: (v) {
+                                                    onChanged: (dynamic v) {
                                                       updateMyComboController
                                                           .onChangeRatio(v);
                                                     },
@@ -435,7 +435,7 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
                                                     groupValue:
                                                         updateMyComboController
                                                             .discountType.value,
-                                                    onChanged: (v) {
+                                                    onChanged: (dynamic v) {
                                                       updateMyComboController
                                                           .onChangeRatio(v);
                                                     },
@@ -611,7 +611,7 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
                                 .amountCodeAvailableEditingController,
                             keyboardType: TextInputType.number,
                             validator: (value) {
-                              if (value.length < 1) {
+                              if (value!.length < 1) {
                                 return 'Chưa nhập giới hạn combo';
                               } else {
                                 return null;
@@ -732,17 +732,17 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
                                                 imageUrl: updateMyComboController
                                                             .updateProductComboController
                                                             .listSelectedProduct
-                                                            .value[index]
-                                                            .images
+                                                            .value[index]!
+                                                            .images!
                                                             .length ==
                                                         0
                                                     ? ""
                                                     : updateMyComboController
                                                         .updateProductComboController
                                                         .listSelectedProduct
-                                                        .value[index]
-                                                        .images[0]
-                                                        .imageUrl,
+                                                        .value[index]!
+                                                        .images![0]
+                                                        .imageUrl!,
                                                 errorWidget:
                                                     (context, url, error) =>
                                                         Container(
@@ -810,7 +810,7 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
                                                         updateMyComboController
                                                             .updateProductComboController
                                                             .listSelectedProduct
-                                                            .value[index]
+                                                            .value[index]!
                                                             .id);
                                                 updateMyComboController
                                                     .updateProductComboController
@@ -861,8 +861,8 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
                         : SahaButtonFullParent(
                             text: "Lưu",
                             onPressed: () {
-                              if (_formKey.currentState.validate()) {
-                                _formKey.currentState.save();
+                              if (_formKey.currentState!.validate()) {
+                                _formKey.currentState!.save();
                                 KeyboardUtil.hideKeyboard(context);
                                 if (updateMyComboController
                                         .typeVoucherDiscount.value ==
@@ -872,7 +872,7 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
                                       .value = false;
                                 } else {
                                   updateMyComboController
-                                      .updateCombo(widget.combo.id);
+                                      .updateCombo(widget.combo!.id);
                                   updateMyComboController
                                       .isChoosedTypeVoucherDiscount
                                       .value = true;

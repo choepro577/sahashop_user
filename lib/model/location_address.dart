@@ -13,9 +13,9 @@ class LocationAddress {
     this.type,
   });
 
-  int id;
-  String name;
-  String type;
+  int? id;
+  String? name;
+  String? type;
 
   factory LocationAddress.fromJson(Map<String, dynamic> json) =>
       LocationAddress(

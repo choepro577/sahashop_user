@@ -7,10 +7,10 @@ import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class AddressRepository {
-  Future<AllIAddressCustomerResponse> getAllAddressCustomer() async {
+  Future<AllIAddressCustomerResponse?> getAllAddressCustomer() async {
     try {
       var res = await CustomerServiceManager()
-          .service
+          .service!
           .getAllAddressCustomer(UserInfo().getCurrentStoreCode());
       return res;
     } catch (err) {
@@ -18,35 +18,37 @@ class AddressRepository {
     }
   }
 
-  Future<CreateUpdateAddressCustomerResponse> createAddressCustomer(
+  Future<CreateUpdateAddressCustomerResponse?> createAddressCustomer(
       AddressCustomerRequest addressCustomerRequest) async {
     try {
-      var res = await CustomerServiceManager().service.createAddressCustomer(
+      var res = await CustomerServiceManager().service!.createAddressCustomer(
           UserInfo().getCurrentStoreCode(), addressCustomerRequest.toJson());
       return res;
     } catch (err) {
       SahaAlert.showError(message: err.toString());
+     throw(err.toString());
     }
   }
 
   Future<CreateUpdateAddressCustomerResponse> updateAddressCustomer(
-      int idAddressCustomer,
+      int? idAddressCustomer,
       AddressCustomerRequest addressCustomerRequest) async {
     try {
-      var res = await CustomerServiceManager().service.updateAddressCustomer(
+      var res = await CustomerServiceManager().service!.updateAddressCustomer(
           UserInfo().getCurrentStoreCode(),
           idAddressCustomer,
           addressCustomerRequest.toJson());
       return res;
     } catch (err) {
       SahaAlert.showError(message: err.toString());
+      throw(err.toString());
     }
   }
 
-  Future<DeleteAddressCustomerResponse> deleteAddressCustomer(
-      int idAddressCustomer) async {
+  Future<DeleteAddressCustomerResponse?> deleteAddressCustomer(
+      int? idAddressCustomer) async {
     try {
-      var res = await CustomerServiceManager().service.deleteAddressCustomer(
+      var res = await CustomerServiceManager().service!.deleteAddressCustomer(
           UserInfo().getCurrentStoreCode(), idAddressCustomer);
       return res;
     } catch (err) {

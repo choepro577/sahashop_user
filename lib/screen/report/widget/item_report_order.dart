@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:sahashop_user/components/saha_user/text/text_money.dart';
 
 class ItemReportOrder extends StatelessWidget {
-  final String text;
-  final double totalPrice;
-  final int totalOrder;
+  final String? text;
+  final double? totalPrice;
+  final int? totalOrder;
 
-  ItemReportOrder({this.text, this.totalPrice, this.totalOrder});
+  ItemReportOrder({ this.text, this.totalPrice, this.totalOrder});
 
   @override
   Widget build(BuildContext context) {

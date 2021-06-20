@@ -2,13 +2,13 @@ import 'package:flutter/widgets.dart';
 
 class FakeDevicePixelRatio extends StatelessWidget {
   final num fakeDevicePixelRatio;
-  final Widget child;
+  final Widget? child;
 
-  FakeDevicePixelRatio({this.fakeDevicePixelRatio, this.child}) : assert(fakeDevicePixelRatio != null);
+  FakeDevicePixelRatio({required this.fakeDevicePixelRatio, this.child}) : assert(fakeDevicePixelRatio != null);
 
   @override
   Widget build(BuildContext context) {
-    final ratio = fakeDevicePixelRatio / WidgetsBinding.instance.window.devicePixelRatio;
+    final ratio = fakeDevicePixelRatio / WidgetsBinding.instance!.window.devicePixelRatio;
 
     return FractionallySizedBox(
         widthFactor: 1/ratio,

@@ -14,8 +14,8 @@ class BusinessChart extends StatefulWidget {
 }
 
 class _BusinessChartState extends State<BusinessChart> {
-  ReportController reportController;
-  TooltipBehavior _tooltipBehavior;
+  ReportController? reportController;
+  TooltipBehavior? _tooltipBehavior;
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _BusinessChartState extends State<BusinessChart> {
                     itemBuilder: (BuildContext context, int index) {
                       return InkWell(
                         onTap: () {
-                          reportController.changeChooseChartType(index);
+                          reportController!.changeChooseChartType(index);
                         },
                         child: Obx(
                           () => Stack(
@@ -54,24 +54,22 @@ class _BusinessChartState extends State<BusinessChart> {
                                 width: (Get.width - 40) / 2,
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: reportController
-                                                .listChooseChartType[index]
-                                            ? Theme.of(context).primaryColor
-                                            : Colors.grey[500]),
+                                        color: Theme.of(context).primaryColor
+                                    ),
                                     borderRadius: BorderRadius.circular(2)),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                        "${reportController.listNameChartType[index]}"),
+                                        "${reportController!.listNameChartType[index]}"),
                                     SizedBox(
                                       height: 10,
                                     ),
                                     index == 1
                                         ? Text(
-                                            "${reportController.reportPrimeTime.value.totalOrderCount.toInt()}")
+                                            "${reportController!.reportPrimeTime.value.totalOrderCount!.toInt()}")
                                         : SahaMoneyText(
-                                            price: reportController
+                                            price: reportController!
                                                 .reportPrimeTime
                                                 .value
                                                 .totalFinal,
@@ -82,7 +80,7 @@ class _BusinessChartState extends State<BusinessChart> {
                                   ],
                                 ),
                               ),
-                              reportController.listChooseChartType[index]
+                              reportController!.listChooseChartType[index]
                                   ? Positioned(
                                       height: 30,
                                       width: 30,
@@ -94,7 +92,7 @@ class _BusinessChartState extends State<BusinessChart> {
                                       ),
                                     )
                                   : Container(),
-                              reportController.listChooseChartType[index]
+                              reportController!.listChooseChartType[index]
                                   ? Positioned(
                                       height: 15,
                                       width: 15,
@@ -105,7 +103,7 @@ class _BusinessChartState extends State<BusinessChart> {
                                         size: 15,
                                         color: Theme.of(context)
                                             .primaryTextTheme
-                                            .headline6
+                                            .headline6!
                                             .color,
                                       ),
                                     )
@@ -140,14 +138,17 @@ class _BusinessChartState extends State<BusinessChart> {
                         borderColor: Theme.of(context).primaryColor),
                     dataSource: <SalesData>[
                       ...List.generate(
-                        reportController.reportPrimeTime.value.charts.length,
+                        reportController!.reportPrimeTime.value.charts!.length,
                         (index) => SalesData(
-                            '${reportController.fromDay.value.day == DateTime.now().day || reportController.fromDay.value.day == DateTime.now().subtract(Duration(days: 1)).day ? "${reportController.listChart[index].time.hour}h" : "${SahaDateUtils().getDDMM(reportController.listChart[index].time)}"}',
-                            reportController.isTotalChart.value
-                                ? reportController.reportPrimeTime.value
-                                    .charts[index].totalFinal
-                                : reportController.reportPrimeTime.value
-                                    .charts[index].totalOrderCount),
+                            '${reportController!.fromDay.value.day == DateTime.now().day ||
+                                reportController!.fromDay.value.day == DateTime.now().subtract(Duration(days: 1)).day ?
+                            "${reportController!.listChart[index]!.time!.hour}h" :
+                            "${SahaDateUtils().getDDMM(reportController!.listChart[index]!.time!)}"}',
+                            (reportController!.isTotalChart.value
+                                ? reportController!.reportPrimeTime.value
+                                    .charts![index]!.totalFinal
+                                : reportController!.reportPrimeTime.value
+                                    .charts![index]!.totalOrderCount)!),
                       )
                     ],
                     xValueMapper: (SalesData sales, _) => sales.year,

@@ -8,7 +8,7 @@ import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/components/saha_user/text_field/saha_text_filed_content.dart';
 import 'package:sahashop_user/components/saha_user/text_field/sahashopTextField.dart';
 import 'package:sahashop_user/model/category_post.dart';
-import 'package:smart_select/smart_select.dart';
+//import 'package:smart_select/smart_select.dart';
 import 'add_post_controller.dart';
 import 'widget/select_image.dart';
 
@@ -20,7 +20,7 @@ class AddPostScreen extends StatelessWidget {
   final AddPostController addPostController = new AddPostController();
   final _formKey = GlobalKey<FormState>();
 
-  File imageSelected;
+  File? imageSelected;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +42,7 @@ class AddPostScreen extends StatelessWidget {
                           addPostController.title = value;
                         },
                         validator: (value) {
-                          if (value.length == 0) {
+                          if (value!.length == 0) {
                             return 'Không được để trống';
                           }
                           return null;
@@ -79,24 +79,24 @@ class AddPostScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Obx(
-                        () => addPostController.isLoadingCategory.value
-                            ? SahaLoadingWidget(
-                                size: 15,
-                              )
-                            : SmartSelect<CategoryPost>.single(
-                                title: "Chọn danh mục",
-                                placeholder: "Mời chọn",
-                                value: addPostController.postSelected.value,
-                                choiceItems: addPostController.listCategory
-                                    .toList()
-                                    .map((e) =>
-                                        S2Choice(value: e, title: e.title))
-                                    .toList(),
-                                onChange: (va) {
-                                  addPostController.categoryId = va.value.id;
-                                }),
-                      ),
+                      // Obx(
+                      //   () => addPostController.isLoadingCategory.value
+                      //       ? SahaLoadingWidget(
+                      //           size: 15,
+                      //         )
+                      //       : SmartSelect<CategoryPost>.single(
+                      //           title: "Chọn danh mục",
+                      //           placeholder: "Mời chọn",
+                      //           value: addPostController.postSelected.value,
+                      //           choiceItems: addPostController.listCategory
+                      //               .toList()
+                      //               .map((e) =>
+                      //                   S2Choice(value: e, title: e.title))
+                      //               .toList(),
+                      //           onChange: (va) {
+                      //             addPostController.categoryId = va.value.id;
+                      //           }),
+                      // ),
                       SahaTextField(
                         onChanged: (value) {
                           addPostController.title = value;
@@ -130,7 +130,7 @@ class AddPostScreen extends StatelessWidget {
                         textColor: Colors.black,
                         colorBorder: Colors.grey,
                         onPressed: () {
-                          if (_formKey.currentState.validate()) {
+                          if (_formKey.currentState!.validate()) {
                             addPostController.published = false;
                             addPostController.createPost();
                           }
@@ -141,7 +141,7 @@ class AddPostScreen extends StatelessWidget {
                       child: SahaButtonFullParent(
                         text: "Hiển thị",
                         onPressed: () {
-                          if (_formKey.currentState.validate()) {
+                          if (_formKey.currentState!.validate()) {
                             addPostController.published = true;
                             addPostController.createPost();
                           }

@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 
 class SahaAppBar extends PreferredSize {
   final double height;
-  final Widget titleChild;
-  final String titleText;
-  final Widget leading;
-  final List<Widget> actions;
+  final Widget? titleChild;
+  final String? titleText;
+  final Widget? leading;
+  final List<Widget>? actions;
 
-  SahaAppBar(
+   SahaAppBar(
       {this.leading,
       this.actions,
       this.titleText,
       this.titleChild,
-      this.height = kToolbarHeight});
+      this.height = kToolbarHeight}) : super(
+     child: Container(),
+     preferredSize: Size(100,100)
+   );
 
   @override
   Size get preferredSize => Size.fromHeight(height);
@@ -22,7 +25,7 @@ class SahaAppBar extends PreferredSize {
     return  AppBar(
             title: titleText != null
                 ? Text(
-                    titleText,
+                    titleText!,
                     style: TextStyle(color: Colors.black87),
                   )
                 : titleChild,

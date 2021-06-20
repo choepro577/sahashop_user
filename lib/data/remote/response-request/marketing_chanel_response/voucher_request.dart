@@ -20,24 +20,24 @@ class VoucherRequest {
     this.isEnd,
   });
 
-  int voucherType;
-  String name;
-  String code;
-  String description;
-  String imageUrl;
-  String startTime;
-  String endTime;
-  int discountType;
-  int valueDiscount;
-  bool setLimitValueDiscount;
-  int maxValueDiscount;
-  bool setLimitTotal;
-  int valueLimitTotal;
-  bool isShowVoucher;
-  bool setLimitAmount;
-  int amount;
-  String products;
-  bool isEnd;
+  int? voucherType;
+  String? name;
+  String? code;
+  String? description;
+  String? imageUrl;
+  String? startTime;
+  String? endTime;
+  int? discountType;
+  int? valueDiscount;
+  bool? setLimitValueDiscount;
+  int? maxValueDiscount;
+  bool? setLimitTotal;
+  int? valueLimitTotal;
+  bool? isShowVoucher;
+  bool? setLimitAmount;
+  int? amount;
+  String? products;
+  bool? isEnd;
 
   Map<String, dynamic> toJson() => {
         "is_end": isEnd,

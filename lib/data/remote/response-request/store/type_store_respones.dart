@@ -12,10 +12,10 @@ class TypeShopResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  List<DataTypeShop> data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  List<DataTypeShop>? data;
 
   factory TypeShopResponse.fromJson(Map<String, dynamic> json) => TypeShopResponse(
     code: json["code"],
@@ -28,7 +28,7 @@ class TypeShopResponse {
     "code": code,
     "success": success,
     "msg_code": msgCode,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
   };
 }
 
@@ -40,10 +40,10 @@ class DataTypeShop {
     this.updatedAt,
   });
 
-  int id;
-  String name;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? id;
+  String? name;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory DataTypeShop.fromJson(Map<String, dynamic> json) => DataTypeShop(
     id: json["id"],
@@ -55,7 +55,7 @@ class DataTypeShop {
   Map<String, dynamic> toJson() => {
     "id": id,
     "name": name,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
+    "created_at": createdAt!.toIso8601String(),
+    "updated_at": updatedAt!.toIso8601String(),
   };
 }

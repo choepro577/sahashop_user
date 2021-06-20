@@ -27,9 +27,9 @@ class CustomerManageController extends GetxController {
       if (!isEndCustomer.value) {
         var res = await RepositoryManager.customerRepository
             .getAllInfoCustomer(pageLoadMore);
-        listInfoCustomer.addAll(res.data.data);
+        listInfoCustomer.addAll(res!.data!.data!);
 
-        if (res.data.nextPageUrl != null) {
+        if (res.data!.nextPageUrl != null) {
           pageLoadMore++;
           isEndCustomer.value = false;
         } else {

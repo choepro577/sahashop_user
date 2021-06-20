@@ -4,16 +4,16 @@ import 'package:sahashop_user/components/app_customer/repository/repository_cust
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 
 class ConfigPaymentCustomerController extends GetxController {
-  var listNamePaymentMethod = RxList<String>();
-  var listUsePaymentMethod = RxList<bool>();
-  var listIdPaymentMethod = RxList<int>();
-  var listConfig = Map<String, dynamic>();
+  var listNamePaymentMethod = RxList<String?>();
+  var listUsePaymentMethod = RxList<bool?>();
+  var listIdPaymentMethod = RxList<int?>();
+  Map<String, dynamic>? listConfig = Map<String, dynamic>();
   var listTextEditingController = RxList<List<TextEditingController>>();
   var listChoosePaymentMethod = RxList<bool>();
-  String namePaymentCurrent = "";
-  int idPaymentCurrentCallBack = 0;
+  String? namePaymentCurrent = "";
+  int? idPaymentCurrentCallBack = 0;
 
-  final int idPaymentCurrent;
+  final int? idPaymentCurrent;
 
   ConfigPaymentCustomerController({this.idPaymentCurrent}) {
     getPaymentMethod();
@@ -23,7 +23,7 @@ class ConfigPaymentCustomerController extends GetxController {
     try {
       var res =
           await CustomerRepositoryManager.paymentRepository.getPaymentMethod();
-      res.data.forEach((element) {
+      res!.data!.forEach((element) {
         listNamePaymentMethod.add(element["name"]);
         listUsePaymentMethod.add(element["use"]);
         listIdPaymentMethod.add(element["id"]);

@@ -8,12 +8,15 @@ import 'package:sahashop_user/data/repository/register/register_repository.dart'
 import 'package:sahashop_user/data/repository/report/report_repository.dart';
 import 'package:sahashop_user/data/repository/type_of_shop/type_of_shop_repository.dart';
 
+import 'attributes/attributes_repository.dart';
 import 'category/category_repository.dart';
 import 'config_ui/config_ui_repository.dart';
 import 'device_token/device_token_repository.dart';
 import 'image/image_repository.dart';
 import 'login/login_repository.dart';
 import 'marketing_chanel/marketing_chanel_repository.dart';
+import 'order/order_repository.dart';
+import 'payment_method/payment_repository.dart';
 import 'post/post_repository.dart';
 import 'store/store_repository.dart';
 
@@ -38,4 +41,5 @@ class RepositoryManager {
   static OrderRepository get orderRepository => OrderRepository();
   static CustomerRepository get customerRepository => CustomerRepository();
   static ReportRepository get reportRepository => ReportRepository();
+  static AttributesRepository get attributesRepository => AttributesRepository();
 }

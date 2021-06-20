@@ -15,11 +15,11 @@ class DeleteAddressStoreResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  String msg;
-  Data data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  String? msg;
+  Data? data;
 
   factory DeleteAddressStoreResponse.fromJson(Map<String, dynamic> json) =>
       DeleteAddressStoreResponse(
@@ -35,7 +35,7 @@ class DeleteAddressStoreResponse {
         "success": success,
         "msg_code": msgCode,
         "msg": msg,
-        "data": data.toJson(),
+        "data": data!.toJson(),
       };
 }
 
@@ -44,7 +44,7 @@ class Data {
     this.idDeleted,
   });
 
-  int idDeleted;
+  int? idDeleted;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         idDeleted: json["idDeleted"],

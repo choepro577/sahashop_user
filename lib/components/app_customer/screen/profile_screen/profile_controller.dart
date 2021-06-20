@@ -19,7 +19,7 @@ class ProfileController extends GetxController {
     try {
       var res = await RepositoryManager.orderRepository
           .getAllOrder(loadMoreItemCount, "", "", "", "", "", "", "");
-      res.data.data.forEach((element) {
+      res!.data!.data!.forEach((element) {
         if (element.orderStatusCode == WAITING_FOR_PROGRESSING) {
           processingAmount.value++;
         }

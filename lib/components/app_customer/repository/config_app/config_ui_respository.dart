@@ -4,10 +4,10 @@ import 'package:sahashop_user/model/config_app.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class ConfigUICustomerRepository {
-  Future<ConfigApp> getAppTheme() async {
+  Future<ConfigApp?> getAppTheme() async {
     try {
       var res = await CustomerServiceManager()
-          .service
+          .service!
           .getAppTheme(UserInfo().getCurrentStoreCode());
       return res.data;
     } catch (err) {

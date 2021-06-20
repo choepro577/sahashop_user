@@ -4,10 +4,10 @@ import 'package:sahashop_user/utils/user_info.dart';
 import '../handle_error.dart';
 
 class ConfigUIRepository {
-  Future<ConfigApp> createAppTheme(ConfigApp configApp) async {
+  Future<ConfigApp?> createAppTheme(ConfigApp configApp) async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .createAppTheme(UserInfo().getCurrentStoreCode(), configApp.toJson());
       return res.data;
     } catch (err) {
@@ -15,10 +15,10 @@ class ConfigUIRepository {
     }
   }
 
-  Future<ConfigApp> getAppTheme() async {
+  Future<ConfigApp?> getAppTheme() async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .getAppTheme(UserInfo().getCurrentStoreCode());
       return res.data;
     } catch (err) {

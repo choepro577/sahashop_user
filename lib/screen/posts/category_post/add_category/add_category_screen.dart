@@ -17,7 +17,7 @@ class AddCategoryPostScreen extends StatelessWidget {
       new AddCategoryPostController();
   final _formKey = GlobalKey<FormState>();
 
-  File imageSelected;
+  File? imageSelected;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +39,7 @@ class AddCategoryPostScreen extends StatelessWidget {
                             addCategoryPostController.title = value;
                           },
                           validator: (value) {
-                            if (value.length == 0) {
+                            if (value!.length == 0) {
                               return 'Không được để trống';
                             }
                             return null;
@@ -90,7 +90,7 @@ class AddCategoryPostScreen extends StatelessWidget {
                   SahaButtonFullParent(
                     text: "Thêm",
                     onPressed: () {
-                      if (_formKey.currentState.validate()) {
+                      if (_formKey.currentState!.validate()) {
                         addCategoryPostController.createCategoryPost();
                       }
                     },

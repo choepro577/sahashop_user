@@ -16,7 +16,7 @@ class SahaDataController extends GetxController {
     SocketUser().listenCustomer((data) {
       print("------------------------------${data.toString()}");
 
-      unread.value = Unread.fromJson(data).uread;
+      unread.value = Unread.fromJson(data).uread!;
       print("------------------------------$unread");
     });
   }
@@ -31,7 +31,7 @@ class Unread {
     this.uread,
   });
 
-  int uread;
+  int? uread;
 
   factory Unread.fromJson(Map<String, dynamic> json) => Unread(
         uread: int.parse(json["uread"]),

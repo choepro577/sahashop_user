@@ -11,12 +11,13 @@ import 'package:photo_view/photo_view_gallery.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sahashop_user/components/saha_user/expanded_viewport/expanded_viewport.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
+import 'package:sahashop_user/model/box_chat_customer.dart';
+import 'package:sahashop_user/model/info_customer.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
 import 'chat_controller.dart';
 
-// ignore: must_be_immutable
 class ChatScreen extends StatelessWidget {
   ChatScreen() {
     chatController = Get.find();
@@ -25,9 +26,9 @@ class ChatScreen extends StatelessWidget {
     chatController.loadInitMessage();
   }
 
-  ChatController chatController;
-  ScrollController scrollController;
-  RefreshController refreshController;
+  late ChatController chatController;
+  ScrollController? scrollController;
+  late RefreshController refreshController;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class ChatScreen extends StatelessWidget {
         FocusScopeNode currentFocus = FocusScope.of(context);
         if (!currentFocus.hasPrimaryFocus &&
             currentFocus.focusedChild != null) {
-          FocusManager.instance.primaryFocus.unfocus();
+          FocusManager.instance.primaryFocus!.unfocus();
         }
       },
       child: Scaffold(
@@ -48,7 +49,7 @@ class ChatScreen extends StatelessWidget {
               ClipRRect(
                 child: CachedNetworkImage(
                   imageUrl: chatController
-                          .boxChatCustomer.value.customer.avatarImage ??
+                          .boxChatCustomer.value.customer!.avatarImage ??
                       "",
                   width: 45,
                   height: 45,
@@ -67,14 +68,14 @@ class ChatScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${chatController.boxChatCustomer.value.customer.name ?? "Chưa đặt tên"}",
+                    "${chatController.boxChatCustomer.value.customer!.name ?? "Chưa đặt tên"}",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
                     height: 5,
                   ),
                   Text(
-                    "${SahaStringUtils().displayTimeAgoFromTime(chatController.boxChatCustomer.value.lastMessage?.createdAt ?? DateTime.now())}",
+                    "${SahaStringUtils().displayTimeAgoFromTime(chatController.boxChatCustomer.value.lastMessage!.createdAt!)}",
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 12),
@@ -116,7 +117,7 @@ class ChatScreen extends StatelessWidget {
                   axisDirection: AxisDirection.up,
                   viewportBuilder: (context, offset) {
                     return ExpandedViewport(
-                      offset: offset,
+                      offset: offset as ScrollPosition,
                       axisDirection: AxisDirection.up,
                       slivers: <Widget>[
                         SliverExpanded(),
@@ -188,7 +189,7 @@ class ChatScreen extends StatelessWidget {
                                     color: Theme.of(context).primaryColor,
                                   ),
                                   onPressed: () {
-                                    scrollController.jumpTo(0.0);
+                                    scrollController!.jumpTo(0.0);
                                     chatController.sendMessageToCustomer();
                                   })
                               : IconButton(
@@ -212,7 +213,7 @@ class ChatScreen extends StatelessWidget {
   }
 
   Widget itemMessage(int index, BuildContext context) {
-    return chatController.listMessage[index].isUser
+    return chatController.listMessage[index].isUser!
         ? chatController.listMessage[index].linkImages != null
             ? chatController.listMessage[index].linkImages == ""
                 ? Bubble(
@@ -227,37 +228,37 @@ class ChatScreen extends StatelessWidget {
                     color: Colors.transparent,
                     child: Obx(
                       () => Container(
-                          height: chatController.listSaveDataImages[index].length ==
+                          height: chatController.listSaveDataImages[index]!.length ==
                                   1
                               ? Get.height * 0.3
-                              : chatController.listSaveDataImages[index].length ==
+                              : chatController.listSaveDataImages[index]!.length ==
                                       2
                                   ? 100
-                                  : chatController.listSaveDataImages[index].length == 3 ||
+                                  : chatController.listSaveDataImages[index]!.length == 3 ||
                                           chatController
-                                                  .listSaveDataImages[index]
+                                                  .listSaveDataImages[index]!
                                                   .length ==
                                               4
                                       ? 200
-                                      : chatController.listSaveDataImages[index]
+                                      : chatController.listSaveDataImages[index]!
                                                       .length ==
                                                   5 ||
                                               chatController
-                                                      .listSaveDataImages[index]
+                                                      .listSaveDataImages[index]!
                                                       .length ==
                                                   6
                                           ? 300
-                                          : chatController.listSaveDataImages[index].length == 7 ||
-                                                  chatController.listSaveDataImages[index].length ==
+                                          : chatController.listSaveDataImages[index]!.length == 7 ||
+                                                  chatController.listSaveDataImages[index]!.length ==
                                                       8
                                               ? 400
-                                              : chatController.listSaveDataImages[index].length == 9 ||
-                                                      chatController.listSaveDataImages[index].length ==
+                                              : chatController.listSaveDataImages[index]!.length == 9 ||
+                                                      chatController.listSaveDataImages[index]!.length ==
                                                           10
                                                   ? 520
                                                   : 0,
                           child: buildItemImageData(
-                              chatController.listSaveDataImages[index], context)),
+                              chatController.listSaveDataImages[index]!, context)),
                     ),
                   )
                 : Column(
@@ -273,37 +274,37 @@ class ChatScreen extends StatelessWidget {
                         color: Colors.transparent,
                         child: Obx(
                           () => Container(
-                            height: chatController.allImageInMessage[index].length ==
+                            height: chatController.allImageInMessage[index]!.length ==
                                     1
                                 ? Get.height * 0.3
-                                : chatController.allImageInMessage[index].length ==
+                                : chatController.allImageInMessage[index]!.length ==
                                         2
                                     ? 100
-                                    : chatController.allImageInMessage[index]
+                                    : chatController.allImageInMessage[index]!
                                                     .length ==
                                                 3 ||
                                             chatController
-                                                    .allImageInMessage[index]
+                                                    .allImageInMessage[index]!
                                                     .length ==
                                                 4
                                         ? 200
-                                        : chatController.allImageInMessage[index].length ==
+                                        : chatController.allImageInMessage[index]!.length ==
                                                     5 ||
-                                                chatController.allImageInMessage[index].length ==
+                                                chatController.allImageInMessage[index]!.length ==
                                                     6
                                             ? 300
-                                            : chatController.allImageInMessage[index].length ==
+                                            : chatController.allImageInMessage[index]!.length ==
                                                         7 ||
                                                     chatController
                                                             .allImageInMessage[
-                                                                index]
+                                                                index]!
                                                             .length ==
                                                         8
                                                 ? 400
-                                                : chatController.allImageInMessage[index].length ==
+                                                : chatController.allImageInMessage[index]!.length ==
                                                             9 ||
                                                         chatController
-                                                                .allImageInMessage[index]
+                                                                .allImageInMessage[index]!
                                                                 .length ==
                                                             10
                                                     ? 520
@@ -311,7 +312,7 @@ class ChatScreen extends StatelessWidget {
                             child: Obx(
                               () {
                                 var listLinkImages = chatController
-                                    .allImageInMessage[index]
+                                    .allImageInMessage[index]!
                                     .toList();
 
                                 if (listLinkImages == null ||
@@ -451,7 +452,7 @@ class ChatScreen extends StatelessWidget {
                 padding: BubbleEdges.all(15),
                 nip: BubbleNip.rightTop,
                 color: Color(0xff279f63),
-                child: Text(chatController.listMessage[index].content,
+                child: Text(chatController.listMessage[index].content!,
                     style: TextStyle(
                         fontSize: 16,
                         color: Colors.white,
@@ -465,13 +466,13 @@ class ChatScreen extends StatelessWidget {
                 /// get image from customer
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  chatController.listMessage[index].createdAt.day -
+                  chatController.listMessage[index].createdAt!.day -
                               chatController
                                   .listMessage[(index + 1) >=
                                           chatController.listMessage.length
                                       ? index
                                       : index + 1]
-                                  .createdAt
+                                  .createdAt!
                                   .day >=
                           1
                       ? SizedBox(
@@ -488,7 +489,7 @@ class ChatScreen extends StatelessWidget {
                                                           .listMessage.length
                                                   ? index
                                                   : index + 1]
-                                              .createdAt
+                                              .createdAt!
                                               .day >
                                       1
                                   ? Bubble(
@@ -497,7 +498,7 @@ class ChatScreen extends StatelessWidget {
                                       nip: BubbleNip.no,
                                       color: Color.fromRGBO(212, 234, 244, 1.0),
                                       child: Text(
-                                          "${SahaDateUtils().getDDMM(chatController.listMessage[index + 1].createdAt)}",
+                                          "${SahaDateUtils().getDDMM(chatController.listMessage[index + 1].createdAt!)}",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontSize: 11.0,
@@ -517,13 +518,13 @@ class ChatScreen extends StatelessWidget {
                             ],
                           ),
                         )
-                      : chatController.listMessage[index].createdAt.minute -
+                      : chatController.listMessage[index].createdAt!.minute -
                                   chatController
                                       .listMessage[(index + 1) >=
                                               chatController.listMessage.length
                                           ? index
                                           : index + 1]
-                                      .createdAt
+                                      .createdAt!
                                       .minute >
                               2
                           ? SizedBox(
@@ -534,7 +535,7 @@ class ChatScreen extends StatelessWidget {
                                     height: 22,
                                   ),
                                   Text(
-                                      "${SahaDateUtils().getHHMM(chatController.listMessage[index].createdAt)}"),
+                                      "${SahaDateUtils().getHHMM(chatController.listMessage[index].createdAt!)}"),
                                 ],
                               ),
                             )
@@ -550,35 +551,35 @@ class ChatScreen extends StatelessWidget {
                     color: Colors.transparent,
                     child: Obx(
                       () => Container(
-                        height: chatController.allImageInMessage[index].length ==
+                        height: chatController.allImageInMessage[index]!.length ==
                                 1
                             ? Get.height * 0.3
-                            : chatController.allImageInMessage[index].length ==
+                            : chatController.allImageInMessage[index]!.length ==
                                     2
                                 ? 100
-                                : chatController.allImageInMessage[index].length == 3 ||
-                                        chatController.allImageInMessage[index]
+                                : chatController.allImageInMessage[index]!.length == 3 ||
+                                        chatController.allImageInMessage[index]!
                                                 .length ==
                                             4
                                     ? 200
-                                    : chatController.allImageInMessage[index]
+                                    : chatController.allImageInMessage[index]!
                                                     .length ==
                                                 5 ||
                                             chatController
-                                                    .allImageInMessage[index]
+                                                    .allImageInMessage[index]!
                                                     .length ==
                                                 6
                                         ? 300
-                                        : chatController.allImageInMessage[index].length == 7 ||
+                                        : chatController.allImageInMessage[index]!.length == 7 ||
                                                 chatController
                                                         .allImageInMessage[
-                                                            index]
+                                                            index]!
                                                         .length ==
                                                     8
                                             ? 400
-                                            : chatController.allImageInMessage[index].length == 9 ||
+                                            : chatController.allImageInMessage[index]!.length == 9 ||
                                                     chatController
-                                                            .allImageInMessage[index]
+                                                            .allImageInMessage[index]!
                                                             .length ==
                                                         10
                                                 ? 520
@@ -586,7 +587,7 @@ class ChatScreen extends StatelessWidget {
                         child: Obx(
                           () {
                             var listLinkImages = chatController
-                                .allImageInMessage[index]
+                                .allImageInMessage[index]!
                                 .toList();
 
                             if (listLinkImages == null ||
@@ -720,7 +721,7 @@ class ChatScreen extends StatelessWidget {
                 padding: BubbleEdges.all(15),
                 nip: BubbleNip.leftTop,
                 color: Color(0xff279f63),
-                child: Text(chatController.listMessage[index].content,
+                child: Text(chatController.listMessage[index].content!,
                     style: TextStyle(
                         fontSize: 16,
                         color: Colors.white,
@@ -749,7 +750,7 @@ class ChatScreen extends StatelessWidget {
                           builder: (BuildContext context, int index) {
                             return PhotoViewGalleryPageOptions(
                               imageProvider:
-                                  NetworkImage(listImageData[index].linkImage),
+                                  NetworkImage(listImageData[index].linkImage!),
                               initialScale:
                                   PhotoViewComputedScale.contained * 1,
                               heroAttributes: PhotoViewHeroAttributes(
@@ -800,7 +801,7 @@ class ChatScreen extends StatelessWidget {
                               listImageData[index].file == null
                                   ? Container()
                                   : AssetThumb(
-                                      asset: listImageData[index].file,
+                                      asset: listImageData[index].file!,
                                       height: listImageData.length == 1
                                           ? int.parse((Get.height * 0.3)
                                               .toStringAsFixed(0))
@@ -820,7 +821,7 @@ class ChatScreen extends StatelessWidget {
                               Icon(Icons.error),
                         )
                       : AssetThumb(
-                          asset: listImageData[index].file,
+                          asset: listImageData[index].file!,
                           height: listImageData.length == 1
                               ? int.parse((Get.height * 0.3).toStringAsFixed(0))
                               : 100,

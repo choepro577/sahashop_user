@@ -4,15 +4,15 @@ import 'package:sahashop_user/data/repository/handle_error.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class ReportRepository {
-  Future<ReportResponse> getReport(
+  Future<ReportResponse?> getReport(
     String timeFrom,
     String timeTo,
     String dateFromCompare,
     String dateToCompare,
   ) async {
     try {
-      var res = await SahaServiceManager().service.getReport(
-          UserInfo().getCurrentStoreCode(),
+      var res = await SahaServiceManager().service!.getReport(
+          UserInfo().getCurrentStoreCode()!,
           timeFrom,
           timeTo,
           dateFromCompare,

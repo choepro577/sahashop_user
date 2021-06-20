@@ -36,7 +36,7 @@ class ChooseStoreScreen extends StatelessWidget {
                       var listStore = chooseStoreController.listStore;
 
                       var idSelected =
-                          homeController?.storeCurrent?.value?.id ?? null;
+                          homeController.storeCurrent?.value.id ?? null;
 
                       return ListView.builder(
                           itemCount: listStore.length,
@@ -56,7 +56,7 @@ class ChooseStoreScreen extends StatelessWidget {
                     SahaButtonFullParent(
                       text: "Thêm cửa hàng",
                       onPressed: () {
-                        Get.to(() => AddStore()).then((value) => {
+                        Get.to(() => AddStore())!.then((value) => {
                               if (value == "added")
                                 {chooseStoreController.getListStore()}
                             });
@@ -71,21 +71,21 @@ class ChooseStoreScreen extends StatelessWidget {
 }
 
 class ItemStore extends StatelessWidget {
-  final Store store;
-  final Function onChange;
+  final Store? store;
+  final Function? onChange;
   final bool selected;
 
-  final int index;
+  final int? index;
 
   const ItemStore(
-      {Key key, this.store, this.onChange, this.selected = false, this.index})
+      {Key? key, this.store, this.onChange, this.selected = false, this.index})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
       onPressed: () {
-        onChange(store);
+        onChange!(store);
       },
       child: Card(
         child: Padding(

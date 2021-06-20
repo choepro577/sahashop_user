@@ -4,11 +4,11 @@ import 'package:sahashop_user/data/repository/handle_error.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class CustomerRepository {
-  Future<AllCustomerResponse> getAllInfoCustomer(int numberPage) async {
+  Future<AllCustomerResponse?> getAllInfoCustomer(int numberPage) async {
     try {
       var res = await SahaServiceManager()
-          .service
-          .getAllInfoCustomer(UserInfo().getCurrentStoreCode(), numberPage);
+          .service!
+          .getAllInfoCustomer(UserInfo().getCurrentStoreCode()!, numberPage);
       return res;
     } catch (err) {
       handleError(err);

@@ -10,19 +10,19 @@ import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart'
 import 'package:sahashop_user/model/info_address_customer.dart';
 
 class ReceiverAddressCustomerScreen extends StatelessWidget {
-  final InfoAddressCustomer infoAddressCustomers;
-  final Function callback;
+  final InfoAddressCustomer? infoAddressCustomers;
+  final Function? callback;
 
-  ConfirmController payController;
+  ConfirmController? payController;
 
   ReceiverAddressCustomerScreen(
-      {Key key, this.infoAddressCustomers, this.callback})
+      {Key? key, this.infoAddressCustomers, this.callback})
       : super(key: key) {
     chooseAddressCustomerController = ReceiverAddressCustomerController();
     payController = Get.find();
   }
 
-  ReceiverAddressCustomerController chooseAddressCustomerController;
+  late ReceiverAddressCustomerController chooseAddressCustomerController;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class ReceiverAddressCustomerScreen extends StatelessWidget {
         actions: [
           GestureDetector(
             onTap: () {
-              Get.to(() => AllAddressCustomerScreen()).then((value) =>
+              Get.to(() => AllAddressCustomerScreen())!.then((value) =>
                   {chooseAddressCustomerController.getAllAddressCustomer()});
             },
             child: Column(
@@ -62,7 +62,7 @@ class ReceiverAddressCustomerScreen extends StatelessWidget {
                     (index) => addressSave(context, index)),
                 InkWell(
                   onTap: () {
-                    Get.to(() => NewAddressCustomerScreen()).then((value) => {
+                    Get.to(() => NewAddressCustomerScreen())!.then((value) => {
                           chooseAddressCustomerController
                               .getAllAddressCustomer()
                         });
@@ -101,7 +101,7 @@ class ReceiverAddressCustomerScreen extends StatelessWidget {
           onTap: () {
             print(chooseAddressCustomerController
                 .listInfoAddressCustomer[index].provinceName);
-            callback(
+            callback!(
                 chooseAddressCustomerController.listInfoAddressCustomer[index]);
             Get.back();
           },
@@ -138,7 +138,7 @@ class ReceiverAddressCustomerScreen extends StatelessWidget {
                   children: [
                     infoAddressCustomers == null
                         ? Container()
-                        : infoAddressCustomers.id ==
+                        : infoAddressCustomers!.id ==
                                 chooseAddressCustomerController
                                     .listInfoAddressCustomer[index].id
                             ? Icon(Icons.check_outlined,
@@ -151,7 +151,7 @@ class ReceiverAddressCustomerScreen extends StatelessWidget {
                       child: SvgPicture.asset(
                         "assets/icons/pin.svg",
                         color: chooseAddressCustomerController
-                                .listInfoAddressCustomer[index].isDefault
+                                .listInfoAddressCustomer[index].isDefault!
                             ? Theme.of(context).primaryColor
                             : Colors.grey[500],
                       ),

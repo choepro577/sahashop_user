@@ -8,10 +8,10 @@ import 'package:sahashop_user/const/constant.dart';
 import 'select_images_controller.dart';
 
 class SelectProductImages extends StatelessWidget {
-  Function onUpload;
-  Function doneUpload;
+  Function? onUpload;
+  Function? doneUpload;
 
-  SelectImageController selectImageController;
+  late SelectImageController selectImageController;
   SelectProductImages({this.onUpload, this.doneUpload}) {
     selectImageController =
         new SelectImageController(onUpload: onUpload, doneUpload: doneUpload);
@@ -162,13 +162,13 @@ class SelectProductImages extends StatelessWidget {
                           height: 300,
                           width: 300,
                           fit: BoxFit.cover,
-                          imageUrl: imageData.linkImage,
+                          imageUrl: imageData.linkImage!,
                           placeholder: (context, url) => Stack(
                             children: [
                               imageData.file == null
                                   ? Container()
                                   : AssetThumb(
-                                      asset: imageData.file,
+                                      asset: imageData.file!,
                                       width: 300,
                                       height: 300,
                                       spinner: SahaLoadingWidget(
@@ -182,7 +182,7 @@ class SelectProductImages extends StatelessWidget {
                               Icon(Icons.error),
                         )
                       : AssetThumb(
-                          asset: imageData.file,
+                          asset: imageData.file!,
                           width: 300,
                           height: 300,
                           spinner: SahaLoadingWidget(
@@ -219,12 +219,12 @@ class SelectProductImages extends StatelessWidget {
                 ),
               ),
             ),
-            imageData.uploading
+            imageData.uploading!
                 ? SahaLoadingWidget(
                     size: 50,
                   )
                 : Container(),
-            imageData.errorUpload ? Icon(Icons.error) : Container(),
+            imageData.errorUpload! ? Icon(Icons.error) : Container(),
           ],
         ),
       ),

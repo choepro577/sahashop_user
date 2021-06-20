@@ -21,11 +21,11 @@ class InfoCustomerResponse {
     this.msg,
   });
 
-  int code;
-  bool success;
-  InfoCustomer data;
-  String msgCode;
-  String msg;
+  int? code;
+  bool? success;
+  InfoCustomer? data;
+  String? msgCode;
+  String? msg;
 
   factory InfoCustomerResponse.fromJson(Map<String, dynamic> json) =>
       InfoCustomerResponse(
@@ -39,7 +39,7 @@ class InfoCustomerResponse {
   Map<String, dynamic> toJson() => {
         "code": code,
         "success": success,
-        "data": data.toJson(),
+        "data": data!.toJson(),
         "msg_code": msgCode,
         "msg": msg,
       };

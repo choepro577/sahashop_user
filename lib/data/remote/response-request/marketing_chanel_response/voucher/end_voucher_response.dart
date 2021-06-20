@@ -16,10 +16,10 @@ class EndVoucherResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  Data data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  Data? data;
 
   factory EndVoucherResponse.fromJson(Map<String, dynamic> json) =>
       EndVoucherResponse(
@@ -33,7 +33,7 @@ class EndVoucherResponse {
         "code": code,
         "success": success,
         "msg_code": msgCode,
-        "data": data.toJson(),
+        "data": data!.toJson(),
       };
 }
 
@@ -50,15 +50,15 @@ class Data {
     this.to,
   });
 
-  int currentPage;
-  List<Voucher> data;
-  String firstPageUrl;
-  int from;
-  String nextPageUrl;
-  String path;
-  int perPage;
+  int? currentPage;
+  List<Voucher>? data;
+  String? firstPageUrl;
+  int? from;
+  String? nextPageUrl;
+  String? path;
+  int? perPage;
   dynamic prevPageUrl;
-  int to;
+  int? to;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         currentPage: json["current_page"],
@@ -74,7 +74,7 @@ class Data {
 
   Map<String, dynamic> toJson() => {
         "current_page": currentPage,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
         "first_page_url": firstPageUrl,
         "from": from,
         "next_page_url": nextPageUrl,

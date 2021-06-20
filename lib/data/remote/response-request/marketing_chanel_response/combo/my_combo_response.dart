@@ -16,10 +16,10 @@ class MyComboResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  List<Combo> data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  List<Combo>? data;
 
   factory MyComboResponse.fromJson(Map<String, dynamic> json) =>
       MyComboResponse(
@@ -33,6 +33,6 @@ class MyComboResponse {
         "code": code,
         "success": success,
         "msg_code": msgCode,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }

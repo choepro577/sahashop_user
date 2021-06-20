@@ -14,10 +14,10 @@ class UpdatePaymentResponse {
     this.msg,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  String msg;
+  int? code;
+  bool? success;
+  String? msgCode;
+  String? msg;
 
   factory UpdatePaymentResponse.fromJson(Map<String, dynamic> json) =>
       UpdatePaymentResponse(

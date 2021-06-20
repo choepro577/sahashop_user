@@ -15,8 +15,8 @@ import 'package:sahashop_user/utils/date_utils.dart';
 import 'customer_manage_controller.dart';
 
 class CustomerManageScreen extends StatelessWidget {
-  CustomerManageController customerManageController;
-  ChatController chatController;
+  CustomerManageController customerManageController = CustomerManageController();
+  ChatController chatController = ChatController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class CustomerManageScreen extends StatelessWidget {
         footer: CustomFooter(
           builder: (
             BuildContext context,
-            LoadStatus mode,
+            LoadStatus? mode,
           ) {
             Widget body;
             if (mode == LoadStatus.idle) {
@@ -140,7 +140,8 @@ class CustomerManageScreen extends StatelessWidget {
                                           height: 5,
                                         ),
                                         Text(
-                                            "Ngày tạo tài khoản: ${SahaDateUtils().getDDMMYY(DateTime.parse(customerManageController.listInfoCustomer[index].createdAt.toIso8601String()))}")
+                                            "Ngày tạo tài khoản: ${SahaDateUtils().getDDMMYY(DateTime.parse(
+                                                customerManageController.listInfoCustomer[index].createdAt!.toIso8601String()))}")
                                       ],
                                     ),
                                   ),
@@ -163,7 +164,7 @@ class CustomerManageScreen extends StatelessWidget {
                                         customer: customerManageController
                                             .listInfoCustomer[index],
                                       );
-                                      Get.to(() => ChatScreen()).then((value) =>
+                                      Get.to(() => ChatScreen())!.then((value) =>
                                           {
                                             chatController.refreshDataMessage(),
                                             chatController.refreshDataAllChat()
@@ -182,7 +183,7 @@ class CustomerManageScreen extends StatelessWidget {
                                           style: TextStyle(
                                               color: Theme.of(context)
                                                   .primaryTextTheme
-                                                  .headline6
+                                                  .headline6!
                                                   .color),
                                         ),
                                       ),
@@ -196,7 +197,7 @@ class CustomerManageScreen extends StatelessWidget {
                                     onTap: () {
                                       Get.to(() => OrderOfCustomer(
                                             idCustomer: customerManageController
-                                                .listInfoCustomer[index].id,
+                                                .listInfoCustomer[index].id!,
                                           ));
                                     },
                                     child: Container(
@@ -212,7 +213,7 @@ class CustomerManageScreen extends StatelessWidget {
                                           style: TextStyle(
                                               color: Theme.of(context)
                                                   .primaryTextTheme
-                                                  .headline6
+                                                  .headline6!
                                                   .color),
                                         ),
                                       ),

@@ -5,7 +5,7 @@ import 'package:sahashop_user/model/order.dart';
 import 'package:sahashop_user/model/state_order.dart';
 
 class OrderOfCustomerDetailController extends GetxController {
-  Order order;
+  Order? order;
 
   OrderOfCustomerDetailController({this.order}) {
     getStateHistoryOrder();
@@ -16,8 +16,8 @@ class OrderOfCustomerDetailController extends GetxController {
   Future<void> getStateHistoryOrder() async {
     try {
       var res = await RepositoryManager.orderRepository
-          .getStateHistoryOrder(order.id);
-      listStateOrder(res.data);
+          .getStateHistoryOrder(order!.id);
+      listStateOrder(res!.data);
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }

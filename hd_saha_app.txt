@@ -1,4 +1,4 @@
-Flutter 2.0.3 • channel stable • https://github.com/flutter/flutter.git
+Flutter 2.2.2 • channel stable • https://github.com/flutter/flutter.git
 Framework • revision 4d7946a68d (2 days ago) • 2021-03-18 17:24:33 -0700
 Engine • revision 3459eb2436
 Tools • Dart 2.12.2
@@ -26,3 +26,5 @@ Số thẻ	9704198526191432198
 Tên chủ thẻ	NGUYEN VAN A
 Ngày phát hành	07/15
 Mật khẩu OTP	123456
+
+flutter pub outdated --mode=null-safety

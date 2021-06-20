@@ -18,10 +18,10 @@ class DeleteProgramResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  Data data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  Data? data;
 
   factory DeleteProgramResponse.fromJson(Map<String, dynamic> json) =>
       DeleteProgramResponse(
@@ -35,7 +35,7 @@ class DeleteProgramResponse {
         "code": code,
         "success": success,
         "msg_code": msgCode,
-        "data": data.toJson(),
+        "data": data!.toJson(),
       };
 }
 
@@ -44,7 +44,7 @@ class Data {
     this.idDeleted,
   });
 
-  int idDeleted;
+  int? idDeleted;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         idDeleted: json["idDeleted"],

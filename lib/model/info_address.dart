@@ -32,25 +32,25 @@ class InfoAddress {
     this.wardsName,
   });
 
-  int id;
-  int storeId;
-  String name;
-  String addressDetail;
-  int country;
-  int province;
-  int district;
-  int wards;
-  int village;
-  int postcode;
-  String email;
-  String phone;
-  bool isDefaultPickup;
-  bool isDefaultReturn;
-  DateTime createdAt;
-  DateTime updatedAt;
-  String provinceName;
-  String districtName;
-  String wardsName;
+  int? id;
+  int? storeId;
+  String? name;
+  String? addressDetail;
+  int? country;
+  int? province;
+  int? district;
+  int? wards;
+  int? village;
+  int? postcode;
+  String? email;
+  String? phone;
+  bool? isDefaultPickup;
+  bool? isDefaultReturn;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? provinceName;
+  String? districtName;
+  String? wardsName;
 
   factory InfoAddress.fromJson(Map<String, dynamic> json) => InfoAddress(
         id: json["id"],

@@ -1,10 +1,10 @@
 import 'package:sahashop_user/model/category_post.dart';
 
 class AllCategoryPostResponse {
-  int code;
-  bool success;
-  String msgCode;
-  List<CategoryPost> data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  List<CategoryPost>? data;
 
   AllCategoryPostResponse({this.code, this.success, this.msgCode, this.data});
 
@@ -13,9 +13,9 @@ class AllCategoryPostResponse {
     success = json['success'];
     msgCode = json['msg_code'];
     if (json['data'] != null) {
-      data = new List<CategoryPost>();
+      data = [];
       json['data'].forEach((v) {
-        data.add(new CategoryPost.fromJson(v));
+        data!.add(new CategoryPost.fromJson(v));
       });
     }
   }
@@ -26,7 +26,7 @@ class AllCategoryPostResponse {
     data['success'] = this.success;
     data['msg_code'] = this.msgCode;
     if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }

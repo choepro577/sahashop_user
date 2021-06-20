@@ -11,15 +11,15 @@ class AddressCustomerRequest {
     this.isDefault,
   });
 
-  String name;
-  String addressDetail;
-  int country;
-  int province;
-  int district;
-  int wards;
-  String email;
-  String phone;
-  bool isDefault;
+  String? name;
+  String? addressDetail;
+  int? country;
+  int? province;
+  int? district;
+  int? wards;
+  String? email;
+  String? phone;
+  bool? isDefault;
 
   Map<String, dynamic> toJson() => {
         "name": name,

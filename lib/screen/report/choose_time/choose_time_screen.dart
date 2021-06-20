@@ -7,7 +7,7 @@ import 'package:sahashop_user/screen/report/choose_time/widget/pick_date.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 
 class ChooseTimeScreen extends StatefulWidget {
-  final Function callback;
+  final Function? callback;
 
   ChooseTimeScreen({this.callback});
 
@@ -17,7 +17,7 @@ class ChooseTimeScreen extends StatefulWidget {
 
 class _ChooseTimeScreenState extends State<ChooseTimeScreen>
     with TickerProviderStateMixin {
-  TabController tabController;
+  TabController? tabController;
   ChooseTimeController chooseTimeController = ChooseTimeController();
   @override
   void initState() {
@@ -40,7 +40,7 @@ class _ChooseTimeScreenState extends State<ChooseTimeScreen>
               Spacer(),
               InkWell(
                 onTap: () {
-                  widget.callback(chooseTimeController.fromDay.value,
+                  widget.callback!(chooseTimeController.fromDay.value,
                       chooseTimeController.toDay.value);
                 },
                 child: Text(
@@ -75,17 +75,17 @@ class _ChooseTimeScreenState extends State<ChooseTimeScreen>
                             (index) => PickDate(
                               isChoose: chooseTimeController.fromDay.value ==
                                           chooseTimeController
-                                              .listFromDateDAY[index] &&
+                                              .listFromDateDAY![index] &&
                                       chooseTimeController.toDay.value ==
                                           chooseTimeController
-                                              .listToDateDAY[index]
+                                              .listToDateDAY![index]
                                   ? true
                                   : false,
                               text:
                                   chooseTimeController.listTextChooseDAY[index],
                               fromDate:
-                                  chooseTimeController.listFromDateDAY[index],
-                              toDay: chooseTimeController.listToDateDAY[index],
+                                  chooseTimeController.listFromDateDAY![index],
+                              toDay: chooseTimeController.listToDateDAY![index],
                               onReturn: (fromDate, toDay) {
                                 chooseTimeController.fromDay.value = fromDate;
                                 chooseTimeController.toDay.value = toDay;
@@ -118,17 +118,17 @@ class _ChooseTimeScreenState extends State<ChooseTimeScreen>
                             (index) => PickDate(
                               isChoose: chooseTimeController.fromDay.value ==
                                           chooseTimeController
-                                              .listFromDateDAY[index] &&
+                                              .listFromDateDAY![index] &&
                                       chooseTimeController.toDay.value ==
                                           chooseTimeController
-                                              .listToDateDAY[index]
+                                              .listToDateDAY![index]
                                   ? true
                                   : false,
                               text:
                                   chooseTimeController.listTextChooseDAY[index],
                               fromDate:
-                                  chooseTimeController.listFromDateDAY[index],
-                              toDay: chooseTimeController.listToDateDAY[index],
+                                  chooseTimeController.listFromDateDAY![index],
+                              toDay: chooseTimeController.listToDateDAY![index],
                               onReturn: (fromDate, toDay) {
                                 chooseTimeController.fromDay.value = fromDate;
                                 chooseTimeController.toDay.value = toDay;
@@ -148,18 +148,18 @@ class _ChooseTimeScreenState extends State<ChooseTimeScreen>
                                   isChoose: chooseTimeController
                                                   .fromDay.value ==
                                               chooseTimeController
-                                                  .listFromDateWEEK[index] &&
+                                                  .listFromDateWEEK![index] &&
                                           chooseTimeController.toDay.value ==
                                               chooseTimeController
-                                                  .listToDateWEEK[index]
+                                                  .listToDateWEEK![index]
                                       ? true
                                       : false,
                                   text: chooseTimeController
                                       .listTextChooseWEEK[index],
                                   fromDate: chooseTimeController
-                                      .listFromDateWEEK[index],
+                                      .listFromDateWEEK![index],
                                   toDay: chooseTimeController
-                                      .listToDateWEEK[index],
+                                      .listToDateWEEK![index],
                                   onReturn: (fromDate, toDay) {
                                     chooseTimeController.fromDay.value =
                                         fromDate;
@@ -180,20 +180,20 @@ class _ChooseTimeScreenState extends State<ChooseTimeScreen>
                                       isChoose: chooseTimeController
                                                       .fromDay.value ==
                                                   chooseTimeController
-                                                          .listFromDateMONTH[
+                                                          .listFromDateMONTH![
                                                       index] &&
                                               chooseTimeController
                                                       .toDay.value ==
                                                   chooseTimeController
-                                                      .listToDateMONTH[index]
+                                                      .listToDateMONTH![index]
                                           ? true
                                           : false,
                                       text: chooseTimeController
-                                          .listTextChooseMONTH[index],
+                                          .listTextChooseMONTH![index],
                                       fromDate: chooseTimeController
-                                          .listFromDateMONTH[index],
+                                          .listFromDateMONTH![index],
                                       toDay: chooseTimeController
-                                          .listToDateMONTH[index],
+                                          .listToDateMONTH![index],
                                       onReturn: (fromDate, toDay) {
                                         chooseTimeController.fromDay.value =
                                             fromDate;
@@ -215,20 +215,20 @@ class _ChooseTimeScreenState extends State<ChooseTimeScreen>
                                           isChoose: chooseTimeController
                                                           .fromDay.value ==
                                                       chooseTimeController
-                                                              .listFromDateYEAR[
+                                                              .listFromDateYEAR![
                                                           index] &&
                                                   chooseTimeController
                                                           .toDay.value ==
                                                       chooseTimeController
-                                                          .listToDateYEAR[index]
+                                                          .listToDateYEAR![index]
                                               ? true
                                               : false,
                                           text: chooseTimeController
-                                              .listTextChooseYEAR[index],
+                                              .listTextChooseYEAR![index],
                                           fromDate: chooseTimeController
-                                              .listFromDateYEAR[index],
+                                              .listFromDateYEAR![index],
                                           toDay: chooseTimeController
-                                              .listToDateYEAR[index],
+                                              .listToDateYEAR![index],
                                           onReturn: (fromDate, toDay) {
                                             chooseTimeController.fromDay.value =
                                                 fromDate;

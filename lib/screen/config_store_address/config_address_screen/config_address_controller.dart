@@ -7,20 +7,20 @@ import 'package:sahashop_user/model/info_address.dart';
 import 'package:sahashop_user/model/location_address.dart';
 
 class ConfigAddressController extends GetxController {
-  final InfoAddress infoAddress;
+  final InfoAddress? infoAddress;
 
   ConfigAddressController(this.infoAddress) {
-    nameTextEditingController.text = infoAddress.name;
-    phoneTextEditingController.text = infoAddress.phone;
-    addressDetailTextEditingController.text = infoAddress.addressDetail;
-    locationProvince.value.name = infoAddress.provinceName;
-    locationDistrict.value.name = infoAddress.districtName;
-    locationWard.value.name = infoAddress.wardsName;
-    locationProvince.value.id = infoAddress.province;
-    locationDistrict.value.id = infoAddress.district;
-    locationWard.value.id = infoAddress.wards;
-    isDefaultPickup.value = infoAddress.isDefaultPickup;
-    isDefaultReturn.value = infoAddress.isDefaultReturn;
+    nameTextEditingController.text = infoAddress!.name!;
+    phoneTextEditingController.text = infoAddress!.phone!;
+    addressDetailTextEditingController.text = infoAddress!.addressDetail!;
+    locationProvince.value.name = infoAddress!.provinceName;
+    locationDistrict.value.name = infoAddress!.districtName;
+    locationWard.value.name = infoAddress!.wardsName;
+    locationProvince.value.id = infoAddress!.province;
+    locationDistrict.value.id = infoAddress!.district;
+    locationWard.value.id = infoAddress!.wards;
+    isDefaultPickup.value = infoAddress!.isDefaultPickup!;
+    isDefaultReturn.value = infoAddress!.isDefaultReturn!;
   }
 
   var locationProvince = LocationAddress().obs;
@@ -41,7 +41,7 @@ class ConfigAddressController extends GetxController {
     isLoadingUpdate.value = true;
     try {
       var res = await RepositoryManager.addressRepository.updateAddressStore(
-          infoAddress.id,
+          infoAddress!.id,
           AddressRequest(
             name: nameTextEditingController.text,
             addressDetail: addressDetailTextEditingController.text,
@@ -66,7 +66,7 @@ class ConfigAddressController extends GetxController {
     isDeletingAddressStore.value = true;
     try {
       var res = await RepositoryManager.addressRepository
-          .deleteAddressStore(infoAddress.id);
+          .deleteAddressStore(infoAddress!.id);
       Get.back();
       SahaAlert.showSuccess(message: "Lưu thành công");
     } catch (err) {

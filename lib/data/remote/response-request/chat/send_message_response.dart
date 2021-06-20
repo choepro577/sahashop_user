@@ -14,10 +14,10 @@ class SendMessageResponse {
     this.success,
   });
 
-  int code;
-  String msgCode;
-  String msg;
-  bool success;
+  int? code;
+  String? msgCode;
+  String? msg;
+  bool? success;
 
   factory SendMessageResponse.fromJson(Map<String, dynamic> json) =>
       SendMessageResponse(

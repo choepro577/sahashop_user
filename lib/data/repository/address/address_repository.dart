@@ -11,37 +11,37 @@ import 'package:sahashop_user/model/shipment.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class AddressRepository {
-  Future<AddressResponse> getProvince() async {
+  Future<AddressResponse?> getProvince() async {
     try {
-      var res = await SahaServiceManager().service.getProvince();
+      var res = await SahaServiceManager().service!.getProvince();
       return res;
     } catch (err) {
       handleError(err);
     }
   }
 
-  Future<AddressResponse> getDistrict(int idProvince) async {
+  Future<AddressResponse?> getDistrict(int? idProvince) async {
     try {
-      var res = await SahaServiceManager().service.getDistrict(idProvince);
+      var res = await SahaServiceManager().service!.getDistrict(idProvince);
       return res;
     } catch (err) {
       handleError(err);
     }
   }
 
-  Future<AddressResponse> getWard(int idDistrict) async {
+  Future<AddressResponse?> getWard(int? idDistrict) async {
     try {
-      var res = await SahaServiceManager().service.getWard(idDistrict);
+      var res = await SahaServiceManager().service!.getWard(idDistrict);
       return res;
     } catch (err) {
       handleError(err);
     }
   }
 
-  Future<CreateAddressStoreResponse> createAddressStore(
+  Future<CreateAddressStoreResponse?> createAddressStore(
       AddressRequest addressRequest) async {
     try {
-      var res = await SahaServiceManager().service.createAddressStore(
+      var res = await SahaServiceManager().service!.createAddressStore(
             UserInfo().getCurrentStoreCode(),
             addressRequest.toJson(),
           );
@@ -51,10 +51,10 @@ class AddressRepository {
     }
   }
 
-  Future<CreateAddressStoreResponse> updateAddressStore(
-      int idAddressStore, AddressRequest addressRequest) async {
+  Future<CreateAddressStoreResponse?> updateAddressStore(
+      int? idAddressStore, AddressRequest addressRequest) async {
     try {
-      var res = await SahaServiceManager().service.updateAddressStore(
+      var res = await SahaServiceManager().service!.updateAddressStore(
             UserInfo().getCurrentStoreCode(),
             idAddressStore,
             addressRequest.toJson(),
@@ -65,10 +65,10 @@ class AddressRepository {
     }
   }
 
-  Future<DeleteAddressStoreResponse> deleteAddressStore(
-      int idAddressStore) async {
+  Future<DeleteAddressStoreResponse?> deleteAddressStore(
+      int? idAddressStore) async {
     try {
-      var res = await SahaServiceManager().service.deleteAddressStore(
+      var res = await SahaServiceManager().service!.deleteAddressStore(
             UserInfo().getCurrentStoreCode(),
             idAddressStore,
           );
@@ -78,9 +78,9 @@ class AddressRepository {
     }
   }
 
-  Future<AllAddressStoreResponse> getAllAddressStore() async {
+  Future<AllAddressStoreResponse?> getAllAddressStore() async {
     try {
-      var res = await SahaServiceManager().service.getAllAddressStore(
+      var res = await SahaServiceManager().service!.getAllAddressStore(
             UserInfo().getCurrentStoreCode(),
           );
       return res;
@@ -89,9 +89,9 @@ class AddressRepository {
     }
   }
 
-  Future<AllShipmentResponse> getAllShipmentStore() async {
+  Future<AllShipmentResponse?> getAllShipmentStore() async {
     try {
-      var res = await SahaServiceManager().service.getAllShipmentStore(
+      var res = await SahaServiceManager().service!.getAllShipmentStore(
             UserInfo().getCurrentStoreCode(),
           );
       return res;
@@ -100,10 +100,10 @@ class AddressRepository {
     }
   }
 
-  Future<AddTokenShipmentResponse> addTokenShipment(
-      int idShipment, ShipperConfig shipperConfig) async {
+  Future<AddTokenShipmentResponse?> addTokenShipment(
+      int? idShipment, ShipperConfig shipperConfig) async {
     try {
-      var res = await SahaServiceManager().service.addTokenShipment(
+      var res = await SahaServiceManager().service!.addTokenShipment(
           UserInfo().getCurrentStoreCode(), idShipment, shipperConfig.toJson());
       return res;
     } catch (err) {

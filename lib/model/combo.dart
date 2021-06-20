@@ -30,22 +30,22 @@ class Combo {
     this.productsCombo,
   });
 
-  int id;
-  int storeId;
-  bool isEnd;
-  String name;
-  String description;
-  String imageUrl;
-  DateTime startTime;
-  DateTime endTime;
-  int discountType;
-  int valueDiscount;
-  bool setLimitAmount;
+  int? id;
+  int? storeId;
+  bool? isEnd;
+  String? name;
+  String? description;
+  String? imageUrl;
+  DateTime? startTime;
+  DateTime? endTime;
+  int? discountType;
+  int? valueDiscount;
+  bool? setLimitAmount;
   dynamic amount;
-  int used;
-  DateTime createdAt;
-  DateTime updatedAt;
-  List<ProductsCombo> productsCombo;
+  int? used;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  List<ProductsCombo>? productsCombo;
 
   factory Combo.fromJson(Map<String, dynamic> json) => Combo(
         id: json["id"],
@@ -74,17 +74,17 @@ class Combo {
         "name": name,
         "description": description,
         "image_url": imageUrl,
-        "start_time": startTime.toIso8601String(),
-        "end_time": endTime.toIso8601String(),
+        "start_time": startTime!.toIso8601String(),
+        "end_time": endTime!.toIso8601String(),
         "discount_type": discountType,
         "value_discount": valueDiscount,
         "set_limit_amount": setLimitAmount,
         "amount": amount,
         "used": used,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
         "products_combo":
-            List<dynamic>.from(productsCombo.map((x) => x.toJson())),
+            List<dynamic>.from(productsCombo!.map((x) => x.toJson())),
       };
 }
 
@@ -95,9 +95,9 @@ class ProductsCombo {
     this.product,
   });
 
-  int id;
-  int quantity;
-  Product product;
+  int? id;
+  int? quantity;
+  Product? product;
 
   factory ProductsCombo.fromJson(Map<String, dynamic> json) => ProductsCombo(
         id: json["id"],
@@ -108,6 +108,6 @@ class ProductsCombo {
   Map<String, dynamic> toJson() => {
         "id": id,
         "quantity": quantity,
-        "product": product.toJson(),
+        "product": product!.toJson(),
       };
 }

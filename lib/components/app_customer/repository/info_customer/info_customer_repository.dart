@@ -7,10 +7,10 @@ import 'package:sahashop_user/model/info_customer.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class InfoCustomerRepository {
-  Future<InfoCustomerResponse> getInfoCustomer() async {
+  Future<InfoCustomerResponse?> getInfoCustomer() async {
     try {
       var res = await CustomerServiceManager()
-          .service
+          .service!
           .getInfoCustomer(UserInfo().getCurrentStoreCode());
       return res;
     } catch (err) {
@@ -18,10 +18,10 @@ class InfoCustomerRepository {
     }
   }
 
-  Future<InfoCustomerResponse> updateAccountCustomer(
+  Future<InfoCustomerResponse?> updateAccountCustomer(
       InfoCustomer infoCustomer) async {
     try {
-      var res = await CustomerServiceManager().service.updateAccount(
+      var res = await CustomerServiceManager().service!.updateAccount(
           UserInfo().getCurrentStoreCode(), infoCustomer.toJson());
       return res;
     } catch (err) {

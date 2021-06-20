@@ -16,10 +16,10 @@ class CreateComboResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  Combo data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  Combo? data;
 
   factory CreateComboResponse.fromJson(Map<String, dynamic> json) =>
       CreateComboResponse(
@@ -33,6 +33,6 @@ class CreateComboResponse {
         "code": code,
         "success": success,
         "msg_code": msgCode,
-        "data": data.toJson(),
+        "data": data!.toJson(),
       };
 }

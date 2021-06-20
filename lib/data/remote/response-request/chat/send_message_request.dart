@@ -13,9 +13,9 @@ class SendMessageRequest {
     this.productId,
   });
 
-  String content;
-  String linkImages;
-  int productId;
+  String? content;
+  String? linkImages;
+  int? productId;
 
   factory SendMessageRequest.fromJson(Map<String, dynamic> json) =>
       SendMessageRequest(

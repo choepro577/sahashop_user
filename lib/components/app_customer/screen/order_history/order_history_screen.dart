@@ -13,7 +13,7 @@ import 'package:sahashop_user/model/order.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
 class OrderHistoryScreen extends StatefulWidget {
-  final int initPage;
+  final int? initPage;
 
   OrderHistoryScreen({this.initPage});
 
@@ -23,7 +23,7 @@ class OrderHistoryScreen extends StatefulWidget {
 
 class _OrderHistoryScreenState extends State<OrderHistoryScreen>
     with TickerProviderStateMixin {
-  TabController tabController;
+  TabController? tabController;
   OrderHistoryController orderHistoryController =
       Get.put(OrderHistoryController());
   @override
@@ -83,7 +83,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
       footer: CustomFooter(
         builder: (
           BuildContext context,
-          LoadStatus mode,
+          LoadStatus? mode,
         ) {
           Widget body;
           if (mode == LoadStatus.idle) {
@@ -175,10 +175,10 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                     order: orderHistoryController
                                         .listAllOrder[indexState][index],
                                   ),
-                                ).then((value) => {
+                                )!.then((value) => {
                                       if (value == "CANCELLED")
                                         {
-                                          tabController.animateTo(6),
+                                          tabController!.animateTo(6),
                                           orderHistoryController.refreshData(
                                             "order_status_code",
                                             orderHistoryController
@@ -227,11 +227,12 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                             imageUrl: orderHistoryController
                                                         .listAllOrder[
                                                             indexState][index]
-                                                        .lineItemsAtTime
+                                                        .lineItemsAtTime!
                                                         .length ==
                                                     0
                                                 ? ""
-                                                : "${orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime[0].imageUrl}",
+                                                : "${orderHistoryController.
+                                            listAllOrder[indexState][index].lineItemsAtTime![0].imageUrl}",
                                             errorWidget:
                                                 (context, url, error) =>
                                                     ClipRRect(
@@ -257,7 +258,11 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                  "${orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime[0].name}",
+                                                  "${orderHistoryController.
+                                                  listAllOrder[indexState]
+                                                  [index].lineItemsAtTime![0]
+                                                      .name
+                                                  }",
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.w500),
@@ -268,7 +273,9 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                       children: [
                                                         Spacer(),
                                                         Text(
-                                                          " x ${orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime[0].quantity}",
+                                                          " x ${orderHistoryController.
+                                                          listAllOrder
+                                                          [indexState][index].lineItemsAtTime![0].quantity}",
                                                           style: TextStyle(
                                                               fontSize: 13,
                                                               color: Colors
@@ -280,7 +287,8 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                       children: [
                                                         Spacer(),
                                                         Text(
-                                                          "đ${SahaStringUtils().convertToMoney(orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime[0].beforePrice)}",
+                                                          "đ${SahaStringUtils().convertToMoney(
+                                                              orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime![0].beforePrice)}",
                                                           style: TextStyle(
                                                               decoration:
                                                                   TextDecoration
@@ -290,7 +298,9 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                         ),
                                                         SizedBox(width: 15),
                                                         Text(
-                                                          "đ${SahaStringUtils().convertToMoney(orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime[0].afterDiscount)}",
+                                                          "đ${SahaStringUtils().convertToMoney(
+                                                              orderHistoryController.
+                                                              listAllOrder[indexState][index].lineItemsAtTime![0].afterDiscount)}",
                                                           style: TextStyle(
                                                               color: Theme.of(
                                                                       context)
@@ -312,7 +322,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                   ),
                                   orderHistoryController
                                               .listAllOrder[indexState][index]
-                                              .lineItemsAtTime
+                                              .lineItemsAtTime!
                                               .length >
                                           1
                                       ? Container(
@@ -336,7 +346,9 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                     child: Row(
                                       children: [
                                         Text(
-                                          "${orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime.length} sản phẩm",
+                                          "${orderHistoryController.
+                                          listAllOrder[indexState][index].
+                                          lineItemsAtTime!.length} sản phẩm",
                                           style: TextStyle(
                                               color: Colors.grey[600]),
                                         ),
@@ -421,7 +433,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                           color: Theme.of(
                                                                   context)
                                                               .primaryTextTheme
-                                                              .headline6
+                                                              .headline6!
                                                               .color),
                                                     ),
                                                   ),
@@ -449,7 +461,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                     style: TextStyle(
                                                         color: Theme.of(context)
                                                             .primaryTextTheme
-                                                            .headline6
+                                                            .headline6!
                                                             .color),
                                                   ),
                                                 ),
@@ -472,7 +484,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                           color: Theme.of(
                                                                   context)
                                                               .primaryTextTheme
-                                                              .headline6
+                                                              .headline6!
                                                               .color),
                                                     ),
                                                   ),

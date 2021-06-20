@@ -15,11 +15,11 @@ class PaymentMethodResponse {
     this.msg,
   });
 
-  int code;
-  bool success;
-  List<Map> data;
-  String msgCode;
-  String msg;
+  int? code;
+  bool? success;
+  List<Map>? data;
+  String? msgCode;
+  String? msg;
 
   factory PaymentMethodResponse.fromJson(Map<String, dynamic> json) =>
       PaymentMethodResponse(
@@ -33,7 +33,7 @@ class PaymentMethodResponse {
   Map<String, dynamic> toJson() => {
         "code": code,
         "success": success,
-        "data": List<dynamic>.from(data.map((x) => x)),
+        "data": List<dynamic>.from(data!.map((x) => x)),
         "msg_code": msgCode,
         "msg": msg,
       };

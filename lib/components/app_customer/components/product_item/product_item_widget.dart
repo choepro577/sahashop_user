@@ -5,21 +5,20 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
-import 'package:sahashop_user/components/utils/money.dart';
 import 'package:sahashop_user/model/product.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
 class ProductItemWidget extends StatelessWidget {
   const ProductItemWidget({
-    Key key,
-    @required this.product,
+    Key? key,
+    required this.product,
     this.isLoading = false,
     this.width,
   }) : super(key: key);
 
   final Product product;
   final bool isLoading;
-  final double width;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class ProductItemWidget extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                   color: Colors.white,
-                  border: Border.all(color: Colors.grey[400])),
+                  border: Border.all(color: Colors.grey[400]!)),
               child: Stack(
                 children: [
                   InkWell(
@@ -63,9 +62,9 @@ class ProductItemWidget extends StatelessWidget {
                                   height: 180,
                                   width: Get.width,
                                   fit: BoxFit.cover,
-                                  imageUrl: product.images.length == 0
+                                  imageUrl: product.images!.length == 0
                                       ? ""
-                                      : product.images[0].imageUrl,
+                                      : product.images![0].imageUrl!,
                                   errorWidget: (context, url, error) =>
                                       CachedNetworkImage(
                                     fit: BoxFit.cover,
@@ -96,7 +95,7 @@ class ProductItemWidget extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              product.name,
+                                              product.name!,
                                               style: TextStyle(
                                                 fontSize: 13,
                                                 color: Colors.black,
@@ -157,7 +156,7 @@ class ProductItemWidget extends StatelessWidget {
                                           child: Text(
                                             product.productDiscount == null
                                                 ? "${SahaStringUtils().convertToMoney(product.price)}đ"
-                                                : "${SahaStringUtils().convertToMoney(product.productDiscount.discountPrice)}đ",
+                                                : "${SahaStringUtils().convertToMoney(product.productDiscount!.discountPrice)}đ",
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .primaryColor,
@@ -189,7 +188,7 @@ class ProductItemWidget extends StatelessWidget {
                                       color: true
                                           ? Theme.of(context)
                                               .primaryTextTheme
-                                              .headline6
+                                              .headline6!
                                               .color
                                           : Color(0xFFDBDEE4),
                                     ),
@@ -232,7 +231,7 @@ class ProductItemWidget extends StatelessWidget {
                                 top: 7,
                                 right: 11,
                                 child: Text(
-                                  "${product.productDiscount.value} %",
+                                  "${product.productDiscount!.value} %",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize: 10,
@@ -300,7 +299,7 @@ class ProductItemWidget extends StatelessWidget {
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
                         color:
-                            Theme.of(context).primaryTextTheme.headline6.color),
+                            Theme.of(context).primaryTextTheme.headline6!.color),
                   ),
                 ),
               ],
@@ -313,7 +312,7 @@ class ProductItemWidget extends StatelessWidget {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.grey[600].withOpacity(0.5),
+                    color: Colors.grey[600]!.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(3),
                   ),
                   height: 15,
@@ -325,7 +324,7 @@ class ProductItemWidget extends StatelessWidget {
                           fontSize: 9,
                           color: Theme.of(context)
                               .primaryTextTheme
-                              .headline6
+                              .headline6!
                               .color),
                     ),
                   ),

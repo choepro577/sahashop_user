@@ -33,29 +33,29 @@ class Voucher {
     this.products,
   });
 
-  int id;
-  int storeId;
-  bool isEnd;
-  int voucherType;
-  String name;
-  String code;
-  String description;
-  String imageUrl;
-  DateTime startTime;
-  DateTime endTime;
-  int discountType;
-  int valueDiscount;
-  bool setLimitValueDiscount;
-  int maxValueDiscount;
-  bool setLimitTotal;
-  int valueLimitTotal;
-  bool isShowVoucher;
-  bool setLimitAmount;
+  int? id;
+  int? storeId;
+  bool? isEnd;
+  int? voucherType;
+  String? name;
+  String? code;
+  String? description;
+  String? imageUrl;
+  DateTime? startTime;
+  DateTime? endTime;
+  int? discountType;
+  int? valueDiscount;
+  bool? setLimitValueDiscount;
+  int? maxValueDiscount;
+  bool? setLimitTotal;
+  int? valueLimitTotal;
+  bool? isShowVoucher;
+  bool? setLimitAmount;
   dynamic amount;
-  int used;
-  DateTime createdAt;
-  DateTime updatedAt;
-  List<Product> products;
+  int? used;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  List<Product>? products;
 
   factory Voucher.fromJson(Map<String, dynamic> json) => Voucher(
         id: json["id"],
@@ -93,8 +93,8 @@ class Voucher {
         "code": code,
         "description": description,
         "image_url": imageUrl,
-        "start_time": startTime.toIso8601String(),
-        "end_time": endTime.toIso8601String(),
+        "start_time": startTime!.toIso8601String(),
+        "end_time": endTime!.toIso8601String(),
         "discount_type": discountType,
         "value_discount": valueDiscount,
         "set_limit_value_discount": setLimitValueDiscount,
@@ -105,8 +105,8 @@ class Voucher {
         "set_limit_amount": setLimitAmount,
         "amount": amount,
         "used": used,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-        "products": List<dynamic>.from(products.map((x) => x.toJson())),
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
+        "products": List<dynamic>.from(products!.map((x) => x.toJson())),
       };
 }

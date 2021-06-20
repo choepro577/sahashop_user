@@ -4,9 +4,9 @@ import 'package:sahashop_user/data/remote/saha_service_manager.dart';
 import '../handle_error.dart';
 
 class ImageRepository {
-  Future<String> uploadImage(File image) async {
+  Future<String?> uploadImage(File? image) async {
     try {
-      var res = await SahaServiceManager().service.uploadImage(
+      var res = await SahaServiceManager().service!.uploadImage(
         {
           "image": image == null
               ? null

@@ -15,9 +15,9 @@ class Shipment {
     this.shipperConfig,
   });
 
-  int id;
-  String name;
-  ShipperConfig shipperConfig;
+  int? id;
+  String? name;
+  ShipperConfig? shipperConfig;
 
   factory Shipment.fromJson(Map<String, dynamic> json) => Shipment(
         id: json["id"],
@@ -28,7 +28,7 @@ class Shipment {
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "shipper_config": shipperConfig.toJson(),
+        "shipper_config": shipperConfig!.toJson(),
       };
 }
 
@@ -42,12 +42,12 @@ class ShipperConfig {
     this.updatedAt,
   });
 
-  int partnerId;
-  String token;
-  bool use;
-  bool cod;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? partnerId;
+  String? token;
+  bool? use;
+  bool? cod;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory ShipperConfig.fromJson(Map<String, dynamic> json) => ShipperConfig(
         partnerId: json["partner_id"],

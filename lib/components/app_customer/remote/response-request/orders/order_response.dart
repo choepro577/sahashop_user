@@ -19,11 +19,11 @@ class OrderResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  String msg;
-  Order data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  String? msg;
+  Order? data;
 
   factory OrderResponse.fromJson(Map<String, dynamic> json) => OrderResponse(
         code: json["code"],
@@ -38,6 +38,6 @@ class OrderResponse {
         "success": success,
         "msg_code": msgCode,
         "msg": msg,
-        "data": data.toJson(),
+        "data": data!.toJson(),
       };
 }

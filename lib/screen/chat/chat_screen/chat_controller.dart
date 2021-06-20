@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -60,10 +61,10 @@ class ChatController extends GetxController {
     try {
       var res =
           await RepositoryManager.chatRepository.getAllChatUser(pageLoadMore);
-      if (res.data.data == []) {
+      if (res!.data!.data == []) {
         isEndPageBoxChatCustomer = true;
       } else {
-        listBoxChatCustomer.addAll(res.data.data);
+        listBoxChatCustomer.addAll(res.data!.data!);
         pageLoadMoreBoxChatCustomer++;
       }
     } catch (err) {
@@ -85,10 +86,10 @@ class ChatController extends GetxController {
   var pageLoadMore = 1;
   var isEndPageCombo = false;
   var listMessage = RxList<Message>();
-  var allImageInMessage = RxList<List<dynamic>>();
+  var allImageInMessage = RxList<List<dynamic>?>();
   var listImageResponse = [];
   var listImageRequest = [];
-  var listSaveDataImages = RxList<List<ImageData>>();
+  var listSaveDataImages = RxList<List<ImageData>?>();
   var timeNow = DateTime.now().obs;
 
   void loadInitMessage() {
@@ -107,7 +108,7 @@ class ChatController extends GetxController {
         listSaveDataImages.add([]);
         listMessage.insert(0, Message.fromJson(data));
         try {
-          var listImage = (jsonDecode(listMessage[0].linkImages));
+          var listImage = (jsonDecode(listMessage[0].linkImages!));
           allImageInMessage.insert(0, listImage);
         } catch (err) {
           allImageInMessage.insert(0, [listMessage[0].linkImages]);
@@ -125,7 +126,7 @@ class ChatController extends GetxController {
       if (!isEndPageCombo) {
         var res = await RepositoryManager.chatRepository
             .getAllMessageUser(boxChatCustomer.value.customerId, pageLoadMore);
-        listMessage.addAll(res.data.data);
+        listMessage.addAll(res!.data!.data!);
 
         listMessage.forEach((e) {
           listSaveDataImages.add([]);
@@ -134,7 +135,7 @@ class ChatController extends GetxController {
 
         for (int i = 0; i < listMessage.length; i++) {
           try {
-            var listImage = (jsonDecode(listMessage[i].linkImages));
+            var listImage = (jsonDecode(listMessage[i].linkImages!));
 
             allImageInMessage[i] = listImage.toList();
           } catch (err) {
@@ -143,7 +144,7 @@ class ChatController extends GetxController {
         }
         // print(allImageInMessage);
 
-        if (res.data.nextPageUrl != null) {
+        if (res.data!.nextPageUrl != null) {
           pageLoadMore++;
           isEndPageCombo = false;
         } else {
@@ -167,7 +168,7 @@ class ChatController extends GetxController {
     timeNow.value = DateTime.now();
   }
 
-  Future<SendMessageResponse> sendMessageToCustomer() async {
+  Future<SendMessageResponse?> sendMessageToCustomer() async {
     timeNow.value = DateTime.now();
     try {
       listSaveDataImages.insert(0, null);
@@ -193,7 +194,7 @@ class ChatController extends GetxController {
     }
   }
 
-  Future<SendMessageResponse> sendImageToCustomer() async {
+  Future<SendMessageResponse?> sendImageToCustomer() async {
     timeNow.value = DateTime.now();
     try {
       listSaveDataImages.insert(0, dataImages);
@@ -229,8 +230,7 @@ class ChatController extends GetxController {
     var newList = <ImageData>[];
 
     for (var asset in listAsset) {
-      var dataPre = listPre.firstWhere((itemPre) => itemPre.file == asset,
-          orElse: () => null);
+      var dataPre = listPre.firstWhereOrNull((itemPre) => itemPre.file == asset);
 
       if (dataPre != null) {
         newList.add(dataPre);
@@ -270,11 +270,11 @@ class ChatController extends GetxController {
     listImageRequest = [];
   }
 
-  Future<void> uploadImageData({int indexImage, Function onOK}) async {
+  Future<void> uploadImageData({required int indexImage, required Function onOK}) async {
     try {
       var fileUp =
           await ImageUtils.getImageFileFromAsset(dataImages[indexImage].file);
-      var fileUpImageCompress = await ImageUtils.getImageCompress(fileUp);
+      var fileUpImageCompress = await ImageUtils.getImageCompress(fileUp!);
 
       var link = await RepositoryManager.imageRepository
           .uploadImage(fileUpImageCompress);
@@ -321,10 +321,10 @@ class ChatController extends GetxController {
 }
 
 class ImageData {
-  Asset file;
-  String linkImage;
-  bool errorUpload;
-  bool uploading;
+  Asset? file;
+  String? linkImage;
+  bool? errorUpload;
+  bool? uploading;
 
   ImageData({this.file, this.linkImage, this.errorUpload, this.uploading});
 }

@@ -7,7 +7,7 @@ import 'package:sahashop_user/data/repository/handle_error.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class OrderRepository {
-  Future<AllOrderResponse> getAllOrder(
+  Future<AllOrderResponse?> getAllOrder(
     int numberPage,
     String search,
     String fieldBy,
@@ -18,7 +18,7 @@ class OrderRepository {
     String dateTo,
   ) async {
     try {
-      var res = await SahaServiceManager().service.getAllOrder(
+      var res = await SahaServiceManager().service!.getAllOrder(
           UserInfo().getCurrentStoreCode(),
           numberPage,
           search,
@@ -34,10 +34,10 @@ class OrderRepository {
     }
   }
 
-  Future<StateHistoryOrderResponse> getStateHistoryOrder(int idOrder) async {
+  Future<StateHistoryOrderResponse?> getStateHistoryOrder(int? idOrder) async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .getStateHistoryOrder(UserInfo().getCurrentStoreCode(), idOrder);
       return res;
     } catch (err) {
@@ -45,22 +45,22 @@ class OrderRepository {
     }
   }
 
-  Future<OrderResponse> getOneOrder(String orderCode) async {
+  Future<OrderResponse?> getOneOrder(String orderCode) async {
     try {
       var res = await SahaServiceManager()
-          .service
-          .getOneOrder(UserInfo().getCurrentStoreCode(), orderCode);
+          .service!
+          .getOneOrder(UserInfo().getCurrentStoreCode()!, orderCode);
       return res;
     } catch (err) {
       handleError(err);
     }
   }
 
-  Future<ChangeOrderStatusResponse> changeOrderStatus(
-      String orderCode, String orderStatusCode) async {
+  Future<ChangeOrderStatusResponse?> changeOrderStatus(
+      String? orderCode, String orderStatusCode) async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .changeOrderStatus(UserInfo().getCurrentStoreCode(), {
         "order_code": orderCode,
         "order_status_code": orderStatusCode,

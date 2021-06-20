@@ -11,11 +11,11 @@ class AddCategoryPostController extends GetxController {
   Product productRequest = new Product();
   var isLoadingAdd = false.obs;
 
-  String title;
-  File image;
-  String description;
+  String? title;
+  late File image;
+  String? description;
 
-  Future<void> createCategoryPost() async {
+  Future<bool?> createCategoryPost() async {
     isLoadingAdd.value = true;
     try {
       var imageUp = await ImageUtils.getImageCompress(image);
@@ -23,7 +23,7 @@ class AddCategoryPostController extends GetxController {
           title: title, image: imageUp, description: description);
 
       SahaAlert.showSuccess(message: "Thêm thành công");
-      Navigator.pop(Get.context, "added");
+      Navigator.pop(Get.context!, "added");
 
       return true;
     } catch (err) {

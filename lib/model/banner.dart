@@ -7,11 +7,11 @@ class BannerItem {
     this.updatedAt,
   });
 
-  int storeId;
-  String imageUrl;
-  String title;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? storeId;
+  String? imageUrl;
+  String? title;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory BannerItem.fromJson(Map<String, dynamic> json) => BannerItem(
     storeId: json["store_id"],

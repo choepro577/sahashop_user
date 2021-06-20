@@ -6,13 +6,13 @@ import 'package:sahashop_user/model/order.dart';
 class DialogChoosePaymentStatus {
   static void showChoosePayment(Function onReturn) {
     showModalBottomSheet<void>(
-      context: Get.context,
+      context: Get.context!,
       builder: (BuildContext context) {
         Widget buttonStatus(
-            {String text, String code, Function onTap, Color color}) {
+            {required String text, String? code, Function? onTap, Color? color}) {
           return InkWell(
             onTap: () {
-              onTap(code);
+              onTap!(code);
             },
             child: Card(
               child: Container(
@@ -22,7 +22,7 @@ class DialogChoosePaymentStatus {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(2),
                     border:
-                        Border.all(width: 1, color: color ?? Colors.grey[600])),
+                        Border.all(width: 1, color: color ?? Colors.grey[600]!)),
                 child: Center(
                     child: Text(
                   text,
@@ -57,7 +57,7 @@ class DialogChoosePaymentStatus {
               children: [
                 buttonStatus(
                   code: WAITING_FOR_PROGRESSING,
-                  text: ORDER_PAYMENT_DEFINE[WAITING_FOR_PROGRESSING],
+                  text: ORDER_PAYMENT_DEFINE[WAITING_FOR_PROGRESSING]!,
                   onTap: (code) {
                     onReturn(code);
                   },
@@ -65,7 +65,7 @@ class DialogChoosePaymentStatus {
                 ),
                 buttonStatus(
                   code: UNPAID,
-                  text: ORDER_PAYMENT_DEFINE[UNPAID],
+                  text: ORDER_PAYMENT_DEFINE[UNPAID]!,
                   onTap: (code) {
                     onReturn(code);
                   },
@@ -73,7 +73,7 @@ class DialogChoosePaymentStatus {
                 ),
                 buttonStatus(
                   code: PAID,
-                  text: ORDER_PAYMENT_DEFINE[PAID],
+                  text: ORDER_PAYMENT_DEFINE[PAID]!,
                   onTap: (code) {
                     onReturn(code);
                   },
@@ -85,19 +85,19 @@ class DialogChoosePaymentStatus {
               children: [
                 buttonStatus(
                     code: PARTIALLY_PAID,
-                    text: ORDER_PAYMENT_DEFINE[PARTIALLY_PAID],
+                    text: ORDER_PAYMENT_DEFINE[PARTIALLY_PAID]!,
                     onTap: (code) {
                       onReturn(code);
                     }),
                 buttonStatus(
                     code: CANCELLED,
-                    text: ORDER_PAYMENT_DEFINE[CANCELLED],
+                    text: ORDER_PAYMENT_DEFINE[CANCELLED]!,
                     onTap: (code) {
                       onReturn(code);
                     }),
                 buttonStatus(
                     code: REFUNDS,
-                    text: ORDER_PAYMENT_DEFINE[REFUNDS],
+                    text: ORDER_PAYMENT_DEFINE[REFUNDS]!,
                     onTap: (code) {
                       onReturn(code);
                     }),

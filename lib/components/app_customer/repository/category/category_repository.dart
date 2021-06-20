@@ -6,11 +6,11 @@ import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class CategoryRepository {
-  Future<List<Category>> getAllCategory() async {
+  Future<List<Category>?> getAllCategory() async {
     if (FlowData().isOnline()) {
       try {
         var res = await CustomerServiceManager()
-            .service
+            .service!
             .getAllCategory(UserInfo().getCurrentStoreCode());
         return res.data;
       } catch (err) {

@@ -10,14 +10,14 @@ class BannerType2 extends StatefulWidget {
   @override
   _BannerType2State createState() => _BannerType2State();
 
-  final double height;
+  final double? height;
 
   BannerType2({this.height});
 }
 
 class _BannerType2State extends State<BannerType2> {
   int _current = 0;
-  double height;
+  double? height;
 
   DataAppCustomerController dataAppCustomerController = Get.find();
 
@@ -34,7 +34,7 @@ class _BannerType2State extends State<BannerType2> {
       dataAppCustomerController.homeData?.banner?.list == null
           ? Container()
           : CarouselSlider(
-        items: dataAppCustomerController.homeData.banner.list
+        items: dataAppCustomerController.homeData!.banner!.list!
             .map((item) => Container(
           child: Container(
             margin: EdgeInsets.all(5.0),
@@ -43,7 +43,7 @@ class _BannerType2State extends State<BannerType2> {
                 BorderRadius.all(Radius.circular(5.0)),
                 child: Stack(
                   children: <Widget>[
-                    Image.network(item.imageUrl,
+                    Image.network(item.imageUrl!,
                         fit: BoxFit.cover, width: 1000.0),
                     Positioned(
                       bottom: 0.0,

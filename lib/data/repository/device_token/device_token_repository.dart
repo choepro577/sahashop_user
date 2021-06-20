@@ -8,7 +8,7 @@ import 'package:sahashop_user/utils/user_info.dart';
 import '../handle_error.dart';
 
 class DeviceTokenRepository {
-  Future<DeviceTokenUser> updateDeviceTokenUser(String deviceToken) async {
+  Future<DeviceTokenUser?> updateDeviceTokenUser(String? deviceToken) async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     String deviceId;
     if (Platform.isAndroid) {
@@ -20,7 +20,7 @@ class DeviceTokenRepository {
     }
 
     try {
-      var res = await SahaServiceManager().service.updateDeviceTokenUser({
+      var res = await SahaServiceManager().service!.updateDeviceTokenUser({
         "device_token": deviceToken,
         "device_id": deviceId,
         "device_type": Platform.isAndroid ? 0 : 1,

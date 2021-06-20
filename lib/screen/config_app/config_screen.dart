@@ -75,7 +75,7 @@ class ConfigScreen extends StatelessWidget {
                                           Text(
                                             uiDataConfig.UIData[configController
                                                     .indexTab.value]
-                                                .name,
+                                                .name!,
                                             style: TextStyle(
                                               fontSize: 17,
                                             ),
@@ -90,7 +90,7 @@ class ConfigScreen extends StatelessWidget {
                                                 null ||
                                         uiDataConfig.UIData[configController
                                                         .indexTab.value]
-                                                    .listChildConfig
+                                                    .listChildConfig!
                                                     .length ==
                                                 0
                                         ? Container(
@@ -102,7 +102,7 @@ class ConfigScreen extends StatelessWidget {
                                             children: uiDataConfig.UIData[
                                                     configController
                                                         .indexTab.value]
-                                                .listChildConfig
+                                                .listChildConfig!
                                                 .map(
                                                   (e) => e.editWidget == null
                                                       ? Container()
@@ -136,7 +136,7 @@ class ConfigScreen extends StatelessWidget {
                                                                 SizedBox(
                                                                   height: 10,
                                                                 ),
-                                                                e.editWidget
+                                                                e.editWidget!
                                                               ],
                                                             ),
                                                           ),
@@ -160,7 +160,7 @@ class ConfigScreen extends StatelessWidget {
                             color: Theme.of(context).primaryColor,
                             textColor: Theme.of(context)
                                 .primaryTextTheme
-                                .bodyText1
+                                .bodyText1!
                                 .color,
                             onPressed:
                                 configController.isLoadingCreate.value == true
@@ -184,7 +184,7 @@ class ConfigScreen extends StatelessWidget {
         ));
   }
 
-  Widget buildItem({int index}) {
+  Widget buildItem({required int index}) {
     ParentConfig parentConfig = uiDataConfig.UIData[index];
     return Container(
       color: configController.indexTab.value == index
@@ -211,7 +211,7 @@ class ConfigScreen extends StatelessWidget {
               height: 10,
             ),
             Text(
-              parentConfig.name,
+              parentConfig.name!,
               style: TextStyle(
                   fontSize: 14,
                   color: configController.indexTab.value == index

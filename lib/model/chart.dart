@@ -11,15 +11,15 @@ class Chart {
     this.name,
   });
 
-  DateTime time;
-  double totalOrderCount;
-  double totalShippingFee;
-  double totalBeforeDiscount;
-  double comboDiscountAmount;
-  double voucherDiscountAmount;
-  double totalAfterDiscount;
-  double totalFinal;
-  String name;
+  DateTime? time;
+  double? totalOrderCount;
+  double? totalShippingFee;
+  double? totalBeforeDiscount;
+  double? comboDiscountAmount;
+  double? voucherDiscountAmount;
+  double? totalAfterDiscount;
+  double? totalFinal;
+  String? name;
 
   factory Chart.fromJson(Map<String, dynamic> json) => Chart(
         time: json["time"] == null

@@ -16,10 +16,10 @@ class CreateVoucherResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  Data data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  Data? data;
 
   factory CreateVoucherResponse.fromJson(Map<String, dynamic> json) =>
       CreateVoucherResponse(
@@ -33,7 +33,7 @@ class CreateVoucherResponse {
         "code": code,
         "success": success,
         "msg_code": msgCode,
-        "data": data.toJson(),
+        "data": data!.toJson(),
       };
 }
 
@@ -64,29 +64,29 @@ class Data {
     this.products,
   });
 
-  int id;
-  int storeId;
-  bool isEnd;
-  int voucherType;
-  String name;
-  String code;
-  String description;
-  String imageUrl;
-  DateTime startTime;
-  DateTime endTime;
-  int discountType;
-  int valueDiscount;
-  bool setLimitValueDiscount;
-  int maxValueDiscount;
-  bool setLimitTotal;
-  int valueLimitTotal;
-  bool isShowVoucher;
-  bool setLimitAmount;
+  int? id;
+  int? storeId;
+  bool? isEnd;
+  int? voucherType;
+  String? name;
+  String? code;
+  String? description;
+  String? imageUrl;
+  DateTime? startTime;
+  DateTime? endTime;
+  int? discountType;
+  int? valueDiscount;
+  bool? setLimitValueDiscount;
+  int? maxValueDiscount;
+  bool? setLimitTotal;
+  int? valueLimitTotal;
+  bool? isShowVoucher;
+  bool? setLimitAmount;
   dynamic amount;
-  int used;
-  DateTime createdAt;
-  DateTime updatedAt;
-  List<Product> products;
+  int? used;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  List<Product>? products;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"],
@@ -124,8 +124,8 @@ class Data {
         "code": code,
         "description": description,
         "image_url": imageUrl,
-        "start_time": startTime.toIso8601String(),
-        "end_time": endTime.toIso8601String(),
+        "start_time": startTime!.toIso8601String(),
+        "end_time": endTime!.toIso8601String(),
         "discount_type": discountType,
         "value_discount": valueDiscount,
         "set_limit_value_discount": setLimitValueDiscount,
@@ -136,8 +136,8 @@ class Data {
         "set_limit_amount": setLimitAmount,
         "amount": amount,
         "used": used,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-        "products": List<Product>.from(products.map((x) => x)),
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
+        "products": List<Product>.from(products!.map((x) => x)),
       };
 }

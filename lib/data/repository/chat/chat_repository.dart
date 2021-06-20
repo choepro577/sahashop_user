@@ -7,21 +7,22 @@ import 'package:sahashop_user/data/remote/saha_service_manager.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class ChatRepository {
-  Future<AllChatCustomerResponse> getAllChatUser(int numberPage) {
+  Future<AllChatCustomerResponse?> getAllChatUser(int? numberPage) async {
     try {
       var res = SahaServiceManager()
-          .service
-          .getAllChatUser(UserInfo().getCurrentStoreCode(), numberPage);
+          .service!
+          .getAllChatUser(UserInfo().getCurrentStoreCode(), numberPage!);
       return res;
     } catch (err) {
       SahaAlert.showError(message: err.toString());
+
     }
   }
 
-  Future<AllMessageResponse> getAllMessageUser(
-      int idCustomer, int numberPage) async {
+  Future<AllMessageResponse?> getAllMessageUser(
+      int? idCustomer, int numberPage) async {
     try {
-      var res = await SahaServiceManager().service.getAllMessageUser(
+      var res = await SahaServiceManager().service!.getAllMessageUser(
           UserInfo().getCurrentStoreCode(), idCustomer, numberPage);
       return res;
     } catch (err) {
@@ -29,10 +30,10 @@ class ChatRepository {
     }
   }
 
-  Future<SendMessageResponse> sendMessageToCustomer(
-      int idCustomer, SendMessageRequest sendMessageRequest) async {
+  Future<SendMessageResponse?> sendMessageToCustomer(
+      int? idCustomer, SendMessageRequest sendMessageRequest) async {
     try {
-      var res = await SahaServiceManager().service.sendMessageToCustomer(
+      var res = await SahaServiceManager().service!.sendMessageToCustomer(
           UserInfo().getCurrentStoreCode(),
           idCustomer,
           sendMessageRequest.toJson());

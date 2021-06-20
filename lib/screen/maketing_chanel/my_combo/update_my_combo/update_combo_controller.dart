@@ -33,7 +33,7 @@ class UpdateMyComboController extends GetxController {
   var isLimitedPrice = true.obs;
   var typeVoucherDiscount = "Chọn".obs;
   var isChoosedTypeVoucherDiscount = true.obs;
-  var discountType = DiscountType.k1.obs;
+  Rx<DiscountType?> discountType = DiscountType.k1.obs;
   var discountTypeRequest = 1.obs;
   var validateComboPercent = false.obs;
 
@@ -85,7 +85,7 @@ class UpdateMyComboController extends GetxController {
     }
   }
 
-  void onChangeRatio(DiscountType v) {
+  void onChangeRatio(DiscountType? v) {
     if (discountType.value == DiscountType.k1) {
       valueEditingController.text = "";
       amountEditingController.text = "";
@@ -102,7 +102,7 @@ class UpdateMyComboController extends GetxController {
     print(discountTypeRequest.value);
   }
 
-  Future<void> updateCombo(int idCombo) async {
+  Future<void> updateCombo(int? idCombo) async {
     isLoadingCreate.value = true;
     try {
       var res = await RepositoryManager.marketingChanel.updateCombo(

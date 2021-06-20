@@ -15,9 +15,9 @@ import '../handle_error.dart';
 class PostCustomerRepository {
 
 
-  Future<List<CategoryPost>> getAllCategoryPost() async {
+  Future<List<CategoryPost>?> getAllCategoryPost() async {
     try {
-      var res = await CustomerServiceManager().service
+      var res = await CustomerServiceManager().service!
           .getAllCategoryPost(UserInfo().getCurrentStoreCode());
       return res.data;
     } catch (err) {
@@ -26,17 +26,17 @@ class PostCustomerRepository {
   }
 
 
-  Future<List<Post>> searchPost({String search="", String idCategory="",
+  Future<List<Post>?> searchPost({String search="", String idCategory="",
     bool descending=false, String sortBy=""}) async {
     if (FlowData().isOnline()) {
       try {
-        var res = await CustomerServiceManager().service.searchPost(
+        var res = await CustomerServiceManager().service!.searchPost(
             UserInfo().getCurrentStoreCode(),
             search,
             idCategory,
             descending,
             sortBy);
-        return res.data.data;
+        return res.data!.data;
       } catch (err) {
         handleErrorCustomer(err);
       }

@@ -4,10 +4,10 @@ import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class ShipmentRepository {
-  Future<ShipmentCustomerResponse> chargeShipmentFee(
-      int idAddressCustomer) async {
+  Future<ShipmentCustomerResponse?> chargeShipmentFee(
+      int? idAddressCustomer) async {
     try {
-      var res = await CustomerServiceManager().service.chargeShipmentFee(
+      var res = await CustomerServiceManager().service!.chargeShipmentFee(
           UserInfo().getCurrentStoreCode(),
           {"id_address_customer": idAddressCustomer});
       return res;

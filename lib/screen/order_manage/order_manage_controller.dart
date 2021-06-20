@@ -64,7 +64,7 @@ class OrderManageController extends GetxController {
             "",
             "");
 
-        res.data.data.forEach((element) {
+        res!.data!.data!.forEach((element) {
           listAllOrder[indexStatus].add(element);
         });
 
@@ -75,7 +75,7 @@ class OrderManageController extends GetxController {
         listCheckRefresh[indexStatus]++;
         listAllOrder.refresh();
 
-        if (res.data.nextPageUrl != null) {
+        if (res.data!.nextPageUrl != null) {
           listPageLoadMore[indexStatus]++;
           listIsEndOrder[indexStatus] = false;
         } else {

@@ -16,7 +16,7 @@ import 'package:sahashop_user/components/app_customer/screen/register/register_c
 // ignore: must_be_immutable
 class ProfileScreen extends StatelessWidget {
   DataAppCustomerController dataAppCustomerController = Get.find();
-  ProfileController profileController;
+  ProfileController? profileController;
   @override
   Widget build(BuildContext context) {
     profileController = ProfileController();
@@ -43,7 +43,7 @@ class ProfileScreen extends StatelessWidget {
                                   Icons.settings,
                                   color: Theme.of(context)
                                       .primaryTextTheme
-                                      .bodyText1
+                                      .bodyText1!
                                       .color,
                                 ),
                                 onPressed: () {})
@@ -53,7 +53,7 @@ class ProfileScreen extends StatelessWidget {
                               Icons.shopping_cart,
                               color: Theme.of(context)
                                   .primaryTextTheme
-                                  .bodyText1
+                                  .bodyText1!
                                   .color,
                             ),
                             onPressed: () {}),
@@ -62,7 +62,7 @@ class ProfileScreen extends StatelessWidget {
                               Icons.chat,
                               color: Theme.of(context)
                                   .primaryTextTheme
-                                  .bodyText1
+                                  .bodyText1!
                                   .color,
                             ),
                             onPressed: () {}),
@@ -94,7 +94,7 @@ class ProfileScreen extends StatelessWidget {
                                           fit: BoxFit.cover,
                                           imageUrl: dataAppCustomerController
                                                   .infoCustomer
-                                                  .value
+                                                  .value!
                                                   .avatarImage ??
                                               "",
                                           errorWidget: (context, url, error) =>
@@ -104,7 +104,7 @@ class ProfileScreen extends StatelessWidget {
                                           ),
                                         ),
                                         dataAppCustomerController.infoCustomer
-                                                    .value.avatarImage ==
+                                                    .value!.avatarImage ==
                                                 null
                                             ? Positioned(
                                                 bottom: 1,
@@ -119,7 +119,7 @@ class ProfileScreen extends StatelessWidget {
                                                           color: Theme.of(
                                                                   context)
                                                               .primaryTextTheme
-                                                              .headline6
+                                                              .headline6!
                                                               .color),
                                                     ),
                                                   ),
@@ -140,12 +140,12 @@ class ProfileScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     dataAppCustomerController
-                                            .infoCustomer.value.name ??
+                                            .infoCustomer.value!.name ??
                                         "Chưa có tên",
                                     style: TextStyle(
                                       color: Theme.of(context)
                                           .primaryTextTheme
-                                          .headline6
+                                          .headline6!
                                           .color,
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -221,7 +221,7 @@ class ProfileScreen extends StatelessWidget {
                                         onTap: () {
                                           Get.to(
                                             () => LoginScreenCustomer(),
-                                          ).then((value) => {
+                                          )!.then((value) => {
                                                 dataAppCustomerController
                                                     .getInfoCustomer()
                                               });
@@ -248,7 +248,7 @@ class ProfileScreen extends StatelessWidget {
                                       ),
                                       InkWell(
                                         onTap: () {
-                                          Get.to(() => RegisterCustomerScreen())
+                                          Get.to(() => RegisterCustomerScreen())!
                                               .then((value) => {
                                                     dataAppCustomerController
                                                         .getInfoCustomer()
@@ -264,15 +264,15 @@ class ProfileScreen extends StatelessWidget {
                                               border: Border.all(
                                                   color: Theme.of(context)
                                                       .primaryTextTheme
-                                                      .headline6
-                                                      .color)),
+                                                      .headline6!
+                                                      .color!)),
                                           child: Center(
                                               child: Text(
                                             "Đăng ký",
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .primaryTextTheme
-                                                    .headline6
+                                                    .headline6!
                                                     .color),
                                           )),
                                         ),
@@ -366,7 +366,7 @@ class ProfileScreen extends StatelessWidget {
                                           color: Theme.of(context).primaryColor,
                                         ),
                                       ),
-                                      profileController
+                                      profileController!
                                                   .processingAmount.value !=
                                               0
                                           ? Positioned(
@@ -384,7 +384,7 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    "${profileController.processingAmount.value}+",
+                                                    "${profileController!.processingAmount.value}+",
                                                     style: TextStyle(
                                                       fontSize: 8,
                                                       height: 1,
@@ -429,7 +429,7 @@ class ProfileScreen extends StatelessWidget {
                                           color: Theme.of(context).primaryColor,
                                         ),
                                       ),
-                                      profileController.packingAmount.value != 0
+                                      profileController!.packingAmount.value != 0
                                           ? Positioned(
                                               top: -3,
                                               right: -5,
@@ -445,7 +445,7 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    "${profileController.packingAmount.value}+",
+                                                    "${profileController!.packingAmount.value}+",
                                                     style: TextStyle(
                                                       fontSize: 8,
                                                       height: 1,
@@ -490,7 +490,7 @@ class ProfileScreen extends StatelessWidget {
                                           color: Theme.of(context).primaryColor,
                                         ),
                                       ),
-                                      profileController.shippingAmount.value !=
+                                      profileController!.shippingAmount.value !=
                                               0
                                           ? Positioned(
                                               top: -3,
@@ -507,7 +507,7 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    "${profileController.shippingAmount.value}+",
+                                                    "${profileController!.shippingAmount.value}+",
                                                     style: TextStyle(
                                                       fontSize: 8,
                                                       height: 1,
@@ -552,7 +552,7 @@ class ProfileScreen extends StatelessWidget {
                                           color: Theme.of(context).primaryColor,
                                         ),
                                       ),
-                                      profileController.evaluateAmount.value !=
+                                      profileController!.evaluateAmount.value !=
                                               0
                                           ? Positioned(
                                               top: -8,
@@ -569,7 +569,7 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    "${profileController.evaluateAmount.value}+",
+                                                    "${profileController!.evaluateAmount.value}+",
                                                     style: TextStyle(
                                                       fontSize: 8,
                                                       height: 1,

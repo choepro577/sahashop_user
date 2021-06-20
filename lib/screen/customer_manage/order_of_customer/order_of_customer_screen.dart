@@ -14,13 +14,13 @@ import 'package:sahashop_user/utils/string_utils.dart';
 
 // ignore: must_be_immutable
 class OrderOfCustomer extends StatelessWidget {
-  final int idCustomer;
+  final int? idCustomer;
 
   OrderOfCustomer({this.idCustomer}) {
     orderOfCustomerController = OrderOfCustomerController();
-    orderOfCustomerController.loadInitOrder(idCustomer);
+    orderOfCustomerController.loadInitOrder(idCustomer!);
   }
-  OrderOfCustomerController orderOfCustomerController;
+  OrderOfCustomerController orderOfCustomerController = OrderOfCustomerController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class OrderOfCustomer extends StatelessWidget {
         footer: CustomFooter(
           builder: (
             BuildContext context,
-            LoadStatus mode,
+            LoadStatus? mode,
           ) {
             Widget body;
             if (mode == LoadStatus.idle) {
@@ -64,7 +64,7 @@ class OrderOfCustomer extends StatelessWidget {
         onLoading: () async {
           await Future.delayed(Duration(milliseconds: 300));
           if (orderOfCustomerController.isDoneLoadMore.value) {
-            orderOfCustomerController.loadMoreCustomer(idCustomer);
+            orderOfCustomerController.loadMoreCustomer(idCustomer!);
           }
           _refreshController.loadComplete();
         },
@@ -138,11 +138,11 @@ class OrderOfCustomer extends StatelessWidget {
                                               fit: BoxFit.cover,
                                               imageUrl: orderOfCustomerController
                                                           .listOrder[index]
-                                                          .lineItemsAtTime
+                                                          .lineItemsAtTime!
                                                           .length ==
                                                       0
                                                   ? ""
-                                                  : "${orderOfCustomerController.listOrder[index].infoCustomer.avatarImage}",
+                                                  : "${orderOfCustomerController.listOrder[index].infoCustomer!.avatarImage}",
                                               errorWidget:
                                                   (context, url, error) =>
                                                       ClipRRect(
@@ -158,7 +158,7 @@ class OrderOfCustomer extends StatelessWidget {
                                             width: 15,
                                           ),
                                           Text(
-                                              "${orderOfCustomerController.listOrder[index].infoCustomer.name}"),
+                                              "${orderOfCustomerController.listOrder[index].infoCustomer!.name}"),
                                           Spacer(),
                                           Text(
                                             "${orderOfCustomerController.listOrder[index].orderStatusName}",
@@ -186,11 +186,11 @@ class OrderOfCustomer extends StatelessWidget {
                                               fit: BoxFit.cover,
                                               imageUrl: orderOfCustomerController
                                                           .listOrder[index]
-                                                          .lineItemsAtTime
+                                                          .lineItemsAtTime!
                                                           .length ==
                                                       0
                                                   ? ""
-                                                  : "${orderOfCustomerController.listOrder[index].lineItemsAtTime[0].imageUrl}",
+                                                  : "${orderOfCustomerController.listOrder[index].lineItemsAtTime![0].imageUrl}",
                                               errorWidget:
                                                   (context, url, error) =>
                                                       ClipRRect(
@@ -216,7 +216,7 @@ class OrderOfCustomer extends StatelessWidget {
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    "${orderOfCustomerController.listOrder[index].lineItemsAtTime[0].name}",
+                                                    "${orderOfCustomerController.listOrder[index].lineItemsAtTime![0].name}",
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w500),
@@ -227,7 +227,7 @@ class OrderOfCustomer extends StatelessWidget {
                                                         children: [
                                                           Spacer(),
                                                           Text(
-                                                            " x ${orderOfCustomerController.listOrder[index].lineItemsAtTime[0].quantity}",
+                                                            " x ${orderOfCustomerController.listOrder[index].lineItemsAtTime![0].quantity}",
                                                             style: TextStyle(
                                                                 fontSize: 13,
                                                                 color: Colors
@@ -239,7 +239,7 @@ class OrderOfCustomer extends StatelessWidget {
                                                         children: [
                                                           Spacer(),
                                                           Text(
-                                                            "đ${SahaStringUtils().convertToMoney(orderOfCustomerController.listOrder[index].lineItemsAtTime[0].beforePrice)}",
+                                                            "đ${SahaStringUtils().convertToMoney(orderOfCustomerController.listOrder[index].lineItemsAtTime![0].beforePrice)}",
                                                             style: TextStyle(
                                                                 decoration:
                                                                     TextDecoration
@@ -249,7 +249,7 @@ class OrderOfCustomer extends StatelessWidget {
                                                           ),
                                                           SizedBox(width: 15),
                                                           Text(
-                                                            "đ${SahaStringUtils().convertToMoney(orderOfCustomerController.listOrder[index].lineItemsAtTime[0].afterDiscount)}",
+                                                            "đ${SahaStringUtils().convertToMoney(orderOfCustomerController.listOrder[index].lineItemsAtTime![0].afterDiscount)}",
                                                             style: TextStyle(
                                                                 color: Theme.of(
                                                                         context)
@@ -270,7 +270,7 @@ class OrderOfCustomer extends StatelessWidget {
                                       height: 1,
                                     ),
                                     orderOfCustomerController.listOrder[index]
-                                                .lineItemsAtTime.length >
+                                                .lineItemsAtTime!.length >
                                             1
                                         ? Container(
                                             width: Get.width,
@@ -293,7 +293,7 @@ class OrderOfCustomer extends StatelessWidget {
                                       child: Row(
                                         children: [
                                           Text(
-                                            "${orderOfCustomerController.listOrder[index].lineItemsAtTime.length} sản phẩm",
+                                            "${orderOfCustomerController.listOrder[index].lineItemsAtTime!.length} sản phẩm",
                                             style: TextStyle(
                                                 color: Colors.grey[600]),
                                           ),
@@ -351,7 +351,7 @@ class OrderOfCustomer extends StatelessWidget {
                                                 style: TextStyle(
                                                     color: Theme.of(context)
                                                         .primaryTextTheme
-                                                        .headline6
+                                                        .headline6!
                                                         .color),
                                               ),
                                             ),

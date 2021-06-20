@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 class SahaTextField extends StatefulWidget {
   final String labelText;
   final bool withAsterisk;
-  final String suffix;
-  final Icon icon;
-  final TextEditingController controller;
-  final Function(String) onChanged;
-  final Function(String) onSubmitted;
-  final Function(String) validator;
-  final bool obscureText;
-  final TextInputType textInputType;
-  final String hintText;
-  final int maxLength;
+  final String? suffix;
+  final Icon? icon;
+  final TextEditingController? controller;
+  final Function(String?)? onChanged;
+  final Function(String?)? onSubmitted;
+  final Function(String?)? validator;
+  final bool? obscureText;
+  final TextInputType? textInputType;
+  final String? hintText;
+  final int? maxLength;
 
   const SahaTextField(
-      {Key key,
-        @required this.labelText,
+      {Key? key,
+        required this.labelText,
         this.withAsterisk = false,
         this.suffix,
         this.icon,
@@ -41,7 +41,7 @@ class _SahaTextFieldState extends State<SahaTextField> {
       Container(
         padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
         child: TextFormField(
-          validator: widget.validator,
+          validator: widget.validator as String? Function(String?)?,
           keyboardType:widget.textInputType,
           onChanged: widget.onChanged,
           onFieldSubmitted: widget.onSubmitted,

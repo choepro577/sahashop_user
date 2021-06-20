@@ -84,37 +84,37 @@ class Order {
     this.infoCustomer,
   });
 
-  int id;
-  int customerId;
-  String orderCode;
-  int orderStatus;
-  int paymentStatus;
-  int paymentMethodId;
-  int partnerShipperId;
-  int shipperType;
-  double totalShippingFee;
-  double totalBeforeDiscount;
-  double comboDiscountAmount;
-  double productDiscountAmount;
-  double voucherDiscountAmount;
-  double totalAfterDiscount;
-  double totalFinal;
+  int? id;
+  int? customerId;
+  String? orderCode;
+  int? orderStatus;
+  int? paymentStatus;
+  int? paymentMethodId;
+  int? partnerShipperId;
+  int? shipperType;
+  double? totalShippingFee;
+  double? totalBeforeDiscount;
+  double? comboDiscountAmount;
+  double? productDiscountAmount;
+  double? voucherDiscountAmount;
+  double? totalAfterDiscount;
+  double? totalFinal;
   dynamic customerNote;
-  DateTime createdAt;
-  DateTime updatedAt;
-  String paymentStatusCode;
-  String paymentStatusName;
-  String orderStatusCode;
-  String orderStatusName;
-  List<LineItem> lineItems;
-  String paymentMethodName;
-  String shipperName;
-  InfoAddressCustomer customerAddress;
-  List<CustomerUsedDiscount> customerUsedDiscount;
-  List<CustomerUsedCombo> customerUsedCombos;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? paymentStatusCode;
+  String? paymentStatusName;
+  String? orderStatusCode;
+  String? orderStatusName;
+  List<LineItem>? lineItems;
+  String? paymentMethodName;
+  String? shipperName;
+  InfoAddressCustomer? customerAddress;
+  List<CustomerUsedDiscount>? customerUsedDiscount;
+  List<CustomerUsedCombo>? customerUsedCombos;
   dynamic customerUsedVoucher;
-  List<LineItemsAtTime> lineItemsAtTime;
-  InfoCustomer infoCustomer;
+  List<LineItemsAtTime>? lineItemsAtTime;
+  InfoCustomer? infoCustomer;
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
         id: json["id"],
@@ -181,19 +181,19 @@ class Order {
         "total_after_discount": totalAfterDiscount,
         "total_final": totalFinal,
         "customer_note": customerNote,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-        "line_items": List<dynamic>.from(lineItems.map((x) => x.toJson())),
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
+        "line_items": List<dynamic>.from(lineItems!.map((x) => x.toJson())),
         "payment_method_name": paymentMethodName,
         "shipper_name": shipperName,
-        "customer_address": customerAddress.toJson(),
+        "customer_address": customerAddress!.toJson(),
         "customer_used_discount":
-            List<dynamic>.from(customerUsedDiscount.map((x) => x.toJson())),
+            List<dynamic>.from(customerUsedDiscount!.map((x) => x.toJson())),
         "customer_used_combos":
-            List<dynamic>.from(customerUsedCombos.map((x) => x.toJson())),
+            List<dynamic>.from(customerUsedCombos!.map((x) => x.toJson())),
         "customer_used_voucher": customerUsedVoucher,
         "line_items_at_time":
-            List<dynamic>.from(lineItemsAtTime.map((x) => x.toJson())),
+            List<dynamic>.from(lineItemsAtTime!.map((x) => x.toJson())),
       };
 }
 
@@ -203,8 +203,8 @@ class CustomerUsedCombo {
     this.quantity,
   });
 
-  Combo combo;
-  int quantity;
+  Combo? combo;
+  int? quantity;
 
   factory CustomerUsedCombo.fromJson(Map<String, dynamic> json) =>
       CustomerUsedCombo(
@@ -213,7 +213,7 @@ class CustomerUsedCombo {
       );
 
   Map<String, dynamic> toJson() => {
-        "combo": combo.toJson(),
+        "combo": combo!.toJson(),
         "quantity": quantity,
       };
 }
@@ -227,11 +227,11 @@ class CustomerUsedDiscount {
     this.afterDiscount,
   });
 
-  int id;
-  int quantity;
-  String name;
-  double beforePrice;
-  double afterDiscount;
+  int? id;
+  int? quantity;
+  String? name;
+  double? beforePrice;
+  double? afterDiscount;
 
   factory CustomerUsedDiscount.fromJson(Map<String, dynamic> json) =>
       CustomerUsedDiscount(
@@ -258,9 +258,9 @@ class LineItem {
     this.product,
   });
 
-  int id;
-  int quantity;
-  Product product;
+  int? id;
+  int? quantity;
+  Product? product;
 
   factory LineItem.fromJson(Map<String, dynamic> json) => LineItem(
         id: json["id"],
@@ -271,7 +271,7 @@ class LineItem {
   Map<String, dynamic> toJson() => {
         "id": id,
         "quantity": quantity,
-        "product": product.toJson(),
+        "product": product!.toJson(),
       };
 }
 
@@ -285,12 +285,12 @@ class LineItemsAtTime {
     this.afterDiscount,
   });
 
-  int id;
-  int quantity;
-  String name;
-  String imageUrl;
-  int beforePrice;
-  int afterDiscount;
+  int? id;
+  int? quantity;
+  String? name;
+  String? imageUrl;
+  int? beforePrice;
+  int? afterDiscount;
 
   factory LineItemsAtTime.fromJson(Map<String, dynamic> json) =>
       LineItemsAtTime(

@@ -63,16 +63,16 @@ class UIDataConfig {
 }
 
 class ParentConfig {
-  String name;
-  String icon;
-  List<ChildConfig> listChildConfig;
+  String? name;
+  String? icon;
+  List<ChildConfig>? listChildConfig;
 
   ParentConfig({this.name, this.listChildConfig, this.icon});
 }
 
 class ChildConfig {
-  String name;
-  Widget editWidget;
+  String? name;
+  Widget? editWidget;
 
   ChildConfig({this.name, this.editWidget});
 }

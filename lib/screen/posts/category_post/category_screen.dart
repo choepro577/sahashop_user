@@ -29,7 +29,7 @@ class CategoryPostScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Obx(() {
-                          var list = categoryController.listCategoryPost?.toList().reversed.toList();
+                          var list = categoryController.listCategoryPost.toList().reversed.toList();
                           if (list == null || list.length == 0) {
                             return SahaEmptyWidget(
                               tile: "Không có danh mục nào",
@@ -47,7 +47,7 @@ class CategoryPostScreen extends StatelessWidget {
                       ),
                       SahaButtonFullParent(
                         onPressed: () {
-                          Get.to(AddCategoryPostScreen()).then((value) {
+                          Get.to(AddCategoryPostScreen())!.then((value) {
                             if (value == "added") {
                               categoryController.getAllCategoryPost();
                             }
@@ -66,9 +66,9 @@ class CategoryPostScreen extends StatelessWidget {
 }
 
 class ItemCategoryPostWidget extends StatelessWidget {
-  final CategoryPost category;
+  final CategoryPost? category;
 
-  const ItemCategoryPostWidget({Key key, this.category}) : super(key: key);
+  const ItemCategoryPostWidget({Key? key, this.category}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -77,11 +77,11 @@ class ItemCategoryPostWidget extends StatelessWidget {
           height: 60,
           width: 60,
           fit: BoxFit.cover,
-          imageUrl: category.imageUrl ?? "",
+          imageUrl: category!.imageUrl ?? "",
           placeholder: (context, url) => new SahaLoadingWidget(size: 30,),
           errorWidget: (context, url, error) => new Icon(Icons.error),
         ),
-        title: Text(category.title ?? ""),
+        title: Text(category!.title ?? ""),
       ),
     );
   }
