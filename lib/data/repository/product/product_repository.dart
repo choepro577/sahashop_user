@@ -6,9 +6,9 @@ import 'package:sahashop_user/utils/user_info.dart';
 import '../handle_error.dart';
 
 class ProductRepository {
-  Future<Product> create(ProductRequest productRequest) async {
+  Future<Product?> create(ProductRequest productRequest) async {
     try {
-      var res = await SahaServiceManager().service.createProduct(
+      var res = await SahaServiceManager().service!.createProduct(
           UserInfo().getCurrentStoreCode(), productRequest.toJson());
       return res.data;
     } catch (err) {
@@ -16,14 +16,14 @@ class ProductRepository {
     }
   }
 
-  Future<List<Product>> getAllProduct(
-      {String search,
-      String idCategory,
-      bool descending,
-      String details,
-      String sortBy}) async {
+  Future<List<Product>?> getAllProduct(
+      {String? search,
+      String? idCategory,
+      bool? descending,
+      String? details,
+      String? sortBy}) async {
     try {
-      var res = await SahaServiceManager().service.getAllProduct(
+      var res = await SahaServiceManager().service!.getAllProduct(
           UserInfo().getCurrentStoreCode(),
           search ?? "",
           idCategory ?? "",
@@ -31,9 +31,9 @@ class ProductRepository {
           details ?? "",
           sortBy ?? "");
 
-      print(res.data.data);
+      print(res.data!.data);
 
-      return res.data.data;
+      return res.data!.data;
     } catch (err) {
       handleError(err);
     }

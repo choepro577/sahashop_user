@@ -6,16 +6,16 @@ import 'package:sahashop_user/controller/config_controller.dart';
 
 class NavigationController extends GetxController {
   var selectedIndexBottomBar = 0.obs;
-  ConfigController configController;
+  late ConfigController configController;
   List<Widget> navigationHome = [];
 
   NavigationController() {
     configController = Get.find();
-    if (configController.configApp?.homePageType != null &&
-        configController.configApp.homePageType <
+    if (configController.configApp.homePageType != null &&
+        configController.configApp.homePageType! <
             LIST_WIDGET_HOME_SCREEN.length) {
       navigationHome = [
-        LIST_WIDGET_HOME_SCREEN[configController.configApp.homePageType],
+        LIST_WIDGET_HOME_SCREEN[configController.configApp.homePageType!],
         ProfileScreen(),
       ];
     } else {

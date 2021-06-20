@@ -17,9 +17,9 @@ import 'package:sahashop_user/model/product.dart';
 import 'distribute_select_controller.dart';
 
 class DistributeSelect extends StatefulWidget {
-  final Function onData;
+  final Function? onData;
 
-  const DistributeSelect({Key key, this.onData}) : super(key: key);
+  const DistributeSelect({Key? key, this.onData}) : super(key: key);
 
   @override
   _DistributeSelectState createState() => _DistributeSelectState();
@@ -34,7 +34,7 @@ class _DistributeSelectState extends State<DistributeSelect> {
       onWillPop: () async {
         var valid = distributeSelectController.checkValidParam();
         if (valid) {
-          widget.onData(distributeSelectController.getFinalDistribute());
+          widget.onData!(distributeSelectController.getFinalDistribute());
         }
         return distributeSelectController.checkValidParam();
       },
@@ -120,7 +120,7 @@ class _DistributeSelectState extends State<DistributeSelect> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  distributes?.name,
+                  distributes.name!,
                   style: TextStyle(fontWeight: FontWeight.w600),
                 ),
               ),
@@ -135,7 +135,7 @@ class _DistributeSelectState extends State<DistributeSelect> {
                   child: Transform.scale(
                     scale: 0.5,
                     child: new CupertinoSwitch(
-                      value: distributes.boolHasImage,
+                      value: distributes.boolHasImage!,
                       onChanged: (bool value1) {
                         distributeSelectController.toggleHasImage(
                             distributeSelectController.listDistribute
@@ -170,7 +170,7 @@ class _DistributeSelectState extends State<DistributeSelect> {
                   child: Row(
                     children: buildListDistributes(
                       distribute: distributes,
-                      list: distributes.elementDistributes,
+                      list: distributes.elementDistributes!,
                       onRemove: (distribute) {
                         distributeSelectController.removeElementDistribute(
                             distributeSelectController.listDistribute
@@ -206,10 +206,10 @@ class _DistributeSelectState extends State<DistributeSelect> {
   }
 
   List<Widget> buildListDistributes(
-      {List<ElementDistributesRequest> list,
-      Function onRemove,
-      DistributesRequest distribute,
-      Function onAdd}) {
+      {required List<ElementDistributesRequest?> list,
+      Function? onRemove,
+      DistributesRequest? distribute,
+      Function? onAdd}) {
     var rtList = list
         .map((e) => buildItemDistribute(
             distribute: distribute, elementDistribute: e, onRemove: onRemove))
@@ -220,13 +220,13 @@ class _DistributeSelectState extends State<DistributeSelect> {
   }
 
   Widget buildItemDistribute(
-      {ElementDistributesRequest elementDistribute,
-      Function onRemove,
-      DistributesRequest distribute,
-      Function onAdd,
+      {ElementDistributesRequest? elementDistribute,
+      Function? onRemove,
+      DistributesRequest? distribute,
+      Function? onAdd,
       bool isAdd = false}) {
     return InkWell(
-      onTap: isAdd ? onAdd : null,
+      onTap: isAdd ? onAdd as void Function()? : null,
       child: Container(
         margin: EdgeInsets.only(right: 8, top: 8),
         padding: EdgeInsets.all(8),
@@ -237,7 +237,7 @@ class _DistributeSelectState extends State<DistributeSelect> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             !isAdd &&
-                    distribute.boolHasImage != null &&
+                    distribute!.boolHasImage != null &&
                     distribute.boolHasImage == true
                 ? Padding(
                     padding: const EdgeInsets.only(bottom: 8),
@@ -254,10 +254,10 @@ class _DistributeSelectState extends State<DistributeSelect> {
                           child: Container(
                             height: 60,
                             width: 60,
-                            child: elementDistribute.imageUrl != null
+                            child: elementDistribute!.imageUrl != null
                                 ? CachedNetworkImage(
                               fit: BoxFit. cover,
-                                    imageUrl: elementDistribute?.imageUrl,
+                                    imageUrl: elementDistribute.imageUrl!,
                                     placeholder: (context, url) =>
                                         Center(child: SahaLoadingWidget()),
                                     errorWidget: (context, url, error) =>
@@ -278,14 +278,14 @@ class _DistributeSelectState extends State<DistributeSelect> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(isAdd ? "Thêm" : elementDistribute.name ?? ""),
+                  Text(isAdd ? "Thêm" : elementDistribute!.name ?? ""),
                   InkWell(
                       child: Icon(
                         isAdd ? Icons.add : Icons.clear,
                         size: 15,
                       ),
                       onTap: () {
-                        isAdd ? onAdd() : onRemove(elementDistribute);
+                        isAdd ? onAdd!() : onRemove!(elementDistribute);
                       })
                 ],
               ),
@@ -297,7 +297,7 @@ class _DistributeSelectState extends State<DistributeSelect> {
   }
 
   List<DropdownMenuItem> buildDropdownTestItems(List _testList) {
-    List<DropdownMenuItem> items = List();
+    List<DropdownMenuItem> items = [];
     for (var i in _testList) {
       items.add(
         DropdownMenuItem(
@@ -317,10 +317,10 @@ class _DistributeSelectState extends State<DistributeSelect> {
   }
 
   Future inputDialog(
-      {bool isElementDistribute = false, String initValue}) async {
+      {bool isElementDistribute = false, String? initValue}) async {
     String teamName = '';
     return showDialog(
-      context: Get.context,
+      context: Get.context!,
       barrierDismissible:
           false, // dialog is dismissible with a tap on the barrier
       builder: (BuildContext context) {

@@ -13,8 +13,8 @@ import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
 
 class UpdateMyProgram extends StatefulWidget {
-  DiscountProductsList programDiscount;
-  bool onlyWatch;
+  DiscountProductsList? programDiscount;
+  bool? onlyWatch;
 
   UpdateMyProgram({this.programDiscount, this.onlyWatch});
 
@@ -24,10 +24,10 @@ class UpdateMyProgram extends StatefulWidget {
 
 class _UpdateMyProgramState extends State<UpdateMyProgram> {
   final _formKey = GlobalKey<FormState>();
-  DateTime dateStart;
-  DateTime timeStart;
-  DateTime dateEnd;
-  DateTime timeEnd;
+  late DateTime dateStart;
+  late DateTime timeStart;
+  late DateTime dateEnd;
+  late DateTime timeEnd;
   UpdateProductToDiscountController updateProductToDiscountController =
       Get.put(UpdateProductToDiscountController());
   MyProgramController myProgramController = Get.find();
@@ -42,16 +42,16 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
   void initState() {
     super.initState();
     updateProductToDiscountController.listSelectedProduct.value
-        .addAll(widget.programDiscount.products);
+        .addAll(widget.programDiscount!.products!);
     updateProductToDiscountController.listProductHasInDiscount.value
-        .addAll(widget.programDiscount.products);
-    dateStart = widget.programDiscount.startTime ?? DateTime.now();
-    timeStart = widget.programDiscount.startTime ?? DateTime.now();
-    dateEnd = widget.programDiscount.endTime ?? DateTime.now();
-    timeEnd = widget.programDiscount.endTime ?? DateTime.now();
-    nameProgramEditingController.text = widget.programDiscount.name;
-    discountEditingController.text = widget.programDiscount.value.toString();
-    quantityEditingController.text = widget.programDiscount.amount.toString();
+        .addAll(widget.programDiscount!.products!);
+    dateStart = widget.programDiscount!.startTime ?? DateTime.now();
+    timeStart = widget.programDiscount!.startTime ?? DateTime.now();
+    dateEnd = widget.programDiscount!.endTime ?? DateTime.now();
+    timeEnd = widget.programDiscount!.endTime ?? DateTime.now();
+    nameProgramEditingController.text = widget.programDiscount!.name!;
+    discountEditingController.text = widget.programDiscount!.value.toString();
+    quantityEditingController.text = widget.programDiscount!.amount.toString();
   }
 
   @override
@@ -63,7 +63,7 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
         FocusScopeNode currentFocus = FocusScope.of(context);
         if (!currentFocus.hasPrimaryFocus &&
             currentFocus.focusedChild != null) {
-          FocusManager.instance.primaryFocus.unfocus();
+          FocusManager.instance.primaryFocus!.unfocus();
         }
       },
       child: Scaffold(
@@ -97,7 +97,7 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
                         child: TextFormField(
                           controller: nameProgramEditingController,
                           validator: (value) {
-                            if (value.length < 1) {
+                            if (value!.length < 1) {
                               return 'Chưa nhập tên chương trình';
                             }
                             return null;
@@ -311,7 +311,7 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
                           controller: discountEditingController,
                           keyboardType: TextInputType.number,
                           validator: (value) {
-                            if (value.length < 1) {
+                            if (value!.length < 1) {
                               return 'Chưa nhập % giảm giá';
                             } else {
                               var myInt = int.parse(value);
@@ -451,15 +451,15 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
                                               updateProductToDiscountController
                                                           .listSelectedProduct
                                                           .value[index]
-                                                          .images
+                                                          .images!
                                                           .length ==
                                                       0
                                                   ? ""
                                                   : updateProductToDiscountController
                                                       .listSelectedProduct
                                                       .value[index]
-                                                      .images[0]
-                                                      .imageUrl,
+                                                      .images![0]
+                                                      .imageUrl!,
                                           errorWidget: (context, url, error) =>
                                               Container(
                                             height: 100,
@@ -536,16 +536,16 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
                             text: "Lưu",
                             onPressed: () {
                               print(
-                                widget.programDiscount.id,
+                                widget.programDiscount!.id,
                               );
-                              if (_formKey.currentState.validate()) {
-                                _formKey.currentState.save();
+                              if (_formKey.currentState!.validate()) {
+                                _formKey.currentState!.save();
                                 KeyboardUtil.hideKeyboard(context);
                                 updateProductToDiscountController
                                     .listSelectedProductToString();
                                 updateProductToDiscountController
                                     .updateDiscount(
-                                        widget.programDiscount.id,
+                                        widget.programDiscount!.id,
                                         false,
                                         nameProgramEditingController.text,
                                         "",

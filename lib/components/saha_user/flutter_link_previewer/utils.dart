@@ -7,7 +7,7 @@ import 'package:html/parser.dart' as parser show parse;
 import 'package:http/http.dart' as http show get;
 import 'types.dart';
 
-String _getMetaContent(Document document, String propertyValue) {
+String? _getMetaContent(Document document, String propertyValue) {
   final meta = document.getElementsByTagName('meta');
   final element = meta.firstWhere(
     (e) => e.attributes['property'] == propertyValue,
@@ -28,10 +28,10 @@ bool _hasUTF8Charset(Document document) {
     orElse: () => emptyElement,
   );
   if (element == emptyElement) return true;
-  return element.attributes['charset'].toLowerCase() == 'utf-8';
+  return element.attributes['charset']!.toLowerCase() == 'utf-8';
 }
 
-String _getTitle(Document document) {
+String? _getTitle(Document document) {
   final titleElements = document.getElementsByTagName('title');
   if (titleElements.isNotEmpty) return titleElements.first.text;
 
@@ -40,7 +40,7 @@ String _getTitle(Document document) {
       _getMetaContent(document, 'og:site_name');
 }
 
-String _getDescription(Document document) {
+String? _getDescription(Document document) {
   return _getMetaContent(document, 'og:description') ??
       _getMetaContent(document, 'description') ??
       _getMetaContent(document, 'twitter:description');
@@ -74,7 +74,7 @@ List<String> _getImageUrls(Document document, String baseUrl) {
   });
 }
 
-String _getActualImageUrl(String baseUrl, String imageUrl) {
+String? _getActualImageUrl(String baseUrl, String? imageUrl) {
   if (imageUrl == null || imageUrl.isEmpty || imageUrl.startsWith('data')) {
     return null;
   }
@@ -100,7 +100,7 @@ Future<Size> _getImageSize(String url) {
   final stream = Image.network(url).image.resolve(ImageConfiguration.empty);
   final completer = Completer<Size>();
 
-  void onError(Object _, StackTrace __) {}
+  void onError(Object _, StackTrace? __) {}
 
   void listener(ImageInfo info, bool _) {
     if (!completer.isCompleted) {
@@ -142,10 +142,10 @@ Future<String> _getBiggestImageUrl(List<String> imageUrls) async {
 Future<PreviewData> getPreviewData(String text) async {
   const previewData = PreviewData();
 
-  String previewDataDescription;
-  PreviewDataImage previewDataImage;
-  String previewDataTitle;
-  String previewDataUrl;
+  String? previewDataDescription;
+  PreviewDataImage? previewDataImage;
+  String? previewDataTitle;
+  String? previewDataUrl;
 
   try {
     final urlRegexp = RegExp(REGEX_LINK);

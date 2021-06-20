@@ -10,7 +10,7 @@ class SahaAlert {
   }) {
     showFlash(
       duration: Duration(milliseconds: 3500),
-      context: Get.context,
+      context: Get.context!,
       builder: (_, controller) {
         return Flash(
           controller: controller,
@@ -55,7 +55,7 @@ class SahaAlert {
   }) {
     showFlash(
       duration: Duration(milliseconds: 2000),
-      context: Get.context,
+      context: Get.context!,
       builder: (_, controller) {
         return Flash(
           controller: controller,
@@ -94,7 +94,7 @@ class SahaAlert {
   }) {
     showFlash(
       duration: Duration(milliseconds: 1000),
-      context: Get.context,
+      context: Get.context!,
       builder: (_, controller) {
         return Flash(
           controller: controller,
@@ -125,11 +125,11 @@ class SahaAlert {
 
   static void showBasicsFlash(
     String message, {
-    Duration duration,
+    Duration? duration,
     flashStyle = FlashStyle.floating,
   }) {
     showFlash(
-      context: Get.context,
+      context: Get.context!,
       duration: duration,
       builder: (context, controller) {
         return Flash(
@@ -145,10 +145,10 @@ class SahaAlert {
     );
   }
 
-  static void showNotificationTopFlash(String title, String body) {
+  static void showNotificationTopFlash(String? title, String? body) {
     showFlash(
       duration: Duration(milliseconds: 3500),
-      context: Get.context,
+      context: Get.context!,
       builder: (_, controller) {
         return Flash(
           controller: controller,
@@ -184,7 +184,7 @@ class SahaAlert {
 
   static void showTopFlash({FlashStyle style = FlashStyle.floating}) {
     showFlash(
-      context: Get.context,
+      context: Get.context!,
       duration: const Duration(seconds: 2),
       persistent: false,
       builder: (_, controller) {
@@ -215,7 +215,7 @@ class SahaAlert {
   static void showBottomFlash(
       {bool persistent = true, EdgeInsets margin = EdgeInsets.zero}) {
     showFlash(
-      context: Get.context,
+      context: Get.context!,
       persistent: persistent,
       builder: (_, controller) {
         return Flash(
@@ -264,11 +264,11 @@ class SahaAlert {
 
   static void showInputFlash({
     bool persistent = true,
-    WillPopCallback onWillPop,
+    WillPopCallback? onWillPop,
   }) {
     var editingController = TextEditingController();
     showFlash(
-      context: Get.context,
+      context: Get.context!,
       persistent: persistent,
       onWillPop: onWillPop,
       builder: (_, controller) {
@@ -311,12 +311,12 @@ class SahaAlert {
   }
 
   static void showCenterFlash({
-    FlashPosition position,
-    FlashStyle style,
-    Alignment alignment,
+    FlashPosition? position,
+    FlashStyle? style,
+    Alignment? alignment,
   }) {
     showFlash(
-      context: Get.context,
+      context: Get.context!,
       duration: Duration(seconds: 5),
       builder: (_, controller) {
         return Flash(
@@ -349,7 +349,7 @@ class SahaAlert {
 
   static void _showMessage(String message) {
     showFlash(
-        context: Get.context,
+        context: Get.context!,
         duration: Duration(seconds: 3),
         builder: (_, controller) {
           return Flash(

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 OverlayEntry createOverlayEntry(BuildContext context) {
-  RenderBox renderBox = context.findRenderObject();
+  RenderBox renderBox = context.findRenderObject() as RenderBox;
   var size = renderBox.size;
   var offset = renderBox.localToGlobal(Offset.zero);
 
@@ -18,7 +18,7 @@ OverlayEntry createOverlayEntry(BuildContext context) {
               radius: 40,
               backgroundColor: Colors.red,
               child: IconButton(
-                icon: Icon(Icons.exit_to_app),
+                icon: Icon(Icons.exit_to_app), onPressed: () {  },
               ),
             ),
           )));

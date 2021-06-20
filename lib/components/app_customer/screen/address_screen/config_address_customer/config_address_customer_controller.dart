@@ -7,7 +7,7 @@ import 'package:sahashop_user/model/info_address_customer.dart';
 import 'package:sahashop_user/model/location_address.dart';
 
 class ConfigAddressCustomerController extends GetxController {
-  InfoAddressCustomer infoAddressCustomer;
+  InfoAddressCustomer? infoAddressCustomer;
 
   var isDefault = false.obs;
   var nameTextEditingController = TextEditingController(text: "").obs;
@@ -20,17 +20,17 @@ class ConfigAddressCustomerController extends GetxController {
   var isDeletingAddressStore = false.obs;
 
   ConfigAddressCustomerController({this.infoAddressCustomer}) {
-    nameTextEditingController.value.text = infoAddressCustomer.name ?? " ";
-    phoneTextEditingController.value.text = infoAddressCustomer.phone ?? " ";
+    nameTextEditingController.value.text = infoAddressCustomer!.name ?? " ";
+    phoneTextEditingController.value.text = infoAddressCustomer!.phone ?? " ";
     addressDetailTextEditingController.value.text =
-        infoAddressCustomer.addressDetail ?? " ";
-    isDefault.value = infoAddressCustomer.isDefault;
-    locationProvince.value.name = infoAddressCustomer.provinceName;
-    locationDistrict.value.name = infoAddressCustomer.districtName;
-    locationWard.value.name = infoAddressCustomer.wardsName;
-    locationProvince.value.id = infoAddressCustomer.province;
-    locationDistrict.value.id = infoAddressCustomer.district;
-    locationWard.value.id = infoAddressCustomer.wards;
+        infoAddressCustomer!.addressDetail ?? " ";
+    isDefault.value = infoAddressCustomer!.isDefault!;
+    locationProvince.value.name = infoAddressCustomer!.provinceName;
+    locationDistrict.value.name = infoAddressCustomer!.districtName;
+    locationWard.value.name = infoAddressCustomer!.wardsName;
+    locationProvince.value.id = infoAddressCustomer!.province;
+    locationDistrict.value.id = infoAddressCustomer!.district;
+    locationWard.value.id = infoAddressCustomer!.wards;
   }
 
   Future<void> updateAddressCustomer() async {
@@ -38,7 +38,7 @@ class ConfigAddressCustomerController extends GetxController {
     try {
       var res = await CustomerRepositoryManager.addressRepository
           .updateAddressCustomer(
-              infoAddressCustomer.id,
+              infoAddressCustomer!.id,
               AddressCustomerRequest(
                 name: nameTextEditingController.value.text,
                 addressDetail: addressDetailTextEditingController.value.text,
@@ -62,7 +62,7 @@ class ConfigAddressCustomerController extends GetxController {
     isDeletingAddressStore.value = true;
     try {
       var res = await CustomerRepositoryManager.addressRepository
-          .deleteAddressCustomer(infoAddressCustomer.id);
+          .deleteAddressCustomer(infoAddressCustomer!.id);
       Get.back();
       SahaAlert.showSuccess(message: "Lưu thành công");
     } catch (err) {

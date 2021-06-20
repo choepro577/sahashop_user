@@ -33,8 +33,8 @@ class OrderManageController extends GetxController {
       if (!isEndPageVoucher) {
         var res = await RepositoryManager.orderRepository
             .getAllOrder(pageLoadMore, "", "", "", "", "", "", "");
-        listOrder.addAll(res.data.data);
-        if (res.data.nextPageUrl != null) {
+        listOrder.addAll(res!.data!.data!);
+        if (res.data!.nextPageUrl != null) {
           pageLoadMore++;
           isEndPageVoucher = false;
         } else {

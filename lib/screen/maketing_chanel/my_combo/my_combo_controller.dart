@@ -22,11 +22,11 @@ class MyComboController extends GetxController {
     try {
       var res = await RepositoryManager.marketingChanel.getAllCombo();
 
-      res.data.forEach((element) {
-        if (element.startTime.isAfter(timeNow)) {
+      res!.data!.forEach((element) {
+        if (element.startTime!.isAfter(timeNow)) {
           listComboIsComing.value.add(element);
         } else {
-          if (element.endTime.isAfter(timeNow)) {
+          if (element.endTime!.isAfter(timeNow)) {
             listComboIsRunning.value.add(element);
           }
           // else {
@@ -65,7 +65,7 @@ class MyComboController extends GetxController {
           .getEndComboFromPage(pageLoadMore);
 
       if (!isEndPageCombo) {
-        res.data.data.forEach((element) {
+        res!.data!.data!.forEach((element) {
           listComboIsEnd.value.add(element);
         });
       } else {
@@ -74,7 +74,7 @@ class MyComboController extends GetxController {
 
       listAll.value[2] = listComboIsEnd.value;
       listAllSaveStateBefore = listAll;
-      if (res.data.nextPageUrl != null) {
+      if (res.data!.nextPageUrl != null) {
         pageLoadMore++;
         isEndPageCombo = false;
       } else {
@@ -85,7 +85,7 @@ class MyComboController extends GetxController {
     }
   }
 
-  Future<void> endCombo(int idCombo) async {
+  Future<void> endCombo(int? idCombo) async {
     try {
       var data = await RepositoryManager.marketingChanel
           .updateCombo(idCombo, ComboRequest(isEnd: true));
@@ -97,7 +97,7 @@ class MyComboController extends GetxController {
   }
 
   Future<void> deleteCombo(
-    int idCombo,
+    int? idCombo,
   ) async {
     isDeletingDiscount.value = true;
     try {

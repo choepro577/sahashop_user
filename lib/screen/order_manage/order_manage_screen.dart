@@ -16,7 +16,7 @@ class OrderManageScreen extends StatefulWidget {
 
 class _OrderManageScreenState extends State<OrderManageScreen>
     with TickerProviderStateMixin {
-  TabController tabController;
+  TabController? tabController;
   OrderManageController orderManageController =
       Get.put(OrderManageController());
   @override
@@ -73,7 +73,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
       footer: CustomFooter(
         builder: (
           BuildContext context,
-          LoadStatus mode,
+          LoadStatus? mode,
         ) {
           Widget body;
           if (mode == LoadStatus.idle) {
@@ -157,11 +157,11 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                       fit: BoxFit.cover,
                                       imageUrl: orderManageController
                                                   .listOrder[index]
-                                                  .lineItemsAtTime
+                                                  .lineItemsAtTime!
                                                   .length ==
                                               0
                                           ? ""
-                                          : "${orderManageController.listOrder[index].lineItemsAtTime[0].imageUrl}",
+                                          : "${orderManageController.listOrder[index].lineItemsAtTime![0].imageUrl}",
                                       errorWidget: (context, url, error) =>
                                           ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
@@ -184,7 +184,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            "${orderManageController.listOrder[index].lineItemsAtTime[0].name}",
+                                            "${orderManageController.listOrder[index].lineItemsAtTime![0].name}",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500),
                                           ),
@@ -194,7 +194,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                                 children: [
                                                   Spacer(),
                                                   Text(
-                                                    " x ${orderManageController.listOrder[index].lineItemsAtTime[0].quantity}",
+                                                    " x ${orderManageController.listOrder[index].lineItemsAtTime![0].quantity}",
                                                     style: TextStyle(
                                                         fontSize: 13,
                                                         color:
@@ -206,7 +206,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                                 children: [
                                                   Spacer(),
                                                   Text(
-                                                    "đ${SahaStringUtils().convertToMoney(orderManageController.listOrder[index].lineItemsAtTime[0].beforePrice)}",
+                                                    "đ${SahaStringUtils().convertToMoney(orderManageController.listOrder[index].lineItemsAtTime![0].beforePrice)}",
                                                     style: TextStyle(
                                                         decoration:
                                                             TextDecoration
@@ -216,7 +216,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                                   ),
                                                   SizedBox(width: 15),
                                                   Text(
-                                                    "đ${SahaStringUtils().convertToMoney(orderManageController.listOrder[index].lineItemsAtTime[0].afterDiscount)}",
+                                                    "đ${SahaStringUtils().convertToMoney(orderManageController.listOrder[index].lineItemsAtTime![0].afterDiscount)}",
                                                     style: TextStyle(
                                                         color: Theme.of(context)
                                                             .primaryColor),
@@ -236,7 +236,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                               height: 1,
                             ),
                             orderManageController.listOrder[index]
-                                        .lineItemsAtTime.length >
+                                        .lineItemsAtTime!.length >
                                     1
                                 ? Container(
                                     width: Get.width,
@@ -259,7 +259,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                               child: Row(
                                 children: [
                                   Text(
-                                    "${orderManageController.listOrder[index].lineItemsAtTime.length} sản phẩm",
+                                    "${orderManageController.listOrder[index].lineItemsAtTime!.length} sản phẩm",
                                     style: TextStyle(color: Colors.grey[600]),
                                   ),
                                   Spacer(),
@@ -313,7 +313,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                         style: TextStyle(
                                             color: Theme.of(context)
                                                 .primaryTextTheme
-                                                .headline6
+                                                .headline6!
                                                 .color),
                                       ),
                                     ),

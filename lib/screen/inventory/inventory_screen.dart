@@ -36,13 +36,13 @@ class InventoryScreen extends StatelessWidget {
   }
 
   Widget itemList({
-    Function onPress,
-    String title,
+    Function? onPress,
+    String? title,
   }) {
     return ListTile(
       title: Text("$title"),
       onTap: () {
-        onPress();
+        onPress!();
       },
     );
   }

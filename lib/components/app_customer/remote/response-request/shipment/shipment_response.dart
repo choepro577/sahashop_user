@@ -17,11 +17,11 @@ class ShipmentCustomerResponse {
     this.msg,
   });
 
-  int code;
-  bool success;
-  Data data;
-  String msgCode;
-  String msg;
+  int? code;
+  bool? success;
+  Data? data;
+  String? msgCode;
+  String? msg;
 
   factory ShipmentCustomerResponse.fromJson(Map<String, dynamic> json) =>
       ShipmentCustomerResponse(
@@ -35,7 +35,7 @@ class ShipmentCustomerResponse {
   Map<String, dynamic> toJson() => {
         "code": code,
         "success": success,
-        "data": data.toJson(),
+        "data": data!.toJson(),
         "msg_code": msgCode,
         "msg": msg,
       };
@@ -48,7 +48,7 @@ class Data {
   });
 
   dynamic info;
-  List<ShipmentMethod> data;
+  List<ShipmentMethod>? data;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         info: json["info"],
@@ -58,6 +58,6 @@ class Data {
 
   Map<String, dynamic> toJson() => {
         "info": info,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }

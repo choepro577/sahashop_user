@@ -8,15 +8,15 @@ import 'package:sahashop_user/utils/date_utils.dart';
 
 class PostItemWidget extends StatelessWidget {
   const PostItemWidget({
-    Key key,
-    @required this.post,
+    Key? key,
+    required this.post,
     this.isLoading = false,
     this.width,
   }) : super(key: key);
 
   final Post post;
   final bool isLoading;
-  final double width;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class PostItemWidget extends StatelessWidget {
                         height: 70,
                         width: 70,
                         fit: BoxFit.cover,
-                        imageUrl: post.imageUrl == null ? "" : post.imageUrl,
+                        imageUrl: post.imageUrl == null ? "" : post.imageUrl!,
                         errorWidget: (context, url, error) =>
                             CachedNetworkImage(
                           height: 70,
@@ -82,7 +82,7 @@ class PostItemWidget extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: Text(
-                                  post.title,
+                                  post.title!,
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.black,
@@ -92,7 +92,7 @@ class PostItemWidget extends StatelessWidget {
                               ),
                               Text(
                                 SahaDateUtils()
-                                    .getDDMMYY(DateTime.parse(post.updatedAt)),
+                                    .getDDMMYY(DateTime.parse(post.updatedAt!)),
                                 style: TextStyle(
                                   fontSize: 10,
                                   color: Colors.grey,

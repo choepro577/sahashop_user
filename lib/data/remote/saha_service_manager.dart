@@ -16,14 +16,14 @@ class SahaServiceManager {
   SahaServiceManager._internal();
 
   /// Service getter
-  SahaService get service => _service;
+  SahaService? get service => _service;
 
   /// Dio client uses to perform normal requests
-  Dio dioClient;
+  Dio? dioClient;
 
   /// Dio client uses to perform upload requests
-  Dio uploadClient;
-  SahaService _service;
+  Dio? uploadClient;
+  SahaService? _service;
 
   /// Initialzation function
   static void initialize() {
@@ -39,10 +39,8 @@ class SahaServiceManager {
             connectTimeout: 10 * 1000,
             receiveTimeout: 10 * 1000,
             responseType: ResponseType.json), // seconds);
-        dioClient = Dio(options)..interceptors.add(AuthInterceptor());
-
-    uploadClient = Dio(options);
-
+        dioClient = Dio(options);
+    dioClient.interceptors.add(AuthInterceptor());
     _service = SahaService(
       dioClient,
     );

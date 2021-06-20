@@ -17,7 +17,7 @@ class LoginController extends GetxController {
     try {
       var res = await CustomerRepositoryManager.loginCustomerRepository
           .loginAccount(phone, password);
-      await CustomerInfo().setToken(res.data.token);
+      await CustomerInfo().setToken(res!.data!.token);
       isLoginSuccess.value = true;
       dataAppCustomerController.getInfoCustomer();
     } catch (err) {

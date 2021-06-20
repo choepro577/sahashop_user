@@ -5,13 +5,13 @@ import 'package:sahashop_user/components/app_customer/screen/payment_method/conf
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 
 class PaymentMethodCustomerScreen extends StatelessWidget {
-  final Function callback;
-  final int idPaymentCurrent;
+  final Function? callback;
+  final int? idPaymentCurrent;
   PaymentMethodCustomerScreen({this.callback, this.idPaymentCurrent}) {
     configPaymentCustomerController =
         ConfigPaymentCustomerController(idPaymentCurrent: idPaymentCurrent);
   }
-  ConfigPaymentCustomerController configPaymentCustomerController;
+  late ConfigPaymentCustomerController configPaymentCustomerController;
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +101,7 @@ class PaymentMethodCustomerScreen extends StatelessWidget {
                 : SahaButtonFullParent(
                     text: "Đồng ý",
                     onPressed: () {
-                      callback(
+                      callback!(
                           configPaymentCustomerController.namePaymentCurrent,
                           configPaymentCustomerController
                               .idPaymentCurrentCallBack);

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SahaEmptyWidget extends StatelessWidget {
-  final String tile;
-  final String subtitle;
+  final String? tile;
+  final String? subtitle;
 
-  const SahaEmptyWidget({Key key, this.tile, this.subtitle}) : super(key: key);
+  const SahaEmptyWidget({Key? key, this.tile, this.subtitle}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

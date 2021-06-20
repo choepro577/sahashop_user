@@ -11,13 +11,13 @@ import 'order_completed_controller.dart';
 
 // ignore: must_be_immutable
 class OrderCompletedScreen extends StatelessWidget {
-  final String orderCode;
+  final String? orderCode;
 
-  OrderCompletedController orderCompletedController;
+  late OrderCompletedController orderCompletedController;
 
   DataAppCustomerController dataAppCustomerController = Get.find();
 
-  OrderCompletedScreen({Key key, this.orderCode}) : super(key: key) {
+  OrderCompletedScreen({Key? key, this.orderCode}) : super(key: key) {
     orderCompletedController = OrderCompletedController(orderCode);
   }
 
@@ -57,7 +57,7 @@ class OrderCompletedScreen extends StatelessWidget {
                                 size: 15.0,
                                 color: Theme.of(context)
                                     .primaryTextTheme
-                                    .headline6
+                                    .headline6!
                                     .color,
                               ),
                             ),
@@ -81,17 +81,17 @@ class OrderCompletedScreen extends StatelessWidget {
                             textAlign: TextAlign.center,
                           ),
                         ),
-                        orderCompletedController.order.value.paymentMethodId ==
+                        orderCompletedController.order.value!.paymentMethodId ==
                                     0 ||
                                 orderCompletedController
-                                        .order.value.paymentMethodId ==
+                                        .order.value!.paymentMethodId ==
                                     null
                             ? Container()
                             : InkWell(
                                 onTap: () {
                                   Get.to(() => PayScreen(
                                         orderCode: orderCompletedController
-                                            .order.value.orderCode,
+                                            .order.value!.orderCode,
                                       ));
                                 },
                                 child: Container(
@@ -109,7 +109,7 @@ class OrderCompletedScreen extends StatelessWidget {
                                       style: TextStyle(
                                           color: Theme.of(context)
                                               .primaryTextTheme
-                                              .headline6
+                                              .headline6!
                                               .color,
                                           fontWeight: FontWeight.w500),
                                     ),
@@ -185,16 +185,16 @@ class OrderCompletedScreen extends StatelessWidget {
                                       .isLoadingPayment.value ==
                                   true
                               ? Container()
-                              : DropdownButton<Map<int, String>>(
+                              : DropdownButton<Map<int?, String?>>(
                                   focusColor: Colors.white,
                                   value: orderCompletedController.paymentMethod,
                                   //elevation: 5,
                                   style: TextStyle(color: Colors.white),
                                   items: orderCompletedController
                                       .listPaymentMethod
-                                      .map<DropdownMenuItem<Map<int, String>>>(
-                                          (Map<int, String> value) {
-                                    return DropdownMenuItem<Map<int, String>>(
+                                      .map<DropdownMenuItem<Map<int?, String?>>>(
+                                          (Map<int?, String?> value) {
+                                    return DropdownMenuItem<Map<int?, String?>>(
                                       value: value,
                                       child: Text(
                                         "${value.values.first}",
@@ -204,17 +204,17 @@ class OrderCompletedScreen extends StatelessWidget {
                                     );
                                   }).toList(),
                                   hint: Text(
-                                    "${orderCompletedController.order?.value?.paymentMethodName}",
+                                    "${orderCompletedController.order.value?.paymentMethodName}",
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500),
                                   ),
-                                  onChanged: (Map<int, String> value) {
+                                  onChanged: (Map<int?, String?>? value) {
                                     orderCompletedController.paymentMethod =
                                         value;
                                     orderCompletedController
-                                        .changPaymentMethod(value.keys.first);
+                                        .changPaymentMethod(value!.keys.first);
                                   },
                                 ),
                         ),
@@ -258,7 +258,7 @@ class OrderCompletedScreen extends StatelessWidget {
                             color: true
                                 ? Theme.of(context)
                                     .primaryTextTheme
-                                    .headline6
+                                    .headline6!
                                     .color
                                 : Color(0xFFDBDEE4),
                           ),

@@ -13,7 +13,7 @@ class FontConfig extends StatefulWidget {
 
 class _FontConfigState extends State<FontConfig> {
 
-  String fontTitle;
+  String? fontTitle;
 
   ConfigController controller = Get.find();
 

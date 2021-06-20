@@ -42,7 +42,7 @@ class CreateMyVoucherController extends GetxController {
   var isChoosedTypeVoucherDiscount = true.obs;
   var isCheckMinimumOrderDiscount = true.obs;
 
-  var discountType = DiscountType.k1.obs;
+  Rx<DiscountType?> discountType = DiscountType.k1.obs;
   var discountTypeRequest = 0.obs;
 
   void onChangeDateStart(DateTime date) {
@@ -93,7 +93,7 @@ class CreateMyVoucherController extends GetxController {
     }
   }
 
-  void onChangeRatio(DiscountType v) {
+  void onChangeRatio(DiscountType? v) {
     if (discountType.value == DiscountType.k1) {
       pricePermanentEditingController.text = "";
     } else {
@@ -108,7 +108,7 @@ class CreateMyVoucherController extends GetxController {
     }
   }
 
-  Future<void> createVoucher(int voucherType) async {
+  Future<void> createVoucher(int? voucherType) async {
     isLoadingCreate.value = true;
     try {
       var res = await RepositoryManager.marketingChanel.createVoucher(

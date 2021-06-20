@@ -10,11 +10,11 @@ import 'package:path/path.dart';
 
 class SelectCategoryPostImage extends StatelessWidget {
   SelectImageController selectImageController = new SelectImageController();
-  final Function onChange;
+  final Function? onChange;
 
-  final File fileSelected;
+  final File? fileSelected;
 
-  SelectCategoryPostImage({Key key, this.onChange, this.fileSelected})
+  SelectCategoryPostImage({Key? key, this.onChange, this.fileSelected})
       : super(key: key);
 
   @override
@@ -36,7 +36,7 @@ class SelectCategoryPostImage extends StatelessWidget {
       child: InkWell(
         onTap: () {
           selectImageController.getImage((file) {
-            onChange(file);
+            onChange!(file);
           });
         },
         child: Container(
@@ -82,7 +82,7 @@ class SelectCategoryPostImage extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     selectImageController.removeImage();
-                    onChange(null);
+                    onChange!(null);
                   },
                   child: Container(
                     height: 17,
@@ -126,9 +126,9 @@ class SelectImageController extends GetxController {
       final dir = await path_provider.getTemporaryDirectory();
       final targetPath = dir.absolute.path + basename(pickedFile.path);
 
-      var result = await FlutterImageCompress.compressAndGetFile(
+      var result = await (FlutterImageCompress.compressAndGetFile(
           file.absolute.path, targetPath,
-          quality: 60, minHeight: 512, minWidth: 512);
+          quality: 60, minHeight: 512, minWidth: 512) as Future<File>);
 
       onPick(File(result.path));
     } else {
@@ -137,6 +137,6 @@ class SelectImageController extends GetxController {
   }
 
   void removeImage() {
-    pathImage.value = null;
+    pathImage(null);
   }
 }

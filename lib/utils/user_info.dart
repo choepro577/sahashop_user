@@ -4,9 +4,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserInfo {
   static final UserInfo _singleton = UserInfo._internal();
 
-  String _token;
-  String _currentStoreCode;
-  int _currentIdUser;
+  String? _token;
+  String? _currentStoreCode;
+  int? _currentIdUser;
 
   factory UserInfo() {
     return _singleton;
@@ -14,7 +14,7 @@ class UserInfo {
 
   UserInfo._internal();
 
-  Future<void> setCurrentStoreCode(String code) async {
+  Future<void> setCurrentStoreCode(String? code) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (code == null) {
       await prefs.remove(CURRENT_STORE_CODE);
@@ -24,7 +24,7 @@ class UserInfo {
     this._currentStoreCode = code;
   }
 
-  Future<void> setCurrentIdUser(int idUser) async {
+  Future<void> setCurrentIdUser(int? idUser) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (idUser == null) {
       await prefs.remove(CURRENT_USER_ID);
@@ -34,7 +34,7 @@ class UserInfo {
     this._currentIdUser = idUser;
   }
 
-  Future<void> setToken(String token) async {
+  Future<void> setToken(String? token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (token == null) {
       await prefs.remove(USER_TOKEN);
@@ -44,15 +44,15 @@ class UserInfo {
     this._token = token;
   }
 
-  String getToken() {
+  String? getToken() {
     return _token;
   }
 
-  String getCurrentStoreCode() {
+  String? getCurrentStoreCode() {
     return _currentStoreCode;
   }
 
-  int getCurrentIdUser() {
+  int? getCurrentIdUser() {
     return _currentIdUser;
   }
 
@@ -66,7 +66,7 @@ class UserInfo {
 
   Future<void> loadDataUserSaved() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String tokenLocal = prefs.getString(USER_TOKEN) ?? null;
+    String? tokenLocal = prefs.getString(USER_TOKEN) ?? null;
     this._token = tokenLocal;
 
     this._currentStoreCode = prefs.getString(CURRENT_STORE_CODE) ?? null;

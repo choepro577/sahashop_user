@@ -365,14 +365,14 @@ class SahaDateUtils {
     return DateFormat('HH:mm').format(dateTime);
   }
 
-  Future<TimeOfDay> selectTime(BuildContext context, TimeOfDay initTime) async {
-    final TimeOfDay picked = await showTimePicker(
+  Future<TimeOfDay?> selectTime(BuildContext context, TimeOfDay initTime) async {
+    final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: initTime,
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         return MediaQuery(
           data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-          child: child,
+          child: child!,
         );
       },
     );

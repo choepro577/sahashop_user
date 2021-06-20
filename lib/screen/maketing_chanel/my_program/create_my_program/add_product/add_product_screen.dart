@@ -84,8 +84,7 @@ class _AddProductToSaleScreenState extends State<AddProductToSaleScreen> {
               : Column(
                   children: [
                     ...List.generate(
-                      addProductToSaleController.listProduct.length ??
-                          LIST_PRODUCT_EXAMPLE.length,
+                      addProductToSaleController.listProduct.length,
                       (index) => addProductToSaleController
                                   .listIsSave.value[index] ==
                               true
@@ -107,8 +106,7 @@ class _AddProductToSaleScreenState extends State<AddProductToSaleScreen> {
                                                       .listCheckSelectedProduct
                                                       .value[index]
                                                       .values
-                                                      .first ??
-                                                  false,
+                                                      .first,
                                               onChanged: (v) {
                                                 setState(() {
                                                   addProductToSaleController
@@ -150,15 +148,15 @@ class _AddProductToSaleScreenState extends State<AddProductToSaleScreen> {
                                                         addProductToSaleController
                                                                     .listProduct[
                                                                         index]
-                                                                    .images
+                                                                    .images!
                                                                     .length ==
                                                                 0
                                                             ? ""
                                                             : addProductToSaleController
                                                                 .listProduct[
                                                                     index]
-                                                                .images[0]
-                                                                .imageUrl,
+                                                                .images![0]
+                                                                .imageUrl!,
                                                     errorWidget:
                                                         (context, url, error) =>
                                                             ClipRRect(
@@ -201,8 +199,7 @@ class _AddProductToSaleScreenState extends State<AddProductToSaleScreen> {
                                                   height: 10,
                                                 ),
                                                 Text(
-                                                    "${addProductToSaleController.listProduct[index].price} đ" ??
-                                                        "Chưa đặt giá"),
+                                                    "${addProductToSaleController.listProduct[index].price} đ"),
                                               ],
                                             ),
                                           )
@@ -230,7 +227,7 @@ class _AddProductToSaleScreenState extends State<AddProductToSaleScreen> {
                                             Shadow(
                                                 offset: Offset(0, 0),
                                                 blurRadius: 10.0,
-                                                color: Colors.grey[200]),
+                                                color: Colors.grey[200]!),
                                           ],
                                         ),
                                       ),
@@ -251,8 +248,7 @@ class _AddProductToSaleScreenState extends State<AddProductToSaleScreen> {
                                               .listCheckSelectedProduct
                                               .value[index]
                                               .values
-                                              .first ??
-                                          false,
+                                              .first,
                                       onChanged: (v) {
                                         setState(() {
                                           addProductToSaleController
@@ -296,14 +292,14 @@ class _AddProductToSaleScreenState extends State<AddProductToSaleScreen> {
                                             fit: BoxFit.cover,
                                             imageUrl: addProductToSaleController
                                                         .listProduct[index]
-                                                        .images
+                                                        .images!
                                                         .length ==
                                                     0
                                                 ? ""
                                                 : addProductToSaleController
                                                     .listProduct[index]
-                                                    .images[0]
-                                                    .imageUrl,
+                                                    .images![0]
+                                                    .imageUrl!,
                                             errorWidget:
                                                 (context, url, error) =>
                                                     ClipRRect(
@@ -343,8 +339,7 @@ class _AddProductToSaleScreenState extends State<AddProductToSaleScreen> {
                                           height: 10,
                                         ),
                                         Text(
-                                            "${addProductToSaleController.listProduct[index].price} đ" ??
-                                                "Chưa đặt giá"),
+                                            "${addProductToSaleController.listProduct[index].price} đ"),
                                       ],
                                     ),
                                   )

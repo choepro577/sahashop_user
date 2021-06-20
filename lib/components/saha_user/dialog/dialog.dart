@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 
 class SahaDialogApp {
 
-  static void showDialogOneButton({String mess, bool barrierDismissible = true,
-  Function onClose
+  static void showDialogOneButton({String? mess, bool barrierDismissible = true,
+  Function? onClose
   }) {
     // flutter defined function
     showDialog(
       barrierDismissible: barrierDismissible,
-      context: Get.context,
+      context: Get.context!,
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
@@ -21,7 +21,7 @@ class SahaDialogApp {
               child: new Text("Close"),
               onPressed: () {
                 Navigator.of(context).pop();
-                onClose();
+                onClose!();
               },
             ),
           ],
@@ -30,13 +30,13 @@ class SahaDialogApp {
     );
   }
 
-  static void showDialogNotificationOneButton({String mess, bool barrierDismissible = true,
-    Function onClose
+  static void showDialogNotificationOneButton({String? mess, bool barrierDismissible = true,
+    Function? onClose
   }) {
     // flutter defined function
     showDialog(
       barrierDismissible: barrierDismissible,
-      context: Get.context,
+      context: Get.context!,
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
@@ -48,7 +48,7 @@ class SahaDialogApp {
               child: new Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
-                onClose();
+                onClose!();
               },
             ),
           ],
@@ -57,7 +57,7 @@ class SahaDialogApp {
     );
   }
 
-  static void showDialogError({BuildContext context, String errorMess}) {
+  static void showDialogError({required BuildContext context, String? errorMess}) {
     // flutter defined function
     showDialog(
       context: context,
@@ -65,7 +65,7 @@ class SahaDialogApp {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Có lỗi xảy ra"),
-          content: new Text(errorMess),
+          content: new Text(errorMess!),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
@@ -80,13 +80,13 @@ class SahaDialogApp {
     );
   }
 
-  static void showDialogYesNo({String mess, bool barrierDismissible = true,
-    Function onClose, Function onOK
+  static void showDialogYesNo({String? mess, bool barrierDismissible = true,
+    Function? onClose, Function? onOK
   }) {
     // flutter defined function
     showDialog(
       barrierDismissible: barrierDismissible,
-      context: Get.context,
+      context: Get.context!,
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
@@ -98,14 +98,14 @@ class SahaDialogApp {
               child: new Text("Hủy"),
               onPressed: () {
                 Navigator.of(context).pop();
-                onClose();
+                onClose!();
               },
             ),
             new TextButton(
               child: new Text("Đồng ý"),
               onPressed: () {
                 Navigator.of(context).pop();
-                onOK();
+                onOK!();
               },
             ),
           ],

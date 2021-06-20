@@ -8,12 +8,12 @@ class OrderRequest {
     this.customerNote,
   });
 
-  int paymentMethodId;
-  int partnerShipperId;
-  int shipperType;
-  int totalShippingFee;
-  int customerAddressId;
-  String customerNote;
+  int? paymentMethodId;
+  int? partnerShipperId;
+  int? shipperType;
+  int? totalShippingFee;
+  int? customerAddressId;
+  String? customerNote;
 
   Map<String, dynamic> toJson() => {
         "payment_method_id": paymentMethodId,

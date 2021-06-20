@@ -13,17 +13,17 @@ import '../../../../../components/saha_user/toast/saha_alert.dart';
 import '../../../../../const/constant.dart';
 
 class SelectCarouselImagesController extends GetxController {
-  Function onUpload;
-  Function doneUpload;
+  Function? onUpload;
+  Function? doneUpload;
 
-  var dataImages = <ImageData>[].obs;
+  RxList<ImageData?> dataImages = <ImageData>[].obs;
 
   void init() {
     dataImages([]);
     ConfigController configController = Get.find();
 
-    if (configController.configApp?.carouselAppImages != null) {
-      final listCarousel = configController.configApp?.carouselAppImages;
+    if (configController.configApp.carouselAppImages != null) {
+      final listCarousel = configController.configApp.carouselAppImages!;
 
       dataImages(listCarousel
           .map((e) => ImageData(
@@ -43,7 +43,7 @@ class SelectCarouselImagesController extends GetxController {
     var banners = <BannerItem>[];
 
     dataImages.forEach((imageData) {
-      if (imageData.linkImage != null) {
+      if (imageData!.linkImage != null) {
         banners.add(BannerItem(imageUrl: imageData.linkImage, title: ""));
       }
     });
@@ -52,7 +52,7 @@ class SelectCarouselImagesController extends GetxController {
     configController.createAppTheme();
   }
 
-  void updateImage({int index, ImageData imageData}) {
+  void updateImage({required int index, ImageData? imageData}) {
     var indexWithLength = index - 1;
     var newList = dataImages.toList();
 
@@ -61,7 +61,7 @@ class SelectCarouselImagesController extends GetxController {
     dataImages(newList);
   }
 
-  Future<String> uploadImage(File file) async {
+  Future<String?> uploadImage(File file) async {
     try {
       var fileUpImageCompress =
           await ImageUtils.getImageCompress(file, quality: 80);
@@ -89,11 +89,11 @@ class SelectCarouselImagesController extends GetxController {
     }
   }
 
-  Future<String> loadAssets() async {
+  Future<String?> loadAssets() async {
     try {
       final picker = ImagePicker();
-      final pickedFile = await picker.getImage(source: ImageSource.gallery);
-      File croppedFile = await ImageCropper.cropImage(
+      final pickedFile = await (picker.getImage(source: ImageSource.gallery) as Future<PickedFile>);
+      File? croppedFile = await ImageCropper.cropImage(
           compressQuality: 100,
           sourcePath: pickedFile.path,
           aspectRatioPresets: [CropAspectRatioPreset.ratio16x9],
@@ -124,10 +124,10 @@ class SelectCarouselImagesController extends GetxController {
 }
 
 class ImageData {
-  File file;
-  String linkImage;
-  bool errorUpload;
-  bool uploading;
+  File? file;
+  String? linkImage;
+  bool? errorUpload;
+  bool? uploading;
 
   ImageData({this.file, this.linkImage, this.errorUpload, this.uploading});
 }

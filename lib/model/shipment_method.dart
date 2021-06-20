@@ -13,10 +13,10 @@ class ShipmentMethod {
     this.shipType,
   });
 
-  int partnerId;
-  int fee;
-  String name;
-  int shipType;
+  int? partnerId;
+  int? fee;
+  String? name;
+  int? shipType;
 
   factory ShipmentMethod.fromJson(Map<String, dynamic> json) => ShipmentMethod(
         partnerId: json["partner_id"],

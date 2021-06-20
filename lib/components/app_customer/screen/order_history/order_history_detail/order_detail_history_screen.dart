@@ -14,7 +14,7 @@ import 'package:sahashop_user/utils/string_utils.dart';
 
 // ignore: must_be_immutable
 class OrderHistoryDetailScreen extends StatelessWidget {
-  final Order order;
+  final Order? order;
 
   var listStatusCode = [
     WAITING_FOR_PROGRESSING,
@@ -34,7 +34,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
         Get.put(OrderHistoryDetailController(order: order));
   }
 
-  OrderHistoryDetailController orderHistoryDetailController;
+  late OrderHistoryDetailController orderHistoryDetailController;
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +56,11 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "Trạng thái đơn hàng: ${order.orderStatusName}",
+                          "Trạng thái đơn hàng: ${order!.orderStatusName}",
                           style: TextStyle(
                               color: Theme.of(context)
                                   .primaryTextTheme
-                                  .headline6
+                                  .headline6!
                                   .color),
                         ),
                         Spacer(),
@@ -71,7 +71,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                               "assets/icons/delivery_truck.svg",
                               color: Theme.of(context)
                                   .primaryTextTheme
-                                  .headline6
+                                  .headline6!
                                   .color),
                         ),
                       ],
@@ -86,11 +86,11 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "Trạng thái thanh toán: ${order.paymentStatusName}",
+                          "Trạng thái thanh toán: ${order!.paymentStatusName}",
                           style: TextStyle(
                               color: Theme.of(context)
                                   .primaryTextTheme
-                                  .headline6
+                                  .headline6!
                                   .color),
                         ),
                         Spacer(),
@@ -100,7 +100,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                               height: 28,
                               color: Theme.of(context)
                                   .primaryTextTheme
-                                  .headline6
+                                  .headline6!
                                   .color),
                         ),
                       ],
@@ -128,17 +128,17 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Đơn vị vận chuyển: ${order.shipperName}"),
+                      Text("Đơn vị vận chuyển: ${order!.shipperName}"),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                          "Kiểu : ${order.shipperType == 0 ? "Giao nhanh" : "Siêu tốc"}"),
+                          "Kiểu : ${order!.shipperType == 0 ? "Giao nhanh" : "Siêu tốc"}"),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                          "Phí giao hàng: đ${SahaStringUtils().convertToMoney(order.totalShippingFee)}"),
+                          "Phí giao hàng: đ${SahaStringUtils().convertToMoney(order!.totalShippingFee)}"),
                     ],
                   )
                 ],
@@ -178,21 +178,21 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                       Container(
                         width: Get.width * 0.7,
                         child: Text(
-                          "${order.customerAddress.name ?? "Chưa có tên"}  | ${order.customerAddress.phone ?? "Chưa có số điện thoại"}",
+                          "${order!.customerAddress!.name ?? "Chưa có tên"}  | ${order!.customerAddress!.phone ?? "Chưa có số điện thoại"}",
                           maxLines: 2,
                         ),
                       ),
                       Container(
                         width: Get.width * 0.7,
                         child: Text(
-                          "${order.customerAddress.addressDetail ?? "Chưa có địa chỉ chi tiết"}",
+                          "${order!.customerAddress!.addressDetail ?? "Chưa có địa chỉ chi tiết"}",
                           maxLines: 2,
                         ),
                       ),
                       Container(
                         width: Get.width * 0.7,
                         child: Text(
-                          "${order.customerAddress.districtName ?? "Chưa có Quận/Huyện"}, ${order.customerAddress.wardsName ?? "Chưa có Phường/Xã"}, ${order.customerAddress.provinceName ?? "Chưa có Tỉnh/Thành phố"}",
+                          "${order!.customerAddress!.districtName ?? "Chưa có Quận/Huyện"}, ${order!.customerAddress!.wardsName ?? "Chưa có Phường/Xã"}, ${order!.customerAddress!.provinceName ?? "Chưa có Tỉnh/Thành phố"}",
                           style:
                               TextStyle(color: Colors.grey[700], fontSize: 13),
                           maxLines: 2,
@@ -210,7 +210,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
             Column(
               children: [
                 ...List.generate(
-                  orderHistoryDetailController.order.lineItemsAtTime.length,
+                  orderHistoryDetailController.order!.lineItemsAtTime!.length,
                   (index) => Column(
                     children: [
                       Padding(
@@ -222,16 +222,16 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                               child: Container(
                                 decoration: BoxDecoration(
                                     border:
-                                        Border.all(color: Colors.grey[200])),
+                                        Border.all(color: Colors.grey[200]!)),
                                 child: CachedNetworkImage(
                                   width: 80,
                                   height: 80,
                                   fit: BoxFit.cover,
                                   imageUrl: orderHistoryDetailController
-                                              .order.lineItemsAtTime.length ==
+                                              .order!.lineItemsAtTime!.length ==
                                           0
                                       ? ""
-                                      : "${orderHistoryDetailController.order.lineItemsAtTime[index].imageUrl}",
+                                      : "${orderHistoryDetailController.order!.lineItemsAtTime![index].imageUrl}",
                                   errorWidget: (context, url, error) =>
                                       ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
@@ -254,7 +254,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      "${orderHistoryDetailController.order.lineItemsAtTime[index].name}",
+                                      "${orderHistoryDetailController.order!.lineItemsAtTime![index].name}",
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500),
                                     ),
@@ -264,7 +264,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                                           children: [
                                             Spacer(),
                                             Text(
-                                              " x ${orderHistoryDetailController.order.lineItemsAtTime[index].quantity}",
+                                              " x ${orderHistoryDetailController.order!.lineItemsAtTime![index].quantity}",
                                               style: TextStyle(
                                                   fontSize: 13,
                                                   color: Colors.grey[600]),
@@ -275,7 +275,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                                           children: [
                                             Spacer(),
                                             Text(
-                                              "đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order.lineItemsAtTime[index].beforePrice)}",
+                                              "đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order!.lineItemsAtTime![index].beforePrice)}",
                                               style: TextStyle(
                                                   decoration: TextDecoration
                                                       .lineThrough,
@@ -283,7 +283,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                                             ),
                                             SizedBox(width: 15),
                                             Text(
-                                              "đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order.lineItemsAtTime[index].afterDiscount)}",
+                                              "đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order!.lineItemsAtTime![index].afterDiscount)}",
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .primaryColor),
@@ -319,7 +319,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                       ),
                       Spacer(),
                       Text(
-                        "đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order.totalBeforeDiscount)}",
+                        "đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order!.totalBeforeDiscount)}",
                         style: TextStyle(color: Colors.grey[600]),
                       )
                     ],
@@ -335,7 +335,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                       ),
                       Spacer(),
                       Text(
-                        "+ đ${"Chua co" ?? SahaStringUtils().convertToMoney(orderHistoryDetailController.order.totalAfterDiscount)}",
+                        "+ đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order!.totalAfterDiscount)}",
                         style: TextStyle(color: Colors.grey[600]),
                       )
                     ],
@@ -343,7 +343,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                   SizedBox(
                     height: 5,
                   ),
-                  orderHistoryDetailController.order.productDiscountAmount == 0
+                  orderHistoryDetailController.order!.productDiscountAmount == 0
                       ? Container()
                       : Row(
                           children: [
@@ -353,7 +353,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                             ),
                             Spacer(),
                             Text(
-                              "- đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order.productDiscountAmount)}",
+                              "- đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order!.productDiscountAmount)}",
                               style: TextStyle(color: Colors.grey[600]),
                             )
                           ],
@@ -361,7 +361,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                   SizedBox(
                     height: 5,
                   ),
-                  orderHistoryDetailController.order.comboDiscountAmount == 0
+                  orderHistoryDetailController.order!.comboDiscountAmount == 0
                       ? Container()
                       : Row(
                           children: [
@@ -371,7 +371,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                             ),
                             Spacer(),
                             Text(
-                              "- đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order.comboDiscountAmount)}",
+                              "- đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order!.comboDiscountAmount)}",
                               style: TextStyle(color: Colors.grey[600]),
                             )
                           ],
@@ -379,7 +379,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                   SizedBox(
                     height: 5,
                   ),
-                  orderHistoryDetailController.order.voucherDiscountAmount == 0
+                  orderHistoryDetailController.order!.voucherDiscountAmount == 0
                       ? Container()
                       : Row(
                           children: [
@@ -389,7 +389,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                             ),
                             Spacer(),
                             Text(
-                              "- đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order.voucherDiscountAmount)}",
+                              "- đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order!.voucherDiscountAmount)}",
                               style: TextStyle(color: Colors.grey[600]),
                             )
                           ],
@@ -402,7 +402,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                       Text("Thành tiền: "),
                       Spacer(),
                       Text(
-                          "đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order.totalAfterDiscount)}")
+                          "đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order!.totalAfterDiscount)}")
                     ],
                   ),
                   SizedBox(
@@ -442,7 +442,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                       SizedBox(
                         height: 5,
                       ),
-                      Text("${order.paymentMethodName}")
+                      Text("${order!.paymentMethodName}")
                     ],
                   )
                 ],
@@ -461,7 +461,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                       children: [
                         Text("Mã đơn hàng"),
                         Spacer(),
-                        Text("${order.orderCode}"),
+                        Text("${order!.orderCode}"),
                       ],
                     ),
                     SizedBox(
@@ -475,7 +475,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                         ),
                         Spacer(),
                         Text(
-                          "${SahaDateUtils().getDDMMYY(order.createdAt)} ${SahaDateUtils().getHHMM(order.createdAt)}",
+                          "${SahaDateUtils().getDDMMYY(order!.createdAt!)} ${SahaDateUtils().getHHMM(order!.createdAt!)}",
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                       ],
@@ -498,7 +498,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                               ),
                               Spacer(),
                               Text(
-                                "${SahaDateUtils().getDDMMYY(orderHistoryDetailController.listStateOrder[index].createdAt)} ${SahaDateUtils().getHHMM(orderHistoryDetailController.listStateOrder[index].createdAt)}",
+                                "${SahaDateUtils().getDDMMYY(orderHistoryDetailController.listStateOrder[index].createdAt!)} ${SahaDateUtils().getHHMM(orderHistoryDetailController.listStateOrder[index].createdAt!)}",
                                 style: TextStyle(color: Colors.grey[600]),
                               ),
                             ],
@@ -516,7 +516,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
             Container(
               height: 40,
               decoration:
-                  BoxDecoration(border: Border.all(color: Colors.grey[500])),
+                  BoxDecoration(border: Border.all(color: Colors.grey[500]!)),
               child: Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -546,7 +546,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
               height: 8,
               color: Colors.grey[200],
             ),
-            order.orderStatusCode == WAITING_FOR_PROGRESSING
+            order!.orderStatusCode == WAITING_FOR_PROGRESSING
                 ? InkWell(
                     onTap: () {
                       ChooseReasonCancelOrder.showChooseReasonCancel(
@@ -566,7 +566,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                       margin: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           color: Colors.grey[200],
-                          border: Border.all(color: Colors.grey[500])),
+                          border: Border.all(color: Colors.grey[500]!)),
                       child: Center(child: Text("Huỷ đơn hàng")),
                     ),
                   )
@@ -592,7 +592,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                   ),
                   Spacer(),
                   Text(
-                    "đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order.totalAfterDiscount)}",
+                    "đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order!.totalAfterDiscount)}",
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: Theme.of(context).primaryColor),
@@ -609,7 +609,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.w500),
                   ),
                   Spacer(),
-                  Text("${order.orderCode}"),
+                  Text("${order!.orderCode}"),
                 ],
               ),
             ),

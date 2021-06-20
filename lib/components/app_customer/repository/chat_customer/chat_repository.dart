@@ -6,11 +6,11 @@ import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class ChatCustomerRepository {
-  Future<AllMessageCustomerResponse> getAllMessageCustomer(
+  Future<AllMessageCustomerResponse?> getAllMessageCustomer(
       int numberPage) async {
     try {
       var res = await CustomerServiceManager()
-          .service
+          .service!
           .getAllMessageCustomer(UserInfo().getCurrentStoreCode(), numberPage);
       return res;
     } catch (err) {
@@ -18,10 +18,10 @@ class ChatCustomerRepository {
     }
   }
 
-  Future<SendMessageCustomerResponse> sendMessageToUser(
+  Future<SendMessageCustomerResponse?> sendMessageToUser(
       SendMessageCustomerRequest sendMessageCustomerRequest) async {
     try {
-      var res = await CustomerServiceManager().service.sendMessageToUser(
+      var res = await CustomerServiceManager().service!.sendMessageToUser(
           UserInfo().getCurrentStoreCode(),
           sendMessageCustomerRequest.toJson());
       return res;

@@ -10,14 +10,14 @@ class BannerType1 extends StatefulWidget {
   @override
   _BannerType1State createState() => _BannerType1State();
 
-  final double height;
+  final double? height;
 
   BannerType1({this.height});
 }
 
 class _BannerType1State extends State<BannerType1> {
   int _current = 0;
-  double height;
+  double? height;
 
   DataAppCustomerController dataAppCustomerController = Get.find();
 
@@ -36,14 +36,14 @@ class _BannerType1State extends State<BannerType1> {
           : Container(
               width: Get.width,
               child: CarouselSlider(
-                items: dataAppCustomerController.homeData.banner.list
+                items: dataAppCustomerController.homeData!.banner!.list!
                     .map((item) => ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(5.0)),
                         child: Stack(
                           children: <Widget>[
                             AspectRatio(
                               aspectRatio: 16 / 9,
-                              child: Image.network(item.imageUrl,
+                              child: Image.network(item.imageUrl!,
                                   fit: BoxFit.cover),
                             ),
                             Positioned(
@@ -90,9 +90,9 @@ class _BannerType1State extends State<BannerType1> {
           : Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children:
-                  dataAppCustomerController.homeData.banner.list.map((url) {
+                  dataAppCustomerController.homeData!.banner!.list!.map((url) {
                 int index =
-                    dataAppCustomerController.homeData.banner.list.indexOf(url);
+                    dataAppCustomerController.homeData!.banner!.list!.indexOf(url);
                 return Container(
                   width: 8.0,
                   height: 8.0,

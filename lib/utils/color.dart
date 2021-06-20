@@ -11,7 +11,7 @@ class HexColor extends Color {
         hexColor = "FF" + hexColor;
       }
 
-      var a = int.tryParse(hexColor, radix: 16);
+      var a = int.tryParse(hexColor, radix: 16)!;
 
       var color = Color(a);
 

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CustomDropDownString extends StatelessWidget {
-  final String value;
-  final String hint;
-  final String errorText;
-  final List<DropdownMenuItem<String>> items;
-  final Function onChanged;
+  final String? value;
+  final String? hint;
+  final String? errorText;
+  final List<DropdownMenuItem<String>>? items;
+  final Function? onChanged;
 
   const CustomDropDownString(
-      {Key key,
+      {Key? key,
       this.value,
       this.hint,
       this.items,
@@ -31,11 +31,11 @@ class CustomDropDownString extends StatelessWidget {
             child: SizedBox(
               height: 35,
               child: DropdownButton<String>(
-                value: items.map((e) => e.value).contains(value)
+                value: items!.map((e) => e.value).contains(value)
                     ? value
-                    : items.map((e) => e.value).toList()[0],
+                    : items!.map((e) => e.value).toList()[0],
                 hint: Text(
-                  hint,
+                  hint!,
                   style: TextStyle(
 
                   ),
@@ -46,7 +46,7 @@ class CustomDropDownString extends StatelessWidget {
                 // ),
                 items: items,
                 onChanged: (item) {
-                  onChanged(item);
+                  onChanged!(item);
                 },
                 isExpanded: true,
                 underline: Container(),

@@ -16,13 +16,13 @@ class Message {
     this.product,
   });
 
-  int id;
-  int customerId;
-  String content;
-  String linkImages;
-  bool isUser;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? id;
+  int? customerId;
+  String? content;
+  String? linkImages;
+  bool? isUser;
+  DateTime? createdAt;
+  DateTime? updatedAt;
   dynamic product;
 
   factory Message.fromJson(Map<String, dynamic> json) => Message(
@@ -42,8 +42,8 @@ class Message {
         "content": content,
         "link_images": linkImages,
         "is_user": isUser,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
         "product": product,
       };
 }

@@ -13,14 +13,14 @@ class ProductController extends GetxController {
     getAllProduct();
   }
 
-  Future<void> getAllProduct() async {
+  Future<bool?> getAllProduct() async {
     loading.value = true;
     try {
      var list = await RepositoryManager.productRepository.getAllProduct(
 
      );
 
-      listProduct(list);
+      listProduct(list!);
 
       loading.value = false;
       return true;

@@ -10,7 +10,7 @@ import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'search_controller.dart';
 
 class SearchScreen extends StatefulWidget {
-  String searchText;
+  String? searchText;
 
   SearchScreen({this.searchText});
 
@@ -23,8 +23,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
   bool descending = false;
   String sortBy = "price";
-  Map<String, bool> chooseDropDownValue;
-  Map<String, String> chooseDropDownSortValue;
+  Map<String, bool>? chooseDropDownValue;
+  Map<String, String>? chooseDropDownSortValue;
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -56,7 +56,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    searchEditingController.text = widget.searchText;
+    searchEditingController.text = widget.searchText!;
     chooseDropDownValue = descendingFilter[0];
     chooseDropDownSortValue = sortFilter[0];
   }
@@ -74,7 +74,7 @@ class _SearchScreenState extends State<SearchScreen> {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryTextTheme.headline1.color,
+                  color: Theme.of(context).primaryTextTheme.headline1!.color,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: TextField(
@@ -137,7 +137,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: FilterChip(
                                     label: Text(searchController
-                                        .listCategory[index].name),
+                                        .listCategory[index].name!),
                                     selected: searchController
                                         .listCategorySelected[index]
                                         .values
@@ -506,10 +506,10 @@ class _SearchScreenState extends State<SearchScreen> {
                               ),
                             );
                           }).toList(),
-                          onChanged: (Map<String, String> value) {
+                          onChanged: (Map<String, String>? value) {
                             setState(() {
                               chooseDropDownSortValue = value;
-                              sortBy = value.values.first;
+                              sortBy = value!.values.first;
                               print(sortBy);
                             });
                           },
@@ -534,10 +534,10 @@ class _SearchScreenState extends State<SearchScreen> {
                               ),
                             );
                           }).toList(),
-                          onChanged: (Map<String, bool> value) {
+                          onChanged: (Map<String, bool>? value) {
                             setState(() {
                               chooseDropDownValue = value;
-                              descending = value.values.first;
+                              descending = value!.values.first;
                               print(descending);
                             });
                           },
@@ -548,7 +548,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   IconButton(
                       icon: Icon(Icons.filter_alt_outlined),
                       onPressed: () {
-                        scaffoldKey.currentState.openEndDrawer();
+                        scaffoldKey.currentState!.openEndDrawer();
                         searchController.getAllCategory();
                       })
                 ],

@@ -1,8 +1,8 @@
 class UpdateDeviceTokenResponse {
-  int code;
-  bool success;
-  String msgCode;
-  DeviceTokenUser data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  DeviceTokenUser? data;
 
   UpdateDeviceTokenResponse({this.code, this.success, this.msgCode, this.data});
 
@@ -19,22 +19,22 @@ class UpdateDeviceTokenResponse {
     data['success'] = this.success;
     data['msg_code'] = this.msgCode;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class DeviceTokenUser {
-  int id;
-  int userId;
-  int storeId;
-  String deviceToken;
-  String deviceId;
-  int deviceType;
-  bool active;
-  String createdAt;
-  String updatedAt;
+  int? id;
+  int? userId;
+  int? storeId;
+  String? deviceToken;
+  String? deviceId;
+  int? deviceType;
+  bool? active;
+  String? createdAt;
+  String? updatedAt;
 
   DeviceTokenUser(
       {this.id,

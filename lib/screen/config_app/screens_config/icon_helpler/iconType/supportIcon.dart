@@ -32,7 +32,7 @@ class _SupportIconState extends State<SupportIcon> {
             Checkbox(
               tristate: false,
               value: controller.configApp.isShowIconHotline,
-              onChanged: (bool choose) {
+              onChanged: (bool? choose) {
                 setState(() {
                   controller.configApp.isShowIconHotline = choose;
                 });
@@ -84,7 +84,7 @@ class _SupportIconState extends State<SupportIcon> {
             Checkbox(
               tristate: false,
               value: controller.configApp.isShowIconEmail,
-              onChanged: (bool choose) {
+              onChanged: (bool? choose) {
                 setState(() {
                   controller.configApp.isShowIconEmail = choose;
                 });
@@ -142,7 +142,7 @@ class _SupportIconState extends State<SupportIcon> {
             Checkbox(
               tristate: false,
               value: controller.configApp.isShowIconFacebook,
-              onChanged: (bool choose) {
+              onChanged: (bool? choose) {
                 setState(() {
                   controller.configApp.isShowIconFacebook = choose;
                 });
@@ -199,7 +199,7 @@ class _SupportIconState extends State<SupportIcon> {
             Checkbox(
               tristate: false,
               value: controller.configApp.isShowIconZalo,
-              onChanged: (bool choose) {
+              onChanged: (bool? choose) {
                 setState(() {
                   controller.configApp.isShowIconZalo = choose;
                 });

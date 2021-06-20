@@ -1,6 +1,6 @@
 class Attribute {
-  int id;
-  String name;
+  int? id;
+  String? name;
   Null numericalOrder;
 
   Attribute({this.id, this.name, this.numericalOrder});

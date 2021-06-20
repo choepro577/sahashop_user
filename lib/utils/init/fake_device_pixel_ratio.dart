@@ -2,15 +2,15 @@ import 'package:flutter/cupertino.dart';
 
 class FakeDevicePixelRatio extends StatelessWidget {
   final num fakeDevicePixelRatio;
-  final Widget child;
+  final Widget? child;
 
-  FakeDevicePixelRatio({this.fakeDevicePixelRatio, this.child})
+  FakeDevicePixelRatio({required this.fakeDevicePixelRatio, this.child})
       : assert(fakeDevicePixelRatio != null);
 
   @override
   Widget build(BuildContext context) {
     final ratio =
-        fakeDevicePixelRatio / WidgetsBinding.instance.window.devicePixelRatio;
+        fakeDevicePixelRatio / WidgetsBinding.instance!.window.devicePixelRatio;
 
     return FractionallySizedBox(
         widthFactor: 1 / ratio,

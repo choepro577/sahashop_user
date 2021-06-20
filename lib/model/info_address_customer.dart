@@ -29,25 +29,25 @@ class InfoAddressCustomer {
     this.wardsName,
   });
 
-  int id;
-  int storeId;
-  int customerId;
-  String name;
-  String addressDetail;
-  int country;
-  int province;
-  int district;
-  int wards;
+  int? id;
+  int? storeId;
+  int? customerId;
+  String? name;
+  String? addressDetail;
+  int? country;
+  int? province;
+  int? district;
+  int? wards;
   dynamic village;
   dynamic postcode;
-  String email;
-  String phone;
-  bool isDefault;
-  DateTime createdAt;
-  DateTime updatedAt;
-  String provinceName;
-  String districtName;
-  String wardsName;
+  String? email;
+  String? phone;
+  bool? isDefault;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? provinceName;
+  String? districtName;
+  String? wardsName;
 
   factory InfoAddressCustomer.fromJson(Map<String, dynamic> json) =>
       InfoAddressCustomer(
@@ -91,8 +91,8 @@ class InfoAddressCustomer {
         "email": email,
         "phone": phone,
         "is_default": isDefault,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
         "province_name": provinceName,
         "district_name": districtName,
         "wards_name": wardsName,

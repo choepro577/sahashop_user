@@ -1,10 +1,10 @@
 import 'package:sahashop_user/model/post.dart';
 
 class CreatePostResponse {
-  int code;
-  bool success;
-  String msgCode;
-  Post data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  Post? data;
 
   CreatePostResponse({this.code, this.success, this.msgCode, this.data});
 
@@ -21,7 +21,7 @@ class CreatePostResponse {
     data['success'] = this.success;
     data['msg_code'] = this.msgCode;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }

@@ -18,15 +18,15 @@ class UpdateProductVoucherController extends GetxController {
   var isLoadingCreate = false.obs;
   var listProductParam = "";
 
-  Future<List<Product>> getAllProduct(
-      {String search,
-      String idCategory,
-      bool descending,
-      String details,
-      String sortBy}) async {
+  Future<List<Product>?> getAllProduct(
+      {String? search,
+      String? idCategory,
+      bool? descending,
+      String? details,
+      String? sortBy}) async {
     isLoadingProduct.value = true;
     try {
-      var res = await SahaServiceManager().service.getAllProduct(
+      var res = await SahaServiceManager().service!.getAllProduct(
           UserInfo().getCurrentStoreCode(),
           search ?? "",
           idCategory ?? "",
@@ -34,7 +34,7 @@ class UpdateProductVoucherController extends GetxController {
           details ?? "",
           sortBy ?? "");
 
-      listProduct.addAll(res.data.data);
+      listProduct.addAll(res.data!.data!);
 
       if (listCheckSelectedProduct.value.length == 0) {
         listProduct.forEach((product) {
@@ -57,7 +57,7 @@ class UpdateProductVoucherController extends GetxController {
       }
 
       isLoadingProduct.value = false;
-      return res.data.data;
+      return res.data!.data;
     } catch (err) {
       handleError(err);
     }
@@ -100,7 +100,7 @@ class UpdateProductVoucherController extends GetxController {
     listProductParam = "";
   }
 
-  void deleteProductSelected(int id) {
+  void deleteProductSelected(int? id) {
     listSelectedProduct.value.removeWhere((element) => element.id == id);
     listCheckSelectedProduct.value[listCheckSelectedProduct.value
             .indexWhere((e) => e.keys.first.id == id)]

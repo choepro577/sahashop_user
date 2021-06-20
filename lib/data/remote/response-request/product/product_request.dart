@@ -19,16 +19,16 @@ class ProductRequest {
     this.categories,
   });
 
-  String description;
-  String name;
-  int indexImageAvatar;
-  double price;
-  String barcode;
-  int status;
-  List<String> images;
-  List<DistributesRequest> listDistribute;
-  List<ListAttribute> listAttribute;
-  List<int> categories;
+  String? description;
+  String? name;
+  int? indexImageAvatar;
+  double? price;
+  String? barcode;
+  int? status;
+  List<String>? images;
+  List<DistributesRequest>? listDistribute;
+  List<ListAttribute>? listAttribute;
+  List<int?>? categories;
 
   factory ProductRequest.fromJson(Map<String, dynamic> json) => ProductRequest(
         description: json["description"],
@@ -52,12 +52,12 @@ class ProductRequest {
         "price": price,
         "barcode": barcode,
         "status": status,
-        "images": List<dynamic>.from(images.map((x) => x)),
+        "images": List<dynamic>.from(images!.map((x) => x)),
         "list_distribute":
-            List<dynamic>.from(listDistribute.map((x) => x.toJson())),
+            List<dynamic>.from(listDistribute!.map((x) => x.toJson())),
         "list_attribute":
-            List<dynamic>.from(listAttribute.map((x) => x.toJson())),
-        "categories": List<dynamic>.from(categories.map((x) => x)),
+            List<dynamic>.from(listAttribute!.map((x) => x.toJson())),
+        "categories": List<dynamic>.from(categories!.map((x) => x)),
       };
 }
 
@@ -67,8 +67,8 @@ class ListAttribute {
     this.value,
   });
 
-  String name;
-  String value;
+  String? name;
+  String? value;
 
   factory ListAttribute.fromJson(Map<String, dynamic> json) => ListAttribute(
         name: json["name"],
@@ -82,12 +82,12 @@ class ListAttribute {
 }
 
 class DistributesRequest {
-  int id;
-  String name;
-  bool boolHasImage;
-  String createdAt;
-  String updatedAt;
-  List<ElementDistributesRequest> elementDistributes;
+  int? id;
+  String? name;
+  bool? boolHasImage;
+  String? createdAt;
+  String? updatedAt;
+  List<ElementDistributesRequest?>? elementDistributes;
 
   DistributesRequest(
       {this.id,
@@ -103,9 +103,9 @@ class DistributesRequest {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     if (json['element_distributes'] != null) {
-      elementDistributes = new List<ElementDistributesRequest>();
+      elementDistributes = [];
       json['element_distributes'].forEach((v) {
-        elementDistributes.add(new ElementDistributesRequest.fromJson(v));
+        elementDistributes!.add(new ElementDistributesRequest.fromJson(v));
       });
     }
   }
@@ -118,17 +118,17 @@ class DistributesRequest {
     data['updated_at'] = this.updatedAt;
     if (this.elementDistributes != null) {
       data['element_distributes'] =
-          this.elementDistributes.map((v) => v.toJson()).toList();
+          this.elementDistributes!.map((v) => v!.toJson()).toList();
     }
     return data;
   }
 }
 
 class ElementDistributesRequest {
-  String name;
-  String imageUrl;
-  String createdAt;
-  String updatedAt;
+  String? name;
+  String? imageUrl;
+  String? createdAt;
+  String? updatedAt;
 
   ElementDistributesRequest(
       {this.name, this.imageUrl, this.createdAt, this.updatedAt});

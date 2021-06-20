@@ -41,7 +41,7 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
         FocusScopeNode currentFocus = FocusScope.of(context);
         if (!currentFocus.hasPrimaryFocus &&
             currentFocus.focusedChild != null) {
-          FocusManager.instance.primaryFocus.unfocus();
+          FocusManager.instance.primaryFocus!.unfocus();
         }
       },
       child: Scaffold(
@@ -75,7 +75,7 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
                         child: TextFormField(
                           controller: nameProgramEditingController,
                           validator: (value) {
-                            if (value.length < 1) {
+                            if (value!.length < 1) {
                               return 'Chưa nhập tên chương trình';
                             }
                             return null;
@@ -289,7 +289,7 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
                           controller: discountEditingController,
                           keyboardType: TextInputType.number,
                           validator: (value) {
-                            if (value.length < 1) {
+                            if (value!.length < 1) {
                               return 'Chưa nhập % giảm giá';
                             } else {
                               var myInt = int.parse(value);
@@ -427,15 +427,15 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
                                           imageUrl: addProductToSaleController
                                                       .listSelectedProduct
                                                       .value[index]
-                                                      .images
+                                                      .images!
                                                       .length ==
                                                   0
                                               ? ""
                                               : addProductToSaleController
                                                   .listSelectedProduct
                                                   .value[index]
-                                                  .images[0]
-                                                  .imageUrl,
+                                                  .images![0]
+                                                  .imageUrl!,
                                           errorWidget: (context, url, error) =>
                                               Container(
                                             height: 100,
@@ -501,8 +501,8 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
                     : SahaButtonFullParent(
                         text: "Lưu",
                         onPressed: () {
-                          if (_formKey.currentState.validate()) {
-                            _formKey.currentState.save();
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
                             KeyboardUtil.hideKeyboard(context);
                             addProductToSaleController
                                 .listSelectedProductToString();

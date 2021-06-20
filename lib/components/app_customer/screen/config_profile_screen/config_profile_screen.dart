@@ -10,13 +10,13 @@ import 'package:sahashop_user/model/info_customer.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 
 class ConfigProfileScreen extends StatelessWidget {
-  InfoCustomer infoCustomer;
+  InfoCustomer? infoCustomer;
 
   ConfigProfileScreen({this.infoCustomer}) {
     configProfileController =
         ConfigProfileController(infoCustomer: infoCustomer);
   }
-  ConfigProfileController configProfileController;
+  late ConfigProfileController configProfileController;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class ConfigProfileScreen extends StatelessWidget {
         FocusScopeNode currentFocus = FocusScope.of(context);
         if (!currentFocus.hasPrimaryFocus &&
             currentFocus.focusedChild != null) {
-          FocusManager.instance.primaryFocus.unfocus();
+          FocusManager.instance.primaryFocus!.unfocus();
         }
       },
       child: Scaffold(
@@ -105,12 +105,12 @@ class ConfigProfileScreen extends StatelessWidget {
                                         placeholder: (context, url) => Stack(
                                           children: [
                                             configProfileController.dataImages
-                                                        .value.file ==
+                                                        .value!.file ==
                                                     null
                                                 ? Container()
                                                 : Image.file(
                                                     configProfileController
-                                                        .dataImages.value.file,
+                                                        .dataImages.value!.file!,
                                                     width: 300,
                                                     height: 300,
                                                   ),
@@ -135,7 +135,7 @@ class ConfigProfileScreen extends StatelessWidget {
                                       style: TextStyle(
                                           color: Theme.of(context)
                                               .primaryTextTheme
-                                              .headline6
+                                              .headline6!
                                               .color),
                                     )),
                                   ),

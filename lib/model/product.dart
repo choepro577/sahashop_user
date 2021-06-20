@@ -26,23 +26,23 @@ class Product {
     this.hasInCombo,
   });
 
-  int id;
-  String name;
-  int storeId;
-  String description;
-  int indexImageAvatar;
-  double price;
-  String barcode;
-  int status;
-  DateTime createdAt;
-  DateTime updatedAt;
-  List<Distributes> distributes;
-  List<Attributes> attributes;
-  List<ImageProduct> images;
-  List<Category> categories;
-  ProductDiscount productDiscount;
-  bool hasInDiscount;
-  bool hasInCombo;
+  int? id;
+  String? name;
+  int? storeId;
+  String? description;
+  int? indexImageAvatar;
+  double? price;
+  String? barcode;
+  int? status;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  List<Distributes>? distributes;
+  List<Attributes>? attributes;
+  List<ImageProduct>? images;
+  List<Category>? categories;
+  ProductDiscount? productDiscount;
+  bool? hasInDiscount;
+  bool? hasInCombo;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
@@ -84,19 +84,19 @@ class Product {
         "barcode": name,
         "status": status,
         "product_discount":
-            productDiscount == null ? null : productDiscount.toJson(),
+            productDiscount == null ? null : productDiscount!.toJson(),
         "has_in_discount": hasInDiscount,
         "has_in_combo": hasInCombo,
         "distributes": distributes == null
             ? null
-            : List<dynamic>.from(distributes.map((x) => x.toJson())),
+            : List<dynamic>.from(distributes!.map((x) => x.toJson())),
         "attributes": attributes == null
             ? null
-            : List<dynamic>.from(attributes.map((x) => x.toJson())),
+            : List<dynamic>.from(attributes!.map((x) => x.toJson())),
         "images":
-            images == null ? null : images.map((e) => e.imageUrl).toList(),
+            images == null ? null : images!.map((e) => e.imageUrl).toList(),
         "categories":
-            categories == null ? null : categories.map((e) => e.id).toList(),
+            categories == null ? null : categories!.map((e) => e.id).toList(),
       };
 }
 
@@ -106,9 +106,9 @@ class ImageProduct {
     this.imageUrl,
   });
 
-  int id;
+  int? id;
 
-  String imageUrl;
+  String? imageUrl;
 
   factory ImageProduct.fromJson(Map<String, dynamic> json) => ImageProduct(
         id: json["id"],
@@ -127,15 +127,15 @@ class ProductDiscount {
     this.discountPrice,
   });
 
-  int value;
+  int? value;
 
-  double discountPrice;
+  double? discountPrice;
 
   factory ProductDiscount.fromJson(Map<String, dynamic> json) =>
       ProductDiscount(
         value: json["value"],
         discountPrice:
-            double.tryParse(json["discount_price"].toString()).toDouble(),
+            double.tryParse(json["discount_price"].toString())!.toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -145,11 +145,11 @@ class ProductDiscount {
 }
 
 class Distributes {
-  int id;
-  String name;
-  String createdAt;
-  String updatedAt;
-  List<ElementDistributes> elementDistributes;
+  int? id;
+  String? name;
+  String? createdAt;
+  String? updatedAt;
+  List<ElementDistributes>? elementDistributes;
 
   Distributes(
       {this.id,
@@ -164,9 +164,9 @@ class Distributes {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     if (json['element_distributes'] != null) {
-      elementDistributes = new List<ElementDistributes>();
+      elementDistributes = [];
       json['element_distributes'].forEach((v) {
-        elementDistributes.add(new ElementDistributes.fromJson(v));
+        elementDistributes!.add(new ElementDistributes.fromJson(v));
       });
     }
   }
@@ -179,17 +179,17 @@ class Distributes {
     data['updated_at'] = this.updatedAt;
     if (this.elementDistributes != null) {
       data['element_distributes'] =
-          this.elementDistributes.map((v) => v.toJson()).toList();
+          this.elementDistributes!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class ElementDistributes {
-  String name;
-  String imageUrl;
-  String createdAt;
-  String updatedAt;
+  String? name;
+  String? imageUrl;
+  String? createdAt;
+  String? updatedAt;
 
   ElementDistributes(
       {this.name, this.imageUrl, this.createdAt, this.updatedAt});
@@ -212,13 +212,13 @@ class ElementDistributes {
 }
 
 class Attributes {
-  int id;
-  int storeId;
-  int productId;
-  String name;
-  String value;
-  String createdAt;
-  String updatedAt;
+  int? id;
+  int? storeId;
+  int? productId;
+  String? name;
+  String? value;
+  String? createdAt;
+  String? updatedAt;
 
   Attributes(
       {this.id,

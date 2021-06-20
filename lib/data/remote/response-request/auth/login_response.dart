@@ -10,8 +10,8 @@ class LoginResponse {
     this.data,
   });
 
-  int code;
-  DataLogin data;
+  int? code;
+  DataLogin? data;
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
     code: json["code"],
@@ -20,7 +20,7 @@ class LoginResponse {
 
   Map<String, dynamic> toJson() => {
     "code": code,
-    "data": data.toJson(),
+    "data": data!.toJson(),
   };
 }
 
@@ -36,14 +36,14 @@ class DataLogin {
     this.updatedAt,
   });
 
-  int id;
-  String token;
-  String refreshToken;
-  DateTime tokenExpried;
-  DateTime refreshTokenExpried;
-  int userId;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? id;
+  String? token;
+  String? refreshToken;
+  DateTime? tokenExpried;
+  DateTime? refreshTokenExpried;
+  int? userId;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory DataLogin.fromJson(Map<String, dynamic> json) => DataLogin(
     id: json["id"],
@@ -60,10 +60,10 @@ class DataLogin {
     "id": id,
     "token": token,
     "refresh_token": refreshToken,
-    "token_expried": tokenExpried.toIso8601String(),
-    "refresh_token_expried": refreshTokenExpried.toIso8601String(),
+    "token_expried": tokenExpried!.toIso8601String(),
+    "refresh_token_expried": refreshTokenExpried!.toIso8601String(),
     "user_id": userId,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
+    "created_at": createdAt!.toIso8601String(),
+    "updated_at": updatedAt!.toIso8601String(),
   };
 }

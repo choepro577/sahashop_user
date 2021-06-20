@@ -14,11 +14,11 @@ class LoginResponse {
     this.msg,
   });
 
-  int code;
-  bool success;
-  Data data;
-  String msgCode;
-  String msg;
+  int? code;
+  bool? success;
+  Data? data;
+  String? msgCode;
+  String? msg;
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
         code: json["code"],
@@ -31,7 +31,7 @@ class LoginResponse {
   Map<String, dynamic> toJson() => {
         "code": code,
         "success": success,
-        "data": data.toJson(),
+        "data": data!.toJson(),
         "msg_code": msgCode,
         "msg": msg,
       };
@@ -49,14 +49,14 @@ class Data {
     this.updatedAt,
   });
 
-  int id;
-  String token;
-  String refreshToken;
-  DateTime tokenExpried;
-  DateTime refreshTokenExpried;
-  int customerId;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? id;
+  String? token;
+  String? refreshToken;
+  DateTime? tokenExpried;
+  DateTime? refreshTokenExpried;
+  int? customerId;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"],
@@ -73,10 +73,10 @@ class Data {
         "id": id,
         "token": token,
         "refresh_token": refreshToken,
-        "token_expried": tokenExpried.toIso8601String(),
-        "refresh_token_expried": refreshTokenExpried.toIso8601String(),
+        "token_expried": tokenExpried!.toIso8601String(),
+        "refresh_token_expried": refreshTokenExpried!.toIso8601String(),
         "customer_id": customerId,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
       };
 }

@@ -17,11 +17,11 @@ class Cart {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  String msg;
-  Data data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  String? msg;
+  Data? data;
 
   factory Cart.fromJson(Map<String, dynamic> json) => Cart(
         code: json["code"],
@@ -36,7 +36,7 @@ class Cart {
         "success": success,
         "msg_code": msgCode,
         "msg": msg,
-        "data": data.toJson(),
+        "data": data!.toJson(),
       };
 }
 
@@ -53,15 +53,15 @@ class Data {
     this.lineItems,
   });
 
-  double totalBeforeDiscount;
-  double productDiscountAmount;
-  List<UsedDiscount> usedDiscount;
-  double comboDiscountAmount;
-  List<UsedCombo> usedCombos;
-  double voucherDiscountAmount;
-  UsedVoucher usedVoucher;
-  double totalAfterDiscount;
-  List<LineItem> lineItems;
+  double? totalBeforeDiscount;
+  double? productDiscountAmount;
+  List<UsedDiscount>? usedDiscount;
+  double? comboDiscountAmount;
+  List<UsedCombo>? usedCombos;
+  double? voucherDiscountAmount;
+  UsedVoucher? usedVoucher;
+  double? totalAfterDiscount;
+  List<LineItem>? lineItems;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         totalBeforeDiscount: json["total_before_discount"].toDouble(),
@@ -84,13 +84,13 @@ class Data {
         "total_before_discount": totalBeforeDiscount,
         "product_discount_amount": productDiscountAmount,
         "used_discount":
-            List<dynamic>.from(usedDiscount.map((x) => x.toJson())),
+            List<dynamic>.from(usedDiscount!.map((x) => x.toJson())),
         "combo_discount_amount": comboDiscountAmount,
-        "used_combos": List<dynamic>.from(usedCombos.map((x) => x.toJson())),
+        "used_combos": List<dynamic>.from(usedCombos!.map((x) => x.toJson())),
         "voucher_discount_amount": voucherDiscountAmount,
-        "used_voucher": usedVoucher.toJson(),
+        "used_voucher": usedVoucher!.toJson(),
         "total_after_discount": totalAfterDiscount,
-        "line_items": List<dynamic>.from(lineItems.map((x) => x.toJson())),
+        "line_items": List<dynamic>.from(lineItems!.map((x) => x.toJson())),
       };
 }
 
@@ -100,8 +100,8 @@ class UsedCombo {
     this.quantity,
   });
 
-  Combo combo;
-  int quantity;
+  Combo? combo;
+  int? quantity;
 
   factory UsedCombo.fromJson(Map<String, dynamic> json) => UsedCombo(
         combo: Combo.fromJson(json["combo"]),
@@ -109,7 +109,7 @@ class UsedCombo {
       );
 
   Map<String, dynamic> toJson() => {
-        "combo": combo.toJson(),
+        "combo": combo!.toJson(),
         "quantity": quantity,
       };
 }
@@ -121,9 +121,9 @@ class UsedDiscount {
     this.afterDiscount,
   });
 
-  String name;
-  double beforePrice;
-  double afterDiscount;
+  String? name;
+  double? beforePrice;
+  double? afterDiscount;
 
   factory UsedDiscount.fromJson(Map<String, dynamic> json) => UsedDiscount(
         name: json["name"],
@@ -165,29 +165,29 @@ class UsedVoucher {
     this.products,
   });
 
-  int id;
-  int storeId;
-  bool isEnd;
-  int voucherType;
-  String name;
-  String code;
+  int? id;
+  int? storeId;
+  bool? isEnd;
+  int? voucherType;
+  String? name;
+  String? code;
   dynamic description;
   dynamic imageUrl;
-  DateTime startTime;
-  DateTime endTime;
-  int discountType;
-  double valueDiscount;
-  bool setLimitValueDiscount;
-  double maxValueDiscount;
-  bool setLimitTotal;
-  double valueLimitTotal;
-  bool isShowVoucher;
-  bool setLimitAmount;
-  int amount;
-  int used;
-  DateTime createdAt;
-  DateTime updatedAt;
-  List<Product> products;
+  DateTime? startTime;
+  DateTime? endTime;
+  int? discountType;
+  double? valueDiscount;
+  bool? setLimitValueDiscount;
+  double? maxValueDiscount;
+  bool? setLimitTotal;
+  double? valueLimitTotal;
+  bool? isShowVoucher;
+  bool? setLimitAmount;
+  int? amount;
+  int? used;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  List<Product>? products;
 
   factory UsedVoucher.fromJson(Map<String, dynamic> json) => UsedVoucher(
         id: json["id"],
@@ -225,8 +225,8 @@ class UsedVoucher {
         "code": code,
         "description": description,
         "image_url": imageUrl,
-        "start_time": startTime.toIso8601String(),
-        "end_time": endTime.toIso8601String(),
+        "start_time": startTime!.toIso8601String(),
+        "end_time": endTime!.toIso8601String(),
         "discount_type": discountType,
         "value_discount": valueDiscount,
         "set_limit_value_discount": setLimitValueDiscount,
@@ -237,8 +237,8 @@ class UsedVoucher {
         "set_limit_amount": setLimitAmount,
         "amount": amount,
         "used": used,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-        "products": List<dynamic>.from(products.map((x) => x.toJson())),
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
+        "products": List<dynamic>.from(products!.map((x) => x.toJson())),
       };
 }

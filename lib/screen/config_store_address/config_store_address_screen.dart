@@ -153,20 +153,20 @@ class ConfigStoreAddressScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(configStoreAddressController.listShipmentStore[index].name),
+              Text(configStoreAddressController.listShipmentStore[index].name!),
               Obx(() => CustomSwitch(
                     value: configStoreAddressController
-                        .listShipmentStore[index].shipperConfig.use,
+                        .listShipmentStore[index].shipperConfig!.use,
                     onChanged: (bool val) {
                       if (configStoreAddressController
-                              .listShipmentStore[index].shipperConfig.use ==
+                              .listShipmentStore[index].shipperConfig!.use ==
                           true) {
                         configStoreAddressController.addTokenShipment(
                             configStoreAddressController
                                 .listShipmentStore[index].id,
                             ShipperConfig(
                               token: configStoreAddressController
-                                  .listShipmentStore[index].shipperConfig.token,
+                                  .listShipmentStore[index].shipperConfig!.token,
                               use: false,
                               cod: false,
                             ));
@@ -177,7 +177,7 @@ class ConfigStoreAddressScreen extends StatelessWidget {
                         Get.to(() => InputTokenShipmentScreen(
                                   shipment: configStoreAddressController
                                       .listShipmentStore[index],
-                                ))
+                                ))!
                             .then((value) =>
                                 {configStoreAddressController.refreshData()});
                       }

@@ -3,9 +3,9 @@ import 'package:sahashop_user/data/remote/saha_service_manager.dart';
 import '../handle_error.dart';
 
 class RegisterRepository {
-  Future<DataRegister> register({String phone, String pass}) async {
+  Future<DataRegister?> register({String? phone, String? pass}) async {
     try {
-      var res = await SahaServiceManager().service.register({
+      var res = await SahaServiceManager().service!.register({
         "phone_number": phone,
         "password": pass,
       });

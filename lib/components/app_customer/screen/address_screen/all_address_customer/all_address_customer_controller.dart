@@ -16,7 +16,7 @@ class AllAddressCustomerController extends GetxController {
     try {
       var res = await CustomerRepositoryManager.addressRepository
           .getAllAddressCustomer();
-      listInfoAddressCustomer(res.data);
+      listInfoAddressCustomer(res!.data!);
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }

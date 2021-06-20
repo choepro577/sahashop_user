@@ -7,7 +7,6 @@ import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/divide/divide.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_full_screen.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
-import 'package:sahashop_user/components/saha_user/text_field/sahashopTextField.dart';
 import 'package:sahashop_user/components/saha_user/text_field/text_field_no_border.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/const/constant_database_status_online.dart';
@@ -15,7 +14,6 @@ import 'package:sahashop_user/data/remote/response-request/product/product_reque
 import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/screen/inventory/attribute/attributes_screen.dart';
 import 'package:sahashop_user/screen/inventory/products/add_product/add_product_controller.dart';
-import 'package:smart_select/smart_select.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
 
 import 'widget/distribute_select.dart';
@@ -77,7 +75,7 @@ class AddProductScreen extends StatelessWidget {
                                         value;
                                   },
                                   validator: (value) {
-                                    if (value.length == 0) {
+                                    if (value!.length == 0) {
                                       return 'Không được để trống';
                                     }
                                     return null;
@@ -96,7 +94,7 @@ class AddProductScreen extends StatelessWidget {
                                   },
                                   doneUpload: (List<ImageData> listImages) {
                                     print(
-                                        "done upload image ${listImages?.length} images => ${listImages.toList().map((e) => e.linkImage).toList()}");
+                                        "done upload image ${listImages.length} images => ${listImages.toList().map((e) => e.linkImage).toList()}");
                                     addProductController
                                         .setUploadingImages(false);
                                     addProductController.listImages =
@@ -108,10 +106,10 @@ class AddProductScreen extends StatelessWidget {
                               SahaTextFieldNoBorder(
                                 onChanged: (value) {
                                   addProductController.productRequest.price =
-                                      double.tryParse(value);
+                                      double.tryParse(value!);
                                 },
                                 validator: (value) {
-                                  if (value.length == 0) {
+                                  if (value!.length == 0) {
                                     return 'Không được để trống';
                                   }
                                   return null;
@@ -127,67 +125,9 @@ class AddProductScreen extends StatelessWidget {
                                     ? SahaLoadingWidget(
                                         size: 20,
                                       )
-                                    : SmartSelect<Category>.multiple(
-                                        title: 'Danh mục',
-                                        value: addProductController
-                                            .listCategorySelected
-                                            .toList(),
-                                        modalHeader: true,
-                                        modalFilter: true,
-                                        modalType: S2ModalType.bottomSheet,
-                                        modalFilterHint: "",
-                                        choiceConfig: S2ChoiceConfig(),
-                                        choiceGroupBuilder:
-                                            (context, header, choices) {
-                                          return StickyHeader(
-                                            header: header,
-                                            content: choices,
-                                          );
-                                        },
-                                        tileBuilder: (context, state) {
-                                          return S2Tile.fromState(
-                                            state,
-                                            hideValue: true,
-                                            body: S2TileChips(
-                                              chipLength:
-                                                  state.valueObject.length,
-                                              chipLabelBuilder: (context, i) {
-                                                return Text(
-                                                    state.valueObject[i].title);
-                                              },
-                                              chipAvatarBuilder: (context, i) {
-                                                return CircleAvatar(
-                                                    backgroundImage:
-                                                        NetworkImage(state
-                                                                .valueObject[i]
-                                                                .value
-                                                                ?.imageUrl ??
-                                                            ""));
-                                              },
-                                              chipOnDelete: (i) {
-                                                addProductController
-                                                    .onRemoveItem(state
-                                                        .valueObject[i].value);
-                                              },
-                                              chipColor: SahaPrimaryColor,
-                                              chipBrightness: Brightness.dark,
-                                              chipBorderOpacity: .5,
-                                            ),
-                                          );
-                                        },
-                                        choiceItems: addProductController
-                                            .listCategory
-                                            .toList()
-                                            .map(
-                                              (category) => S2Choice<Category>(
-                                                  value: category,
-                                                  title: category.name),
-                                            )
-                                            .toList(),
-                                        onChange: (state) {
-                                          addProductController
-                                              .onChoose(state.value);
-                                        }),
+                                    : Container(
+                                  height: 100,
+                                )
                               ),
                               SahaDivide(),
                               InkWell(
@@ -265,7 +205,7 @@ class AddProductScreen extends StatelessWidget {
                                       .productRequest.description = value;
                                 },
                                 validator: (value) {
-                                  if (value.length == 0) {
+                                  if (value!.length == 0) {
                                     return 'Không được để trống';
                                   }
                                   return null;
@@ -288,7 +228,7 @@ class AddProductScreen extends StatelessWidget {
                                   onPressed: !addProductController
                                           .uploadingImages.value
                                       ? () {
-                                          if (_formKey.currentState
+                                          if (_formKey.currentState!
                                               .validate()) {
                                             addProductController.productRequest
                                                 .status = STATUS_PRODUCT_HIDE;
@@ -305,7 +245,7 @@ class AddProductScreen extends StatelessWidget {
                                   onPressed: !addProductController
                                           .uploadingImages.value
                                       ? () {
-                                          if (_formKey.currentState
+                                          if (_formKey.currentState!
                                               .validate()) {
                                             addProductController.productRequest
                                                 .status = STATUS_PRODUCT_SHOW;
@@ -428,7 +368,7 @@ class AddProductScreen extends StatelessWidget {
                                       Icons.add_box_outlined,
                                       size: 15,
                                     ),
-                                    AutoSizeText(distribute?.name)
+                                    AutoSizeText(distribute.name!)
                                   ],
                                 )),
                             Expanded(
@@ -436,7 +376,7 @@ class AddProductScreen extends StatelessWidget {
                                 child: SingleChildScrollView(
                                     scrollDirection: Axis.horizontal,
                                     child: Row(
-                                      children: distribute.elementDistributes
+                                      children: distribute.elementDistributes!
                                           .map((e) => Container(
                                                 margin: EdgeInsets.only(right: 4),
                                                 padding: EdgeInsets.all(4),
@@ -459,7 +399,7 @@ class AddProductScreen extends StatelessWidget {
                                                                 CachedNetworkImage(
                                                               fit: BoxFit.cover,
                                                               imageUrl:
-                                                                  e?.imageUrl,
+                                                                  e!.imageUrl!,
                                                               placeholder: (context,
                                                                       url) =>
                                                                   Center(
@@ -473,7 +413,7 @@ class AddProductScreen extends StatelessWidget {
                                                             ),
                                                           )
                                                         : Container(),
-                                                    Text(e.name),
+                                                    Text(e!.name!),
                                                   ],
                                                 ),
                                               ))

@@ -15,10 +15,10 @@ class ChooseStoreController extends GetxController {
     isLoading.value = true;
     errMsg.refresh();
     try {
-      listStore(await RepositoryManager.storeRepository.getAll());
+      listStore(await (RepositoryManager.storeRepository.getAll() as Future<List<Store>>));
       isLoading.value = false;
     } catch (err) {
-      errMsg.value = err;
+      errMsg(err.toString());
       isLoading.value = false;
     }
   }

@@ -20,7 +20,7 @@ class AddProductController extends GetxController {
 
   var listDistribute = RxList<DistributesRequest>();
 
-  List<ImageData> listImages;
+  List<ImageData>? listImages;
   var uploadingImages = false.obs;
 
   var attributeData = {}.obs;
@@ -30,12 +30,12 @@ class AddProductController extends GetxController {
     getAllAttribute();
   }
 
-  Future<void> getAllAttribute() async {
+  Future<bool?> getAllAttribute() async {
     isLoadingAttribute.value = true;
     try {
       var list =
           await RepositoryManager.attributesRepository.getAllAttributes();
-      listAttribute(list);
+      listAttribute(list!);
 
       isLoadingAttribute.value = false;
       return true;
@@ -50,7 +50,7 @@ class AddProductController extends GetxController {
     listOK = list.where((element) =>
         element.name != null &&
         element.elementDistributes != null &&
-        element.elementDistributes.length > 0).toList();
+        element.elementDistributes!.length > 0).toList();
 
     listDistribute(listOK);
     refresh();
@@ -81,11 +81,11 @@ class AddProductController extends GetxController {
     listCategorySelected.remove(category);
   }
 
-  Future<void> getAllCategory() async {
+  Future<bool?> getAllCategory() async {
     isLoadingCategory.value = true;
     try {
       var list = await RepositoryManager.categoryRepository.getAllCategory();
-      listCategory(list);
+      listCategory(list!);
 
       isLoadingCategory.value = false;
       return true;
@@ -95,20 +95,20 @@ class AddProductController extends GetxController {
     isLoadingCategory.value = false;
   }
 
-  Future<void> createProduct() async {
+  Future<bool?> createProduct() async {
     isLoadingAdd.value = true;
     productRequest.categories =
         listCategorySelected.map((element) => element.id).toList();
     productRequest.images = listImages == null
         ? []
-        : listImages.map((e) => ImageProduct(imageUrl: e.linkImage)).toList();
+        : listImages!.map((e) => ImageProduct(imageUrl: e.linkImage)).toList() as List<String>?;
 
     try {
       var data =
           await RepositoryManager.productRepository.create(productRequest);
 
       SahaAlert.showSuccess(message: "Thêm thành công");
-      Navigator.pop(Get.context, "added");
+      Navigator.pop(Get.context!, "added");
 
       return true;
     } catch (err) {

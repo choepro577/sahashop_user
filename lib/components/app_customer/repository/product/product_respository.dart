@@ -7,7 +7,7 @@ import 'package:sahashop_user/model/product.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class ProductCustomerRepository {
-  Future<List<Product>> searchProduct(
+  Future<List<Product>?> searchProduct(
       {String search = "",
       String idCategory = "",
       bool descending = false,
@@ -15,14 +15,14 @@ class ProductCustomerRepository {
       String sortBy = ""}) async {
     if (FlowData().isOnline()) {
       try {
-        var res = await CustomerServiceManager().service.searchProduct(
+        var res = await CustomerServiceManager().service!.searchProduct(
             UserInfo().getCurrentStoreCode(),
             search,
             idCategory,
             descending,
             details,
             sortBy);
-        return res.data.data;
+        return res.data!.data;
       } catch (err) {
         handleErrorCustomer(err);
       }
@@ -31,10 +31,10 @@ class ProductCustomerRepository {
     }
   }
 
-  Future<DetailProductResponse> getDetailProduct(int idProduct) async {
+  Future<DetailProductResponse?> getDetailProduct(int? idProduct) async {
     try {
       var res = await CustomerServiceManager()
-          .service
+          .service!
           .getDetailProduct(UserInfo().getCurrentStoreCode(), idProduct);
       return res;
     } catch (err) {

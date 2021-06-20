@@ -16,10 +16,10 @@ class CreateDiscountResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  Data data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  Data? data;
 
   factory CreateDiscountResponse.fromJson(Map<String, dynamic> json) =>
       CreateDiscountResponse(
@@ -33,7 +33,7 @@ class CreateDiscountResponse {
         "code": code,
         "success": success,
         "msg_code": msgCode,
-        "data": data.toJson(),
+        "data": data!.toJson(),
       };
 }
 
@@ -56,21 +56,21 @@ class Data {
     this.products,
   });
 
-  int id;
-  int storeId;
-  bool isEnd;
-  String name;
-  String description;
-  String imageUrl;
-  DateTime startTime;
-  DateTime endTime;
-  int value;
-  bool setLimitAmount;
+  int? id;
+  int? storeId;
+  bool? isEnd;
+  String? name;
+  String? description;
+  String? imageUrl;
+  DateTime? startTime;
+  DateTime? endTime;
+  int? value;
+  bool? setLimitAmount;
   dynamic amount;
-  int used;
-  DateTime createdAt;
-  DateTime updatedAt;
-  List<Product> products;
+  int? used;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  List<Product>? products;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"],
@@ -98,14 +98,14 @@ class Data {
         "name": name,
         "description": description,
         "image_url": imageUrl,
-        "start_time": startTime.toIso8601String(),
-        "end_time": endTime.toIso8601String(),
+        "start_time": startTime!.toIso8601String(),
+        "end_time": endTime!.toIso8601String(),
         "value": value,
         "set_limit_amount": setLimitAmount,
         "amount": amount,
         "used": used,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-        "products": List<dynamic>.from(products.map((x) => x.toJson())),
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
+        "products": List<dynamic>.from(products!.map((x) => x.toJson())),
       };
 }

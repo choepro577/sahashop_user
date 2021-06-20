@@ -10,15 +10,15 @@ enum TypeAddress {
 }
 
 class ChooseAddressScreen extends StatelessWidget {
-  final TypeAddress typeAddress;
+  final TypeAddress? typeAddress;
   final idProvince;
   final idDistrict;
-  final Function callback;
+  final Function? callback;
 
-  ChooseAddressController chooseAddressController;
+  late ChooseAddressController chooseAddressController;
 
   ChooseAddressScreen(
-      {Key key,
+      {Key? key,
       this.typeAddress,
       this.idProvince,
       this.idDistrict,
@@ -41,13 +41,13 @@ class ChooseAddressScreen extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                callback(
+                callback!(
                     chooseAddressController.listLocationAddress.value[index]);
                 Get.back();
               },
               child: ListTile(
                 title: Text(
-                  chooseAddressController.listLocationAddress.value[index].name,
+                  chooseAddressController.listLocationAddress.value[index].name!,
                   style: TextStyle(fontSize: 14),
                 ),
               ),

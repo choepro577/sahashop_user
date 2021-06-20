@@ -13,11 +13,11 @@ class LogoutResponse {
     this.code,
   });
 
-  bool success;
+  bool? success;
   dynamic data;
-  String msg;
+  String? msg;
   dynamic errors;
-  int code;
+  int? code;
 
   factory LogoutResponse.fromJson(Map<String, dynamic> json) => LogoutResponse(
     success: json["success"],

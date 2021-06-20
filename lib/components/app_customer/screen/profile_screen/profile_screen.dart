@@ -38,7 +38,7 @@ class ProfileScreen extends StatelessWidget {
                                   Icons.settings,
                                   color: Theme.of(context)
                                       .primaryTextTheme
-                                      .bodyText1
+                                      .bodyText1!
                                       .color,
                                 ),
                                 onPressed: () {})
@@ -48,7 +48,7 @@ class ProfileScreen extends StatelessWidget {
                               Icons.shopping_cart,
                               color: Theme.of(context)
                                   .primaryTextTheme
-                                  .bodyText1
+                                  .bodyText1!
                                   .color,
                             ),
                             onPressed: () {}),
@@ -57,7 +57,7 @@ class ProfileScreen extends StatelessWidget {
                               Icons.chat,
                               color: Theme.of(context)
                                   .primaryTextTheme
-                                  .bodyText1
+                                  .bodyText1!
                                   .color,
                             ),
                             onPressed: () {}),
@@ -89,7 +89,7 @@ class ProfileScreen extends StatelessWidget {
                                           fit: BoxFit.cover,
                                           imageUrl: dataAppCustomerController
                                                   .infoCustomer
-                                                  .value
+                                                  .value!
                                                   .avatarImage ??
                                               "",
                                           errorWidget: (context, url, error) =>
@@ -99,7 +99,7 @@ class ProfileScreen extends StatelessWidget {
                                           ),
                                         ),
                                         dataAppCustomerController.infoCustomer
-                                                    .value.avatarImage ==
+                                                    .value!.avatarImage ==
                                                 null
                                             ? Positioned(
                                                 bottom: 1,
@@ -114,7 +114,7 @@ class ProfileScreen extends StatelessWidget {
                                                           color: Theme.of(
                                                                   context)
                                                               .primaryTextTheme
-                                                              .headline6
+                                                              .headline6!
                                                               .color),
                                                     ),
                                                   ),
@@ -135,12 +135,12 @@ class ProfileScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     dataAppCustomerController
-                                            .infoCustomer.value.name ??
+                                            .infoCustomer.value!.name ??
                                         "Chưa có tên",
                                     style: TextStyle(
                                       color: Theme.of(context)
                                           .primaryTextTheme
-                                          .headline6
+                                          .headline6!
                                           .color,
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -216,7 +216,7 @@ class ProfileScreen extends StatelessWidget {
                                         onTap: () {
                                           Get.to(
                                             () => LoginScreenCustomer(),
-                                          ).then((value) => {
+                                          )!.then((value) => {
                                                 dataAppCustomerController
                                                     .getInfoCustomer()
                                               });
@@ -243,7 +243,7 @@ class ProfileScreen extends StatelessWidget {
                                       ),
                                       InkWell(
                                         onTap: () {
-                                          Get.to(() => RegisterCustomerScreen())
+                                          Get.to(() => RegisterCustomerScreen())!
                                               .then((value) => {
                                                     dataAppCustomerController
                                                         .getInfoCustomer()
@@ -259,15 +259,15 @@ class ProfileScreen extends StatelessWidget {
                                               border: Border.all(
                                                   color: Theme.of(context)
                                                       .primaryTextTheme
-                                                      .headline6
-                                                      .color)),
+                                                      .headline6!
+                                                      .color!)),
                                           child: Center(
                                               child: Text(
                                             "Đăng ký",
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .primaryTextTheme
-                                                    .headline6
+                                                    .headline6!
                                                     .color),
                                           )),
                                         ),

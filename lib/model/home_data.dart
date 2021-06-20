@@ -15,12 +15,12 @@ class HomeData {
     this.newPost,
   });
 
-  BannerList banner;
-  AllCategory allCategory;
-  DiscountProducts discountProducts;
-  NewProduct newProduct;
-  BestSellProduct bestSellProduct;
-  NewPost newPost;
+  BannerList? banner;
+  AllCategory? allCategory;
+  DiscountProducts? discountProducts;
+  NewProduct? newProduct;
+  BestSellProduct? bestSellProduct;
+  NewPost? newPost;
 
   factory HomeData.fromJson(Map<String, dynamic> json) => HomeData(
         banner: BannerList.fromJson(json["banner"]),
@@ -32,12 +32,12 @@ class HomeData {
       );
 
   Map<String, dynamic> toJson() => {
-        "banner": banner.toJson(),
-        "allCategory": allCategory.toJson(),
-        "discountProducts": discountProducts.toJson(),
-        "newProduct": newProduct.toJson(),
-        "bestSellProduct": bestSellProduct.toJson(),
-        "newPost": newPost.toJson(),
+        "banner": banner!.toJson(),
+        "allCategory": allCategory!.toJson(),
+        "discountProducts": discountProducts!.toJson(),
+        "newProduct": newProduct!.toJson(),
+        "bestSellProduct": bestSellProduct!.toJson(),
+        "newPost": newPost!.toJson(),
       };
 }
 
@@ -48,9 +48,9 @@ class AllCategory {
     this.list,
   });
 
-  String name;
-  String type;
-  List<Category> list;
+  String? name;
+  String? type;
+  List<Category>? list;
 
   factory AllCategory.fromJson(Map<String, dynamic> json) => AllCategory(
         name: json["name"],
@@ -62,7 +62,7 @@ class AllCategory {
   Map<String, dynamic> toJson() => {
         "name": name,
         "type": type,
-        "list": List<dynamic>.from(list.map((x) => x.toJson())),
+        "list": List<dynamic>.from(list!.map((x) => x.toJson())),
       };
 }
 
@@ -73,9 +73,9 @@ class BannerList {
     this.list,
   });
 
-  String name;
-  String type;
-  List<BannerItem> list;
+  String? name;
+  String? type;
+  List<BannerItem>? list;
 
   factory BannerList.fromJson(Map<String, dynamic> json) => BannerList(
         name: json["name"],
@@ -87,7 +87,7 @@ class BannerList {
   Map<String, dynamic> toJson() => {
         "name": name,
         "type": type,
-        "list": List<dynamic>.from(list.map((x) => x.toJson())),
+        "list": List<dynamic>.from(list!.map((x) => x.toJson())),
       };
 }
 
@@ -100,9 +100,9 @@ class NewProduct {
     this.list,
   });
 
-  String name;
-  String type;
-  List<Product> list;
+  String? name;
+  String? type;
+  List<Product>? list;
 
   factory NewProduct.fromJson(Map<String, dynamic> json) => NewProduct(
         name: json["name"],
@@ -113,7 +113,7 @@ class NewProduct {
   Map<String, dynamic> toJson() => {
         "name": name,
         "type": type,
-        "list": List<dynamic>.from(list.map((x) => x.toJson())),
+        "list": List<dynamic>.from(list!.map((x) => x.toJson())),
       };
 }
 
@@ -124,9 +124,9 @@ class BestSellProduct {
     this.list,
   });
 
-  String name;
-  String type;
-  List<Product> list;
+  String? name;
+  String? type;
+  List<Product>? list;
 
   factory BestSellProduct.fromJson(Map<String, dynamic> json) =>
       BestSellProduct(
@@ -138,7 +138,7 @@ class BestSellProduct {
   Map<String, dynamic> toJson() => {
         "name": name,
         "type": type,
-        "list": List<dynamic>.from(list.map((x) => x.toJson())),
+        "list": List<dynamic>.from(list!.map((x) => x.toJson())),
       };
 }
 
@@ -149,9 +149,9 @@ class DiscountProducts {
     this.list,
   });
 
-  String name;
-  String type;
-  List<DiscountProductsList> list;
+  String? name;
+  String? type;
+  List<DiscountProductsList>? list;
 
   factory DiscountProducts.fromJson(Map<String, dynamic> json) =>
       DiscountProducts(
@@ -164,7 +164,7 @@ class DiscountProducts {
   Map<String, dynamic> toJson() => {
         "name": name,
         "type": type,
-        "list": List<dynamic>.from(list.map((x) => x.toJson())),
+        "list": List<dynamic>.from(list!.map((x) => x.toJson())),
       };
 }
 
@@ -175,9 +175,9 @@ class NewPost {
     this.list,
   });
 
-  String name;
-  String type;
-  List<Post> list;
+  String? name;
+  String? type;
+  List<Post>? list;
 
   factory NewPost.fromJson(Map<String, dynamic> json) => NewPost(
         name: json["name"],
@@ -188,6 +188,6 @@ class NewPost {
   Map<String, dynamic> toJson() => {
         "name": name,
         "type": type,
-        "list": List<dynamic>.from(list.map((x) => x.toJson())),
+        "list": List<dynamic>.from(list!.map((x) => x.toJson())),
       };
 }

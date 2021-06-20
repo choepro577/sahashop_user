@@ -28,12 +28,12 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
 
   final _formKey = GlobalKey<FormState>();
 
-  String _chosenValue;
-  List<DataTypeShop> listTypeShop;
+  String? _chosenValue;
+  List<DataTypeShop>? listTypeShop;
   List<String> nameTypeShop = [];
-  Map<String, String> chooseDropDownValue;
+  Map<String, String?>? chooseDropDownValue;
   // ignore: cancel_subscriptions
-  StreamSubscription sub;
+  StreamSubscription? sub;
   final signUpController = Get.put(SignUpController());
 
   @override
@@ -100,7 +100,7 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
                 controller: textEditingControllerNameShop,
                 onChanged: (value) {},
                 validator: (value) {
-                  if (value.length < 6) {
+                  if (value!.length < 6) {
                     return 'Bạn chưa nhập số điện thoại';
                   }
                   return null;
@@ -115,7 +115,7 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
                 controller: textEditingControllerAddress,
                 onChanged: (value) {},
                 validator: (value) {
-                  if (value.length < 6) {
+                  if (value!.length < 6) {
                     return 'mật khẩu chứa hơn 6 kí tự';
                   }
                   return null;
@@ -127,16 +127,16 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
                 icon: Icon(Icons.lock),
               ),
               GetX<SetUpInfoShopController>(
-                builder: (_) => DropdownButton<Map<String, String>>(
+                builder: (_) => DropdownButton<Map<String, String?>>(
                   focusColor: Colors.white,
                   value: chooseDropDownValue,
                   //elevation: 5,
                   style: TextStyle(color: Colors.white),
                   iconEnabledColor: Colors.black,
                   items: setUpInfoShopController.mapTypeShop
-                      .map<DropdownMenuItem<Map<String, String>>>(
-                          (Map<String, String> value) {
-                    return DropdownMenuItem<Map<String, String>>(
+                      .map<DropdownMenuItem<Map<String, String?>>>(
+                          (Map<String, String?> value) {
+                    return DropdownMenuItem<Map<String, String?>>(
                       value: value,
                       child: Text(
                         "${value.values.first}",
@@ -151,10 +151,10 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
                         fontSize: 14,
                         fontWeight: FontWeight.w500),
                   ),
-                  onChanged: (Map<String, String> value) {
+                  onChanged: (Map<String, String?>? value) {
                     setState(() {
                       chooseDropDownValue = value;
-                      _chosenValue = value.keys.first;
+                      _chosenValue = value!.keys.first;
                     });
                   },
                 ),
@@ -162,8 +162,8 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
               TextButton(
                 // signUpController.shopPhones.toString()
                 onPressed: () {
-                  if (_formKey.currentState.validate()) {
-                    _formKey.currentState.save();
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
                     KeyboardUtil.hideKeyboard(context);
                     setUpInfoShopController.createShop(
                         textEditingControllerNameShop.text,

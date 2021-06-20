@@ -26,15 +26,15 @@ class MyProgramController extends GetxController {
     try {
       var res = await RepositoryManager.marketingChanel.getAllDiscount();
 
-      if (res.data.isNotEmpty) {
+      if (res!.data!.isNotEmpty) {
         hasDiscounted.value = true;
       }
 
-      res.data.forEach((element) {
-        if (element.startTime.isAfter(timeNow)) {
+      res.data!.forEach((element) {
+        if (element.startTime!.isAfter(timeNow)) {
           listProgramIsComing.value.add(element);
         } else {
-          if (element.endTime.isAfter(timeNow)) {
+          if (element.endTime!.isAfter(timeNow)) {
             listProgramIsRunning.value.add(element);
           }
           // else {
@@ -64,7 +64,7 @@ class MyProgramController extends GetxController {
           .getEndDiscountFromPage(pageLoadMore);
 
       if (!isEndPageDiscount) {
-        res.data.data.forEach((element) {
+        res!.data!.data!.forEach((element) {
           listProgramIsEnd.value.add(element);
         });
       } else {
@@ -73,7 +73,7 @@ class MyProgramController extends GetxController {
 
       listAll.value[2] = listProgramIsEnd.value;
       listAllSaveStateBefore = listAll;
-      if (res.data.nextPageUrl != null) {
+      if (res.data!.nextPageUrl != null) {
         pageLoadMore++;
         isEndPageDiscount = false;
       } else {
@@ -95,7 +95,7 @@ class MyProgramController extends GetxController {
   }
 
   Future<void> endDiscount(
-    int idDiscount,
+    int? idDiscount,
     bool isEnd,
     String name,
     String description,
@@ -130,7 +130,7 @@ class MyProgramController extends GetxController {
   }
 
   Future<void> deleteDiscount(
-    int idDiscount,
+    int? idDiscount,
   ) async {
     isDeletingDiscount.value = true;
     try {

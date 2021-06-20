@@ -8,9 +8,9 @@ import 'package:sahashop_user/utils/user_info.dart';
 import '../handle_error.dart';
 
 class CategoryRepository {
-  Future<Category> createCategory(String name, File image) async {
+  Future<Category?> createCategory(String? name, File? image) async {
     try {
-      var res = await SahaServiceManager().service.createCategory(
+      var res = await SahaServiceManager().service!.createCategory(
         UserInfo().getCurrentStoreCode(),
         {
           "name": name,
@@ -24,10 +24,10 @@ class CategoryRepository {
     }
   }
 
-  Future<List<Category>> getAllCategory() async {
+  Future<List<Category>?> getAllCategory() async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .getAllCategory(UserInfo().getCurrentStoreCode());
       return res.data;
     } catch (err) {

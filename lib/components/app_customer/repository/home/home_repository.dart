@@ -4,9 +4,9 @@ import 'package:sahashop_user/model/home_data.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class HomeDataRepository {
-  Future<HomeData> getHomeData() async {
+  Future<HomeData?> getHomeData() async {
     try {
-      var res = await CustomerServiceManager().service.getHomeApp(
+      var res = await CustomerServiceManager().service!.getHomeApp(
             UserInfo().getCurrentStoreCode(),
           );
       return res.data;

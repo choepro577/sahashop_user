@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:sahashop_user/const/constant.dart';
 
 class SahaButtonFullParent extends StatelessWidget {
-  final Function onPressed;
-  final String text;
-  final Color textColor;
-  final Color color;
-  final Color colorBorder;
+  final Function? onPressed;
+  final String? text;
+  final Color? textColor;
+  final Color? color;
+  final Color? colorBorder;
 
   const SahaButtonFullParent(
-      {Key key,
+      {Key? key,
       this.onPressed,
       this.text,
       this.textColor,
@@ -32,12 +32,12 @@ class SahaButtonFullParent extends StatelessWidget {
                 ? BorderSide(width: 0, color: Colors.transparent)
                 : BorderSide(
                     width: 1.0,
-                    color: colorBorder,
+                    color: colorBorder!,
                   ),
             borderRadius: BorderRadius.circular(4),
           ),
         ),
-        onPressed: onPressed,
+        onPressed: onPressed as void Function()?,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -61,13 +61,13 @@ class SahaButtonFullParent extends StatelessWidget {
 }
 
 class SahaButtonSizeChild extends StatelessWidget {
-  final Function onPressed;
-  final String text;
-  final Color textColor;
-  final Color color;
+  final Function? onPressed;
+  final String? text;
+  final Color? textColor;
+  final Color? color;
 
   const SahaButtonSizeChild(
-      {Key key, this.onPressed, this.text, this.textColor, this.color})
+      {Key? key, this.onPressed, this.text, this.textColor, this.color})
       : super(key: key);
 
   @override
@@ -79,7 +79,7 @@ class SahaButtonSizeChild extends StatelessWidget {
         padding: EdgeInsets.only(top: 15, bottom: 15),
         color: onPressed == null ? Colors.grey : (color ?? SahaPrimaryColor),
         onPressed: () {
-          onPressed();
+          onPressed!();
         },
         child: Text(
           "$text",

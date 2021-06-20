@@ -34,15 +34,15 @@ class ImageUtils {
     return file;
   }
 
-  static Future<File> getImageFileFromAsset(Asset asset) async {
+  static Future<File?> getImageFileFromAsset(Asset? asset) async {
     if (Platform.isAndroid) {
-      return await getImageFileFromAssetsAndroid(asset);
+      return await getImageFileFromAssetsAndroid(asset!);
     } else if (Platform.isIOS) {
-      return await getImageFileFromAssetsIos(asset);
+      return await getImageFileFromAssetsIos(asset!);
     }
   }
 
-  static Future<File> getImageCompress(File file,
+  static Future<File?> getImageCompress(File file,
       {int quality = 20, int minHeight = 1024, int minWidth = 1024}) async {
     var path = file.path;
     final dir = await path_provider.getTemporaryDirectory();

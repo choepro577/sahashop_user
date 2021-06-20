@@ -7,7 +7,7 @@ class ChooseReasonCancelOrder {
   static void showChooseReasonCancel(Function onReturn, Function accept) {
     showModalBottomSheet<void>(
       isScrollControlled: true,
-      context: Get.context,
+      context: Get.context!,
       builder: (BuildContext context) {
         OrderHistoryDetailController orderHistoryDetailController = Get.find();
         var listReasonCancelOrder = [
@@ -18,10 +18,10 @@ class ChooseReasonCancelOrder {
           "Tìm thấy giá rẻ hơn chỗ khác",
           "Đổi ý không muốn mua nữa",
         ];
-        Widget boxChooseReason({String text, Function onTap, bool isChoose}) {
+        Widget boxChooseReason({required String text, Function? onTap, required bool isChoose}) {
           return InkWell(
               onTap: () {
-                onTap(text);
+                onTap!(text);
               },
               child: Row(
                 children: [

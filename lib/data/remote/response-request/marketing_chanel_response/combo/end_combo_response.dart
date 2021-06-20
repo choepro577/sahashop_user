@@ -21,11 +21,11 @@ class EndComboResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  String msg;
-  Data data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  String? msg;
+  Data? data;
 
   factory EndComboResponse.fromJson(Map<String, dynamic> json) =>
       EndComboResponse(
@@ -41,7 +41,7 @@ class EndComboResponse {
         "success": success,
         "msg_code": msgCode,
         "msg": msg,
-        "data": data.toJson(),
+        "data": data!.toJson(),
       };
 }
 
@@ -58,15 +58,15 @@ class Data {
     this.to,
   });
 
-  int currentPage;
-  List<Combo> data;
-  String firstPageUrl;
-  int from;
+  int? currentPage;
+  List<Combo>? data;
+  String? firstPageUrl;
+  int? from;
   dynamic nextPageUrl;
-  String path;
-  int perPage;
+  String? path;
+  int? perPage;
   dynamic prevPageUrl;
-  int to;
+  int? to;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         currentPage: json["current_page"],
@@ -82,7 +82,7 @@ class Data {
 
   Map<String, dynamic> toJson() => {
         "current_page": currentPage,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
         "first_page_url": firstPageUrl,
         "from": from,
         "next_page_url": nextPageUrl,

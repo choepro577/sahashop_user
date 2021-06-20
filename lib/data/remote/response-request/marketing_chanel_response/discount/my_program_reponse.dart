@@ -1,10 +1,10 @@
 import 'package:sahashop_user/model/discount_product_list.dart';
 
 class MyProgramResponse {
-  int code;
-  bool success;
-  String msgCode;
-  List<DiscountProductsList> data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  List<DiscountProductsList>? data;
 
   MyProgramResponse({
     this.code,
@@ -18,9 +18,9 @@ class MyProgramResponse {
     success = json["success"];
     msgCode = json["msg_code"];
     if (json['data'] != null) {
-      data = new List<DiscountProductsList>();
+      data =  [];
       json['data'].forEach((v) {
-        data.add(new DiscountProductsList.fromJson(v));
+        data!.add(new DiscountProductsList.fromJson(v));
       });
     }
     Map<String, dynamic> toJson() {
@@ -29,7 +29,7 @@ class MyProgramResponse {
       data['success'] = this.success;
       data['msg_code'] = this.msgCode;
       if (this.data != null) {
-        data['data'] = this.data.map((v) => v.toJson()).toList();
+        data['data'] = this.data!.map((v) => v.toJson()).toList();
       }
       return data;
     }

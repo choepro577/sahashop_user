@@ -16,7 +16,7 @@ import 'package:sahashop_user/components/saha_user/text/text_money.dart';
 import 'package:sahashop_user/screen/home/widget/section_title.dart';
 
 class ProductScreen1 extends StatelessWidget {
-  ProductController productController;
+  late ProductController productController;
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +40,12 @@ class ProductScreen1 extends StatelessWidget {
                                       productController.changeIndexImage(index);
                                     }),
                                 items: productController
-                                    .productDetailRequest.value.images
+                                    .productDetailRequest.value.images!
                                     .map((item) => Container(
                                           child: Stack(
                                             children: <Widget>[
                                               CachedNetworkImage(
-                                                imageUrl: item.imageUrl,
+                                                imageUrl: item.imageUrl!,
                                                 fit: BoxFit.cover,
                                                 width: 1000.0,
                                                 height: Get.height * 0.45,
@@ -84,10 +84,10 @@ class ProductScreen1 extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: productController
-                                    .productDetailRequest.value.images
+                                    .productDetailRequest.value.images!
                                     .map((url) {
                                   int index = productController
-                                      .productDetailRequest.value.images
+                                      .productDetailRequest.value.images!
                                       .indexOf(url);
                                   return Obx(
                                     () => Container(
@@ -126,7 +126,7 @@ class ProductScreen1 extends StatelessWidget {
                                   style: TextStyle(
                                       color: Theme.of(context)
                                           .primaryTextTheme
-                                          .headline6
+                                          .headline6!
                                           .color,
                                       fontWeight: FontWeight.w600),
                                 ),
@@ -378,16 +378,16 @@ class ProductScreen1 extends StatelessWidget {
                                                   imageUrl: productController
                                                               .listProductCombo[
                                                                   index]
-                                                              .product
-                                                              .images
+                                                              .product!
+                                                              .images!
                                                               .length !=
                                                           0
                                                       ? productController
                                                           .listProductCombo[
                                                               index]
-                                                          .product
-                                                          .images[0]
-                                                          .imageUrl
+                                                          .product!
+                                                          .images![0]
+                                                          .imageUrl!
                                                       : "",
                                                   fit: BoxFit.cover,
                                                   width: Get.width / 3 - 10,
@@ -591,7 +591,7 @@ class ProductScreen1 extends StatelessWidget {
                                               var controller =
                                                   ExpandableController.of(
                                                       context,
-                                                      required: true);
+                                                      required: true)!;
                                               return Container(
                                                 width: Get.width * 0.9,
                                                 child: TextButton(
@@ -601,7 +601,7 @@ class ProductScreen1 extends StatelessWidget {
                                                         : "Xem thêm",
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .button
+                                                        .button!
                                                         .copyWith(
                                                             color: Colors
                                                                 .deepPurple),
@@ -801,7 +801,7 @@ class ProductScreen1 extends StatelessWidget {
                             color: true
                                 ? Theme.of(context)
                                     .primaryTextTheme
-                                    .headline6
+                                    .headline6!
                                     .color
                                 : Color(0xFFDBDEE4),
                           ),
@@ -861,10 +861,10 @@ class ProductScreen1 extends StatelessWidget {
                 child: productController.animateAddCart.value
                     ? CachedNetworkImage(
                         imageUrl: productController
-                                    .productDetailRequest.value.images.length !=
+                                    .productDetailRequest.value.images!.length !=
                                 0
                             ? productController
-                                .productDetailRequest.value.images[0].imageUrl
+                                .productDetailRequest.value.images![0].imageUrl!
                             : "",
                         fit: BoxFit.cover,
                         width: 1000.0,
@@ -900,7 +900,7 @@ class ProductScreen1 extends StatelessWidget {
                           "assets/icons/chat.svg",
                           color: Theme.of(context)
                               .primaryTextTheme
-                              .headline6
+                              .headline6!
                               .color,
                         ),
                       ),
@@ -925,7 +925,7 @@ class ProductScreen1 extends StatelessWidget {
                                   "assets/icons/add_to_cart.svg",
                                   color: Theme.of(context)
                                       .primaryTextTheme
-                                      .headline6
+                                      .headline6!
                                       .color,
                                 ),
                               ),
@@ -938,7 +938,7 @@ class ProductScreen1 extends StatelessWidget {
                                   "assets/icons/add_to_cart.svg",
                                   color: Theme.of(context)
                                       .primaryTextTheme
-                                      .headline6
+                                      .headline6!
                                       .color,
                                 ),
                               ),
@@ -972,15 +972,15 @@ class ProductScreen1 extends StatelessWidget {
                                             imageUrl: productController
                                                         .productDetailRequest
                                                         .value
-                                                        .images
+                                                        .images!
                                                         .length ==
                                                     0
                                                 ? ""
                                                 : productController
                                                     .productDetailRequest
                                                     .value
-                                                    .images[0]
-                                                    .imageUrl,
+                                                    .images![0]
+                                                    .imageUrl!,
                                             fit: BoxFit.cover,
                                             errorWidget: (context, url,
                                                     error) =>
@@ -1045,7 +1045,7 @@ class ProductScreen1 extends StatelessWidget {
                                           child: Icon(Icons.remove),
                                           decoration: BoxDecoration(
                                               border: Border.all(
-                                                  color: Colors.grey[300])),
+                                                  color: Colors.grey[300]!)),
                                         ),
                                       ),
                                       Container(
@@ -1059,7 +1059,7 @@ class ProductScreen1 extends StatelessWidget {
                                         ),
                                         decoration: BoxDecoration(
                                             border: Border.all(
-                                                color: Colors.grey[300])),
+                                                color: Colors.grey[300]!)),
                                       ),
                                       InkWell(
                                         onTap: () {
@@ -1071,7 +1071,7 @@ class ProductScreen1 extends StatelessWidget {
                                           child: Icon(Icons.add),
                                           decoration: BoxDecoration(
                                               border: Border.all(
-                                                  color: Colors.grey[300])),
+                                                  color: Colors.grey[300]!)),
                                         ),
                                       ),
                                     ],
@@ -1083,7 +1083,7 @@ class ProductScreen1 extends StatelessWidget {
                               text: "Mua ngay",
                               textColor: Theme.of(context)
                                   .primaryTextTheme
-                                  .headline6
+                                  .headline6!
                                   .color,
                               color: Theme.of(context).primaryColor,
                               onPressed: () {
@@ -1107,7 +1107,7 @@ class ProductScreen1 extends StatelessWidget {
                       style: TextStyle(
                           color: Theme.of(context)
                               .primaryTextTheme
-                              .headline6
+                              .headline6!
                               .color),
                     ))),
               ),

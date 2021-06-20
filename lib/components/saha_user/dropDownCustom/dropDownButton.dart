@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:sahashop_user/screen/config_app/screens_config/font_type/font_data.dart';
 
 class DropDownButtonCustom extends StatelessWidget {
-  String value;
-  List<String> item;
-  String title;
-  Function onChange;
+  String? value;
+  List<String>? item;
+  String? title;
+  Function? onChange;
 
   DropDownButtonCustom({this.value, this.item, this.title, this.onChange});
 
@@ -19,14 +19,14 @@ class DropDownButtonCustom extends StatelessWidget {
       //elevation: 5,
       style: TextStyle(color: Colors.white),
       iconEnabledColor: Colors.black,
-      items: item.map<DropdownMenuItem<dynamic>>((String value) {
+      items: item!.map<DropdownMenuItem<dynamic>>((String value) {
         return DropdownMenuItem<dynamic>(
           value: value,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                FONT_DATA[value],
+                FONT_DATA[value]!,
                 style: TextStyle(color: Colors.black,
                 fontFamily: value
                 ),
@@ -37,11 +37,11 @@ class DropDownButtonCustom extends StatelessWidget {
         );
       }).toList(),
       hint: Text(
-        title,
+        title!,
         style: TextStyle(
             color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),
       ),
-      onChanged: onChange,
+      onChanged: onChange as void Function(dynamic)?,
     );
   }
 }

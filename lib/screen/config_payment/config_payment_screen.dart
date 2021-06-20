@@ -7,7 +7,7 @@ import 'package:sahashop_user/screen/config_payment/config_detail_payment/config
 import 'package:sahashop_user/screen/config_payment/config_payment_controller.dart';
 
 class ConfigPayment extends StatelessWidget {
-  ConfigPaymentController configPaymentController;
+  late ConfigPaymentController configPaymentController;
   @override
   Widget build(BuildContext context) {
     configPaymentController = Get.put(ConfigPaymentController());
@@ -78,7 +78,7 @@ class ConfigPayment extends StatelessWidget {
                 () => CustomSwitch(
                   value: configPaymentController.listUsePaymentMethod[index],
                   onChanged: (bool val) {
-                    if (configPaymentController.listUsePaymentMethod[index]) {
+                    if (configPaymentController.listUsePaymentMethod[index]!) {
                       configPaymentController.upDatePaymentMethod(
                           configPaymentController.listIdPaymentMethod[index],
                           configPaymentController.listFieldRequest[index],

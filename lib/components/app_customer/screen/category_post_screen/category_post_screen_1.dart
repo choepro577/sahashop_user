@@ -19,7 +19,7 @@ class CategoryPostStyle1 extends StatelessWidget {
   final DataAppCustomerController dataAppCustomerController = Get.find();
   final CategoryPostController categoryController = CategoryPostController();
 
-  CategoryPostStyle1({Key key}) : super(key: key);
+  CategoryPostStyle1({Key? key}) : super(key: key);
 
   @override
   void dispose() {}
@@ -38,7 +38,7 @@ class CategoryPostStyle1 extends StatelessWidget {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryTextTheme.headline1.color,
+                  color: Theme.of(context).primaryTextTheme.headline1!.color,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: TextField(
@@ -121,14 +121,14 @@ class CategoryPostStyle1 extends StatelessWidget {
     });
   }
 
-  Widget buildItem({CategoryPost category}) {
+  Widget buildItem({CategoryPost? category}) {
     return Obx(
         () => Container(
           height: 25,
           margin: EdgeInsets.all(10),
           padding: EdgeInsets.only(left: 13,right: 13,bottom: 8, top: 8),
           decoration: BoxDecoration(
-            border: Border.all(color:  categoryController.categoryCurrent?.value?.id == category.id
+            border: Border.all(color:  categoryController.categoryCurrent.value.id == category!.id
                 ? Colors.black
                 : Colors.grey),
             borderRadius: BorderRadius.all(Radius.circular(45)),
@@ -165,11 +165,11 @@ class CategoryPostStyle1 extends StatelessWidget {
                   maxLines: 3,
                   style: TextStyle(
                       fontSize: 13,
-                      fontWeight: categoryController.categoryCurrent?.value?.id == category.id
+                      fontWeight: categoryController.categoryCurrent.value.id == category.id
                           ? FontWeight.bold
                           : FontWeight.normal,
                       color: categoryController.categoryCurrent.value == category
-                          ? Theme.of(Get.context).primaryColor
+                          ? Theme.of(Get.context!).primaryColor
                           : Colors.black54),
                   textAlign: TextAlign.center,
                 ),

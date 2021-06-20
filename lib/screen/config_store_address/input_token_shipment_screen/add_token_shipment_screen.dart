@@ -7,9 +7,9 @@ import 'package:sahashop_user/model/shipment.dart';
 import 'package:sahashop_user/screen/config_store_address/input_token_shipment_screen/add_token_controller.dart';
 
 class InputTokenShipmentScreen extends StatelessWidget {
-  Shipment shipment;
+  Shipment? shipment;
 
-  AddTokenShipment addTokenShipment;
+  late AddTokenShipment addTokenShipment;
 
   InputTokenShipmentScreen({this.shipment}) {
     addTokenShipment = AddTokenShipment(shipment: shipment);

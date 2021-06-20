@@ -1,20 +1,21 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 
 class SahaTextFiledContent extends StatelessWidget {
-  final String title;
-  final String contentSaved;
-  final Function onChangeContent;
+  final String? title;
+  final String? contentSaved;
+  final Function? onChangeContent;
 
   SahaTextFiledContent(
-      {Key key, this.title, this.contentSaved, this.onChangeContent})
+      {Key? key, this.title, this.contentSaved, this.onChangeContent})
       : super(key: key);
 
-  Html html;
+  Html? html;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class SahaTextFiledContent extends StatelessWidget {
               ),
             ),
             Divider(),
-            html
+            html!
           ],
         ),
       ),
@@ -61,16 +62,17 @@ class SahaTextFiledContent extends StatelessWidget {
   void toChangeScreen() {
     Get.to(EditContentHtml(
       contentSaved: contentSaved,
-    )).then((value) {
-      if (onChangeContent != null) onChangeContent(value);
+    ))!
+        .then((value) {
+      if (onChangeContent != null) onChangeContent!(value);
     });
   }
 }
 
 class EditContentHtml extends StatefulWidget {
-  final String contentSaved;
+  final String? contentSaved;
 
-  const EditContentHtml({Key key, this.contentSaved}) : super(key: key);
+  const EditContentHtml({Key? key, this.contentSaved}) : super(key: key);
 
   @override
   _EditContentHtmlState createState() => _EditContentHtmlState();
@@ -79,25 +81,11 @@ class EditContentHtml extends StatefulWidget {
 class _EditContentHtmlState extends State<EditContentHtml> {
   HtmlEditorController controller = HtmlEditorController();
 
-  Widget htmlEditor;
-
   @override
   void initState() {
     super.initState();
 
-    htmlEditor = HtmlEditor(
-        controller: controller, //required
-        //other options
-        initialText: widget.contentSaved ?? "",
-        toolbar: [
-          Style(),
-          FontSetting(),
-          Font(),
-          MiscFont(),
-          ColorBar(),
-          Paragraph()
-        ],
-        options: HtmlEditorOptions());
+    configState();
   }
 
   Future<bool> _onWillPop() async {
@@ -106,15 +94,69 @@ class _EditContentHtmlState extends State<EditContentHtml> {
     return true;
   }
 
+  Future<void> configState() async {
+    await Future.delayed(Duration(seconds: 1));
+
+    controller.setFullScreen();
+
+    controller.clearFocus();
+    controller.setFocus();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => _onWillPop(),
       child: Scaffold(
-          appBar: SahaAppBar(
-            titleText: "Chỉnh sửa nội dung",
-          ),
-          body: htmlEditor),
+        appBar: SahaAppBar(
+          titleText: "Chỉnh sửa nội dung",
+          actions: [
+            IconButton(
+                icon: Icon(Icons.check),
+                tooltip: "Save",
+                onPressed: () {
+                  _onWillPop();
+                }
+            ),
+          ],
+        ),
+        body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: HtmlEditor(
+
+                controller: controller, //required
+                //other options
+                htmlEditorOptions: HtmlEditorOptions(
+                  shouldEnsureVisible:true,
+                  adjustHeightForKeyboard: false,
+                  autoAdjustHeight: false,
+                  initialText: widget.contentSaved!
+                ),
+                htmlToolbarOptions: HtmlToolbarOptions(
+
+                  defaultToolbarButtons: [
+                    FontButtons(
+                        superscript: false,
+                        strikethrough: false,
+                        subscript: false,
+                        clearAll: false),
+                    ListButtons(),
+                    ColorButtons(),
+                    ParagraphButtons(),
+                    StyleButtons(),
+                    FontSettingButtons(),
+
+                    //  InsertButtons(),
+                    OtherButtons(),
+                  ],
+
+                  customToolbarInsertionIndices: [2, 5],
+                  toolbarType: ToolbarType.nativeScrollable,
+                  toolbarPosition: ToolbarPosition.belowEditor,
+
+                ))),
+      ),
     );
   }
 }

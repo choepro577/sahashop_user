@@ -5,10 +5,10 @@ import '../../../const/constant.dart';
 
 class IconBtnWithCounter extends StatelessWidget {
   const IconBtnWithCounter({
-    Key key,
-    @required this.svgSrc,
+    Key? key,
+    required this.svgSrc,
     this.numOfitem = 0,
-    @required this.press,
+    required this.press,
   }) : super(key: key);
 
   final String svgSrc;
@@ -28,7 +28,7 @@ class IconBtnWithCounter extends StatelessWidget {
             height: 44,
             width: 44,
             decoration: BoxDecoration(
-              color: Theme.of(context).primaryTextTheme.headline1.color,
+              color: Theme.of(context).primaryTextTheme.headline1!.color,
               shape: BoxShape.circle,
             ),
             child: SvgPicture.asset(

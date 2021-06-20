@@ -14,8 +14,8 @@ import 'package:sahashop_user/utils/keyboard.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
 class UpdateMyVoucherScreen extends StatefulWidget {
-  Voucher voucher;
-  bool onlyWatch;
+  Voucher? voucher;
+  bool? onlyWatch;
 
   UpdateMyVoucherScreen({this.voucher, this.onlyWatch});
 
@@ -34,71 +34,71 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
   void initState() {
     updateVoucherController
         .updateProductVoucherController.listSelectedProduct.value
-        .addAll(widget.voucher.products);
+        .addAll(widget.voucher!.products!);
     updateVoucherController
         .updateProductVoucherController.listProductHasInDiscount.value
-        .addAll(widget.voucher.products);
+        .addAll(widget.voucher!.products!);
     updateVoucherController.nameProgramEditingController.text =
-        widget.voucher.name;
+        widget.voucher!.name!;
     updateVoucherController.codeVoucherEditingController.text =
-        widget.voucher.code;
+        widget.voucher!.code!;
 
     updateVoucherController.dateStart.value = DateTime(
-      widget.voucher.startTime.year,
-      widget.voucher.startTime.month,
-      widget.voucher.startTime.day,
-      widget.voucher.startTime.hour,
-      widget.voucher.startTime.minute,
-      widget.voucher.startTime.second,
-      widget.voucher.startTime.millisecond,
-      widget.voucher.startTime.microsecond,
+      widget.voucher!.startTime!.year,
+      widget.voucher!.startTime!.month,
+      widget.voucher!.startTime!.day,
+      widget.voucher!.startTime!.hour,
+      widget.voucher!.startTime!.minute,
+      widget.voucher!.startTime!.second,
+      widget.voucher!.startTime!.millisecond,
+      widget.voucher!.startTime!.microsecond,
     );
     updateVoucherController.dateEnd.value = DateTime(
-      widget.voucher.endTime.year,
-      widget.voucher.endTime.month,
-      widget.voucher.endTime.day,
-      widget.voucher.endTime.hour,
-      widget.voucher.endTime.minute,
-      widget.voucher.endTime.second,
-      widget.voucher.endTime.millisecond,
-      widget.voucher.endTime.microsecond,
+      widget.voucher!.endTime!.year,
+      widget.voucher!.endTime!.month,
+      widget.voucher!.endTime!.day,
+      widget.voucher!.endTime!.hour,
+      widget.voucher!.endTime!.minute,
+      widget.voucher!.endTime!.second,
+      widget.voucher!.endTime!.millisecond,
+      widget.voucher!.endTime!.microsecond,
     );
     updateVoucherController.timeStart.value = DateTime(
-      widget.voucher.startTime.year,
-      widget.voucher.startTime.month,
-      widget.voucher.startTime.day,
-      widget.voucher.startTime.hour,
-      widget.voucher.startTime.minute,
-      widget.voucher.startTime.second,
-      widget.voucher.startTime.millisecond,
-      widget.voucher.startTime.microsecond,
+      widget.voucher!.startTime!.year,
+      widget.voucher!.startTime!.month,
+      widget.voucher!.startTime!.day,
+      widget.voucher!.startTime!.hour,
+      widget.voucher!.startTime!.minute,
+      widget.voucher!.startTime!.second,
+      widget.voucher!.startTime!.millisecond,
+      widget.voucher!.startTime!.microsecond,
     );
     updateVoucherController.timeEnd.value = DateTime(
-      widget.voucher.endTime.year,
-      widget.voucher.endTime.month,
-      widget.voucher.endTime.day,
-      widget.voucher.endTime.hour,
-      widget.voucher.endTime.minute,
-      widget.voucher.endTime.second,
-      widget.voucher.endTime.millisecond,
-      widget.voucher.endTime.microsecond,
+      widget.voucher!.endTime!.year,
+      widget.voucher!.endTime!.month,
+      widget.voucher!.endTime!.day,
+      widget.voucher!.endTime!.hour,
+      widget.voucher!.endTime!.minute,
+      widget.voucher!.endTime!.second,
+      widget.voucher!.endTime!.millisecond,
+      widget.voucher!.endTime!.microsecond,
     );
     updateVoucherController.discountTypeInput.value =
-        widget.voucher.discountType;
-    updateVoucherController.voucherTypeInput.value = widget.voucher.voucherType;
+        widget.voucher!.discountType!;
+    updateVoucherController.voucherTypeInput.value = widget.voucher!.voucherType!;
 
     updateVoucherController.pricePermanentEditingController.text =
-        widget.voucher.valueDiscount.toString();
+        widget.voucher!.valueDiscount.toString();
     updateVoucherController.priceDiscountLimitedEditingController.text =
-        widget.voucher.maxValueDiscount == null
+        widget.voucher!.maxValueDiscount == null
             ? ""
-            : widget.voucher.maxValueDiscount.toString();
+            : widget.voucher!.maxValueDiscount.toString();
     updateVoucherController.isLimitedPrice.value =
-        widget.voucher.setLimitValueDiscount;
+        widget.voucher!.setLimitValueDiscount!;
     updateVoucherController.minimumOrderEditingController.text =
-        widget.voucher.valueLimitTotal.toString();
+        widget.voucher!.valueLimitTotal.toString();
     updateVoucherController.amountCodeAvailableEditingController.text =
-        widget.voucher.amount == null ? "" : widget.voucher.amount.toString();
+        widget.voucher!.amount == null ? "" : widget.voucher!.amount.toString();
     updateVoucherController.checkTypeDiscountInput();
     super.initState();
   }
@@ -112,7 +112,7 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
         FocusScopeNode currentFocus = FocusScope.of(context);
         if (!currentFocus.hasPrimaryFocus &&
             currentFocus.focusedChild != null) {
-          FocusManager.instance.primaryFocus.unfocus();
+          FocusManager.instance.primaryFocus!.unfocus();
         }
       },
       child: Scaffold(
@@ -148,7 +148,7 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                             controller: updateVoucherController
                                 .nameProgramEditingController,
                             validator: (value) {
-                              if (value.length < 1) {
+                              if (value!.length < 1) {
                                 return 'Chưa nhập tên chương trình';
                               }
                               return null;
@@ -184,7 +184,7 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                 .codeVoucherEditingController,
                             keyboardType: TextInputType.name,
                             validator: (value) {
-                              if (value.length < 1) {
+                              if (value!.length < 1) {
                                 return 'Chưa nhập mã giảm giá';
                               } else {
                                 if (SahaStringUtils()
@@ -394,7 +394,7 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                                           updateVoucherController
                                                               .discountType
                                                               .value,
-                                                      onChanged: (v) {
+                                                      onChanged: (dynamic v) {
                                                         updateVoucherController
                                                             .onChangeRatio(v);
                                                       },
@@ -435,7 +435,7 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                                                       .number,
                                                               validator:
                                                                   (value) {
-                                                                if (value
+                                                                if (value!
                                                                         .length <
                                                                     1) {
                                                                   return 'Chưa nhập giá trị muốn giảm';
@@ -487,7 +487,7 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                                           updateVoucherController
                                                               .discountType
                                                               .value,
-                                                      onChanged: (v) {
+                                                      onChanged: (dynamic v) {
                                                         updateVoucherController
                                                             .onChangeRatio(v);
                                                       },
@@ -522,7 +522,7 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                                                           .number,
                                                                   validator:
                                                                       (value) {
-                                                                    if (value
+                                                                    if (value!
                                                                             .length <
                                                                         1) {
                                                                       return 'Chưa nhập % giảm giá';
@@ -609,7 +609,7 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                                                         )
                                                                       : Container(
                                                                           decoration: BoxDecoration(
-                                                                              border: Border.all(color: Colors.grey[600]),
+                                                                              border: Border.all(color: Colors.grey[600]!),
                                                                               borderRadius: BorderRadius.circular(5)),
                                                                           height:
                                                                               40,
@@ -664,7 +664,7 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                                                             EdgeInsets.all(8.0),
                                                                         decoration: BoxDecoration(
                                                                             border:
-                                                                                Border.all(color: Colors.grey[600]),
+                                                                                Border.all(color: Colors.grey[600]!),
                                                                             borderRadius: BorderRadius.circular(5)),
                                                                         height:
                                                                             40,
@@ -713,7 +713,7 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                                                               TextInputType.number,
                                                                           validator:
                                                                               (value) {
-                                                                            if (value.length <
+                                                                            if (value!.length <
                                                                                 1) {
                                                                               return 'Chưa nhập giá trị muốn giảm';
                                                                             } else {
@@ -760,9 +760,9 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                           InkWell(
                                             onTap: () {
                                               if (_formKeyTypeVoucher
-                                                  .currentState
+                                                  .currentState!
                                                   .validate()) {
-                                                _formKeyTypeVoucher.currentState
+                                                _formKeyTypeVoucher.currentState!
                                                     .save();
                                                 KeyboardUtil.hideKeyboard(
                                                     context);
@@ -838,7 +838,7 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                 .minimumOrderEditingController,
                             keyboardType: TextInputType.number,
                             validator: (value) {
-                              if (value.length < 1) {
+                              if (value!.length < 1) {
                                 return 'Chưa nhập giá trị tối thiểu đơn hàng';
                               } else {
                                 if (updateVoucherController
@@ -908,7 +908,7 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                 .amountCodeAvailableEditingController,
                             keyboardType: TextInputType.number,
                             validator: (value) {
-                              if (value.length < 1) {
+                              if (value!.length < 1) {
                                 return 'Chưa nhập số mã có thể sử dụng';
                               } else {
                                 return null;
@@ -1058,7 +1058,7 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                       ),
                     ),
                   ),
-                  widget.voucher.voucherType == 1
+                  widget.voucher!.voucherType == 1
                       ? Container(
                           color: Colors.white,
                           width: Get.width,
@@ -1176,7 +1176,7 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                                               .updateProductVoucherController
                                                               .listSelectedProduct
                                                               .value[index]
-                                                              .images
+                                                              .images!
                                                               .length ==
                                                           0
                                                       ? ""
@@ -1184,8 +1184,8 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                                           .updateProductVoucherController
                                                           .listSelectedProduct
                                                           .value[index]
-                                                          .images[0]
-                                                          .imageUrl,
+                                                          .images![0]
+                                                          .imageUrl!,
                                                   errorWidget:
                                                       (context, url, error) =>
                                                           Container(
@@ -1266,8 +1266,8 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                         : SahaButtonFullParent(
                             text: "Lưu",
                             onPressed: () {
-                              if (_formKey.currentState.validate()) {
-                                _formKey.currentState.save();
+                              if (_formKey.currentState!.validate()) {
+                                _formKey.currentState!.save();
                                 KeyboardUtil.hideKeyboard(context);
                                 updateVoucherController
                                     .updateProductVoucherController
@@ -1280,7 +1280,7 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                       .value = false;
                                 } else {
                                   updateVoucherController
-                                      .updateVoucher(widget.voucher.id);
+                                      .updateVoucher(widget.voucher!.id);
                                   updateVoucherController
                                       .isChoosedTypeVoucherDiscount
                                       .value = true;

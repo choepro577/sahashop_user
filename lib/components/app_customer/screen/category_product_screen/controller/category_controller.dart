@@ -17,7 +17,7 @@ class CategoryController extends GetxController {
   CategoryController() {
     final DataAppCustomerController dataAppCustomerController = Get.find();
     if (dataAppCustomerController.categoryCurrent != null) {
-      categoryCurrent(dataAppCustomerController.categoryCurrent);
+      categoryCurrent(dataAppCustomerController.categoryCurrent!);
     }
   }
 
@@ -33,12 +33,12 @@ class CategoryController extends GetxController {
     getProductWithCategory(category.id);
   }
 
-  Future<void> getProductWithCategory(int idCategory) async {
+  Future<void> getProductWithCategory(int? idCategory) async {
     try {
       var res = await CustomerRepositoryManager.productCustomerRepository
           .searchProduct(
               idCategory: idCategory == null ? "" : idCategory.toString());
-      products(res);
+      products(res!);
     } catch (err) {
       print(err);
       handleErrorCustomer(err);
@@ -53,7 +53,7 @@ class CategoryController extends GetxController {
       var res =
           await CustomerRepositoryManager.categoryRepository.getAllCategory();
 
-      categories(res);
+      categories(res!);
 
       if (categoryCurrent.value != null) {
         setCategoryCurrent(categoryCurrent.value);

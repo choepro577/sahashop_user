@@ -16,10 +16,10 @@ class CreateShopResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  DataCreateShop data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  DataCreateShop? data;
 
   factory CreateShopResponse.fromJson(Map<String, dynamic> json) => CreateShopResponse(
     code: json["code"],
@@ -32,7 +32,7 @@ class CreateShopResponse {
     "code": code,
     "success": success,
     "msg_code": msgCode,
-    "data": data.toJson(),
+    "data": data!.toJson(),
   };
 }
 
@@ -47,13 +47,13 @@ class DataCreateShop {
     this.id,
   });
 
-  String name;
-  String storeCode;
-  String address;
-  String idTypeOfStore;
-  DateTime updatedAt;
-  DateTime createdAt;
-  int id;
+  String? name;
+  String? storeCode;
+  String? address;
+  String? idTypeOfStore;
+  DateTime? updatedAt;
+  DateTime? createdAt;
+  int? id;
 
   factory DataCreateShop.fromJson(Map<String, dynamic> json) => DataCreateShop(
     name: json["name"],
@@ -70,8 +70,8 @@ class DataCreateShop {
     "store_code": storeCode,
     "address": address,
     "id_type_of_store": idTypeOfStore,
-    "updated_at": updatedAt.toIso8601String(),
-    "created_at": createdAt.toIso8601String(),
+    "updated_at": updatedAt!.toIso8601String(),
+    "created_at": createdAt!.toIso8601String(),
     "id": id,
   };
 }

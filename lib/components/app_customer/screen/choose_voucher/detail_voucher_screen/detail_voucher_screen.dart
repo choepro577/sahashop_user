@@ -5,7 +5,7 @@ import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
 class DetailVoucherScreen extends StatelessWidget {
-  final Voucher voucher;
+  final Voucher? voucher;
 
   DetailVoucherScreen({this.voucher});
 
@@ -24,7 +24,7 @@ class DetailVoucherScreen extends StatelessWidget {
               padding: const EdgeInsets.all(13.0),
               child: Container(
                 decoration:
-                    BoxDecoration(border: Border.all(color: Colors.grey[300])),
+                    BoxDecoration(border: Border.all(color: Colors.grey[300]!)),
                 child: Row(
                   children: [
                     Stack(
@@ -35,57 +35,57 @@ class DetailVoucherScreen extends StatelessWidget {
                           height: 100,
                           decoration: BoxDecoration(
                             color: Theme.of(context).primaryColor,
-                            border: Border.all(color: Colors.grey[500]),
+                            border: Border.all(color: Colors.grey[500]!),
                           ),
                           child: Center(
                             child: SizedBox(
                               width: 80,
-                              child: voucher.voucherType == 1
-                                  ? voucher.discountType == 1
+                              child: voucher!.voucherType == 1
+                                  ? voucher!.discountType == 1
                                       ? Text(
-                                          "Mã: ${voucher.code} giảm ${voucher.valueDiscount} %",
+                                          "Mã: ${voucher!.code} giảm ${voucher!.valueDiscount} %",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             color: Theme.of(context)
                                                 .primaryTextTheme
-                                                .headline6
+                                                .headline6!
                                                 .color,
                                             fontWeight: FontWeight.w500,
                                           ),
                                           maxLines: 4,
                                         )
                                       : Text(
-                                          "Mã: ${voucher.code} giảm ${SahaStringUtils().convertToMoney(voucher.valueDiscount)}đ",
+                                          "Mã: ${voucher!.code} giảm ${SahaStringUtils().convertToMoney(voucher!.valueDiscount)}đ",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             color: Theme.of(context)
                                                 .primaryTextTheme
-                                                .headline6
+                                                .headline6!
                                                 .color,
                                             fontWeight: FontWeight.w500,
                                           ),
                                           maxLines: 4,
                                         )
-                                  : voucher.discountType == 1
+                                  : voucher!.discountType == 1
                                       ? Text(
-                                          "Mã: ${voucher.code} giảm ${voucher.valueDiscount} %",
+                                          "Mã: ${voucher!.code} giảm ${voucher!.valueDiscount} %",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             color: Theme.of(context)
                                                 .primaryTextTheme
-                                                .headline6
+                                                .headline6!
                                                 .color,
                                             fontWeight: FontWeight.w500,
                                           ),
                                           maxLines: 4,
                                         )
                                       : Text(
-                                          "Mã: ${voucher.code} giảm ${SahaStringUtils().convertToMoney(voucher.valueDiscount)}đ",
+                                          "Mã: ${voucher!.code} giảm ${SahaStringUtils().convertToMoney(voucher!.valueDiscount)}đ",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             color: Theme.of(context)
                                                 .primaryTextTheme
-                                                .headline6
+                                                .headline6!
                                                 .color,
                                             fontWeight: FontWeight.w500,
                                           ),
@@ -182,13 +182,13 @@ class DetailVoucherScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "${voucher.name}",
+                                      "${voucher!.name}",
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600),
                                       maxLines: 2,
                                     ),
-                                    voucher.voucherType == 1
+                                    voucher!.voucherType == 1
                                         ? Text(
                                             "Giảm giá cho các sản phẩm sau:",
                                             style: TextStyle(
@@ -203,9 +203,9 @@ class DetailVoucherScreen extends StatelessWidget {
                                             ),
                                             maxLines: 2,
                                           ),
-                                    voucher.voucherType == 1
+                                    voucher!.voucherType == 1
                                         ? Text(
-                                            "${voucher.products[0].name}, vv...",
+                                            "${voucher!.products![0].name}, vv...",
                                             style: TextStyle(
                                               fontSize: 13,
                                             ),
@@ -213,7 +213,7 @@ class DetailVoucherScreen extends StatelessWidget {
                                           )
                                         : Container(),
                                     Text(
-                                      "HSD: ${SahaDateUtils().getDDMMYY(voucher.endTime)}",
+                                      "HSD: ${SahaDateUtils().getDDMMYY(voucher!.endTime!)}",
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.grey,
@@ -255,41 +255,41 @@ class DetailVoucherScreen extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  voucher.voucherType == 1
-                      ? voucher.discountType == 1
+                  voucher!.voucherType == 1
+                      ? voucher!.discountType == 1
                           ? Text(
-                              "Giảm ${voucher.valueDiscount} % cho các sản phẩm sau:",
+                              "Giảm ${voucher!.valueDiscount} % cho các sản phẩm sau:",
                               textAlign: TextAlign.center,
                               maxLines: 4,
                             )
                           : Text(
-                              "Giảm ${SahaStringUtils().convertToMoney(voucher.valueDiscount)}đ cho các sản phẩm sau:",
+                              "Giảm ${SahaStringUtils().convertToMoney(voucher!.valueDiscount)}đ cho các sản phẩm sau:",
                               textAlign: TextAlign.center,
                               maxLines: 4,
                             )
-                      : voucher.discountType == 1
+                      : voucher!.discountType == 1
                           ? Text(
-                              "Giảm ${voucher.valueDiscount} % cho toàn bộ các sản phẩm",
+                              "Giảm ${voucher!.valueDiscount} % cho toàn bộ các sản phẩm",
                               textAlign: TextAlign.center,
                               maxLines: 4,
                             )
                           : Text(
-                              "Giảm ${SahaStringUtils().convertToMoney(voucher.valueDiscount)}đ cho toàn bộ các sản phẩm",
+                              "Giảm ${SahaStringUtils().convertToMoney(voucher!.valueDiscount)}đ cho toàn bộ các sản phẩm",
                               textAlign: TextAlign.center,
                               maxLines: 4,
                             ),
-                  voucher.voucherType == 1
+                  voucher!.voucherType == 1
                       ? Text(
-                          "${voucher.products[0].name}, vv...",
+                          "${voucher!.products![0].name}, vv...",
                           style: TextStyle(
                             fontSize: 13,
                           ),
                           maxLines: 1,
                         )
                       : Container(),
-                  voucher.setLimitValueDiscount == true
+                  voucher!.setLimitValueDiscount == true
                       ? Text(
-                          "Giới hạn giảm ${SahaStringUtils().convertToMoney(voucher.maxValueDiscount)}đ.")
+                          "Giới hạn giảm ${SahaStringUtils().convertToMoney(voucher!.maxValueDiscount)}đ.")
                       : Container(),
                   SizedBox(
                     height: 20,
@@ -305,7 +305,7 @@ class DetailVoucherScreen extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    "${SahaDateUtils().getDDMMYY(voucher.startTime)} ${SahaDateUtils().getHHMM(voucher.startTime)} - ${SahaDateUtils().getDDMMYY(voucher.endTime)} ${SahaDateUtils().getHHMM(voucher.endTime)}",
+                    "${SahaDateUtils().getDDMMYY(voucher!.startTime!)} ${SahaDateUtils().getHHMM(voucher!.startTime!)} - ${SahaDateUtils().getDDMMYY(voucher!.endTime!)} ${SahaDateUtils().getHHMM(voucher!.endTime!)}",
                   ),
                   SizedBox(
                     height: 20,
@@ -334,29 +334,29 @@ class DetailVoucherScreen extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  voucher.setLimitAmount == true
-                      ? Text("Số lượng giới hạn: ${voucher.amount}.")
+                  voucher!.setLimitAmount == true
+                      ? Text("Số lượng giới hạn: ${voucher!.amount}.")
                       : Container(),
-                  voucher.voucherType == 1
+                  voucher!.voucherType == 1
                       ? Container(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text("Chỉ áp dụng cho các sản phẩm sau: "),
                               ...List.generate(
-                                  voucher.products.length,
+                                  voucher!.products!.length,
                                   (index) =>
-                                      Text("${voucher.products[index].name}."))
+                                      Text("${voucher!.products![index].name}."))
                             ],
                           ),
                         )
                       : Container(),
-                  voucher.setLimitTotal == true
+                  voucher!.setLimitTotal == true
                       ? Text(
-                          "Giá trị tổng đơn hàng tối thiểu: ${SahaStringUtils().convertToMoney(voucher.valueLimitTotal)}đ.")
+                          "Giá trị tổng đơn hàng tối thiểu: ${SahaStringUtils().convertToMoney(voucher!.valueLimitTotal)}đ.")
                       : Container(),
                   Text(
-                    "HSD: ${SahaDateUtils().getDDMMYY(voucher.startTime)} ${SahaDateUtils().getHHMM(voucher.startTime)} - ${SahaDateUtils().getDDMMYY(voucher.endTime)} ${SahaDateUtils().getHHMM(voucher.endTime)}.",
+                    "HSD: ${SahaDateUtils().getDDMMYY(voucher!.startTime!)} ${SahaDateUtils().getHHMM(voucher!.startTime!)} - ${SahaDateUtils().getDDMMYY(voucher!.endTime!)} ${SahaDateUtils().getHHMM(voucher!.endTime!)}.",
                   ),
                 ],
               ),

@@ -27,21 +27,21 @@ class DiscountProductsList {
     this.products,
   });
 
-  int id;
-  int storeId;
-  bool isEnd;
-  String name;
+  int? id;
+  int? storeId;
+  bool? isEnd;
+  String? name;
   dynamic description;
   dynamic imageUrl;
-  DateTime startTime;
-  DateTime endTime;
-  int value;
-  bool setLimitAmount;
+  DateTime? startTime;
+  DateTime? endTime;
+  int? value;
+  bool? setLimitAmount;
   dynamic amount;
-  int used;
-  DateTime createdAt;
-  DateTime updatedAt;
-  List<Product> products;
+  int? used;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  List<Product>? products;
 
   factory DiscountProductsList.fromJson(Map<String, dynamic> json) =>
       DiscountProductsList(
@@ -70,14 +70,14 @@ class DiscountProductsList {
         "name": name,
         "description": description,
         "image_url": imageUrl,
-        "start_time": startTime.toIso8601String(),
-        "end_time": endTime.toIso8601String(),
+        "start_time": startTime!.toIso8601String(),
+        "end_time": endTime!.toIso8601String(),
         "value": value,
         "set_limit_amount": setLimitAmount,
         "amount": amount,
         "used": used,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-        "products": List<dynamic>.from(products.map((x) => x.toJson())),
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
+        "products": List<dynamic>.from(products!.map((x) => x.toJson())),
       };
 }

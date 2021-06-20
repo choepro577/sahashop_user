@@ -1,9 +1,9 @@
 class AttributesResponse {
-  int code;
-  bool success;
-  String msgCode;
-  String msg;
-  List<String> data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  String? msg;
+  List<String>? data;
 
   AttributesResponse(
       {this.code, this.success, this.msgCode, this.msg, this.data});

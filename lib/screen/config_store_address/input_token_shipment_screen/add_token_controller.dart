@@ -5,7 +5,7 @@ import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/model/shipment.dart';
 
 class AddTokenShipment extends GetxController {
-  Shipment shipment;
+  Shipment? shipment;
 
   AddTokenShipment({this.shipment});
 
@@ -14,7 +14,7 @@ class AddTokenShipment extends GetxController {
   Future<void> addTokenShipment() async {
     try {
       var res = await RepositoryManager.addressRepository.addTokenShipment(
-          shipment.id,
+          shipment!.id,
           ShipperConfig(
               token: tokenEditingController.value.text, use: true, cod: true));
       Get.back();

@@ -5,9 +5,9 @@ import 'package:sahashop_user/components/saha_user/iconButton/iconbtn_counter_ty
 import 'package:sahashop_user/components/saha_user/search/seach_field.dart';
 
 class SearchBarType3 extends StatelessWidget {
-  final Function onSearch;
+  final Function? onSearch;
 
-  const SearchBarType3({Key key, this.onSearch}) : super(key: key);
+  const SearchBarType3({Key? key, this.onSearch}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

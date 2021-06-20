@@ -68,64 +68,64 @@ class ConfigApp {
     this.cartPageType,
   });
 
-  String logoUrl;
-  bool isShowLogo;
-  List<BannerItem> carouselAppImages;
-  String colorMain1;
-  String colorMain2;
-  String fontFamily;
-  String fontColorAllPage;
-  String fontColorTitle;
-  String fontColorMain;
-  String iconHotline;
-  bool isShowIconHotline;
-  String colorIconHotline;
-  String noteIconHotline;
-  String phoneNumberHotline;
-  String iconEmail;
-  bool isShowIconEmail;
-  String colorIconEmail;
-  String titlePopupIconEmail;
-  String titlePopupSuccessIconEmail;
-  String bodyEmailSuccessIconEmail;
-  String iconFacebook;
-  bool isShowIconFacebook;
-  String colorIconFacebook;
-  String noteIconFacebook;
-  String idFacebook;
-  String iconZalo;
-  bool isShowIconZalo;
-  String colorIconZalo;
-  String noteIconZalo;
-  String idZalo;
-  int headerType;
-  String colorBackgroundHeader;
-  String colorTextHeader;
-  int typeOfMenu;
-  int typeNavigator;
-  int searchType;
-  String searchBackgroundHeader;
-  String searchTextHeader;
-  int carouselType;
+  String? logoUrl;
+  bool? isShowLogo;
+  List<BannerItem>? carouselAppImages;
+  String? colorMain1;
+  String? colorMain2;
+  String? fontFamily;
+  String? fontColorAllPage;
+  String? fontColorTitle;
+  String? fontColorMain;
+  String? iconHotline;
+  bool? isShowIconHotline;
+  String? colorIconHotline;
+  String? noteIconHotline;
+  String? phoneNumberHotline;
+  String? iconEmail;
+  bool? isShowIconEmail;
+  String? colorIconEmail;
+  String? titlePopupIconEmail;
+  String? titlePopupSuccessIconEmail;
+  String? bodyEmailSuccessIconEmail;
+  String? iconFacebook;
+  bool? isShowIconFacebook;
+  String? colorIconFacebook;
+  String? noteIconFacebook;
+  String? idFacebook;
+  String? iconZalo;
+  bool? isShowIconZalo;
+  String? colorIconZalo;
+  String? noteIconZalo;
+  String? idZalo;
+  int? headerType;
+  String? colorBackgroundHeader;
+  String? colorTextHeader;
+  int? typeOfMenu;
+  int? typeNavigator;
+  int? searchType;
+  String? searchBackgroundHeader;
+  String? searchTextHeader;
+  int? carouselType;
   dynamic homeIdCarouselAppImage;
-  bool homeListCategoryIsShow;
+  bool? homeListCategoryIsShow;
   dynamic homeIdListCategoryAppImage;
-  bool homeTopIsShow;
+  bool? homeTopIsShow;
   dynamic homeTopText;
   dynamic homeTopColor;
-  bool homeCarouselIsShow;
-  int homePageType;
-  int categoryPageType;
-  int productPageType;
-  bool isShowSameProduct;
-  int contactPageType;
-  String contactGoogleMap;
-  String contactAddress;
-  String contactEmail;
-  String contactPhoneNumber;
-  String contactTimeWork;
-  String contactInfoBank;
-  int cartPageType;
+  bool? homeCarouselIsShow;
+  int? homePageType;
+  int? categoryPageType;
+  int? productPageType;
+  bool? isShowSameProduct;
+  int? contactPageType;
+  String? contactGoogleMap;
+  String? contactAddress;
+  String? contactEmail;
+  String? contactPhoneNumber;
+  String? contactTimeWork;
+  String? contactInfoBank;
+  int? cartPageType;
 
   factory ConfigApp.fromJson(Map<String, dynamic> json) => ConfigApp(
         logoUrl: json["logo_url"],
@@ -193,7 +193,7 @@ class ConfigApp {
   Map<String, dynamic> toJson() => {
         "logo_url": logoUrl,
         "is_show_logo": isShowLogo,
-        "carousel_app_images": carouselAppImages.map((e) => e.toJson()).toList(),
+        "carousel_app_images": carouselAppImages!.map((e) => e.toJson()).toList(),
         "color_main_1": colorMain1,
         "color_main_2": colorMain2,
         "font_family": fontFamily,

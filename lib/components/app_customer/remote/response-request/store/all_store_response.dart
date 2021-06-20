@@ -14,10 +14,10 @@ class AllStoreResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  List<Store> data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  List<Store>? data;
 
   factory AllStoreResponse.fromJson(Map<String, dynamic> json) =>
       AllStoreResponse(
@@ -31,7 +31,7 @@ class AllStoreResponse {
         "code": code,
         "success": success,
         "msg_code": msgCode,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }
 
@@ -47,14 +47,14 @@ class Store {
     this.updatedAt,
   });
 
-  int id;
-  String name;
-  String storeCode;
-  String address;
-  int userId;
-  int idTypeOfStore;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? id;
+  String? name;
+  String? storeCode;
+  String? address;
+  int? userId;
+  int? idTypeOfStore;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory Store.fromJson(Map<String, dynamic> json) => Store(
         id: json["id"],
@@ -74,7 +74,7 @@ class Store {
         "address": address,
         "user_id": userId,
         "id_type_of_store": idTypeOfStore,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
       };
 }

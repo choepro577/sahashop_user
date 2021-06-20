@@ -1,10 +1,10 @@
 import 'package:sahashop_user/model/post.dart';
 
 class AllPostResponse {
-  int code;
-  bool success;
-  String msgCode;
-  Data data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  Data? data;
 
   AllPostResponse({this.code, this.success, this.msgCode, this.data});
 
@@ -21,22 +21,22 @@ class AllPostResponse {
     data['success'] = this.success;
     data['msg_code'] = this.msgCode;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  int currentPage;
-  List<Post> data;
-  String firstPageUrl;
-  int from;
-  String nextPageUrl;
-  String path;
-  int perPage;
-  String prevPageUrl;
-  int to;
+  int? currentPage;
+  List<Post>? data;
+  String? firstPageUrl;
+  int? from;
+  String? nextPageUrl;
+  String? path;
+  int? perPage;
+  String? prevPageUrl;
+  int? to;
 
   Data(
       {this.currentPage,
@@ -52,9 +52,9 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'];
     if (json['data'] != null) {
-      data = new List<Post>();
+      data = [];
       json['data'].forEach((v) {
-        data.add(new Post.fromJson(v));
+        data!.add(new Post.fromJson(v));
       });
     }
     firstPageUrl = json['first_page_url'];
@@ -70,7 +70,7 @@ class Data {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['current_page'] = this.currentPage;
     if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     data['first_page_url'] = this.firstPageUrl;
     data['from'] = this.from;

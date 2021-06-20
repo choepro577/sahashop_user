@@ -1,8 +1,8 @@
 class UploadImageResponse {
-  int code;
-  bool success;
-  String msgCode;
-  String data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  String? data;
 
   UploadImageResponse({this.code, this.success, this.msgCode, this.data});
 

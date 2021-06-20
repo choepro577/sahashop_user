@@ -20,7 +20,7 @@ class _MyComboScreenState extends State<MyComboScreen>
     with TickerProviderStateMixin {
   bool isHasDiscount = false;
   bool isTabOnTap = false;
-  TabController tabController;
+  TabController? tabController;
   MyComboController myComboController = Get.put(MyComboController());
 
   List<String> stateVoucher = [
@@ -77,7 +77,7 @@ class _MyComboScreenState extends State<MyComboScreen>
               SahaButtonFullParent(
                 text: "Tạo Voucher mới",
                 onPressed: () {
-                  Get.to(() => CreateMyComboScreen())
+                  Get.to(() => CreateMyComboScreen())!
                       .then((value) => {myComboController.refreshData()});
                 },
                 color: Theme.of(context).primaryColor,
@@ -101,7 +101,7 @@ class _MyComboScreenState extends State<MyComboScreen>
         footer: CustomFooter(
           builder: (
             BuildContext context,
-            LoadStatus mode,
+            LoadStatus? mode,
           ) {
             Widget body;
             if (mode == LoadStatus.idle) {
@@ -235,7 +235,7 @@ class _MyComboScreenState extends State<MyComboScreen>
                         width: Get.width * 0.6,
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          listComboState.name,
+                          listComboState.name!,
                           textAlign: TextAlign.start,
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w500),
@@ -245,7 +245,7 @@ class _MyComboScreenState extends State<MyComboScreen>
                         width: Get.width * 0.7,
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "${SahaDateUtils().getDDMMYY(listComboState.startTime)} ${SahaDateUtils().getHHMM(listComboState.startTime)} - ${SahaDateUtils().getDDMMYY(listComboState.endTime)} ${SahaDateUtils().getHHMM(listComboState.endTime)}",
+                          "${SahaDateUtils().getDDMMYY(listComboState.startTime!)} ${SahaDateUtils().getHHMM(listComboState.startTime!)} - ${SahaDateUtils().getDDMMYY(listComboState.endTime!)} ${SahaDateUtils().getHHMM(listComboState.endTime!)}",
                           style:
                               TextStyle(fontSize: 13, color: Colors.grey[700]),
                         ),
@@ -312,7 +312,7 @@ class _MyComboScreenState extends State<MyComboScreen>
                             height: 35,
                             width: Get.width * 0.9,
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey[600]),
+                                border: Border.all(color: Colors.grey[600]!),
                                 borderRadius: BorderRadius.circular(2.0)),
                             child: Center(
                               child: Text("Xem"),
@@ -328,7 +328,7 @@ class _MyComboScreenState extends State<MyComboScreen>
                           onTap: () {
                             Get.to(() => UpdateMyComboScreen(
                                       combo: listComboState,
-                                    ))
+                                    ))!
                                 .then((value) =>
                                     {myComboController.refreshData()});
                           },
@@ -336,7 +336,7 @@ class _MyComboScreenState extends State<MyComboScreen>
                             height: 35,
                             width: Get.width * 0.45,
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey[600]),
+                                border: Border.all(color: Colors.grey[600]!),
                                 borderRadius: BorderRadius.circular(2.0)),
                             child: Center(
                               child: Text("Thay đổi"),
@@ -352,7 +352,7 @@ class _MyComboScreenState extends State<MyComboScreen>
                                   height: 35,
                                   width: Get.width * 0.45,
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey[600]),
+                                    border: Border.all(color: Colors.grey[600]!),
                                     borderRadius: BorderRadius.circular(2.0),
                                   ),
                                   child: Center(
@@ -369,7 +369,7 @@ class _MyComboScreenState extends State<MyComboScreen>
                                   height: 35,
                                   width: Get.width * 0.45,
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey[600]),
+                                    border: Border.all(color: Colors.grey[600]!),
                                     borderRadius: BorderRadius.circular(2.0),
                                   ),
                                   child: Center(

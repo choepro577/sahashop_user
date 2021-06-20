@@ -5,16 +5,16 @@ import 'package:sahashop_user/const/constant.dart';
 
 class SahaBoxButton extends StatelessWidget {
   const SahaBoxButton({
-    Key key,
-    @required this.icon,
-    @required this.text,
-    @required this.press,
+    Key? key,
+    required this.icon,
+    required this.text,
+    required this.press,
     this.numOfitem,
   }) : super(key: key);
 
-  final String icon, text;
+  final String? icon, text;
   final GestureTapCallback press;
-  final int numOfitem;
+  final int? numOfitem;
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +37,8 @@ class SahaBoxButton extends StatelessWidget {
                       color: Theme.of(context).primaryColor,
                     ),
                     child: SvgPicture.asset(
-                      icon,
-                      color: Theme.of(context).primaryTextTheme.headline1.color,
+                      icon!,
+                      color: Theme.of(context).primaryTextTheme.headline1!.color,
                     ),
                   ),
                   SizedBox(height: 5),
@@ -46,7 +46,7 @@ class SahaBoxButton extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        text,
+                        text!,
                         textAlign: TextAlign.center,
                       ),
                     ],

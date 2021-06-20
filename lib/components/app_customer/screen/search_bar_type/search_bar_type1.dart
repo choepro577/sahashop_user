@@ -10,10 +10,10 @@ import 'package:sahashop_user/components/saha_user/search/seach_field.dart';
 import 'package:sahashop_user/components/utils/customer_info.dart';
 
 class SearchBarType1 extends StatelessWidget {
-  final Function onSearch;
+  final Function? onSearch;
   final DataAppCustomerController dataAppCustomerController = Get.find();
 
-  SearchBarType1({Key key, this.onSearch}) : super(key: key);
+  SearchBarType1({Key? key, this.onSearch}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

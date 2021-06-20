@@ -4,9 +4,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CustomerInfo {
   static final CustomerInfo _singleton = CustomerInfo._internal();
 
-  String _token;
-  String _currentStoreCode;
-  int _currentIdUser;
+  String? _token;
+  String? _currentStoreCode;
+  int? _currentIdUser;
 
   factory CustomerInfo() {
     return _singleton;
@@ -34,7 +34,7 @@ class CustomerInfo {
     this._currentIdUser = idUser;
   }
 
-  Future<void> setToken(String token) async {
+  Future<void> setToken(String? token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (token == null) {
       await prefs.remove(CUSTOMER_TOKEN);
@@ -44,15 +44,15 @@ class CustomerInfo {
     this._token = token;
   }
 
-  String getToken() {
+  String? getToken() {
     return _token;
   }
 
-  String getCurrentStoreCode() {
+  String? getCurrentStoreCode() {
     return _currentStoreCode;
   }
 
-  int getCurrentIdUser() {
+  int? getCurrentIdUser() {
     return _currentIdUser;
   }
 
@@ -66,7 +66,7 @@ class CustomerInfo {
 
   Future<void> loadDataUserSaved() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String tokenLocal = prefs.getString(CUSTOMER_TOKEN) ?? null;
+    String? tokenLocal = prefs.getString(CUSTOMER_TOKEN) ?? null;
     this._token = tokenLocal;
 
     this._currentStoreCode = prefs.getString(CURRENT_STORE_CODE) ?? null;

@@ -34,8 +34,8 @@ class OrderHistoryController extends GetxController {
       if (!isEndPageVoucher) {
         var res = await CustomerRepositoryManager.orderCustomerRepository
             .getOrderHistory(pageLoadMore, "", "", "", "", "", "", "");
-        listOrder.addAll(res.data.data);
-        if (res.data.nextPageUrl != null) {
+        listOrder.addAll(res!.data!.data!);
+        if (res.data!.nextPageUrl != null) {
           pageLoadMore++;
           isEndPageVoucher = false;
         } else {

@@ -11,11 +11,11 @@ class CategoryPostController extends GetxController {
     getAllCategoryPost();
   }
 
-  Future<void> getAllCategoryPost() async {
+  Future<bool?> getAllCategoryPost() async {
     loading.value = true;
     try {
       var list = await RepositoryManager.postRepository.getAllCategoryPost();
-      listCategoryPost(list);
+      listCategoryPost(list!);
 
       loading.value = false;
       return true;

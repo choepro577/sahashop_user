@@ -13,10 +13,10 @@ class ProductResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  Product data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  Product? data;
 
   factory ProductResponse.fromJson(Map<String, dynamic> json) => ProductResponse(
     code: json["code"],
@@ -29,7 +29,7 @@ class ProductResponse {
     "code": code,
     "success": success,
     "msg_code": msgCode,
-    "data": data.toJson(),
+    "data": data!.toJson(),
   };
 }
 

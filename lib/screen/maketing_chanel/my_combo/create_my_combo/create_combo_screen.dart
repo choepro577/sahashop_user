@@ -24,7 +24,7 @@ class CreateMyComboScreen extends StatelessWidget {
         FocusScopeNode currentFocus = FocusScope.of(context);
         if (!currentFocus.hasPrimaryFocus &&
             currentFocus.focusedChild != null) {
-          FocusManager.instance.primaryFocus.unfocus();
+          FocusManager.instance.primaryFocus!.unfocus();
         }
       },
       child: Scaffold(
@@ -60,7 +60,7 @@ class CreateMyComboScreen extends StatelessWidget {
                             controller: createMyVoucherController
                                 .nameProgramEditingController,
                             validator: (value) {
-                              if (value.length < 1) {
+                              if (value!.length < 1) {
                                 return 'Chưa nhập tên chương trình';
                               }
                               return null;
@@ -266,7 +266,7 @@ class CreateMyComboScreen extends StatelessWidget {
                                                     groupValue:
                                                         createMyVoucherController
                                                             .discountType.value,
-                                                    onChanged: (v) {
+                                                    onChanged: (dynamic v) {
                                                       createMyVoucherController
                                                           .onChangeRatio(v);
                                                     },
@@ -348,7 +348,7 @@ class CreateMyComboScreen extends StatelessWidget {
                                                     groupValue:
                                                         createMyVoucherController
                                                             .discountType.value,
-                                                    onChanged: (v) {
+                                                    onChanged: (dynamic v) {
                                                       createMyVoucherController
                                                           .onChangeRatio(v);
                                                     },
@@ -525,7 +525,7 @@ class CreateMyComboScreen extends StatelessWidget {
                                 .amountCodeAvailableEditingController,
                             keyboardType: TextInputType.number,
                             validator: (value) {
-                              if (value.length < 1) {
+                              if (value!.length < 1) {
                                 return 'Chưa nhập giới hạn combo';
                               } else {
                                 return null;
@@ -660,7 +660,7 @@ class CreateMyComboScreen extends StatelessWidget {
                                                             .addProductComboController
                                                             .listSelectedProduct
                                                             .value[index]
-                                                            .images
+                                                            .images!
                                                             .length ==
                                                         0
                                                     ? ""
@@ -668,8 +668,8 @@ class CreateMyComboScreen extends StatelessWidget {
                                                         .addProductComboController
                                                         .listSelectedProduct
                                                         .value[index]
-                                                        .images[0]
-                                                        .imageUrl,
+                                                        .images![0]
+                                                        .imageUrl!,
                                                 errorWidget:
                                                     (context, url, error) =>
                                                         Container(
@@ -779,8 +779,8 @@ class CreateMyComboScreen extends StatelessWidget {
                     : SahaButtonFullParent(
                         text: "Lưu",
                         onPressed: () {
-                          if (_formKey.currentState.validate()) {
-                            _formKey.currentState.save();
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
                             KeyboardUtil.hideKeyboard(context);
                             if (createMyVoucherController
                                     .typeVoucherDiscount.value ==

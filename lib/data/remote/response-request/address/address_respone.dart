@@ -16,10 +16,10 @@ class AddressResponse {
     this.msgCode,
   });
 
-  int code;
-  bool success;
-  List<LocationAddress> data;
-  String msgCode;
+  int? code;
+  bool? success;
+  List<LocationAddress>? data;
+  String? msgCode;
 
   factory AddressResponse.fromJson(Map<String, dynamic> json) =>
       AddressResponse(
@@ -33,7 +33,7 @@ class AddressResponse {
   Map<String, dynamic> toJson() => {
         "code": code,
         "success": success,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
         "msg_code": msgCode,
       };
 }

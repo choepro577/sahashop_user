@@ -5,15 +5,15 @@ import 'package:sahashop_user/components/app_customer/screen/address_screen/choo
 import 'package:sahashop_user/const/type_address.dart';
 
 class ChooseAddressCustomerScreen extends StatelessWidget {
-  final TypeAddress typeAddress;
+  final TypeAddress? typeAddress;
   final idProvince;
   final idDistrict;
-  final Function callback;
+  final Function? callback;
 
-  ChooseAddressCustomerController chooseAddressCustomerController;
+  late ChooseAddressCustomerController chooseAddressCustomerController;
 
   ChooseAddressCustomerScreen(
-      {Key key,
+      {Key? key,
       this.typeAddress,
       this.idProvince,
       this.idDistrict,
@@ -48,14 +48,14 @@ class ChooseAddressCustomerScreen extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   return InkWell(
                     onTap: () {
-                      callback(chooseAddressCustomerController
+                      callback!(chooseAddressCustomerController
                           .listLocationAddress.value[index]);
                       Get.back();
                     },
                     child: ListTile(
                       title: Text(
                         chooseAddressCustomerController
-                            .listLocationAddress.value[index].name,
+                            .listLocationAddress.value[index].name!,
                         style: TextStyle(fontSize: 14),
                       ),
                     ),

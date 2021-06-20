@@ -6,7 +6,7 @@ import 'package:sahashop_user/model/order.dart';
 import 'package:sahashop_user/model/state_order.dart';
 
 class OrderHistoryDetailController extends GetxController {
-  Order order;
+  Order? order;
   var listChoose = RxList<bool>([false, false, false, false, false, false]);
   var reason = "";
 
@@ -19,8 +19,8 @@ class OrderHistoryDetailController extends GetxController {
   Future<void> getStateHistoryCustomerOrder() async {
     try {
       var res = await CustomerRepositoryManager.orderCustomerRepository
-          .getStateHistoryCustomerOrder(order.id);
-      listStateOrder(res.data);
+          .getStateHistoryCustomerOrder(order!.id);
+      listStateOrder(res!.data!);
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
@@ -29,7 +29,7 @@ class OrderHistoryDetailController extends GetxController {
   Future<void> cancelOrder() async {
     try {
       var res = await CustomerRepositoryManager.orderCustomerRepository
-          .cancelOrder(order.orderCode, reason);
+          .cancelOrder(order!.orderCode, reason);
       Get.back(result: "CANCELLED");
     } catch (err) {
       handleError(err);

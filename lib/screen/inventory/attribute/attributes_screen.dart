@@ -12,17 +12,17 @@ import 'attributes_controller.dart';
 
 class AttributeScreen extends StatelessWidget {
   AttributeController attributeController = new AttributeController();
-  final Function(List<String>) onData;
+  final Function(List<String>)? onData;
 
   TextEditingController textEditingController = new TextEditingController();
 
-  AttributeScreen({Key key, this.onData}) : super(key: key);
+  AttributeScreen({Key? key, this.onData}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         if (onData != null) {
-          onData(attributeController.listAttribute.toList());
+          onData!(attributeController.listAttribute.toList());
         }
 
         return true;
@@ -41,7 +41,7 @@ class AttributeScreen extends StatelessWidget {
                         Expanded(
                           child: Obx(() {
                             var list = attributeController.listAttribute
-                                ?.toList()
+                                .toList()
                                 .toList();
                             if (list == null || list.length == 0) {
                               return SahaEmptyWidget(
@@ -56,7 +56,7 @@ class AttributeScreen extends StatelessWidget {
                                       key: ValueKey(e),
                                       elevation: 2,
                                       child: ListTile(
-                                        title: Text(e ?? ""),
+                                        title: Text(e),
                                         leading: Icon(
                                           Icons.list,
                                           color: Colors.black,
@@ -67,7 +67,7 @@ class AttributeScreen extends StatelessWidget {
                                             color: Colors.black54,
                                           ),
                                           onPressed: () {
-                                            attributeController.removeAttribute(e ?? "");
+                                            attributeController.removeAttribute(e);
                                           },
                                         )
                                       ),
@@ -141,14 +141,14 @@ class AttributeScreen extends StatelessWidget {
 }
 
 class ItemAttributeWidget extends StatelessWidget {
-  final String attribute;
+  final String? attribute;
 
-  const ItemAttributeWidget({Key key, this.attribute}) : super(key: key);
+  const ItemAttributeWidget({Key? key, this.attribute}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ListTile(
-        title: Text(attribute),
+        title: Text(attribute!),
       ),
     );
   }

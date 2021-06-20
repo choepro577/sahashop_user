@@ -17,7 +17,7 @@ class OrderHistoryScreen extends StatefulWidget {
 
 class _OrderHistoryScreenState extends State<OrderHistoryScreen>
     with TickerProviderStateMixin {
-  TabController tabController;
+  TabController? tabController;
   OrderHistoryController orderHistoryController =
       Get.put(OrderHistoryController());
   @override
@@ -74,7 +74,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
       footer: CustomFooter(
         builder: (
           BuildContext context,
-          LoadStatus mode,
+          LoadStatus? mode,
         ) {
           Widget body;
           if (mode == LoadStatus.idle) {
@@ -122,10 +122,10 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                             () => OrderHistoryDetailScreen(
                               order: orderHistoryController.listOrder[index],
                             ),
-                          ).then((value) => {
+                          )!.then((value) => {
                                 if (value == "CANCELLED")
                                   {
-                                    tabController.animateTo(6),
+                                    tabController!.animateTo(6),
                                     orderHistoryController.refreshData(),
                                   },
                               });
@@ -166,11 +166,11 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                       fit: BoxFit.cover,
                                       imageUrl: orderHistoryController
                                                   .listOrder[index]
-                                                  .lineItemsAtTime
+                                                  .lineItemsAtTime!
                                                   .length ==
                                               0
                                           ? ""
-                                          : "${orderHistoryController.listOrder[index].lineItemsAtTime[0].imageUrl}",
+                                          : "${orderHistoryController.listOrder[index].lineItemsAtTime![0].imageUrl}",
                                       errorWidget: (context, url, error) =>
                                           ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
@@ -193,7 +193,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            "${orderHistoryController.listOrder[index].lineItemsAtTime[0].name}",
+                                            "${orderHistoryController.listOrder[index].lineItemsAtTime![0].name}",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500),
                                           ),
@@ -203,7 +203,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                 children: [
                                                   Spacer(),
                                                   Text(
-                                                    " x ${orderHistoryController.listOrder[index].lineItemsAtTime[0].quantity}",
+                                                    " x ${orderHistoryController.listOrder[index].lineItemsAtTime![0].quantity}",
                                                     style: TextStyle(
                                                         fontSize: 13,
                                                         color:
@@ -215,7 +215,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                 children: [
                                                   Spacer(),
                                                   Text(
-                                                    "đ${SahaStringUtils().convertToMoney(orderHistoryController.listOrder[index].lineItemsAtTime[0].beforePrice)}",
+                                                    "đ${SahaStringUtils().convertToMoney(orderHistoryController.listOrder[index].lineItemsAtTime![0].beforePrice)}",
                                                     style: TextStyle(
                                                         decoration:
                                                             TextDecoration
@@ -225,7 +225,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                   ),
                                                   SizedBox(width: 15),
                                                   Text(
-                                                    "đ${SahaStringUtils().convertToMoney(orderHistoryController.listOrder[index].lineItemsAtTime[0].afterDiscount)}",
+                                                    "đ${SahaStringUtils().convertToMoney(orderHistoryController.listOrder[index].lineItemsAtTime![0].afterDiscount)}",
                                                     style: TextStyle(
                                                         color: Theme.of(context)
                                                             .primaryColor),
@@ -245,7 +245,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                               height: 1,
                             ),
                             orderHistoryController.listOrder[index]
-                                        .lineItemsAtTime.length >
+                                        .lineItemsAtTime!.length >
                                     1
                                 ? Container(
                                     width: Get.width,
@@ -268,7 +268,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                               child: Row(
                                 children: [
                                   Text(
-                                    "${orderHistoryController.listOrder[index].lineItemsAtTime.length} sản phẩm",
+                                    "${orderHistoryController.listOrder[index].lineItemsAtTime!.length} sản phẩm",
                                     style: TextStyle(color: Colors.grey[600]),
                                   ),
                                   Spacer(),
@@ -329,7 +329,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                           style: TextStyle(
                                               color: Theme.of(context)
                                                   .primaryTextTheme
-                                                  .headline6
+                                                  .headline6!
                                                   .color),
                                         ),
                                       ),
@@ -348,7 +348,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                         style: TextStyle(
                                             color: Theme.of(context)
                                                 .primaryTextTheme
-                                                .headline6
+                                                .headline6!
                                                 .color),
                                       ),
                                     ),

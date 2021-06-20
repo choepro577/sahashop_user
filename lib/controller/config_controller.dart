@@ -43,7 +43,7 @@ class ConfigController extends GetxController {
   }
 
   @override
-  void update([List<Object> ids, bool condition = true]) {
+  void update([List<Object>? ids, bool condition = true]) {
     print("upddate");
   }
 
@@ -62,33 +62,33 @@ class ConfigController extends GetxController {
     currentTheme.value = ThemeData(
         fontFamily: configApp.fontFamily,
         primarySwatch:
-            MaterialColor(HexColor.getColorFromHex(configApp.colorMain1), {
-          50: HexColor(configApp.colorMain1).withOpacity(0.1),
-          100: HexColor(configApp.colorMain1).withOpacity(0.2),
-          200: HexColor(configApp.colorMain1).withOpacity(0.3),
-          300: HexColor(configApp.colorMain1).withOpacity(0.4),
-          400: HexColor(configApp.colorMain1).withOpacity(0.5),
-          500: HexColor(configApp.colorMain1).withOpacity(0.6),
-          600: HexColor(configApp.colorMain1).withOpacity(0.7),
-          700: HexColor(configApp.colorMain1).withOpacity(0.8),
-          800: HexColor(configApp.colorMain1).withOpacity(0.9),
-          900: HexColor(configApp.colorMain1).withOpacity(1),
+            MaterialColor(HexColor.getColorFromHex(configApp.colorMain1!), {
+          50: HexColor(configApp.colorMain1!).withOpacity(0.1),
+          100: HexColor(configApp.colorMain1!).withOpacity(0.2),
+          200: HexColor(configApp.colorMain1!).withOpacity(0.3),
+          300: HexColor(configApp.colorMain1!).withOpacity(0.4),
+          400: HexColor(configApp.colorMain1!).withOpacity(0.5),
+          500: HexColor(configApp.colorMain1!).withOpacity(0.6),
+          600: HexColor(configApp.colorMain1!).withOpacity(0.7),
+          700: HexColor(configApp.colorMain1!).withOpacity(0.8),
+          800: HexColor(configApp.colorMain1!).withOpacity(0.9),
+          900: HexColor(configApp.colorMain1!).withOpacity(1),
         }));
 
     Get.changeTheme(currentTheme.value);
   }
 
-  Future<void> getAppTheme() async {
+  Future<bool?> getAppTheme() async {
     try {
       isLoadingGet.value = true;
-      var data = await RepositoryManager.configUiRepository.getAppTheme();
+      var data = await (RepositoryManager.configUiRepository.getAppTheme() as Future<ConfigApp>);
       configApp.colorMain1 = data.colorMain1 ?? "#ff93b9b4";
       configApp.fontFamily =
           data.fontFamily != null && FONT_DATA.containsKey(data.fontFamily)
               ? data.fontFamily
               : FONT_DATA.keys.toList()[0];
       configApp.searchType = data.searchType ?? 0;
-      if (configApp.searchType > LIST_WIDGET_SEARCH_BAR.length) {
+      if (configApp.searchType! > LIST_WIDGET_SEARCH_BAR.length) {
         configApp.searchType = LIST_WIDGET_SEARCH_BAR.length - 1;
       }
       configApp.carouselType = data.carouselType ?? 0;
@@ -145,7 +145,7 @@ class ConfigController extends GetxController {
               color: Theme.of(context).primaryColor,
             ),
             backgroundColor: Colors.white,
-            label: configApp.phoneNumberHotline.isEmpty
+            label: configApp.phoneNumberHotline!.isEmpty
                 ? null
                 : configApp.phoneNumberHotline,
             labelStyle: TextStyle(fontSize: 14.0),
@@ -163,7 +163,7 @@ class ConfigController extends GetxController {
             child: Icon(Icons.email, color: Theme.of(context).primaryColor),
             backgroundColor: Colors.white,
             label:
-                configApp.contactEmail.isEmpty ? null : configApp.contactEmail,
+                configApp.contactEmail!.isEmpty ? null : configApp.contactEmail,
             labelStyle: TextStyle(fontSize: 14.0),
             labelBackgroundColor: Colors.white,
             onTap: () => print('FIRST CHILD'),
@@ -185,7 +185,7 @@ class ConfigController extends GetxController {
               child: SvgPicture.asset("assets/icons/facebook-2.svg"),
             ),
             backgroundColor: Colors.white,
-            label: configApp.idFacebook.isEmpty ? null : configApp.idFacebook,
+            label: configApp.idFacebook!.isEmpty ? null : configApp.idFacebook,
             labelStyle: TextStyle(fontSize: 14.0),
             labelBackgroundColor: Colors.white,
             onTap: () => print('FIRST CHILD'),
@@ -206,7 +206,7 @@ class ConfigController extends GetxController {
               child: SvgPicture.asset("assets/icons/zalo.svg"),
             ),
             backgroundColor: Colors.white,
-            label: configApp.idZalo.isEmpty ? null : configApp.idZalo,
+            label: configApp.idZalo!.isEmpty ? null : configApp.idZalo,
             labelStyle: TextStyle(fontSize: 14.0),
             labelBackgroundColor: Colors.white,
             onTap: () => print('FIRST CHILD'),

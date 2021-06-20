@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DropDownColorButtonCustom extends StatelessWidget {
-  Map<String, dynamic> value;
-  List <Map<String, dynamic>> item;
-  String title;
-  Function onChange;
+  Map<String, dynamic>? value;
+  List <Map<String, dynamic>>? item;
+  String? title;
+  Function? onChange;
 
   DropDownColorButtonCustom(
       {this.value, this.item, this.title, this.onChange});
@@ -19,7 +19,7 @@ class DropDownColorButtonCustom extends StatelessWidget {
       //elevation: 5,
       style: TextStyle(color: Colors.white),
       iconEnabledColor: Colors.black,
-      items: item.map<DropdownMenuItem<Map<String, dynamic>>>(
+      items: item!.map<DropdownMenuItem<Map<String, dynamic>>>(
               (Map<String, dynamic> value) {
             return DropdownMenuItem<Map<String, dynamic>>(
               value: value,
@@ -42,11 +42,11 @@ class DropDownColorButtonCustom extends StatelessWidget {
             );
           }).toList(),
       hint: Text(
-        title,
+        title!,
         style: TextStyle(
             color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),
       ),
-      onChanged: (Map<String, dynamic> value) {
+      onChanged: (Map<String, dynamic>? value) {
         onChange;
         // setState(() {
         //   chooseDropDownValue = value;

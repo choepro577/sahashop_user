@@ -1,10 +1,10 @@
 import 'package:sahashop_user/model/category.dart';
 
 class CreateCategoryResponse {
-  int code;
-  bool success;
-  String msgCode;
-  Category data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  Category? data;
 
   CreateCategoryResponse({this.code, this.success, this.msgCode, this.data});
 
@@ -21,7 +21,7 @@ class CreateCategoryResponse {
     data['success'] = this.success;
     data['msg_code'] = this.msgCode;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }

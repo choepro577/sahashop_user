@@ -1,10 +1,10 @@
 class CategoryPost {
-  int id;
-  String imageUrl;
-  String title;
-  String description;
-  String createdAt;
-  String updatedAt;
+  int? id;
+  String? imageUrl;
+  String? title;
+  String? description;
+  String? createdAt;
+  String? updatedAt;
 
   CategoryPost(
       {this.id,

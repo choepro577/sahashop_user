@@ -7,7 +7,7 @@ import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
 class ChooseVoucherCustomerScreen extends StatelessWidget {
-  ChooseCustomerController chooseCustomerController;
+  late ChooseCustomerController chooseCustomerController;
 
   ChooseVoucherCustomerScreen() {
     chooseCustomerController = ChooseCustomerController();
@@ -100,7 +100,7 @@ class ChooseVoucherCustomerScreen extends StatelessWidget {
                               style: TextStyle(
                                   color: Theme.of(context)
                                       .primaryTextTheme
-                                      .headline6
+                                      .headline6!
                                       .color),
                             ),
                           ),
@@ -120,7 +120,7 @@ class ChooseVoucherCustomerScreen extends StatelessWidget {
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .primaryTextTheme
-                                        .headline6
+                                        .headline6!
                                         .color),
                               ),
                             ),
@@ -147,7 +147,7 @@ class ChooseVoucherCustomerScreen extends StatelessWidget {
                             padding: const EdgeInsets.all(13.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey[300])),
+                                  border: Border.all(color: Colors.grey[300]!)),
                               child: Row(
                                 children: [
                                   Stack(
@@ -159,7 +159,7 @@ class ChooseVoucherCustomerScreen extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           color: Theme.of(context).primaryColor,
                                           border: Border.all(
-                                              color: Colors.grey[500]),
+                                              color: Colors.grey[500]!),
                                         ),
                                         child: Center(
                                           child: SizedBox(
@@ -180,7 +180,7 @@ class ChooseVoucherCustomerScreen extends StatelessWidget {
                                                           color: Theme.of(
                                                                   context)
                                                               .primaryTextTheme
-                                                              .headline6
+                                                              .headline6!
                                                               .color,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -195,7 +195,7 @@ class ChooseVoucherCustomerScreen extends StatelessWidget {
                                                           color: Theme.of(
                                                                   context)
                                                               .primaryTextTheme
-                                                              .headline6
+                                                              .headline6!
                                                               .color,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -214,7 +214,7 @@ class ChooseVoucherCustomerScreen extends StatelessWidget {
                                                           color: Theme.of(
                                                                   context)
                                                               .primaryTextTheme
-                                                              .headline6
+                                                              .headline6!
                                                               .color,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -229,7 +229,7 @@ class ChooseVoucherCustomerScreen extends StatelessWidget {
                                                           color: Theme.of(
                                                                   context)
                                                               .primaryTextTheme
-                                                              .headline6
+                                                              .headline6!
                                                               .color,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -370,7 +370,7 @@ class ChooseVoucherCustomerScreen extends StatelessWidget {
                                                                 .voucherType ==
                                                             1
                                                         ? Text(
-                                                            "${chooseCustomerController.listVoucher[index].products[0].name}, vv...",
+                                                            "${chooseCustomerController.listVoucher[index].products![0].name}, vv...",
                                                             style: TextStyle(
                                                               fontSize: 12,
                                                             ),
@@ -378,7 +378,7 @@ class ChooseVoucherCustomerScreen extends StatelessWidget {
                                                           )
                                                         : Container(),
                                                     Text(
-                                                      "HSD: ${SahaDateUtils().getDDMMYY(chooseCustomerController.listVoucher[index].endTime)}",
+                                                      "HSD: ${SahaDateUtils().getDDMMYY(chooseCustomerController.listVoucher[index].endTime!)}",
                                                       style: TextStyle(
                                                         fontSize: 11,
                                                         color: Colors.grey,
@@ -423,7 +423,7 @@ class ChooseVoucherCustomerScreen extends StatelessWidget {
                                                         size: 15.0,
                                                         color: Theme.of(context)
                                                             .primaryTextTheme
-                                                            .headline6
+                                                            .headline6!
                                                             .color,
                                                       )
                                                     : Container(),

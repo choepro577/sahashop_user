@@ -10,11 +10,11 @@ import 'package:sahashop_user/screen/config_store_address/choose_address_screen/
 import 'package:sahashop_user/screen/config_store_address/config_address_screen/config_address_controller.dart';
 
 class ConfigAddressStoreScreen extends StatelessWidget {
-  final InfoAddress infoAddress;
+  final InfoAddress? infoAddress;
 
   ConfigAddressStoreScreen({this.infoAddress});
 
-  ConfigAddressController configAddressController;
+  late ConfigAddressController configAddressController;
 
   @override
   Widget build(BuildContext context) {

@@ -15,7 +15,7 @@ import 'create_my_voucher_controller.dart';
 class CreateMyVoucher extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _formKeyTypeVoucher = GlobalKey<FormState>();
-  int voucherType;
+  int? voucherType;
   CreateMyVoucherController createMyVoucherController =
       CreateMyVoucherController();
 
@@ -30,7 +30,7 @@ class CreateMyVoucher extends StatelessWidget {
         FocusScopeNode currentFocus = FocusScope.of(context);
         if (!currentFocus.hasPrimaryFocus &&
             currentFocus.focusedChild != null) {
-          FocusManager.instance.primaryFocus.unfocus();
+          FocusManager.instance.primaryFocus!.unfocus();
         }
       },
       child: Scaffold(
@@ -66,7 +66,7 @@ class CreateMyVoucher extends StatelessWidget {
                             controller: createMyVoucherController
                                 .nameProgramEditingController,
                             validator: (value) {
-                              if (value.length < 1) {
+                              if (value!.length < 1) {
                                 return 'Chưa nhập tên chương trình';
                               }
                               return null;
@@ -102,7 +102,7 @@ class CreateMyVoucher extends StatelessWidget {
                                 .codeVoucherEditingController,
                             keyboardType: TextInputType.name,
                             validator: (value) {
-                              if (value.length < 1) {
+                              if (value!.length < 1) {
                                 return 'Chưa nhập mã giảm giá';
                               } else {
                                 if (SahaStringUtils()
@@ -313,7 +313,7 @@ class CreateMyVoucher extends StatelessWidget {
                                                           createMyVoucherController
                                                               .discountType
                                                               .value,
-                                                      onChanged: (v) {
+                                                      onChanged: (dynamic v) {
                                                         createMyVoucherController
                                                             .onChangeRatio(v);
                                                       },
@@ -354,7 +354,7 @@ class CreateMyVoucher extends StatelessWidget {
                                                                       .number,
                                                               validator:
                                                                   (value) {
-                                                                if (value
+                                                                if (value!
                                                                         .length <
                                                                     1) {
                                                                   return 'Chưa nhập giá trị muốn giảm';
@@ -406,7 +406,7 @@ class CreateMyVoucher extends StatelessWidget {
                                                           createMyVoucherController
                                                               .discountType
                                                               .value,
-                                                      onChanged: (v) {
+                                                      onChanged: (dynamic v) {
                                                         createMyVoucherController
                                                             .onChangeRatio(v);
                                                       },
@@ -441,7 +441,7 @@ class CreateMyVoucher extends StatelessWidget {
                                                                           .number,
                                                                   validator:
                                                                       (value) {
-                                                                    if (value
+                                                                    if (value!
                                                                             .length <
                                                                         1) {
                                                                       return 'Chưa nhập % giảm giá';
@@ -528,7 +528,7 @@ class CreateMyVoucher extends StatelessWidget {
                                                                         )
                                                                       : Container(
                                                                           decoration: BoxDecoration(
-                                                                              border: Border.all(color: Colors.grey[600]),
+                                                                              border: Border.all(color: Colors.grey[600]!),
                                                                               borderRadius: BorderRadius.circular(5)),
                                                                           height:
                                                                               40,
@@ -583,7 +583,7 @@ class CreateMyVoucher extends StatelessWidget {
                                                                             EdgeInsets.all(8.0),
                                                                         decoration: BoxDecoration(
                                                                             border:
-                                                                                Border.all(color: Colors.grey[600]),
+                                                                                Border.all(color: Colors.grey[600]!),
                                                                             borderRadius: BorderRadius.circular(5)),
                                                                         height:
                                                                             40,
@@ -632,7 +632,7 @@ class CreateMyVoucher extends StatelessWidget {
                                                                               TextInputType.number,
                                                                           validator:
                                                                               (value) {
-                                                                            if (value.length <
+                                                                            if (value!.length <
                                                                                 1) {
                                                                               return 'Chưa nhập giá trị muốn giảm';
                                                                             } else {
@@ -679,9 +679,9 @@ class CreateMyVoucher extends StatelessWidget {
                                           InkWell(
                                             onTap: () {
                                               if (_formKeyTypeVoucher
-                                                  .currentState
+                                                  .currentState!
                                                   .validate()) {
-                                                _formKeyTypeVoucher.currentState
+                                                _formKeyTypeVoucher.currentState!
                                                     .save();
                                                 KeyboardUtil.hideKeyboard(
                                                     context);
@@ -758,7 +758,7 @@ class CreateMyVoucher extends StatelessWidget {
                                 .minimumOrderEditingController,
                             keyboardType: TextInputType.number,
                             validator: (value) {
-                              if (value.length < 1) {
+                              if (value!.length < 1) {
                                 return 'Chưa nhập giá trị tối thiểu đơn hàng';
                               } else {
                                 if (createMyVoucherController
@@ -828,7 +828,7 @@ class CreateMyVoucher extends StatelessWidget {
                                 .amountCodeAvailableEditingController,
                             keyboardType: TextInputType.number,
                             validator: (value) {
-                              if (value.length < 1) {
+                              if (value!.length < 1) {
                                 return 'Chưa nhập số mã có thể sử dụng';
                               } else {
                                 return null;
@@ -1080,7 +1080,7 @@ class CreateMyVoucher extends StatelessWidget {
                                                               .addProductToVoucherController
                                                               .listSelectedProduct
                                                               .value[index]
-                                                              .images
+                                                              .images!
                                                               .length ==
                                                           0
                                                       ? ""
@@ -1088,8 +1088,8 @@ class CreateMyVoucher extends StatelessWidget {
                                                           .addProductToVoucherController
                                                           .listSelectedProduct
                                                           .value[index]
-                                                          .images[0]
-                                                          .imageUrl,
+                                                          .images![0]
+                                                          .imageUrl!,
                                                   errorWidget:
                                                       (context, url, error) =>
                                                           Container(
@@ -1161,8 +1161,8 @@ class CreateMyVoucher extends StatelessWidget {
                     : SahaButtonFullParent(
                         text: "Lưu",
                         onPressed: () {
-                          if (_formKey.currentState.validate()) {
-                            _formKey.currentState.save();
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
                             KeyboardUtil.hideKeyboard(context);
                             createMyVoucherController
                                 .addProductToVoucherController

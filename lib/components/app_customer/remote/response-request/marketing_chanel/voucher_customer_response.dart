@@ -21,11 +21,11 @@ class VoucherCustomerResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  String msg;
-  List<Voucher> data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  String? msg;
+  List<Voucher>? data;
 
   factory VoucherCustomerResponse.fromJson(Map<String, dynamic> json) =>
       VoucherCustomerResponse(
@@ -41,6 +41,6 @@ class VoucherCustomerResponse {
         "success": success,
         "msg_code": msgCode,
         "msg": msg,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }

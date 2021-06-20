@@ -15,7 +15,7 @@ import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
 class CartScreen1 extends StatelessWidget {
-  DataAppCustomerController dataAppCustomerController;
+  late DataAppCustomerController dataAppCustomerController;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class CartScreen1 extends StatelessWidget {
                 onTap: () {
                   Get.to(() => ComboDetailScreen(
                       idProduct: dataAppCustomerController
-                          .listCombo[index].productsCombo[0].product.id));
+                          .listCombo[index].productsCombo![0].product!.id));
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -96,13 +96,13 @@ class CartScreen1 extends StatelessWidget {
                                         0
                                     ? SahaMoneyText(
                                         price: dataAppCustomerController
-                                            .listCombo[index].valueDiscount
+                                            .listCombo[index].valueDiscount!
                                             .toDouble(),
                                         sizeText: 12,
                                         sizeVND: 10,
                                       )
                                     : Text(
-                                        "${dataAppCustomerController.listCombo[index].valueDiscount.toDouble()}%",
+                                        "${dataAppCustomerController.listCombo[index].valueDiscount!.toDouble()}%",
                                         style: TextStyle(fontSize: 12),
                                       )
                               ],
@@ -142,7 +142,7 @@ class CartScreen1 extends StatelessWidget {
                             /// remove item product in cart on sever
                             dataAppCustomerController.updateItemCart(
                                 dataAppCustomerController
-                                    .listOrder[index].product.id,
+                                    .listOrder[index].product!.id,
                                 0);
                           },
                           background: Container(
@@ -175,16 +175,16 @@ class CartScreen1 extends StatelessWidget {
                                             fit: BoxFit.cover,
                                             imageUrl: dataAppCustomerController
                                                         .listOrder[index]
-                                                        .product
-                                                        .images
+                                                        .product!
+                                                        .images!
                                                         .length ==
                                                     0
                                                 ? ""
                                                 : dataAppCustomerController
                                                     .listOrder[index]
-                                                    .product
-                                                    .images[0]
-                                                    .imageUrl,
+                                                    .product!
+                                                    .images![0]
+                                                    .imageUrl!,
                                             errorWidget:
                                                 (context, url, error) =>
                                                     ClipRRect(
@@ -205,7 +205,7 @@ class CartScreen1 extends StatelessWidget {
                                     ),
                                   ),
                                   dataAppCustomerController.listOrder[index]
-                                              .product.productDiscount ==
+                                              .product!.productDiscount ==
                                           null
                                       ? Container()
                                       : Positioned(
@@ -226,7 +226,7 @@ class CartScreen1 extends StatelessWidget {
                                                 top: 13,
                                                 left: 3,
                                                 child: Text(
-                                                  "-${dataAppCustomerController.listOrder[index].product.productDiscount.value} %",
+                                                  "-${dataAppCustomerController.listOrder[index].product!.productDiscount!.value} %",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       fontSize: 10,
@@ -248,7 +248,7 @@ class CartScreen1 extends StatelessWidget {
                                   children: [
                                     Text(
                                       dataAppCustomerController
-                                              .listOrder[index].product.name ??
+                                              .listOrder[index].product!.name ??
                                           "Loi san pham",
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 14),
@@ -261,11 +261,11 @@ class CartScreen1 extends StatelessWidget {
                                           TextSpan(
                                             text: dataAppCustomerController
                                                         .listOrder[index]
-                                                        .product
+                                                        .product!
                                                         .productDiscount ==
                                                     null
-                                                ? "đ${SahaStringUtils().convertToMoney(dataAppCustomerController.listOrder[index].product.price)}"
-                                                : "đ${SahaStringUtils().convertToMoney(dataAppCustomerController.listOrder[index].product.productDiscount.discountPrice)}",
+                                                ? "đ${SahaStringUtils().convertToMoney(dataAppCustomerController.listOrder[index].product!.price)}"
+                                                : "đ${SahaStringUtils().convertToMoney(dataAppCustomerController.listOrder[index].product!.productDiscount!.discountPrice)}",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 color: SahaPrimaryColor),
@@ -277,11 +277,11 @@ class CartScreen1 extends StatelessWidget {
                                         Text(
                                           dataAppCustomerController
                                                       .listOrder[index]
-                                                      .product
+                                                      .product!
                                                       .productDiscount ==
                                                   null
                                               ? ""
-                                              : "đ${SahaStringUtils().convertToMoney(dataAppCustomerController.listOrder[index].product.price)}",
+                                              : "đ${SahaStringUtils().convertToMoney(dataAppCustomerController.listOrder[index].product!.price)}",
                                           style: TextStyle(
                                               decoration:
                                                   TextDecoration.lineThrough,
@@ -309,7 +309,7 @@ class CartScreen1 extends StatelessWidget {
                                             ),
                                             decoration: BoxDecoration(
                                               border: Border.all(
-                                                  color: Colors.grey[200]),
+                                                  color: Colors.grey[200]!),
                                             ),
                                           ),
                                         ),
@@ -337,7 +337,7 @@ class CartScreen1 extends StatelessWidget {
                                           ),
                                           decoration: BoxDecoration(
                                             border: Border.all(
-                                                color: Colors.grey[200]),
+                                                color: Colors.grey[200]!),
                                           ),
                                         ),
                                         InkWell(
@@ -354,7 +354,7 @@ class CartScreen1 extends StatelessWidget {
                                             ),
                                             decoration: BoxDecoration(
                                               border: Border.all(
-                                                  color: Colors.grey[200]),
+                                                  color: Colors.grey[200]!),
                                             ),
                                           ),
                                         ),
@@ -596,7 +596,7 @@ class CartScreen1 extends StatelessWidget {
                                           text: "Đóng",
                                           textColor: Theme.of(context)
                                               .primaryTextTheme
-                                              .headline6
+                                              .headline6!
                                               .color,
                                           color: Theme.of(context).primaryColor,
                                           onPressed: () {
@@ -699,7 +699,7 @@ class CartScreen1 extends StatelessWidget {
                                   fontSize: 16,
                                   color: Theme.of(context)
                                       .primaryTextTheme
-                                      .headline6
+                                      .headline6!
                                       .color,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -710,7 +710,7 @@ class CartScreen1 extends StatelessWidget {
                                   fontSize: 14,
                                   color: Theme.of(context)
                                       .primaryTextTheme
-                                      .headline6
+                                      .headline6!
                                       .color,
                                 ),
                               ),

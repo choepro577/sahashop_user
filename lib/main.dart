@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         ],
         builder: (context, widget) => Column(
               children: [
-                Expanded(child: widget),
+                Expanded(child: widget!),
                 Obx(
                   () => !sahaDataController.isPreview.value
                       ? Container()

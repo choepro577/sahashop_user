@@ -21,7 +21,7 @@ class ChooseCustomerController extends GetxController {
     try {
       var res = await CustomerRepositoryManager.marketingRepository
           .getVoucherCustomer();
-      listVoucher(res.data);
+      listVoucher(res!.data!);
       listVoucher.forEach((element) {
         listChooseVoucher.add(false);
       });
@@ -118,7 +118,7 @@ class ChooseCustomerController extends GetxController {
     voucherCodeChoose.value = "";
     if (value == false) {
       listChooseVoucher[index] = true;
-      voucherCodeChoose.value = listVoucher[index].code;
+      voucherCodeChoose.value = listVoucher[index].code!;
     }
   }
 }

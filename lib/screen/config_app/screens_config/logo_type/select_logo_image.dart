@@ -15,10 +15,10 @@ import 'package:path/path.dart';
 class SelectLogoImage extends StatelessWidget {
   SelectLogoImageController selectImageController =
       new SelectLogoImageController();
-  final Function onChange;
-  final String linkLogo;
+  final Function? onChange;
+  final String? linkLogo;
 
-  SelectLogoImage({Key key, this.onChange, this.linkLogo}) : super(key: key);
+  SelectLogoImage({Key? key, this.onChange, this.linkLogo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class SelectLogoImage extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 selectImageController.getImage(onOK: (link) {
-                  onChange(link);
+                  onChange!(link);
                 });
               },
               child: Container(
@@ -55,7 +55,7 @@ class SelectLogoImage extends StatelessWidget {
                         height: 100,
                         width: 100,
                         fit: BoxFit.cover,
-                        imageUrl: linkLogo,
+                        imageUrl: linkLogo!,
                         placeholder: (context, url) => new SahaLoadingWidget(
                           size: 30,
                         ),
@@ -99,7 +99,7 @@ class SelectLogoImage extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     selectImageController.removeImage();
-                    onChange(null);
+                    onChange!(null);
                   },
                   child: Container(
                     height: 17,
@@ -136,7 +136,7 @@ class SelectLogoImageController extends GetxController {
   final picker = ImagePicker();
   var isLoadingAdd = false.obs;
 
-  Future getImage({Function onOK, Function onError}) async {
+  Future getImage({Function? onOK, Function? onError}) async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       var file = File(pickedFile.path);
@@ -149,7 +149,7 @@ class SelectLogoImageController extends GetxController {
           quality: 60, minHeight: 512, minWidth: 512);
 
       var link = await upLogo(result);
-      onOK(link);
+      onOK!(link);
       pathImage.value = pickedFile.path;
     } else {
       SahaAlert.showError(message: "Có lỗi khi up logo");
@@ -158,10 +158,10 @@ class SelectLogoImageController extends GetxController {
   }
 
   void removeImage() {
-    pathImage.value = null;
+    pathImage(null);
   }
 
-  Future<String> upLogo(File file) async {
+  Future<String?> upLogo(File? file) async {
     isLoadingAdd.value = true;
     try {
       var link = await RepositoryManager.imageRepository.uploadImage(file);

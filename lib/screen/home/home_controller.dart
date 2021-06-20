@@ -10,7 +10,7 @@ class HomeController extends GetxController {
   }
 
   var isExpansion = false.obs;
-  var storeCurrent = Store().obs;
+  Rx<Store>? storeCurrent = Store().obs;
   var isLoadingStore = false.obs;
   var errMsg = "".obs;
   void onChangeExpansion(bool value) {
@@ -21,13 +21,13 @@ class HomeController extends GetxController {
     isLoadingStore.value = true;
     errMsg.refresh();
     try {
-      var list = await RepositoryManager.storeRepository.getAll();
+      var list = await (RepositoryManager.storeRepository.getAll() as Future<List<Store>>);
 
       if (list.length > 0) {
         var indexStoreSelected;
         if (UserInfo().getCurrentStoreCode() != null) {
           indexStoreSelected = list.indexWhere((storeE) =>
-              storeE?.storeCode == UserInfo().getCurrentStoreCode());
+              storeE.storeCode == UserInfo().getCurrentStoreCode());
         }
 
         if (indexStoreSelected != null && indexStoreSelected >= 0) {
@@ -55,7 +55,7 @@ class HomeController extends GetxController {
 
   void setNewStoreCurrent(Store store) {
     UserInfo().setCurrentStoreCode(store.storeCode);
-    storeCurrent.value = store;
+    storeCurrent!.value = store;
   }
 
   void setUserIdCurrent(Store store) {

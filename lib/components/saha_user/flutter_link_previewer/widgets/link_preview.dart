@@ -12,7 +12,7 @@ import '../utils.dart' show getPreviewData;
 class LinkPreview extends StatefulWidget {
   /// Creates [LinkPreview]
   const LinkPreview({
-    Key key,
+    Key? key,
     this.animationDuration,
     this.enableAnimation = false,
     this.header,
@@ -21,37 +21,37 @@ class LinkPreview extends StatefulWidget {
     this.metadataTextStyle,
     this.metadataTitleStyle,
     this.onLinkPressed,
-    @required this.onPreviewDataFetched,
+    required this.onPreviewDataFetched,
     this.padding,
-    @required this.previewData,
-    @required this.text,
+    required this.previewData,
+    required this.text,
     this.textStyle,
-    @required this.width,
+    required this.width,
   }) : super(key: key);
 
   /// Expand animation duration
-  final Duration animationDuration;
+  final Duration? animationDuration;
 
   /// Enables expand animation. Default value is false.
   final bool enableAnimation;
 
   /// Custom header above provided text
-  final String header;
+  final String? header;
 
   /// Style of the custom header
-  final TextStyle headerStyle;
+  final TextStyle? headerStyle;
 
   /// Style of highlighted links in the text
-  final TextStyle linkStyle;
+  final TextStyle? linkStyle;
 
   /// Style of preview's description
-  final TextStyle metadataTextStyle;
+  final TextStyle? metadataTextStyle;
 
   /// Style of preview's title
-  final TextStyle metadataTitleStyle;
+  final TextStyle? metadataTitleStyle;
 
   /// Custom link press handler
-  final void Function(String) onLinkPressed;
+  final void Function(String)? onLinkPressed;
 
   /// Callback which is called when [PreviewData] was successfully parsed.
   /// Use it to save [PreviewData] to the state and pass it back
@@ -60,7 +60,7 @@ class LinkPreview extends StatefulWidget {
   final void Function(PreviewData) onPreviewDataFetched;
 
   /// Padding around initial text widget
-  final EdgeInsets padding;
+  final EdgeInsets? padding;
 
   /// Pass saved [PreviewData] here so [LinkPreview] would not fetch preview
   /// data again
@@ -70,7 +70,7 @@ class LinkPreview extends StatefulWidget {
   final String text;
 
   /// Style of the provided text
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
 
   /// Width of the [LinkPreview] widget
   final double width;
@@ -81,9 +81,9 @@ class LinkPreview extends StatefulWidget {
 
 class _LinkPreviewState extends State<LinkPreview>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+  late AnimationController _controller;
 
-  Animation<double> _animation;
+  late Animation<double> _animation;
 
   bool isFetchingPreviewData = false;
   bool shouldAnimate = false;
@@ -153,15 +153,15 @@ class _LinkPreviewState extends State<LinkPreview>
   }
 
   bool _hasData(PreviewData previewData) {
-    return previewData?.title != null ||
-        previewData?.description != null ||
-        previewData?.image?.url != null;
+    return previewData.title != null ||
+        previewData.description != null ||
+        previewData.image?.url != null;
   }
 
   bool _hasOnlyImage() {
-    return widget.previewData?.title == null &&
-        widget.previewData?.description == null &&
-        widget.previewData?.image?.url != null;
+    return widget.previewData.title == null &&
+        widget.previewData.description == null &&
+        widget.previewData.image?.url != null;
   }
 
   Future<void> _onOpen(LinkableElement link) async {
@@ -201,21 +201,21 @@ class _LinkPreviewState extends State<LinkPreview>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              if (data.title != null) _titleWidget(data.title),
+              if (data.title != null) _titleWidget(data.title!),
               if (data.description != null)
-                _descriptionWidget(data.description),
+                _descriptionWidget(data.description!),
             ],
           ),
         ),
-        if (data.image?.url != null) _imageWidget(data.image.url, width),
+        if (data.image?.url != null) _imageWidget(data.image!.url, width),
       ],
     );
   }
 
   Widget _containerWidget({
-    @required bool animate,
+    required bool animate,
     bool withPadding = false,
-    Widget child,
+    Widget? child,
   }) {
     final _padding = widget.padding ??
         const EdgeInsets.symmetric(
@@ -247,7 +247,7 @@ class _LinkPreviewState extends State<LinkPreview>
                   Padding(
                     padding: const EdgeInsets.only(bottom: 6),
                     child: Text(
-                      widget.header,
+                      widget.header!,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: widget.headerStyle,
@@ -298,7 +298,7 @@ class _LinkPreviewState extends State<LinkPreview>
       maxLines: 100,
       minLines: 1,
       onOpen: widget.onLinkPressed != null
-          ? (element) => widget.onLinkPressed(element.url)
+          ? (element) => widget.onLinkPressed!(element.url)
           : _onOpen,
       options: const LinkifyOptions(
         defaultToHttps: true,
@@ -326,15 +326,15 @@ class _LinkPreviewState extends State<LinkPreview>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        if (data.title != null) _titleWidget(data.title),
+                        if (data.title != null) _titleWidget(data.title!),
                         if (data.description != null)
-                          _descriptionWidget(data.description),
+                          _descriptionWidget(data.description!),
                       ],
                     ),
                   ),
                 ),
                 if (data.image?.url != null)
-                  _minimizedImageWidget(data.image.url),
+                  _minimizedImageWidget(data.image!.url),
               ],
             ),
           ),
@@ -374,7 +374,7 @@ class _LinkPreviewState extends State<LinkPreview>
     if (widget.previewData != null && _hasData(widget.previewData)) {
       final aspectRatio = widget.previewData.image == null
           ? null
-          : widget.previewData.image.width / widget.previewData.image.height;
+          : widget.previewData.image!.width / widget.previewData.image!.height;
 
       final _width = aspectRatio == 1 ? widget.width : widget.width - 32;
 

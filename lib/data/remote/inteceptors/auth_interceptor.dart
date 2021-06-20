@@ -15,8 +15,7 @@ class AuthInterceptor extends InterceptorsWrapper {
   AuthInterceptor();
 
   @override
-  Future onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     if (UserInfo().getToken() != null) {
       options.headers.putIfAbsent("token", () => UserInfo().getToken());
     }
@@ -30,8 +29,9 @@ class AuthInterceptor extends InterceptorsWrapper {
     return super.onRequest(options, handler);
   }
 
+
   @override
-  Future onError(DioError error, ErrorInterceptorHandler handler) async {
+  void onError(DioError error, ErrorInterceptorHandler handler) {
     print('Response: ${error.response}');
     if (error is DioError) {
       var dioError = error;
@@ -46,13 +46,13 @@ class AuthInterceptor extends InterceptorsWrapper {
           return errorMess('Không thể nhận dữ liệu từ server');
           break;
         case DioErrorType.response:
-          if (dioError?.response?.statusCode == 429) {
+          if (dioError.response?.statusCode == 429) {
             return errorMess(
                 'Bạn gửi quá nhiều yêu cầu xin thử lại sau 1 phút');
           }
 
           return errorMess(
-              '${dioError?.response?.data["msg"] != null ? dioError?.response?.data["msg"] : "Có lỗi xảy ra"}');
+              '${dioError.response?.data["msg"] != null ? dioError.response?.data["msg"] : "Có lỗi xảy ra"}');
           break;
         case DioErrorType.sendTimeout:
           return errorMess('Không thể gửi dữ liệu đến server');
@@ -64,7 +64,6 @@ class AuthInterceptor extends InterceptorsWrapper {
     }
     return errorMess("Có lỗi xảy ta");
   }
-
   errorMess(String mess) async {
     return mess;
   }
@@ -74,9 +73,9 @@ class AuthInterceptor extends InterceptorsWrapper {
     pattern.allMatches(text).forEach((match) => print(match.group(0)));
   }
 
+
   @override
-  Future onResponse(
-      Response response, ResponseInterceptorHandler handler) async {
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
     print('------Response: ${response.data}');
 
     if (response.data["code"] == 401) {
@@ -104,7 +103,7 @@ class AuthInterceptor extends InterceptorsWrapper {
       } catch (e) {
         print(e.toString());
       }
-      return super.onResponse(null, handler);
+      return super.onResponse(response, handler);
     }
 
     return super.onResponse(response, handler);

@@ -13,21 +13,21 @@ class UpdateProductComboController extends GetxController {
   var listIsSave = RxList<bool>().obs;
   var listCheckSelectedProduct = RxList<Map<Product, bool>>().obs;
   var listSelectedProductParam = RxList<ComboProduct>().obs;
-  var listSelectedProduct = RxList<Product>().obs;
+  Rx<RxList<Product?>> listSelectedProduct = RxList<Product>().obs;
   var quantityProductSelected = 0.obs;
   var isLoadingCreate = false.obs;
   var listCheckHasInDiscount = RxList<bool>().obs;
-  var listProductHasInDiscount = RxList<Product>().obs;
+  Rx<RxList<Product?>> listProductHasInDiscount = RxList<Product>().obs;
 
-  Future<List<Product>> getAllProduct(
-      {String search,
-      String idCategory,
-      bool descending,
-      String details,
-      String sortBy}) async {
+  Future<List<Product>?> getAllProduct(
+      {String? search,
+      String? idCategory,
+      bool? descending,
+      String? details,
+      String? sortBy}) async {
     isLoadingProduct.value = true;
     try {
-      var res = await SahaServiceManager().service.getAllProduct(
+      var res = await SahaServiceManager().service!.getAllProduct(
           UserInfo().getCurrentStoreCode(),
           search ?? "",
           idCategory ?? "",
@@ -35,7 +35,7 @@ class UpdateProductComboController extends GetxController {
           details ?? "",
           sortBy ?? "");
 
-      listProduct.addAll(res.data.data);
+      listProduct.addAll(res.data!.data!);
 
       if (listCheckSelectedProduct.value.length == 0) {
         listProduct.forEach((product) {
@@ -46,12 +46,12 @@ class UpdateProductComboController extends GetxController {
       }
 
       for (int i = 0; i < listProduct.length; i++) {
-        if (res.data.data[i].hasInCombo == true) {
+        if (res.data!.data![i].hasInCombo == true) {
           listIsSave.value[i] = true;
         }
 
         for (int j = 0; j < listProductHasInDiscount.value.length; j++) {
-          if (listProduct[i].id == listProductHasInDiscount.value[j].id) {
+          if (listProduct[i].id == listProductHasInDiscount.value[j]!.id) {
             listCheckSelectedProduct.value[i].update(
                 listCheckSelectedProduct.value[i].keys.first, (value) => true);
             listCheckHasInDiscount.value[i] = true;
@@ -62,7 +62,7 @@ class UpdateProductComboController extends GetxController {
       }
 
       isLoadingProduct.value = false;
-      return res.data.data;
+      return res.data!.data;
     } catch (err) {
       handleError(err);
     }
@@ -90,7 +90,7 @@ class UpdateProductComboController extends GetxController {
           bool isSame = false;
           for (int j = 0; j < listSelectedProduct.value.length; j++) {
             if (listCheckSelectedProduct.value[i].keys.first.id ==
-                listSelectedProduct.value[j].id) {
+                listSelectedProduct.value[j]!.id) {
               isSame = true;
             }
           }
@@ -101,7 +101,7 @@ class UpdateProductComboController extends GetxController {
           }
         } else {
           listSelectedProduct.value.removeWhere((element) =>
-              element.id == listCheckSelectedProduct.value[i].keys.first.id);
+              element!.id == listCheckSelectedProduct.value[i].keys.first.id);
           listSelectedProductParam.value.removeWhere((element) =>
               element.productId ==
               listCheckSelectedProduct.value[i].keys.first.id);
@@ -114,8 +114,8 @@ class UpdateProductComboController extends GetxController {
     listProduct = new RxList<Product>();
   }
 
-  void deleteProductSelected(int id) {
-    listSelectedProduct.value.removeWhere((element) => element.id == id);
+  void deleteProductSelected(int? id) {
+    listSelectedProduct.value.removeWhere((element) => element!.id == id);
     listSelectedProductParam.value
         .removeWhere((element) => element.productId == id);
     listCheckSelectedProduct.value[listCheckSelectedProduct.value
@@ -156,25 +156,27 @@ class UpdateProductComboController extends GetxController {
   void listSelectedProductToComboProduct() {
     listSelectedProduct.value.forEach((element) {
       int indexSame = listSelectedProductParam.value
-          .indexWhere((e) => e.productId == element.id);
+          .indexWhere((e) => e.productId == element!.id);
 
       if (indexSame == -1) {
         listSelectedProductParam.value
-            .add(ComboProduct(productId: element.id, quantity: 1));
+            .add(ComboProduct(productId: element!.id, quantity: 1));
       }
     });
     print(listSelectedProductParam);
   }
 
   void increaseAmountProductCombo(int index) {
-    listSelectedProductParam.value[index].quantity++;
+    listSelectedProductParam.value[index].quantity
+     =  listSelectedProductParam.value[index].quantity! +1;
     listSelectedProductParam.refresh();
     print(listSelectedProductParam.value[0].quantity);
   }
 
   void decreaseAmountProductCombo(int index) {
-    if (listSelectedProductParam.value[index].quantity > 1) {
-      listSelectedProductParam.value[index].quantity--;
+    if (listSelectedProductParam.value[index].quantity! > 1) {
+      listSelectedProductParam.value[index].quantity =
+          listSelectedProductParam.value[index].quantity! -1;
       listSelectedProductParam.refresh();
       print(listSelectedProductParam.value[0].quantity);
     }

@@ -5,33 +5,33 @@ import 'package:sahashop_user/model/info_address_customer.dart';
 import 'package:sahashop_user/model/shipment_method.dart';
 
 class ShipmentCustomerController extends GetxController {
-  var infoAddressCustomer = InfoAddressCustomer();
-  ShipmentMethod shipmentCurrentInput;
+  InfoAddressCustomer? infoAddressCustomer = InfoAddressCustomer();
+  ShipmentMethod? shipmentCurrentInput;
   var listChooseShipmentMethod = RxList<bool>();
-  ShipmentMethod shipmentCurrentChoose;
+  late ShipmentMethod shipmentCurrentChoose;
 
   ShipmentCustomerController(
       {this.infoAddressCustomer, this.shipmentCurrentInput}) {
-    chargeShipmentFee(infoAddressCustomer.id);
+    chargeShipmentFee(infoAddressCustomer!.id);
   }
 
   var listShipment = RxList<ShipmentMethod>();
   var isLoadingShipmentMethod = false.obs;
   var shipmentMethodChoose = ShipmentMethod().obs;
 
-  Future<void> chargeShipmentFee(int idAddressCustomer) async {
+  Future<void> chargeShipmentFee(int? idAddressCustomer) async {
     isLoadingShipmentMethod.value = true;
     try {
       var res = await CustomerRepositoryManager.shipmentRepository
           .chargeShipmentFee(idAddressCustomer);
-      listShipment(res.data.data);
+      listShipment(res!.data!.data!);
 
       listShipment.forEach((element) {
         listChooseShipmentMethod.add(false);
       });
 
       var index = listShipment.indexWhere(
-          (element) => element.partnerId == shipmentCurrentInput.partnerId);
+          (element) => element.partnerId == shipmentCurrentInput!.partnerId);
       if (index != -1) {
         listChooseShipmentMethod[index] = true;
         shipmentCurrentChoose = listShipment[index];

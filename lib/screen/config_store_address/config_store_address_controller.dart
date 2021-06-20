@@ -15,7 +15,7 @@ class ConfigStoreAddressController extends GetxController {
   }
 
   Future<void> addTokenShipment(
-      int shipmentId, ShipperConfig shipperConfig) async {
+      int? shipmentId, ShipperConfig shipperConfig) async {
     try {
       var res = await RepositoryManager.addressRepository.addTokenShipment(
         shipmentId,
@@ -30,7 +30,7 @@ class ConfigStoreAddressController extends GetxController {
     isLoadingAddress.value = true;
     try {
       var res = await RepositoryManager.addressRepository.getAllAddressStore();
-      res.data.forEach((element) {
+      res!.data!.forEach((element) {
         if (element.isDefaultPickup == true) {
           listAddressStore.value = element;
         }
@@ -45,7 +45,7 @@ class ConfigStoreAddressController extends GetxController {
     isLoadingAddress.value = true;
     try {
       var res = await RepositoryManager.addressRepository.getAllShipmentStore();
-      listShipmentStore(res.data);
+      listShipmentStore(res!.data!);
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }

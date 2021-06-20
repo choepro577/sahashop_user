@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import '../fakedevicepixelratio.dart';
 
 class CarouselSelect extends StatefulWidget {
-  final List<Widget> listWidget;
-  final Function onChange;
-  final Function onSelected;
-  final int indexSelected;
-  final int initPage;
-  final double height;
+  final List<Widget>? listWidget;
+  final Function? onChange;
+  final Function? onSelected;
+  final int? indexSelected;
+  final int? initPage;
+  final double? height;
 
   const CarouselSelect(
-      {Key key,
+      {Key? key,
       this.listWidget,
       this.onChange,
       this.indexSelected,
@@ -26,9 +26,9 @@ class CarouselSelect extends StatefulWidget {
 }
 
 class _CarouselSelectState extends State<CarouselSelect> {
-  int page;
-  int indexSelected;
-  double height;
+  int? page;
+  int? indexSelected;
+  double? height;
   @override
   void initState() {
     // TODO: implement initState
@@ -43,7 +43,7 @@ class _CarouselSelectState extends State<CarouselSelect> {
     return Column(
       children: [
         CarouselSlider(
-            items: widget.listWidget
+            items: widget.listWidget!
                 .map((e) => Card(
                       child: IgnorePointer(
                         child: FakeDevicePixelRatio(
@@ -57,7 +57,7 @@ class _CarouselSelectState extends State<CarouselSelect> {
               height: height,
               aspectRatio: 16 / 9,
               viewportFraction: 0.8,
-              initialPage: widget.initPage,
+              initialPage: widget.initPage!,
               enableInfiniteScroll: false,
               reverse: false,
               autoPlay: false,
@@ -68,15 +68,15 @@ class _CarouselSelectState extends State<CarouselSelect> {
               onPageChanged: (va, reason) {
                 page = va;
                 print(va);
-                if (widget.onChange != null) widget.onChange(va);
+                if (widget.onChange != null) widget.onChange!(va);
                 setState(() {});
               },
               scrollDirection: Axis.horizontal,
             )),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: widget.listWidget.map((url) {
-            int index = widget.listWidget.indexOf(url);
+          children: widget.listWidget!.map((url) {
+            int index = widget.listWidget!.indexOf(url);
             return Container(
               width: 8.0,
               height: 8.0,
@@ -98,7 +98,7 @@ class _CarouselSelectState extends State<CarouselSelect> {
           onSelected: (bool value) {
             indexSelected = page;
             setState(() {});
-            widget.onSelected(indexSelected);
+            widget.onSelected!(indexSelected);
           },
         ),
       ],

@@ -17,11 +17,11 @@ class AllIAddressCustomerResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  String msg;
-  List<InfoAddressCustomer> data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  String? msg;
+  List<InfoAddressCustomer>? data;
 
   factory AllIAddressCustomerResponse.fromJson(Map<String, dynamic> json) =>
       AllIAddressCustomerResponse(
@@ -38,6 +38,6 @@ class AllIAddressCustomerResponse {
         "success": success,
         "msg_code": msgCode,
         "msg": msg,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }

@@ -1,17 +1,17 @@
 import 'category.dart';
 
 class Post {
-  int id;
-  int storeId;
-  String title;
-  String imageUrl;
-  String summary;
-  String content;
-  bool published;
-  int countView;
-  String createdAt;
-  String updatedAt;
-  List<Category> category;
+  int? id;
+  int? storeId;
+  String? title;
+  String? imageUrl;
+  String? summary;
+  String? content;
+  bool? published;
+  int? countView;
+  String? createdAt;
+  String? updatedAt;
+  List<Category>? category;
 
   Post(
       {this.id,
@@ -38,9 +38,9 @@ class Post {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     if (json['category'] != null) {
-      category = new List<Category>();
+      category = [];
       json['category'].forEach((v) {
-        category.add(new Category.fromJson(v));
+        category!.add(new Category.fromJson(v));
       });
     }
   }
@@ -58,7 +58,7 @@ class Post {
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     if (this.category != null) {
-      data['category'] = this.category.map((v) => v.toJson()).toList();
+      data['category'] = this.category!.map((v) => v.toJson()).toList();
     }
     return data;
   }

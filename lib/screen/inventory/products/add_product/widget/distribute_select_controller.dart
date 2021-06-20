@@ -45,26 +45,26 @@ class DistributeSelectController extends GetxController {
   void toggleHasImage(int indexDistribute) {
     if (listDistribute[indexDistribute] != null) {
       var newDistribute = listDistribute[indexDistribute];
-      newDistribute.boolHasImage = !newDistribute.boolHasImage;
+      newDistribute.boolHasImage = !newDistribute.boolHasImage!;
       listDistribute[indexDistribute] = newDistribute;
     }
   }
 
-  void chooseImage(DistributesRequest distributes,
-      ElementDistributesRequest elementDistributes) async {
+  void chooseImage(DistributesRequest? distributes,
+      ElementDistributesRequest? elementDistributes) async {
     try {
       final picker = ImagePicker();
-      final pickedFile = await picker.getImage(source: ImageSource.gallery);
+      final pickedFile = await (picker.getImage(source: ImageSource.gallery) as Future<PickedFile>);
       var file = File(pickedFile.path);
       var fileUp = await ImageUtils.getImageCompress(file);
 
       var link = await RepositoryManager.imageRepository.uploadImage(fileUp);
 
       var indexElement = listDistribute[listDistribute.indexOf(distributes)]
-          .elementDistributes
+          .elementDistributes!
           .indexOf(elementDistributes);
       listDistribute[listDistribute.indexOf(distributes)]
-          .elementDistributes[indexElement]
+          .elementDistributes![indexElement]!
           .imageUrl = link;
 
       listDistribute.refresh();
@@ -74,7 +74,7 @@ class DistributeSelectController extends GetxController {
 
   }
 
-  void addDistribute(String name) {
+  void addDistribute(String? name) {
     if (name == null) {
       var name = getNameNewDistribute();
 
@@ -97,40 +97,40 @@ class DistributeSelectController extends GetxController {
   void addElementDistribute(int indexDistribute, String name) {
     if (listDistribute[indexDistribute] != null) {
       if (listDistribute[indexDistribute]
-          .elementDistributes
-          .map((e) => e.name)
+          .elementDistributes!
+          .map((e) => e!.name)
           .contains(name)) {
         SahaAlert.showWarning(message: "Thuộc tính đã có");
         return;
       }
       listDistribute[indexDistribute]
-          .elementDistributes
+          .elementDistributes!
           .add(ElementDistributesRequest(name: name));
     }
   }
 
   void removeElementDistribute(
       int indexDistribute, ElementDistributesRequest distributes) {
-    listDistribute[indexDistribute].elementDistributes.remove(distributes);
+    listDistribute[indexDistribute].elementDistributes!.remove(distributes);
   }
 
   void refresh() {
     listDistribute.refresh();
   }
 
-  List<String> getListStringBuild(Distributes details) {
+  List<String?> getListStringBuild(Distributes details) {
     var listNew = listSuggestion.toList();
     listNew.removeWhere(
         (text) => listDistribute.map((detail) => detail.name).contains(text));
 
-    listNew.insert(0, details.name);
+    listNew.insert(0, details.name!);
     if (!listNew.contains(listSuggestion.last)) {
       listNew.add(listSuggestion.last);
     }
     return listNew;
   }
 
-  String getNameNewDistribute() {
+  String? getNameNewDistribute() {
     var listNew = listSuggestion.toList();
     listNew.removeWhere(
         (text) => listDistribute.map((detail) => detail.name).contains(text));
@@ -172,7 +172,7 @@ class DistributeSelectController extends GetxController {
         return (element.name == null ||
             element.name == "" ||
             element.elementDistributes == null ||
-            element.elementDistributes.length == 0);
+            element.elementDistributes!.length == 0);
       });
     return listRT.toList();
   }

@@ -9,12 +9,12 @@ import 'package:sahashop_user/utils/user_info.dart';
 import '../handle_error.dart';
 
 class PostRepository {
-  Future<CategoryPost> createCategoryPost(
-      {String title,
-      File image,
-      String description,}) async {
+  Future<CategoryPost?> createCategoryPost(
+      {String? title,
+      File? image,
+      String? description,}) async {
     try {
-      var res = await SahaServiceManager().service.createCategoryPost(
+      var res = await SahaServiceManager().service!.createCategoryPost(
         UserInfo().getCurrentStoreCode(),
         {
           "title": title,
@@ -29,10 +29,10 @@ class PostRepository {
     }
   }
 
-  Future<List<CategoryPost>> getAllCategoryPost() async {
+  Future<List<CategoryPost>?> getAllCategoryPost() async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .getAllCategoryPost(UserInfo().getCurrentStoreCode());
       return res.data;
     } catch (err) {
@@ -40,15 +40,15 @@ class PostRepository {
     }
   }
 
-  Future<Post> createPost(
-      {String title,
-        File image,
-        String summary,
-        String content,
-        bool published,
-        int categoryId}) async {
+  Future<Post?> createPost(
+      {String? title,
+        File? image,
+        String? summary,
+        String? content,
+        bool? published,
+        int? categoryId}) async {
     try {
-      var res = await SahaServiceManager().service.createPost(
+      var res = await SahaServiceManager().service!.createPost(
         UserInfo().getCurrentStoreCode(),
         {
           "title": title,
@@ -66,12 +66,12 @@ class PostRepository {
     }
   }
 
-  Future<List<Post>> getAllPost() async {
+  Future<List<Post>?> getAllPost() async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .getAllPost(UserInfo().getCurrentStoreCode());
-      return res.data.data;
+      return res.data!.data;
     } catch (err) {
       handleError(err);
     }

@@ -53,7 +53,7 @@ class ProductScreen extends StatelessWidget {
                   width: Get.width,
                   child: SahaButtonFullParent(
                     onPressed: () {
-                      Get.to(AddProductScreen()).then((value) {
+                      Get.to(AddProductScreen())!.then((value) {
                         if (value == "added") {
                           productController.getAllProduct();
                         }
@@ -71,9 +71,9 @@ class ProductScreen extends StatelessWidget {
 }
 
 class ItemProductWidget extends StatelessWidget {
-  final Product product;
+  final Product? product;
 
-  const ItemProductWidget({Key key, this.product}) : super(key: key);
+  const ItemProductWidget({Key? key, this.product}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -84,12 +84,12 @@ class ItemProductWidget extends StatelessWidget {
               height: 60,
               width: 60,
               fit: BoxFit.cover,
-              imageUrl: product.images != null && product.images.length >0 ?product.images[0].imageUrl: "",
+              imageUrl: product!.images != null && product!.images!.length >0 ?product!.images![0].imageUrl!: "",
               placeholder: (context, url) => new SahaLoadingWidget(size: 30,),
               errorWidget: (context, url, error) => new Icon(Icons.error),
             ),
-            title: Text(product.name??""),
-            trailing: Text(SahaStringUtils().convertToMoney(product.price),
+            title: Text(product!.name??""),
+            trailing: Text(SahaStringUtils().convertToMoney(product!.price),
 
               style: TextStyle(
                 color: SahaPrimaryColor
@@ -108,7 +108,7 @@ class ItemProductWidget extends StatelessWidget {
     );
   }
 
-  Widget buildItemOption({String title, Function onTap}) {
+  Widget buildItemOption({required String title, Function? onTap}) {
     return Container(
       margin: EdgeInsets.all(8),
       padding: EdgeInsets.all(8),

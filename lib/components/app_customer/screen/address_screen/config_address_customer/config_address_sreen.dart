@@ -11,9 +11,9 @@ import 'package:sahashop_user/model/info_address_customer.dart';
 import 'package:sahashop_user/model/location_address.dart';
 
 class ConfigAddressCustomerScreen extends StatelessWidget {
-  final InfoAddressCustomer infoAddressCustomer;
+  final InfoAddressCustomer? infoAddressCustomer;
 
-  ConfigAddressCustomerController configAddressCustomerController;
+  late ConfigAddressCustomerController configAddressCustomerController;
   ConfigAddressCustomerScreen({this.infoAddressCustomer}) {
     configAddressCustomerController = ConfigAddressCustomerController(
       infoAddressCustomer: infoAddressCustomer,

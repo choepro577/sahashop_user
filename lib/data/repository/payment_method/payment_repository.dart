@@ -5,10 +5,10 @@ import 'package:sahashop_user/data/repository/handle_error.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class PaymentRepository {
-  Future<PaymentMethodResponse> getPaymentMethod() async {
+  Future<PaymentMethodResponse?> getPaymentMethod() async {
     try {
       var res = await SahaServiceManager()
-          .service
+          .service!
           .getPaymentMethod(UserInfo().getCurrentStoreCode());
       return res;
     } catch (err) {
@@ -16,10 +16,10 @@ class PaymentRepository {
     }
   }
 
-  Future<UpdatePaymentResponse> upDatePaymentMethod(
-      int idPaymentMethod, Map<String, dynamic> body) async {
+  Future<UpdatePaymentResponse?> upDatePaymentMethod(
+      int? idPaymentMethod, Map<String, dynamic> body) async {
     try {
-      var res = await SahaServiceManager().service.upDatePaymentMethod(
+      var res = await SahaServiceManager().service!.upDatePaymentMethod(
           UserInfo().getCurrentStoreCode(), idPaymentMethod, body);
       return res;
     } catch (err) {

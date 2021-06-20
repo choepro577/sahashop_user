@@ -12,11 +12,11 @@ class CategoryController extends GetxController {
     getAllCategory();
   }
 
-  Future<void> getAllCategory() async {
+  Future<bool?> getAllCategory() async {
     loading.value = true;
     try {
       var list = await RepositoryManager.categoryRepository.getAllCategory();
-      listCategory(list);
+      listCategory(list!);
 
       loading.value = false;
       return true;

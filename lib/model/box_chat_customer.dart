@@ -28,16 +28,16 @@ class BoxChatCustomer {
     this.customer,
   });
 
-  int id;
-  int storeId;
-  int customerId;
-  int messagesId;
-  int userUnread;
-  int customerUnread;
-  DateTime createdAt;
-  DateTime updatedAt;
-  Message lastMessage;
-  InfoCustomer customer;
+  int? id;
+  int? storeId;
+  int? customerId;
+  int? messagesId;
+  int? userUnread;
+  int? customerUnread;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  Message? lastMessage;
+  InfoCustomer? customer;
 
   factory BoxChatCustomer.fromJson(Map<String, dynamic> json) =>
       BoxChatCustomer(
@@ -60,9 +60,9 @@ class BoxChatCustomer {
         "messages_id": messagesId,
         "user_unread": userUnread,
         "customer_unread": customerUnread,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-        "last_message": lastMessage.toJson(),
-        "customer": customer.toJson(),
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
+        "last_message": lastMessage!.toJson(),
+        "customer": customer!.toJson(),
       };
 }

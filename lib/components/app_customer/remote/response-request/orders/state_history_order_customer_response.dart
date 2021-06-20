@@ -9,11 +9,11 @@ class StateHistoryOrderCustomerResponse {
     this.data,
   });
 
-  int code;
-  bool success;
-  String msgCode;
-  String msg;
-  List<StateOrder> data;
+  int? code;
+  bool? success;
+  String? msgCode;
+  String? msg;
+  List<StateOrder>? data;
 
   factory StateHistoryOrderCustomerResponse.fromJson(
           Map<String, dynamic> json) =>
@@ -31,6 +31,6 @@ class StateHistoryOrderCustomerResponse {
         "success": success,
         "msg_code": msgCode,
         "msg": msg,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }

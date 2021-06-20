@@ -6,8 +6,8 @@ import 'package:sahashop_user/controller/config_controller.dart';
 import 'data_app_controller.dart';
 
 class LoadAppScreen extends StatefulWidget {
-  final String logo;
-  const LoadAppScreen({Key key, this.logo}) : super(key: key);
+  final String? logo;
+  const LoadAppScreen({Key? key, this.logo}) : super(key: key);
 
   @override
   _LoadAppScreenState createState() => _LoadAppScreenState();
@@ -28,7 +28,7 @@ class _LoadAppScreenState extends State<LoadAppScreen> {
     await Future.delayed(Duration(seconds: 1));
     isInit = true;
 
-    Get.offNamed('customer_home').then((value) {
+    Get.offNamed('customer_home')!.then((value) {
       //Get.back();
     });
   }
@@ -47,7 +47,7 @@ class _LoadAppScreenState extends State<LoadAppScreen> {
               Image.network(
                 widget.logo == null
                     ? "https://sahavi.vn/wp-content/uploads/2018/11/cb9551447aa689f8d0b7-1536x524.png"
-                    : configController.configApp.logoUrl,
+                    : configController.configApp.logoUrl!,
                 height: 150,
                 width: 150,
               ),

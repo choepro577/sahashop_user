@@ -14,7 +14,7 @@ class NewAddressStoreScreen extends StatefulWidget {
 }
 
 class _NewAddressStoreScreenState extends State<NewAddressStoreScreen> {
-  NewAddressController newAddressController;
+  late NewAddressController newAddressController;
 
   @override
   Widget build(BuildContext context) {

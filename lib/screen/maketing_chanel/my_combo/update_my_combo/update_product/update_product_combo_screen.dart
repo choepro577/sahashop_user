@@ -84,8 +84,7 @@ class _UpdateProductComboScreenState extends State<UpdateProductComboScreen> {
               : Column(
                   children: [
                     ...List.generate(
-                      updateProductComboController.listProduct.length ??
-                          LIST_PRODUCT_EXAMPLE.length,
+                      updateProductComboController.listProduct.length,
                       (index) => updateProductComboController
                                   .listIsSave.value[index] ==
                               true
@@ -107,8 +106,7 @@ class _UpdateProductComboScreenState extends State<UpdateProductComboScreen> {
                                                       .listCheckSelectedProduct
                                                       .value[index]
                                                       .values
-                                                      .first ??
-                                                  false,
+                                                      .first,
                                               onChanged: (v) {
                                                 setState(() {
                                                   updateProductComboController
@@ -150,15 +148,15 @@ class _UpdateProductComboScreenState extends State<UpdateProductComboScreen> {
                                                         updateProductComboController
                                                                     .listProduct[
                                                                         index]
-                                                                    .images
+                                                                    .images!
                                                                     .length ==
                                                                 0
                                                             ? ""
                                                             : updateProductComboController
                                                                 .listProduct[
                                                                     index]
-                                                                .images[0]
-                                                                .imageUrl,
+                                                                .images![0]
+                                                                .imageUrl!,
                                                     errorWidget:
                                                         (context, url, error) =>
                                                             ClipRRect(
@@ -201,8 +199,7 @@ class _UpdateProductComboScreenState extends State<UpdateProductComboScreen> {
                                                   height: 10,
                                                 ),
                                                 Text(
-                                                    "${updateProductComboController.listProduct[index].price} đ" ??
-                                                        "Chưa đặt giá"),
+                                                    "${updateProductComboController.listProduct[index].price} đ"),
                                               ],
                                             ),
                                           )
@@ -230,7 +227,7 @@ class _UpdateProductComboScreenState extends State<UpdateProductComboScreen> {
                                             Shadow(
                                                 offset: Offset(0, 0),
                                                 blurRadius: 10.0,
-                                                color: Colors.grey[200]),
+                                                color: Colors.grey[200]!),
                                           ],
                                         ),
                                       ),
@@ -252,8 +249,7 @@ class _UpdateProductComboScreenState extends State<UpdateProductComboScreen> {
                                                 .listCheckSelectedProduct
                                                 .value[index]
                                                 .values
-                                                .first ??
-                                            false,
+                                                .first,
                                         onChanged: (v) {
                                           updateProductComboController
                                               .onChangeCheckbox(index);
@@ -283,14 +279,14 @@ class _UpdateProductComboScreenState extends State<UpdateProductComboScreen> {
                                             fit: BoxFit.cover,
                                             imageUrl: updateProductComboController
                                                         .listProduct[index]
-                                                        .images
+                                                        .images!
                                                         .length ==
                                                     0
                                                 ? ""
                                                 : updateProductComboController
                                                     .listProduct[index]
-                                                    .images[0]
-                                                    .imageUrl,
+                                                    .images![0]
+                                                    .imageUrl!,
                                             errorWidget:
                                                 (context, url, error) =>
                                                     ClipRRect(
@@ -330,8 +326,7 @@ class _UpdateProductComboScreenState extends State<UpdateProductComboScreen> {
                                           height: 10,
                                         ),
                                         Text(
-                                            "${updateProductComboController.listProduct[index].price} đ" ??
-                                                "Chưa đặt giá"),
+                                            "${updateProductComboController.listProduct[index].price} đ"),
                                       ],
                                     ),
                                   ),
