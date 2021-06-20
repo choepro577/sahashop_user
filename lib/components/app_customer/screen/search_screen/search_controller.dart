@@ -46,13 +46,13 @@ class SearchController extends GetxController {
     isLoadingProduct.value = true;
     checkIsSelectedCategory();
     try {
-      var list = await (CustomerRepositoryManager.productCustomerRepository
+      var list = (await CustomerRepositoryManager.productCustomerRepository
           .searchProduct(
               search: search,
               idCategory: selectedCategoryParam,
               descending: descending,
               details: sizeSearch,
-              sortBy: sortBy) as Future<List<Product>>);
+              sortBy: sortBy))!;
       listProduct.value = list;
       print(listProduct.length);
       isLoadingProduct.value = false;

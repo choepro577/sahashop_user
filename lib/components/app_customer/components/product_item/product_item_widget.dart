@@ -185,12 +185,10 @@ class ProductItemWidget extends StatelessWidget {
                                     width: 15,
                                     child: SvgPicture.asset(
                                       "assets/icons/cart_icon.svg",
-                                      color: true
-                                          ? Theme.of(context)
+                                      color: Theme.of(context)
                                               .primaryTextTheme
                                               .headline6!
-                                              .color
-                                          : Color(0xFFDBDEE4),
+                                              .color,
                                     ),
                                   ),
                                 ),

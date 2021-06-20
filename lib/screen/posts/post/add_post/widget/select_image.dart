@@ -126,9 +126,9 @@ class SelectImageController extends GetxController {
       final dir = await path_provider.getTemporaryDirectory();
       final targetPath = dir.absolute.path + basename(pickedFile.path);
 
-      var result = await (FlutterImageCompress.compressAndGetFile(
+      var result = (await FlutterImageCompress.compressAndGetFile(
           file.absolute.path, targetPath,
-          quality: 60, minHeight: 512, minWidth: 512) as Future<File>);
+          quality: 60, minHeight: 512, minWidth: 512))!;
 
       onPick(File(result.path));
     } else {

@@ -12,7 +12,7 @@ class AddStoreController extends GetxController {
   Future<List<DataTypeShop>?> getAllShopType() async {
     try {
       var listDataTypeShop =
-          await (RepositoryManager.typeOfShopRepository.getAll() as Future<List<DataTypeShop>>);
+      (await RepositoryManager.typeOfShopRepository.getAll())!;
 
       for (var i in listDataTypeShop) {
         listNameShop.add(i.name);

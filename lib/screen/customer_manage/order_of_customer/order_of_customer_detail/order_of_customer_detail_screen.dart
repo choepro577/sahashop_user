@@ -318,7 +318,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                       ),
                       Spacer(),
                       Text(
-                        "+ đ${SahaStringUtils().convertToMoney(order?.totalShippingFee)}",
+                        "+ đ${SahaStringUtils().convertToMoney(order.totalShippingFee)}",
                         style: TextStyle(color: Colors.grey[600]),
                       )
                     ],

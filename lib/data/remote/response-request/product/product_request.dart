@@ -28,7 +28,7 @@ class ProductRequest {
   List<String>? images;
   List<DistributesRequest>? listDistribute;
   List<ListAttribute>? listAttribute;
-  List<int?>? categories;
+  List<int>? categories;
 
   factory ProductRequest.fromJson(Map<String, dynamic> json) => ProductRequest(
         description: json["description"],

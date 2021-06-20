@@ -21,7 +21,7 @@ class HomeController extends GetxController {
     isLoadingStore.value = true;
     errMsg.refresh();
     try {
-      var list = await (RepositoryManager.storeRepository.getAll() as Future<List<Store>>);
+      var list = (await RepositoryManager.storeRepository.getAll())!;
 
       if (list.length > 0) {
         var indexStoreSelected;

@@ -6,7 +6,7 @@ import 'package:sahashop_user/model/combo.dart';
 
 class ComboDetailController extends GetxController {
   var listProductCombo = RxList<ProductsCombo>();
-  var listQuantityProductNeedBuy = RxList<int?>();
+  var listQuantityProductNeedBuy = RxList<int>();
   var discountComboType = 0.obs;
   var valueComboType = 0.0.obs;
   var hadEnough = false.obs;
@@ -21,7 +21,7 @@ class ComboDetailController extends GetxController {
           .indexWhere((element) => element.product!.id == e.product!.id);
       if (checkHasInCombo != -1) {
         listQuantityProductNeedBuy[checkHasInCombo] =
-            listQuantityProductNeedBuy[checkHasInCombo]! - e.quantity!;
+            listQuantityProductNeedBuy[checkHasInCombo] - e.quantity!;
       }
     });
     checkProductInCombo();
@@ -32,7 +32,7 @@ class ComboDetailController extends GetxController {
       (v) {
         if (dataAppCustomerController.listOrder.length == 0) {
           for (int i = 0; i < listProductCombo.length; i++) {
-            listQuantityProductNeedBuy[i] = listProductCombo[i].quantity;
+            listQuantityProductNeedBuy[i] = listProductCombo[i].quantity!;
           }
         } else {
           if (dataAppCustomerController.listOrder.length >=
@@ -61,7 +61,7 @@ class ComboDetailController extends GetxController {
                           .listOrder[checkHasInCombo].quantity!;
                 }
               } else {
-                listQuantityProductNeedBuy[i] = listProductCombo[i].quantity;
+                listQuantityProductNeedBuy[i] = listProductCombo[i].quantity!;
               }
             }
           }
@@ -91,7 +91,7 @@ class ComboDetailController extends GetxController {
           discountComboType.value = e.discountType!;
           valueComboType.value = e.valueDiscount!.toDouble();
           listProductCombo.forEach((element) {
-            listQuantityProductNeedBuy.add(element.quantity);
+            listQuantityProductNeedBuy.add(element.quantity!);
           });
 
           dataAppCustomerController.listOrder.forEach((e) {

@@ -229,13 +229,13 @@ class DataAppCustomerController extends GetxController {
   }
 
   Future<void> getItemCart() async {
-    List<int?> listQuantityProductNew = [];
+    List<int> listQuantityProductNew = [];
     try {
       var res = await CustomerRepositoryManager.cartRepository.getItemCart();
       listOrder(res!.data!.lineItems!);
       listUsedCombo(res.data!.usedCombos!);
       res.data!.lineItems!.forEach((element) {
-        listQuantityProductNew.add(element.quantity);
+        listQuantityProductNew.add(element.quantity!);
       });
       comboDiscountAmount.value = res.data!.comboDiscountAmount!;
       listQuantityProduct(listQuantityProductNew as List<int>);
@@ -249,7 +249,7 @@ class DataAppCustomerController extends GetxController {
   }
 
   Future<void> addVoucherCart(String codeVoucher) async {
-    List<int?> listQuantityProductNew = [];
+    List<int> listQuantityProductNew = [];
     voucherDiscountAmount.value = 0.0;
     try {
       var res = await CustomerRepositoryManager.cartRepository
@@ -257,7 +257,7 @@ class DataAppCustomerController extends GetxController {
       listOrder(res!.data!.lineItems!);
       listUsedCombo(res.data!.usedCombos!);
       res.data!.lineItems!.forEach((element) {
-        listQuantityProductNew.add(element.quantity);
+        listQuantityProductNew.add(element.quantity!);
       });
       listQuantityProduct(listQuantityProductNew as List<int>);
       comboDiscountAmount.value = res.data!.comboDiscountAmount!;
@@ -272,14 +272,14 @@ class DataAppCustomerController extends GetxController {
   }
 
   Future<void> updateItemCart(int? idProduct, int quantity) async {
-    List<int?> listQuantityProductNew = [];
+    List<int> listQuantityProductNew = [];
     try {
       var res = await CustomerRepositoryManager.cartRepository
           .updateItemCart(idProduct, quantity);
       listOrder(res!.data!.lineItems!);
       listUsedCombo(res.data!.usedCombos!);
       res.data!.lineItems!.forEach((element) {
-        listQuantityProductNew.add(element.quantity);
+        listQuantityProductNew.add(element.quantity!);
       });
       listQuantityProduct(listQuantityProductNew as List<int>);
       comboDiscountAmount.value = res.data!.comboDiscountAmount!;
@@ -293,14 +293,14 @@ class DataAppCustomerController extends GetxController {
   }
 
   Future<void> addItemCart(int? idProduct) async {
-    List<int?> listQuantityProductNew = [];
+    List<int> listQuantityProductNew = [];
     try {
       var res =
           await CustomerRepositoryManager.cartRepository.addItemCart(idProduct);
       listOrder(res!.data!.lineItems!);
       listUsedCombo(res.data!.usedCombos!);
       res.data!.lineItems!.forEach((element) {
-        listQuantityProductNew.add(element.quantity);
+        listQuantityProductNew.add(element.quantity!);
       });
       listQuantityProduct(listQuantityProductNew as List<int>);
       comboDiscountAmount.value = res.data!.comboDiscountAmount!;
