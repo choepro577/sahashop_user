@@ -10,8 +10,8 @@ class OrderCompletedController extends GetxController {
   var loading = false.obs;
   var isLoadingPayment = false.obs;
   var refreshValue = false.obs;
-  RxList<Map<int?, String?>> listPaymentMethod = RxList<Map<int, String>>();
-  Map<int?, String?>? paymentMethod;
+  RxList<Map<int, String>>? listPaymentMethod = RxList<Map<int, String>>();
+  Map<int, String> paymentMethod = new Map<int, String>();
 
   OrderCompletedController(this.orderCode) {
     loadOrder(orderCode);
@@ -37,7 +37,7 @@ class OrderCompletedController extends GetxController {
       var res =
           await CustomerRepositoryManager.paymentRepository.getPaymentMethod();
       res!.data!.forEach((element) {
-        listPaymentMethod.add({element["id"]: element["name"]});
+        listPaymentMethod!.add({element["id"]: element["name"]});
       });
 
       print(listPaymentMethod);

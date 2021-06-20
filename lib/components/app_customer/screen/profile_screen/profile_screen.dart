@@ -3,18 +3,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/screen/address_screen/all_address_customer/all_address_customer_screen.dart';
+import 'package:sahashop_user/components/app_customer/screen/choose_voucher/choose_voucher_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/config_profile_screen/config_profile_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/login/login_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_screen.dart';
+import 'package:sahashop_user/components/app_customer/screen/profile_screen/fanpage/fanpage_screen.dart';
+import 'package:sahashop_user/components/app_customer/screen/profile_screen/profile_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/register/register_customer_screen.dart';
 
+// ignore: must_be_immutable
 class ProfileScreen extends StatelessWidget {
   DataAppCustomerController dataAppCustomerController = Get.find();
-
+  ProfileController? profileController;
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    profileController = ProfileController();
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -336,92 +341,262 @@ class ProfileScreen extends StatelessWidget {
                 height: 1,
               ),
               dataAppCustomerController.isLogin.value == true
-                  ? Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            children: [
-                              Container(
-                                width: 30,
-                                height: 30,
-                                child: SvgPicture.asset(
-                                  "assets/icons/wallet.svg",
-                                  color: Theme.of(context).primaryColor,
+                  ? Obx(
+                      () => Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(() => OrderHistoryScreen(
+                                          initPage: 0,
+                                        ));
+                                  },
+                                  child: Stack(
+                                    overflow: Overflow.visible,
+                                    children: [
+                                      Container(
+                                        width: 30,
+                                        height: 30,
+                                        child: SvgPicture.asset(
+                                          "assets/icons/wallet.svg",
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                      profileController!
+                                                  .processingAmount.value !=
+                                              0
+                                          ? Positioned(
+                                              top: -3,
+                                              right: -5,
+                                              child: Container(
+                                                height: 18,
+                                                width: 18,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xFFFF4848),
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                      width: 1.5,
+                                                      color: Colors.white),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    "${profileController!.processingAmount.value}+",
+                                                    style: TextStyle(
+                                                      fontSize: 8,
+                                                      height: 1,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          : Container(),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                "Chờ xác nhận",
-                                style: TextStyle(
-                                    fontSize: 11, color: Colors.grey[700]),
-                              )
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Container(
-                                width: 30,
-                                height: 30,
-                                child: SvgPicture.asset(
-                                  "assets/icons/box.svg",
-                                  color: Theme.of(context).primaryColor,
+                                SizedBox(
+                                  height: 10,
                                 ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                "Chờ lấy hàng",
-                                style: TextStyle(
-                                    fontSize: 11, color: Colors.grey[700]),
-                              )
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Container(
-                                width: 30,
-                                height: 30,
-                                child: SvgPicture.asset(
-                                  "assets/icons/delivery_truck.svg",
-                                  color: Theme.of(context).primaryColor,
+                                Text(
+                                  "Chờ xác nhận",
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.grey[700]),
+                                )
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(() => OrderHistoryScreen(
+                                          initPage: 1,
+                                        ));
+                                  },
+                                  child: Stack(
+                                    overflow: Overflow.visible,
+                                    children: [
+                                      Container(
+                                        width: 30,
+                                        height: 30,
+                                        child: SvgPicture.asset(
+                                          "assets/icons/box.svg",
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                      profileController!.packingAmount.value != 0
+                                          ? Positioned(
+                                              top: -3,
+                                              right: -5,
+                                              child: Container(
+                                                height: 18,
+                                                width: 18,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xFFFF4848),
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                      width: 1.5,
+                                                      color: Colors.white),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    "${profileController!.packingAmount.value}+",
+                                                    style: TextStyle(
+                                                      fontSize: 8,
+                                                      height: 1,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          : Container(),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                "Đang giao",
-                                style: TextStyle(
-                                    fontSize: 11, color: Colors.grey[700]),
-                              )
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Container(
-                                width: 25,
-                                height: 25,
-                                child: SvgPicture.asset(
-                                  "assets/icons/favorite.svg",
-                                  color: Theme.of(context).primaryColor,
+                                SizedBox(
+                                  height: 10,
                                 ),
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Text(
-                                "Đánh giá",
-                                style: TextStyle(
-                                    fontSize: 11, color: Colors.grey[700]),
-                              )
-                            ],
-                          ),
-                        ],
+                                Text(
+                                  "Chờ lấy hàng",
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.grey[700]),
+                                )
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(() => OrderHistoryScreen(
+                                          initPage: 2,
+                                        ));
+                                  },
+                                  child: Stack(
+                                    overflow: Overflow.visible,
+                                    children: [
+                                      Container(
+                                        width: 30,
+                                        height: 30,
+                                        child: SvgPicture.asset(
+                                          "assets/icons/delivery_truck.svg",
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                      profileController!.shippingAmount.value !=
+                                              0
+                                          ? Positioned(
+                                              top: -3,
+                                              right: -5,
+                                              child: Container(
+                                                height: 18,
+                                                width: 18,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xFFFF4848),
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                      width: 1.5,
+                                                      color: Colors.white),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    "${profileController!.shippingAmount.value}+",
+                                                    style: TextStyle(
+                                                      fontSize: 8,
+                                                      height: 1,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          : Container(),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "Đang giao",
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.grey[700]),
+                                )
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(() => OrderHistoryScreen(
+                                          initPage: 3,
+                                        ));
+                                  },
+                                  child: Stack(
+                                    overflow: Overflow.visible,
+                                    children: [
+                                      Container(
+                                        width: 25,
+                                        height: 25,
+                                        child: SvgPicture.asset(
+                                          "assets/icons/favorite.svg",
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                      profileController!.evaluateAmount.value !=
+                                              0
+                                          ? Positioned(
+                                              top: -8,
+                                              right: -8,
+                                              child: Container(
+                                                height: 18,
+                                                width: 18,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xFFFF4848),
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                      width: 1.5,
+                                                      color: Colors.white),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    "${profileController!.evaluateAmount.value}+",
+                                                    style: TextStyle(
+                                                      fontSize: 8,
+                                                      height: 1,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          : Container(),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Text(
+                                  "Đánh giá",
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.grey[700]),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     )
                   : Container(),
@@ -567,39 +742,44 @@ class ProfileScreen extends StatelessWidget {
               Divider(
                 height: 1,
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: 25,
-                          width: 25,
-                          child: SvgPicture.asset(
-                            "assets/icons/coupon.svg",
-                            color: Colors.deepOrange,
+              InkWell(
+                onTap: () {
+                  Get.to(() => ChooseVoucherCustomerScreen());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            height: 25,
+                            width: 25,
+                            child: SvgPicture.asset(
+                              "assets/icons/coupon.svg",
+                              color: Colors.deepOrange,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          "Ví Voucher",
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      height: 13,
-                      width: 13,
-                      child: SvgPicture.asset(
-                        "assets/icons/right_arrow.svg",
-                        color: Colors.black,
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            "Ví Voucher",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ],
                       ),
-                    )
-                  ],
+                      Container(
+                        height: 13,
+                        width: 13,
+                        child: SvgPicture.asset(
+                          "assets/icons/right_arrow.svg",
+                          color: Colors.black,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
               Divider(
@@ -681,39 +861,44 @@ class ProfileScreen extends StatelessWidget {
               Divider(
                 height: 1,
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: 25,
-                          width: 25,
-                          child: SvgPicture.asset(
-                            "assets/icons/location.svg",
-                            color: Colors.lightBlue,
+              InkWell(
+                onTap: () {
+                  Get.to(() => AllAddressCustomerScreen());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            height: 25,
+                            width: 25,
+                            child: SvgPicture.asset(
+                              "assets/icons/location.svg",
+                              color: Colors.lightBlue,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          "Địa chỉ của tôi",
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      height: 13,
-                      width: 13,
-                      child: SvgPicture.asset(
-                        "assets/icons/right_arrow.svg",
-                        color: Colors.black,
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            "Địa chỉ của tôi",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ],
                       ),
-                    )
-                  ],
+                      Container(
+                        height: 13,
+                        width: 13,
+                        child: SvgPicture.asset(
+                          "assets/icons/right_arrow.svg",
+                          color: Colors.black,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
               Divider(
@@ -757,42 +942,47 @@ class ProfileScreen extends StatelessWidget {
               Divider(
                 height: 1,
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(8),
-                          height: 35,
-                          width: 35,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFF5F6F9),
-                            shape: BoxShape.circle,
+              InkWell(
+                onTap: () {
+                  Get.to(() => FanPageScreen());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            height: 35,
+                            width: 35,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFF5F6F9),
+                              shape: BoxShape.circle,
+                            ),
+                            child:
+                                SvgPicture.asset("assets/icons/facebook-2.svg"),
                           ),
-                          child:
-                              SvgPicture.asset("assets/icons/facebook-2.svg"),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          "Fanpage SahaTech",
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      height: 13,
-                      width: 13,
-                      child: SvgPicture.asset(
-                        "assets/icons/right_arrow.svg",
-                        color: Colors.black,
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            "Fanpage SahaTech",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ],
                       ),
-                    )
-                  ],
+                      Container(
+                        height: 13,
+                        width: 13,
+                        child: SvgPicture.asset(
+                          "assets/icons/right_arrow.svg",
+                          color: Colors.black,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],

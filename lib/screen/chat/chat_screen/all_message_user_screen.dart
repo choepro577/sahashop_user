@@ -10,6 +10,7 @@ import 'package:shimmer/shimmer.dart';
 
 import 'chat_screen.dart';
 
+// ignore: must_be_immutable
 class AllMessageScreen extends StatelessWidget {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);

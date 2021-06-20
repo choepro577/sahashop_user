@@ -12,11 +12,13 @@ import 'package:sahashop_user/screen/chat/chat_screen/all_message_user_screen.da
 import 'package:sahashop_user/screen/config_app/config_screen.dart';
 import 'package:sahashop_user/screen/config_payment/config_payment_screen.dart';
 import 'package:sahashop_user/screen/config_store_address/config_store_address_screen.dart';
+import 'package:sahashop_user/screen/customer_manage/customer_manage_screen.dart';
 import 'package:sahashop_user/screen/home/home_controller.dart';
 import 'package:sahashop_user/screen/inventory/inventory_screen.dart';
 import 'package:sahashop_user/screen/maketing_chanel/marketing_chanel_screen.dart';
 import 'package:sahashop_user/screen/order_manage/order_manage_screen.dart';
 import 'package:sahashop_user/screen/posts/screen.dart';
+import 'package:sahashop_user/screen/report/report_screen.dart';
 
 import 'choose_store/choose_store.dart';
 import 'widget/special_offers.dart';
@@ -159,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: 'assets/icons/flash_icon.svg',
                     text: 'Báo cáo',
                     press: () {
-                      Get.to(InventoryScreen());
+                      Get.to(ReportScreen());
                     },
                   ),
                   ItemStoreView(
@@ -172,7 +174,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ItemStoreView(
                     icon: 'assets/icons/flash_icon.svg',
                     text: 'Khách hàng',
-                    press: () {},
+                    press: () {
+                      Get.to(() => CustomerManageScreen());
+                    },
                   ),
                   ItemStoreView(
                     icon: 'assets/icons/gift_icon.svg',

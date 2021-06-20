@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/orders/order_response.dart';
 import 'package:sahashop_user/data/remote/response-request/address/add_token_shipment_response.dart';
 import 'package:sahashop_user/data/remote/response-request/address/address_respone.dart';
 import 'package:sahashop_user/data/remote/response-request/address/all_address_store_response.dart';
@@ -13,6 +14,7 @@ import 'package:sahashop_user/data/remote/response-request/chat/all_message_resp
 import 'package:sahashop_user/data/remote/response-request/chat/send_message_response.dart';
 import 'package:sahashop_user/data/remote/response-request/config_ui/app_theme_response.dart';
 import 'package:sahashop_user/data/remote/response-request/config_ui/create_app_theme_response.dart';
+import 'package:sahashop_user/data/remote/response-request/customer/all_customer_response.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/create_combo_reponse.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/end_combo_response.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/my_combo_response.dart';
@@ -29,6 +31,7 @@ import 'package:sahashop_user/data/remote/response-request/order/state_history_o
 import 'package:sahashop_user/data/remote/response-request/payment_method/payment_method_response.dart';
 import 'package:sahashop_user/data/remote/response-request/payment_method/update_payment_response.dart';
 import 'package:sahashop_user/data/remote/response-request/post/all_post_response.dart';
+import 'package:sahashop_user/data/remote/response-request/report/report_response.dart';
 
 import 'response-request/auth/register_response.dart';
 import 'response-request/category/all_category_response.dart';
@@ -275,5 +278,29 @@ abstract class SahaService {
   Future<ChangeOrderStatusResponse> changeOrderStatus(
     @Path("storeCode") String? storeCode,
     @Body() Map<String, dynamic> body,
+  );
+
+  @GET("store/{storeCode}/orders/{orderCode}")
+  Future<OrderResponse> getOneOrder(
+    @Path() String storeCode,
+    @Path() String orderCode,
+  );
+
+  /// customer manage
+
+  @GET("store/{storeCode}/customers")
+  Future<AllCustomerResponse> getAllInfoCustomer(
+    @Path() String storeCode,
+    @Query("page") int numberPage,
+  );
+
+  /// report
+  @GET("store/{storeCode}/report/overview")
+  Future<ReportResponse> getReport(
+    @Path() String storeCode,
+    @Query("date_from") String timeFrom,
+    @Query("date_to") String timeTo,
+    @Query("date_from_compare") String dateFromCompare,
+    @Query("date_to_compare") String dateToCompare,
   );
 }

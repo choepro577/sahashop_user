@@ -889,6 +889,57 @@ class _SahaService implements SahaService {
     return value;
   }
 
+  @override
+  Future<OrderResponse> getOneOrder(storeCode, orderCode) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<OrderResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'store/$storeCode/orders/$orderCode',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = OrderResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<AllCustomerResponse> getAllInfoCustomer(storeCode, numberPage) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'page': numberPage};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AllCustomerResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'store/$storeCode/customers',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AllCustomerResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ReportResponse> getReport(
+      storeCode, timeFrom, timeTo, dateFromCompare, dateToCompare) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'date_from': timeFrom,
+      r'date_to': timeTo,
+      r'date_from_compare': dateFromCompare,
+      r'date_to_compare': dateToCompare
+    };
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ReportResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'store/$storeCode/report/overview',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ReportResponse.fromJson(_result.data!);
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

@@ -1,7 +1,11 @@
 import 'package:sahashop_user/data/repository/address/address_repository.dart';
 import 'package:sahashop_user/data/repository/chat/chat_repository.dart';
+import 'package:sahashop_user/data/repository/customer/customer_repository.dart';
+import 'package:sahashop_user/data/repository/order/order_repository.dart';
+import 'package:sahashop_user/data/repository/payment_method/payment_repository.dart';
 import 'package:sahashop_user/data/repository/product/product_repository.dart';
 import 'package:sahashop_user/data/repository/register/register_repository.dart';
+import 'package:sahashop_user/data/repository/report/report_repository.dart';
 import 'package:sahashop_user/data/repository/type_of_shop/type_of_shop_repository.dart';
 
 import 'attributes/attributes_repository.dart';
@@ -35,5 +39,7 @@ class RepositoryManager {
   static ChatRepository get chatRepository => ChatRepository();
   static PaymentRepository get paymentRepository => PaymentRepository();
   static OrderRepository get orderRepository => OrderRepository();
+  static CustomerRepository get customerRepository => CustomerRepository();
+  static ReportRepository get reportRepository => ReportRepository();
   static AttributesRepository get attributesRepository => AttributesRepository();
 }

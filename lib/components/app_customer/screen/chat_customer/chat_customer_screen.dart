@@ -4,7 +4,6 @@ import 'package:bubble/bubble.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:photo_view/photo_view.dart';
@@ -12,8 +11,6 @@ import 'package:photo_view/photo_view_gallery.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sahashop_user/components/saha_user/expanded_viewport/expanded_viewport.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
-import 'package:sahashop_user/model/box_chat_customer.dart';
-import 'package:sahashop_user/model/info_customer.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 
 import 'chat_customer_controller.dart';

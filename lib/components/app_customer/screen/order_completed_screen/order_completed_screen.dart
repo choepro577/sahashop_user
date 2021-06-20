@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/cart_screen_1.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
+import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_detail/order_detail_history_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/pay_screen/pay_screen.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
@@ -13,11 +14,12 @@ import 'order_completed_controller.dart';
 class OrderCompletedScreen extends StatelessWidget {
   final String? orderCode;
 
-  late OrderCompletedController orderCompletedController;
+  OrderCompletedController? orderCompletedController;
 
   DataAppCustomerController dataAppCustomerController = Get.find();
+  OrderHistoryController orderHistoryController = Get.find();
 
-  OrderCompletedScreen({Key? key, this.orderCode}) : super(key: key) {
+   OrderCompletedScreen({Key? key, this.orderCode}) : super(key: key) {
     orderCompletedController = OrderCompletedController(orderCode);
   }
 
@@ -37,7 +39,7 @@ class OrderCompletedScreen extends StatelessWidget {
                 width: Get.width,
                 child: Obx(
                   () {
-                    var x = orderCompletedController.refreshValue.value;
+                    var x = orderCompletedController!.refreshValue.value;
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -81,16 +83,16 @@ class OrderCompletedScreen extends StatelessWidget {
                             textAlign: TextAlign.center,
                           ),
                         ),
-                        orderCompletedController.order.value!.paymentMethodId ==
+                        orderCompletedController!.order.value!.paymentMethodId ==
                                     0 ||
-                                orderCompletedController
+                                orderCompletedController!
                                         .order.value!.paymentMethodId ==
                                     null
                             ? Container()
                             : InkWell(
                                 onTap: () {
                                   Get.to(() => PayScreen(
-                                        orderCode: orderCompletedController
+                                        orderCode: orderCompletedController!
                                             .order.value!.orderCode,
                                       ));
                                 },
@@ -149,8 +151,19 @@ class OrderCompletedScreen extends StatelessWidget {
                               onTap: () {
                                 Get.off(() => OrderHistoryDetailScreen(
                                       order:
-                                          orderCompletedController.order.value,
-                                    ));
+                                          orderCompletedController!.order.value,
+                                    ))!.then((value) => {
+                                      //  orderHistoryController.refreshData(),
+                                      orderHistoryController.refreshData(
+                                        "order_status_code",
+                                        "WAITING_FOR_PROGRESSING",
+                                        orderHistoryController.listStatusCode
+                                            .indexWhere((element) =>
+                                                element ==
+                                                orderCompletedController!.order
+                                                    .value!.orderStatusCode),
+                                      ),
+                                    });
                               },
                               child: Container(
                                 height: 35,
@@ -180,44 +193,44 @@ class OrderCompletedScreen extends StatelessWidget {
                                 color: Theme.of(context).primaryColor),
                           ),
                         ),
-                        Obx(
-                          () => orderCompletedController
-                                      .isLoadingPayment.value ==
-                                  true
-                              ? Container()
-                              : DropdownButton<Map<int?, String?>>(
-                                  focusColor: Colors.white,
-                                  value: orderCompletedController.paymentMethod,
-                                  //elevation: 5,
-                                  style: TextStyle(color: Colors.white),
-                                  items: orderCompletedController
-                                      .listPaymentMethod
-                                      .map<DropdownMenuItem<Map<int?, String?>>>(
-                                          (Map<int?, String?> value) {
-                                    return DropdownMenuItem<Map<int?, String?>>(
-                                      value: value,
-                                      child: Text(
-                                        "${value.values.first}",
-                                        style: TextStyle(color: Colors.black),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    );
-                                  }).toList(),
-                                  hint: Text(
-                                    "${orderCompletedController.order.value?.paymentMethodName}",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  onChanged: (Map<int?, String?>? value) {
-                                    orderCompletedController.paymentMethod =
-                                        value;
-                                    orderCompletedController
-                                        .changPaymentMethod(value!.keys.first);
-                                  },
-                                ),
-                        ),
+                        // Obx(
+                        //   () => orderCompletedController!
+                        //               .isLoadingPayment.value ==
+                        //           true
+                        //       ? Container()
+                        //       : DropdownButton<Map<int, String>>(
+                        //           focusColor: Colors.white,
+                        //           value: orderCompletedController!.paymentMethod,
+                        //           //elevation: 5,
+                        //           style: TextStyle(color: Colors.white),
+                        //           items: orderCompletedController!
+                        //               .listPaymentMethod!
+                        //               .map<DropdownMenuItem<Map<int, String>> >(
+                        //                   (Map<int?, String?>? value) {
+                        //                     return DropdownMenuItem<Map<int, String>>(
+                        //                       value: value,
+                        //                       child: Text(
+                        //                         "${value!.values.first}",
+                        //                         style: TextStyle(color: Colors.black),
+                        //                         textAlign: TextAlign.center,
+                        //                       ),
+                        //                     );
+                        //           }).toList(),
+                        //           hint: Text(
+                        //             "${orderCompletedController!.order.value?.paymentMethodName}",
+                        //             style: TextStyle(
+                        //                 color: Colors.black,
+                        //                 fontSize: 14,
+                        //                 fontWeight: FontWeight.w500),
+                        //           ),
+                        //           onChanged: (Map<int, String>? value) {
+                        //             orderCompletedController!.paymentMethod =
+                        //                 value!;
+                        //             orderCompletedController!
+                        //                 .changPaymentMethod(value.keys.first);
+                        //           },
+                        //         ),
+                        // ),
                       ],
                     );
                   },
