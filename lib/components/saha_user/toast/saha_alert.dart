@@ -1,57 +1,61 @@
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fluttertoast/fluttertoast.dart' as FLToast;
 import 'package:get/get.dart';
 import 'package:sahashop_user/const/constant.dart';
 
 class SahaAlert {
   static void showError({
-    String message = "",
-    String title = "Saha",
+    String? message = "",
+    String? title = "Saha",
   }) {
-    showFlash(
-      duration: Duration(milliseconds: 3500),
-      context: Get.context!,
-      builder: (_, controller) {
-        return Flash(
-          controller: controller,
-          borderRadius: BorderRadius.circular(8.0),
-          borderColor: Colors.red,
-          boxShadows: kElevationToShadow[8],
-          backgroundGradient: RadialGradient(
-            colors: [Colors.white, Colors.white],
-            center: Alignment.topLeft,
-            radius: 2,
-          ),
-          onTap: () => controller.dismiss(),
-          forwardAnimationCurve: Curves.easeInCirc,
-          reverseAnimationCurve: Curves.bounceIn,
-          child: DefaultTextStyle(
-            style: TextStyle(color: Colors.white),
-            child: FlashBar(
-              title: Text(
-                '$title',
-                style: TextStyle(color: Colors.black87),
-              ),
-              message: Text(
-                '$message',
-                style:
-                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-              ),
-              leftBarIndicatorColor: Colors.red,
-              icon: Icon(
-                Icons.error,
-                color: Colors.red,
-              ),
-              primaryAction: TextButton(
-                onPressed: () => controller.dismiss(),
-                child: Text('Đóng'),
-              ),
-            ),
-          ),
-        );
-      },
-    );
+
+      FLToast.Fluttertoast.showToast(msg: message!);
+    // showFlash(
+    //   duration: Duration(milliseconds: 3500),
+    //   context: Get.context!,
+    //   builder: (_, controller) {
+    //     return Flash(
+    //       controller: controller,
+    //       borderRadius: BorderRadius.circular(8.0),
+    //       borderColor: Colors.red,
+    //       behavior: FlashBehavior.fixed,
+    //       position: FlashPosition.bottom,
+    //       boxShadows: kElevationToShadow[8],
+    //       backgroundGradient: RadialGradient(
+    //         colors: [Colors.white, Colors.white],
+    //         center: Alignment.topLeft,
+    //         radius: 2,
+    //       ),
+    //       onTap: () => controller.dismiss(),
+    //       forwardAnimationCurve: Curves.easeInCirc,
+    //       reverseAnimationCurve: Curves.bounceIn,
+    //       child: DefaultTextStyle(
+    //         style: TextStyle(color: Colors.white),
+    //         child: FlashBar(
+    //           title: Text(
+    //             '$title',
+    //             style: TextStyle(color: Colors.black87),
+    //           ),
+    //           content: Text(
+    //             '$message',
+    //             style:
+    //                 TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+    //           ),
+    //           indicatorColor: Colors.red,
+    //           icon: Icon(
+    //             Icons.error,
+    //             color: Colors.red,
+    //           ),
+    //           primaryAction: TextButton(
+    //             onPressed: () => controller.dismiss(),
+    //             child: Text('Đóng'),
+    //           ),
+    //         ),
+    //       ),
+    //     );
+    //   },
+    // );
   }
 
   static void showWarning({
@@ -64,6 +68,7 @@ class SahaAlert {
       builder: (_, controller) {
         return Flash(
           controller: controller,
+          position: FlashPosition.bottom,
           borderRadius: BorderRadius.circular(8.0),
           borderColor: Colors.amber,
           boxShadows: kElevationToShadow[8],
@@ -79,8 +84,8 @@ class SahaAlert {
             style: TextStyle(color: Colors.white),
             child: FlashBar(
               title: Text('$title'),
-              message: Text('$message'),
-              leftBarIndicatorColor: Colors.yellow,
+              content: Text('$message'),
+              indicatorColor: Colors.yellow,
               icon: Icon(Icons.info_outline),
               primaryAction: TextButton(
                 onPressed: () => controller.dismiss(),
@@ -103,6 +108,7 @@ class SahaAlert {
       builder: (_, controller) {
         return Flash(
           controller: controller,
+          position: FlashPosition.bottom,
           borderRadius: BorderRadius.circular(8.0),
           borderColor: Colors.blue,
           boxShadows: kElevationToShadow[8],
@@ -118,8 +124,8 @@ class SahaAlert {
             style: TextStyle(color: Colors.white),
             child: FlashBar(
               title: Text('$title'),
-              message: Text('$message'),
-              leftBarIndicatorColor: Colors.green,
+              content: Text('$message'),
+              indicatorColor: Colors.green,
               icon: Icon(Icons.check),
             ),
           ),
@@ -131,7 +137,6 @@ class SahaAlert {
   static void showBasicsFlash(
     String message, {
     Duration? duration,
-    flashStyle = FlashStyle.floating,
   }) {
     showFlash(
       context: Get.context!,
@@ -139,11 +144,11 @@ class SahaAlert {
       builder: (context, controller) {
         return Flash(
           controller: controller,
-          style: flashStyle,
           boxShadows: kElevationToShadow[4],
+          position: FlashPosition.bottom,
           horizontalDismissDirection: HorizontalDismissDirection.horizontal,
           child: FlashBar(
-            message: Text('$message'),
+            content: Text('$message'),
           ),
         );
       },
@@ -160,12 +165,12 @@ class SahaAlert {
           borderRadius: BorderRadius.circular(8.0),
           borderColor: SahaPrimaryColor,
           boxShadows: kElevationToShadow[8],
+          position: FlashPosition.bottom,
           backgroundGradient: RadialGradient(
             colors: [Colors.white, Colors.white],
             center: Alignment.topLeft,
             radius: 2,
           ),
-          position: FlashPosition.top,
           onTap: () => controller.dismiss(),
           forwardAnimationCurve: Curves.easeInCirc,
           reverseAnimationCurve: Curves.bounceIn,
@@ -173,8 +178,8 @@ class SahaAlert {
             style: TextStyle(color: Colors.black87),
             child: FlashBar(
               title: Text('$title'),
-              message: Text('$body'),
-              leftBarIndicatorColor: SahaPrimaryColor,
+              content: Text('$body'),
+              indicatorColor: SahaPrimaryColor,
               icon: Icon(Icons.notifications_active),
               primaryAction: TextButton(
                 onPressed: () => controller.dismiss(),
@@ -187,7 +192,7 @@ class SahaAlert {
     );
   }
 
-  static void showTopFlash({FlashStyle style = FlashStyle.floating}) {
+  static void showTopFlash() {
     showFlash(
       context: Get.context!,
       duration: const Duration(seconds: 2),
@@ -201,11 +206,10 @@ class SahaAlert {
           barrierBlur: 3.0,
           barrierColor: Colors.black38,
           barrierDismissible: true,
-          style: style,
           position: FlashPosition.top,
           child: FlashBar(
             title: Text('Title'),
-            message: Text('Hello world!'),
+            content: Text('Hello world!'),
             showProgressIndicator: true,
             primaryAction: TextButton(
               onPressed: () => controller.dismiss(),
@@ -226,6 +230,7 @@ class SahaAlert {
         return Flash(
           controller: controller,
           margin: margin,
+          position: FlashPosition.bottom,
           borderRadius: BorderRadius.circular(8.0),
           borderColor: Colors.blue,
           boxShadows: kElevationToShadow[8],
@@ -241,8 +246,8 @@ class SahaAlert {
             style: TextStyle(color: Colors.white),
             child: FlashBar(
               title: Text('Hello Flash'),
-              message: Text('You can put any message of any length here.'),
-              leftBarIndicatorColor: Colors.red,
+              content: Text('You can put any message of any length here.'),
+              indicatorColor: Colors.red,
               icon: Icon(Icons.info_outline),
               primaryAction: TextButton(
                 onPressed: () => controller.dismiss(),
@@ -279,13 +284,13 @@ class SahaAlert {
       builder: (_, controller) {
         return Flash.bar(
           controller: controller,
+          position: FlashPosition.bottom,
           barrierColor: Colors.black54,
           borderWidth: 3,
-          style: FlashStyle.grounded,
           forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
           child: FlashBar(
             title: Text('Hello Flash', style: TextStyle(fontSize: 24.0)),
-            message: Column(
+            content: Column(
               children: [
                 Text('You can put any message of any length here.'),
                 Form(
@@ -296,7 +301,7 @@ class SahaAlert {
                 ),
               ],
             ),
-            leftBarIndicatorColor: Colors.red,
+            indicatorColor: Colors.red,
             primaryAction: IconButton(
               onPressed: () {
                 if (editingController.text.isEmpty) {
@@ -317,7 +322,6 @@ class SahaAlert {
 
   static void showCenterFlash({
     FlashPosition? position,
-    FlashStyle? style,
     Alignment? alignment,
   }) {
     showFlash(
@@ -330,9 +334,7 @@ class SahaAlert {
           borderRadius: BorderRadius.circular(8.0),
           borderColor: Colors.blue,
           position: position,
-          style: style,
           alignment: alignment,
-          enableDrag: false,
           onTap: () => controller.dismiss(),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
@@ -360,24 +362,23 @@ class SahaAlert {
           return Flash(
             controller: controller,
             position: FlashPosition.top,
-            style: FlashStyle.grounded,
             child: FlashBar(
               icon: Icon(
                 Icons.face,
                 size: 36.0,
                 color: Colors.black,
               ),
-              message: Text(message),
+              content: Text(message),
             ),
           );
         });
   }
 
   static void showToastMiddle({String? message, Color? color, Color? textColor}) {
-    Fluttertoast.showToast(
+    FLToast.Fluttertoast.showToast(
         msg: message!,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
+        toastLength: FLToast.Toast.LENGTH_SHORT,
+        gravity: FLToast.ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
         backgroundColor: color ?? Colors.red,
         textColor: textColor ?? Colors.white,

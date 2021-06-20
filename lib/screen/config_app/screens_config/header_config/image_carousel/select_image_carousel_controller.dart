@@ -92,7 +92,7 @@ class SelectCarouselImagesController extends GetxController {
   Future<String?> loadAssets() async {
     try {
       final picker = ImagePicker();
-      final pickedFile = await (picker.getImage(source: ImageSource.gallery) as Future<PickedFile>);
+      final pickedFile = (await picker.getImage(source: ImageSource.gallery))!;
       File? croppedFile = await ImageCropper.cropImage(
           compressQuality: 100,
           sourcePath: pickedFile.path,

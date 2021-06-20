@@ -10,8 +10,8 @@ class LoginController extends GetxController {
   Future<bool> onLogin({String? shopPhone, String? password}) async {
     logging.value = true;
     try {
-      var loginData = await (RepositoryManager.loginRepository
-          .login(phone: shopPhone, pass: password) as Future<DataLogin>);
+      var loginData = (await RepositoryManager.loginRepository
+          .login(phone: shopPhone, pass: password))!;
 
       await UserInfo().setToken(loginData.token);
 

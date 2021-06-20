@@ -42,7 +42,7 @@ class ReportScreen extends StatelessWidget {
           InkWell(
             onTap: () {
               Get.to(() => ChooseTimeScreen(
-                    callback: (DateTime fromDate, DateTime toDay) {
+                    callback: (DateTime fromDate, DateTime? toDay) {
                       print(fromDate);
                       print(toDay);
                       reportController.fromDay.value = fromDate;

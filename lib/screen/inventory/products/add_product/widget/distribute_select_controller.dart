@@ -54,7 +54,7 @@ class DistributeSelectController extends GetxController {
       ElementDistributesRequest? elementDistributes) async {
     try {
       final picker = ImagePicker();
-      final pickedFile = await (picker.getImage(source: ImageSource.gallery) as Future<PickedFile>);
+      final pickedFile = (await picker.getImage(source: ImageSource.gallery))!;
       var file = File(pickedFile.path);
       var fileUp = await ImageUtils.getImageCompress(file);
 

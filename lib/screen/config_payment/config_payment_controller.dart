@@ -6,7 +6,7 @@ import 'package:sahashop_user/data/repository/repository_manager.dart';
 class ConfigPaymentController extends GetxController {
   var listNamePaymentMethod = RxList<String?>();
   var listUsePaymentMethod = RxList<bool?>();
-  var listIdPaymentMethod = RxList<int?>();
+  var listIdPaymentMethod = RxList<int>();
   var listDefineField = RxList<List<dynamic>?>();
   var listFieldResponse = RxList<List<dynamic>?>();
   var listFieldRequest = RxList<Map<String, dynamic>>();

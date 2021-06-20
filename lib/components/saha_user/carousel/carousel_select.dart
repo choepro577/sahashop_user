@@ -16,7 +16,7 @@ class CarouselSelect extends StatefulWidget {
       this.listWidget,
       this.onChange,
       this.indexSelected,
-      this.initPage,
+      this.initPage=0,
       this.height,
       this.onSelected})
       : super(key: key);

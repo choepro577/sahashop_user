@@ -164,7 +164,7 @@ class ComboDetailScreen extends StatelessWidget {
                                       ),
                                       Spacer(),
                                       Text(
-                                          "x ${comboDetailController.listQuantityProductNeedBuy[index] ?? ""}"),
+                                          "x ${comboDetailController.listQuantityProductNeedBuy[index]}"),
                                       SizedBox(
                                         width: 10,
                                       )

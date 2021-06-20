@@ -81,7 +81,7 @@ class ConfigController extends GetxController {
   Future<bool?> getAppTheme() async {
     try {
       isLoadingGet.value = true;
-      var data = await (RepositoryManager.configUiRepository.getAppTheme() as Future<ConfigApp>);
+      var data = (await RepositoryManager.configUiRepository.getAppTheme())!;
       configApp.colorMain1 = data.colorMain1 ?? "#ff93b9b4";
       configApp.fontFamily =
           data.fontFamily != null && FONT_DATA.containsKey(data.fontFamily)
@@ -110,7 +110,7 @@ class ConfigController extends GetxController {
       isLoadingGet.value = false;
       return true;
     } catch (err) {
-      SahaAlert.showError(message: err.toString());
+      SahaAlert.showError(message: "Có lỗi khi lấy dữ liệu Config App");
       isLoadingGet.value = false;
     }
   }

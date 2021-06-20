@@ -86,14 +86,14 @@ class ConfigProfileController extends GetxController {
       var fileUpImageCompress =
           await ImageUtils.getImageCompress(file, quality: 80);
 
-      var link = await (RepositoryManager.imageRepository
-          .uploadImage(fileUpImageCompress) as Future<String?>);
+      var link = (await RepositoryManager.imageRepository
+          .uploadImage(fileUpImageCompress))!;
 
       //OK up load
       updateImage(
           imageData:
               ImageData(linkImage: link, uploading: false, errorUpload: false));
-      linkAvatar.value = link!;
+      linkAvatar.value = link;
     } catch (err) {
       updateImage(
           imageData:
@@ -107,7 +107,7 @@ class ConfigProfileController extends GetxController {
   Future<String?> loadAssets() async {
     try {
       final picker = ImagePicker();
-      final pickedFile = await (picker.getImage(source: ImageSource.gallery) as Future<PickedFile>);
+      final pickedFile = (await picker.getImage(source: ImageSource.gallery))!;
       File? croppedFile = await ImageCropper.cropImage(
           compressQuality: 10,
           sourcePath: pickedFile.path,

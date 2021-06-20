@@ -6,7 +6,7 @@ import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 class ConfigPaymentCustomerController extends GetxController {
   var listNamePaymentMethod = RxList<String?>();
   var listUsePaymentMethod = RxList<bool?>();
-  var listIdPaymentMethod = RxList<int?>();
+  var listIdPaymentMethod = RxList<int>();
   Map<String, dynamic>? listConfig = Map<String, dynamic>();
   var listTextEditingController = RxList<List<TextEditingController>>();
   var listChoosePaymentMethod = RxList<bool>();
