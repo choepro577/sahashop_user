@@ -27,145 +27,218 @@ class _BusinessChartState extends State<BusinessChart> {
   @override
   Widget build(BuildContext context) {
     var checkLandscape = context.isLandscape;
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          checkLandscape == true
-              ? Container()
-              : Container(
-                  height: 110,
-                  width: Get.width,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.all(8),
-                    itemCount: 2,
-                    itemBuilder: (BuildContext context, int index) {
-                      return InkWell(
-                        onTap: () {
-                          reportController!.changeChooseChartType(index);
-                        },
-                        child: Obx(
-                          () => Stack(
-                            children: [
-                              Container(
-                                height: 85,
-                                margin: EdgeInsets.all(8.0),
-                                padding: EdgeInsets.all(8.0),
-                                width: (Get.width - 40) / 2,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: (reportController!
-                                                .listChooseChartType[index]
-                                            ? Theme.of(context).primaryColor
-                                            : Colors.grey[500])!),
-                                    borderRadius: BorderRadius.circular(2)),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                        "${reportController!.listNameChartType[index]}"),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    index == 1
-                                        ? Text(
-                                            "${reportController!.reportPrimeTime.value.totalOrderCount!.toInt()}")
-                                        : SahaMoneyText(
-                                            price: reportController!
-                                                .reportPrimeTime
-                                                .value
-                                                .totalFinal,
-                                            fontWeight: FontWeight.w400,
-                                            sizeVND: 14,
-                                            sizeText: 15,
-                                          ),
-                                  ],
-                                ),
+    return Column(
+      children: [
+        checkLandscape == true
+            ? Container()
+            : Container(
+                height: 110,
+                width: Get.width,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.all(8),
+                  itemCount: 2,
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(
+                      onTap: () {
+                        reportController!.changeChooseChartType(index);
+                      },
+                      child: Obx(
+                        () => Stack(
+                          children: [
+                            Container(
+                              height: 85,
+                              margin: EdgeInsets.all(8.0),
+                              padding: EdgeInsets.all(8.0),
+                              width: (Get.width - 40) / 2,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: (reportController!
+                                              .listChooseChartType[index]
+                                          ? Theme.of(context).primaryColor
+                                          : Colors.grey[500])!),
+                                  borderRadius: BorderRadius.circular(2)),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      "${reportController!.listNameChartType[index]}"),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  index == 1
+                                      ? Text(
+                                          "${reportController!.reportPrimeTime.value.totalOrderCount!.toInt()}")
+                                      : SahaMoneyText(
+                                          price: reportController!
+                                              .reportPrimeTime.value.totalFinal,
+                                          fontWeight: FontWeight.w400,
+                                          sizeVND: 14,
+                                          sizeText: 15,
+                                        ),
+                                ],
                               ),
-                              reportController!.listChooseChartType[index]
-                                  ? Positioned(
-                                      height: 30,
-                                      width: 30,
-                                      top: 9,
-                                      right: 9,
-                                      child: SvgPicture.asset(
-                                        "assets/icons/levels.svg",
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                    )
-                                  : Container(),
-                              reportController!.listChooseChartType[index]
-                                  ? Positioned(
-                                      height: 15,
-                                      width: 15,
-                                      top: 9,
-                                      right: 9,
-                                      child: Icon(
-                                        Icons.check,
-                                        size: 15,
-                                        color: Theme.of(context)
-                                            .primaryTextTheme
-                                            .headline6!
-                                            .color,
-                                      ),
-                                    )
-                                  : Container(),
-                            ],
-                          ),
+                            ),
+                            reportController!.listChooseChartType[index]
+                                ? Positioned(
+                                    height: 30,
+                                    width: 30,
+                                    top: 9,
+                                    right: 9,
+                                    child: SvgPicture.asset(
+                                      "assets/icons/levels.svg",
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  )
+                                : Container(),
+                            reportController!.listChooseChartType[index]
+                                ? Positioned(
+                                    height: 15,
+                                    width: 15,
+                                    top: 9,
+                                    right: 9,
+                                    child: Icon(
+                                      Icons.check,
+                                      size: 15,
+                                      color: Theme.of(context)
+                                          .primaryTextTheme
+                                          .headline6!
+                                          .color,
+                                    ),
+                                  )
+                                : Container(),
+                          ],
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 ),
-          Obx(
-            () => Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: SfCartesianChart(
-                primaryXAxis: CategoryAxis(),
-                // Chart title
-                title: ChartTitle(text: 'Half yearly sales analysis'),
-                // Enable legend
-                legend:
-                    Legend(isVisible: true, position: LegendPosition.bottom),
-                // Enable tooltip
-                tooltipBehavior: _tooltipBehavior,
-                series: <LineSeries<SalesData, String>>[
-                  LineSeries<SalesData, String>(
-                    markerSettings: MarkerSettings(
-                        isVisible: true,
-                        height: 4,
-                        width: 4,
-                        shape: DataMarkerType.circle,
-                        borderWidth: 2,
-                        borderColor: Theme.of(context).primaryColor),
-                    dataSource: <SalesData>[
-                      ...List.generate(
-                        reportController!.reportPrimeTime.value.charts!.length,
-                        (index) => SalesData(
-                            '${reportController!.fromDay.value.day == DateTime.now().day || reportController!.fromDay.value.day == DateTime.now().subtract(Duration(days: 1)).day ? "${reportController!.listChart[index]!.time!.hour}h" : "${SahaDateUtils().getDDMM(reportController!.listChart[index]!.time!)}"}',
-                            (reportController!.isTotalChart.value
-                                ? reportController!.reportPrimeTime.value
-                                    .charts![index]!.totalFinal
-                                : reportController!.reportPrimeTime.value
-                                    .charts![index]!.totalOrderCount)!),
-                      )
-                    ],
-                    xValueMapper: (SalesData sales, _) => sales.year,
-                    yValueMapper: (SalesData sales, _) => sales.sales,
-                    // Enable data label
-                    dataLabelSettings: DataLabelSettings(
-                        isVisible: true,
-                        textStyle: TextStyle(
-                            fontSize: 11,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500)),
-                  ),
-                ],
               ),
+        Obx(
+          () => Container(
+            padding: const EdgeInsets.all(5.0),
+            height: 500,
+            child: SfCartesianChart(
+              primaryXAxis: CategoryAxis(),
+              // Chart title
+              title: ChartTitle(
+                  text:
+                      '${reportController!.isCompare.value ? reportController!.isTotalChart.value ? "So sánh chênh lệch doanh thu" : "So sánh chênh lệch đơn" : reportController!.isTotalChart.value ? "Doanh thu" : "Đơn hàng"}'),
+              // Enable legend
+              legend: Legend(
+                isVisible: true,
+                position: LegendPosition.bottom,
+              ),
+              // Enable tooltip
+              tooltipBehavior: _tooltipBehavior,
+              series: reportController!.isCompare.value
+                  ? <LineSeries<SalesData, String>>[
+                      LineSeries<SalesData, String>(
+                        legendItemText:
+                            "${SahaDateUtils().getDDMM(reportController!.fromDayCP.value)} Đến ${SahaDateUtils().getDDMM(reportController!.toDayCP.value)}",
+                        color: Colors.red,
+                        markerSettings: MarkerSettings(
+                            isVisible: true,
+                            height: 4,
+                            width: 4,
+                            shape: DataMarkerType.circle,
+                            borderWidth: 2,
+                            borderColor: Colors.red),
+                        dataSource: <SalesData>[
+                          ...List.generate(
+                            reportController!
+                                .reportCompareTime.value.charts!.length,
+                            (index) => SalesData(
+                                '${reportController!.fromDay.value.day == DateTime.now().day || reportController!.fromDay.value.day == DateTime.now().subtract(Duration(days: 1)).day ? "${reportController!.reportCompareTime.value.charts![index]!.time!.hour}h" : "${SahaDateUtils().getDDMM(reportController!.reportCompareTime.value.charts![index]!.time!)}"}',
+                                (reportController!.isTotalChart.value
+                                    ? reportController!.reportCompareTime.value
+                                        .charts![index]!.totalFinal
+                                    : reportController!.reportCompareTime.value
+                                        .charts![index]!.totalOrderCount)!),
+                          )
+                        ],
+                        xValueMapper: (SalesData sales, _) => sales.year,
+                        yValueMapper: (SalesData sales, _) => sales.sales,
+                        // Enable data label
+                        dataLabelSettings: DataLabelSettings(
+                            isVisible: true,
+                            textStyle: TextStyle(
+                                fontSize: 11,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500)),
+                      ),
+                      LineSeries<SalesData, String>(
+                        color: Colors.blue,
+                        legendItemText:
+                            "${SahaDateUtils().getDDMM(reportController!.fromDay.value)} Đến ${SahaDateUtils().getDDMM(reportController!.toDay.value)}",
+                        markerSettings: MarkerSettings(
+                            isVisible: true,
+                            height: 4,
+                            width: 4,
+                            shape: DataMarkerType.circle,
+                            borderWidth: 2,
+                            borderColor: Colors.blue),
+                        dataSource: <SalesData>[
+                          ...List.generate(
+                            reportController!
+                                .reportPrimeTime.value.charts!.length,
+                            (index) => SalesData(
+                                '${reportController!.fromDay.value.day == DateTime.now().day || reportController!.fromDay.value.day == DateTime.now().subtract(Duration(days: 1)).day ? "${reportController!.reportPrimeTime.value.charts![index]!.time!.hour}h" : "${SahaDateUtils().getDDMM(reportController!.reportPrimeTime.value.charts![index]!.time!)}"}',
+                                (reportController!.isTotalChart.value
+                                    ? reportController!.reportPrimeTime.value
+                                        .charts![index]!.totalFinal
+                                    : reportController!.reportPrimeTime.value
+                                        .charts![index]!.totalOrderCount)!),
+                          )
+                        ],
+                        xValueMapper: (SalesData sales, _) => sales.year,
+                        yValueMapper: (SalesData sales, _) => sales.sales,
+                        // Enable data label
+                        dataLabelSettings: DataLabelSettings(
+                            isVisible: true,
+                            textStyle: TextStyle(
+                                fontSize: 11,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500)),
+                      ),
+                    ]
+                  : <LineSeries<SalesData, String>>[
+                      LineSeries<SalesData, String>(
+                        markerSettings: MarkerSettings(
+                            isVisible: true,
+                            height: 4,
+                            width: 4,
+                            shape: DataMarkerType.circle,
+                            borderWidth: 2,
+                            borderColor: Theme.of(context).primaryColor),
+                        dataSource: <SalesData>[
+                          ...List.generate(
+                            reportController!
+                                .reportPrimeTime.value.charts!.length,
+                            (index) => SalesData(
+                                '${reportController!.fromDay.value.day == DateTime.now().day || reportController!.fromDay.value.day == DateTime.now().subtract(Duration(days: 1)).day ? "${reportController!.reportPrimeTime.value.charts![index]!.time!.hour}h" : "${SahaDateUtils().getDDMM(reportController!.reportPrimeTime.value.charts![index]!.time!)}"}',
+                                (reportController!.isTotalChart.value
+                                    ? reportController!.reportPrimeTime.value
+                                        .charts![index]!.totalFinal
+                                    : reportController!.reportPrimeTime.value
+                                        .charts![index]!.totalOrderCount)!),
+                          )
+                        ],
+                        xValueMapper: (SalesData sales, _) => sales.year,
+                        yValueMapper: (SalesData sales, _) => sales.sales,
+                        // Enable data label
+                        dataLabelSettings: DataLabelSettings(
+                            isVisible: true,
+                            textStyle: TextStyle(
+                                fontSize: 11,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500)),
+                      ),
+                    ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

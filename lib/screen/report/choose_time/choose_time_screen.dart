@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/saha_user/switch_button/switch_button.dart';
 import 'package:sahashop_user/screen/report/choose_time/choose_time_controller.dart';
+import 'package:sahashop_user/screen/report/choose_time/widget/choose_compare.dart';
 import 'package:sahashop_user/screen/report/choose_time/widget/pick_date.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class ChooseTimeScreen extends StatefulWidget {
   final Function? callback;
-
-  ChooseTimeScreen({this.callback});
+  final bool? isCompare;
+  ChooseTimeScreen({this.callback, this.isCompare});
 
   @override
   _ChooseTimeScreenState createState() => _ChooseTimeScreenState();
@@ -18,12 +19,18 @@ class ChooseTimeScreen extends StatefulWidget {
 class _ChooseTimeScreenState extends State<ChooseTimeScreen>
     with TickerProviderStateMixin {
   TabController? tabController;
-  ChooseTimeController chooseTimeController = ChooseTimeController();
+  ChooseTimeController? chooseTimeController;
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now();
+  DateTime startDateCP = DateTime.now();
+  DateTime endDateCP = DateTime.now();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     tabController = new TabController(length: 5, vsync: this, initialIndex: 0);
+    chooseTimeController =
+        ChooseTimeController(isCompareInput: widget.isCompare);
   }
 
   @override
@@ -38,14 +45,36 @@ class _ChooseTimeScreenState extends State<ChooseTimeScreen>
             children: [
               Text('Thời gian'),
               Spacer(),
-              InkWell(
-                onTap: () {
-                  widget.callback!(chooseTimeController.fromDay.value,
-                      chooseTimeController.toDay.value);
+              TextButton(
+                onPressed: () {
+                  if (chooseTimeController!.checkSelected) {
+                    if (chooseTimeController!.checkSelectedCP) {
+                      widget.callback!(
+                        chooseTimeController!.fromDay.value,
+                        chooseTimeController!.toDay.value,
+                        chooseTimeController!.fromDayCP.value,
+                        chooseTimeController!.toDayCP.value,
+                        chooseTimeController!.isCompare.value,
+                      );
+                    } else {
+                      chooseTimeController!.isCompare.value = false;
+                      widget.callback!(
+                        chooseTimeController!.fromDay.value,
+                        chooseTimeController!.toDay.value,
+                        chooseTimeController!.fromDayCP.value,
+                        chooseTimeController!.toDayCP.value,
+                        chooseTimeController!.isCompare.value,
+                      );
+                    }
+                  }
+                  Get.back();
                 },
                 child: Text(
                   'Lưu',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(
+                      fontSize: 16,
+                      color:
+                          Theme.of(context).primaryTextTheme.headline6!.color),
                 ),
               ),
             ],
@@ -64,189 +93,370 @@ class _ChooseTimeScreenState extends State<ChooseTimeScreen>
         ),
         body: TabBarView(
           controller: tabController,
-          children: List<Widget>.generate(5, (int index) {
+          children: List<Widget>.generate(5, (int indexType) {
             return SingleChildScrollView(
-              child: index == 0
+              child: indexType == 0
                   ? Obx(
                       () => Column(
                         children: [
                           ...List.generate(
                             2,
                             (index) => PickDate(
-                              isChoose: chooseTimeController.fromDay.value ==
-                                          chooseTimeController
+                              isChoose: chooseTimeController!.fromDay.value ==
+                                          chooseTimeController!
                                               .listFromDateDAY![index] &&
-                                      chooseTimeController.toDay.value ==
-                                          chooseTimeController
+                                      chooseTimeController!.toDay.value ==
+                                          chooseTimeController!
                                               .listToDateDAY![index]
                                   ? true
                                   : false,
-                              text:
-                                  chooseTimeController.listTextChooseDAY[index],
+                              text: chooseTimeController!
+                                  .listTextChooseDAY[index],
                               fromDate:
-                                  chooseTimeController.listFromDateDAY![index],
-                              toDay: chooseTimeController.listToDateDAY![index],
+                                  chooseTimeController!.listFromDateDAY![index],
+                              toDay:
+                                  chooseTimeController!.listToDateDAY![index],
                               onReturn: (fromDate, toDay) {
-                                chooseTimeController.fromDay.value = fromDate;
-                                chooseTimeController.toDay.value = toDay;
+                                chooseTimeController!
+                                    .chooseDate(fromDate, toDay, indexType);
                               },
                             ),
                           ),
-                          Container(
-                            color: Colors.grey[300],
-                            height: 4,
+                          ChooseCompare(
+                            isCompare: chooseTimeController!.isCompare.value,
+                            onReturn: (v) {
+                              chooseTimeController!.isCompare.value =
+                                  !chooseTimeController!.isCompare.value;
+                            },
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Row(
-                              children: [
-                                Text("So sánh với"),
-                                Spacer(),
-                                CustomSwitch(
-                                  value: true,
-                                  onChanged: (v) {},
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            color: Colors.grey[300],
-                            height: 4,
-                          ),
-                          ...List.generate(
-                            2,
-                            (index) => PickDate(
-                              isChoose: chooseTimeController.fromDay.value ==
-                                          chooseTimeController
-                                              .listFromDateDAY![index] &&
-                                      chooseTimeController.toDay.value ==
-                                          chooseTimeController
-                                              .listToDateDAY![index]
-                                  ? true
-                                  : false,
-                              text:
-                                  chooseTimeController.listTextChooseDAY[index],
-                              fromDate:
-                                  chooseTimeController.listFromDateDAY![index],
-                              toDay: chooseTimeController.listToDateDAY![index],
-                              onReturn: (fromDate, toDay) {
-                                chooseTimeController.fromDay.value = fromDate;
-                                chooseTimeController.toDay.value = toDay;
-                              },
-                            ),
+                          Obx(
+                            () => chooseTimeController!.isCompare.value
+                                ? Column(
+                                    children: [
+                                      ...List.generate(
+                                        3,
+                                        (index) => PickDate(
+                                          isChoose: chooseTimeController!
+                                                          .fromDayCP.value ==
+                                                      chooseTimeController!
+                                                              .listFromDateDAYCP[
+                                                          index] &&
+                                                  chooseTimeController!
+                                                          .toDayCP.value ==
+                                                      chooseTimeController!
+                                                              .listToDateDAYCP[
+                                                          index]
+                                              ? true
+                                              : false,
+                                          text: chooseTimeController!
+                                              .listTextChooseDAYCP[index],
+                                          fromDate: chooseTimeController!
+                                              .listFromDateDAYCP[index],
+                                          toDay: chooseTimeController!
+                                              .listToDateDAYCP[index],
+                                          onReturn: (fromDate, toDay) {
+                                            chooseTimeController!
+                                                .chooseDateCP(fromDate, toDay);
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : Container(),
                           ),
                         ],
                       ),
                     )
-                  : index == 1
+                  : indexType == 1
                       ? Obx(
                           () => Column(
                             children: [
                               ...List.generate(
                                 3,
                                 (index) => PickDate(
-                                  isChoose: chooseTimeController
+                                  isChoose: chooseTimeController!
                                                   .fromDay.value ==
-                                              chooseTimeController
+                                              chooseTimeController!
                                                   .listFromDateWEEK![index] &&
-                                          chooseTimeController.toDay.value ==
-                                              chooseTimeController
+                                          chooseTimeController!.toDay.value ==
+                                              chooseTimeController!
                                                   .listToDateWEEK![index]
                                       ? true
                                       : false,
-                                  text: chooseTimeController
+                                  text: chooseTimeController!
                                       .listTextChooseWEEK[index],
-                                  fromDate: chooseTimeController
+                                  fromDate: chooseTimeController!
                                       .listFromDateWEEK![index],
-                                  toDay: chooseTimeController
+                                  toDay: chooseTimeController!
                                       .listToDateWEEK![index],
                                   onReturn: (fromDate, toDay) {
-                                    chooseTimeController.fromDay.value =
-                                        fromDate;
-                                    chooseTimeController.toDay.value = toDay;
+                                    chooseTimeController!
+                                        .chooseDate(fromDate, toDay, indexType);
                                   },
                                 ),
+                              ),
+                              ChooseCompare(
+                                isCompare:
+                                    chooseTimeController!.isCompare.value,
+                                onReturn: (v) {
+                                  chooseTimeController!.isCompare.value =
+                                      !chooseTimeController!.isCompare.value;
+                                },
+                              ),
+                              Obx(
+                                () => chooseTimeController!.isCompare.value
+                                    ? Column(
+                                        children: [
+                                          ...List.generate(
+                                            2,
+                                            (index) => PickDate(
+                                              isChoose: chooseTimeController!
+                                                              .fromDayCP
+                                                              .value ==
+                                                          chooseTimeController!
+                                                                  .listFromDateWEEKCP[
+                                                              index] &&
+                                                      chooseTimeController!
+                                                              .toDayCP.value ==
+                                                          chooseTimeController!
+                                                                  .listToDateWEEKCP[
+                                                              index]
+                                                  ? true
+                                                  : false,
+                                              text: chooseTimeController!
+                                                  .listTextChooseWEEKCP[index],
+                                              fromDate: chooseTimeController!
+                                                  .listFromDateWEEKCP[index],
+                                              toDay: chooseTimeController!
+                                                  .listToDateWEEKCP[index],
+                                              onReturn: (fromDate, toDay) {
+                                                chooseTimeController!
+                                                    .chooseDateCP(
+                                                        fromDate, toDay);
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
                               ),
                             ],
                           ),
                         )
-                      : index == 2
+                      : indexType == 2
                           ? Obx(
                               () => Column(
                                 children: [
                                   ...List.generate(
                                     3,
                                     (index) => PickDate(
-                                      isChoose: chooseTimeController
+                                      isChoose: chooseTimeController!
                                                       .fromDay.value ==
-                                                  chooseTimeController
+                                                  chooseTimeController!
                                                           .listFromDateMONTH![
                                                       index] &&
-                                              chooseTimeController
+                                              chooseTimeController!
                                                       .toDay.value ==
-                                                  chooseTimeController
+                                                  chooseTimeController!
                                                       .listToDateMONTH![index]
                                           ? true
                                           : false,
-                                      text: chooseTimeController
+                                      text: chooseTimeController!
                                           .listTextChooseMONTH![index],
-                                      fromDate: chooseTimeController
+                                      fromDate: chooseTimeController!
                                           .listFromDateMONTH![index],
-                                      toDay: chooseTimeController
+                                      toDay: chooseTimeController!
                                           .listToDateMONTH![index],
                                       onReturn: (fromDate, toDay) {
-                                        chooseTimeController.fromDay.value =
-                                            fromDate;
-                                        chooseTimeController.toDay.value =
-                                            toDay;
+                                        chooseTimeController!.chooseDate(
+                                            fromDate, toDay, indexType);
                                       },
                                     ),
                                   ),
+                                  ChooseCompare(
+                                    isCompare:
+                                        chooseTimeController!.isCompare.value,
+                                    onReturn: (v) {
+                                      chooseTimeController!.isCompare.value =
+                                          !chooseTimeController!
+                                              .isCompare.value;
+                                    },
+                                  ),
+                                  Obx(
+                                    () => chooseTimeController!.isCompare.value
+                                        ? Column(
+                                            children: [
+                                              ...List.generate(
+                                                2,
+                                                (index) => PickDate(
+                                                  isChoose: chooseTimeController!
+                                                                  .fromDayCP
+                                                                  .value ==
+                                                              chooseTimeController!
+                                                                      .listFromDateMONTHCP[
+                                                                  index] &&
+                                                          chooseTimeController!
+                                                                  .toDayCP
+                                                                  .value ==
+                                                              chooseTimeController!
+                                                                      .listToDateMONTHCP[
+                                                                  index]
+                                                      ? true
+                                                      : false,
+                                                  text: chooseTimeController!
+                                                          .listTextChooseMONTHCP[
+                                                      index],
+                                                  fromDate: chooseTimeController!
+                                                          .listFromDateMONTHCP[
+                                                      index],
+                                                  toDay: chooseTimeController!
+                                                      .listToDateMONTHCP[index],
+                                                  onReturn: (fromDate, toDay) {
+                                                    chooseTimeController!
+                                                        .chooseDateCP(
+                                                            fromDate, toDay);
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        : Container(),
+                                  )
                                 ],
                               ),
                             )
-                          : index == 3
+                          : indexType == 3
                               ? Obx(
                                   () => Column(
                                     children: [
                                       ...List.generate(
                                         2,
                                         (index) => PickDate(
-                                          isChoose: chooseTimeController
+                                          isChoose: chooseTimeController!
                                                           .fromDay.value ==
-                                                      chooseTimeController
+                                                      chooseTimeController!
                                                               .listFromDateYEAR![
                                                           index] &&
-                                                  chooseTimeController
+                                                  chooseTimeController!
                                                           .toDay.value ==
-                                                      chooseTimeController
-                                                          .listToDateYEAR![index]
+                                                      chooseTimeController!
+                                                              .listToDateYEAR![
+                                                          index]
                                               ? true
                                               : false,
-                                          text: chooseTimeController
+                                          text: chooseTimeController!
                                               .listTextChooseYEAR![index],
-                                          fromDate: chooseTimeController
+                                          fromDate: chooseTimeController!
                                               .listFromDateYEAR![index],
-                                          toDay: chooseTimeController
+                                          toDay: chooseTimeController!
                                               .listToDateYEAR![index],
                                           onReturn: (fromDate, toDay) {
-                                            chooseTimeController.fromDay.value =
-                                                fromDate;
-                                            chooseTimeController.toDay.value =
-                                                toDay;
+                                            chooseTimeController!.chooseDate(
+                                                fromDate, toDay, indexType);
                                           },
                                         ),
+                                      ),
+                                      ChooseCompare(
+                                        isCompare: chooseTimeController!
+                                            .isCompare.value,
+                                        onReturn: (v) {
+                                          chooseTimeController!
+                                                  .isCompare.value =
+                                              !chooseTimeController!
+                                                  .isCompare.value;
+                                        },
+                                      ),
+                                      Obx(
+                                        () => chooseTimeController!
+                                                .isCompare.value
+                                            ? Column(
+                                                children: [
+                                                  ...List.generate(
+                                                    1,
+                                                    (index) => PickDate(
+                                                      isChoose: chooseTimeController!
+                                                                      .fromDayCP
+                                                                      .value ==
+                                                                  chooseTimeController!
+                                                                          .listFromDateYEARCP[
+                                                                      index] &&
+                                                              chooseTimeController!
+                                                                      .toDayCP
+                                                                      .value ==
+                                                                  chooseTimeController!
+                                                                          .listToDateYEARCP[
+                                                                      index]
+                                                          ? true
+                                                          : false,
+                                                      text: chooseTimeController!
+                                                              .listTextChooseYEARCP[
+                                                          index],
+                                                      fromDate:
+                                                          chooseTimeController!
+                                                                  .listFromDateYEARCP[
+                                                              index],
+                                                      toDay: chooseTimeController!
+                                                              .listToDateYEARCP[
+                                                          index],
+                                                      onReturn:
+                                                          (fromDate, toDay) {
+                                                        chooseTimeController!
+                                                            .chooseDateCP(
+                                                                fromDate,
+                                                                toDay);
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            : Container(),
                                       ),
                                     ],
                                   ),
                                 )
-                              : index == 4
+                              : indexType == 4
                                   ? Column(
                                       children: [
                                         InkWell(
                                           onTap: () {
-                                            chooseTimeController
-                                                .chooseRangeTime(context);
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    content: Container(
+                                                      width: Get.width * 0.9,
+                                                      height: Get.height * 0.5,
+                                                      child: SfDateRangePicker(
+                                                        onCancel: () {
+                                                          Get.back();
+                                                        },
+                                                        onSubmit: (v) {
+                                                          chooseTimeController!
+                                                              .onOkChooseTime(
+                                                                  startDate,
+                                                                  endDate);
+                                                        },
+                                                        showActionButtons: true,
+                                                        onSelectionChanged:
+                                                            chooseRangeTime,
+                                                        selectionMode:
+                                                            DateRangePickerSelectionMode
+                                                                .range,
+                                                        initialSelectedRange:
+                                                            PickerDateRange(
+                                                          chooseTimeController!
+                                                              .fromDateOption
+                                                              .value,
+                                                          chooseTimeController!
+                                                              .toDateOption
+                                                              .value,
+                                                        ),
+                                                        maxDate: DateTime.now(),
+                                                      ),
+                                                    ),
+                                                  );
+                                                });
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.all(15.0),
@@ -254,7 +464,7 @@ class _ChooseTimeScreenState extends State<ChooseTimeScreen>
                                               children: [
                                                 Obx(
                                                   () => Text(
-                                                      "Ngày bắt đầu và kết thúc: ${SahaDateUtils().getDDMM(chooseTimeController.fromDay.value)} đến ${SahaDateUtils().getDDMM(chooseTimeController.toDay.value)}"),
+                                                      "Ngày bắt đầu và kết thúc: ${SahaDateUtils().getDDMM(chooseTimeController!.fromDateOption.value)} đến ${SahaDateUtils().getDDMM(chooseTimeController!.toDateOption.value)}"),
                                                 ),
                                                 Spacer(),
                                                 Icon(
@@ -264,6 +474,85 @@ class _ChooseTimeScreenState extends State<ChooseTimeScreen>
                                                 )
                                               ],
                                             ),
+                                          ),
+                                        ),
+                                        Obx(
+                                          () => ChooseCompare(
+                                            isCompare: chooseTimeController!
+                                                .isCompare.value,
+                                            onReturn: (v) {
+                                              chooseTimeController!
+                                                      .isCompare.value =
+                                                  chooseTimeController!
+                                                      .isCompare.value;
+                                            },
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    content: Container(
+                                                      width: Get.width * 0.9,
+                                                      height: Get.height * 0.5,
+                                                      child: SfDateRangePicker(
+                                                        onCancel: () {
+                                                          Get.back();
+                                                        },
+                                                        onSubmit: (v) {
+                                                          chooseTimeController!
+                                                              .onOkChooseTimeCP(
+                                                                  startDateCP,
+                                                                  endDateCP);
+                                                        },
+                                                        showActionButtons: true,
+                                                        onSelectionChanged:
+                                                            chooseRangeTimeCP,
+                                                        selectionMode:
+                                                            DateRangePickerSelectionMode
+                                                                .range,
+                                                        initialSelectedRange:
+                                                            PickerDateRange(
+                                                          chooseTimeController!
+                                                              .fromDateOptionCP
+                                                              .value,
+                                                          chooseTimeController!
+                                                              .toDateOptionCP
+                                                              .value,
+                                                        ),
+                                                        maxDate: DateTime.now(),
+                                                      ),
+                                                    ),
+                                                  );
+                                                });
+                                          },
+                                          child: Obx(
+                                            () => chooseTimeController!
+                                                    .isCompare.value
+                                                ? Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            15.0),
+                                                    child: Row(
+                                                      children: [
+                                                        Obx(
+                                                          () => Text(
+                                                              "Thời gian: ${SahaDateUtils().getDDMM(chooseTimeController!.fromDateOptionCP.value)} đến ${SahaDateUtils().getDDMM(chooseTimeController!.toDateOptionCP.value)}"),
+                                                        ),
+                                                        Spacer(),
+                                                        Icon(
+                                                          Icons.check,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  )
+                                                : Container(),
                                           ),
                                         ),
                                         Divider(
@@ -277,5 +566,19 @@ class _ChooseTimeScreenState extends State<ChooseTimeScreen>
         ),
       ),
     );
+  }
+
+  void chooseRangeTime(DateRangePickerSelectionChangedArgs args) {
+    if (args.value is PickerDateRange) {
+      startDate = args.value.startDate;
+      endDate = args.value.endDate ?? args.value.startDate;
+    }
+  }
+
+  void chooseRangeTimeCP(DateRangePickerSelectionChangedArgs args) {
+    if (args.value is PickerDateRange) {
+      startDateCP = args.value.startDate;
+      endDateCP = args.value.endDate ?? args.value.startDate;
+    }
   }
 }

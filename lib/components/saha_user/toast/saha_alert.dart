@@ -9,8 +9,7 @@ class SahaAlert {
     String? message = "",
     String? title = "Saha",
   }) {
-
-      FLToast.Fluttertoast.showToast(msg: message!);
+    FLToast.Fluttertoast.showToast(msg: message!);
     // showFlash(
     //   duration: Duration(milliseconds: 3500),
     //   context: Get.context!,
@@ -62,76 +61,78 @@ class SahaAlert {
     String message = "",
     String title = "Saha",
   }) {
-    showFlash(
-      duration: Duration(milliseconds: 2000),
-      context: Get.context!,
-      builder: (_, controller) {
-        return Flash(
-          controller: controller,
-          position: FlashPosition.bottom,
-          borderRadius: BorderRadius.circular(8.0),
-          borderColor: Colors.amber,
-          boxShadows: kElevationToShadow[8],
-          backgroundGradient: RadialGradient(
-            colors: [Colors.black87, Colors.black87],
-            center: Alignment.topLeft,
-            radius: 2,
-          ),
-          onTap: () => controller.dismiss(),
-          forwardAnimationCurve: Curves.easeInCirc,
-          reverseAnimationCurve: Curves.bounceIn,
-          child: DefaultTextStyle(
-            style: TextStyle(color: Colors.white),
-            child: FlashBar(
-              title: Text('$title'),
-              content: Text('$message'),
-              indicatorColor: Colors.yellow,
-              icon: Icon(Icons.info_outline),
-              primaryAction: TextButton(
-                onPressed: () => controller.dismiss(),
-                child: Text('Đóng'),
-              ),
-            ),
-          ),
-        );
-      },
-    );
+    FLToast.Fluttertoast.showToast(msg: message);
+    // showFlash(
+    //   duration: Duration(milliseconds: 2000),
+    //   context: Get.context!,
+    //   builder: (_, controller) {
+    //     return Flash(
+    //       controller: controller,
+    //       position: FlashPosition.bottom,
+    //       borderRadius: BorderRadius.circular(8.0),
+    //       borderColor: Colors.amber,
+    //       boxShadows: kElevationToShadow[8],
+    //       backgroundGradient: RadialGradient(
+    //         colors: [Colors.black87, Colors.black87],
+    //         center: Alignment.topLeft,
+    //         radius: 2,
+    //       ),
+    //       onTap: () => controller.dismiss(),
+    //       forwardAnimationCurve: Curves.easeInCirc,
+    //       reverseAnimationCurve: Curves.bounceIn,
+    //       child: DefaultTextStyle(
+    //         style: TextStyle(color: Colors.white),
+    //         child: FlashBar(
+    //           title: Text('$title'),
+    //           content: Text('$message'),
+    //           indicatorColor: Colors.yellow,
+    //           icon: Icon(Icons.info_outline),
+    //           primaryAction: TextButton(
+    //             onPressed: () => controller.dismiss(),
+    //             child: Text('Đóng'),
+    //           ),
+    //         ),
+    //       ),
+    //     );
+    //   },
+    // );
   }
 
   static void showSuccess({
     String message = "",
     String title = "Saha",
   }) {
-    showFlash(
-      duration: Duration(milliseconds: 1000),
-      context: Get.context!,
-      builder: (_, controller) {
-        return Flash(
-          controller: controller,
-          position: FlashPosition.bottom,
-          borderRadius: BorderRadius.circular(8.0),
-          borderColor: Colors.blue,
-          boxShadows: kElevationToShadow[8],
-          backgroundGradient: RadialGradient(
-            colors: [Colors.black87, Colors.black87],
-            center: Alignment.topLeft,
-            radius: 2,
-          ),
-          onTap: () => controller.dismiss(),
-          forwardAnimationCurve: Curves.easeInCirc,
-          reverseAnimationCurve: Curves.bounceIn,
-          child: DefaultTextStyle(
-            style: TextStyle(color: Colors.white),
-            child: FlashBar(
-              title: Text('$title'),
-              content: Text('$message'),
-              indicatorColor: Colors.green,
-              icon: Icon(Icons.check),
-            ),
-          ),
-        );
-      },
-    );
+    FLToast.Fluttertoast.showToast(msg: message);
+    // showFlash(
+    //   duration: Duration(milliseconds: 1000),
+    //   context: Get.context!,
+    //   builder: (_, controller) {
+    //     return Flash(
+    //       controller: controller,
+    //       position: FlashPosition.bottom,
+    //       borderRadius: BorderRadius.circular(8.0),
+    //       borderColor: Colors.blue,
+    //       boxShadows: kElevationToShadow[8],
+    //       backgroundGradient: RadialGradient(
+    //         colors: [Colors.black87, Colors.black87],
+    //         center: Alignment.topLeft,
+    //         radius: 2,
+    //       ),
+    //       onTap: () => controller.dismiss(),
+    //       forwardAnimationCurve: Curves.easeInCirc,
+    //       reverseAnimationCurve: Curves.bounceIn,
+    //       child: DefaultTextStyle(
+    //         style: TextStyle(color: Colors.white),
+    //         child: FlashBar(
+    //           title: Text('$title'),
+    //           content: Text('$message'),
+    //           indicatorColor: Colors.green,
+    //           icon: Icon(Icons.check),
+    //         ),
+    //       ),
+    //     );
+    //   },
+    // );
   }
 
   static void showBasicsFlash(
@@ -374,7 +375,8 @@ class SahaAlert {
         });
   }
 
-  static void showToastMiddle({String? message, Color? color, Color? textColor}) {
+  static void showToastMiddle(
+      {String? message, Color? color, Color? textColor}) {
     FLToast.Fluttertoast.showToast(
         msg: message!,
         toastLength: FLToast.Toast.LENGTH_SHORT,

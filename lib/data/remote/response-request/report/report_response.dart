@@ -102,10 +102,13 @@ class DataCompareTime {
         voucherDiscountAmount: json["voucher_discount_amount"].toDouble(),
         totalAfterDiscount: json["total_after_discount"].toDouble(),
         totalFinal: json["total_final"].toDouble(),
-        detailsByOrderStatus:
-            DetailsByOrderStatus.fromJson(json["details_by_order_status"]),
-        detailsByPaymentStatus:
-            DetailsByPaymentStatus.fromJson(json["details_by_payment_status"]),
+        detailsByOrderStatus: json["details_by_order_status"] == null
+            ? null
+            : DetailsByOrderStatus.fromJson(json["details_by_order_status"]),
+        detailsByPaymentStatus: json["details_by_order_status"] == null
+            ? null
+            : DetailsByPaymentStatus.fromJson(
+                json["details_by_payment_status"]),
         typeChart: json["type_chart"],
         charts: List<Chart>.from(json["charts"].map((x) => Chart.fromJson(x))),
       );
