@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/screen/report/choose_time/choose_time_screen.dart';
+import 'package:sahashop_user/screen/report/option_report/chart_business.dart';
+import 'package:sahashop_user/screen/report/option_report/chart_product.dart';
+import 'package:sahashop_user/screen/report/option_report/report_order.dart';
 import 'package:sahashop_user/screen/report/report_controller.dart';
-import 'package:sahashop_user/screen/report/widget/show_choose_option.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 
 // ignore: must_be_immutable
@@ -16,22 +19,6 @@ class ReportScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Tổng quan"),
-        actions: [
-          IconButton(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              icon: Icon(Icons.settings_outlined),
-              onPressed: () {
-                print(reportController!.listChooseOption);
-                ShowChooseOrderOption.showChoose(
-                    onReturn: (index) {
-                      reportController!.indexOption.value = index;
-                      reportController!.changeChooseOption(index);
-                      Get.back();
-                    },
-                    listChooseOption: reportController!.listChooseOption);
-              })
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -56,7 +43,9 @@ class ReportScreen extends StatelessWidget {
                             reportController!.isCompare.value = isCompare;
                           },
                         ))!
-                    .then((value) => reportController!.getReport());
+                    .then((value) => {
+                          reportController!.getReport(),
+                        });
               },
               child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -125,9 +114,7 @@ class ReportScreen extends StatelessWidget {
                                       : Container(),
                                 ],
                               ),
-                              SizedBox(
-                                width: 10,
-                              ),
+                              Spacer(),
                               Icon(
                                 Icons.keyboard_arrow_down,
                                 size: 21,
@@ -284,8 +271,21 @@ class ReportScreen extends StatelessWidget {
               height: 4,
               color: Colors.grey[200],
             ),
-            Obx(() => reportController!
-                .listOptionWidget[reportController!.indexOption.value]),
+            Obx(() => reportController!.isLoading.value
+                ? SahaSimmer(
+                    isLoading: true,
+                    child: Container(
+                      width: Get.width,
+                      height: Get.height,
+                      color: Colors.black,
+                    ))
+                : Column(
+                    children: [
+                      ReportOrder(),
+                      BusinessChart(),
+                      ChartProduct(),
+                    ],
+                  ))
           ],
         ),
       ),

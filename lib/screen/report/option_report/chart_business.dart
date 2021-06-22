@@ -32,7 +32,7 @@ class _BusinessChartState extends State<BusinessChart> {
         checkLandscape == true
             ? Container()
             : Container(
-                height: 110,
+                height: 115,
                 width: Get.width,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
@@ -60,11 +60,18 @@ class _BusinessChartState extends State<BusinessChart> {
                                   borderRadius: BorderRadius.circular(2)),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
-                                      "${reportController!.listNameChartType[index]}"),
+                                  reportController!.isCompare.value
+                                      ? index == 0
+                                          ? Text(
+                                              "${reportController!.listNameChartType[index]} ${reportController!.differenceTotalFinal.value > 0 ? ' tăng ${reportController!.percentTotalFinal.value.toInt()}%' : ' giảm ${reportController!.percentTotalFinal.value.toInt()}%'}")
+                                          : Text(
+                                              "${reportController!.listNameChartType[index]} ${reportController!.differenceOrder.value > 0 ? ' tăng ${reportController!.percentOrder.value.toInt()}%' : ' giảm ${reportController!.percentOrder.value.toInt()}%'}")
+                                      : Text(
+                                          "${reportController!.listNameChartType[index]}"),
                                   SizedBox(
-                                    height: 10,
+                                    height: 5,
                                   ),
                                   index == 1
                                       ? Text(
@@ -76,6 +83,47 @@ class _BusinessChartState extends State<BusinessChart> {
                                           sizeVND: 14,
                                           sizeText: 15,
                                         ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  reportController!.isCompare.value
+                                      ? index == 1
+                                          ? Text(
+                                              "${reportController!.differenceOrder.value > 0 ? '+ ${reportController!.differenceOrder.value.toInt().abs()}' : '- ${reportController!.differenceOrder.value.toInt().abs()}'}")
+                                          : reportController!
+                                                      .differenceTotalFinal
+                                                      .value >
+                                                  0
+                                              ? Row(
+                                                  children: [
+                                                    Text("+ "),
+                                                    SahaMoneyText(
+                                                      price: reportController!
+                                                          .differenceTotalFinal
+                                                          .value,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      sizeVND: 14,
+                                                      sizeText: 15,
+                                                    ),
+                                                  ],
+                                                )
+                                              : Row(
+                                                  children: [
+                                                    Text("- "),
+                                                    SahaMoneyText(
+                                                      price: reportController!
+                                                          .differenceTotalFinal
+                                                          .value
+                                                          .abs(),
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      sizeVND: 14,
+                                                      sizeText: 15,
+                                                    ),
+                                                  ],
+                                                )
+                                      : Container(),
                                 ],
                               ),
                             ),
@@ -204,6 +252,8 @@ class _BusinessChartState extends State<BusinessChart> {
                     ]
                   : <LineSeries<SalesData, String>>[
                       LineSeries<SalesData, String>(
+                        legendItemText:
+                            "${SahaDateUtils().getDDMM(reportController!.fromDay.value)} Đến ${SahaDateUtils().getDDMM(reportController!.toDay.value)}",
                         markerSettings: MarkerSettings(
                             isVisible: true,
                             height: 4,

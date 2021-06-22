@@ -149,9 +149,9 @@ class ChooseTimeController extends GetxController {
       timeNow!.subtract(Duration(days: 365)),
     ]);
 
-    fromDateOption.value = SahaDateUtils().getFirstDayOfMonthDATETIME();
+    fromDateOption.value = timeNow!;
     toDateOption.value = timeNow!;
-    fromDateOptionCP.value = SahaDateUtils().getFirstDayOfMonthDATETIME();
+    fromDateOptionCP.value = timeNow!;
     toDateOptionCP.value = timeNow!;
   }
 
@@ -211,6 +211,7 @@ class ChooseTimeController extends GetxController {
   }
 
   void onOkChooseTime(DateTime startDate, DateTime endDate) {
+    checkSelected = true;
     fromDay.value = startDate;
     toDay.value = endDate;
     fromDateOption.value = startDate;
@@ -219,6 +220,7 @@ class ChooseTimeController extends GetxController {
   }
 
   void onOkChooseTimeCP(DateTime startDate, DateTime endDate) {
+    checkSelectedCP = true;
     fromDayCP.value = startDate;
     toDayCP.value = endDate;
     fromDateOptionCP.value = startDate;

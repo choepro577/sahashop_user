@@ -483,7 +483,7 @@ class _ChooseTimeScreenState extends State<ChooseTimeScreen>
                                             onReturn: (v) {
                                               chooseTimeController!
                                                       .isCompare.value =
-                                                  chooseTimeController!
+                                                  !chooseTimeController!
                                                       .isCompare.value;
                                             },
                                           ),

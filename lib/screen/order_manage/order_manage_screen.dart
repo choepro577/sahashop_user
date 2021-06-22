@@ -110,7 +110,6 @@ class _OrderManageScreenState extends State<OrderManageScreen>
           orderManageController.listStatusCode[indexState],
           indexState,
         );
-
         // orderManageController.refreshData();
         _refreshController.refreshCompleted();
       },
