@@ -33,8 +33,8 @@ class ConfirmController extends GetxController {
 
   ConfirmController() {
     shipmentMethodCurrent.value.fee = 0;
-    infoAddressCustomer.value = null;
-    getAllAddressCustomer();
+    infoAddressCustomer.value = InfoAddressCustomer(id: 0);
+    //getAllAddressCustomer();
   }
 
   Future<void> chargeShipmentFee(int? idAddressCustomer) async {
@@ -68,7 +68,7 @@ class ConfirmController extends GetxController {
   }
 
   Future<void> createOrders() async {
-    if (infoAddressCustomer.value == null) {
+    if (infoAddressCustomer.value?.id == 0) {
       SahaAlert.showError(message: "Chưa chọn địa chỉ nhận ");
     } else {
       isLoadingOrder.value = true;

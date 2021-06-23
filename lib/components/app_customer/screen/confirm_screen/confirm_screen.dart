@@ -39,7 +39,7 @@ class ConfirmScreen extends StatelessWidget {
               Obx(
                 () => Column(
                   children: [
-                    confirmController.infoAddressCustomer.value != null
+                    confirmController.infoAddressCustomer.value?.id != 0
                         ? Card(
                             child: InkWell(
                               onTap: () {
@@ -139,20 +139,26 @@ class ConfirmScreen extends StatelessWidget {
                                 child: InkWell(
                                   onTap: () {
                                     Get.to(() => ReceiverAddressCustomerScreen(
-                                          infoAddressCustomers:
+                                              infoAddressCustomers:
+                                                  confirmController
+                                                      .infoAddressCustomer
+                                                      .value,
+                                              callback: (InfoAddressCustomer
+                                                  infoAddressCustomer) {
+                                                confirmController
+                                                        .infoAddressCustomer
+                                                        .value =
+                                                    infoAddressCustomer;
+                                              },
+                                            ))!
+                                        .then((value) => {
                                               confirmController
-                                                  .infoAddressCustomer.value,
-                                          callback: (InfoAddressCustomer
-                                              infoAddressCustomer) {
-                                            confirmController
-                                                .infoAddressCustomer
-                                                .value = infoAddressCustomer;
-                                          },
-                                        ))!.then((value) => {
-                                          confirmController.chargeShipmentFee(
-                                              confirmController
-                                                  .infoAddressCustomer.value!.id)
-                                        });
+                                                  .chargeShipmentFee(
+                                                      confirmController
+                                                          .infoAddressCustomer
+                                                          .value!
+                                                          .id)
+                                            });
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(15.0),
@@ -885,7 +891,7 @@ class ConfirmScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    if (confirmController.infoAddressCustomer.value == null) {
+                    if (confirmController.infoAddressCustomer.value?.id == 0) {
                       Scrollable.ensureVisible(dataKey.currentContext!,
                           duration: Duration(milliseconds: 500));
                       confirmController.colorAnimateAddress.value = Colors.red;

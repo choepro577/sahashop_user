@@ -31,6 +31,7 @@ import 'package:sahashop_user/data/remote/response-request/order/state_history_o
 import 'package:sahashop_user/data/remote/response-request/payment_method/payment_method_response.dart';
 import 'package:sahashop_user/data/remote/response-request/payment_method/update_payment_response.dart';
 import 'package:sahashop_user/data/remote/response-request/post/all_post_response.dart';
+import 'package:sahashop_user/data/remote/response-request/report/product_report_response.dart';
 import 'package:sahashop_user/data/remote/response-request/report/report_response.dart';
 
 import 'response-request/auth/register_response.dart';
@@ -53,7 +54,7 @@ part 'service.g.dart';
 @RestApi(baseUrl: "http://103.221.220.124/api/")
 abstract class SahaService {
   /// Retrofit factory
- factory SahaService(Dio dio) => _SahaService(dio);
+  factory SahaService(Dio dio) => _SahaService(dio);
 
   @POST("register")
   Future<RegisterResponse> register(@Body() Map<String, dynamic> body);
@@ -110,7 +111,8 @@ abstract class SahaService {
   Future<GetAppThemeResponse> getAppTheme(@Path("storeCode") String? storeCode);
 
   @GET("store/{storeCode}/categories")
-  Future<AllCategoryResponse> getAllCategory(@Path("storeCode") String? storeCode);
+  Future<AllCategoryResponse> getAllCategory(
+      @Path("storeCode") String? storeCode);
 
   @POST("images")
   Future<UploadImageResponse> uploadImage(@Body() Map<String, dynamic> body);
@@ -129,7 +131,8 @@ abstract class SahaService {
       @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   @GET("store/{storeCode}/post_categories")
-  Future<AllCategoryPostResponse> getAllCategoryPost(@Path("storeCode") String? storeCode);
+  Future<AllCategoryPostResponse> getAllCategoryPost(
+      @Path("storeCode") String? storeCode);
 
   @POST("store/{storeCode}/posts")
   @FormUrlEncoded()
@@ -140,7 +143,8 @@ abstract class SahaService {
   Future<AllPostResponse> getAllPost(@Path("storeCode") String? storeCode);
 
   @GET("store/{storeCode}/discounts")
-  Future<MyProgramResponse> getAllDisCount(@Path("storeCode") String? storeCode);
+  Future<MyProgramResponse> getAllDisCount(
+      @Path("storeCode") String? storeCode);
 
   @GET("store/{storeCode}/vouchers")
   Future<MyVoucherResponse> getAllVoucher(@Path("storeCode") String? storeCode);
@@ -169,8 +173,10 @@ abstract class SahaService {
       @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   @PUT("store/{storeCode}/vouchers/{idVoucher}")
-  Future<CreateVoucherResponse> updateVoucher(@Path("storeCode") String? storeCode,
-      @Path() int? idVoucher, @Body() Map<String, dynamic> body);
+  Future<CreateVoucherResponse> updateVoucher(
+      @Path("storeCode") String? storeCode,
+      @Path() int? idVoucher,
+      @Body() Map<String, dynamic> body);
 
   @GET("store/{storeCode}/vouchers_end")
   Future<EndVoucherResponse> getEndVoucherFromPage(
@@ -206,7 +212,8 @@ abstract class SahaService {
       @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   @GET("store/{storeCode}/store_address")
-  Future<AllAddressStoreResponse> getAllAddressStore(@Path("storeCode") String? storeCode);
+  Future<AllAddressStoreResponse> getAllAddressStore(
+      @Path("storeCode") String? storeCode);
 
   @PUT("store/{storeCode}/store_address/{idAddressStore}")
   Future<CreateAddressStoreResponse> updateAddressStore(
@@ -219,11 +226,14 @@ abstract class SahaService {
       @Path("storeCode") String? storeCode, @Path() int? idAddressStore);
 
   @GET("store/{storeCode}/shipments")
-  Future<AllShipmentResponse> getAllShipmentStore(@Path("storeCode") String? storeCode);
+  Future<AllShipmentResponse> getAllShipmentStore(
+      @Path("storeCode") String? storeCode);
 
   @PUT("store/{storeCode}/shipments/{idShipment}")
-  Future<AddTokenShipmentResponse> addTokenShipment(@Path("storeCode") String? storeCode,
-      @Path() int? idShipment, @Body() Map<String, dynamic> body);
+  Future<AddTokenShipmentResponse> addTokenShipment(
+      @Path("storeCode") String? storeCode,
+      @Path() int? idShipment,
+      @Body() Map<String, dynamic> body);
 
   @GET("store/{storeCode}/message_customers")
   Future<AllChatCustomerResponse> getAllChatUser(
@@ -247,14 +257,14 @@ abstract class SahaService {
 
   @GET("store/{storeCode}/attribute_fields")
   Future<AttributesResponse> getAllAttributeFields(
-      @Path("storeCode") String? storeCode,
-      );
+    @Path("storeCode") String? storeCode,
+  );
 
   @PUT("store/{storeCode}/attribute_fields")
   Future<AttributesResponse> updateAttributeFields(
-      @Path("storeCode") String? storeCode,
-      @Body() Map<String, dynamic> body,
-      );
+    @Path("storeCode") String? storeCode,
+    @Body() Map<String, dynamic> body,
+  );
 
   @GET("store/{storeCode}/payment_methods")
   Future<PaymentMethodResponse> getPaymentMethod(
@@ -317,5 +327,12 @@ abstract class SahaService {
     @Query("date_to") String timeTo,
     @Query("date_from_compare") String dateFromCompare,
     @Query("date_to_compare") String dateToCompare,
+  );
+
+  @GET("store/{storeCode}/report/top_ten_products")
+  Future<ProductReportResponse> getProductReport(
+    @Path() String storeCode,
+    @Query("date_from") String timeFrom,
+    @Query("date_to") String timeTo,
   );
 }

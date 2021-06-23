@@ -90,6 +90,20 @@ class ShowChooseOrderOption {
                 onTap: () {
                   onReturn!(1);
                 }),
+            itemOption(
+                icon: Icon(
+                  Icons.multiline_chart_outlined,
+                  color: listChooseOption[1]
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey[600],
+                ),
+                text: "Báo cáo sản phẩm",
+                colorText: listChooseOption[1]
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey[600],
+                onTap: () {
+                  onReturn!(2);
+                }),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: SahaButtonFullParent(

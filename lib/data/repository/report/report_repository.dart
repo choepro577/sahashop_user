@@ -1,3 +1,4 @@
+import 'package:sahashop_user/data/remote/response-request/report/product_report_response.dart';
 import 'package:sahashop_user/data/remote/response-request/report/report_response.dart';
 import 'package:sahashop_user/data/remote/saha_service_manager.dart';
 import 'package:sahashop_user/data/repository/handle_error.dart';
@@ -17,6 +18,22 @@ class ReportRepository {
           timeTo,
           dateFromCompare,
           dateToCompare);
+      return res;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  Future<ProductReportResponse?> getProductReport(
+    String timeFrom,
+    String timeTo,
+  ) async {
+    try {
+      var res = await SahaServiceManager().service!.getProductReport(
+            UserInfo().getCurrentStoreCode()!,
+            timeFrom,
+            timeTo,
+          );
       return res;
     } catch (err) {
       handleError(err);

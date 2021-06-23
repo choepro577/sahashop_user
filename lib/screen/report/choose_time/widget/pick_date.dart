@@ -29,10 +29,20 @@ class PickDate extends StatelessWidget {
             padding: const EdgeInsets.all(15.0),
             child: Row(
               children: [
-                toDay == fromDate
-                    ? Text("$text ${SahaDateUtils().getDDMMYY(fromDate!)}")
-                    : Text(
-                        "$text ${SahaDateUtils().getDDMM(fromDate!)} đến ${SahaDateUtils().getDDMM(toDay!)}"),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "$text",
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                        "${SahaDateUtils().getDDMMYY(fromDate!)} đến ${SahaDateUtils().getDDMMYY(toDay!)}"),
+                  ],
+                ),
                 Spacer(),
                 isChoose!
                     ? Icon(
