@@ -12,6 +12,7 @@ class SahaTextFieldNoBorder extends StatefulWidget {
   final bool? obscureText;
   final TextInputType? textInputType;
   final String? hintText;
+  final String? helperText;
   final int? maxLength;
 
   const SahaTextFieldNoBorder(
@@ -25,6 +26,7 @@ class SahaTextFieldNoBorder extends StatefulWidget {
       this.onSubmitted,
       this.validator,
       this.obscureText,
+      this.helperText,
       this.textInputType,
       this.hintText,
       this.maxLength})
@@ -42,18 +44,22 @@ class _SahaTextFieldNoBorderState extends State<SahaTextFieldNoBorder> {
         padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
         child: TextFormField(
           validator: widget.validator as String? Function(String?)?,
-          keyboardType:widget.textInputType,
+          keyboardType: widget.textInputType,
           onChanged: widget.onChanged,
           onFieldSubmitted: widget.onSubmitted,
           controller: widget.controller,
           maxLength: widget.maxLength,
+          textCapitalization: TextCapitalization.sentences,
           decoration: InputDecoration(
-
+            isDense: true,
+            contentPadding: EdgeInsets.only(top: 15, bottom: 3),
+            helperText: widget.helperText,
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             enabledBorder: InputBorder.none,
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
+            helperStyle: TextStyle(fontSize: 11),
             hintText: widget.hintText,
           ),
         ),

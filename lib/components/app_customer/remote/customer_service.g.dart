@@ -518,13 +518,13 @@ class _CustomerService implements CustomerService {
 
   @override
   Future<OrderHistoryResponse> getOrderHistory(storeCode, numberPage, search,
-      fieldBy, fieldByValue, sortBy, descending, dateFrom, dateTo) async {
+      fieldBy, filterByValue, sortBy, descending, dateFrom, dateTo) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': numberPage,
       r'search': search,
       r'field_by': fieldBy,
-      r'field_by_value': fieldByValue,
+      r'field_by_value': filterByValue,
       r'sort_by': sortBy,
       r'descending': descending,
       r'date_from': dateFrom,

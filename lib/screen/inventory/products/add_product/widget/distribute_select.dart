@@ -17,6 +17,7 @@ import 'package:sahashop_user/model/product.dart';
 import 'distribute_select_controller.dart';
 
 class DistributeSelect extends StatefulWidget {
+
   final Function? onData;
 
   const DistributeSelect({Key? key, this.onData}) : super(key: key);

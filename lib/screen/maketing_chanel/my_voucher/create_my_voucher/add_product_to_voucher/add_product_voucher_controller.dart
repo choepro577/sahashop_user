@@ -24,15 +24,9 @@ class AddProductToVoucherController extends GetxController {
       String? sortBy}) async {
     isLoadingProduct.value = true;
     try {
-      var res = await SahaServiceManager().service!.getAllProduct(
-          UserInfo().getCurrentStoreCode(),
-          search ?? "",
-          idCategory ?? "",
-          descending ?? false,
-          details ?? "",
-          sortBy ?? "");
-
-      listProduct.addAll(res.data!.data!);
+      var data = await RepositoryManager.productRepository.getAllProduct();
+      var list = data!.data;
+      listProduct.addAll(list!);
 
       if (listCheckSelectedProduct.value.length == 0) {
         listProduct.forEach((product) {
@@ -42,7 +36,7 @@ class AddProductToVoucherController extends GetxController {
       }
 
       isLoadingProduct.value = false;
-      return res.data!.data;
+      return list;
     } catch (err) {
       handleError(err);
     }

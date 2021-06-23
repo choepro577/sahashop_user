@@ -64,6 +64,7 @@ class SahaTextFiledContent extends StatelessWidget {
       contentSaved: contentSaved,
     ))!
         .then((value) {
+
       if (onChangeContent != null) onChangeContent!(value);
     });
   }
@@ -90,6 +91,7 @@ class _EditContentHtmlState extends State<EditContentHtml> {
 
   Future<bool> _onWillPop() async {
     var txt = await controller.getText();
+
     Get.back(result: txt);
     return true;
   }

@@ -180,7 +180,7 @@ abstract class CustomerService {
     @Query("page") int numberPage,
     @Query("search") String search,
     @Query("field_by") String fieldBy,
-    @Query("field_by_value") String fieldByValue,
+    @Query("field_by_value") String filterByValue,
     @Query("sort_by") String sortBy,
     @Query("descending") String descending,
     @Query("date_from") String dateFrom,

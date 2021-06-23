@@ -109,13 +109,13 @@ class SelectImageController extends GetxController {
 
 
   Future<void> loadAssets() async {
-    List<Asset> resultList = <Asset>[];
+    List<Asset?> resultList = <Asset?>[];
     String error = 'No Error Detected';
     try {
       resultList = await MultiImagePicker.pickImages(
         maxImages: MAX_SELECT - resultList.length,
         enableCamera: true,
-        selectedAssets: dataImages.toList().map((e) => e.file).toList() as List<Asset>,
+        selectedAssets: dataImages.toList().map((e) => e.file!).toList(),
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: MaterialOptions(
           actionBarColor: "#abcdef",

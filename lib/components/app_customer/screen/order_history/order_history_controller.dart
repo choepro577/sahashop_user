@@ -43,15 +43,15 @@ class OrderHistoryController extends GetxController {
   ];
 
   Future<void> loadInitOrder(
-      String fieldBy, String fieldByValue, int indexStatus) async {
+      String fieldBy, String filterByValue, int indexStatus) async {
     isLoadInit.value = true;
     listPageLoadMore[indexStatus] = 1;
     listIsEndOrder[indexStatus] = false;
-    loadMoreOrder(fieldBy, fieldByValue, indexStatus);
+    loadMoreOrder(fieldBy, filterByValue, indexStatus);
   }
 
   Future<void> loadMoreOrder(
-      String fieldBy, String fieldByValue, int indexStatus) async {
+      String fieldBy, String filterByValue, int indexStatus) async {
     isDoneLoadMore.value = false;
     listCheckIsEmpty[indexStatus] = false;
     try {
@@ -60,7 +60,7 @@ class OrderHistoryController extends GetxController {
             listPageLoadMore[indexStatus],
             "",
             fieldBy,
-            fieldByValue,
+            filterByValue,
             "",
             "",
             "",
@@ -95,9 +95,9 @@ class OrderHistoryController extends GetxController {
   }
 
   Future<void> refreshData(
-      String fieldBy, String fieldByValue, int indexStatus) async {
+      String fieldBy, String filterByValue, int indexStatus) async {
     isLoadInit.value = true;
     listAllOrder[indexStatus] = [];
-    loadInitOrder(fieldBy, fieldByValue, indexStatus);
+    loadInitOrder(fieldBy, filterByValue, indexStatus);
   }
 }

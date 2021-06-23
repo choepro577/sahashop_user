@@ -7,9 +7,34 @@ import 'package:sahashop_user/model/category.dart';
 class CategoryController extends GetxController {
   var loading = false.obs;
   var listCategory = RxList<Category>();
+  var listCategorySelected = RxList<Category>();
 
   CategoryController() {
     getAllCategory();
+  }
+
+  void selectCategory(Category category) {
+    listCategorySelected.refresh();
+    if (listCategorySelected
+        .map((element) => element.id)
+        .toList()
+        .contains(category.id)) {
+      listCategorySelected.removeWhere((element) => element.id == category.id);
+    } else {
+      listCategorySelected.add(category);
+    }
+    listCategorySelected.forEach((element) {
+      if (!listCategory.map((e) => e.id).toList().contains(element.id)) {
+        listCategorySelected.removeWhere((element) => element.id == category.id);
+      }
+    });
+  }
+
+  bool selected(Category category) {
+    return listCategorySelected
+        .map((element) => element.id)
+        .toList()
+        .contains(category.id);
   }
 
   Future<bool?> getAllCategory() async {

@@ -26,15 +26,9 @@ class UpdateProductToDiscountController extends GetxController {
       String? sortBy}) async {
     isLoadingProduct.value = true;
     try {
-      var res = await SahaServiceManager().service!.getAllProduct(
-          UserInfo().getCurrentStoreCode(),
-          search ?? "",
-          idCategory ?? "",
-          descending ?? false,
-          details ?? "",
-          sortBy ?? "");
-
-      listProduct.addAll(res.data!.data!);
+      var data = await RepositoryManager.productRepository.getAllProduct();
+      var list = data!.data;
+      listProduct.addAll(list!);
 
       if (listCheckSelectedProduct.value.length == 0) {
         listProduct.forEach((product) {
@@ -45,7 +39,7 @@ class UpdateProductToDiscountController extends GetxController {
       }
 
       for (int i = 0; i < listProduct.length; i++) {
-        if (res.data!.data![i].hasInDiscount == true) {
+        if (list[i].hasInDiscount == true) {
           listIsSave.value[i] = true;
         }
 
@@ -61,7 +55,7 @@ class UpdateProductToDiscountController extends GetxController {
       }
 
       isLoadingProduct.value = false;
-      return res.data!.data;
+      return list;
     } catch (err) {
       handleError(err);
     }

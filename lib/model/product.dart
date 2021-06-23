@@ -15,6 +15,10 @@ class Product {
     this.price,
     this.barcode,
     this.status,
+    this.quantityInStock,
+    this.view,
+    this.sold,
+    this.likes,
     this.createdAt,
     this.updatedAt,
     this.distributes,
@@ -33,6 +37,10 @@ class Product {
   int? indexImageAvatar;
   double? price;
   String? barcode;
+  int? quantityInStock;
+  int? sold;
+  int? view;
+  int? likes;
   int? status;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -58,6 +66,10 @@ class Product {
         price: double.parse(json["price"].toString()),
         barcode: json["barcode"],
         status: json["status"],
+        quantityInStock: json["quantity_in_stock"],
+        sold: json["sold"],
+        view: json["view"],
+        likes: json['likes'],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         distributes: json['distributes'] != null
@@ -83,6 +95,10 @@ class Product {
         "price": price,
         "barcode": name,
         "status": status,
+        "likes": likes,
+        "quantity_in_stock": quantityInStock,
+        "sold": sold,
+        "view": view,
         "product_discount":
             productDiscount == null ? null : productDiscount!.toJson(),
         "has_in_discount": hasInDiscount,

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:sahashop_user/model/product.dart';
+
 ProductRequest productRequestFromJson(String str) =>
     ProductRequest.fromJson(json.decode(str));
 
@@ -13,6 +15,7 @@ class ProductRequest {
     this.price,
     this.barcode,
     this.status,
+    this.quantityInStock,
     this.images,
     this.listDistribute,
     this.listAttribute,
@@ -25,6 +28,7 @@ class ProductRequest {
   double? price;
   String? barcode;
   int? status;
+  int? quantityInStock;
   List<String>? images;
   List<DistributesRequest>? listDistribute;
   List<ListAttribute>? listAttribute;
@@ -37,6 +41,7 @@ class ProductRequest {
         price: json["price"],
         barcode: json["barcode"],
         status: json["status"],
+        quantityInStock: json['quantity_in_stock'],
         images: List<String>.from(json["images"].map((x) => x)),
         listDistribute: List<DistributesRequest>.from(
             json["list_distribute"].map((x) => DistributesRequest.fromJson(x))),
@@ -45,6 +50,49 @@ class ProductRequest {
         categories: List<int>.from(json["categories"].map((x) => x)),
       );
 
+  factory ProductRequest.fromProduct(Product product) {
+    List<ListAttribute> listAttributeRequest = [];
+    product.attributes!.forEach((key) {
+      if (key != null) {
+        listAttributeRequest
+            .add(ListAttribute(name: key.name, value: key.value));
+      }
+    });
+
+    List<DistributesRequest> listDistribute = [];
+    if (product.distributes != null) {
+      listDistribute.addAll(product.distributes!.map((listDistribute) {
+        ElementDistributes? ele = listDistribute.elementDistributes!.firstWhere(
+            (elementDistribute) => elementDistribute.imageUrl != null);
+        bool boolHasImage = false;
+        if (ele != null) {
+          boolHasImage = true;
+        }
+        return DistributesRequest(
+            boolHasImage: boolHasImage,
+            name: listDistribute.name,
+            elementDistributes: listDistribute.elementDistributes!
+                .map((e) => ElementDistributesRequest(
+                    name: e.name, imageUrl: e.imageUrl))
+                .toList());
+      }).toList());
+    }
+
+    return ProductRequest(
+      description: product.description,
+      name: product.name,
+      indexImageAvatar: product.indexImageAvatar,
+      price: product.price,
+      barcode: product.barcode,
+      status: product.status,
+      quantityInStock: product.quantityInStock,
+      images: product.images!.map((e) => e.imageUrl!).toList(),
+      listDistribute: listDistribute,
+      listAttribute: listAttributeRequest,
+      categories: product.categories!.map((e) => e.id!).toList(),
+    );
+  }
+
   Map<String, dynamic> toJson() => {
         "description": description,
         "name": name,
@@ -52,7 +100,8 @@ class ProductRequest {
         "price": price,
         "barcode": barcode,
         "status": status,
-        "images": List<dynamic>.from(images!.map((x) => x)),
+        "quantity_in_stock":quantityInStock,
+        "images": images!,
         "list_distribute":
             List<dynamic>.from(listDistribute!.map((x) => x.toJson())),
         "list_attribute":

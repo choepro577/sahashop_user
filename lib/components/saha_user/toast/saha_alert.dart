@@ -102,36 +102,39 @@ class SahaAlert {
     String message = "",
     String title = "Saha",
   }) {
-    showFlash(
-      duration: Duration(milliseconds: 1000),
-      context: Get.context!,
-      builder: (_, controller) {
-        return Flash(
-          controller: controller,
-          position: FlashPosition.bottom,
-          borderRadius: BorderRadius.circular(8.0),
-          borderColor: Colors.blue,
-          boxShadows: kElevationToShadow[8],
-          backgroundGradient: RadialGradient(
-            colors: [Colors.black87, Colors.black87],
-            center: Alignment.topLeft,
-            radius: 2,
-          ),
-          onTap: () => controller.dismiss(),
-          forwardAnimationCurve: Curves.easeInCirc,
-          reverseAnimationCurve: Curves.bounceIn,
-          child: DefaultTextStyle(
-            style: TextStyle(color: Colors.white),
-            child: FlashBar(
-              title: Text('$title'),
-              content: Text('$message'),
-              indicatorColor: Colors.green,
-              icon: Icon(Icons.check),
-            ),
-          ),
-        );
-      },
-    );
+
+    FLToast.Fluttertoast.showToast(msg: message);
+
+    // showFlash(
+    //   duration: Duration(milliseconds: 1000),
+    //   context: Get.context!,
+    //   builder: (_, controller) {
+    //     return Flash(
+    //       controller: controller,
+    //       position: FlashPosition.bottom,
+    //       borderRadius: BorderRadius.circular(8.0),
+    //       borderColor: Colors.blue,
+    //       boxShadows: kElevationToShadow[8],
+    //       backgroundGradient: RadialGradient(
+    //         colors: [Colors.black87, Colors.black87],
+    //         center: Alignment.topLeft,
+    //         radius: 2,
+    //       ),
+    //       onTap: () => controller.dismiss(),
+    //       forwardAnimationCurve: Curves.easeInCirc,
+    //       reverseAnimationCurve: Curves.bounceIn,
+    //       child: DefaultTextStyle(
+    //         style: TextStyle(color: Colors.white),
+    //         child: FlashBar(
+    //           title: Text('$title'),
+    //           content: Text('$message'),
+    //           indicatorColor: Colors.green,
+    //           icon: Icon(Icons.check),
+    //         ),
+    //       ),
+    //     );
+    //   },
+    // );
   }
 
   static void showBasicsFlash(

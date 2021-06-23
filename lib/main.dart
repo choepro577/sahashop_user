@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
         title: 'SahaShop',
+        debugShowCheckedModeBanner: false,
         theme: SahaUserPrimaryTheme,
         home: SahaMainScreen(),
         getPages: [

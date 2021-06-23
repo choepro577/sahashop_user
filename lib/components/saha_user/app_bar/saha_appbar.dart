@@ -6,43 +6,41 @@ class SahaAppBar extends PreferredSize {
   final String? titleText;
   final Widget? leading;
   final List<Widget>? actions;
+  final PreferredSizeWidget? bottom;
 
-   SahaAppBar(
+  SahaAppBar(
       {this.leading,
       this.actions,
       this.titleText,
+      this.bottom,
       this.titleChild,
-      this.height = kToolbarHeight}) : super(
-     child: Container(),
-     preferredSize: Size(100,100)
-   );
+      this.height = kToolbarHeight})
+      : super(child: Container(), preferredSize: Size(100, 100));
 
   @override
   Size get preferredSize => Size.fromHeight(height);
 
   @override
   Widget build(BuildContext context) {
-    return  AppBar(
-            title: titleText != null
-                ? Text(
-                    titleText!,
-                    style: TextStyle(color: Colors.black87),
-                  )
-                : titleChild,
-            iconTheme: IconThemeData(
-              color: Colors.black87
-            ),
-            leading: leading,
-            actions: actions,
-            backgroundColor: Colors.white,
-            elevation: 0.0,
-            centerTitle: true,
-            bottom: PreferredSize(
-              preferredSize: Size.zero,
-              child: Divider(
-                height: 1,
-              ),
-            )
-    );
+    return AppBar(
+        title: titleText != null
+            ? Text(
+                titleText!,
+                style: TextStyle(color: Colors.black87),
+              )
+            : titleChild,
+        iconTheme: IconThemeData(color: Colors.black87),
+        leading: leading,
+        actions: actions,
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+        centerTitle: true,
+        bottom: bottom != null
+            ? bottom
+            : PreferredSize(
+                preferredSize: Size.zero,
+                child: Divider(
+                  height: 1,
+                )));
   }
 }
