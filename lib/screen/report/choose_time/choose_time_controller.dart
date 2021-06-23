@@ -146,7 +146,7 @@ class ChooseTimeController extends GetxController {
     ]);
 
     listToDateYEARCP([
-      timeNow!.subtract(Duration(days: 365)),
+      timeNow!.subtract(Duration(days: 366)),
     ]);
 
     fromDateOption.value = timeNow!;
@@ -196,7 +196,7 @@ class ChooseTimeController extends GetxController {
         fromDay.value.subtract(Duration(days: 365)),
       ]);
       listToDateYEARCP([
-        toDay.value.subtract(Duration(days: 365)),
+        toDay.value.subtract(Duration(days: 366)),
       ]);
     }
   }

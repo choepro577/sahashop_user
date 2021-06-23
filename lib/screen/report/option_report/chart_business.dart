@@ -65,9 +65,9 @@ class _BusinessChartState extends State<BusinessChart> {
                                   reportController!.isCompare.value
                                       ? index == 0
                                           ? Text(
-                                              "${reportController!.listNameChartType[index]} ${reportController!.differenceTotalFinal.value > 0 ? ' tăng ${reportController!.percentTotalFinal.value.toInt()}%' : ' giảm ${reportController!.percentTotalFinal.value.toInt()}%'}")
+                                              "${reportController!.listNameChartType[index]} ${reportController!.reportPrimeTime.value.totalFinal! != 0 ? reportController!.differenceTotalFinal.value > 0 ? ' tăng ${reportController!.percentTotalFinal.value.toInt()}%' : ' giảm ${reportController!.percentTotalFinal.value.toInt()}%' : ""}")
                                           : Text(
-                                              "${reportController!.listNameChartType[index]} ${reportController!.differenceOrder.value > 0 ? ' tăng ${reportController!.percentOrder.value.toInt()}%' : ' giảm ${reportController!.percentOrder.value.toInt()}%'}")
+                                              "${reportController!.listNameChartType[index]} ${reportController!.reportPrimeTime.value.totalFinal! != 0 ? reportController!.differenceOrder.value > 0 ? ' tăng ${reportController!.percentOrder.value.toInt()}%' : ' giảm ${reportController!.percentOrder.value.toInt()}%' : ""}")
                                       : Text(
                                           "${reportController!.listNameChartType[index]}"),
                                   SizedBox(
@@ -197,7 +197,7 @@ class _BusinessChartState extends State<BusinessChart> {
                             reportController!
                                 .reportCompareTime.value.charts!.length,
                             (index) => SalesData(
-                                '${reportController!.fromDay.value.day == DateTime.now().day || reportController!.fromDay.value.day == DateTime.now().subtract(Duration(days: 1)).day ? "${reportController!.reportCompareTime.value.charts![index]!.time!.hour}h" : "${SahaDateUtils().getDDMM(reportController!.reportCompareTime.value.charts![index]!.time!)}"}',
+                                '${reportController!.reportCompareTime.value.charts![index]!.time == null ? reportController!.listMonth[index] : reportController!.fromDay.value.day == DateTime.now().day || reportController!.fromDay.value.day == DateTime.now().subtract(Duration(days: 1)).day ? "${reportController!.reportCompareTime.value.charts![index]!.time!.hour}h" : "${SahaDateUtils().getDDMM(reportController!.reportCompareTime.value.charts![index]!.time!)}"}',
                                 (reportController!.isTotalChart.value
                                     ? reportController!.reportCompareTime.value
                                         .charts![index]!.totalFinal
@@ -231,7 +231,7 @@ class _BusinessChartState extends State<BusinessChart> {
                             reportController!
                                 .reportPrimeTime.value.charts!.length,
                             (index) => SalesData(
-                                '${reportController!.fromDay.value.day == DateTime.now().day || reportController!.fromDay.value.day == DateTime.now().subtract(Duration(days: 1)).day ? "${reportController!.reportPrimeTime.value.charts![index]!.time!.hour}h" : "${SahaDateUtils().getDDMM(reportController!.reportPrimeTime.value.charts![index]!.time!)}"}',
+                                '${reportController!.reportPrimeTime.value.charts![index]!.time == null ? reportController!.listMonth[index] : reportController!.fromDay.value.day == DateTime.now().day || reportController!.fromDay.value.day == DateTime.now().subtract(Duration(days: 1)).day ? "${reportController!.reportPrimeTime.value.charts![index]!.time!.hour}h" : "${SahaDateUtils().getDDMM(reportController!.reportPrimeTime.value.charts![index]!.time!)}"}',
                                 (reportController!.isTotalChart.value
                                     ? reportController!.reportPrimeTime.value
                                         .charts![index]!.totalFinal
@@ -266,7 +266,7 @@ class _BusinessChartState extends State<BusinessChart> {
                             reportController!
                                 .reportPrimeTime.value.charts!.length,
                             (index) => SalesData(
-                                '${reportController!.fromDay.value.day == DateTime.now().day || reportController!.fromDay.value.day == DateTime.now().subtract(Duration(days: 1)).day ? "${reportController!.reportPrimeTime.value.charts![index]!.time!.hour}h" : "${SahaDateUtils().getDDMM(reportController!.reportPrimeTime.value.charts![index]!.time!)}"}',
+                                '${reportController!.reportPrimeTime.value.charts![index]!.time == null ? reportController!.listMonth[index] : reportController!.fromDay.value.day == DateTime.now().day || reportController!.fromDay.value.day == DateTime.now().subtract(Duration(days: 1)).day ? "${reportController!.reportPrimeTime.value.charts![index]!.time!.hour}h" : "${SahaDateUtils().getDDMM(reportController!.reportPrimeTime.value.charts![index]!.time!)}"}',
                                 (reportController!.isTotalChart.value
                                     ? reportController!.reportPrimeTime.value
                                         .charts![index]!.totalFinal

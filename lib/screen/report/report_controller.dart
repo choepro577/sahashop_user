@@ -29,6 +29,20 @@ class ReportController extends GetxController {
   var percentOrder = 0.0.obs;
 
   List<String> listNameChartType = ["Doanh thu:", "Số đơn:"];
+  List<String> listMonth = [
+    "Tháng 1",
+    "Tháng 2",
+    "Tháng 3",
+    "Tháng 4",
+    "Tháng 5",
+    "Tháng 6",
+    "Tháng 7",
+    "Tháng 8",
+    "Tháng 9",
+    "Tháng 10",
+    "Tháng 11",
+    "Tháng 12",
+  ];
 
   var listLineChart = RxList<LineSeries<SalesData?, String>>();
 
@@ -86,7 +100,7 @@ class ReportController extends GetxController {
           reportCompareTime.value.totalOrderCount!;
       percentTotalFinal.value = differenceTotalFinal.value.abs() *
           100 /
-          (reportCompareTime.value.totalFinal! + 1);
+          (reportPrimeTime.value.totalFinal! + 1);
       percentOrder.value = differenceOrder.value.abs() *
           100 /
           (reportPrimeTime.value.totalOrderCount! + 1);
