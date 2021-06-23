@@ -293,7 +293,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           ),
                         ),
                       ),
-                      Obx(() => Column(
+                      Column(
                             children: [
                               Row(
                                 children: [
@@ -333,7 +333,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                 ],
                               ),
                             ],
-                          )),
+                          ),
                       SizedBox(
                         height: 5,
                       )
