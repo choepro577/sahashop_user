@@ -96,15 +96,63 @@ class _SahaService implements SahaService {
   }
 
   @override
+  Future<ProductResponse> updateProduct(storeCode, idProduct, body) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ProductResponse>(
+            Options(method: 'PUT', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'store/$storeCode/products/$idProduct',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ProductResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ProductDeleteResponse> deleteProduct(storeCode, idProduct) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ProductDeleteResponse>(Options(
+                method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
+            .compose(_dio.options, 'store/$storeCode/products/$idProduct',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ProductDeleteResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<AllProductResponse> getAllProduct(
-      storeCode, search, idCategory, descending, details, sortBy) async {
+      storeCode,
+      search,
+      idCategory,
+      descending,
+      status,
+      filterBy,
+      filterOption,
+      filterByValue,
+      details,
+      sortBy,
+      page) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'search': search,
       r'category_ids': idCategory,
       r'descending': descending,
+      r'status': status,
+      r'filter_by': filterBy,
+      r'filter_option': filterOption,
+      r'filter_by_value': filterByValue,
       r'details': details,
-      r'sort_by': sortBy
+      r'sort_by': sortBy,
+      r'page': page
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
@@ -829,13 +877,13 @@ class _SahaService implements SahaService {
 
   @override
   Future<AllOrderResponse> getAllOrder(storeCode, numberPage, search, fieldBy,
-      fieldByValue, sortBy, descending, dateFrom, dateTo) async {
+      filterByValue, sortBy, descending, dateFrom, dateTo) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': numberPage,
       r'search': search,
       r'field_by': fieldBy,
-      r'field_by_value': fieldByValue,
+      r'field_by_value': filterByValue,
       r'sort_by': sortBy,
       r'descending': descending,
       r'date_from': dateFrom,

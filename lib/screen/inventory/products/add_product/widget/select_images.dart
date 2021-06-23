@@ -10,11 +10,16 @@ import 'select_images_controller.dart';
 class SelectProductImages extends StatelessWidget {
   Function? onUpload;
   Function? doneUpload;
+  final  List<ImageData>? images;
 
   late SelectImageController selectImageController;
-  SelectProductImages({this.onUpload, this.doneUpload}) {
+  SelectProductImages({this.onUpload, this.doneUpload, this.images}) {
     selectImageController =
         new SelectImageController(onUpload: onUpload, doneUpload: doneUpload);
+
+    if(images != null) {
+      selectImageController.dataImages.value = images!;
+    }
   }
 
   @override
@@ -224,7 +229,7 @@ class SelectProductImages extends StatelessWidget {
                     size: 50,
                   )
                 : Container(),
-            imageData.errorUpload! ? Icon(Icons.error) : Container(),
+            imageData.errorUpload! ? Icon(Icons.error,color: Colors.redAccent,) : Container(),
           ],
         ),
       ),

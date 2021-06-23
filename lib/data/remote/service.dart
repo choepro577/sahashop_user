@@ -43,6 +43,7 @@ import 'response-request/post/all_category_post_response.dart';
 import 'response-request/post/create_category_post_response.dart';
 import 'response-request/post/create_post_response.dart';
 import 'response-request/product/all_product_response.dart';
+import 'response-request/product/product_delete_response.dart';
 import 'response-request/product/product_response.dart';
 import 'response-request/store/all_store_response.dart';
 import 'response-request/store/create_store_response.dart';
@@ -71,14 +72,28 @@ abstract class SahaService {
   Future<ProductResponse> createProduct(
       @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
+  @PUT("store/{storeCode}/products/{idProduct}")
+  Future<ProductResponse> updateProduct(
+      @Path("storeCode") String? storeCode, @Path() int? idProduct, @Body() Map<String, dynamic> body);
+
+ @DELETE("store/{storeCode}/products/{idProduct}")
+ Future<ProductDeleteResponse> deleteProduct(
+     @Path("storeCode") String? storeCode, @Path() int? idProduct);
+
   @GET("store/{storeCode}/products")
   Future<AllProductResponse> getAllProduct(
       @Path("storeCode") String? storeCode,
       @Query("search") String search,
       @Query("category_ids") String idCategory,
       @Query("descending") bool descending,
+      @Query("status") String status,
+      @Query("filter_by") String filterBy,
+      @Query("filter_option") String filterOption,
+      @Query("filter_by_value") String filterByValue,
       @Query("details") String details,
-      @Query("sort_by") String sortBy);
+      @Query("sort_by") String sortBy,
+      @Query("page") int page,
+      );
 
   @GET("type_of_store")
   Future<TypeShopResponse> getAllTypeOfStore();
@@ -271,7 +286,7 @@ abstract class SahaService {
     @Query("page") int numberPage,
     @Query("search") String search,
     @Query("field_by") String fieldBy,
-    @Query("field_by_value") String fieldByValue,
+    @Query("field_by_value") String filterByValue,
     @Query("sort_by") String sortBy,
     @Query("descending") String descending,
     @Query("date_from") String dateFrom,

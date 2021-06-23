@@ -9,7 +9,7 @@ class SahaEmptyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text("Không có gì"),
+      child: Text("Không có dữ liệu"),
     );
   }
 }

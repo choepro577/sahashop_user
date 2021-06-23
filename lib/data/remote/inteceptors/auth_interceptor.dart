@@ -29,50 +29,46 @@ class AuthInterceptor extends InterceptorsWrapper {
     return super.onRequest(options, handler);
   }
 
-
   @override
   void onError(DioError error, ErrorInterceptorHandler handler) {
-    print('Response: ${error.response}');
+    print('On Error${error.response}');
+
     if (error is DioError) {
       var dioError = error;
       switch (dioError.type) {
         case DioErrorType.cancel:
-          return errorMess('Đã hủy kết nối');
+          error.error = 'Đã hủy kết nối';
           break;
         case DioErrorType.connectTimeout:
-          return errorMess('Không thể kết nối đến server');
+          error.error = 'Không thể kết nối đến server';
           break;
         case DioErrorType.receiveTimeout:
-          return errorMess('Không thể nhận dữ liệu từ server');
+          error.error = 'Không thể nhận dữ liệu từ server';
           break;
         case DioErrorType.response:
           if (dioError.response?.statusCode == 429) {
-            return errorMess(
-                'Bạn gửi quá nhiều yêu cầu xin thử lại sau 1 phút');
+            error.error = 'Bạn gửi quá nhiều yêu cầu xin thử lại sau 1 phút';
           }
-
-          return errorMess(
-              '${dioError.response?.data["msg"] != null ? dioError.response?.data["msg"] : "Có lỗi xảy ra"}');
+          error.error =
+              '${dioError.response?.data["msg"] != null ? dioError.response?.data["msg"] : "Có lỗi xảy ra"}';
           break;
         case DioErrorType.sendTimeout:
-          return errorMess('Không thể gửi dữ liệu đến server');
+          error.error = 'Không thể gửi dữ liệu đến server';
           break;
         case DioErrorType.other:
-          return errorMess(error.message);
+          error.error = error.message;
           break;
       }
     }
-    return errorMess("Có lỗi xảy ta");
+
+    return handler.next(error);
   }
-  errorMess(String mess) async {
-    return mess;
-  }
+
 
   void printWrapped(String text) {
     final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
     pattern.allMatches(text).forEach((match) => print(match.group(0)));
   }
-
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {

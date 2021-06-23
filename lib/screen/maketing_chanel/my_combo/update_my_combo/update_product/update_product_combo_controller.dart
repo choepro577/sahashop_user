@@ -22,20 +22,18 @@ class UpdateProductComboController extends GetxController {
   Future<List<Product>?> getAllProduct(
       {String? search,
       String? idCategory,
+      String? status,
+      String? fieldBy,
+      String? fieldOption,
+      String? filterByValue,
       bool? descending,
       String? details,
       String? sortBy}) async {
     isLoadingProduct.value = true;
     try {
-      var res = await SahaServiceManager().service!.getAllProduct(
-          UserInfo().getCurrentStoreCode(),
-          search ?? "",
-          idCategory ?? "",
-          descending ?? false,
-          details ?? "",
-          sortBy ?? "");
-
-      listProduct.addAll(res.data!.data!);
+      var data = await RepositoryManager.productRepository.getAllProduct();
+      var list = data!.data;
+      listProduct.addAll(list!);
 
       if (listCheckSelectedProduct.value.length == 0) {
         listProduct.forEach((product) {
@@ -46,7 +44,7 @@ class UpdateProductComboController extends GetxController {
       }
 
       for (int i = 0; i < listProduct.length; i++) {
-        if (res.data!.data![i].hasInCombo == true) {
+        if (list[i].hasInCombo == true) {
           listIsSave.value[i] = true;
         }
 
@@ -62,7 +60,7 @@ class UpdateProductComboController extends GetxController {
       }
 
       isLoadingProduct.value = false;
-      return res.data!.data;
+      return list;
     } catch (err) {
       handleError(err);
     }
@@ -167,8 +165,8 @@ class UpdateProductComboController extends GetxController {
   }
 
   void increaseAmountProductCombo(int index) {
-    listSelectedProductParam.value[index].quantity
-     =  listSelectedProductParam.value[index].quantity! +1;
+    listSelectedProductParam.value[index].quantity =
+        listSelectedProductParam.value[index].quantity! + 1;
     listSelectedProductParam.refresh();
     print(listSelectedProductParam.value[0].quantity);
   }
@@ -176,7 +174,7 @@ class UpdateProductComboController extends GetxController {
   void decreaseAmountProductCombo(int index) {
     if (listSelectedProductParam.value[index].quantity! > 1) {
       listSelectedProductParam.value[index].quantity =
-          listSelectedProductParam.value[index].quantity! -1;
+          listSelectedProductParam.value[index].quantity! - 1;
       listSelectedProductParam.refresh();
       print(listSelectedProductParam.value[0].quantity);
     }
