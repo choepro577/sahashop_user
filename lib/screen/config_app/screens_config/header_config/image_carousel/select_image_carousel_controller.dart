@@ -19,7 +19,7 @@ class SelectCarouselImagesController extends GetxController {
   RxList<ImageData?> dataImages = <ImageData>[].obs;
 
   void init() {
-    dataImages([]);
+
     ConfigController configController = Get.find();
 
     if (configController.configApp.carouselAppImages != null) {

@@ -93,13 +93,18 @@ class AddProductController extends GetxController {
       });
     }
     if (productEd.distributes != null) {
-      listDistribute.addAll(productEd.distributes!.map((listDistribute) {
-        ElementDistributes? ele = listDistribute.elementDistributes!.firstWhere(
-            (elementDistribute) => elementDistribute.imageUrl != null);
+      listDistribute.addAll(productEd.distributes!.map((Distributes? listDistribute) {
+
         bool boolHasImage = false;
-        if (ele != null) {
-          boolHasImage = true;
+        if(listDistribute!.elementDistributes != null) {
+          var listOK = listDistribute.elementDistributes!.where(
+                  (elementDistribute) => elementDistribute.imageUrl != null);
+
+          if (listOK.length > 0) {
+            boolHasImage = true;
+          }
         }
+
         return DistributesRequest(
             boolHasImage: boolHasImage,
             name: listDistribute.name,
@@ -172,7 +177,7 @@ class AddProductController extends GetxController {
       productRequest.images = listImages == null
           ? []
           : listImages!.map((e) => e.linkImage!).toList();
-      productRequest.listDistribute = listDistribute.toList();
+
       productRequest.description = description.value;
       productRequest.status = status;
 
@@ -185,6 +190,9 @@ class AddProductController extends GetxController {
       });
 
       productRequest.listAttribute = listAttributeRequest;
+      final DistributeSelectController distributeSelectController = Get.find();
+      productRequest.listDistribute =
+          distributeSelectController.listDistribute.toList();
 
       productRequest.price = double.tryParse(textEditingControllerPrice.text);
       productRequest.name = textEditingControllerName.text;

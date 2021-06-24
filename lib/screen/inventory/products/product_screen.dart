@@ -82,21 +82,21 @@ class _ProductScreenState extends State<ProductScreen>
                 typePage: TYPE_PAGE.STOCKING,
                 updateTotal: updateTotal,
                 onReturnController: (pageController) {
-                  productsController.addPageController(pageController);
+                  productsController.addPageController(pageController,TYPE_PAGE.STOCKING);
                 },
               ),
               ProductPage(
                 typePage: TYPE_PAGE.OUT_OF_STOCK,
                 updateTotal: updateTotal,
                 onReturnController: (pageController) {
-                  productsController.addPageController(pageController);
+                  productsController.addPageController(pageController,TYPE_PAGE.OUT_OF_STOCK);
                 },
               ),
               ProductPage(
                 typePage: TYPE_PAGE.HIDE,
                 updateTotal: updateTotal,
                 onReturnController: (pageController) {
-                  productsController.addPageController(pageController);
+                  productsController.addPageController(pageController,TYPE_PAGE.HIDE,);
                 },
               ),
             ]),

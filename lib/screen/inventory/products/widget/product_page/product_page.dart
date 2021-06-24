@@ -29,7 +29,11 @@ class ProductPage extends StatefulWidget {
 
    ProductPage({Key? key, this.typePage, this.updateTotal, this.onReturnController})
       : super(key: key) {
-     onReturnController!(productController);
+     onReturnController!(
+         productController..typePage = typePage
+             ..updateTotal = updateTotal
+
+     );
   }
 
   @override
@@ -49,10 +53,10 @@ class _ProductPageState extends State<ProductPage>
     super.didChangeDependencies();
 
     productController = widget.productController;
-    productController.updateTotal = widget.updateTotal;
-    productController.typePage = widget.typePage;
+    // productController.updateTotal = widget.updateTotal;
+    // productController.typePage = widget.typePage;
 
-    widget.onReturnController!(productController);
+   // widget.onReturnController!(productController);
     productController.getAllProduct();
   }
 
@@ -60,7 +64,7 @@ class _ProductPageState extends State<ProductPage>
   // ignore: must_call_super
   Widget build(BuildContext context) {
     RefreshController _refreshController = RefreshController();
-
+    widget.onReturnController!(productController);
     return Obx(
       () => productController.loading.value
           ? SahaLoadingFullScreen()

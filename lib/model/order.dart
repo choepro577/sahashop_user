@@ -256,22 +256,30 @@ class LineItem {
     this.id,
     this.quantity,
     this.product,
+    this.distributesSelected,
   });
 
   int? id;
   int? quantity;
   Product? product;
+  List<DistributesSelected>? distributesSelected;
 
   factory LineItem.fromJson(Map<String, dynamic> json) => LineItem(
         id: json["id"],
         quantity: json["quantity"],
         product: Product.fromJson(json["product"]),
+        distributesSelected: json["distributes_selected"] == null
+            ? null
+            : List<DistributesSelected>.from(json["distributes_selected"]
+                .map((x) => DistributesSelected.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "quantity": quantity,
         "product": product!.toJson(),
+        "distributes_selected":
+            List<dynamic>.from(distributesSelected!.map((x) => x.toJson())),
       };
 }
 
@@ -283,6 +291,7 @@ class LineItemsAtTime {
     this.imageUrl,
     this.beforePrice,
     this.afterDiscount,
+    this.distributesSelected,
   });
 
   int? id;
@@ -291,6 +300,7 @@ class LineItemsAtTime {
   String? imageUrl;
   int? beforePrice;
   int? afterDiscount;
+  List<DistributesSelected>? distributesSelected;
 
   factory LineItemsAtTime.fromJson(Map<String, dynamic> json) =>
       LineItemsAtTime(
@@ -300,6 +310,10 @@ class LineItemsAtTime {
         imageUrl: json["image_url"] == null ? null : json["image_url"],
         beforePrice: json["before_price"],
         afterDiscount: json["after_discount"],
+        distributesSelected: json["distributes_selected"] == null
+            ? null
+            : List<DistributesSelected>.from(json["distributes_selected"]
+                .map((x) => DistributesSelected.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -309,5 +323,28 @@ class LineItemsAtTime {
         "image_url": imageUrl == null ? null : imageUrl,
         "before_price": beforePrice,
         "after_discount": afterDiscount,
+        "distributes_selected":
+            List<dynamic>.from(distributesSelected!.map((x) => x.toJson())),
+      };
+}
+
+class DistributesSelected {
+  String? name;
+  String? value;
+
+  DistributesSelected({
+    this.name,
+    this.value,
+  });
+
+  factory DistributesSelected.fromJson(Map<String, dynamic> json) =>
+      DistributesSelected(
+        name: json["name"],
+        value: json["value"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "value": value,
+        "name": name,
       };
 }

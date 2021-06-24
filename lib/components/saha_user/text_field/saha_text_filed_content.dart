@@ -124,12 +124,13 @@ class _EditContentHtmlState extends State<EditContentHtml> {
           ],
         ),
         body: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(left: 8,top: 0,right: 8,bottom: 8),
             child: HtmlEditor(
 
                 controller: controller, //required
                 //other options
                 htmlEditorOptions: HtmlEditorOptions(
+                  hint: "",
                   shouldEnsureVisible:true,
                   adjustHeightForKeyboard: false,
                   autoAdjustHeight: false,

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:sahashop_user/screen/inventory/products/widget/product_page/product_page.dart';
 
 import 'widget/product_page/product_page_controller.dart';
 
@@ -8,7 +9,8 @@ class ProductsController extends GetxController {
   var totalHide= 0.obs;
   var searching = false.obs;
 
-  List<ProductPageController> listControllerPage = [];
+  Map<TYPE_PAGE, ProductPageController> pagesController
+   ={};
 
 
   void updateTotal({int? totalStokingI, int? totalOutOfStockI, int? totalHideI}) {
@@ -24,21 +26,23 @@ class ProductsController extends GetxController {
   }
 
   void onSearch(String text){
-    listControllerPage.forEach((element) {
+    pagesController.values.forEach((element) {
       element.searchText = text;
       element.getAllProduct(search: text);
     });
   }
 
   void closeSearch(){
-    listControllerPage.forEach((element) {
+    pagesController.values.forEach((element) {
       element.searchText = "";
       element.getAllProduct(search: "");
     });
   }
+  void addPageController(ProductPageController pageController, TYPE_PAGE typePage) {
+    var listType = pagesController.values.map((e) => e.typePage).toList();
 
-  void addPageController(ProductPageController pageController) {
-    if(listControllerPage.contains(pageController)) return;
-    listControllerPage.add(pageController);
+      pagesController[typePage] = pageController;
+
+
   }
 }

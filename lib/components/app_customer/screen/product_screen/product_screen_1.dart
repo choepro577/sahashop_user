@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/components/product_item/product_item_widget.dart';
@@ -12,6 +13,7 @@ import 'package:sahashop_user/components/app_customer/screen/combo_detail_screen
 import 'package:sahashop_user/components/app_customer/screen/product_screen/controller/product_controller.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
+import 'package:sahashop_user/components/saha_user/chip/ticker.dart';
 import 'package:sahashop_user/components/saha_user/text/text_money.dart';
 import 'package:sahashop_user/screen/home/widget/section_title.dart';
 
@@ -40,7 +42,7 @@ class ProductScreen1 extends StatelessWidget {
                                       productController.changeIndexImage(index);
                                     }),
                                 items: productController
-                                    .productDetailRequest.value.images!
+                                    .productShow.value.images!
                                     .map((item) => Container(
                                           child: Stack(
                                             children: <Widget>[
@@ -84,10 +86,10 @@ class ProductScreen1 extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: productController
-                                    .productDetailRequest.value.images!
+                                    .productShow.value.images!
                                     .map((url) {
                                   int index = productController
-                                      .productDetailRequest.value.images!
+                                      .productShow.value.images!
                                       .indexOf(url);
                                   return Obx(
                                     () => Container(
@@ -113,29 +115,74 @@ class ProductScreen1 extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Container(
-                                padding: EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                  color: Colors.deepOrange,
-                                  borderRadius: BorderRadius.circular(2),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Container(
+                                    padding: EdgeInsets.all(3),
+                                    decoration: BoxDecoration(
+                                      color: Colors.deepOrange,
+                                      borderRadius: BorderRadius.circular(2),
+                                    ),
+                                    child: Text(
+                                      "Yêu thích",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
                                 ),
-                                child: Text(
-                                  "Yêu thích",
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .primaryTextTheme
-                                          .headline6!
-                                          .color,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ),
+                                productController.productShow.value.isNew! ==
+                                        true
+                                    ? Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Container(
+                                          padding: EdgeInsets.all(3),
+                                          decoration: BoxDecoration(
+                                            color: Colors.redAccent,
+                                            borderRadius:
+                                                BorderRadius.circular(2),
+                                          ),
+                                          child: Text(
+                                            "Sản phẩm mới",
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                      )
+                                    : Container(),
+                                productController
+                                            .productShow.value.isTopSale! ==
+                                        true
+                                    ? Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Container(
+                                          padding: EdgeInsets.all(3),
+                                          decoration: BoxDecoration(
+                                            color: Colors.blueAccent,
+                                            borderRadius:
+                                                BorderRadius.circular(2),
+                                          ),
+                                          child: Text(
+                                            "Bán chạy",
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                      )
+                                    : Container(),
+                              ],
                             ),
                             Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Text(
-                                "${productController.productDetailRequest.value.name}",
+                                "${productController.productShow.value.name}",
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.w500),
                                 maxLines: 2,
@@ -147,8 +194,13 @@ class ProductScreen1 extends StatelessWidget {
                                 children: [
                                   SahaMoneyText(
                                     price: productController
-                                        .productDetailRequest.value.price,
-                                    color: Theme.of(context).primaryColor,
+                                        .productShow.value.price,
+                                    color: Theme.of(context)
+                                                .primaryColor
+                                                .computeLuminance() >
+                                            0.5
+                                        ? Colors.black
+                                        : Theme.of(context).primaryColor,
                                   ),
                                   SizedBox(
                                     width: 20,
@@ -339,7 +391,7 @@ class ProductScreen1 extends StatelessWidget {
                                                           ComboDetailScreen(
                                                             idProduct:
                                                                 productController
-                                                                    .productDetailRequest
+                                                                    .productShow
                                                                     .value
                                                                     .id,
                                                           ));
@@ -420,12 +472,46 @@ class ProductScreen1 extends StatelessWidget {
                                     fontSize: 14, fontWeight: FontWeight.w500),
                               ),
                             ),
-                            Divider(
-                              height: 1,
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Column(
+                              children: productController
+                                          .productShow.value.attributes ==
+                                      null
+                                  ? [
+                                      Container(
+                                        height: 1,
+                                      )
+                                    ]
+                                  : productController
+                                      .productShow.value.attributes!
+                                      .toList()
+                                      .map((attribute) => Row(
+                                            children: [
+                                              SizedBox(width: 20),
+                                              Expanded(
+                                                  flex: 2,
+                                                  child: Text(
+                                                    attribute.name!,
+                                                    style: TextStyle(
+                                                        color:
+                                                            Colors.grey[600]),
+                                                  )),
+                                              Expanded(
+                                                  flex: 3,
+                                                  child:
+                                                      Text(attribute.value!)),
+                                            ],
+                                          ))
+                                      .toList(),
+                            ),
+                            SizedBox(
+                              height: 15,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(
-                                  right: 10.0, left: 10.0, top: 10.0),
+                                  right: 10.0, left: 10.0, top: 5.0),
                               child: ExpandableNotifier(
                                 child: ScrollOnExpand(
                                   child: Column(
@@ -435,69 +521,17 @@ class ProductScreen1 extends StatelessWidget {
                                       Expandable(
                                         collapsed: Column(
                                           children: [
-                                            SizedBox(
-                                              height: 15,
-                                            ),
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  width: Get.width * 0.35,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        "Kho",
-                                                        style: TextStyle(
-                                                            color: Colors
-                                                                .grey[700]),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 15,
-                                                      ),
-                                                      Text(
-                                                        "Thương hiệu",
-                                                        style: TextStyle(
-                                                            color: Colors
-                                                                .grey[700]),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Container(
-                                                  width: Get.width * 0.4,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        "175",
-                                                      ),
-                                                      SizedBox(
-                                                        height: 15,
-                                                      ),
-                                                      Text(
-                                                        "Gucci Real",
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 15,
-                                            ),
                                             Divider(
                                               height: 1,
                                             ),
-                                            SizedBox(
-                                              height: 15,
-                                            ),
                                             Container(
-                                              child: Text(
-                                                "💖 QUYỀN LỢI KHÁCH HÀNG: \n- Khách hàng cũ: Khách mua lần thứ 2 trở đi sẽ nhận được mã giảm giá của shop ➡️ inbox ngay cho shop nhé ⬅️ để nhận mã \- Miễn phí vận chuyển đối với mọi trường hợp đổi trả hàng do lỗi từ phía shop như: sản phẩm lỗi, không đúng hình, đóng gói, vận chuyển nhầm\n",
+                                              height: 100,
+                                              child: Html(
+                                                data: productController
+                                                        .productShow
+                                                        .value
+                                                        .description ??
+                                                    " ",
                                               ),
                                             ),
                                           ],
@@ -506,69 +540,16 @@ class ProductScreen1 extends StatelessWidget {
                                           child: SingleChildScrollView(
                                             child: Column(
                                               children: [
-                                                SizedBox(
-                                                  height: 15,
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Container(
-                                                      width: Get.width * 0.35,
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            "Kho",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .grey[700]),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 15,
-                                                          ),
-                                                          Text(
-                                                            "Thương hiệu",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .grey[700]),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      width: Get.width * 0.4,
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            "175",
-                                                          ),
-                                                          SizedBox(
-                                                            height: 15,
-                                                          ),
-                                                          Text(
-                                                            "Gucci Real",
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  height: 15,
-                                                ),
                                                 Divider(
                                                   height: 1,
                                                 ),
-                                                SizedBox(
-                                                  height: 15,
-                                                ),
                                                 Container(
-                                                  child: Text(
-                                                    "💖 QUYỀN LỢI KHÁCH HÀNG: \n- Khách hàng cũ: Khách mua lần thứ 2 trở đi sẽ nhận được mã giảm giá của shop ➡️ inbox ngay cho shop nhé ⬅️ để nhận mã \- Miễn phí vận chuyển đối với mọi trường hợp đổi trả hàng do lỗi từ phía shop như: sản phẩm lỗi, không đúng hình, đóng gói, vận chuyển nhầm\n\n- HÀNG CHUẨN 100% - GIÁ RẺ NHẤT THỊ TRƯỜNG \n- Gửi hàng ngay sau khi nhận được đơn\n- Giao hàng toàn quốc, thanh toán khi nhận hàng, Hỗ trợ đổi size thần tốc \n- Giải quyết mọi khiếu nại thắc mắc theo đúng quy định \n",
+                                                  child: Html(
+                                                    data: productController
+                                                            .productShow
+                                                            .value
+                                                            .description ??
+                                                        " ",
                                                   ),
                                                 ),
                                                 SizedBox(
@@ -769,7 +750,7 @@ class ProductScreen1 extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: SahaAppBar().preferredSize.height,
+            top: MediaQuery.of(context).padding.top,
             left: 20,
             right: 20,
             child: Row(
@@ -861,10 +842,10 @@ class ProductScreen1 extends StatelessWidget {
                 child: productController.animateAddCart.value
                     ? CachedNetworkImage(
                         imageUrl: productController
-                                    .productDetailRequest.value.images!.length !=
+                                    .productShow.value.images!.length !=
                                 0
                             ? productController
-                                .productDetailRequest.value.images![0].imageUrl!
+                                .productShow.value.images![0].imageUrl!
                             : "",
                         fit: BoxFit.cover,
                         width: 1000.0,
@@ -885,7 +866,7 @@ class ProductScreen1 extends StatelessWidget {
               Container(
                 width: Get.width / 2,
                 height: 50,
-                color: Color(0xff09875e),
+                color: Theme.of(context).accentColor,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -936,7 +917,7 @@ class ProductScreen1 extends StatelessWidget {
                                 width: Get.width / 4 - 1,
                                 child: SvgPicture.asset(
                                   "assets/icons/add_to_cart.svg",
-                                  color: Theme.of(context)
+                                  color: Theme.of(Get.context!)
                                       .primaryTextTheme
                                       .headline6!
                                       .color,
@@ -949,158 +930,12 @@ class ProductScreen1 extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  showModalBottomSheet<void>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Container(
-                        height: 300,
-                        color: Colors.white,
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(13.0),
-                                      child: Container(
-                                        width: 120,
-                                        height: 120,
-                                        child: CachedNetworkImage(
-                                            imageUrl: productController
-                                                        .productDetailRequest
-                                                        .value
-                                                        .images!
-                                                        .length ==
-                                                    0
-                                                ? ""
-                                                : productController
-                                                    .productDetailRequest
-                                                    .value
-                                                    .images![0]
-                                                    .imageUrl!,
-                                            fit: BoxFit.cover,
-                                            errorWidget: (context, url,
-                                                    error) =>
-                                                Image.asset(
-                                                    "assets/saha_loading.png")),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 15,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SahaMoneyText(
-                                          price: productController
-                                              .productDetailRequest.value.price,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
-                                        Text("Kho: 69"),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                IconButton(
-                                    icon: Icon(Icons.close),
-                                    onPressed: () {
-                                      Get.back();
-                                    }),
-                              ],
-                            ),
-                            Divider(
-                              height: 1,
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Số lượng",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  Row(
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          productController.decreaseItem();
-                                        },
-                                        child: Container(
-                                          height: 25,
-                                          width: 30,
-                                          child: Icon(Icons.remove),
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.grey[300]!)),
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 25,
-                                        width: 40,
-                                        child: Center(
-                                          child: Obx(() => Text(
-                                                '${productController.quantity.value}',
-                                                style: TextStyle(fontSize: 14),
-                                              )),
-                                        ),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Colors.grey[300]!)),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          productController.increaseItem();
-                                        },
-                                        child: Container(
-                                          height: 25,
-                                          width: 30,
-                                          child: Icon(Icons.add),
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.grey[300]!)),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            SahaButtonFullParent(
-                              text: "Mua ngay",
-                              textColor: Theme.of(context)
-                                  .primaryTextTheme
-                                  .headline6!
-                                  .color,
-                              color: Theme.of(context).primaryColor,
-                              onPressed: () {
-                                productController.addManyItemOrUpdate();
-                                //productController.getListOrder();
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
+                  showModelOption();
                 },
                 child: Container(
                     width: Get.width / 2,
                     height: 50,
-                    color: Colors.deepOrange,
+                    color: Theme.of(context).primaryColor,
                     child: Center(
                         child: Text(
                       "Mua ngay",
@@ -1113,6 +948,240 @@ class ProductScreen1 extends StatelessWidget {
               ),
             ],
           )),
+    );
+  }
+
+  void showModelOption() {
+    showModalBottomSheet<void>(
+      isScrollControlled: true,
+      context: Get.context!,
+      builder: (BuildContext context) {
+        var quantity =
+            productController.productShow.value.quantityInStock == null ||
+                    productController.productShow.value.quantityInStock! < 0
+                ? "Vô hạn"
+                : productController.productShow.value.quantityInStock;
+
+        return Obx(
+          () => Container(
+            color: Colors.white,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(13.0),
+                          child: Container(
+                            width: 120,
+                            height: 120,
+                            child: CachedNetworkImage(
+                                imageUrl: productController
+                                            .productShow.value.images!.length ==
+                                        0
+                                    ? ""
+                                    : productController
+                                        .productShow.value.images![0].imageUrl!,
+                                fit: BoxFit.cover,
+                                errorWidget: (context, url, error) =>
+                                    Image.asset("assets/saha_loading.png")),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SahaMoneyText(
+                              price: productController.productShow.value.price,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text("Kho: $quantity")
+                          ],
+                        )
+                      ],
+                    ),
+                    IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () {
+                          Get.back();
+                        }),
+                  ],
+                ),
+                Divider(
+                  height: 1,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                productController.productShow.value.distributes == null ||
+                        productController
+                                .productShow.value.distributes!.length ==
+                            0
+                    ? Container()
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ConstrainedBox(
+                            constraints: new BoxConstraints(
+                              minHeight: 35.0,
+                              maxHeight: MediaQuery.of(context).orientation ==
+                                      Orientation.portrait
+                                  ? Get.height * 0.5
+                                  : Get.height * 0.2,
+                            ),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: productController
+                                      .productShow.value.distributes!
+                                      .map((distribute) => Container(
+                                            width: Get.width,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 16,
+                                                          right: 16,
+                                                          top: 8,
+                                                          bottom: 8),
+                                                  child: Text(distribute.name!),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 16, right: 16),
+                                                  child: Wrap(
+                                                    children:
+                                                        distribute
+                                                            .elementDistributes!
+                                                            .map(
+                                                              (elementDistribute) =>
+                                                                  TickerStateLess(
+                                                                text:
+                                                                    elementDistribute
+                                                                        .name,
+                                                                ticked: productController.isChecked(
+                                                                    distribute
+                                                                        .name!,
+                                                                    elementDistribute
+                                                                        .name!),
+                                                                onChange: (va) {
+                                                                  productController.onCheckElementDistribute(
+                                                                      distribute
+                                                                          .name!,
+                                                                      elementDistribute
+                                                                          .name!);
+                                                                },
+                                                              ),
+                                                            )
+                                                            .toList(),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ))
+                                      .toList()),
+                            ),
+                          ),
+                          Divider(
+                            height: 1,
+                          ),
+                        ],
+                      ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Số lượng",
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w500),
+                      ),
+
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              productController.decreaseItem();
+                            },
+                            child: Container(
+                              height: 25,
+                              width: 30,
+                              child: Icon(Icons.remove),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey[300]!)),
+                            ),
+                          ),
+                          Container(
+                            height: 25,
+                            width: 40,
+                            child: Center(
+                              child: Obx(() => Text(
+                                    '${productController.quantity.value}',
+                                    style: TextStyle(fontSize: 14),
+                                  )),
+                            ),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey[300]!)),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              productController.increaseItem();
+                            },
+                            child: Container(
+                              height: 25,
+                              width: 30,
+                              child: Icon(Icons.add),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey[300]!)),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+
+                !productController.isDoneCheckElement() && productController.errorTextInBottomModel.value.length > 0 ?
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "${ productController.errorTextInBottomModel.value}",
+                    style: TextStyle(
+                        fontSize: 12,
+                    color: Colors.redAccent),
+                  ),
+                ) : Container(),
+
+                SahaButtonFullParent(
+                  text: "Mua ngay",
+                  textColor:
+                      Theme.of(context).primaryTextTheme.headline6!.color,
+                  color: productController.isDoneCheckElement()
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey,
+                  onPressed: () {
+                    productController.onSubmitBuy();
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
