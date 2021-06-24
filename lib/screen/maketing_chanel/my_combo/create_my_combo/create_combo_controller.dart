@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/combo_request.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_combo/create_my_combo/add_product/add_product_combo_controller.dart';
+import 'package:sahashop_user/model/product.dart';
 
 enum DiscountType { k0, k1 }
 
@@ -13,9 +13,8 @@ class CreateMyComboController extends GetxController {
   var timeStart = DateTime.now().add(Duration(minutes: 1)).obs;
   var dateEnd = DateTime.now().obs;
   var timeEnd = DateTime.now().add(Duration(hours: 2)).obs;
-
-  AddProductComboController addProductComboController =
-      Get.put(AddProductComboController());
+  var listSelectedProduct = RxList<Product>();
+  var listSelectedProductParam = RxList<ComboProduct>();
 
   var checkDayStart = false.obs;
   var checkDayEnd = false.obs;
@@ -130,8 +129,7 @@ class CreateMyComboController extends GetxController {
           amount: amountCodeAvailableEditingController.text.isEmpty
               ? 0
               : int.parse(amountCodeAvailableEditingController.text),
-          comboProducts:
-              addProductComboController.listSelectedProductParam.value.toJson(),
+          comboProducts: listSelectedProductParam.toJson(),
         ),
       );
       SahaAlert.showSuccess(message: "Lưu thành công");
@@ -140,5 +138,40 @@ class CreateMyComboController extends GetxController {
     }
     isLoadingCreate.value = false;
     Get.back();
+  }
+
+  void deleteProduct(int idProduct) {
+    listSelectedProduct.removeWhere((product) => product.id == idProduct);
+    listSelectedProductParam
+        .removeWhere((product) => product.productId == idProduct);
+    listSelectedProduct.refresh();
+  }
+
+  void listSelectedProductToComboProduct() {
+    listSelectedProduct.forEach((element) {
+      int indexSame =
+          listSelectedProductParam.indexWhere((e) => e.productId == element.id);
+      if (indexSame == -1) {
+        listSelectedProductParam
+            .add(ComboProduct(productId: element.id, quantity: 1));
+      }
+    });
+    print(listSelectedProductParam);
+  }
+
+  void increaseAmountProductCombo(int index) {
+    listSelectedProductParam[index].quantity =
+        listSelectedProductParam[index].quantity! + 1;
+    listSelectedProductParam.refresh();
+    print(listSelectedProductParam[0].quantity);
+  }
+
+  void decreaseAmountProductCombo(int index) {
+    if (listSelectedProductParam[index].quantity! > 1) {
+      listSelectedProductParam[index].quantity =
+          listSelectedProductParam[index].quantity! - 1;
+      listSelectedProductParam.refresh();
+      print(listSelectedProductParam[0].quantity);
+    }
   }
 }

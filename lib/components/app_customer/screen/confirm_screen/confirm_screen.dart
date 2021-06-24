@@ -10,6 +10,7 @@ import 'package:sahashop_user/components/app_customer/screen/confirm_screen/widg
 import 'package:sahashop_user/components/app_customer/screen/payment_method/payment_method_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/shipment_screen/shipment_customer_screen.dart';
 import 'package:sahashop_user/components/utils/money.dart';
+import 'package:sahashop_user/const/const_image_logo.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/model/info_address_customer.dart';
 import 'package:sahashop_user/model/shipment_method.dart';
@@ -284,8 +285,7 @@ class ConfirmScreen extends StatelessWidget {
                                     height: 100,
                                     child: CachedNetworkImage(
                                       fit: BoxFit.cover,
-                                      imageUrl:
-                                          "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
+                                      imageUrl: logoSahaImage,
                                     ),
                                   ),
                                 ),

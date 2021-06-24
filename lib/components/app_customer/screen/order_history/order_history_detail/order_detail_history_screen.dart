@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/screen/chat_customer/chat_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_detail/order_detail_history_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_detail/widget/choose_reason_cancel_order.dart';
 import 'package:sahashop_user/const/const_image_logo.dart';
@@ -513,32 +514,37 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              height: 40,
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.grey[500]!)),
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(4),
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        color: Color(0xFFF5F6F9),
-                        shape: BoxShape.circle,
+            InkWell(
+              onTap: () {
+                Get.to(() => ChatCustomerScreen());
+              },
+              child: Container(
+                height: 40,
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.grey[500]!)),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(4),
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF5F6F9),
+                          shape: BoxShape.circle,
+                        ),
+                        child: SvgPicture.asset(
+                          "assets/icons/chat.svg",
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
-                      child: SvgPicture.asset(
-                        "assets/icons/chat.svg",
-                        color: Theme.of(context).primaryColor,
+                      SizedBox(
+                        width: 10,
                       ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text("Liên hệ Shop")
-                  ],
+                      Text("Liên hệ Shop")
+                    ],
+                  ),
                 ),
               ),
             ),

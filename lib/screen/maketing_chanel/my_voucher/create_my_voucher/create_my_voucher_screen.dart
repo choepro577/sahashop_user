@@ -5,13 +5,15 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_voucher/create_my_voucher/add_product_to_voucher/add_product_voucher_screen.dart';
+import 'package:sahashop_user/model/product.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_voucher/add_product_to_voucher/add_product_voucher_screen.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
 import 'create_my_voucher_controller.dart';
 
+// ignore: must_be_immutable
 class CreateMyVoucher extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _formKeyTypeVoucher = GlobalKey<FormState>();
@@ -681,7 +683,8 @@ class CreateMyVoucher extends StatelessWidget {
                                               if (_formKeyTypeVoucher
                                                   .currentState!
                                                   .validate()) {
-                                                _formKeyTypeVoucher.currentState!
+                                                _formKeyTypeVoucher
+                                                    .currentState!
                                                     .save();
                                                 KeyboardUtil.hideKeyboard(
                                                     context);
@@ -994,10 +997,7 @@ class CreateMyVoucher extends StatelessWidget {
                                   children: [
                                     Text('Sản phẩm'),
                                     createMyVoucherController
-                                                .addProductToVoucherController
-                                                .listSelectedProduct
-                                                .value
-                                                .length ==
+                                                .listSelectedProduct.length ==
                                             0
                                         ? Container()
                                         : IconButton(
@@ -1008,7 +1008,17 @@ class CreateMyVoucher extends StatelessWidget {
                                             ),
                                             onPressed: () {
                                               Get.to(() =>
-                                                  AddProductToVoucherScreen());
+                                                  AddProductToVoucherScreen(
+                                                    callback: (List<Product>?
+                                                        listProduct) {
+                                                      createMyVoucherController
+                                                          .listSelectedProduct
+                                                          .addAll(listProduct!);
+                                                    },
+                                                    listProductInput:
+                                                        createMyVoucherController
+                                                            .listSelectedProduct,
+                                                  ));
                                             })
                                   ],
                                 ),
@@ -1018,15 +1028,22 @@ class CreateMyVoucher extends StatelessWidget {
                               ),
                               Obx(
                                 () => createMyVoucherController
-                                            .addProductToVoucherController
-                                            .listSelectedProduct
-                                            .value
-                                            .length ==
+                                            .listSelectedProduct.length ==
                                         0
                                     ? InkWell(
                                         onTap: () {
-                                          Get.to(() =>
-                                              AddProductToVoucherScreen());
+                                          Get.to(
+                                              () => AddProductToVoucherScreen(
+                                                    callback: (List<Product>?
+                                                        listProduct) {
+                                                      createMyVoucherController
+                                                          .listSelectedProduct
+                                                          .addAll(listProduct!);
+                                                    },
+                                                    listProductInput:
+                                                        createMyVoucherController
+                                                            .listSelectedProduct,
+                                                  ));
                                         },
                                         child: Container(
                                           height: 100,
@@ -1059,46 +1076,40 @@ class CreateMyVoucher extends StatelessWidget {
                                         child: StaggeredGridView.countBuilder(
                                           crossAxisCount: 4,
                                           itemCount: createMyVoucherController
-                                              .addProductToVoucherController
-                                              .listSelectedProduct
-                                              .value
-                                              .length,
+                                              .listSelectedProduct.length,
                                           itemBuilder: (BuildContext context,
                                                   int index) =>
                                               Stack(
                                             children: [
                                               Container(
-                                                height: 100,
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
                                                       color: Theme.of(context)
                                                           .primaryColor),
                                                 ),
                                                 child: CachedNetworkImage(
+                                                  height: 100,
+                                                  width: Get.width / 4,
                                                   fit: BoxFit.cover,
                                                   imageUrl: createMyVoucherController
-                                                              .addProductToVoucherController
-                                                              .listSelectedProduct
-                                                              .value[index]
+                                                              .listSelectedProduct[
+                                                                  index]
                                                               .images!
                                                               .length ==
                                                           0
                                                       ? ""
                                                       : createMyVoucherController
-                                                          .addProductToVoucherController
-                                                          .listSelectedProduct
-                                                          .value[index]
+                                                          .listSelectedProduct[
+                                                              index]
                                                           .images![0]
                                                           .imageUrl!,
                                                   errorWidget:
                                                       (context, url, error) =>
-                                                          Container(
+                                                          CachedNetworkImage(
                                                     height: 100,
-                                                    child: CachedNetworkImage(
-                                                      fit: BoxFit.cover,
-                                                      imageUrl:
-                                                          "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
-                                                    ),
+                                                    width: Get.width / 4,
+                                                    fit: BoxFit.cover,
+                                                    imageUrl: "logoSahaImage",
                                                   ),
                                                 ),
                                               ),
@@ -1113,16 +1124,11 @@ class CreateMyVoucher extends StatelessWidget {
                                                     ),
                                                     onPressed: () {
                                                       createMyVoucherController
-                                                          .addProductToVoucherController
-                                                          .deleteProductSelected(
+                                                          .deleteProduct(
                                                               createMyVoucherController
-                                                                  .addProductToVoucherController
-                                                                  .listSelectedProduct
-                                                                  .value[index]
-                                                                  .id);
-                                                      createMyVoucherController
-                                                          .addProductToVoucherController
-                                                          .countProductSelected();
+                                                                  .listSelectedProduct[
+                                                                      index]
+                                                                  .id!);
                                                     }),
                                               ),
                                             ],
@@ -1165,7 +1171,6 @@ class CreateMyVoucher extends StatelessWidget {
                             _formKey.currentState!.save();
                             KeyboardUtil.hideKeyboard(context);
                             createMyVoucherController
-                                .addProductToVoucherController
                                 .listSelectedProductToString();
                             if (createMyVoucherController
                                     .typeVoucherDiscount.value ==

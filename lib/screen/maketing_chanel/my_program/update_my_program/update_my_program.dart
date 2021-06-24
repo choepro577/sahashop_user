@@ -5,13 +5,16 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
+import 'package:sahashop_user/const/const_image_logo.dart';
 import 'package:sahashop_user/model/discount_product_list.dart';
+import 'package:sahashop_user/model/product.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_program/add_product/add_product_screen.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_controller.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_program/update_my_program/update_product_discount_update/update_product_discount_controller.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_program/update_my_program/update_product_discount_update/update_product_discount_screen.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_program/update_my_program/update_my_program_controller.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
 
+// ignore: must_be_immutable
 class UpdateMyProgram extends StatefulWidget {
   DiscountProductsList? programDiscount;
   bool? onlyWatch;
@@ -28,8 +31,8 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
   late DateTime timeStart;
   late DateTime dateEnd;
   late DateTime timeEnd;
-  UpdateProductToDiscountController updateProductToDiscountController =
-      Get.put(UpdateProductToDiscountController());
+  UpdateMyProgramController updateMyProgramController =
+      Get.put(UpdateMyProgramController());
   MyProgramController myProgramController = Get.find();
   bool checkDayStart = false;
   bool checkDayEnd = false;
@@ -41,9 +44,7 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
   @override
   void initState() {
     super.initState();
-    updateProductToDiscountController.listSelectedProduct.value
-        .addAll(widget.programDiscount!.products!);
-    updateProductToDiscountController.listProductHasInDiscount.value
+    updateMyProgramController.listSelectedProduct.value
         .addAll(widget.programDiscount!.products!);
     dateStart = widget.programDiscount!.startTime ?? DateTime.now();
     timeStart = widget.programDiscount!.startTime ?? DateTime.now();
@@ -51,7 +52,9 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
     timeEnd = widget.programDiscount!.endTime ?? DateTime.now();
     nameProgramEditingController.text = widget.programDiscount!.name!;
     discountEditingController.text = widget.programDiscount!.value.toString();
-    quantityEditingController.text = widget.programDiscount!.amount.toString();
+    quantityEditingController.text = widget.programDiscount!.amount == null
+        ? ""
+        : widget.programDiscount!.amount.toString();
   }
 
   @override
@@ -377,8 +380,8 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('Sản phẩm'),
-                            updateProductToDiscountController
-                                        .listSelectedProduct.value.length ==
+                            updateMyProgramController
+                                        .listSelectedProduct.length ==
                                     0
                                 ? Container()
                                 : IconButton(
@@ -387,8 +390,17 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
                                       color: Theme.of(context).primaryColor,
                                     ),
                                     onPressed: () {
-                                      Get.to(() =>
-                                          UpdateProductToDiscountScreen());
+                                      Get.to(() => AddProductToSaleScreen(
+                                            callback:
+                                                (List<Product>? listProduct) {
+                                              updateMyProgramController
+                                                  .listSelectedProduct
+                                                  .addAll(listProduct!);
+                                            },
+                                            listProductInput:
+                                                updateMyProgramController
+                                                    .listSelectedProduct,
+                                          ));
                                     })
                           ],
                         ),
@@ -397,12 +409,21 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
                         height: 10,
                       ),
                       Obx(
-                        () => updateProductToDiscountController
-                                    .listSelectedProduct.value.length ==
+                        () => updateMyProgramController
+                                    .listSelectedProduct.length ==
                                 0
                             ? InkWell(
                                 onTap: () {
-                                  Get.to(() => UpdateProductToDiscountScreen());
+                                  Get.to(() => AddProductToSaleScreen(
+                                        callback: (List<Product>? listProduct) {
+                                          updateMyProgramController
+                                              .listSelectedProduct
+                                              .addAll(listProduct!);
+                                        },
+                                        listProductInput:
+                                            updateMyProgramController
+                                                .listSelectedProduct,
+                                      ));
                                 },
                                 child: Container(
                                   height: 100,
@@ -432,42 +453,39 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
                                 height: 400,
                                 child: StaggeredGridView.countBuilder(
                                   crossAxisCount: 4,
-                                  itemCount: updateProductToDiscountController
-                                      .listSelectedProduct.value.length,
+                                  itemCount: updateMyProgramController
+                                      .listSelectedProduct.length,
                                   itemBuilder:
                                       (BuildContext context, int index) =>
                                           Stack(
                                     children: [
                                       Container(
-                                        height: 100,
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                               color: Theme.of(context)
                                                   .primaryColor),
                                         ),
                                         child: CachedNetworkImage(
+                                          height: 100,
+                                          width: Get.width / 4,
                                           fit: BoxFit.cover,
-                                          imageUrl:
-                                              updateProductToDiscountController
-                                                          .listSelectedProduct
-                                                          .value[index]
-                                                          .images!
-                                                          .length ==
-                                                      0
-                                                  ? ""
-                                                  : updateProductToDiscountController
-                                                      .listSelectedProduct
-                                                      .value[index]
-                                                      .images![0]
-                                                      .imageUrl!,
+                                          imageUrl: updateMyProgramController
+                                                      .listSelectedProduct[
+                                                          index]
+                                                      .images!
+                                                      .length ==
+                                                  0
+                                              ? ""
+                                              : updateMyProgramController
+                                                  .listSelectedProduct[index]
+                                                  .images![0]
+                                                  .imageUrl!,
                                           errorWidget: (context, url, error) =>
-                                              Container(
+                                              CachedNetworkImage(
                                             height: 100,
-                                            child: CachedNetworkImage(
-                                              fit: BoxFit.cover,
-                                              imageUrl:
-                                                  "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
-                                            ),
+                                            width: Get.width / 4,
+                                            fit: BoxFit.cover,
+                                            imageUrl: logoSahaImage,
                                           ),
                                         ),
                                       ),
@@ -481,14 +499,12 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
                                                   .primaryColor,
                                             ),
                                             onPressed: () {
-                                              updateProductToDiscountController
-                                                  .deleteProductSelected(
-                                                      updateProductToDiscountController
-                                                          .listSelectedProduct
-                                                          .value[index]
-                                                          .id);
-                                              updateProductToDiscountController
-                                                  .countProductSelected();
+                                              updateMyProgramController
+                                                  .deleteProduct(
+                                                      updateMyProgramController
+                                                          .listSelectedProduct[
+                                                              index]
+                                                          .id!);
                                             }),
                                       ),
                                     ],
@@ -513,8 +529,7 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
           child: Column(
             children: [
               Obx(
-                () => updateProductToDiscountController.isLoadingCreate.value ==
-                        true
+                () => updateMyProgramController.isLoadingCreate.value == true
                     ? IgnorePointer(
                         child: SahaButtonFullParent(
                           text: "Lưu",
@@ -541,46 +556,43 @@ class _UpdateMyProgramState extends State<UpdateMyProgram> {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
                                 KeyboardUtil.hideKeyboard(context);
-                                updateProductToDiscountController
+                                updateMyProgramController
                                     .listSelectedProductToString();
-                                updateProductToDiscountController
-                                    .updateDiscount(
-                                        widget.programDiscount!.id,
-                                        false,
-                                        nameProgramEditingController.text,
-                                        "",
-                                        "",
-                                        DateTime(
-                                                dateStart.year,
-                                                dateStart.month,
-                                                dateStart.day,
-                                                timeStart.hour,
-                                                timeStart.minute,
-                                                timeStart.second,
-                                                timeStart.millisecond,
-                                                timeStart.microsecond)
-                                            .toIso8601String(), //timeStart.toIso8601String(),\
-                                        DateTime(
-                                                dateEnd.year,
-                                                dateEnd.month,
-                                                dateEnd.day,
-                                                timeEnd.hour,
-                                                timeEnd.minute,
-                                                timeEnd.second,
-                                                timeEnd.millisecond,
-                                                timeEnd.microsecond)
-                                            .toIso8601String(),
-                                        int.parse(
-                                            discountEditingController.text),
-                                        quantityEditingController.text == "null"
-                                            ? false
-                                            : true,
-                                        quantityEditingController.text == "null"
-                                            ? 0
-                                            : int.parse(
-                                                quantityEditingController.text),
-                                        updateProductToDiscountController
-                                            .listProductParam);
+                                updateMyProgramController.updateDiscount(
+                                    widget.programDiscount!.id,
+                                    false,
+                                    nameProgramEditingController.text,
+                                    "",
+                                    "",
+                                    DateTime(
+                                            dateStart.year,
+                                            dateStart.month,
+                                            dateStart.day,
+                                            timeStart.hour,
+                                            timeStart.minute,
+                                            timeStart.second,
+                                            timeStart.millisecond,
+                                            timeStart.microsecond)
+                                        .toIso8601String(), //timeStart.toIso8601String(),\
+                                    DateTime(
+                                            dateEnd.year,
+                                            dateEnd.month,
+                                            dateEnd.day,
+                                            timeEnd.hour,
+                                            timeEnd.minute,
+                                            timeEnd.second,
+                                            timeEnd.millisecond,
+                                            timeEnd.microsecond)
+                                        .toIso8601String(),
+                                    int.parse(discountEditingController.text),
+                                    quantityEditingController.text == "null"
+                                        ? false
+                                        : true,
+                                    quantityEditingController.text == ""
+                                        ? 0
+                                        : int.parse(
+                                            quantityEditingController.text),
+                                    updateMyProgramController.listProductParam);
                               }
                             },
                             color: Theme.of(context).primaryColor,

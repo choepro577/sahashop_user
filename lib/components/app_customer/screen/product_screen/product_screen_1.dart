@@ -244,7 +244,8 @@ class ProductScreen1 extends StatelessWidget {
                                           "assets/icons/star_around.svg"),
                                       SizedBox(width: 4),
                                       SvgPicture.asset(
-                                          "assets/icons/star_around.svg"),
+                                        "assets/icons/star_around.svg",
+                                      ),
                                       SizedBox(
                                         width: 10,
                                       ),
@@ -860,8 +861,8 @@ class ProductScreen1 extends StatelessWidget {
                     : Get.width * 0.5,
                 child: productController.animateAddCart.value
                     ? CachedNetworkImage(
-                        imageUrl: productController
-                                    .productDetailRequest.value.images!.length !=
+                        imageUrl: productController.productDetailRequest.value
+                                    .images!.length !=
                                 0
                             ? productController
                                 .productDetailRequest.value.images![0].imageUrl!

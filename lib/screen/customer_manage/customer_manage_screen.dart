@@ -14,9 +14,11 @@ import 'package:sahashop_user/utils/date_utils.dart';
 
 import 'customer_manage_controller.dart';
 
+// ignore: must_be_immutable
 class CustomerManageScreen extends StatelessWidget {
-  CustomerManageController customerManageController = CustomerManageController();
-  ChatController chatController = ChatController();
+  CustomerManageController customerManageController =
+      CustomerManageController();
+  ChatController? chatController;
 
   @override
   Widget build(BuildContext context) {
@@ -140,8 +142,7 @@ class CustomerManageScreen extends StatelessWidget {
                                           height: 5,
                                         ),
                                         Text(
-                                            "Ngày tạo tài khoản: ${SahaDateUtils().getDDMMYY(DateTime.parse(
-                                                customerManageController.listInfoCustomer[index].createdAt!.toIso8601String()))}")
+                                            "Ngày tạo tài khoản: ${SahaDateUtils().getDDMMYY(DateTime.parse(customerManageController.listInfoCustomer[index].createdAt!.toIso8601String()))}")
                                       ],
                                     ),
                                   ),
@@ -157,18 +158,20 @@ class CustomerManageScreen extends StatelessWidget {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      chatController.boxChatCustomer.value =
+                                      chatController!.boxChatCustomer.value =
                                           BoxChatCustomer(
                                         customerId: customerManageController
                                             .listInfoCustomer[index].id,
                                         customer: customerManageController
                                             .listInfoCustomer[index],
                                       );
-                                      Get.to(() => ChatScreen())!.then((value) =>
-                                          {
-                                            chatController.refreshDataMessage(),
-                                            chatController.refreshDataAllChat()
-                                          });
+                                      Get.to(() => ChatScreen())!.then(
+                                          (value) => {
+                                                chatController!
+                                                    .refreshDataMessage(),
+                                                chatController!
+                                                    .refreshDataAllChat()
+                                              });
                                     },
                                     child: Container(
                                       height: 35,

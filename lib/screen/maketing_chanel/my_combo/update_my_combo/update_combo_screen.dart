@@ -1,18 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
+import 'package:sahashop_user/const/const_image_logo.dart';
 import 'package:sahashop_user/model/combo.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/combo_request.dart';
+import 'package:sahashop_user/model/product.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_combo/add_product/add_product_combo_screen.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_combo/update_my_combo/update_combo_controller.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_combo/update_my_combo/update_product/update_product_combo_screen.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
 
+// ignore: must_be_immutable
 class UpdateMyComboScreen extends StatefulWidget {
   Combo? combo;
   bool? onlyWatch;
@@ -33,18 +35,10 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
     updateMyComboController.discountTypeRequest.value =
         widget.combo!.discountType!;
     widget.combo!.productsCombo!.forEach((element) {
-      updateMyComboController
-          .updateProductComboController.listSelectedProduct.value
-          .add(element.product);
+      updateMyComboController.listSelectedProduct.add(element.product!);
 
-      updateMyComboController
-          .updateProductComboController.listProductHasInDiscount.value
-          .add(element.product);
-
-      updateMyComboController
-          .updateProductComboController.listSelectedProductParam.value
-          .add(ComboProduct(
-              productId: element.product!.id, quantity: element.quantity));
+      updateMyComboController.listSelectedProductParam.value.add(ComboProduct(
+          productId: element.product!.id, quantity: element.quantity));
 
       updateMyComboController.amountEditingController.text =
           element.quantity == null ? "" : element.quantity.toString();
@@ -92,7 +86,8 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
       widget.combo!.endTime!.millisecond,
       widget.combo!.endTime!.microsecond,
     );
-    updateMyComboController.discountTypeInput.value = widget.combo!.discountType!;
+    updateMyComboController.discountTypeInput.value =
+        widget.combo!.discountType!;
 
     updateMyComboController.valueEditingController.text =
         widget.combo!.valueDiscount.toString();
@@ -647,10 +642,7 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
                             children: [
                               Text("Combo sản phẩm"),
                               updateMyComboController
-                                          .updateProductComboController
-                                          .listSelectedProduct
-                                          .value
-                                          .length ==
+                                          .listSelectedProduct.length ==
                                       0
                                   ? Container()
                                   : IconButton(
@@ -659,8 +651,19 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
                                         color: Theme.of(context).primaryColor,
                                       ),
                                       onPressed: () {
-                                        Get.to(
-                                            () => UpdateProductComboScreen());
+                                        Get.to(() => AddProductComboScreen(
+                                              callback:
+                                                  (List<Product>? listProduct) {
+                                                updateMyComboController
+                                                    .listSelectedProduct
+                                                    .addAll(listProduct!);
+                                                updateMyComboController
+                                                    .listSelectedProductToComboProduct();
+                                              },
+                                              listProductInput:
+                                                  updateMyComboController
+                                                      .listSelectedProduct,
+                                            ));
                                       })
                             ],
                           ),
@@ -670,14 +673,23 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
                         ),
                         Obx(
                           () => updateMyComboController
-                                      .updateProductComboController
-                                      .listSelectedProduct
-                                      .value
-                                      .length ==
+                                      .listSelectedProduct.length ==
                                   0
                               ? InkWell(
                                   onTap: () {
-                                    Get.to(() => UpdateProductComboScreen());
+                                    Get.to(() => AddProductComboScreen(
+                                          callback:
+                                              (List<Product>? listProduct) {
+                                            updateMyComboController
+                                                .listSelectedProduct
+                                                .addAll(listProduct!);
+                                            updateMyComboController
+                                                .listSelectedProductToComboProduct();
+                                          },
+                                          listProductInput:
+                                              updateMyComboController
+                                                  .listSelectedProduct,
+                                        ));
                                   },
                                   child: Container(
                                     height: 100,
@@ -710,10 +722,7 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
                                     crossAxisCount: 1,
                                     scrollDirection: Axis.vertical,
                                     itemCount: updateMyComboController
-                                        .updateProductComboController
-                                        .listSelectedProduct
-                                        .value
-                                        .length,
+                                        .listSelectedProduct.length,
                                     itemBuilder:
                                         (BuildContext context, int index) =>
                                             Stack(
@@ -721,36 +730,35 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
                                         Row(
                                           children: [
                                             Container(
-                                              height: 100,
                                               decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: Theme.of(context)
                                                         .primaryColor),
                                               ),
                                               child: CachedNetworkImage(
+                                                height: 100,
+                                                width: Get.width / 4,
                                                 fit: BoxFit.cover,
                                                 imageUrl: updateMyComboController
-                                                            .updateProductComboController
-                                                            .listSelectedProduct
-                                                            .value[index]!
+                                                            .listSelectedProduct[
+                                                                index]
                                                             .images!
                                                             .length ==
                                                         0
                                                     ? ""
                                                     : updateMyComboController
-                                                        .updateProductComboController
-                                                        .listSelectedProduct
-                                                        .value[index]!
+                                                        .listSelectedProduct[
+                                                            index]
                                                         .images![0]
                                                         .imageUrl!,
                                                 errorWidget:
                                                     (context, url, error) =>
                                                         Container(
                                                   height: 100,
+                                                  width: Get.width / 4,
                                                   child: CachedNetworkImage(
                                                     fit: BoxFit.cover,
-                                                    imageUrl:
-                                                        "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
+                                                    imageUrl: logoSahaImage,
                                                   ),
                                                 ),
                                               ),
@@ -767,7 +775,6 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
                                                       icon: Icon(Icons.remove),
                                                       onPressed: () {
                                                         updateMyComboController
-                                                            .updateProductComboController
                                                             .decreaseAmountProductCombo(
                                                                 index);
                                                       }),
@@ -776,7 +783,7 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
                                                   ),
                                                   Obx(
                                                     () => Text(
-                                                        "${updateMyComboController.updateProductComboController.listSelectedProductParam.value[index].quantity}"),
+                                                        "${updateMyComboController.listSelectedProductParam.value[index].quantity}"),
                                                   ),
                                                   SizedBox(
                                                     width: 20,
@@ -785,7 +792,6 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
                                                       icon: Icon(Icons.add),
                                                       onPressed: () {
                                                         updateMyComboController
-                                                            .updateProductComboController
                                                             .increaseAmountProductCombo(
                                                                 index);
                                                       }),
@@ -805,16 +811,11 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
                                               ),
                                               onPressed: () {
                                                 updateMyComboController
-                                                    .updateProductComboController
-                                                    .deleteProductSelected(
+                                                    .deleteProduct(
                                                         updateMyComboController
-                                                            .updateProductComboController
-                                                            .listSelectedProduct
-                                                            .value[index]!
-                                                            .id);
-                                                updateMyComboController
-                                                    .updateProductComboController
-                                                    .countProductSelected();
+                                                            .listSelectedProduct[
+                                                                index]
+                                                            .id!);
                                               }),
                                         ),
                                       ],

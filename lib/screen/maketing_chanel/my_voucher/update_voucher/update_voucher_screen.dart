@@ -5,14 +5,17 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
+import 'package:sahashop_user/const/const_image_logo.dart';
+import 'package:sahashop_user/model/product.dart';
 import 'package:sahashop_user/model/voucher.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_voucher/add_product_to_voucher/add_product_voucher_screen.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_voucher/create_my_voucher/create_my_voucher_controller.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_voucher/update_voucher/update_product_voucher/update_product_voucher_screen.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_voucher/update_voucher/update_voucher_controller.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
+// ignore: must_be_immutable
 class UpdateMyVoucherScreen extends StatefulWidget {
   Voucher? voucher;
   bool? onlyWatch;
@@ -32,11 +35,7 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
 
   @override
   void initState() {
-    updateVoucherController
-        .updateProductVoucherController.listSelectedProduct.value
-        .addAll(widget.voucher!.products!);
-    updateVoucherController
-        .updateProductVoucherController.listProductHasInDiscount.value
+    updateVoucherController.listSelectedProduct
         .addAll(widget.voucher!.products!);
     updateVoucherController.nameProgramEditingController.text =
         widget.voucher!.name!;
@@ -85,7 +84,8 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
     );
     updateVoucherController.discountTypeInput.value =
         widget.voucher!.discountType!;
-    updateVoucherController.voucherTypeInput.value = widget.voucher!.voucherType!;
+    updateVoucherController.voucherTypeInput.value =
+        widget.voucher!.voucherType!;
 
     updateVoucherController.pricePermanentEditingController.text =
         widget.voucher!.valueDiscount.toString();
@@ -762,7 +762,8 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                               if (_formKeyTypeVoucher
                                                   .currentState!
                                                   .validate()) {
-                                                _formKeyTypeVoucher.currentState!
+                                                _formKeyTypeVoucher
+                                                    .currentState!
                                                     .save();
                                                 KeyboardUtil.hideKeyboard(
                                                     context);
@@ -1072,11 +1073,8 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text('Sản phẩm'),
-                                    updateVoucherController
-                                                .updateProductVoucherController
-                                                .listSelectedProduct
-                                                .value
-                                                .length ==
+                                    updateVoucherController.listSelectedProduct
+                                                .value.length ==
                                             0
                                         ? Container()
                                         : IconButton(
@@ -1087,7 +1085,17 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                             ),
                                             onPressed: () {
                                               Get.to(() =>
-                                                  UpdateProductToVoucherScreen());
+                                                  AddProductToVoucherScreen(
+                                                    callback: (List<Product>?
+                                                        listProduct) {
+                                                      updateVoucherController
+                                                          .listSelectedProduct
+                                                          .addAll(listProduct!);
+                                                    },
+                                                    listProductInput:
+                                                        updateVoucherController
+                                                            .listSelectedProduct,
+                                                  ));
                                             })
                                   ],
                                 ),
@@ -1097,10 +1105,7 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                               ),
                               Obx(
                                 () => updateVoucherController
-                                            .updateProductVoucherController
-                                            .listSelectedProduct
-                                            .value
-                                            .length ==
+                                            .listSelectedProduct.length ==
                                         0
                                     ? Column(
                                         crossAxisAlignment:
@@ -1109,7 +1114,17 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                           InkWell(
                                             onTap: () {
                                               Get.to(() =>
-                                                  UpdateProductToVoucherScreen());
+                                                  AddProductToVoucherScreen(
+                                                    callback: (List<Product>?
+                                                        listProduct) {
+                                                      updateVoucherController
+                                                          .listSelectedProduct
+                                                          .addAll(listProduct!);
+                                                    },
+                                                    listProductInput:
+                                                        updateVoucherController
+                                                            .listSelectedProduct,
+                                                  ));
                                             },
                                             child: Container(
                                               height: 100,
@@ -1155,45 +1170,41 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                         child: StaggeredGridView.countBuilder(
                                           crossAxisCount: 4,
                                           itemCount: updateVoucherController
-                                              .updateProductVoucherController
-                                              .listSelectedProduct
-                                              .value
-                                              .length,
+                                              .listSelectedProduct.length,
                                           itemBuilder: (BuildContext context,
                                                   int index) =>
                                               Stack(
                                             children: [
                                               Container(
-                                                height: 100,
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
                                                       color: Theme.of(context)
                                                           .primaryColor),
                                                 ),
                                                 child: CachedNetworkImage(
+                                                  height: 100,
+                                                  width: Get.width / 4,
                                                   fit: BoxFit.cover,
                                                   imageUrl: updateVoucherController
-                                                              .updateProductVoucherController
-                                                              .listSelectedProduct
-                                                              .value[index]
+                                                              .listSelectedProduct[
+                                                                  index]
                                                               .images!
                                                               .length ==
                                                           0
                                                       ? ""
                                                       : updateVoucherController
-                                                          .updateProductVoucherController
-                                                          .listSelectedProduct
-                                                          .value[index]
+                                                          .listSelectedProduct[
+                                                              index]
                                                           .images![0]
                                                           .imageUrl!,
                                                   errorWidget:
                                                       (context, url, error) =>
                                                           Container(
                                                     height: 100,
+                                                    width: Get.width / 4,
                                                     child: CachedNetworkImage(
                                                       fit: BoxFit.cover,
-                                                      imageUrl:
-                                                          "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
+                                                      imageUrl: logoSahaImage,
                                                     ),
                                                   ),
                                                 ),
@@ -1209,16 +1220,11 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                                     ),
                                                     onPressed: () {
                                                       updateVoucherController
-                                                          .updateProductVoucherController
-                                                          .deleteProductSelected(
+                                                          .deleteProduct(
                                                               updateVoucherController
-                                                                  .updateProductVoucherController
-                                                                  .listSelectedProduct
-                                                                  .value[index]
-                                                                  .id);
-                                                      updateVoucherController
-                                                          .updateProductVoucherController
-                                                          .countProductSelected();
+                                                                  .listSelectedProduct[
+                                                                      index]
+                                                                  .id!);
                                                     }),
                                               ),
                                             ],
@@ -1270,7 +1276,6 @@ class _UpdateMyVoucherScreenState extends State<UpdateMyVoucherScreen> {
                                 _formKey.currentState!.save();
                                 KeyboardUtil.hideKeyboard(context);
                                 updateVoucherController
-                                    .updateProductVoucherController
                                     .listSelectedProductToString();
                                 if (updateVoucherController
                                         .typeVoucherDiscount.value ==

@@ -5,8 +5,10 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/add_product/add_product_controller.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/add_product/add_product_screen.dart';
+import 'package:sahashop_user/const/const_image_logo.dart';
+import 'package:sahashop_user/model/product.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_program/add_product/add_product_screen.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/create_my_program_controller.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_controller.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
@@ -22,8 +24,8 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
   DateTime timeStart = DateTime.now().add(Duration(minutes: 1));
   DateTime dateEnd = DateTime.now();
   DateTime timeEnd = DateTime.now().add(Duration(hours: 2));
-  AddProductToSaleController addProductToSaleController =
-      Get.put(AddProductToSaleController());
+  CreateMyProgramController createMyProgramController =
+      Get.put(CreateMyProgramController());
   MyProgramController myProgramController = Get.find();
   bool checkDayStart = false;
   bool checkDayEnd = false;
@@ -355,8 +357,8 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('Sản phẩm'),
-                            addProductToSaleController
-                                        .listSelectedProduct.value.length ==
+                            createMyProgramController
+                                        .listSelectedProduct.length ==
                                     0
                                 ? Container()
                                 : IconButton(
@@ -365,7 +367,17 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
                                       color: Theme.of(context).primaryColor,
                                     ),
                                     onPressed: () {
-                                      Get.to(() => AddProductToSaleScreen());
+                                      Get.to(() => AddProductToSaleScreen(
+                                            callback:
+                                                (List<Product>? listProduct) {
+                                              createMyProgramController
+                                                  .listSelectedProduct
+                                                  .addAll(listProduct!);
+                                            },
+                                            listProductInput:
+                                                createMyProgramController
+                                                    .listSelectedProduct,
+                                          ));
                                     })
                           ],
                         ),
@@ -374,12 +386,21 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
                         height: 10,
                       ),
                       Obx(
-                        () => addProductToSaleController
-                                    .listSelectedProduct.value.length ==
+                        () => createMyProgramController
+                                    .listSelectedProduct.length ==
                                 0
                             ? InkWell(
                                 onTap: () {
-                                  Get.to(() => AddProductToSaleScreen());
+                                  Get.to(() => AddProductToSaleScreen(
+                                        callback: (List<Product>? listProduct) {
+                                          createMyProgramController
+                                              .listSelectedProduct
+                                              .addAll(listProduct!);
+                                        },
+                                        listProductInput:
+                                            createMyProgramController
+                                                .listSelectedProduct,
+                                      ));
                                 },
                                 child: Container(
                                   height: 100,
@@ -405,74 +426,73 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
                                   ),
                                 ),
                               )
-                            : Container(
-                                height: 400,
-                                child: StaggeredGridView.countBuilder(
-                                  crossAxisCount: 4,
-                                  itemCount: addProductToSaleController
-                                      .listSelectedProduct.value.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) =>
-                                          Stack(
-                                    children: [
-                                      Container(
-                                        height: 100,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Theme.of(context)
-                                                  .primaryColor),
-                                        ),
-                                        child: CachedNetworkImage(
-                                          fit: BoxFit.cover,
-                                          imageUrl: addProductToSaleController
-                                                      .listSelectedProduct
-                                                      .value[index]
-                                                      .images!
-                                                      .length ==
-                                                  0
-                                              ? ""
-                                              : addProductToSaleController
-                                                  .listSelectedProduct
-                                                  .value[index]
-                                                  .images![0]
-                                                  .imageUrl!,
-                                          errorWidget: (context, url, error) =>
-                                              Container(
+                            : Obx(
+                                () => Container(
+                                  height: 400,
+                                  child: StaggeredGridView.countBuilder(
+                                    crossAxisCount: 4,
+                                    itemCount: createMyProgramController
+                                        .listSelectedProduct.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) =>
+                                            Stack(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Theme.of(context)
+                                                    .primaryColor),
+                                          ),
+                                          child: CachedNetworkImage(
                                             height: 100,
-                                            child: CachedNetworkImage(
+                                            width: Get.width / 4,
+                                            fit: BoxFit.cover,
+                                            imageUrl: createMyProgramController
+                                                        .listSelectedProduct[
+                                                            index]
+                                                        .images!
+                                                        .length ==
+                                                    0
+                                                ? ""
+                                                : createMyProgramController
+                                                    .listSelectedProduct[index]
+                                                    .images![0]
+                                                    .imageUrl!,
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    CachedNetworkImage(
+                                              height: 100,
+                                              width: Get.width / 4,
                                               fit: BoxFit.cover,
-                                              imageUrl:
-                                                  "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
+                                              imageUrl: logoSahaImage,
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      Positioned(
-                                        top: -10,
-                                        right: -10,
-                                        child: IconButton(
-                                            icon: Icon(
-                                              Icons.delete,
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                            ),
-                                            onPressed: () {
-                                              addProductToSaleController
-                                                  .deleteProductSelected(
-                                                      addProductToSaleController
-                                                          .listSelectedProduct
-                                                          .value[index]
-                                                          .id);
-                                              addProductToSaleController
-                                                  .countProductSelected();
-                                            }),
-                                      ),
-                                    ],
+                                        Positioned(
+                                          top: -10,
+                                          right: -10,
+                                          child: IconButton(
+                                              icon: Icon(
+                                                Icons.delete,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              ),
+                                              onPressed: () {
+                                                createMyProgramController
+                                                    .deleteProduct(
+                                                        createMyProgramController
+                                                            .listSelectedProduct[
+                                                                index]
+                                                            .id!);
+                                              }),
+                                        ),
+                                      ],
+                                    ),
+                                    staggeredTileBuilder: (int index) =>
+                                        new StaggeredTile.fit(1),
+                                    mainAxisSpacing: 10,
+                                    crossAxisSpacing: 10,
                                   ),
-                                  staggeredTileBuilder: (int index) =>
-                                      new StaggeredTile.fit(1),
-                                  mainAxisSpacing: 10,
-                                  crossAxisSpacing: 10,
                                 ),
                               ),
                       ),
@@ -489,7 +509,7 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
           child: Column(
             children: [
               Obx(
-                () => addProductToSaleController.isLoadingCreate.value == true
+                () => createMyProgramController.isLoadingCreate.value == true
                     ? IgnorePointer(
                         child: SahaButtonFullParent(
                           text: "Lưu",
@@ -504,9 +524,9 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
                             KeyboardUtil.hideKeyboard(context);
-                            addProductToSaleController
+                            createMyProgramController
                                 .listSelectedProductToString();
-                            addProductToSaleController.createDiscount(
+                            createMyProgramController.createDiscount(
                                 nameProgramEditingController.text,
                                 "",
                                 "",
@@ -538,7 +558,7 @@ class _CreateMyProgramState extends State<CreateMyProgram> {
                                 quantityEditingController.text.isEmpty
                                     ? 0
                                     : int.parse(quantityEditingController.text),
-                                addProductToSaleController.listProductParam);
+                                createMyProgramController.listProductParam);
                           }
                         },
                         color: Theme.of(context).primaryColor,

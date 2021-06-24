@@ -3,9 +3,8 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/voucher_request.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_voucher/create_my_voucher/add_product_to_voucher/add_product_voucher_controller.dart';
+import 'package:sahashop_user/model/product.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_voucher/create_my_voucher/create_my_voucher_controller.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_voucher/update_voucher/update_product_voucher/update_product_voucher_controller.dart';
 
 class UpdateVoucherController extends GetxController {
   var isLoadingCreate = false.obs;
@@ -13,9 +12,8 @@ class UpdateVoucherController extends GetxController {
   var timeStart = DateTime.now().add(Duration(minutes: 1)).obs;
   var dateEnd = DateTime.now().obs;
   var timeEnd = DateTime.now().add(Duration(hours: 2)).obs;
-
-  UpdateProductVoucherController updateProductVoucherController =
-      Get.put(UpdateProductVoucherController());
+  var listSelectedProduct = RxList<Product>();
+  var listProductParam = "";
 
   var checkDayStart = false.obs;
   var checkDayEnd = false.obs;
@@ -128,6 +126,22 @@ class UpdateVoucherController extends GetxController {
     }
   }
 
+  void deleteProduct(int idProduct) {
+    listSelectedProduct.removeWhere((product) => product.id == idProduct);
+    listSelectedProduct.refresh();
+  }
+
+  void listSelectedProductToString() {
+    listSelectedProduct.forEach((element) {
+      if (element != listSelectedProduct.last) {
+        listProductParam = listProductParam + "${element.id.toString()},";
+      } else {
+        listProductParam = listProductParam + "${element.id.toString()}";
+      }
+    });
+    print(listProductParam);
+  }
+
   Future<void> updateVoucher(int? idVoucher) async {
     isLoadingCreate.value = true;
     try {
@@ -159,9 +173,7 @@ class UpdateVoucherController extends GetxController {
                     timeEnd.value.microsecond)
                 .toIso8601String(),
             voucherType:
-                updateProductVoucherController.listSelectedProduct.value.isEmpty
-                    ? 0
-                    : voucherTypeInput.value,
+                listSelectedProduct.isEmpty ? 0 : voucherTypeInput.value,
             discountType: discountTypeRequest.value,
             valueDiscount: pricePermanentEditingController.text.isEmpty
                 ? int.parse(pricePercentEditingController.text)
@@ -179,7 +191,7 @@ class UpdateVoucherController extends GetxController {
                 ? 0
                 : int.parse(amountCodeAvailableEditingController.text),
             code: codeVoucherEditingController.text,
-            products: updateProductVoucherController.listProductParam),
+            products: listProductParam),
       );
       SahaAlert.showSuccess(message: "Lưu thành công");
     } catch (err) {
