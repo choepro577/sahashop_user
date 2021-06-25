@@ -47,6 +47,8 @@ class ReviewController extends GetxController {
         jsonEncode(listImageRequest![i]).toString(),
       );
     }
+    SahaAlert.showToastMiddle(message: "Đánh giá thành công");
+    Get.back();
   }
 
   Future<void> reviewProduct(

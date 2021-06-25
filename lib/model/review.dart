@@ -1,3 +1,6 @@
+import 'package:sahashop_user/components/app_customer/remote/response-request/review/review_of_product_response.dart';
+import 'package:sahashop_user/model/product.dart';
+
 class Review {
   Review({
     this.stars,
@@ -7,6 +10,7 @@ class Review {
     this.createdAt,
     this.id,
     this.customer,
+    this.product,
   });
 
   int? stars;
@@ -16,6 +20,7 @@ class Review {
   DateTime? createdAt;
   int? id;
   Customer? customer;
+  Product? product;
 
   factory Review.fromJson(Map<String, dynamic> json) => Review(
         stars: json["stars"] == null ? null : json["stars"],
@@ -29,6 +34,8 @@ class Review {
         customer: json["customer"] == null
             ? null
             : Customer.fromJson(json["customer"]),
+        product:
+            json["product"] == null ? null : Product.fromJson(json["product"]),
       );
 
   Map<String, dynamic> toJson() => {

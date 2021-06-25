@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,13 +9,11 @@ import 'package:sahashop_user/components/app_customer/screen/data_app_controller
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/switch_button/switch_button.dart';
 import 'package:sahashop_user/components/saha_user/text/text_money.dart';
-import 'package:sahashop_user/components/utils/money.dart';
-import 'package:sahashop_user/const/const_image_logo.dart';
-import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
 import 'widget/item_product.dart';
 
+// ignore: must_be_immutable
 class CartScreen1 extends StatelessWidget {
   late DataAppCustomerController dataAppCustomerController;
 
@@ -157,7 +154,7 @@ class CartScreen1 extends StatelessWidget {
                                 distributesSelected);
                           },
                           quantity: dataAppCustomerController
-                                  .listQuantityProduct[index],
+                              .listQuantityProduct[index],
                         )),
               ),
             ),

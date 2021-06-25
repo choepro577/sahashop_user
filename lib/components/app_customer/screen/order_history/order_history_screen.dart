@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:sahashop_user/components/app_customer/screen/cart_screen/cart_screen_1.dart';
 import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_detail/order_detail_history_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/pay_screen/pay_screen.dart';
@@ -457,45 +458,81 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                   ),
                                                 ),
                                               )
-                                            : InkWell(
-                                                onTap: () {
-                                                  Get.to(() => ReviewScreen(
-                                                        lineItemsAtTime:
-                                                            orderHistoryController
-                                                                .listAllOrder[
-                                                                    indexState]
-                                                                    [index]
-                                                                .lineItemsAtTime!,
-                                                        orderCode:
-                                                            orderHistoryController
-                                                                .listAllOrder[
-                                                                    indexState]
-                                                                    [index]
-                                                                .orderCode,
-                                                      ));
-                                                },
-                                                child: Container(
-                                                  height: 35,
-                                                  width: 100,
-                                                  decoration: BoxDecoration(
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              4)),
-                                                  child: Center(
-                                                    child: Text(
-                                                      "Đánh giá",
-                                                      style: TextStyle(
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .primaryTextTheme
-                                                              .headline6!
-                                                              .color),
+                                            : orderHistoryController
+                                                        .listAllOrder[
+                                                            indexState][index]
+                                                        .reviewed ==
+                                                    true
+                                                ? InkWell(
+                                                    onTap: () {
+                                                      Get.to(
+                                                          () => CartScreen1());
+                                                    },
+                                                    child: Container(
+                                                      height: 35,
+                                                      width: 100,
+                                                      decoration: BoxDecoration(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(4)),
+                                                      child: Center(
+                                                        child: Text(
+                                                          "Mua lại",
+                                                          style: TextStyle(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryTextTheme
+                                                                  .headline6!
+                                                                  .color),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                : InkWell(
+                                                    onTap: () {
+                                                      Get.to(
+                                                        () => ReviewScreen(
+                                                          lineItemsAtTime:
+                                                              orderHistoryController
+                                                                  .listAllOrder[
+                                                                      indexState]
+                                                                      [index]
+                                                                  .lineItemsAtTime!,
+                                                          orderCode:
+                                                              orderHistoryController
+                                                                  .listAllOrder[
+                                                                      indexState]
+                                                                      [index]
+                                                                  .orderCode,
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      height: 35,
+                                                      width: 100,
+                                                      decoration: BoxDecoration(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(4)),
+                                                      child: Center(
+                                                        child: Text(
+                                                          "Đánh giá",
+                                                          style: TextStyle(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryTextTheme
+                                                                  .headline6!
+                                                                  .color),
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              )
                                       ],
                                     ),
                                   ),

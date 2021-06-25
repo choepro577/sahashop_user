@@ -12,14 +12,17 @@ import 'package:sahashop_user/components/app_customer/screen/cart_screen/cart_sc
 import 'package:sahashop_user/components/app_customer/screen/chat_customer/chat_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/combo_detail_screen/combo_detail_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/product_screen/controller/product_controller.dart';
+import 'package:sahashop_user/components/app_customer/screen/product_screen/widget/review_product.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/chip/ticker.dart';
+import 'package:sahashop_user/components/saha_user/star_rating/star_rating.dart';
 import 'package:sahashop_user/components/saha_user/text/text_money.dart';
 import 'package:sahashop_user/model/order.dart';
 import 'package:sahashop_user/model/product.dart';
 import 'package:sahashop_user/screen/home/widget/section_title.dart';
 
+// ignore: must_be_immutable
 class ProductScreen1 extends StatelessWidget {
   late ProductController productController;
 
@@ -389,17 +392,18 @@ class ProductScreen1 extends StatelessWidget {
                                             Row(
                                               children: [
                                                 TextButton(
-                                                    onPressed: () {
-                                                      Get.to(() =>
-                                                          ComboDetailScreen(
-                                                            idProduct:
-                                                                productController
-                                                                    .productShow
-                                                                    .value
-                                                                    .id,
-                                                          ));
-                                                    },
-                                                    child: Text("Xem tất cả")),
+                                                  onPressed: () {
+                                                    Get.to(
+                                                        () => ComboDetailScreen(
+                                                              idProduct:
+                                                                  productController
+                                                                      .productShow
+                                                                      .value
+                                                                      .id,
+                                                            ));
+                                                  },
+                                                  child: Text("Xem tất cả"),
+                                                ),
                                                 Container(
                                                     height: 10,
                                                     width: 10,
@@ -608,93 +612,7 @@ class ProductScreen1 extends StatelessWidget {
                               color: Colors.grey[200],
                               height: 8,
                             ),
-                            Container(
-                              padding: EdgeInsets.only(
-                                  top: 15, bottom: 10, left: 10, right: 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "ĐÁNH GIÁ SẢN PHẨM",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      SizedBox(
-                                        height: 9,
-                                      ),
-                                      Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                              "assets/icons/star_around.svg"),
-                                          SizedBox(
-                                            width: 4,
-                                          ),
-                                          SvgPicture.asset(
-                                              "assets/icons/star_around.svg"),
-                                          SizedBox(
-                                            width: 4,
-                                          ),
-                                          SvgPicture.asset(
-                                              "assets/icons/star_around.svg"),
-                                          SizedBox(
-                                            width: 4,
-                                          ),
-                                          SvgPicture.asset(
-                                              "assets/icons/star_around.svg"),
-                                          SizedBox(
-                                            width: 4,
-                                          ),
-                                          SvgPicture.asset(
-                                              "assets/icons/star_around.svg"),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            "5/5",
-                                            style: TextStyle(color: Colors.red),
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            "(69 Đánh giá)",
-                                            style: TextStyle(
-                                                color: Colors.grey[600]),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Xem tất cả",
-                                        style: TextStyle(
-                                            color:
-                                                Theme.of(context).primaryColor),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Container(
-                                          height: 10,
-                                          width: 10,
-                                          child: SvgPicture.asset(
-                                            "assets/icons/right_arrow.svg",
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                          ))
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
+                            ReviewProduct(),
                             Divider(
                               height: 1,
                             ),
@@ -766,7 +684,7 @@ class ProductScreen1 extends StatelessWidget {
                     }),
                 Spacer(),
                 Stack(
-                  overflow: Overflow.visible,
+                  clipBehavior: Clip.none,
                   children: [
                     InkWell(
                       onTap: () {

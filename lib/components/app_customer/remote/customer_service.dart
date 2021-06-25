@@ -23,6 +23,7 @@ import 'package:sahashop_user/components/app_customer/remote/response-request/pr
 import 'package:sahashop_user/components/app_customer/remote/response-request/product/detail_product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/product/query_product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/register/register_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/review/review_of_product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/review/review_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/shipment/shipment_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/store/all_store_response.dart';
@@ -217,4 +218,10 @@ abstract class CustomerService {
   @POST("{storeCode}/products/{idProduct}/reviews")
   Future<ReviewResponse> review(@Path("storeCode") String? storeCode,
       @Path() int? idProduct, @Body() Map<String, dynamic> body);
+
+  @POST("{storeCode}/products/{idProduct}/reviews")
+  Future<ReviewOfProResponse> getReviewProduct(
+    @Path("storeCode") String? storeCode,
+    @Path() int? idProduct,
+  );
 }

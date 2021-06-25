@@ -34,7 +34,23 @@ class ReviewScreen extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Đánh giá sản phẩm"),
+          title: Row(
+            children: [
+              Text("Đánh giá sản phẩm"),
+              Spacer(),
+              TextButton(
+                  onPressed: () {
+                    reviewController!.reviewAllOrder();
+                  },
+                  child: Text(
+                    "Gửi",
+                    style: TextStyle(
+                        color:
+                            Theme.of(context).primaryTextTheme.headline6!.color,
+                        fontSize: 15),
+                  ))
+            ],
+          ),
         ),
         body: SingleChildScrollView(
           child: Column(

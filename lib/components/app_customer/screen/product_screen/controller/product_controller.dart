@@ -7,6 +7,7 @@ import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/model/combo.dart';
 import 'package:sahashop_user/model/order.dart';
 import 'package:sahashop_user/model/product.dart';
+import 'package:sahashop_user/model/review.dart';
 
 class ProductController extends GetxController {
   var currentIndexListOrder = 0.obs;
@@ -21,7 +22,9 @@ class ProductController extends GetxController {
   var hasInCombo = false.obs;
   var discountComboType = 0.obs;
   var valueComboType = 0.0.obs;
-
+  var starReview = 0.0.obs;
+  var totalReview = 0.obs;
+  var listReview = RxList<Review>();
 
   DataAppCustomerController dataAppCustomerController = Get.find();
 
@@ -30,6 +33,7 @@ class ProductController extends GetxController {
     productShow.value = dataAppCustomerController.productCurrent;
     getDetailProduct();
     getComboCustomer();
+    getReviewProduct();
     if (dataAppCustomerController.homeData?.discountProducts?.list != null) {
       dataAppCustomerController.homeData!.discountProducts!.list!
           .forEach((listDiscount) {
@@ -71,6 +75,18 @@ class ProductController extends GetxController {
     }
   }
 
+  Future<void> getReviewProduct() async {
+    try {
+      var data =
+          await CustomerRepositoryManager.reviewRepository.getReviewProduct(0);
+      starReview.value = data!.data!.averagedStars!;
+      totalReview.value = data.data!.totalReviews!;
+      listReview(data.data!.data);
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+  }
+
   void animatedAddCard() {
     animateAddCart.value = true;
     print(animateAddCart.value);
@@ -105,5 +121,4 @@ class ProductController extends GetxController {
       Get.to(() => CartScreen1());
     }
   }
-
 }
