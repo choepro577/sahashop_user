@@ -24,7 +24,7 @@ class _SahaMainScreenState extends State<SahaMainScreen> {
     SahaServiceManager.initialize();
     CustomerServiceManager.initialize();
     LoadLogin.load();
-    LoadFirebase.initFirebase();
+
 
     checkLogin(context);
   }

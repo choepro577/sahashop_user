@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'components/app_customer/screen/navigation_scrren/navigation_screen.dart';
+import 'load_data/load_firebase.dart';
 import 'model/theme_model.dart';
 import 'saha_data_controller.dart';
 import 'saha_load_app.dart';
@@ -10,7 +11,9 @@ import 'screen/config_app/config_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
+  LoadFirebase.initFirebase();
   runApp(MyApp());
 }
 

@@ -157,8 +157,7 @@ class CartScreen1 extends StatelessWidget {
                                 distributesSelected);
                           },
                           quantity: dataAppCustomerController
-                                  .listQuantityProduct[index] ??
-                              0,
+                                  .listQuantityProduct[index],
                         )),
               ),
             ),

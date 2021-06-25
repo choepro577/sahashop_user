@@ -13,70 +13,51 @@ class LoadFirebase {
 }
 
 class FCMMess {
-  // static final FCMMess _singleton = FCMMess._internal();
-  // FCMMess._internal();
-  //
-  // factory FCMMess() {
-  //   return _singleton;
-  // }
+  static final FCMMess _singleton = FCMMess._internal();
+  FCMMess._internal();
 
- // final FirebaseMessaging? _firebaseMessaging; //= FirebaseMessaging();
-
-  void removeID() async {
-    //await _firebaseMessaging.deleteInstanceID();
+  factory FCMMess() {
+    return _singleton;
   }
 
-  static Future<dynamic>? onBackgroundMessage(Map<String, dynamic> message) {
-    if (message.containsKey('data')) {
-      final dynamic data = message['data'];
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
+  void removeID() async {
+    await _firebaseMessaging.deleteToken();
+  }
+
+  Future<void> _firebaseMessagingBackgroundHandler(
+      RemoteMessage message) async {
+
+    print("Handling a background message: ${message.messageId}");
+    var map = message.data;
+
+    print(map);
+
+    if (map.containsKey('data')) {
+      final dynamic data = map['data'];
     }
 
-    if (message.containsKey('notification')) {
-      final dynamic notification = message['notification'];
+    if (map.containsKey('notification')) {
+      final dynamic notification = map['notification'];
     }
-
-    return null;
   }
 
   void handleFirebaseMess() async {
-  //  _firebaseMessaging.requestNotificationPermissions();
-  //   await _firebaseMessaging.getToken().then((String? token) async {
-  //     assert(token != null);
-  //     print("Push Messaging token: $token");
-  //     FCMToken().setToken(token);
-  //
-  //     if (UserInfo().getToken() != null) {
-  //       RepositoryManager.deviceTokenRepository.updateDeviceTokenUser(token);
-  //     }
-  //   });
-    // await _firebaseMessaging.configure(
-    //   onMessage: (Map<String, dynamic> message) async {
-    //     print("onMessageFCM: $message");
-    //     print(message["data"]);
-    //
-    //     var map = Platform.isAndroid ? message["data"] : message;
-    //
-    //     try {
-    //       print(map);
-    //     } catch (err) {
-    //       print(err);
-    //     }
-    //   },
-    //   onBackgroundMessage: Platform.isIOS ? onBackgroundMessage : onBackgroundMessage,
-    //   onLaunch: (Map<String, dynamic> message) async {
-    //     print("onLaunch: $message");
-    //   },
-    //   onResume: (Map<String, dynamic> message) async {
-    //     print("onResume: $message");
-    //   },
-    // );
-    // await _firebaseMessaging.requestNotificationPermissions(
-    //     const IosNotificationSettings(sound: true, badge: true, alert: true));
-    // await _firebaseMessaging.onIosSettingsRegistered
-    //     .listen((IosNotificationSettings settings) {
-    //   print("Settings registered: $settings");
-    // });
-    //await _firebaseMessaging.subscribeToTopic("matchscore");
+
+   // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+    await _firebaseMessaging.getToken().then((String? token) async {
+      assert(token != null);
+      print("Push Messaging token: $token");
+      FCMToken().setToken(token);
+
+      if (UserInfo().getToken() != null) {
+        RepositoryManager.deviceTokenRepository.updateDeviceTokenUser(token);
+      }
+    });
+
+
   }
 }
 

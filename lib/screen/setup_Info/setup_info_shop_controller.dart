@@ -7,7 +7,7 @@ class SetUpInfoShopController extends GetxController {
   var stateCreate = "".obs;
   var creating = false.obs;
   var listNameShop = RxList<String?>();
-  RxList<Map<String, String?>> mapTypeShop = RxList<Map<String, String>>();
+  var mapTypeShop = RxList<Map<String, String>>();
 
   Future<List<DataTypeShop>> getAllShopType() async {
     try {
@@ -16,10 +16,10 @@ class SetUpInfoShopController extends GetxController {
 
       for (var i in listDataTypeShop) {
         listNameShop.add(i.name);
-        mapTypeShop.add({i.id.toString(): i.name});
+        mapTypeShop.add({i.id.toString(): i.name!});
       }
-      print(listNameShop);
-      return listDataTypeShop;
+      listNameShop.refresh();
+      return listDataTypeShop.toList();
     } catch (err) {
       throw(err.toString());
     }

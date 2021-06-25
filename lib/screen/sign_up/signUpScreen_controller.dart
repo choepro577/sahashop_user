@@ -9,8 +9,8 @@ class SignUpController extends GetxController {
   Future<bool> onSignUp({required String shopPhone, String? pass}) async {
     signUpping.value = true;
     try {
-      var dataRegister = await RepositoryManager.loginRepository
-          .login(phone: shopPhone, pass: pass);
+      var dataRegister = await RepositoryManager.registerRepository
+          .register(phone: shopPhone, pass: pass);
       signUpping.value = false;
       stateSignUp.value = "success";
       shopPhones.value = shopPhone;
