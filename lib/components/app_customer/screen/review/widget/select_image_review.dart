@@ -2,21 +2,20 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:sahashop_user/components/app_customer/screen/review/widget/selecte_image_review_controller.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
-import 'package:sahashop_user/const/constant.dart';
-
-import 'select_images_controller.dart';
+import 'package:sahashop_user/screen/inventory/products/add_product/widget/select_images_controller.dart';
 
 // ignore: must_be_immutable
-class SelectProductImages extends StatelessWidget {
+class SelectImagesReview extends StatelessWidget {
   Function? onUpload;
   Function? doneUpload;
   final List<ImageData>? images;
 
-  late SelectImageController selectImageController;
-  SelectProductImages({this.onUpload, this.doneUpload, this.images}) {
-    selectImageController =
-        new SelectImageController(onUpload: onUpload, doneUpload: doneUpload);
+  late SelectImageReviewController selectImageController;
+  SelectImagesReview({this.onUpload, this.doneUpload, this.images}) {
+    selectImageController = new SelectImageReviewController(
+        onUpload: onUpload, doneUpload: doneUpload);
 
     if (images != null) {
       selectImageController.dataImages.value = images!;
@@ -43,10 +42,12 @@ class SelectProductImages extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Ảnh sản phẩm"),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Text(
-                          "Tối đa 10 hình, có thể thêm sau",
-                          style: TextStyle(
-                              color: Colors.grey, fontStyle: FontStyle.italic),
+                          "Tối đa 5 hình, có thể thêm sau",
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
                         )
                       ],
                     ),
@@ -63,8 +64,10 @@ class SelectProductImages extends StatelessWidget {
               return Row(
                 children: [
                   buildItemImageData(dataImages[index]),
-                  index == dataImages.length - 1 &&
-                          dataImages.length < MAX_SELECT
+                  SizedBox(
+                    width: 5,
+                  ),
+                  index == dataImages.length - 1 && dataImages.length < 5
                       ? addImage()
                       : Container()
                 ],
@@ -82,13 +85,17 @@ class SelectProductImages extends StatelessWidget {
           selectImageController.loadAssets();
         },
         child: Container(
-          height: 100,
-          width: 100,
+          height: 80,
+          width: 80,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              border: Border.all(color: SahaPrimaryColor)),
+              color: Colors.grey[100],
+              borderRadius: BorderRadius.all(Radius.circular(2)),
+              border: Border.all(color: Theme.of(Get.context!).primaryColor)),
           child: Center(
-            child: Icon(Icons.camera_alt_outlined),
+            child: Icon(
+              Icons.camera_alt_outlined,
+              color: Theme.of(Get.context!).primaryColor,
+            ),
           ),
         ),
       ),
@@ -99,14 +106,14 @@ class SelectProductImages extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: SizedBox(
-        height: 100,
-        width: 100,
+        height: 80,
+        width: 80,
         child: Stack(
           alignment: Alignment.bottomLeft,
           children: [
             Container(
               child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5.0),
+                  borderRadius: BorderRadius.circular(2.0),
                   child: imageData.linkImage != null
                       ? CachedNetworkImage(
                           height: 300,

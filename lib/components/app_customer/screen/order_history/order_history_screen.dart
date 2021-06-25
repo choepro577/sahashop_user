@@ -459,7 +459,20 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                               )
                                             : InkWell(
                                                 onTap: () {
-                                                  Get.to(() => ReviewScreen());
+                                                  Get.to(() => ReviewScreen(
+                                                        lineItemsAtTime:
+                                                            orderHistoryController
+                                                                .listAllOrder[
+                                                                    indexState]
+                                                                    [index]
+                                                                .lineItemsAtTime!,
+                                                        orderCode:
+                                                            orderHistoryController
+                                                                .listAllOrder[
+                                                                    indexState]
+                                                                    [index]
+                                                                .orderCode,
+                                                      ));
                                                 },
                                                 child: Container(
                                                   height: 35,

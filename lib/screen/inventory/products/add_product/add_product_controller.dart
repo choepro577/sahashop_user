@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/data/remote/response-request/product/product_request.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
-import 'package:sahashop_user/model/attributes.dart';
 import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/model/product.dart';
 
@@ -93,12 +92,12 @@ class AddProductController extends GetxController {
       });
     }
     if (productEd.distributes != null) {
-      listDistribute.addAll(productEd.distributes!.map((Distributes? listDistribute) {
-
+      listDistribute
+          .addAll(productEd.distributes!.map((Distributes? listDistribute) {
         bool boolHasImage = false;
-        if(listDistribute!.elementDistributes != null) {
-          var listOK = listDistribute.elementDistributes!.where(
-                  (elementDistribute) => elementDistribute.imageUrl != null);
+        if (listDistribute!.elementDistributes != null) {
+          var listOK = listDistribute.elementDistributes!
+              .where((elementDistribute) => elementDistribute.imageUrl != null);
 
           if (listOK.length > 0) {
             boolHasImage = true;

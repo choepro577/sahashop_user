@@ -1,163 +1,136 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/screen/review/review_controller.dart';
+import 'package:sahashop_user/components/app_customer/screen/review/widget/select_image_review.dart';
+import 'package:sahashop_user/components/app_customer/screen/review/widget/star.dart';
+import 'package:sahashop_user/components/app_customer/screen/review/widget/text_field_choose.dart';
 import 'package:sahashop_user/const/const_image_logo.dart';
+import 'package:sahashop_user/model/order.dart';
+import 'package:sahashop_user/screen/inventory/products/add_product/widget/select_images_controller.dart';
 
+// ignore: must_be_immutable
 class ReviewScreen extends StatelessWidget {
-  List<String> listChooseReview = [
-    "Chất lượng sản phẩm tuyệt vời",
-    "Đóng gói sản phẩm rất đẹp"
-  ];
+  final List<LineItemsAtTime>? lineItemsAtTime;
+  final String? orderCode;
+  ReviewScreen({this.lineItemsAtTime, this.orderCode}) {
+    reviewController = ReviewController(
+        lineItemsAtTimeInput: lineItemsAtTime, orderCodeInput: orderCode);
+  }
+  ReviewController? reviewController;
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Đánh giá sản phẩm"),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(2),
-                          child: CachedNetworkImage(
-                            width: 30,
-                            height: 30,
-                            fit: BoxFit.cover,
-                            imageUrl: "",
-                            errorWidget: (context, url, error) => ClipRRect(
-                              borderRadius: BorderRadius.circular(2),
-                              child: CachedNetworkImage(
-                                  fit: BoxFit.cover, imageUrl: logoSahaImage),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text("Dep xam vmmm 1")
-                      ],
-                    ),
-                  ),
-                  Divider(
-                    height: 1,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(25.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          "assets/icons/star_around.svg",
-                          height: 30,
-                          width: 30,
-                        ),
-                        SvgPicture.asset(
-                          "assets/icons/star_around.svg",
-                          height: 30,
-                          width: 30,
-                        ),
-                        SvgPicture.asset(
-                          "assets/icons/star_around.svg",
-                          height: 30,
-                          width: 30,
-                        ),
-                        SvgPicture.asset(
-                          "assets/icons/star_around.svg",
-                          height: 30,
-                          width: 30,
-                        ),
-                        SvgPicture.asset(
-                          "assets/icons/star_around.svg",
-                          height: 30,
-                          width: 30,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 70,
-                    width: Get.width - 20,
-                    decoration: BoxDecoration(
-                        border:
-                            Border.all(color: Theme.of(context).primaryColor),
-                        borderRadius: BorderRadius.all(Radius.circular(2))),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.camera_alt,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "Thêm hình ảnh",
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    height: 100,
-                    width: Get.width - 20,
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      border: Border.all(color: (Colors.grey[400])!),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(2),
-                      ),
-                    ),
-                    child: TextFormField(
-                      // controller: chatCustomerController
-                      //     .messageEditingController.value,
-                      onChanged: (v) {},
-                      cursorColor: Colors.grey,
-                      minLines: 1,
-                      maxLines: 5,
-                      //keyboardType: TextInputType.multiline,
-
-                      decoration: InputDecoration(
-                        isDense: true,
-                        border: InputBorder.none,
-                        hintText:
-                            "Hãy chia sẻ những điều bạn thích về sản phẩm này nhé.",
-                        hintStyle: TextStyle(color: Colors.grey),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ListView.builder(
-                      itemCount: 1,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container();
-                      })
-                ],
-              ),
-            )
-          ],
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus &&
+            currentFocus.focusedChild != null) {
+          FocusManager.instance.primaryFocus!.unfocus();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Đánh giá sản phẩm"),
         ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              ...List.generate(reviewController!.lineItemsAtTimeInput!.length,
+                  (index) => itemReview(index)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget itemReview(int index) {
+    return Container(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(2),
+                  child: CachedNetworkImage(
+                    width: 30,
+                    height: 30,
+                    fit: BoxFit.cover,
+                    imageUrl:
+                        "${reviewController!.lineItemsAtTimeInput![index].imageUrl}",
+                    errorWidget: (context, url, error) => ClipRRect(
+                      borderRadius: BorderRadius.circular(2),
+                      child: CachedNetworkImage(
+                          fit: BoxFit.cover, imageUrl: logoSahaImage),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                    "${reviewController!.lineItemsAtTimeInput![index].name ?? "Loading..."}")
+              ],
+            ),
+          ),
+          Divider(
+            height: 1,
+          ),
+          Obx(
+            () => Star(
+              starInput: reviewController!.listStar[index],
+              onTap: (int star) {
+                reviewController!.listStar[index] = star;
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SelectImagesReview(
+              onUpload: () {
+                reviewController!.setUploadingImages(true);
+              },
+              images: reviewController!.listImages![index].isEmpty
+                  ? null
+                  : reviewController!.listImages![index],
+              doneUpload: (List<ImageData> listImages) {
+                print(
+                    "done upload image ${listImages.length} images => ${listImages.toList().map((e) => e.linkImage).toList()}");
+                reviewController!.setUploadingImages(true);
+                reviewController!.listImages![index] = listImages;
+                listImages.forEach((image) {
+                  reviewController!.listImageRequest![index]
+                      .add(image.linkImage!);
+                });
+                print(reviewController!.listImageRequest!);
+              },
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          TextFieldChoose(
+            listChooseText: reviewController!.listChooseText,
+            textInput: reviewController!.listContent[index],
+            onChange: (v) {
+              reviewController!.listContent[index] = v;
+              print(reviewController!.listContent);
+            },
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            height: 8,
+            color: Colors.grey[200],
+          )
+        ],
       ),
     );
   }

@@ -6,14 +6,13 @@ import 'package:get/get.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
+import 'package:sahashop_user/screen/inventory/products/add_product/widget/select_images_controller.dart';
 import 'package:sahashop_user/utils/image_utils.dart';
 
-final MAX_SELECT = 5;
-
-class SelectImageController extends GetxController {
+class SelectImageReviewController extends GetxController {
   Function? onUpload;
   Function? doneUpload;
-  SelectImageController({this.onUpload, this.doneUpload});
+  SelectImageReviewController({this.onUpload, this.doneUpload});
 
   var dataImages = <ImageData>[].obs;
 
@@ -128,13 +127,4 @@ class SelectImageController extends GetxController {
     }
     updateListImage(resultList);
   }
-}
-
-class ImageData {
-  Asset? file;
-  String? linkImage;
-  bool? errorUpload;
-  bool? uploading;
-
-  ImageData({this.file, this.linkImage, this.errorUpload, this.uploading});
 }

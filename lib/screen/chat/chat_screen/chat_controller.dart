@@ -46,10 +46,6 @@ class ChatController extends GetxController {
     });
   }
 
-  // ChatController() {
-  //   loadInitChatUser();
-  // }
-
   void loadInitChatUser() {
     pageLoadMoreBoxChatCustomer = 1;
     isEndPageBoxChatCustomer = false;
@@ -230,7 +226,8 @@ class ChatController extends GetxController {
     var newList = <ImageData>[];
 
     for (var asset in listAsset) {
-      var dataPre = listPre.firstWhereOrNull((itemPre) => itemPre.file == asset);
+      var dataPre =
+          listPre.firstWhereOrNull((itemPre) => itemPre.file == asset);
 
       if (dataPre != null) {
         newList.add(dataPre);
@@ -270,7 +267,8 @@ class ChatController extends GetxController {
     listImageRequest = [];
   }
 
-  Future<void> uploadImageData({required int indexImage, required Function onOK}) async {
+  Future<void> uploadImageData(
+      {required int indexImage, required Function onOK}) async {
     try {
       var fileUp =
           await ImageUtils.getImageFileFromAsset(dataImages[indexImage].file);
