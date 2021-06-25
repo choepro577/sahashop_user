@@ -4,7 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/components/product_item/product_item_widget.dart';
 import 'package:sahashop_user/components/app_customer/example/product.dart';
-import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/cart_screen_1.dart';
+import 'package:sahashop_user/components/app_customer/screen/cart_screen/cart_screen_1.dart';
 import 'package:sahashop_user/components/app_customer/screen/combo_detail_screen/combo_detail_controller.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/components/saha_user/text/text_money.dart';

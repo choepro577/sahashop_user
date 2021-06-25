@@ -15,6 +15,8 @@ import 'package:sahashop_user/const/const_image_logo.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
+import 'widget/item_product.dart';
+
 class CartScreen1 extends StatelessWidget {
   late DataAppCustomerController dataAppCustomerController;
 
@@ -131,247 +133,33 @@ class CartScreen1 extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: ListView.builder(
-                  itemCount: dataAppCustomerController.listOrder.length,
-                  itemBuilder: (context, index) => Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        child: Dismissible(
-                          key: UniqueKey(),
-                          direction: DismissDirection.endToStart,
-                          onDismissed: (direction) {
-                            /// remove item product in cart on sever
+                    itemCount: dataAppCustomerController.listOrder.length,
+                    itemBuilder: (context, index) => ItemProductInCartWidget(
+                          lineItem: dataAppCustomerController.listOrder[index],
+                          onDismissed: () {
                             dataAppCustomerController.updateItemCart(
                                 dataAppCustomerController
                                     .listOrder[index].product!.id,
-                                0, []);
+                                0,
+                                []);
                           },
-                          background: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            decoration: BoxDecoration(
-                              color: Color(0xFFFFE6E6),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Row(
-                              children: [
-                                Spacer(),
-                                SvgPicture.asset("assets/icons/trash.svg"),
-                              ],
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Stack(
-                                children: [
-                                  SizedBox(
-                                    width: 88,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(2.0),
-                                      child: AspectRatio(
-                                        aspectRatio: 1,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(2),
-                                          child: CachedNetworkImage(
-                                            fit: BoxFit.cover,
-                                            imageUrl: dataAppCustomerController
-                                                        .listOrder[index]
-                                                        .product!
-                                                        .images!
-                                                        .length ==
-                                                    0
-                                                ? ""
-                                                : dataAppCustomerController
-                                                    .listOrder[index]
-                                                    .product!
-                                                    .images![0]
-                                                    .imageUrl!,
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(2),
-                                              child: Container(
-                                                height: 100,
-                                                child: CachedNetworkImage(
-                                                    fit: BoxFit.cover,
-                                                    imageUrl: logoSahaImage),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  dataAppCustomerController.listOrder[index]
-                                              .product!.productDiscount ==
-                                          null
-                                      ? Container()
-                                      : Positioned(
-                                          top: -10,
-                                          left: 2,
-                                          child: Stack(
-                                            overflow: Overflow.visible,
-                                            children: [
-                                              Container(
-                                                height: 40,
-                                                width: 40,
-                                                child: SvgPicture.asset(
-                                                  "assets/icons/ribbon.svg",
-                                                  color: Color(0xfffdd100),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                top: 13,
-                                                left: 3,
-                                                child: Text(
-                                                  "-${dataAppCustomerController.listOrder[index].product!.productDiscount!.value} %",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      fontSize: 10,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Color(0xfffd5800)),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                ],
-                              ),
-                              SizedBox(width: 20),
-                              Container(
-                                width: Get.width * 0.5,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      dataAppCustomerController
-                                              .listOrder[index].product!.name ??
-                                          "Loi san pham",
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 14),
-                                      maxLines: 2,
-                                    ),
-                                    SizedBox(height: 10),
-                                    Row(
-                                      children: [
-                                        Text.rich(
-                                          TextSpan(
-                                            text: dataAppCustomerController
-                                                        .listOrder[index]
-                                                        .product!
-                                                        .productDiscount ==
-                                                    null
-                                                ? "đ${SahaStringUtils().convertToMoney(dataAppCustomerController.listOrder[index].product!.price)}"
-                                                : "đ${SahaStringUtils().convertToMoney(dataAppCustomerController.listOrder[index].product!.productDiscount!.discountPrice)}",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                color: SahaPrimaryColor),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          dataAppCustomerController
-                                                      .listOrder[index]
-                                                      .product!
-                                                      .productDiscount ==
-                                                  null
-                                              ? ""
-                                              : "đ${SahaStringUtils().convertToMoney(dataAppCustomerController.listOrder[index].product!.price)}",
-                                          style: TextStyle(
-                                              decoration:
-                                                  TextDecoration.lineThrough,
-                                              color: Colors.grey[400],
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12),
-                                          maxLines: 1,
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 10),
-                                    Row(
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                            dataAppCustomerController
-                                                .decreaseItem(index);
-                                          },
-                                          child: Container(
-                                            height: 25,
-                                            width: 30,
-                                            child: Icon(
-                                              Icons.remove,
-                                              size: 13,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.grey[200]!),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          height: 25,
-                                          width: 40,
-                                          child: Center(
-                                            child: Obx(
-                                              () => dataAppCustomerController
-                                                          .listQuantityProduct
-                                                          .length ==
-                                                      0
-                                                  ? Container(
-                                                      width: 20.0,
-                                                      height: 20.0,
-                                                      child:
-                                                          CupertinoActivityIndicator(),
-                                                    )
-                                                  : Text(
-                                                      '${dataAppCustomerController.listQuantityProduct[index]}',
-                                                      style: TextStyle(
-                                                          fontSize: 14),
-                                                    ),
-                                            ),
-                                          ),
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Colors.grey[200]!),
-                                          ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            dataAppCustomerController
-                                                .increaseItem(index);
-                                          },
-                                          child: Container(
-                                            height: 25,
-                                            width: 30,
-                                            child: Icon(
-                                              Icons.add,
-                                              size: 13,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.grey[200]!),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Divider(
-                        height: 1,
-                      )
-                    ],
-                  ),
-                ),
+                          onDecreaseItem: () {
+                            dataAppCustomerController.decreaseItem(index);
+                          },
+                          onIncreaseItem: () {
+                            dataAppCustomerController.increaseItem(index);
+                          },
+                          onUpdateProduct: (quantity, distributesSelected) {
+                            dataAppCustomerController.updateItemCart(
+                                dataAppCustomerController
+                                    .listOrder[index].product!.id,
+                                quantity,
+                                distributesSelected);
+                          },
+                          quantity: dataAppCustomerController
+                                  .listQuantityProduct[index] ??
+                              0,
+                        )),
               ),
             ),
           ],
