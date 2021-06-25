@@ -158,8 +158,9 @@ class ProductItemWidget extends StatelessWidget {
                                                 ? "${SahaStringUtils().convertToMoney(product.price)}đ"
                                                 : "${SahaStringUtils().convertToMoney(product.productDiscount!.discountPrice)}đ",
                                             style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .primaryColor,
+                                                color: Theme.of(context).primaryColor.computeLuminance()
+                                                    > 0.5 ? Colors.black : Theme.of(context).primaryColor
+                                                ,
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 14),
                                             maxLines: 1,
@@ -186,9 +187,9 @@ class ProductItemWidget extends StatelessWidget {
                                     child: SvgPicture.asset(
                                       "assets/icons/cart_icon.svg",
                                       color: Theme.of(context)
-                                              .primaryTextTheme
-                                              .headline6!
-                                              .color,
+                                          .primaryTextTheme
+                                          .headline6!
+                                          .color,
                                     ),
                                   ),
                                 ),
@@ -244,37 +245,39 @@ class ProductItemWidget extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            top: -5,
-            left: -13,
-            child: Stack(
-              children: [
-                Container(
-                  height: 45,
-                  width: 45,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: SvgPicture.asset(
-                      "assets/icons/rectangle.svg",
-                      color: Color(0xffd70c10),
-                    ),
+          product.isNew == true
+              ? Positioned(
+                  top: -5,
+                  left: -13,
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: 45,
+                        width: 45,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: SvgPicture.asset(
+                            "assets/icons/rectangle.svg",
+                            color: Color(0xffd70c10),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 16,
+                        right: 5,
+                        child: Text(
+                          "New",
+                          style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "nunito_bold",
+                              color: Colors.white),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                Positioned(
-                  top: 16,
-                  right: 5,
-                  child: Text(
-                    "Mall",
-                    style: TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "nunito_bold",
-                        color: Colors.white),
-                  ),
-                ),
-              ],
-            ),
-          ),
+                )
+              : Container(),
           Positioned(
             top: 25,
             left: 0,
@@ -296,40 +299,44 @@ class ProductItemWidget extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
-                        color:
-                            Theme.of(context).primaryTextTheme.headline6!.color),
+                        color: Theme.of(context)
+                            .primaryTextTheme
+                            .headline6!
+                            .color),
                   ),
                 ),
               ],
             ),
           ),
-          Positioned(
-            bottom: 80,
-            right: 10,
-            child: Stack(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[600]!.withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(3),
+          product.isTopSale == true
+              ? Positioned(
+                  bottom: 80,
+                  right: 10,
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[600]!.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                        height: 15,
+                        width: 45,
+                        child: Center(
+                          child: Text(
+                            "Bán chạy",
+                            style: TextStyle(
+                                fontSize: 9,
+                                color: Theme.of(context)
+                                    .primaryTextTheme
+                                    .headline6!
+                                    .color),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  height: 15,
-                  width: 45,
-                  child: Center(
-                    child: Text(
-                      "Bán chạy",
-                      style: TextStyle(
-                          fontSize: 9,
-                          color: Theme.of(context)
-                              .primaryTextTheme
-                              .headline6!
-                              .color),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+                )
+              : Container(),
         ],
       ),
     );

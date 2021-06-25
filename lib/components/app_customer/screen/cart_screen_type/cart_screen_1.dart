@@ -144,7 +144,7 @@ class CartScreen1 extends StatelessWidget {
                             dataAppCustomerController.updateItemCart(
                                 dataAppCustomerController
                                     .listOrder[index].product!.id,
-                                0);
+                                0, []);
                           },
                           background: Container(
                             padding: EdgeInsets.symmetric(horizontal: 20),

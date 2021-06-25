@@ -5,6 +5,7 @@ import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/ca
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/model/combo.dart';
+import 'package:sahashop_user/model/order.dart';
 import 'package:sahashop_user/model/product.dart';
 
 class ProductController extends GetxController {
@@ -13,22 +14,22 @@ class ProductController extends GetxController {
   var currentImage = 0.obs;
   var isSeeMore = false.obs;
   var animateAddCart = false.obs;
-  var currentProduct = Product();
-  var productDetailRequest = Product().obs;
+  var productInput = Product();
+  var productShow = Product().obs;
   var listProductsDiscount = RxList<Product>();
   var isLoadingProduct = false.obs;
   var listProductCombo = RxList<ProductsCombo>();
   var hasInCombo = false.obs;
   var discountComboType = 0.obs;
   var valueComboType = 0.0.obs;
+  var distributesSelected = RxList<DistributesSelected>();
+  var errorTextInBottomModel = "".obs;
 
   DataAppCustomerController dataAppCustomerController = Get.find();
 
   ProductController() {
-    currentProduct =
-        dataAppCustomerController.productCurrent;
-    productDetailRequest.value =
-        dataAppCustomerController.productCurrent;
+    productInput = dataAppCustomerController.productCurrent;
+    productShow.value = dataAppCustomerController.productCurrent;
     getDetailProduct();
     getComboCustomer();
     if (dataAppCustomerController.homeData?.discountProducts?.list != null) {
@@ -43,8 +44,8 @@ class ProductController extends GetxController {
     isLoadingProduct.value = true;
     try {
       var res = await CustomerRepositoryManager.productCustomerRepository
-          .getDetailProduct(currentProduct.id);
-      productDetailRequest.value = res!.data ?? currentProduct;
+          .getDetailProduct(productInput.id);
+      productShow.value = res!.data ?? productInput;
     } catch (err) {
       //  SahaAlert.showError(message: err.toString());
     }
@@ -57,7 +58,7 @@ class ProductController extends GetxController {
           .getComboCustomer();
       res!.data!.forEach((e) {
         int checkHasInCombo = e.productsCombo!.indexWhere(
-            (element) => element.product!.id == productDetailRequest.value.id);
+            (element) => element.product!.id == productShow.value.id);
         if (checkHasInCombo != -1) {
           hasInCombo.value = true;
 
@@ -70,6 +71,27 @@ class ProductController extends GetxController {
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
+  }
+
+  void onCheckElementDistribute(String name, String value) {
+    distributesSelected.removeWhere((distribute) => distribute.name == name);
+    distributesSelected.add(DistributesSelected(name: name, value: value));
+  }
+
+  bool isChecked(String nameDistribute, String nameElement) {
+    if (distributesSelected.map((e) => e.name).contains(nameDistribute) &&
+        distributesSelected.map((e) => e.value).contains(nameElement)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool isDoneCheckElement() {
+    bool ok = (productShow.value.distributes!.length ==
+        distributesSelected.length);
+    if(ok == true)  errorTextInBottomModel.value = "";
+    return ok;
   }
 
   void animatedAddCard() {
@@ -102,15 +124,24 @@ class ProductController extends GetxController {
   }
 
   void addItemCart() {
-    dataAppCustomerController.addItemCart(productDetailRequest.value.id);
+    dataAppCustomerController.addItemCart(productShow.value.id);
   }
 
   void addManyItemOrUpdate() {
     dataAppCustomerController.updateItemCart(
-        productDetailRequest.value.id, quantity.value);
-
-    /// back sheet
+        productShow.value.id, quantity.value,distributesSelected.toList());
     Get.back();
     Get.to(() => CartScreen1());
+  }
+
+  void onSubmitBuy() {
+
+    for(var distribute in productShow.value.distributes!) {
+      if(!distributesSelected.map((element) => element.name).contains(distribute.name)) {
+        errorTextInBottomModel.value = "Mời chọn ${distribute.name}";
+        return;
+      }
+    }
+    addManyItemOrUpdate();
   }
 }

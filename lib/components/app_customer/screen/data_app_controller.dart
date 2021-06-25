@@ -168,13 +168,13 @@ class DataAppCustomerController extends GetxController {
 
   void increaseItem(index) {
     listQuantityProduct[index] = listQuantityProduct[index] + 1;
-    updateItemCart(listOrder[index].product!.id, listQuantityProduct[index]);
+    updateItemCart(listOrder[index].product!.id, listQuantityProduct[index],[]);
   }
 
   void decreaseItem(index) {
     if (listQuantityProduct[index] > 1) {
       listQuantityProduct[index] = listQuantityProduct[index] - 1;
-      updateItemCart(listOrder[index].product!.id, listQuantityProduct[index]);
+      updateItemCart(listOrder[index].product!.id, listQuantityProduct[index],[]);
     } else {
       return;
     }
@@ -271,11 +271,11 @@ class DataAppCustomerController extends GetxController {
     }
   }
 
-  Future<void> updateItemCart(int? idProduct, int quantity) async {
+  Future<void> updateItemCart(int? idProduct, int quantity, List<DistributesSelected> listDistributes) async {
     List<int> listQuantityProductNew = [];
     try {
       var res = await CustomerRepositoryManager.cartRepository
-          .updateItemCart(idProduct, quantity);
+          .updateItemCart(idProduct, quantity, listDistributes);
       listOrder(res!.data!.lineItems!);
       listUsedCombo(res.data!.usedCombos!);
       res.data!.lineItems!.forEach((element) {
@@ -296,7 +296,7 @@ class DataAppCustomerController extends GetxController {
     List<int> listQuantityProductNew = [];
     try {
       var res =
-          await CustomerRepositoryManager.cartRepository.addItemCart(idProduct);
+          await CustomerRepositoryManager.cartRepository.addItemCart(idProduct,[]);
       listOrder(res!.data!.lineItems!);
       listUsedCombo(res.data!.usedCombos!);
       res.data!.lineItems!.forEach((element) {

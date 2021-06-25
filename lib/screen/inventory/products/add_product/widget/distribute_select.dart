@@ -29,19 +29,26 @@ class DistributeSelect extends StatefulWidget {
 class _DistributeSelectState extends State<DistributeSelect> {
   final DistributeSelectController distributeSelectController = Get.find();
 
+  Future<bool> onPop() async {
+    var valid = distributeSelectController.checkValidParam();
+    if (valid) {
+      widget.onData!(distributeSelectController.getFinalDistribute());
+    }
+    return distributeSelectController.checkValidParam();
+  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {
-        var valid = distributeSelectController.checkValidParam();
-        if (valid) {
-          widget.onData!(distributeSelectController.getFinalDistribute());
-        }
-        return distributeSelectController.checkValidParam();
-      },
+      onWillPop: onPop,
       child: Scaffold(
         appBar: SahaAppBar(
           titleText: "Phân loại sản phẩm",
+          actions: [
+            IconButton(icon: Icon(Icons.check), onPressed: () {
+              onPop();
+              Get.back();
+            })
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),

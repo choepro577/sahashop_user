@@ -359,9 +359,9 @@ SPEC CHECKSUMS:
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e
-  wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
+  wakelock: b0843b2479edbf6504d8d262c2959446f35373aa
   webview_flutter: 9f491a9b5a66f2573946a389b2677987b0ff8c0b
 
 PODFILE CHECKSUM: f4a4c3c964704a26f8efd088ab417abd200e3f8b
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

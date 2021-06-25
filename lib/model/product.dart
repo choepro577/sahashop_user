@@ -19,6 +19,8 @@ class Product {
     this.view,
     this.sold,
     this.likes,
+    this.isNew,
+    this.isTopSale,
     this.createdAt,
     this.updatedAt,
     this.distributes,
@@ -42,6 +44,8 @@ class Product {
   int? view;
   int? likes;
   int? status;
+  bool? isNew;
+  bool? isTopSale;
   DateTime? createdAt;
   DateTime? updatedAt;
   List<Distributes>? distributes;
@@ -70,6 +74,8 @@ class Product {
         sold: json["sold"],
         view: json["view"],
         likes: json['likes'],
+        isNew: json['is_new'] ?? false,
+        isTopSale: json['is_top_sale'] ?? false,
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         distributes: json['distributes'] != null
