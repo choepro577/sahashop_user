@@ -47,13 +47,9 @@ class _AddStoreState extends State<AddStore> {
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
+
     super.didChangeDependencies();
     sub ??= addStoreController.stateCreate.listen((state) {
-      if (state != "success") {
-        SahaDialogApp.showDialogError(context: context, errorMess: state);
-        EasyLoading.dismiss();
-      }
 
       if (state == "success") {
         Navigator.pop(context, "added");
@@ -144,8 +140,8 @@ class _AddStoreState extends State<AddStore> {
                 hintText: "Nhập địa chỉ cửa hàng Online",
                 icon: Icon(Icons.lock),
               ),
-              GetX<AddStoreController>(
-                builder: (_) => DropdownButton<Map<String, String?>>(
+              Obx(
+                () => DropdownButton<Map<String, String?>>(
                   focusColor: Colors.white,
                   value: chooseDropDownValue,
                   //elevation: 5,

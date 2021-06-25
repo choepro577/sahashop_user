@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/components/modal/modal_bottom_option_buy_product.dart';
 import 'package:sahashop_user/components/app_customer/components/product_item/product_item_widget.dart';
-import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/cart_screen_1.dart';
+import 'package:sahashop_user/components/app_customer/screen/cart_screen/cart_screen_1.dart';
 import 'package:sahashop_user/components/app_customer/screen/chat_customer/chat_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/combo_detail_screen/combo_detail_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/product_screen/controller/product_controller.dart';
@@ -15,6 +16,8 @@ import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/chip/ticker.dart';
 import 'package:sahashop_user/components/saha_user/text/text_money.dart';
+import 'package:sahashop_user/model/order.dart';
+import 'package:sahashop_user/model/product.dart';
 import 'package:sahashop_user/screen/home/widget/section_title.dart';
 
 class ProductScreen1 extends StatelessWidget {
@@ -895,9 +898,21 @@ class ProductScreen1 extends StatelessWidget {
                       () => !productController.animateAddCart.value
                           ? InkWell(
                               onTap: () {
-                                // Get the position of the current widget when clicked, and pass in overlayEntry
-                                productController.animatedAddCard();
-                                productController.addItemCart();
+                                ModalBottomOptionBuyProduct.showModelOption(
+                                    product:
+                                        productController.productShow.value,
+                                    onSubmit: (int quantity,
+                                        Product product,
+                                        List<DistributesSelected>
+                                            distributesSelected) {
+                                      productController.addManyItemOrUpdate(
+                                          quantity: quantity,
+                                          buyNow: false,
+                                          productId: product.id,
+                                          distributesSelected:
+                                              distributesSelected);
+                                      productController.animatedAddCard();
+                                    });
                               },
                               child: Container(
                                 height: 25,
@@ -930,7 +945,16 @@ class ProductScreen1 extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  showModelOption();
+                  ModalBottomOptionBuyProduct.showModelOption(
+                      product: productController.productShow.value,
+                      onSubmit: (int quantity, Product product,
+                          List<DistributesSelected> distributesSelected) {
+                        productController.addManyItemOrUpdate(
+                            quantity: quantity,
+                            buyNow: true,
+                            productId: product.id,
+                            distributesSelected: distributesSelected);
+                      });
                 },
                 child: Container(
                     width: Get.width / 2,
@@ -948,240 +972,6 @@ class ProductScreen1 extends StatelessWidget {
               ),
             ],
           )),
-    );
-  }
-
-  void showModelOption() {
-    showModalBottomSheet<void>(
-      isScrollControlled: true,
-      context: Get.context!,
-      builder: (BuildContext context) {
-        var quantity =
-            productController.productShow.value.quantityInStock == null ||
-                    productController.productShow.value.quantityInStock! < 0
-                ? "Vô hạn"
-                : productController.productShow.value.quantityInStock;
-
-        return Obx(
-          () => Container(
-            color: Colors.white,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(13.0),
-                          child: Container(
-                            width: 120,
-                            height: 120,
-                            child: CachedNetworkImage(
-                                imageUrl: productController
-                                            .productShow.value.images!.length ==
-                                        0
-                                    ? ""
-                                    : productController
-                                        .productShow.value.images![0].imageUrl!,
-                                fit: BoxFit.cover,
-                                errorWidget: (context, url, error) =>
-                                    Image.asset("assets/saha_loading.png")),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SahaMoneyText(
-                              price: productController.productShow.value.price,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Text("Kho: $quantity")
-                          ],
-                        )
-                      ],
-                    ),
-                    IconButton(
-                        icon: Icon(Icons.close),
-                        onPressed: () {
-                          Get.back();
-                        }),
-                  ],
-                ),
-                Divider(
-                  height: 1,
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                productController.productShow.value.distributes == null ||
-                        productController
-                                .productShow.value.distributes!.length ==
-                            0
-                    ? Container()
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ConstrainedBox(
-                            constraints: new BoxConstraints(
-                              minHeight: 35.0,
-                              maxHeight: MediaQuery.of(context).orientation ==
-                                      Orientation.portrait
-                                  ? Get.height * 0.5
-                                  : Get.height * 0.2,
-                            ),
-                            child: SingleChildScrollView(
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: productController
-                                      .productShow.value.distributes!
-                                      .map((distribute) => Container(
-                                            width: Get.width,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 16,
-                                                          right: 16,
-                                                          top: 8,
-                                                          bottom: 8),
-                                                  child: Text(distribute.name!),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 16, right: 16),
-                                                  child: Wrap(
-                                                    children:
-                                                        distribute
-                                                            .elementDistributes!
-                                                            .map(
-                                                              (elementDistribute) =>
-                                                                  TickerStateLess(
-                                                                text:
-                                                                    elementDistribute
-                                                                        .name,
-                                                                ticked: productController.isChecked(
-                                                                    distribute
-                                                                        .name!,
-                                                                    elementDistribute
-                                                                        .name!),
-                                                                onChange: (va) {
-                                                                  productController.onCheckElementDistribute(
-                                                                      distribute
-                                                                          .name!,
-                                                                      elementDistribute
-                                                                          .name!);
-                                                                },
-                                                              ),
-                                                            )
-                                                            .toList(),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ))
-                                      .toList()),
-                            ),
-                          ),
-                          Divider(
-                            height: 1,
-                          ),
-                        ],
-                      ),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Số lượng",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w500),
-                      ),
-
-                      Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              productController.decreaseItem();
-                            },
-                            child: Container(
-                              height: 25,
-                              width: 30,
-                              child: Icon(Icons.remove),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey[300]!)),
-                            ),
-                          ),
-                          Container(
-                            height: 25,
-                            width: 40,
-                            child: Center(
-                              child: Obx(() => Text(
-                                    '${productController.quantity.value}',
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                            ),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey[300]!)),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              productController.increaseItem();
-                            },
-                            child: Container(
-                              height: 25,
-                              width: 30,
-                              child: Icon(Icons.add),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey[300]!)),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-
-                !productController.isDoneCheckElement() && productController.errorTextInBottomModel.value.length > 0 ?
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "${ productController.errorTextInBottomModel.value}",
-                    style: TextStyle(
-                        fontSize: 12,
-                    color: Colors.redAccent),
-                  ),
-                ) : Container(),
-
-                SahaButtonFullParent(
-                  text: "Mua ngay",
-                  textColor:
-                      Theme.of(context).primaryTextTheme.headline6!.color,
-                  color: productController.isDoneCheckElement()
-                      ? Theme.of(context).primaryColor
-                      : Colors.grey,
-                  onPressed: () {
-                    productController.onSubmitBuy();
-                  },
-                ),
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 }

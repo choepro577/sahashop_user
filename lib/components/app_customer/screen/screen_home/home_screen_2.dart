@@ -128,8 +128,8 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children:
-                            dataAppCustomerController.homeData!.allCategory!.list!
+                        children:  dataAppCustomerController.homeData!.allCategory == null ?[]
+                         :   dataAppCustomerController.homeData!.allCategory!.list!
                                 .map(
                                   (category) => CategoryButton(
                                     category: category,

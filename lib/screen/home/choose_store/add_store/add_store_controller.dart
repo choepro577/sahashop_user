@@ -7,7 +7,7 @@ class AddStoreController extends GetxController {
   var stateCreate = "".obs;
   var creating = false.obs;
   var listNameShop = RxList<String?>();
-  RxList<Map<String, String?>> mapTypeShop = RxList<Map<String, String>>();
+  var mapTypeShop = RxList<Map<String, String>>();
 
   Future<List<DataTypeShop>?> getAllShopType() async {
     try {
@@ -16,10 +16,11 @@ class AddStoreController extends GetxController {
 
       for (var i in listDataTypeShop) {
         listNameShop.add(i.name);
-        mapTypeShop.add({i.id.toString(): i.name});
+        mapTypeShop.add({i.id.toString(): i.name!});
       }
       print(listNameShop);
-      return listDataTypeShop;
+      stateCreate.refresh();
+      mapTypeShop.refresh();
     } catch (err) {
 
     }
@@ -38,6 +39,7 @@ class AddStoreController extends GetxController {
 
       creating.value = false;
       stateCreate.value = "success";
+      stateCreate.refresh();
       return true;
     } catch (e) {
       creating.value = false;

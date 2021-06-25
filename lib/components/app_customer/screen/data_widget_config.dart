@@ -4,7 +4,7 @@ import 'package:sahashop_user/data/example/data_example.dart';
 import 'banner_type/banner_type1.dart';
 import 'banner_type/banner_type2.dart';
 import 'banner_type/banner_type3.dart';
-import 'cart_screen_type/cart_screen_1.dart';
+import 'cart_screen/cart_screen_1.dart';
 import 'category_post_screen/category_post_screen_1.dart';
 import 'category_product_screen/category_product_screen_1.dart';
 import 'category_product_screen/category_product_screen_2.dart';

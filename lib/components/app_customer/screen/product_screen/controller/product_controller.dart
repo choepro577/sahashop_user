@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/app_customer/repository/repository_customer.dart';
-import 'package:sahashop_user/components/app_customer/screen/cart_screen_type/cart_screen_1.dart';
+import 'package:sahashop_user/components/app_customer/screen/cart_screen/cart_screen_1.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/model/combo.dart';
@@ -9,7 +9,6 @@ import 'package:sahashop_user/model/order.dart';
 import 'package:sahashop_user/model/product.dart';
 
 class ProductController extends GetxController {
-  var quantity = 1.obs;
   var currentIndexListOrder = 0.obs;
   var currentImage = 0.obs;
   var isSeeMore = false.obs;
@@ -22,8 +21,7 @@ class ProductController extends GetxController {
   var hasInCombo = false.obs;
   var discountComboType = 0.obs;
   var valueComboType = 0.0.obs;
-  var distributesSelected = RxList<DistributesSelected>();
-  var errorTextInBottomModel = "".obs;
+
 
   DataAppCustomerController dataAppCustomerController = Get.find();
 
@@ -73,27 +71,6 @@ class ProductController extends GetxController {
     }
   }
 
-  void onCheckElementDistribute(String name, String value) {
-    distributesSelected.removeWhere((distribute) => distribute.name == name);
-    distributesSelected.add(DistributesSelected(name: name, value: value));
-  }
-
-  bool isChecked(String nameDistribute, String nameElement) {
-    if (distributesSelected.map((e) => e.name).contains(nameDistribute) &&
-        distributesSelected.map((e) => e.value).contains(nameElement)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  bool isDoneCheckElement() {
-    bool ok = (productShow.value.distributes!.length ==
-        distributesSelected.length);
-    if(ok == true)  errorTextInBottomModel.value = "";
-    return ok;
-  }
-
   void animatedAddCard() {
     animateAddCart.value = true;
     print(animateAddCart.value);
@@ -111,37 +88,22 @@ class ProductController extends GetxController {
     isSeeMore.value = !isSeeMore.value;
   }
 
-  void increaseItem() {
-    quantity = quantity + 1;
-  }
-
-  void decreaseItem() {
-    if (quantity > 1) {
-      quantity = quantity - 1;
-    } else {
-      return;
-    }
-  }
-
   void addItemCart() {
     dataAppCustomerController.addItemCart(productShow.value.id);
   }
 
-  void addManyItemOrUpdate() {
+  void addManyItemOrUpdate(
+      {int? quantity,
+      bool? buyNow,
+      List<DistributesSelected>? distributesSelected,
+      int? productId}) {
     dataAppCustomerController.updateItemCart(
-        productShow.value.id, quantity.value,distributesSelected.toList());
+        productId, quantity!, distributesSelected!.toList());
+
     Get.back();
-    Get.to(() => CartScreen1());
-  }
-
-  void onSubmitBuy() {
-
-    for(var distribute in productShow.value.distributes!) {
-      if(!distributesSelected.map((element) => element.name).contains(distribute.name)) {
-        errorTextInBottomModel.value = "Mời chọn ${distribute.name}";
-        return;
-      }
+    if (buyNow == true) {
+      Get.to(() => CartScreen1());
     }
-    addManyItemOrUpdate();
   }
+
 }
