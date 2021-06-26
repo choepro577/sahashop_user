@@ -25,7 +25,8 @@ class CategoryController extends GetxController {
     }
     listCategorySelected.forEach((element) {
       if (!listCategory.map((e) => e.id).toList().contains(element.id)) {
-        listCategorySelected.removeWhere((element) => element.id == category.id);
+        listCategorySelected
+            .removeWhere((element) => element.id == category.id);
       }
     });
   }
@@ -49,5 +50,17 @@ class CategoryController extends GetxController {
       SahaAlert.showError(message: err.toString());
     }
     loading.value = false;
+  }
+
+  Future<bool?> deleteCategory(int categoryId) async {
+    try {
+      var data =
+          await RepositoryManager.categoryRepository.deleteCategory(categoryId);
+      listCategory.removeWhere((element) => element.id == categoryId);
+      SahaAlert.showSuccess(message: "Đã xóa");
+      return true;
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
   }
 }

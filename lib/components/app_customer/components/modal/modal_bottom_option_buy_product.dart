@@ -65,6 +65,11 @@ class _OptionBuyProductState extends State<OptionBuyProduct> {
   void initState() {
     super.initState();
 
+    max = widget.product.quantityInStock == null ||
+        widget.product.quantityInStock! < 0
+        ? -1
+        : widget.product.quantityInStock;
+
     if (widget.distributesSelectedParam != null) {
       distributesSelected = widget.distributesSelectedParam!;
     }
@@ -114,6 +119,17 @@ class _OptionBuyProductState extends State<OptionBuyProduct> {
   }
 
   bool isDoneCheckElement() {
+
+    max = widget.product.quantityInStock == null ||
+        widget.product.quantityInStock! < 0
+        ? -1
+        : widget.product.quantityInStock;
+
+    if (max == 0) {
+      errorTextInBottomModel = "Hết hàng";
+      return false;
+    }
+
     bool ok =
         (widget.product.distributes!.length == distributesSelected.length);
     if (ok == true) errorTextInBottomModel = "";
@@ -362,7 +378,7 @@ class _OptionBuyProductState extends State<OptionBuyProduct> {
           SahaButtonFullParent(
             text: "Mua ngay",
             textColor: Theme.of(context).primaryTextTheme.headline6!.color,
-            color: isDoneCheckElement()
+            color:max != 0 && isDoneCheckElement()
                 ? Theme.of(context).primaryColor
                 : Colors.grey,
             onPressed: () {

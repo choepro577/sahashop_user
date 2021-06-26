@@ -45,9 +45,30 @@ class ProductController extends GetxController {
           .getDetailProduct(productInput.id);
       productShow.value = res!.data ?? productInput;
     } catch (err) {
-      //  SahaAlert.showError(message: err.toString());
+       SahaAlert.showError(message: err.toString());
     }
     isLoadingProduct.value = false;
+  }
+
+  Future<void> favoriteProduct(bool isFavorite) async {
+
+    try {
+      var res = await CustomerRepositoryManager.favoriteRepository
+          .favoriteProduct(productInput.id!,isFavorite);
+      if(isFavorite) {
+        productShow.value.isFavorite = true;
+        productShow.refresh();
+        SahaAlert.showSuccess(message: "Đã thích");
+      } else {
+        productShow.value.isFavorite = false;
+        productShow.refresh();
+        SahaAlert.showSuccess(message: "Đã bỏ thích");
+      }
+
+    } catch (err) {
+       SahaAlert.showError(message: err.toString());
+    }
+
   }
 
   Future<void> getComboCustomer() async {

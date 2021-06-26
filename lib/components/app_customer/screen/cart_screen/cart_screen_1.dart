@@ -278,6 +278,7 @@ class CartScreen1 extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         showModalBottomSheet<void>(
+                          isScrollControlled: true,
                             context: context,
                             builder: (BuildContext context) {
                               return Stack(

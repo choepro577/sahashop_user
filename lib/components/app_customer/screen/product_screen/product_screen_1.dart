@@ -324,22 +324,40 @@ class ProductScreen1 extends StatelessWidget {
                                       Container(
                                         height: 25,
                                         width: 25,
-                                        child: false
-                                            ? SvgPicture.asset(
-                                                "assets/icons/heart.svg",
-                                                color: Colors.grey,
+                                        child: !productController
+                                                .productShow.value.isFavorite!
+                                            ? InkWell(
+                                                onTap: () {
+                                                  productController
+                                                      .favoriteProduct(true);
+                                                },
+                                                child: SvgPicture.asset(
+                                                  "assets/icons/heart.svg",
+                                                  color: Colors.grey,
+                                                ),
                                               )
-                                            : SvgPicture.asset(
-                                                "assets/icons/heart_fill.svg",
-                                                color: Colors.red,
+                                            : InkWell(
+                                                onTap: () {
+                                                  productController
+                                                      .favoriteProduct(false);
+                                                },
+                                                child: SvgPicture.asset(
+                                                  "assets/icons/heart_fill.svg",
+                                                  color: Colors.red,
+                                                ),
                                               ),
                                       ),
                                       SizedBox(
                                         width: 15,
                                       ),
-                                      Icon(
-                                        Icons.chat_outlined,
-                                        color: Theme.of(context).primaryColor,
+                                      IconButton(
+                                        onPressed: () {
+                                          Get.to(() => ChatCustomerScreen());
+                                        },
+                                        icon: Icon(
+                                          Icons.chat_outlined,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
                                       ),
                                     ],
                                   )
@@ -759,6 +777,7 @@ class ProductScreen1 extends StatelessWidget {
             child: Row(
               children: [
                 IconButton(
+                    color: Colors.grey,
                     icon: Icon(Icons.arrow_back_ios,
                         color: Theme.of(context).primaryColor),
                     onPressed: () {

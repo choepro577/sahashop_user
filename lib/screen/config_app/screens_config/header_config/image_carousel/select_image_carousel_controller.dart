@@ -64,7 +64,7 @@ class SelectCarouselImagesController extends GetxController {
   Future<String?> uploadImage(File file) async {
     try {
       var fileUpImageCompress =
-          await ImageUtils.getImageCompress(file, quality: 80);
+          await ImageUtils.getImageCompress(file, quality: 20, minWidth: 512);
 
       var link = await RepositoryManager.imageRepository
           .uploadImage(fileUpImageCompress);
@@ -94,7 +94,7 @@ class SelectCarouselImagesController extends GetxController {
       final picker = ImagePicker();
       final pickedFile = (await picker.getImage(source: ImageSource.gallery))!;
       File? croppedFile = await ImageCropper.cropImage(
-          compressQuality: 100,
+          compressQuality: 50,
           sourcePath: pickedFile.path,
           aspectRatioPresets: [CropAspectRatioPreset.ratio16x9],
           androidUiSettings: AndroidUiSettings(

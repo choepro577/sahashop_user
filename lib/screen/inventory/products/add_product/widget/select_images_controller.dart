@@ -2,13 +2,10 @@ import 'dart:io';
 
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/services.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
-import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
-import 'package:path/path.dart';
 import 'package:sahashop_user/utils/image_utils.dart';
 
 final MAX_SELECT = 10;

@@ -7,6 +7,7 @@ import 'package:sahashop_user/components/app_customer/screen/address_screen/all_
 import 'package:sahashop_user/components/app_customer/screen/choose_voucher/choose_voucher_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/config_profile_screen/config_profile_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
+import 'package:sahashop_user/components/app_customer/screen/favorites/favorites.dart';
 import 'package:sahashop_user/components/app_customer/screen/login/login_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/profile_screen/fanpage/fanpage_screen.dart';
@@ -823,39 +824,45 @@ class ProfileScreen extends StatelessWidget {
               Divider(
                 height: 1,
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: 25,
-                          width: 25,
-                          child: SvgPicture.asset(
-                            "assets/icons/heart.svg",
-                            color: Colors.red,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          "Đã thích",
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      height: 13,
-                      width: 13,
-                      child: SvgPicture.asset(
-                        "assets/icons/right_arrow.svg",
-                        color: Colors.black,
+              InkWell(
+                onTap: () {
+                  Get.to(()=>FavoritesScreen());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                          children: [
+                            Container(
+                              height: 25,
+                              width: 25,
+                              child: SvgPicture.asset(
+                                "assets/icons/heart.svg",
+                                color: Colors.red,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              "Đã thích",
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ],
+
                       ),
-                    )
-                  ],
+                      Container(
+                        height: 13,
+                        width: 13,
+                        child: SvgPicture.asset(
+                          "assets/icons/right_arrow.svg",
+                          color: Colors.black,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
               Divider(

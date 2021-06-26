@@ -28,6 +28,9 @@ import 'package:sahashop_user/components/app_customer/remote/response-request/st
 import 'package:sahashop_user/components/app_customer/remote/response-request/store/type_store_respones.dart';
 import 'package:sahashop_user/model/cart.dart';
 
+import 'response-request/favorite/all_product_response.dart';
+import 'response-request/favorite/favorite_response.dart';
+
  part 'customer_service.g.dart';
 
 @RestApi(baseUrl: "https://sahashop.net/api/customer/")
@@ -204,4 +207,14 @@ abstract class CustomerService {
   @PUT("{storeCode}/carts/orders/change_payment_method/{orderCode}")
   Future<CancelOrderResponse> changePaymentMethod(@Path("storeCode") String? storeCode,
       @Body() Map<String, dynamic> body, @Path() String? orderCode);
+
+  @GET("{storeCode}/favorites")
+  Future<AllProductFavorites> getAllFavorite(@Path("storeCode") String storeCode, @Path("page") int page);
+
+  @POST("{storeCode}/products/{productId}/favorites")
+  Future<FavoriteResponse> favoriteProduct(@Path("storeCode") String storeCode,
+      @Path("productId") int productId, @Body() Map<String, dynamic> body
+      );
+
+
 }

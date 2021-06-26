@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,8 +15,10 @@ class SelectCategoryImage extends StatelessWidget {
   final Function? onChange;
 
   final File? fileSelected;
+  final String? linkImage;
 
-  SelectCategoryImage({Key? key, this.onChange, this.fileSelected})
+  SelectCategoryImage(
+      {Key? key, this.onChange, this.fileSelected, this.linkImage})
       : super(key: key);
 
   @override
@@ -24,6 +27,27 @@ class SelectCategoryImage extends StatelessWidget {
       height: 110,
       child: Obx(() {
         var deviceImage = selectImageController.pathImage;
+
+        if (linkImage != null && linkImage !="" && deviceImage.value == null ||
+            deviceImage.value == "")
+          return Container(
+
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                CachedNetworkImage(
+                  height: 100,
+                  width: 100,
+                  fit: BoxFit.cover,
+                  imageUrl: linkImage!,
+                  placeholder: (context, url) => Container(),
+                  errorWidget: (context, url, error) => Container()
+                ),
+                addImage()
+              ],
+            ),
+          );
+
         if (deviceImage.value == null || deviceImage.value == "")
           return addImage();
         return buildItemAsset(File(deviceImage.value));
@@ -138,6 +162,7 @@ class SelectImageController extends GetxController {
   }
 
   void removeImage() {
-    pathImage(null);
+    pathImage("");
+    pathImage.refresh();
   }
 }
