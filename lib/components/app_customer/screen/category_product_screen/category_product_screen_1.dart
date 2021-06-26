@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
+import 'package:sahashop_user/components/app_customer/components/product_item/product_item_loading_widget.dart';
 import 'package:sahashop_user/components/app_customer/components/product_item/product_item_widget.dart';
 import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
@@ -17,20 +19,14 @@ import 'package:sahashop_user/model/category.dart';
 import 'controller/category_controller.dart';
 
 class CategoryProductStyle1 extends StatelessWidget {
-
-
   final ConfigController configController = Get.find();
   final DataAppCustomerController dataAppCustomerController = Get.find();
-  final CategoryController categoryController = CategoryController(
-
-  );
+  final CategoryController categoryController = CategoryController();
 
   CategoryProductStyle1({Key? key}) : super(key: key);
 
   @override
-  void dispose() {
-
-  }
+  void dispose() {}
 
   @override
   Widget build(BuildContext context) {
@@ -108,20 +104,28 @@ class CategoryProductStyle1 extends StatelessWidget {
       var list = isLoading ? LIST_PRODUCT_EXAMPLE : categoryController.products;
       return Padding(
         padding: const EdgeInsets.all(2.5),
-        child: SahaSimmer(
-          isLoading: isLoading,
-          child: StaggeredGridView.countBuilder(
-            crossAxisCount: 2,
-            itemCount: list.length,
-            itemBuilder: (BuildContext context, int index) => ProductItemWidget(
-              product: list[index],
-              isLoading: isLoading,
-            ),
-            staggeredTileBuilder: (int index) => new StaggeredTile.fit(1),
-            mainAxisSpacing: 0,
-            crossAxisSpacing: 0,
-          ),
-        ),
+        child: isLoading
+            ? StaggeredGridView.countBuilder(
+                crossAxisCount: 2,
+                itemCount: 6,
+                itemBuilder: (BuildContext context, int index) =>
+                    ProductItemLoadingWidget(),
+                staggeredTileBuilder: (int index) => new StaggeredTile.fit(1),
+                mainAxisSpacing: 0,
+                crossAxisSpacing: 0,
+              )
+            : StaggeredGridView.countBuilder(
+                crossAxisCount: 2,
+                itemCount: list.length,
+                itemBuilder: (BuildContext context, int index) =>
+                    ProductItemWidget(
+                  product: list[index],
+                  isLoading: isLoading,
+                ),
+                staggeredTileBuilder: (int index) => new StaggeredTile.fit(1),
+                mainAxisSpacing: 0,
+                crossAxisSpacing: 0,
+              ),
       );
     });
   }
@@ -129,48 +133,48 @@ class CategoryProductStyle1 extends StatelessWidget {
   Widget buildItem({Category? category}) {
     return Obx(
       () => Container(
-          color: categoryController.categoryCurrent.value.id == category!.id
-              ? Colors.white
-              : Colors.transparent,
-          child: InkWell(
-            onTap: () {
-              categoryController.setCategoryCurrent(category);
-            },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 5,
+        color: categoryController.categoryCurrent.value.id == category!.id
+            ? Colors.white
+            : Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            categoryController.setCategoryCurrent(category);
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 5,
+              ),
+              SizedBox(
+                width: 60,
+                height: 60,
+                child: CachedNetworkImage(
+                  imageUrl: category.imageUrl ?? "",
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => SahaEmptyImage(),
+                  fit: BoxFit.cover,
                 ),
-                SizedBox(
-                  width: 60,
-                  height: 60,
-                  child: CachedNetworkImage(
-                    imageUrl: category.imageUrl ?? "",
-                    placeholder: (context, url) => CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  category.name!,
-                  maxLines: 3,
-                  style: TextStyle(
-                      fontSize: 13,
-                      color: categoryController.categoryCurrent.value == category
-                          ? Theme.of(Get.context!).primaryColor
-                          : Colors.black54),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-              ],
-            ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                category.name!,
+                maxLines: 3,
+                style: TextStyle(
+                    fontSize: 13,
+                    color: categoryController.categoryCurrent.value == category
+                        ? Theme.of(Get.context!).primaryColor
+                        : Colors.black54),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+            ],
           ),
+        ),
       ),
     );
   }

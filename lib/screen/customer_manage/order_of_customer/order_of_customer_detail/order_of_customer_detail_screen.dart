@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/const/const_image_logo.dart';
 import 'package:sahashop_user/model/order.dart';
@@ -216,15 +217,11 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                                       ? ""
                                       : "${order.lineItemsAtTime![index].imageUrl}",
                                   errorWidget: (context, url, error) =>
-                                      ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: CachedNetworkImage(
-                                        fit: BoxFit.cover,
-                                        imageUrl: logoSahaImage),
+                                      SahaEmptyImage(),
                                   ),
                                 ),
                               ),
-                            ),
+
                             SizedBox(
                               width: 10,
                             ),

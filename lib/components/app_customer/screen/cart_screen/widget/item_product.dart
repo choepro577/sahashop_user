@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/app_customer/components/modal/modal_bottom_option_buy_product.dart';
 import 'package:sahashop_user/const/const_image_logo.dart';
 import 'package:sahashop_user/const/constant.dart';
@@ -95,20 +96,14 @@ class ItemProductInCartWidget extends StatelessWidget {
                               imageUrl: product.images!.length == 0
                                   ? ""
                                   : product.images![0].imageUrl!,
-                              errorWidget: (context, url, error) => ClipRRect(
-                                borderRadius: BorderRadius.circular(2),
-                                child: Container(
-                                  height: 100,
-                                  child: CachedNetworkImage(
-                                      fit: BoxFit.cover,
-                                      imageUrl: logoSahaImage),
+                              errorWidget: (context, url, error) => SahaEmptyImage(),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
+
+
                     product.productDiscount == null
                         ? Container()
                         : Positioned(

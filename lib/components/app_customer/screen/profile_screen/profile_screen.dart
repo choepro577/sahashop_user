@@ -13,6 +13,7 @@ import 'package:sahashop_user/components/app_customer/screen/order_history/order
 import 'package:sahashop_user/components/app_customer/screen/profile_screen/fanpage/fanpage_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/profile_screen/profile_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/register/register_customer_screen.dart';
+import 'package:sahashop_user/components/app_customer/utils/color_utils.dart';
 
 // ignore: must_be_immutable
 class ProfileScreen extends StatelessWidget {
@@ -306,7 +307,7 @@ class ProfileScreen extends StatelessWidget {
                             width: 25,
                             child: SvgPicture.asset(
                               "assets/icons/check_list.svg",
-                              color: Theme.of(context).primaryColor,
+                              color: SahaColorUtils().colorTextWithPrimaryColor(),
                             ),
                           ),
                           SizedBox(
@@ -364,7 +365,7 @@ class ProfileScreen extends StatelessWidget {
                                         height: 30,
                                         child: SvgPicture.asset(
                                           "assets/icons/wallet.svg",
-                                          color: Theme.of(context).primaryColor,
+                                          color: SahaColorUtils().colorTextWithPrimaryColor(),
                                         ),
                                       ),
                                       profileController!
@@ -427,7 +428,7 @@ class ProfileScreen extends StatelessWidget {
                                         height: 30,
                                         child: SvgPicture.asset(
                                           "assets/icons/box.svg",
-                                          color: Theme.of(context).primaryColor,
+                                          color: SahaColorUtils().colorTextWithPrimaryColor(),
                                         ),
                                       ),
                                       profileController!.packingAmount.value != 0
@@ -488,7 +489,7 @@ class ProfileScreen extends StatelessWidget {
                                         height: 30,
                                         child: SvgPicture.asset(
                                           "assets/icons/delivery_truck.svg",
-                                          color: Theme.of(context).primaryColor,
+                                          color: SahaColorUtils().colorTextWithPrimaryColor(),
                                         ),
                                       ),
                                       profileController!.shippingAmount.value !=
@@ -550,7 +551,7 @@ class ProfileScreen extends StatelessWidget {
                                         height: 25,
                                         child: SvgPicture.asset(
                                           "assets/icons/favorite.svg",
-                                          color: Theme.of(context).primaryColor,
+                                          color: SahaColorUtils().colorTextWithPrimaryColor(),
                                         ),
                                       ),
                                       profileController!.evaluateAmount.value !=

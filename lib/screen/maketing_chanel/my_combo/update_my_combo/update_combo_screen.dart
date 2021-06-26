@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/model/combo.dart';
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/combo/combo_request.dart';
@@ -745,14 +746,7 @@ class _UpdateMyComboScreenState extends State<UpdateMyComboScreen> {
                                                         .imageUrl!,
                                                 errorWidget:
                                                     (context, url, error) =>
-                                                        Container(
-                                                  height: 100,
-                                                  child: CachedNetworkImage(
-                                                    fit: BoxFit.cover,
-                                                    imageUrl:
-                                                        "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
-                                                  ),
-                                                ),
+                                                        SahaEmptyImage(),
                                               ),
                                             ),
                                             Expanded(

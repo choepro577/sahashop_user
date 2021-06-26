@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/update_my_program/update_product_discount_update/update_product_discount_controller.dart';
@@ -154,20 +155,7 @@ class _UpdateProductToDiscountScreenState
                                                                 .imageUrl!,
                                                     errorWidget:
                                                         (context, url, error) =>
-                                                            ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      child: Container(
-                                                        height: 100,
-                                                        child:
-                                                            CachedNetworkImage(
-                                                          fit: BoxFit.cover,
-                                                          imageUrl:
-                                                              "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
-                                                        ),
-                                                      ),
-                                                    ),
+                                                            SahaEmptyImage(),
                                                   ),
                                                 ),
                                               ),
@@ -297,18 +285,7 @@ class _UpdateProductToDiscountScreenState
                                                     .imageUrl!,
                                             errorWidget:
                                                 (context, url, error) =>
-                                                    ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              child: Container(
-                                                height: 100,
-                                                child: CachedNetworkImage(
-                                                  fit: BoxFit.cover,
-                                                  imageUrl:
-                                                      "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
-                                                ),
-                                              ),
-                                            ),
+                                                    SahaEmptyImage(),
                                           ),
                                         ),
                                       ),

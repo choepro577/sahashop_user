@@ -1,9 +1,5 @@
 PODS:
-  - BSGridCollectionViewLayout (1.2.5)
-  - BSImagePicker (2.10.3):
-    - BSGridCollectionViewLayout (= 1.2.5)
-    - BSImageView (= 1.0.3)
-  - BSImageView (1.0.3)
+  - BSImagePicker (3.3.1)
   - device_info (0.0.1):
     - Flutter
   - DKImagePickerController/Core (4.3.2):
@@ -184,8 +180,8 @@ PODS:
   - Mantle (2.1.6):
     - Mantle/extobjc (= 2.1.6)
   - Mantle/extobjc (2.1.6)
-  - multi_image_picker (4.8.00):
-    - BSImagePicker (~> 2.10.3)
+  - multi_image_picker2 (5.0.00):
+    - BSImagePicker (~> 3.3.1)
     - Flutter
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
@@ -233,7 +229,7 @@ DEPENDENCIES:
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
-  - multi_image_picker (from `.symlinks/plugins/multi_image_picker/ios`)
+  - multi_image_picker2 (from `.symlinks/plugins/multi_image_picker2/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
@@ -244,9 +240,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - BSGridCollectionViewLayout
     - BSImagePicker
-    - BSImageView
     - DKImagePickerController
     - DKPhotoGallery
     - Firebase
@@ -297,8 +291,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_cropper/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
-  multi_image_picker:
-    :path: ".symlinks/plugins/multi_image_picker/ios"
+  multi_image_picker2:
+    :path: ".symlinks/plugins/multi_image_picker2/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   shared_preferences:
@@ -315,9 +309,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter/ios"
 
 SPEC CHECKSUMS:
-  BSGridCollectionViewLayout: 333dcb457a5a3bdd9212607ab5756553dcfe06cb
-  BSImagePicker: 07404254f2fcdaf5a2eb403c0f8c337267ce8738
-  BSImageView: a149459433a2687157d034c78e059d30ac7f2544
+  BSImagePicker: 0fe04b574d4d6b81093785d2af6c26227efc8428
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
@@ -345,7 +337,7 @@ SPEC CHECKSUMS:
   image_picker: 50e7c7ff960e5f58faa4d1f4af84a771c671bc4a
   libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
   Mantle: 4c0ed6ce47c96eccc4dc3bb071deb3def0e2c3be
-  multi_image_picker: 443e776a762d7901641854043b60abf88a85d5ef
+  multi_image_picker2: f81a13124e7a2bc48e7d15ee539a5f8b9ff4d407
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c

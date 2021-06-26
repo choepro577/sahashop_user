@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_detail/order_detail_history_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_detail/widget/choose_reason_cancel_order.dart';
 import 'package:sahashop_user/const/const_image_logo.dart';
@@ -233,15 +234,13 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                                       ? ""
                                       : "${orderHistoryDetailController.order!.lineItemsAtTime![index].imageUrl}",
                                   errorWidget: (context, url, error) =>
-                                      ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: CachedNetworkImage(
-                                        fit: BoxFit.cover,
-                                        imageUrl: logoSahaImage),
+                                      SahaEmptyImage(),
                                   ),
+
                                 ),
+
                               ),
-                            ),
+
                             SizedBox(
                               width: 10,
                             ),

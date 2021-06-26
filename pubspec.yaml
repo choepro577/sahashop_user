@@ -139,6 +139,7 @@ flutter:
     - assets/logo.png
     - assets/images/
     - assets/icons/
+    - assets/svg/
     - assets/saha_loading.png
 
 

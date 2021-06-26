@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_detail/order_detail_history_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/pay_screen/pay_screen.dart';
+import 'package:sahashop_user/components/app_customer/utils/color_utils.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/const/const_image_logo.dart';
 import 'package:sahashop_user/model/order.dart';
@@ -235,13 +237,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                             listAllOrder[indexState][index].lineItemsAtTime![0].imageUrl}",
                                             errorWidget:
                                                 (context, url, error) =>
-                                                    ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              child: CachedNetworkImage(
-                                                  fit: BoxFit.cover,
-                                                  imageUrl: logoSahaImage),
-                                            ),
+                                                    SahaEmptyImage(),
                                           ),
                                         ),
                                         SizedBox(
@@ -364,7 +360,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                           child: SvgPicture.asset(
                                             "assets/icons/money.svg",
                                             color:
-                                                Theme.of(context).primaryColor,
+                                            SahaColorUtils().colorTextWithPrimaryColor(),
                                           ),
                                         ),
                                         SizedBox(

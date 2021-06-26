@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/model/voucher.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_voucher/create_my_voucher/create_my_voucher_screen.dart';
@@ -362,14 +363,7 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                         imageUrl: listVoucherState.imageUrl == null
                             ? ""
                             : "${listVoucherState.imageUrl}",
-                        errorWidget: (context, url, error) => ClipRRect(
-                          borderRadius: BorderRadius.circular(1),
-                          child: CachedNetworkImage(
-                            fit: BoxFit.cover,
-                            imageUrl:
-                                "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
-                          ),
-                        ),
+                        errorWidget: (context, url, error) => SahaEmptyImage(),
                       ),
                     ),
                   ),
