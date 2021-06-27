@@ -26,13 +26,15 @@ class ReviewRepository {
     }
   }
 
-  Future<ReviewOfProResponse?> getReviewProduct(
-    int idProduct,
-  ) async {
+  Future<ReviewOfProResponse?> getReviewProduct(int idProduct, String filterBy,
+      String filterByValue, bool? hasImage) async {
     try {
-      var res = await CustomerServiceManager()
-          .service!
-          .getReviewProduct(UserInfo().getCurrentStoreCode(), idProduct);
+      var res = await CustomerServiceManager().service!.getReviewProduct(
+          UserInfo().getCurrentStoreCode(),
+          idProduct,
+          filterBy,
+          filterByValue,
+          hasImage);
       return res;
     } catch (err) {
       handleError(err);

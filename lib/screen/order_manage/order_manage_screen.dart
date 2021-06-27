@@ -81,7 +81,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
           BuildContext context,
           LoadStatus? mode,
         ) {
-          Widget body;
+          Widget body = Container();
           if (mode == LoadStatus.idle) {
             body = Obx(() => !orderManageController!.isDoneLoadMore.value
                 ? CupertinoActivityIndicator()
@@ -90,12 +90,6 @@ class _OrderManageScreenState extends State<OrderManageScreen>
             body = Obx(() => !orderManageController!.isDoneLoadMore.value
                 ? CupertinoActivityIndicator()
                 : Container());
-          } else if (mode == LoadStatus.failed) {
-            body = Container();
-          } else if (mode == LoadStatus.canLoading) {
-            body = Container();
-          } else {
-            body = Container();
           }
           return Container(
             height: 0,

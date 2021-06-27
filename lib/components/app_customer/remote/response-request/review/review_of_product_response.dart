@@ -45,6 +45,12 @@ class Data {
   Data({
     this.averagedStars,
     this.totalReviews,
+    this.totalHasImage,
+    this.totalOneStar,
+    this.totalTwoStar,
+    this.totalThreeStar,
+    this.totalFourStar,
+    this.totalFiveStar,
     this.currentPage,
     this.data,
     this.firstPageUrl,
@@ -58,6 +64,12 @@ class Data {
 
   double? averagedStars;
   int? totalReviews;
+  int? totalHasImage;
+  int? totalOneStar;
+  int? totalTwoStar;
+  int? totalThreeStar;
+  int? totalFourStar;
+  int? totalFiveStar;
   int? currentPage;
   List<Review>? data;
   String? firstPageUrl;
@@ -74,6 +86,18 @@ class Data {
             : json["averaged_stars"].toDouble(),
         totalReviews:
             json["total_reviews"] == null ? null : json["total_reviews"],
+        totalHasImage:
+            json["total_has_image"] == null ? null : json["total_has_image"],
+        totalOneStar:
+            json["total_1_stars"] == null ? null : json["total_1_stars"],
+        totalTwoStar:
+            json["total_2_stars"] == null ? null : json["total_2_stars"],
+        totalThreeStar:
+            json["total_3_stars"] == null ? null : json["total_3_stars"],
+        totalFourStar:
+            json["total_4_stars"] == null ? null : json["total_4_stars"],
+        totalFiveStar:
+            json["total_5_stars"] == null ? null : json["total_5_stars"],
         currentPage: json["current_page"] == null ? null : json["current_page"],
         data: json["data"] == null
             ? null

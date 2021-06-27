@@ -630,14 +630,19 @@ class _CustomerService implements CustomerService {
   }
 
   @override
-  Future<ReviewOfProResponse> getReviewProduct(storeCode, idProduct) async {
+  Future<ReviewOfProResponse> getReviewProduct(
+      storeCode, idProduct, filterBy, filterByValue, hasImage) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'filter_by': filterBy,
+      r'filter_by_value': filterByValue,
+      r'has_image': hasImage
+    };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ReviewOfProResponse>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '$storeCode/products/$idProduct/reviews',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));

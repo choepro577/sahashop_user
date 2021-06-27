@@ -219,9 +219,12 @@ abstract class CustomerService {
   Future<ReviewResponse> review(@Path("storeCode") String? storeCode,
       @Path() int? idProduct, @Body() Map<String, dynamic> body);
 
-  @POST("{storeCode}/products/{idProduct}/reviews")
+  @GET("{storeCode}/products/{idProduct}/reviews")
   Future<ReviewOfProResponse> getReviewProduct(
     @Path("storeCode") String? storeCode,
     @Path() int? idProduct,
+    @Query("filter_by") String filterBy,
+    @Query("filter_by_value") String filterByValue,
+    @Query("has_image") bool? hasImage,
   );
 }

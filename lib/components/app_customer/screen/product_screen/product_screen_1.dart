@@ -4,6 +4,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/components/modal/modal_bottom_option_buy_product.dart';
@@ -612,7 +613,16 @@ class ProductScreen1 extends StatelessWidget {
                               color: Colors.grey[200],
                               height: 8,
                             ),
-                            ReviewProduct(),
+                            ReviewProduct(
+                              idProduct: productController.productInput.id,
+                              averagedStars:
+                                  productController.averagedStars.value,
+                              totalReview: productController.totalReview.value,
+                              listAllImage:
+                                  productController.listAllImageReview,
+                              listReview: productController.listReview,
+                              listImageReviewOfCustomer: [],
+                            ),
                             Divider(
                               height: 1,
                             ),
