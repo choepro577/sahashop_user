@@ -33,7 +33,7 @@ import 'response-request/favorite/favorite_response.dart';
 
  part 'customer_service.g.dart';
 
-@RestApi(baseUrl: "https://sahashop.net/api/customer/")
+@RestApi(baseUrl: "http://ashop.sahavi.vn/api/customer/")
 abstract class CustomerService {
   /// Retrofit factory
   factory CustomerService(Dio dio) => _CustomerService(dio);

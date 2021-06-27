@@ -8,7 +8,7 @@ part of 'customer_service.dart';
 
 class _CustomerService implements CustomerService {
   _CustomerService(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'https://sahashop.net/api/customer/';
+    baseUrl ??= 'http://ashop.sahavi.vn/api/customer/';
   }
 
   final Dio _dio;
