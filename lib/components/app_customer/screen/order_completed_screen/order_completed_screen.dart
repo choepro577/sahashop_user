@@ -8,6 +8,7 @@ import 'package:sahashop_user/components/app_customer/screen/order_history/order
 import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_detail/order_detail_history_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/pay_screen/pay_screen.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
+import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
 import 'order_completed_controller.dart';
 
 // ignore: must_be_immutable
@@ -19,7 +20,7 @@ class OrderCompletedScreen extends StatelessWidget {
   DataAppCustomerController dataAppCustomerController = Get.find();
   OrderHistoryController orderHistoryController = Get.find();
 
-   OrderCompletedScreen({Key? key, this.orderCode}) : super(key: key) {
+  OrderCompletedScreen({Key? key, this.orderCode}) : super(key: key) {
     orderCompletedController = OrderCompletedController(orderCode);
   }
 
@@ -40,199 +41,225 @@ class OrderCompletedScreen extends StatelessWidget {
                 child: Obx(
                   () {
                     var x = orderCompletedController!.refreshValue.value;
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 20,
-                              height: 20,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                      color: Theme.of(context).primaryColor),
-                                  color: Theme.of(context).primaryColor),
-                              child: Icon(
-                                Icons.check,
-                                size: 15.0,
-                                color: Theme.of(context)
-                                    .primaryTextTheme
-                                    .headline6!
-                                    .color,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "Đặt hàng thành công !",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Text(
-                            "Bạn đã đặt hàng thành công xin đợi xác nhận từ cửa hàng",
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        orderCompletedController!.order.value!.paymentMethodId ==
-                                    0 ||
-                                orderCompletedController!
-                                        .order.value!.paymentMethodId ==
-                                    null
-                            ? Container()
-                            : InkWell(
-                                onTap: () {
-                                  Get.to(() => PayScreen(
-                                        orderCode: orderCompletedController!
-                                            .order.value!.orderCode,
-                                      ));
-                                },
-                                child: Container(
-                                  height: 40,
-                                  width: Get.width * 0.8,
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context).primaryColor,
-                                    border: Border.all(
+                    return orderCompletedController!.loading.value == true
+                        ? SahaSimmer(
+                            isLoading: true,
+                            child: Container(
+                              width: Get.width,
+                              height: Get.height,
+                              color: Colors.black,
+                            ))
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 20,
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                            color:
+                                                Theme.of(context).primaryColor),
                                         color: Theme.of(context).primaryColor),
-                                    borderRadius: BorderRadius.circular(2),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      "THANH TOÁN",
-                                      style: TextStyle(
-                                          color: Theme.of(context)
-                                              .primaryTextTheme
-                                              .headline6!
-                                              .color,
-                                          fontWeight: FontWeight.w500),
+                                    child: Icon(
+                                      Icons.check,
+                                      size: 15.0,
+                                      color: Theme.of(context)
+                                          .primaryTextTheme
+                                          .headline6!
+                                          .color,
                                     ),
                                   ),
-                                ),
-                              ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Get.until((route) =>
-                                    route.settings.name == "customer_home");
-                              },
-                              child: Container(
-                                height: 35,
-                                width: Get.width * 0.35,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(2),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "Trang chủ",
-                                    style: TextStyle(color: Colors.grey),
+                                  SizedBox(
+                                    width: 10,
                                   ),
+                                  Text(
+                                    "Đặt hàng thành công !",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Text(
+                                  "Bạn đã đặt hàng thành công xin đợi xác nhận từ cửa hàng",
+                                  textAlign: TextAlign.center,
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Get.off(() => OrderHistoryDetailScreen(
-                                      order:
-                                          orderCompletedController!.order.value,
-                                    ))!.then((value) => {
-                                      //  orderHistoryController.refreshData(),
-                                      orderHistoryController.refreshData(
-                                        "order_status_code",
-                                        "WAITING_FOR_PROGRESSING",
-                                        orderHistoryController.listStatusCode
-                                            .indexWhere((element) =>
-                                                element ==
-                                                orderCompletedController!.order
-                                                    .value!.orderStatusCode),
+                              orderCompletedController!
+                                              .order.value!.paymentMethodId ==
+                                          0 ||
+                                      orderCompletedController!
+                                              .order.value!.paymentMethodId ==
+                                          null
+                                  ? Container()
+                                  : InkWell(
+                                      onTap: () {
+                                        Get.to(() => PayScreen(
+                                              orderCode:
+                                                  orderCompletedController!
+                                                      .order.value!.orderCode,
+                                            ));
+                                      },
+                                      child: Container(
+                                        height: 40,
+                                        width: Get.width * 0.8,
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context).primaryColor,
+                                          border: Border.all(
+                                              color: Theme.of(context)
+                                                  .primaryColor),
+                                          borderRadius:
+                                              BorderRadius.circular(2),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            "THANH TOÁN",
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .headline6!
+                                                    .color,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ),
                                       ),
-                                    });
-                              },
-                              child: Container(
-                                height: 35,
-                                width: Get.width * 0.35,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(2),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "Đơn mua",
-                                    style: TextStyle(color: Colors.grey),
+                                    ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      Get.until((route) =>
+                                          route.settings.name ==
+                                          "customer_home");
+                                    },
+                                    child: Container(
+                                      height: 35,
+                                      width: Get.width * 0.35,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.grey),
+                                        borderRadius: BorderRadius.circular(2),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "Trang chủ",
+                                          style: TextStyle(color: Colors.grey),
+                                        ),
+                                      ),
+                                    ),
                                   ),
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      Get.off(() => OrderHistoryDetailScreen(
+                                                order: orderCompletedController!
+                                                    .order.value,
+                                              ))!
+                                          .then((value) => {
+                                                //  orderHistoryController.refreshData(),
+                                                orderHistoryController
+                                                    .refreshData(
+                                                  "order_status_code",
+                                                  "WAITING_FOR_PROGRESSING",
+                                                  orderHistoryController
+                                                      .listStatusCode
+                                                      .indexWhere((element) =>
+                                                          element ==
+                                                          orderCompletedController!
+                                                              .order
+                                                              .value!
+                                                              .orderStatusCode),
+                                                ),
+                                              });
+                                    },
+                                    child: Container(
+                                      height: 35,
+                                      width: Get.width * 0.35,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.grey),
+                                        borderRadius: BorderRadius.circular(2),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "Đơn mua",
+                                          style: TextStyle(color: Colors.grey),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Thay đổi hình thức thanh toán",
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "Thay đổi hình thức thanh toán",
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor),
-                          ),
-                        ),
-                        // Obx(
-                        //   () => orderCompletedController!
-                        //               .isLoadingPayment.value ==
-                        //           true
-                        //       ? Container()
-                        //       : DropdownButton<Map<int, String>>(
-                        //           focusColor: Colors.white,
-                        //           value: orderCompletedController!.paymentMethod,
-                        //           //elevation: 5,
-                        //           style: TextStyle(color: Colors.white),
-                        //           items: orderCompletedController!
-                        //               .listPaymentMethod!
-                        //               .map<DropdownMenuItem<Map<int, String>> >(
-                        //                   (Map<int?, String?>? value) {
-                        //                     return DropdownMenuItem<Map<int, String>>(
-                        //                       value: value,
-                        //                       child: Text(
-                        //                         "${value!.values.first}",
-                        //                         style: TextStyle(color: Colors.black),
-                        //                         textAlign: TextAlign.center,
-                        //                       ),
-                        //                     );
-                        //           }).toList(),
-                        //           hint: Text(
-                        //             "${orderCompletedController!.order.value?.paymentMethodName}",
-                        //             style: TextStyle(
-                        //                 color: Colors.black,
-                        //                 fontSize: 14,
-                        //                 fontWeight: FontWeight.w500),
-                        //           ),
-                        //           onChanged: (Map<int, String>? value) {
-                        //             orderCompletedController!.paymentMethod =
-                        //                 value!;
-                        //             orderCompletedController!
-                        //                 .changPaymentMethod(value.keys.first);
-                        //           },
-                        //         ),
-                        // ),
-                      ],
-                    );
+                              Obx(
+                                () => orderCompletedController!
+                                            .isLoadingPayment.value ==
+                                        true
+                                    ? Container()
+                                    : DropdownButton<Map<int, String>?>(
+                                        focusColor: Colors.white,
+                                        // value: null,
+                                        // orderCompletedController!.paymentMethod,
+                                        //elevation: 5,
+                                        style: TextStyle(color: Colors.white),
+                                        items: orderCompletedController!
+                                            .listPaymentMethod!
+                                            .map<
+                                                    DropdownMenuItem<
+                                                        Map<int, String>>>(
+                                                (Map<int, String>? value) {
+                                          return DropdownMenuItem<
+                                              Map<int, String>>(
+                                            value: value,
+                                            child: Text(
+                                              "${value!.values.first}",
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          );
+                                        }).toList(),
+                                        hint: Text(
+                                          "${orderCompletedController!.order.value?.paymentMethodName ?? "Loading..."}",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        onChanged: (Map<int, String>? value) {
+                                          orderCompletedController!
+                                              .paymentMethod = value!;
+                                          orderCompletedController!
+                                              .changPaymentMethod(
+                                                  value.keys.first);
+                                        },
+                                      ),
+                              ),
+                            ],
+                          );
                   },
                 ),
               ),
@@ -252,7 +279,7 @@ class OrderCompletedScreen extends StatelessWidget {
                     }),
                 Spacer(),
                 Stack(
-                  overflow: Overflow.visible,
+                  clipBehavior: Clip.none,
                   children: [
                     InkWell(
                       onTap: () {

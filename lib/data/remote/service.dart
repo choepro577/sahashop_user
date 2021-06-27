@@ -33,6 +33,9 @@ import 'package:sahashop_user/data/remote/response-request/payment_method/update
 import 'package:sahashop_user/data/remote/response-request/post/all_post_response.dart';
 import 'package:sahashop_user/data/remote/response-request/report/product_report_response.dart';
 import 'package:sahashop_user/data/remote/response-request/report/report_response.dart';
+import 'package:sahashop_user/data/remote/response-request/review_manage/all_review_response.dart';
+import 'package:sahashop_user/data/remote/response-request/review_manage/review_delete_response.dart';
+import 'package:sahashop_user/data/remote/response-request/review_manage/update_review_response.dart';
 
 import 'response-request/auth/register_response.dart';
 import 'response-request/category/all_category_response.dart';
@@ -74,27 +77,27 @@ abstract class SahaService {
       @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   @PUT("store/{storeCode}/products/{idProduct}")
-  Future<ProductResponse> updateProduct(
-      @Path("storeCode") String? storeCode, @Path() int? idProduct, @Body() Map<String, dynamic> body);
+  Future<ProductResponse> updateProduct(@Path("storeCode") String? storeCode,
+      @Path() int? idProduct, @Body() Map<String, dynamic> body);
 
- @DELETE("store/{storeCode}/products/{idProduct}")
- Future<ProductDeleteResponse> deleteProduct(
-     @Path("storeCode") String? storeCode, @Path() int? idProduct);
+  @DELETE("store/{storeCode}/products/{idProduct}")
+  Future<ProductDeleteResponse> deleteProduct(
+      @Path("storeCode") String? storeCode, @Path() int? idProduct);
 
   @GET("store/{storeCode}/products")
   Future<AllProductResponse> getAllProduct(
-      @Path("storeCode") String? storeCode,
-      @Query("search") String search,
-      @Query("category_ids") String idCategory,
-      @Query("descending") bool descending,
-      @Query("status") String status,
-      @Query("filter_by") String filterBy,
-      @Query("filter_option") String filterOption,
-      @Query("filter_by_value") String filterByValue,
-      @Query("details") String details,
-      @Query("sort_by") String sortBy,
-      @Query("page") int page,
-      );
+    @Path("storeCode") String? storeCode,
+    @Query("search") String search,
+    @Query("category_ids") String idCategory,
+    @Query("descending") bool descending,
+    @Query("status") String status,
+    @Query("filter_by") String filterBy,
+    @Query("filter_option") String filterOption,
+    @Query("filter_by_value") String filterByValue,
+    @Query("details") String details,
+    @Query("sort_by") String sortBy,
+    @Query("page") int page,
+  );
 
   @GET("type_of_store")
   Future<TypeShopResponse> getAllTypeOfStore();
@@ -108,7 +111,8 @@ abstract class SahaService {
   @FormUrlEncoded()
   Future<CreateCategoryResponse> updateCategory(
       @Path("storeCode") String? storeCode,
-      @Path("storeCode") int? categoryId, @Body() Map<String, dynamic> body);
+      @Path("storeCode") int? categoryId,
+      @Body() Map<String, dynamic> body);
 
   @POST("app-theme/{storeCode}")
   Future<CreateAppThemeResponse> createAppTheme(
@@ -124,7 +128,7 @@ abstract class SahaService {
   @DELETE("store/{storeCode}/categories/{categoryId}")
   Future<CategoryDeleteResponse> deleteCategory(
       @Path("storeCode") String? storeCode,
-  @Path("categoryId") int? categoryId);
+      @Path("categoryId") int? categoryId);
 
   @POST("images")
   Future<UploadImageResponse> uploadImage(@Body() Map<String, dynamic> body);
@@ -346,5 +350,25 @@ abstract class SahaService {
     @Path() String storeCode,
     @Query("date_from") String timeFrom,
     @Query("date_to") String timeTo,
+  );
+
+  /// review manage
+
+  @GET("store/{storeCode}/reviews")
+  Future<AllReviewResponse> getReviewManage(
+    @Path() String storeCode,
+    @Query("filter_by") String filterBy,
+    @Query("filter_by_value") String filterByValue,
+  );
+
+  @DELETE("store/{storeCode}/reviews/{idReview}")
+  Future<ReviewDeleteResponse> deleteReview(
+      @Path("storeCode") String? storeCode, @Path() int? idReview);
+
+  @PUT("store/{storeCode}/reviews/{idReview}")
+  Future<UpdateReviewResponse> updateReview(
+    @Path("storeCode") String? storeCode,
+    @Path() int? idReview,
+    @Body() Map<String, dynamic> body,
   );
 }

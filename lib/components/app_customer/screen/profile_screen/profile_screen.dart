@@ -18,10 +18,9 @@ import 'package:sahashop_user/components/app_customer/utils/color_utils.dart';
 // ignore: must_be_immutable
 class ProfileScreen extends StatelessWidget {
   DataAppCustomerController dataAppCustomerController = Get.find();
-  ProfileController? profileController;
+  ProfileController profileController = ProfileController();
   @override
   Widget build(BuildContext context) {
-    profileController = ProfileController();
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -223,10 +222,11 @@ class ProfileScreen extends StatelessWidget {
                                         onTap: () {
                                           Get.to(
                                             () => LoginScreenCustomer(),
-                                          )!.then((value) => {
-                                                dataAppCustomerController
-                                                    .getInfoCustomer()
-                                              });
+                                          )!
+                                              .then((value) => {
+                                                    dataAppCustomerController
+                                                        .getInfoCustomer()
+                                                  });
                                         },
                                         child: Container(
                                           height: 35,
@@ -250,7 +250,8 @@ class ProfileScreen extends StatelessWidget {
                                       ),
                                       InkWell(
                                         onTap: () {
-                                          Get.to(() => RegisterCustomerScreen())!
+                                          Get.to(() =>
+                                                  RegisterCustomerScreen())!
                                               .then((value) => {
                                                     dataAppCustomerController
                                                         .getInfoCustomer()
@@ -307,7 +308,8 @@ class ProfileScreen extends StatelessWidget {
                             width: 25,
                             child: SvgPicture.asset(
                               "assets/icons/check_list.svg",
-                              color: SahaColorUtils().colorTextWithPrimaryColor(),
+                              color:
+                                  SahaColorUtils().colorTextWithPrimaryColor(),
                             ),
                           ),
                           SizedBox(
@@ -358,17 +360,18 @@ class ProfileScreen extends StatelessWidget {
                                         ));
                                   },
                                   child: Stack(
-                                    overflow: Overflow.visible,
+                                    clipBehavior: Clip.none,
                                     children: [
                                       Container(
                                         width: 30,
                                         height: 30,
                                         child: SvgPicture.asset(
                                           "assets/icons/wallet.svg",
-                                          color: SahaColorUtils().colorTextWithPrimaryColor(),
+                                          color: SahaColorUtils()
+                                              .colorTextWithPrimaryColor(),
                                         ),
                                       ),
-                                      profileController!
+                                      profileController
                                                   .processingAmount.value !=
                                               0
                                           ? Positioned(
@@ -386,7 +389,7 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    "${profileController!.processingAmount.value}+",
+                                                    "${profileController.processingAmount.value}+",
                                                     style: TextStyle(
                                                       fontSize: 8,
                                                       height: 1,
@@ -421,17 +424,18 @@ class ProfileScreen extends StatelessWidget {
                                         ));
                                   },
                                   child: Stack(
-                                    overflow: Overflow.visible,
+                                    clipBehavior: Clip.none,
                                     children: [
                                       Container(
                                         width: 30,
                                         height: 30,
                                         child: SvgPicture.asset(
                                           "assets/icons/box.svg",
-                                          color: SahaColorUtils().colorTextWithPrimaryColor(),
+                                          color: SahaColorUtils()
+                                              .colorTextWithPrimaryColor(),
                                         ),
                                       ),
-                                      profileController!.packingAmount.value != 0
+                                      profileController.packingAmount.value != 0
                                           ? Positioned(
                                               top: -3,
                                               right: -5,
@@ -447,7 +451,7 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    "${profileController!.packingAmount.value}+",
+                                                    "${profileController.packingAmount.value}+",
                                                     style: TextStyle(
                                                       fontSize: 8,
                                                       height: 1,
@@ -482,17 +486,18 @@ class ProfileScreen extends StatelessWidget {
                                         ));
                                   },
                                   child: Stack(
-                                    overflow: Overflow.visible,
+                                    clipBehavior: Clip.none,
                                     children: [
                                       Container(
                                         width: 30,
                                         height: 30,
                                         child: SvgPicture.asset(
                                           "assets/icons/delivery_truck.svg",
-                                          color: SahaColorUtils().colorTextWithPrimaryColor(),
+                                          color: SahaColorUtils()
+                                              .colorTextWithPrimaryColor(),
                                         ),
                                       ),
-                                      profileController!.shippingAmount.value !=
+                                      profileController.shippingAmount.value !=
                                               0
                                           ? Positioned(
                                               top: -3,
@@ -509,7 +514,7 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    "${profileController!.shippingAmount.value}+",
+                                                    "${profileController.shippingAmount.value}+",
                                                     style: TextStyle(
                                                       fontSize: 8,
                                                       height: 1,
@@ -544,17 +549,18 @@ class ProfileScreen extends StatelessWidget {
                                         ));
                                   },
                                   child: Stack(
-                                    overflow: Overflow.visible,
+                                    clipBehavior: Clip.none,
                                     children: [
                                       Container(
                                         width: 25,
                                         height: 25,
                                         child: SvgPicture.asset(
                                           "assets/icons/favorite.svg",
-                                          color: SahaColorUtils().colorTextWithPrimaryColor(),
+                                          color: SahaColorUtils()
+                                              .colorTextWithPrimaryColor(),
                                         ),
                                       ),
-                                      profileController!.evaluateAmount.value !=
+                                      profileController.evaluateAmount.value !=
                                               0
                                           ? Positioned(
                                               top: -8,
@@ -571,7 +577,7 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    "${profileController!.evaluateAmount.value}+",
+                                                    "${profileController.evaluateAmount.value}+",
                                                     style: TextStyle(
                                                       fontSize: 8,
                                                       height: 1,
@@ -827,7 +833,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Get.to(()=>FavoritesScreen());
+                  Get.to(() => FavoritesScreen());
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -835,24 +841,23 @@ class ProfileScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
-                          children: [
-                            Container(
-                              height: 25,
-                              width: 25,
-                              child: SvgPicture.asset(
-                                "assets/icons/heart.svg",
-                                color: Colors.red,
-                              ),
+                        children: [
+                          Container(
+                            height: 25,
+                            width: 25,
+                            child: SvgPicture.asset(
+                              "assets/icons/heart.svg",
+                              color: Colors.red,
                             ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Text(
-                              "Đã thích",
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ],
-
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            "Đã thích",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ],
                       ),
                       Container(
                         height: 13,

@@ -28,12 +28,12 @@ class OrderHistoryScreen extends StatefulWidget {
 class _OrderHistoryScreenState extends State<OrderHistoryScreen>
     with TickerProviderStateMixin {
   TabController? tabController;
-  OrderHistoryController orderHistoryController =
-      Get.put(OrderHistoryController());
+  late OrderHistoryController orderHistoryController;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    orderHistoryController = Get.put(OrderHistoryController());
     tabController = new TabController(
         length: 10, vsync: this, initialIndex: widget.initPage ?? 0);
   }
@@ -351,8 +351,8 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                           ),
                                           child: SvgPicture.asset(
                                             "assets/icons/money.svg",
-                                            color:
-                                            SahaColorUtils().colorTextWithPrimaryColor(),
+                                            color: SahaColorUtils()
+                                                .colorTextWithPrimaryColor(),
                                           ),
                                         ),
                                         SizedBox(

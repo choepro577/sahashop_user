@@ -9,17 +9,18 @@ import 'package:sahashop_user/components/app_customer/screen/confirm_screen/conf
 import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/model/info_address_customer.dart';
 
+// ignore: must_be_immutable
 class ReceiverAddressCustomerScreen extends StatelessWidget {
   final InfoAddressCustomer? infoAddressCustomers;
   final Function? callback;
 
-  ConfirmController? payController;
+  //ConfirmController? payController;
 
   ReceiverAddressCustomerScreen(
       {Key? key, this.infoAddressCustomers, this.callback})
       : super(key: key) {
     chooseAddressCustomerController = ReceiverAddressCustomerController();
-    payController = Get.find();
+    // payController = Get.find();
   }
 
   late ReceiverAddressCustomerController chooseAddressCustomerController;

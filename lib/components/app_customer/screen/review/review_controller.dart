@@ -13,7 +13,7 @@ class ReviewController extends GetxController {
     lineItemsAtTimeInput!.forEach((item) {
       listStar.add(5);
       listContent.add("");
-      listImageRequest!.add([""]);
+      listImageRequest!.add([]);
       listImages!.add([]);
     });
   }
@@ -40,12 +40,11 @@ class ReviewController extends GetxController {
   Future<void> reviewAllOrder() async {
     for (int i = 0; i < lineItemsAtTimeInput!.length; i++) {
       await reviewProduct(
-        lineItemsAtTimeInput![i].id!,
-        orderCodeInput!,
-        listStar[i]!,
-        listContent[i]!,
-        jsonEncode(listImageRequest![i]).toString(),
-      );
+          lineItemsAtTimeInput![i].id!,
+          orderCodeInput!,
+          listStar[i]!,
+          listContent[i]!,
+          jsonEncode(listImageRequest![i]).toString());
     }
     SahaAlert.showToastMiddle(message: "Đánh giá thành công");
     Get.back();
@@ -59,7 +58,7 @@ class ReviewController extends GetxController {
     String images,
   ) async {
     try {
-      var data = await CustomerRepositoryManager.reviewRepository
+      var data = await CustomerRepositoryManager.reviewCustomerRepository
           .review(idProduct, orderCode, star, content, images);
     } catch (err) {
       SahaAlert.showError(message: err.toString());

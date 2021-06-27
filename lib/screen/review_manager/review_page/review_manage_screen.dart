@@ -2,97 +2,78 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/app_customer/screen/review/see_review/see_review_controller.dart';
-import 'package:sahashop_user/components/app_customer/screen/review/see_review/star_page/star_page_screen.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
+import 'package:sahashop_user/screen/review_manager/review_page/review_manage_controller.dart';
+import 'package:sahashop_user/screen/review_manager/review_page/star_page/star_page_manage_screen.dart';
 
 // ignore: must_be_immutable
-class SeeReviewScreen extends StatefulWidget {
-  final int? idProduct;
-
-  SeeReviewScreen({this.idProduct});
-
+class ReviewManageScreen extends StatefulWidget {
   @override
-  _SeeReviewScreenState createState() => _SeeReviewScreenState();
+  _ReviewManageScreenState createState() => _ReviewManageScreenState();
 }
 
-class _SeeReviewScreenState extends State<SeeReviewScreen>
+class _ReviewManageScreenState extends State<ReviewManageScreen>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
   final PageStorageBucket bucket = PageStorageBucket();
+  ReviewManagerController reviewManagerController =
+      new ReviewManagerController();
 
-  late SeeReviewController seeReviewController;
-
-  List<Widget>? pages;
-
-  @override
-  void initState() {
-    seeReviewController =
-        new SeeReviewController(idProductInput: widget.idProduct);
-    pages = <Widget>[
-      StarPage(
-        key: PageStorageKey<String>('pending_approval'),
-        idProduct: widget.idProduct,
-        filterBy: "",
-        filterByValue: "",
-        hasImage: null,
-      ),
-      StarPage(
-        key: PageStorageKey<String>('cancel'),
-        idProduct: widget.idProduct,
-        filterBy: "",
-        filterByValue: "",
-        hasImage: true,
-      ),
-      StarPage(
-        key: PageStorageKey<String>('star1'),
-        idProduct: widget.idProduct,
-        filterBy: "stars",
-        filterByValue: "1",
-        hasImage: null,
-      ),
-      StarPage(
-        key: PageStorageKey<String>('star2'),
-        idProduct: widget.idProduct,
-        filterBy: "stars",
-        filterByValue: "2",
-        hasImage: null,
-      ),
-      StarPage(
-        key: PageStorageKey<String>('star3'),
-        idProduct: widget.idProduct,
-        filterBy: "stars",
-        filterByValue: "3",
-        hasImage: null,
-      ),
-      StarPage(
-        key: PageStorageKey<String>('star4'),
-        idProduct: widget.idProduct,
-        filterBy: "stars",
-        filterByValue: "4",
-        hasImage: null,
-      ),
-      StarPage(
-        key: PageStorageKey<String>('star5'),
-        idProduct: widget.idProduct,
-        filterBy: "stars",
-        filterByValue: "5",
-        hasImage: null,
-      ),
-    ];
-    super.initState();
-  }
+  final List<Widget> pages = <Widget>[
+    StarPageManage(
+      key: PageStorageKey<String>('pending_approval'),
+      filterBy: "status",
+      filterByValue: "0",
+      hasImage: null,
+    ),
+    StarPageManage(
+      key: PageStorageKey<String>('cancel'),
+      filterBy: "status",
+      filterByValue: "-1",
+      hasImage: null,
+    ),
+    StarPageManage(
+      key: PageStorageKey<String>('star1'),
+      filterBy: "stars",
+      filterByValue: "1",
+      hasImage: null,
+    ),
+    StarPageManage(
+      key: PageStorageKey<String>('star2'),
+      filterBy: "stars",
+      filterByValue: "2",
+      hasImage: null,
+    ),
+    StarPageManage(
+      key: PageStorageKey<String>('star3'),
+      filterBy: "stars",
+      filterByValue: "3",
+      hasImage: null,
+    ),
+    StarPageManage(
+      key: PageStorageKey<String>('star4'),
+      filterBy: "stars",
+      filterByValue: "4",
+      hasImage: null,
+    ),
+    StarPageManage(
+      key: PageStorageKey<String>('star5'),
+      filterBy: "stars",
+      filterByValue: "5",
+      hasImage: null,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("Đánh giá"),
+        title: Text("Quản lý đánh giá"),
       ),
       body: Obx(
-        () => seeReviewController.isLoading.value
+        () => reviewManagerController.isLoading.value
             ? SahaSimmer(
                 isLoading: true,
                 child: Container(
@@ -110,7 +91,7 @@ class _SeeReviewScreenState extends State<SeeReviewScreen>
                       children: [
                         InkWell(
                           onTap: () {
-                            seeReviewController.changeIndexReview(0);
+                            reviewManagerController.changeIndexReview(0);
                           },
                           child: Container(
                             height: 35,
@@ -126,12 +107,12 @@ class _SeeReviewScreenState extends State<SeeReviewScreen>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Tất cả",
+                                  "Chờ xác nhận",
                                   style: TextStyle(fontSize: 13),
                                 ),
                                 Obx(
                                   () => Text(
-                                    "(${seeReviewController.totalReview.value})",
+                                    "(${reviewManagerController.totalPendingApproval.value})",
                                     style: TextStyle(fontSize: 10),
                                   ),
                                 ),
@@ -142,7 +123,7 @@ class _SeeReviewScreenState extends State<SeeReviewScreen>
                         Spacer(),
                         InkWell(
                           onTap: () {
-                            seeReviewController.changeIndexReview(1);
+                            reviewManagerController.changeIndexReview(1);
                           },
                           child: Container(
                             height: 35,
@@ -153,12 +134,12 @@ class _SeeReviewScreenState extends State<SeeReviewScreen>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Có hình ảnh",
+                                  "Đã huỷ",
                                   style: TextStyle(fontSize: 13),
                                 ),
                                 Obx(
                                   () => Text(
-                                    "(${seeReviewController.totalHasImage.value})",
+                                    "(${reviewManagerController.totalCancel.value})",
                                     style: TextStyle(fontSize: 10),
                                   ),
                                 ),
@@ -190,8 +171,8 @@ class _SeeReviewScreenState extends State<SeeReviewScreen>
                     () => Expanded(
                       child: PageStorage(
                         bucket: bucket,
-                        child: pages![
-                            seeReviewController.currentIndexReview.value],
+                        child: pages[
+                            reviewManagerController.currentIndexReview.value],
                       ),
                     ),
                   ),
@@ -204,7 +185,7 @@ class _SeeReviewScreenState extends State<SeeReviewScreen>
   Widget chooseStar(int index) {
     return InkWell(
       onTap: () {
-        seeReviewController.changeIndexReview(index + 2);
+        reviewManagerController.changeIndexReview(index + 2);
       },
       child: Container(
         height: 35,
@@ -229,7 +210,7 @@ class _SeeReviewScreenState extends State<SeeReviewScreen>
               ),
               Obx(
                 () => Text(
-                  "(${seeReviewController.listStarOneToFive[index]})",
+                  "(${reviewManagerController.listStarOneToFive[index]})",
                   style: TextStyle(fontSize: 10),
                 ),
               )

@@ -58,7 +58,7 @@ class ComboDetailScreen extends StatelessWidget {
         ),
         actions: [
           Stack(
-            overflow: Overflow.visible,
+            clipBehavior: Clip.none,
             children: [
               IconButton(
                   icon: Icon(

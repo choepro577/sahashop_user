@@ -27,8 +27,8 @@ class SeeReviewController extends GetxController {
   ) async {
     isLoading.value = true;
     try {
-      var data =
-          await CustomerRepositoryManager.reviewRepository.getReviewProduct(
+      var data = await CustomerRepositoryManager.reviewCustomerRepository
+          .getReviewProduct(
         idProductInput!,
         filterBy,
         filterByValue,

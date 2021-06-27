@@ -44,5 +44,6 @@ class CustomerRepositoryManager {
   static AddressRepository get addressRepository => AddressRepository();
   static ShipmentRepository get shipmentRepository => ShipmentRepository();
   static PaymentRepository get paymentRepository => PaymentRepository();
-  static ReviewRepository get reviewRepository => ReviewRepository();
+  static ReviewCustomerRepository get reviewCustomerRepository =>
+      ReviewCustomerRepository();
 }

@@ -74,15 +74,19 @@ class ShipmentCustomerScreen extends StatelessWidget {
                                                       .primaryColor),
                                             ),
                                           ),
-                                          Container(
-                                            height: 9,
-                                            width: 9,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                            ),
-                                          ),
+                                          shipmentCustomerController
+                                                      .listChooseShipmentMethod[
+                                                  index]
+                                              ? Container(
+                                                  height: 9,
+                                                  width: 9,
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
+                                                  ),
+                                                )
+                                              : Container(),
                                         ],
                                       ),
                                     ),

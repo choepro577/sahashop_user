@@ -19,7 +19,7 @@ class ConfigStoreAddressScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: Text("Cai dat van chuyen shop"),
+        title: Text("Cài đặt vận chuyển shop"),
       ),
       body: SingleChildScrollView(
         child: Obx(
@@ -27,7 +27,8 @@ class ConfigStoreAddressScreen extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  Get.to(() => AllAddressStoreScreen());
+                  Get.to(() => AllAddressStoreScreen())!.then(
+                      (value) => {configStoreAddressController.refreshData()});
                 },
                 child: Container(
                   color: Colors.white,
@@ -166,7 +167,9 @@ class ConfigStoreAddressScreen extends StatelessWidget {
                                 .listShipmentStore[index].id,
                             ShipperConfig(
                               token: configStoreAddressController
-                                  .listShipmentStore[index].shipperConfig!.token,
+                                  .listShipmentStore[index]
+                                  .shipperConfig!
+                                  .token,
                               use: false,
                               cod: false,
                             ));

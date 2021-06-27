@@ -28,11 +28,9 @@ class AllAddressStoreScreen extends StatelessWidget {
             child: Column(
               children: [
                 ...List.generate(
-                    allAddressStoreController.listAddressStore.value.length,
-                    (index) => addressSave(
-                        context,
-                        allAddressStoreController
-                            .listAddressStore.value[index])),
+                    allAddressStoreController.listAddressStore.length,
+                    (index) => addressSave(context,
+                        allAddressStoreController.listAddressStore[index])),
                 InkWell(
                   onTap: () {
                     Get.to(() => NewAddressStoreScreen());
@@ -72,8 +70,9 @@ class AllAddressStoreScreen extends StatelessWidget {
             // payController.infoAddress.value = infoAddress;
             //Get.back();
             Get.to(() => ConfigAddressStoreScreen(
-                  infoAddress: infoAddress,
-                ))!.then((value) => {allAddressStoreController.refreshData()});
+                      infoAddress: infoAddress,
+                    ))!
+                .then((value) => {allAddressStoreController.refreshData()});
           },
           child: Container(
             padding: EdgeInsets.all(10),

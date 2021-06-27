@@ -1,18 +1,15 @@
 import 'dart:convert';
-
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/app_customer/repository/repository_customer.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
+import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/model/review.dart';
 
-class StarPageController extends GetxController {
-  int? idProductInput;
+class StarPageManageController extends GetxController {
   String? filterBy;
   String? filterByValue;
   bool? hasImage;
 
-  StarPageController(
-      {this.idProductInput, this.filterBy, this.filterByValue, this.hasImage});
+  StarPageManageController({this.filterBy, this.filterByValue, this.hasImage});
 
   var listReview = RxList<Review>();
   var listImageReviewOfCustomer = RxList<List<dynamic>>([]);
@@ -29,12 +26,9 @@ class StarPageController extends GetxController {
     }
     try {
       if (isEndReview == false) {
-        var data = await CustomerRepositoryManager.reviewCustomerRepository
-            .getReviewProduct(
-          idProductInput!,
+        var data = await RepositoryManager.reviewRepository.getReviewManage(
           filterBy!,
           filterByValue!,
-          hasImage,
         );
 
         listReview(data!.data!.data);
@@ -45,6 +39,7 @@ class StarPageController extends GetxController {
             listImageReviewOfCustomer.add([]);
           }
         });
+        print(listImageReviewOfCustomer);
 
         if (data.data!.nextPageUrl == null) {
           isEndReview = false;
@@ -61,5 +56,34 @@ class StarPageController extends GetxController {
       SahaAlert.showError(message: err.toString());
     }
     isLoading.value = false;
+  }
+
+  void refreshData() {
+    isEndReview = false;
+    currentPage = 1;
+    listReview([]);
+    listImageReviewOfCustomer([[]]);
+    getReviewProduct(isLoadMoreCondition: false);
+  }
+
+  Future<void> deleteReview(int idReview) async {
+    try {
+      var res = await RepositoryManager.reviewRepository.deleteReview(idReview);
+      refreshData();
+      SahaAlert.showToastMiddle(message: "Xoá thành công");
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+  }
+
+  Future<void> updateReview(int idReview) async {
+    try {
+      var res = await RepositoryManager.reviewRepository
+          .updateReview(idReview, 1); // 1 is accept review show
+      refreshData();
+      SahaAlert.showToastMiddle(message: "Duyệt thành công");
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
   }
 }

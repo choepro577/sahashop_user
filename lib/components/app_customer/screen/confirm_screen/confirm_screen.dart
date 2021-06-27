@@ -11,7 +11,6 @@ import 'package:sahashop_user/components/app_customer/screen/confirm_screen/widg
 import 'package:sahashop_user/components/app_customer/screen/payment_method/payment_method_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/shipment_screen/shipment_customer_screen.dart';
 import 'package:sahashop_user/components/utils/money.dart';
-import 'package:sahashop_user/const/const_image_logo.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/model/info_address_customer.dart';
 import 'package:sahashop_user/model/shipment_method.dart';
@@ -19,13 +18,12 @@ import 'package:sahashop_user/utils/string_utils.dart';
 
 // ignore: must_be_immutable
 class ConfirmScreen extends StatelessWidget {
-  late ConfirmController confirmController;
+  ConfirmController confirmController = Get.put(ConfirmController());
   final dataKey = new GlobalKey();
   final dataKeyPayment = new GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    confirmController = Get.put(ConfirmController());
     return Scaffold(
         appBar: AppBar(
           title: Text("Xác nhận đơn hàng"),
@@ -280,7 +278,8 @@ class ConfirmScreen extends StatelessWidget {
                                         .product!
                                         .images![0]
                                         .imageUrl!,
-                                errorWidget: (context, url, error) => SahaEmptyImage(),
+                                errorWidget: (context, url, error) =>
+                                    SahaEmptyImage(),
                               ),
                             ),
                           ),

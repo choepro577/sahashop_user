@@ -127,7 +127,7 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
                 icon: Icon(Icons.lock),
               ),
               Obx(
-                ()=> DropdownButton<Map<String, String?>>(
+                () => DropdownButton<Map<String, String?>>(
                   focusColor: Colors.white,
                   value: chooseDropDownValue,
                   //elevation: 5,
@@ -136,14 +136,14 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
                   items: setUpInfoShopController.mapTypeShop
                       .map<DropdownMenuItem<Map<String, String?>>>(
                           (Map<String, String?> value) {
-                        return DropdownMenuItem<Map<String, String?>>(
-                          value: value,
-                          child: Text(
-                            "${value.values.first}",
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        );
-                      }).toList(),
+                    return DropdownMenuItem<Map<String, String?>>(
+                      value: value,
+                      child: Text(
+                        "${value.values.first}",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    );
+                  }).toList(),
                   hint: Text(
                     "Chọn loại cửa hàng kinh doanh",
                     style: TextStyle(

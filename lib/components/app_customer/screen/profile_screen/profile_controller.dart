@@ -12,7 +12,7 @@ class ProfileController extends GetxController {
   var evaluateAmount = 0.obs;
 
   ProfileController() {
-    countOrder();
+    //  countOrder();
   }
 
   Future<void> countOrder() async {

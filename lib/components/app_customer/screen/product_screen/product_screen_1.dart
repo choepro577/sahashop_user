@@ -4,7 +4,6 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/components/modal/modal_bottom_option_buy_product.dart';
@@ -15,9 +14,6 @@ import 'package:sahashop_user/components/app_customer/screen/combo_detail_screen
 import 'package:sahashop_user/components/app_customer/screen/product_screen/controller/product_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/product_screen/widget/review_product.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
-import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
-import 'package:sahashop_user/components/saha_user/chip/ticker.dart';
-import 'package:sahashop_user/components/saha_user/star_rating/star_rating.dart';
 import 'package:sahashop_user/components/saha_user/text/text_money.dart';
 import 'package:sahashop_user/model/order.dart';
 import 'package:sahashop_user/model/product.dart';

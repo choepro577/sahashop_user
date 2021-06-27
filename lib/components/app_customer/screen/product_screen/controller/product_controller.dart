@@ -52,17 +52,16 @@ class ProductController extends GetxController {
           .getDetailProduct(productInput.id);
       productShow.value = res!.data ?? productInput;
     } catch (err) {
-       SahaAlert.showError(message: err.toString());
+      SahaAlert.showError(message: err.toString());
     }
     isLoadingProduct.value = false;
   }
 
   Future<void> favoriteProduct(bool isFavorite) async {
-
     try {
       var res = await CustomerRepositoryManager.favoriteRepository
-          .favoriteProduct(productInput.id!,isFavorite);
-      if(isFavorite) {
+          .favoriteProduct(productInput.id!, isFavorite);
+      if (isFavorite) {
         productShow.value.isFavorite = true;
         productShow.refresh();
         SahaAlert.showSuccess(message: "Đã thích");
@@ -71,11 +70,9 @@ class ProductController extends GetxController {
         productShow.refresh();
         SahaAlert.showSuccess(message: "Đã bỏ thích");
       }
-
     } catch (err) {
-       SahaAlert.showError(message: err.toString());
+      SahaAlert.showError(message: err.toString());
     }
-
   }
 
   Future<void> getComboCustomer() async {
@@ -101,8 +98,8 @@ class ProductController extends GetxController {
 
   Future<void> getReviewProduct() async {
     try {
-      var data =
-          await CustomerRepositoryManager.reviewRepository.getReviewProduct(
+      var data = await CustomerRepositoryManager.reviewCustomerRepository
+          .getReviewProduct(
         productInput.id!,
         "",
         "",

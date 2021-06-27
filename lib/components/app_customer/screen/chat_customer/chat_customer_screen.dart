@@ -326,64 +326,9 @@ class ChatCustomerScreen extends StatelessWidget {
                                       listLinkImages.length,
                                       (index) => InkWell(
                                         onTap: () {
-                                          showModalBottomSheet<void>(
-                                            isScrollControlled: true,
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return Stack(
-                                                children: [
-                                                  Container(
-                                                    child: PhotoViewGallery
-                                                        .builder(
-                                                      scrollPhysics:
-                                                          const BouncingScrollPhysics(),
-                                                      builder:
-                                                          (BuildContext context,
-                                                              int index) {
-                                                        return PhotoViewGalleryPageOptions(
-                                                          imageProvider:
-                                                              NetworkImage(
-                                                                  listLinkImages[
-                                                                      index]),
-                                                          initialScale:
-                                                              PhotoViewComputedScale
-                                                                      .contained *
-                                                                  1,
-                                                          heroAttributes:
-                                                              PhotoViewHeroAttributes(
-                                                                  tag: listLinkImages[
-                                                                      index]),
-                                                        );
-                                                      },
-                                                      itemCount:
-                                                          listLinkImages.length,
-                                                      loadingBuilder:
-                                                          (context, event) =>
-                                                              Center(
-                                                        child: Container(
-                                                          width: 20.0,
-                                                          height: 20.0,
-                                                          child:
-                                                              CupertinoActivityIndicator(),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Positioned(
-                                                    child: IconButton(
-                                                      icon: Icon(Icons.close),
-                                                      onPressed: () {
-                                                        Get.back();
-                                                      },
-                                                      color: Colors.white,
-                                                    ),
-                                                    top: 60,
-                                                    right: 20,
-                                                  )
-                                                ],
-                                              );
-                                            },
-                                          );
+                                          seeImage(
+                                              listImageUrl: listLinkImages,
+                                              index: index);
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.all(4.0),
@@ -611,64 +556,9 @@ class ChatCustomerScreen extends StatelessWidget {
                                   listLinkImages.length,
                                   (index) => InkWell(
                                     onTap: () {
-                                      showModalBottomSheet<void>(
-                                        isScrollControlled: true,
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return Stack(
-                                            children: [
-                                              Container(
-                                                child: PhotoViewGallery.builder(
-                                                  scrollPhysics:
-                                                      const BouncingScrollPhysics(),
-                                                  builder:
-                                                      (BuildContext context,
-                                                          int index) {
-                                                    return PhotoViewGalleryPageOptions(
-                                                      imageProvider:
-                                                          NetworkImage(
-                                                              listLinkImages[
-                                                                  index]),
-                                                      initialScale:
-                                                          PhotoViewComputedScale
-                                                                  .contained *
-                                                              1,
-                                                      heroAttributes:
-                                                          PhotoViewHeroAttributes(
-                                                              tag:
-                                                                  listLinkImages[
-                                                                      index]),
-                                                    );
-                                                  },
-                                                  itemCount:
-                                                      listLinkImages.length,
-                                                  loadingBuilder:
-                                                      (context, event) =>
-                                                          Center(
-                                                    child: Container(
-                                                      width: 20.0,
-                                                      height: 20.0,
-                                                      child:
-                                                          CupertinoActivityIndicator(),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                child: IconButton(
-                                                  icon: Icon(Icons.close),
-                                                  onPressed: () {
-                                                    Get.back();
-                                                  },
-                                                  color: Colors.white,
-                                                ),
-                                                top: 60,
-                                                right: 20,
-                                              )
-                                            ],
-                                          );
-                                        },
-                                      );
+                                      seeImage(
+                                          listImageUrl: listLinkImages,
+                                          index: index);
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(4.0),
@@ -755,56 +645,14 @@ class ChatCustomerScreen extends StatelessWidget {
 
   Widget buildItemImageData(
       List<ImageData> listImageData, BuildContext context) {
+    var listImageUrl = listImageData.map((e) => e.linkImage).toList();
     return Wrap(
       children: [
         ...List.generate(
           listImageData.length,
           (index) => InkWell(
             onTap: () {
-              showModalBottomSheet<void>(
-                isScrollControlled: true,
-                context: context,
-                builder: (BuildContext context) {
-                  return Stack(
-                    children: [
-                      Container(
-                        child: PhotoViewGallery.builder(
-                          scrollPhysics: const BouncingScrollPhysics(),
-                          builder: (BuildContext context, int index) {
-                            return PhotoViewGalleryPageOptions(
-                              imageProvider:
-                                  NetworkImage(listImageData[index].linkImage!),
-                              initialScale:
-                                  PhotoViewComputedScale.contained * 1,
-                              heroAttributes: PhotoViewHeroAttributes(
-                                  tag: listImageData[index].linkImage!),
-                            );
-                          },
-                          itemCount: listImageData.length,
-                          loadingBuilder: (context, event) => Center(
-                            child: Container(
-                              width: 20.0,
-                              height: 20.0,
-                              child: CupertinoActivityIndicator(),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        child: IconButton(
-                          icon: Icon(Icons.close),
-                          onPressed: () {
-                            Get.back();
-                          },
-                          color: Colors.white,
-                        ),
-                        top: 60,
-                        right: 20,
-                      )
-                    ],
-                  );
-                },
-              );
+              seeImage(listImageUrl: listImageUrl, index: index);
             },
             child: Padding(
               padding: const EdgeInsets.all(4.0),
@@ -865,6 +713,63 @@ class ChatCustomerScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  void seeImage({
+    List<dynamic>? listImageUrl,
+    int? index,
+  }) {
+    PageController _pageController = PageController(initialPage: index!);
+    showModalBottomSheet<void>(
+      isScrollControlled: true,
+      context: Get.context!,
+      builder: (BuildContext context) {
+        return Stack(
+          children: [
+            Container(
+              child: PhotoViewGallery.builder(
+                scrollPhysics: const BouncingScrollPhysics(),
+                pageController: _pageController,
+                builder: (BuildContext context, int index) {
+                  return PhotoViewGalleryPageOptions(
+                    minScale: 0.0,
+                    imageProvider: NetworkImage(listImageUrl![index] ?? ""),
+                    initialScale: PhotoViewComputedScale.contained * 1,
+                    heroAttributes: PhotoViewHeroAttributes(
+                        tag: listImageUrl[index] ?? "error$index"),
+                  );
+                },
+                itemCount: listImageUrl!.length,
+                loadingBuilder: (context, event) => Center(
+                  child: Container(
+                    width: 20.0,
+                    height: 20.0,
+                    child: CupertinoActivityIndicator(),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.black.withOpacity(0.5),
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    Get.back();
+                  },
+                  color: Colors.white,
+                ),
+              ),
+              top: 60,
+              right: 20,
+            )
+          ],
+        );
+      },
     );
   }
 }

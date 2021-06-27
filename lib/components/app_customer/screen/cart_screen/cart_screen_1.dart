@@ -15,12 +15,11 @@ import 'widget/item_product.dart';
 
 // ignore: must_be_immutable
 class CartScreen1 extends StatelessWidget {
-  late DataAppCustomerController dataAppCustomerController;
+  DataAppCustomerController dataAppCustomerController = Get.find()
+    ..checkLoginToCartScreen();
 
   @override
   Widget build(BuildContext context) {
-    dataAppCustomerController = Get.find();
-    dataAppCustomerController.checkLoginToCartScreen();
     return Scaffold(
       appBar: AppBar(
         title: Column(
@@ -275,7 +274,7 @@ class CartScreen1 extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         showModalBottomSheet<void>(
-                          isScrollControlled: true,
+                            isScrollControlled: true,
                             context: context,
                             builder: (BuildContext context) {
                               return Stack(
