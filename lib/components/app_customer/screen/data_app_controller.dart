@@ -4,7 +4,7 @@ import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/app_customer/repository/repository_customer.dart';
 import 'package:sahashop_user/components/app_customer/screen/login/login_screen.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
-import 'package:sahashop_user/components/utils/customer_info.dart';
+import 'package:sahashop_user/components/app_customer/utils/customer_info.dart';
 import 'package:sahashop_user/controller/config_controller.dart';
 import 'package:sahashop_user/model/cart.dart';
 import 'package:sahashop_user/model/category.dart';
@@ -60,7 +60,10 @@ class DataAppCustomerController extends GetxController {
         isLogin.value = true;
       } catch (err) {
         // SahaAlert.showError(message: err.toString());
+        isLogin.value = false;
       }
+    } else {
+      isLogin.value = false;
     }
   }
 

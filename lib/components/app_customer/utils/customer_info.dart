@@ -1,3 +1,6 @@
+import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
+import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/const/const_database_shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -71,4 +74,19 @@ class CustomerInfo {
 
     this._currentStoreCode = prefs.getString(CURRENT_STORE_CODE) ?? null;
   }
+
+  Future<void> logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove(CUSTOMER_TOKEN);
+    prefs.remove(CURRENT_STORE_CODE);
+    DataAppCustomerController dataAppCustomerController = Get.find();
+    dataAppCustomerController.checkLogin();
+    dataAppCustomerController.getInfoCustomer();
+
+    Get.offNamed('customer_home');
+
+    SahaAlert.showSuccess(message: "Đã đăng xuất");
+  }
+
+
 }

@@ -215,7 +215,7 @@ class _SahaService implements SahaService {
                 headers: <String, dynamic>{},
                 extra: _extra,
                 contentType: 'application/x-www-form-urlencoded')
-            .compose(_dio.options, 'store/$storeCode/categories/{categoryId}',
+            .compose(_dio.options, 'store/$storeCode/categories/$categoryId',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = CreateCategoryResponse.fromJson(_result.data!);
@@ -369,6 +369,43 @@ class _SahaService implements SahaService {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = AllCategoryPostResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<CategoryPostDeleteResponse> deleteCategoryPost(
+      storeCode, categoryPostId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<CategoryPostDeleteResponse>(Options(
+                method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
+            .compose(_dio.options,
+                'store/$storeCode/post_categories/$categoryPostId',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = CategoryPostDeleteResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<UpdateCategoryPostResponse> updateCategoryPost(
+      storeCode, categoryPostId, body) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<UpdateCategoryPostResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options,
+                    'store/$storeCode/post_categories/$categoryPostId',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = UpdateCategoryPostResponse.fromJson(_result.data!);
     return value;
   }
 

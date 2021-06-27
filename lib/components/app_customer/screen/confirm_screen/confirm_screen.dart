@@ -10,7 +10,7 @@ import 'package:sahashop_user/components/app_customer/screen/confirm_screen/conf
 import 'package:sahashop_user/components/app_customer/screen/confirm_screen/widget/widget_animate_check.dart';
 import 'package:sahashop_user/components/app_customer/screen/payment_method/payment_method_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/shipment_screen/shipment_customer_screen.dart';
-import 'package:sahashop_user/components/utils/money.dart';
+import 'package:sahashop_user/components/app_customer/utils/money.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/model/info_address_customer.dart';
 import 'package:sahashop_user/model/shipment_method.dart';

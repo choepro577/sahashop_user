@@ -1,15 +1,31 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/screen/cart_screen/cart_screen_1.dart';
+import 'package:sahashop_user/components/app_customer/screen/category_post_screen/category_post_screen_1.dart';
 import 'package:sahashop_user/components/app_customer/screen/navigation_scrren/navigation_controller.dart';
+import 'package:sahashop_user/components/app_customer/screen/profile_screen/profile_screen.dart';
+import 'package:sahashop_user/screen/order_manage/order_manage_screen.dart';
 
 import '../../../../saha_data_controller.dart';
+import '../data_widget_config.dart';
 
-class NavigationScreen extends StatelessWidget {
+class NavigationScreen extends StatefulWidget {
+  @override
+  _NavigationScreenState createState() => _NavigationScreenState();
+}
+
+class _NavigationScreenState extends State<NavigationScreen> {
   NavigationController navigationController = NavigationController();
+
+
+
+  final PageStorageBucket _bucket = PageStorageBucket();
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> pages = navigationController.navigationHome;
+
     return WillPopScope(
       onWillPop: () async {
         SahaDataController sahaDataController = Get.find();
@@ -18,9 +34,9 @@ class NavigationScreen extends StatelessWidget {
       },
       child: Obx(
         () => Scaffold(
-          body: IndexedStack(
-            children: <Widget>[...navigationController.navigationHome],
-            index: navigationController.selectedIndexBottomBar.value,
+          body: PageStorage(
+            child:pages[navigationController.selectedIndexBottomBar.value],
+            bucket: _bucket,
           ),
           bottomNavigationBar: BottomNavigationBar(
             unselectedLabelStyle: TextStyle(color: Colors.grey),

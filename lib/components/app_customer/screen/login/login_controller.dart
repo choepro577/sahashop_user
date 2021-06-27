@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/repository/repository_customer.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
-import 'package:sahashop_user/components/utils/customer_info.dart';
+import 'package:sahashop_user/components/app_customer/utils/customer_info.dart';
 
 class LoginController extends GetxController {
   var isHidePassword = true.obs;
@@ -24,4 +24,6 @@ class LoginController extends GetxController {
       SahaAlert.showError(message: err.toString());
     }
   }
+
+
 }

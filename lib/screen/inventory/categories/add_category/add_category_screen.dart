@@ -98,8 +98,8 @@ class AddCategoryScreen extends StatelessWidget {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       addCategoryController.createCategory(
-                        categoryId: category!.id,
-                        imageUrl: category!.imageUrl,
+                        categoryId: category != null ? category!.id : null,
+                        imageUrl: category != null ? category!.imageUrl : null,
                       );
                     }
                   },

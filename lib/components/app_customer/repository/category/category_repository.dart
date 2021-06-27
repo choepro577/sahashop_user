@@ -1,7 +1,7 @@
 import 'package:sahashop_user/components/app_customer/example/category.dart';
 import 'package:sahashop_user/components/app_customer/remote/customer_service_manager.dart';
 import 'package:sahashop_user/components/app_customer/repository/handle_error.dart';
-import 'package:sahashop_user/components/utils/thread_data.dart';
+import 'package:sahashop_user/components/app_customer/utils/thread_data.dart';
 import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 

@@ -14,9 +14,13 @@ import 'package:sahashop_user/components/app_customer/screen/profile_screen/fanp
 import 'package:sahashop_user/components/app_customer/screen/profile_screen/profile_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/register/register_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/utils/color_utils.dart';
+import 'package:sahashop_user/components/app_customer/utils/customer_info.dart';
+import 'package:sahashop_user/components/saha_user/dialog/dialog.dart';
 
 // ignore: must_be_immutable
 class ProfileScreen extends StatelessWidget {
+  ProfileScreen({Key? key}) : super(key: key);
+
   DataAppCustomerController dataAppCustomerController = Get.find();
   ProfileController profileController = ProfileController();
   @override
@@ -435,7 +439,8 @@ class ProfileScreen extends StatelessWidget {
                                               .colorTextWithPrimaryColor(),
                                         ),
                                       ),
-                                      profileController.packingAmount.value != 0
+                                      profileController.packingAmount.value !=
+                                              0
                                           ? Positioned(
                                               top: -3,
                                               right: -5,
@@ -998,6 +1003,58 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              Divider(
+                height: 1,
+              ),
+              dataAppCustomerController.isLogin.value == true
+                  ? InkWell(
+                      onTap: () {
+                        SahaDialogApp.showDialogYesNo(
+                            mess: "Bạn muốn đăng xuất",
+                            onOK: () {
+                              CustomerInfo().logout();
+                            });
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(8),
+                                  height: 35,
+                                  width: 35,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFF5F6F9),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child:
+                                      SvgPicture.asset("assets/svg/logout.svg"),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "Đăng xuất",
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              height: 13,
+                              width: 13,
+                              child: SvgPicture.asset(
+                                "assets/icons/right_arrow.svg",
+                                color: Colors.black,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  : Container(),
             ],
           ),
         ),

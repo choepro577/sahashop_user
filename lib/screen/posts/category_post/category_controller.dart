@@ -7,6 +7,8 @@ class CategoryPostController extends GetxController {
   var loading = false.obs;
   var listCategoryPost = RxList<CategoryPost>();
 
+  CategoryPost? categoryEd;
+
   CategoryPostController() {
     getAllCategoryPost();
   }
@@ -24,4 +26,19 @@ class CategoryPostController extends GetxController {
     }
     loading.value = false;
   }
+
+  Future<bool?> deleteCategoryPost(int? categoryPostId) async {
+    try {
+      var list = await RepositoryManager.postRepository.deleteCategoryPost(categoryPostId!);
+      listCategoryPost.removeWhere((element) => element.id == categoryPostId);
+      SahaAlert.showSuccess(message: "Đã xóa");
+      return true;
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+  }
+
+
+
+
 }

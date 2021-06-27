@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 import 'package:get/get.dart' as get2;
 import 'package:sahashop_user/components/app_customer/screen/login/login_screen.dart';
-import 'package:sahashop_user/components/utils/customer_info.dart';
+import 'package:sahashop_user/components/app_customer/utils/customer_info.dart';
 import 'package:sahashop_user/utils/msg_code.dart';
 class AuthInterceptor extends InterceptorsWrapper {
   AuthInterceptor();

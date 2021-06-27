@@ -4,8 +4,11 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'components/app_customer/remote/customer_service_manager.dart';
 import 'components/app_customer/screen/navigation_scrren/navigation_screen.dart';
+import 'data/remote/saha_service_manager.dart';
 import 'load_data/load_firebase.dart';
+import 'load_data/load_login.dart';
 import 'model/theme_model.dart';
 import 'saha_data_controller.dart';
 import 'saha_load_app.dart';
@@ -25,6 +28,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   LoadFirebase.initFirebase();
+
+  SahaServiceManager.initialize();
+  CustomerServiceManager.initialize();
+  LoadLogin.load();
+
   runApp(MyApp());
 }
 

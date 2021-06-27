@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,8 +16,13 @@ import 'widget/item_product.dart';
 
 // ignore: must_be_immutable
 class CartScreen1 extends StatelessWidget {
+
+
+  CartScreen1({Key? key}) : super(key: key);
+
   DataAppCustomerController dataAppCustomerController = Get.find()
     ..checkLoginToCartScreen();
+
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +159,7 @@ class CartScreen1 extends StatelessWidget {
                                 distributesSelected);
                           },
                           quantity: dataAppCustomerController
-                              .listQuantityProduct[index],
+                                  .listQuantityProduct[index],
                         )),
               ),
             ),
@@ -274,7 +280,7 @@ class CartScreen1 extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         showModalBottomSheet<void>(
-                            isScrollControlled: true,
+                          isScrollControlled: true,
                             context: context,
                             builder: (BuildContext context) {
                               return Stack(

@@ -1,12 +1,6 @@
-import 'dart:io';
-
-import 'package:dio/dio.dart';
-import 'package:sahashop_user/components/app_customer/remote/customer_service.dart';
 import 'package:sahashop_user/components/app_customer/remote/customer_service_manager.dart';
-import 'package:sahashop_user/components/utils/thread_data.dart';
-import 'package:sahashop_user/data/remote/saha_service_manager.dart';
+import 'package:sahashop_user/components/app_customer/utils/thread_data.dart';
 import 'package:sahashop_user/data/repository/handle_error.dart';
-import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/model/category_post.dart';
 import 'package:sahashop_user/model/post.dart';
 import 'package:sahashop_user/utils/user_info.dart';
