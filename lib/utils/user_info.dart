@@ -1,4 +1,7 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:get/get.dart';
 import 'package:sahashop_user/const/const_database_shared_preferences.dart';
+import 'package:sahashop_user/screen/login/loginScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserInfo {
@@ -70,5 +73,17 @@ class UserInfo {
     this._token = tokenLocal;
 
     this._currentStoreCode = prefs.getString(CURRENT_STORE_CODE) ?? null;
+  }
+
+  Future<void> logout() async {
+    //delete token
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove(USER_TOKEN);
+    prefs.remove(CURRENT_STORE_CODE);
+    //delete message firebase
+    FirebaseMessaging.instance.deleteToken();
+
+    //back screen
+    Get.offAll(() => LoginScreen());
   }
 }

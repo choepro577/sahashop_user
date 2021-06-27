@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/const/constant.dart';
+import 'package:sahashop_user/screen/account/account.dart';
 import 'package:sahashop_user/screen/chat/chat_screen/all_message_user_screen.dart';
 import 'package:sahashop_user/screen/config_payment/config_payment_screen.dart';
 import 'package:sahashop_user/screen/config_store_address/config_store_address_screen.dart';
@@ -243,6 +244,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     text: 'Cài đặt thanh toán',
                     press: () {
                       Get.to(() => ConfigPayment());
+                    },
+                  ),
+                  ItemStoreView(
+                    icon: 'assets/icons/gift_icon.svg',
+                    text: 'Tài khoản',
+                    press: () {
+                      Get.to(() => AccountScreen());
                     },
                   ),
                 ],

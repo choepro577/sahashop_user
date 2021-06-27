@@ -43,6 +43,8 @@ import 'response-request/image/upload_image_response.dart';
 import 'response-request/post/all_category_post_response.dart';
 import 'response-request/post/create_category_post_response.dart';
 import 'response-request/post/create_post_response.dart';
+import 'response-request/post/delete_category_post_response.dart';
+import 'response-request/post/update_category_post_response.dart';
 import 'response-request/product/all_product_response.dart';
 import 'response-request/product/product_delete_response.dart';
 import 'response-request/product/product_response.dart';
@@ -74,27 +76,27 @@ abstract class SahaService {
       @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   @PUT("store/{storeCode}/products/{idProduct}")
-  Future<ProductResponse> updateProduct(
-      @Path("storeCode") String? storeCode, @Path() int? idProduct, @Body() Map<String, dynamic> body);
+  Future<ProductResponse> updateProduct(@Path("storeCode") String? storeCode,
+      @Path() int? idProduct, @Body() Map<String, dynamic> body);
 
- @DELETE("store/{storeCode}/products/{idProduct}")
- Future<ProductDeleteResponse> deleteProduct(
-     @Path("storeCode") String? storeCode, @Path() int? idProduct);
+  @DELETE("store/{storeCode}/products/{idProduct}")
+  Future<ProductDeleteResponse> deleteProduct(
+      @Path("storeCode") String? storeCode, @Path() int? idProduct);
 
   @GET("store/{storeCode}/products")
   Future<AllProductResponse> getAllProduct(
-      @Path("storeCode") String? storeCode,
-      @Query("search") String search,
-      @Query("category_ids") String idCategory,
-      @Query("descending") bool descending,
-      @Query("status") String status,
-      @Query("filter_by") String filterBy,
-      @Query("filter_option") String filterOption,
-      @Query("filter_by_value") String filterByValue,
-      @Query("details") String details,
-      @Query("sort_by") String sortBy,
-      @Query("page") int page,
-      );
+    @Path("storeCode") String? storeCode,
+    @Query("search") String search,
+    @Query("category_ids") String idCategory,
+    @Query("descending") bool descending,
+    @Query("status") String status,
+    @Query("filter_by") String filterBy,
+    @Query("filter_option") String filterOption,
+    @Query("filter_by_value") String filterByValue,
+    @Query("details") String details,
+    @Query("sort_by") String sortBy,
+    @Query("page") int page,
+  );
 
   @GET("type_of_store")
   Future<TypeShopResponse> getAllTypeOfStore();
@@ -108,7 +110,8 @@ abstract class SahaService {
   @FormUrlEncoded()
   Future<CreateCategoryResponse> updateCategory(
       @Path("storeCode") String? storeCode,
-      @Path("storeCode") int? categoryId, @Body() Map<String, dynamic> body);
+      @Path("categoryId") int? categoryId,
+      @Body() Map<String, dynamic> body);
 
   @POST("app-theme/{storeCode}")
   Future<CreateAppThemeResponse> createAppTheme(
@@ -124,7 +127,7 @@ abstract class SahaService {
   @DELETE("store/{storeCode}/categories/{categoryId}")
   Future<CategoryDeleteResponse> deleteCategory(
       @Path("storeCode") String? storeCode,
-  @Path("categoryId") int? categoryId);
+      @Path("categoryId") int? categoryId);
 
   @POST("images")
   Future<UploadImageResponse> uploadImage(@Body() Map<String, dynamic> body);
@@ -145,6 +148,18 @@ abstract class SahaService {
   @GET("store/{storeCode}/post_categories")
   Future<AllCategoryPostResponse> getAllCategoryPost(
       @Path("storeCode") String? storeCode);
+
+  @DELETE("store/{storeCode}/post_categories/{categoryPostId}")
+  Future<CategoryPostDeleteResponse> deleteCategoryPost(
+    @Path("storeCode") String? storeCode,
+    @Path("categoryPostId") int? categoryPostId,
+  );
+
+  @POST("store/{storeCode}/post_categories/{categoryPostId}")
+  Future<UpdateCategoryPostResponse> updateCategoryPost(
+      @Path("storeCode") String? storeCode,
+      @Path("categoryPostId") int? categoryPostId,
+      @Body() Map<String, dynamic> body);
 
   @POST("store/{storeCode}/posts")
   @FormUrlEncoded()

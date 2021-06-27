@@ -15,6 +15,9 @@ import 'package:sahashop_user/screen/order_manage/order_manage_controller.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
 class OrderManageScreen extends StatefulWidget {
+
+  OrderManageScreen({Key? key}) : super(key: key);
+
   @override
   _OrderManageScreenState createState() => _OrderManageScreenState();
 }

@@ -17,7 +17,7 @@ import 'controller/category_post_controller.dart';
 class CategoryPostStyle1 extends StatelessWidget {
   final ConfigController configController = Get.find();
   final DataAppCustomerController dataAppCustomerController = Get.find();
-  final CategoryPostController categoryController = CategoryPostController();
+  final CategoryPostController categoryController = CategoryPostController()..getAllCategoryPost();
 
   CategoryPostStyle1({Key? key}) : super(key: key);
 
@@ -26,7 +26,6 @@ class CategoryPostStyle1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    categoryController.getAllCategoryPost();
 
     ////  ////  ////  ////  ////  ////
     return Scaffold(

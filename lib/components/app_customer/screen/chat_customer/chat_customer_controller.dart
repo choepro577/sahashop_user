@@ -8,7 +8,7 @@ import 'package:sahashop_user/components/app_customer/repository/repository_cust
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/login/login_screen.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
-import 'package:sahashop_user/components/utils/customer_info.dart';
+import 'package:sahashop_user/components/app_customer/utils/customer_info.dart';
 import 'package:sahashop_user/controller/config_controller.dart';
 import 'package:sahashop_user/data/remote/response-request/chat/send_message_response.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';

@@ -30,7 +30,7 @@ class AddCategoryController extends GetxController {
         imageUp = await ImageUtils.getImageCompress(image!);
       }
 
-      if (categoryId != null) {
+      if (categoryId == null) {
         var data = await RepositoryManager.categoryRepository
             .createCategory(textEditingControllerName.text, imageUp);
       } else {

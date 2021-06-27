@@ -1,12 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:sahashop_user/components/app_customer/remote/customer_service_manager.dart';
-import 'package:sahashop_user/load_data/load_login.dart';
+import 'package:get/get.dart';
 import 'package:sahashop_user/screen/home/home_screen.dart';
 import 'package:sahashop_user/screen/login/loginScreen.dart';
 import 'package:sahashop_user/utils/user_info.dart';
-import 'data/remote/saha_service_manager.dart';
-import 'load_data/load_firebase.dart';
 
 class SahaMainScreen extends StatefulWidget {
   @override
@@ -21,11 +18,6 @@ class _SahaMainScreenState extends State<SahaMainScreen> {
   }
 
   void loadInit(BuildContext context) {
-    SahaServiceManager.initialize();
-    CustomerServiceManager.initialize();
-    LoadLogin.load();
-
-
     checkLogin(context);
   }
 
@@ -38,13 +30,11 @@ class _SahaMainScreenState extends State<SahaMainScreen> {
   }
 
   hasLogged(BuildContext context) {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    Get.offAll(() => HomeScreen());
   }
 
   noLogin(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => LoginScreen()));
+    Get.offAll(() => LoginScreen());
   }
 
   @override

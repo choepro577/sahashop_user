@@ -16,11 +16,12 @@ class AddPostController extends GetxController {
   var postSelected = CategoryPost().obs;
 
   String? title;
-  late File image;
+  File? image;
   var content = "".obs;
   String? summary;
   bool? published;
   int? categoryId;
+
 
   AddPostController() {
     getAllCategory();
@@ -29,7 +30,10 @@ class AddPostController extends GetxController {
   Future<bool?> createPost() async {
     isLoadingAdd.value = true;
     try {
-      var imageUp = await ImageUtils.getImageCompress(image);
+      var imageUp;
+      if (image != null) {
+        imageUp = await ImageUtils.getImageCompress(image!);
+      }
       var data = await RepositoryManager.postRepository.createPost(
           title: title,
           image: imageUp,

@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/dialog/dialog.dart';
 import 'package:sahashop_user/components/saha_user/text_field/sahashopTextField.dart';
+import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
 import 'package:sahashop_user/screen/home/home_screen.dart';
 import 'package:sahashop_user/screen/login/loginScreen_controller.dart';
@@ -37,14 +38,13 @@ class _SignInState extends State<LoginScreen> {
     super.didChangeDependencies();
     sub ??= loginController.stateLogin.listen((state) {
       if (state != "success") {
-        SahaDialogApp.showDialogError(context: context, errorMess: state);
-        //Get.to(HomeScreen());
+        SahaAlert.showError(message: state);
         EasyLoading.dismiss();
       }
 
       if (state == "success") {
         print("Đăng nhập thành công");
-        Get.to(HomeScreen());
+        Get.offAll(HomeScreen());
         EasyLoading.dismiss();
       }
     });
