@@ -37,6 +37,7 @@ import 'package:sahashop_user/data/remote/response-request/report/report_respons
 import 'response-request/auth/register_response.dart';
 import 'response-request/category/all_category_response.dart';
 import 'response-request/category/create_category_response.dart';
+import 'response-request/category/delete_category_response.dart';
 import 'response-request/device_token/device_token_user_response.dart';
 import 'response-request/image/upload_image_response.dart';
 import 'response-request/post/all_category_post_response.dart';
@@ -51,7 +52,7 @@ import 'response-request/store/type_store_respones.dart';
 
 part 'service.g.dart';
 
-@RestApi(baseUrl: "http://103.221.220.124/api/")
+@RestApi(baseUrl: "http://ashop.sahavi.vn/api/")
 abstract class SahaService {
   /// Retrofit factory
   factory SahaService(Dio dio) => _SahaService(dio);
@@ -103,6 +104,12 @@ abstract class SahaService {
   Future<CreateCategoryResponse> createCategory(
       @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
+  @POST("store/{storeCode}/categories/{categoryId}")
+  @FormUrlEncoded()
+  Future<CreateCategoryResponse> updateCategory(
+      @Path("storeCode") String? storeCode,
+      @Path("storeCode") int? categoryId, @Body() Map<String, dynamic> body);
+
   @POST("app-theme/{storeCode}")
   Future<CreateAppThemeResponse> createAppTheme(
       @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
@@ -113,6 +120,11 @@ abstract class SahaService {
   @GET("store/{storeCode}/categories")
   Future<AllCategoryResponse> getAllCategory(
       @Path("storeCode") String? storeCode);
+
+  @DELETE("store/{storeCode}/categories/{categoryId}")
+  Future<CategoryDeleteResponse> deleteCategory(
+      @Path("storeCode") String? storeCode,
+  @Path("categoryId") int? categoryId);
 
   @POST("images")
   Future<UploadImageResponse> uploadImage(@Body() Map<String, dynamic> body);

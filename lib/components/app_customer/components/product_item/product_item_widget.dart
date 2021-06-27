@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
+import 'package:sahashop_user/components/app_customer/utils/color_utils.dart';
 import 'package:sahashop_user/model/product.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
@@ -66,11 +68,7 @@ class ProductItemWidget extends StatelessWidget {
                                       ? ""
                                       : product.images![0].imageUrl!,
                                   errorWidget: (context, url, error) =>
-                                      CachedNetworkImage(
-                                    fit: BoxFit.cover,
-                                    imageUrl:
-                                        "https://scontent-sin6-2.xx.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=uUCcbPvUrGYAX89oI2i&_nc_ht=scontent-sin6-2.xx&oh=e8ad14caf2ed844857e6e4c8bf7d3ae3&oe=60D25ECA",
-                                  ),
+                                      SahaEmptyImage(),
                                 ),
                               ), //product.images[0].imageUrl
                         SizedBox(height: 5),
@@ -158,9 +156,7 @@ class ProductItemWidget extends StatelessWidget {
                                                 ? "${SahaStringUtils().convertToMoney(product.price)}đ"
                                                 : "${SahaStringUtils().convertToMoney(product.productDiscount!.discountPrice)}đ",
                                             style: TextStyle(
-                                                color: Theme.of(context).primaryColor.computeLuminance()
-                                                    > 0.5 ? Colors.black : Theme.of(context).primaryColor
-                                                ,
+                                                color: SahaColorUtils().colorTextWithPrimaryColor(),
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 14),
                                             maxLines: 1,

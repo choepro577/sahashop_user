@@ -21,6 +21,7 @@ class Product {
     this.likes,
     this.isNew,
     this.isTopSale,
+    this.isFavorite,
     this.createdAt,
     this.updatedAt,
     this.distributes,
@@ -46,6 +47,7 @@ class Product {
   int? status;
   bool? isNew;
   bool? isTopSale;
+  bool? isFavorite;
   DateTime? createdAt;
   DateTime? updatedAt;
   List<Distributes>? distributes;
@@ -75,6 +77,7 @@ class Product {
         view: json["view"],
         likes: json['likes'],
         isNew: json['is_new'] ?? false,
+        isFavorite: json['is_favorite'] ?? false,
         isTopSale: json['is_top_sale'] ?? false,
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),

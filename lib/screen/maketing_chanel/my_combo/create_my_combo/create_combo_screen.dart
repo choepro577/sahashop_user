@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/const/const_image_logo.dart';
 import 'package:sahashop_user/model/product.dart';
@@ -686,14 +687,7 @@ class CreateMyComboScreen extends StatelessWidget {
                                                         .imageUrl!,
                                                 errorWidget:
                                                     (context, url, error) =>
-                                                        Container(
-                                                  height: 100,
-                                                  width: Get.width / 4,
-                                                  child: CachedNetworkImage(
-                                                    fit: BoxFit.cover,
-                                                    imageUrl: logoSahaImage,
-                                                  ),
-                                                ),
+                                                        SahaEmptyImage(),
                                               ),
                                             ),
                                             Expanded(

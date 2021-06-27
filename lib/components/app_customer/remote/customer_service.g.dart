@@ -8,7 +8,7 @@ part of 'customer_service.dart';
 
 class _CustomerService implements CustomerService {
   _CustomerService(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'https://sahashop.net/api/customer/';
+    baseUrl ??= 'http://ashop.sahavi.vn/api/customer/';
   }
 
   final Dio _dio;
@@ -609,6 +609,38 @@ class _CustomerService implements CustomerService {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = CancelOrderResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<AllProductFavorites> getAllFavorite(storeCode, page) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AllProductFavorites>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/favorites',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AllProductFavorites.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<FavoriteResponse> favoriteProduct(storeCode, productId, body) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<FavoriteResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(
+                    _dio.options, '$storeCode/products/$productId/favorites',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = FavoriteResponse.fromJson(_result.data!);
     return value;
   }
 

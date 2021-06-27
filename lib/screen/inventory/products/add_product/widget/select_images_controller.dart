@@ -3,12 +3,12 @@ import 'dart:io';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/utils/image_utils.dart';
 
-final MAX_SELECT = 5;
+final MAX_SELECT = 10;
 
 class SelectImageController extends GetxController {
   Function? onUpload;
@@ -35,8 +35,7 @@ class SelectImageController extends GetxController {
     var newList = <ImageData>[];
 
     for (var asset in listAsset) {
-      var dataPre =
-          listPre.firstWhereOrNull((itemPre) => itemPre.file == asset);
+      var dataPre = listPre.firstWhereOrNull((itemPre) => itemPre.file == asset);
 
       if (dataPre != null) {
         newList.add(dataPre);
@@ -69,18 +68,17 @@ class SelectImageController extends GetxController {
     doneUpload!(dataImages.toList());
   }
 
-  Future<void> uploadImageData(
-      {required int indexImage, required Function onOK}) async {
+  Future<void> uploadImageData({required int indexImage, required Function onOK}) async {
     try {
       dataImages[indexImage].uploading = true;
       dataImages.refresh();
 
-      var fileUp =
-          await ImageUtils.getImageFileFromAsset(dataImages[indexImage].file);
+      var fileUp = await ImageUtils.getImageFileFromAsset(dataImages[indexImage].file);
       var fileUpImageCompress = await ImageUtils.getImageCompress(fileUp!);
 
-      var link = await RepositoryManager.imageRepository
-          .uploadImage(fileUpImageCompress);
+      var link = await RepositoryManager.imageRepository.uploadImage(
+          fileUpImageCompress
+       );
 
       dataImages[indexImage].linkImage = link;
       dataImages[indexImage].errorUpload = false;
@@ -105,6 +103,7 @@ class SelectImageController extends GetxController {
 
     return file;
   }
+
 
   Future<void> loadAssets() async {
     List<Asset?> resultList = <Asset?>[];

@@ -1,15 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
-import 'package:sahashop_user/components/saha_user/loading/loading_full_screen.dart';
 import 'package:sahashop_user/const/constant.dart';
 import 'package:sahashop_user/screen/chat/chat_screen/all_message_user_screen.dart';
-import 'package:sahashop_user/screen/config_app/config_screen.dart';
 import 'package:sahashop_user/screen/config_payment/config_payment_screen.dart';
 import 'package:sahashop_user/screen/config_store_address/config_store_address_screen.dart';
 import 'package:sahashop_user/screen/customer_manage/customer_manage_screen.dart';

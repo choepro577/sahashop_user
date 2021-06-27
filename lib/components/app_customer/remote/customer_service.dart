@@ -23,16 +23,14 @@ import 'package:sahashop_user/components/app_customer/remote/response-request/pr
 import 'package:sahashop_user/components/app_customer/remote/response-request/product/detail_product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/product/query_product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/register/register_response.dart';
-import 'package:sahashop_user/components/app_customer/remote/response-request/review/review_of_product_response.dart';
-import 'package:sahashop_user/components/app_customer/remote/response-request/review/review_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/shipment/shipment_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/store/all_store_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/store/type_store_respones.dart';
 import 'package:sahashop_user/model/cart.dart';
 
-part 'customer_service.g.dart';
+ part 'customer_service.g.dart';
 
-@RestApi(baseUrl: "https://sahashop.net/api/customer/")
+@RestApi(baseUrl: "http://ashop.sahavi.vn/api/customer/")
 abstract class CustomerService {
   /// Retrofit factory
   factory CustomerService(Dio dio) => _CustomerService(dio);
@@ -209,6 +207,18 @@ abstract class CustomerService {
       @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   @PUT("{storeCode}/carts/orders/change_payment_method/{orderCode}")
+  Future<CancelOrderResponse> changePaymentMethod(@Path("storeCode") String? storeCode,
+      @Body() Map<String, dynamic> body, @Path() String? orderCode);
+
+  @GET("{storeCode}/favorites")
+  Future<AllProductFavorites> getAllFavorite(@Path("storeCode") String storeCode, @Path("page") int page);
+
+  @POST("{storeCode}/products/{productId}/favorites")
+  Future<FavoriteResponse> favoriteProduct(@Path("storeCode") String storeCode,
+      @Path("productId") int productId, @Body() Map<String, dynamic> body
+      );
+
+
   Future<CancelOrderResponse> changePaymentMethod(
       @Path("storeCode") String? storeCode,
       @Body() Map<String, dynamic> body,

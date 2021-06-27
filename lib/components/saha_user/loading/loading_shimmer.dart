@@ -5,7 +5,7 @@ class SahaSimmer extends StatelessWidget {
   final Widget? child;
   final bool? isLoading;
 
-  const SahaSimmer({Key? key, this.isLoading, this.child}) : super(key: key);
+  const SahaSimmer({Key? key, this.isLoading = true, this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

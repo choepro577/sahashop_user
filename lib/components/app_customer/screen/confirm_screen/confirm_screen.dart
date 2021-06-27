@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/app_customer/screen/address_screen/choose_address_receiver/receiver_address_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/choose_voucher/choose_voucher_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/confirm_screen/confirm_controller.dart';
@@ -279,16 +280,7 @@ class ConfirmScreen extends StatelessWidget {
                                         .product!
                                         .images![0]
                                         .imageUrl!,
-                                errorWidget: (context, url, error) => ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Container(
-                                    height: 100,
-                                    child: CachedNetworkImage(
-                                      fit: BoxFit.cover,
-                                      imageUrl: logoSahaImage,
-                                    ),
-                                  ),
-                                ),
+                                errorWidget: (context, url, error) => SahaEmptyImage(),
                               ),
                             ),
                           ),

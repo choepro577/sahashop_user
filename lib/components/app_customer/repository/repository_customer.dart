@@ -14,11 +14,13 @@ import 'package:sahashop_user/components/app_customer/repository/review/review_r
 import 'package:sahashop_user/components/app_customer/repository/shipment/shipment_repository.dart';
 import 'package:sahashop_user/data/repository/post/post_repository.dart';
 
+import 'favorite/favorite_repository.dart';
 import 'home/home_repository.dart';
 import 'post/post_repository.dart';
 
 class CustomerRepositoryManager {
   static CategoryRepository get categoryRepository => CategoryRepository();
+  static FavoriteRepository get favoriteRepository => FavoriteRepository();
   static ConfigUICustomerRepository get configUiRepository =>
       ConfigUICustomerRepository();
   static ProductCustomerRepository get productCustomerRepository =>

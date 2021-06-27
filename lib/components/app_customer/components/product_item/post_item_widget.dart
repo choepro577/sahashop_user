@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
-import 'package:sahashop_user/const/const_image_logo.dart';
 import 'package:sahashop_user/model/post.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 
@@ -57,12 +57,7 @@ class PostItemWidget extends StatelessWidget {
                         fit: BoxFit.cover,
                         imageUrl: post.imageUrl == null ? "" : post.imageUrl!,
                         errorWidget: (context, url, error) =>
-                            CachedNetworkImage(
-                          height: 70,
-                          width: 70,
-                          fit: BoxFit.cover,
-                          imageUrl: logoSahaImage,
-                        ),
+                            SahaEmptyImage(),
                       ), //post.images[0].imageUrl,
               ),
               SizedBox(width: 5),

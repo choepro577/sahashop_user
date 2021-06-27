@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/config_ui/app_theme_response.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/const/const_image_logo.dart';
@@ -104,13 +105,7 @@ class CustomerManageScreen extends StatelessWidget {
                                                   .avatarImage ??
                                               "",
                                       errorWidget: (context, url, error) =>
-                                          ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        child: CachedNetworkImage(
-                                            fit: BoxFit.cover,
-                                            imageUrl: logoSahaImage),
-                                      ),
+                                          SahaEmptyImage(),
                                     ),
                                   ),
                                   SizedBox(

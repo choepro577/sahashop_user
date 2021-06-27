@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/data/remote/response-request/chat/send_message_request.dart';
 import 'package:sahashop_user/data/remote/response-request/chat/send_message_response.dart';

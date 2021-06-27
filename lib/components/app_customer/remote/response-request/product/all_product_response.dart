@@ -13,10 +13,12 @@ class AllProductResponse {
     success = json['success'];
     msgCode = json['msg_code'];
     if (json['data'] != null) {
-      data = [];
-      json['data'].forEach((v) {
-        data!.add(new Product.fromJson(v));
-      });
+
+      data = json['data'] != null
+          ? List<Product>.from(
+          json["data"].map((x) => Product.fromJson(x)))
+          : [];
+
     }
   }
 

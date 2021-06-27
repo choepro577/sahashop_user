@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:multi_image_picker2/multi_image_picker2.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/const/constant.dart';
 
@@ -95,6 +96,62 @@ class SelectProductImages extends StatelessWidget {
     );
   }
 
+  Widget buildItem() {
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            border: Border.all(color: SahaPrimaryColor)),
+        height: 100,
+        width: 100,
+        child: Stack(
+          alignment: Alignment.bottomLeft,
+          children: [
+            Container(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(5.0),
+                child: CachedNetworkImage(
+                  height: 95,
+                  width: 95,
+                  fit: BoxFit.cover,
+                  imageUrl:
+                      "",
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => SahaEmptyImage(),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 0,
+              right: 0,
+              child: Container(
+                height: 17,
+                width: 17,
+                decoration: BoxDecoration(
+                  color: Colors.black54,
+                  shape: BoxShape.circle,
+                  border: Border.all(width: 1, color: Colors.white),
+                ),
+                child: Center(
+                  child: Text(
+                    "x",
+                    style: TextStyle(
+                      fontSize: 10,
+                      height: 1,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget buildItemImageData(ImageData imageData) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
@@ -174,12 +231,7 @@ class SelectProductImages extends StatelessWidget {
                     size: 50,
                   )
                 : Container(),
-            imageData.errorUpload!
-                ? Icon(
-                    Icons.error,
-                    color: Colors.redAccent,
-                  )
-                : Container(),
+            imageData.errorUpload! ? Icon(Icons.error,color: Colors.redAccent,) : Container(),
           ],
         ),
       ),
