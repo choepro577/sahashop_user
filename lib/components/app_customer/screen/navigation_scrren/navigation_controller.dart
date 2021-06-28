@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/screen/cart_screen/cart_screen_1.dart';
 import 'package:sahashop_user/components/app_customer/screen/category_post_screen/category_post_screen_1.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_widget_config.dart';
+import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/profile_screen/profile_screen.dart';
 import 'package:sahashop_user/controller/config_controller.dart';
 import 'package:sahashop_user/screen/order_manage/order_manage_screen.dart';
@@ -22,12 +23,22 @@ class NavigationController extends GetxController {
             LIST_WIDGET_HOME_SCREEN.length) {
 
       navigationHome = [
-        CartScreen1(key: PageStorageKey<String>('str0'),),
-        CategoryPostStyle1(key: PageStorageKey<String>('str1'),),
-        Container(key: PageStorageKey<String>('str2'),
-            child: LIST_WIDGET_HOME_SCREEN[configController.configApp.homePageType!]),
-        OrderManageScreen(key: PageStorageKey<String>('str3'),),
-        ProfileScreen(key: PageStorageKey<String>('str4'),),
+        CartScreen1(
+          key: PageStorageKey<String>('str0'),
+        ),
+        CategoryPostStyle1(
+          key: PageStorageKey<String>('str1'),
+        ),
+        Container(
+            key: PageStorageKey<String>('str2'),
+            child: LIST_WIDGET_HOME_SCREEN[
+                configController.configApp.homePageType!]),
+        OrderHistoryScreen(
+          key: PageStorageKey<String>('str3'),
+        ),
+        ProfileScreen(
+          key: PageStorageKey<String>('str4'),
+        ),
       ];
 
     } else {

@@ -18,7 +18,6 @@ class OrderCompletedScreen extends StatelessWidget {
   OrderCompletedController? orderCompletedController;
 
   DataAppCustomerController dataAppCustomerController = Get.find();
-  OrderHistoryController orderHistoryController = Get.find();
 
   OrderCompletedScreen({Key? key, this.orderCode}) : super(key: key) {
     orderCompletedController = OrderCompletedController(orderCode);
@@ -166,25 +165,9 @@ class OrderCompletedScreen extends StatelessWidget {
                                   InkWell(
                                     onTap: () {
                                       Get.off(() => OrderHistoryDetailScreen(
-                                                order: orderCompletedController!
-                                                    .order.value,
-                                              ))!
-                                          .then((value) => {
-                                                //  orderHistoryController.refreshData(),
-                                                orderHistoryController
-                                                    .refreshData(
-                                                  "order_status_code",
-                                                  "WAITING_FOR_PROGRESSING",
-                                                  orderHistoryController
-                                                      .listStatusCode
-                                                      .indexWhere((element) =>
-                                                          element ==
-                                                          orderCompletedController!
-                                                              .order
-                                                              .value!
-                                                              .orderStatusCode),
-                                                ),
-                                              });
+                                            order: orderCompletedController!
+                                                .order.value,
+                                          ));
                                     },
                                     child: Container(
                                       height: 35,

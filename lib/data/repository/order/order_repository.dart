@@ -1,6 +1,7 @@
 import 'package:sahashop_user/components/app_customer/remote/response-request/orders/order_response.dart';
 import 'package:sahashop_user/data/remote/response-request/order/all_order_response.dart';
 import 'package:sahashop_user/data/remote/response-request/order/change_order_status_repose.dart';
+import 'package:sahashop_user/data/remote/response-request/order/change_pay_success_response.dart';
 import 'package:sahashop_user/data/remote/response-request/order/state_history_order_response.dart';
 import 'package:sahashop_user/data/remote/saha_service_manager.dart';
 import 'package:sahashop_user/data/repository/handle_error.dart';
@@ -64,6 +65,20 @@ class OrderRepository {
           .changeOrderStatus(UserInfo().getCurrentStoreCode(), {
         "order_code": orderCode,
         "order_status_code": orderStatusCode,
+      });
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  Future<ChangePaySuccessResponse?> changePaymentStatus(
+      String? orderCode, String orderStatusCode) async {
+    try {
+      var res = await SahaServiceManager()
+          .service!
+          .changePaymentStatus(UserInfo().getCurrentStoreCode(), {
+        "order_code": orderCode,
+        "payment_status_code": orderStatusCode,
       });
     } catch (err) {
       handleError(err);

@@ -48,4 +48,14 @@ class OrderDetailController extends GetxController {
       SahaAlert.showError(message: err.toString());
     }
   }
+
+  Future<void> changePaymentStatus(String paymentStatusCode) async {
+    try {
+      var res = await RepositoryManager.orderRepository
+          .changePaymentStatus(inputOrder!.orderCode, paymentStatusCode);
+      getOneOrder();
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+  }
 }

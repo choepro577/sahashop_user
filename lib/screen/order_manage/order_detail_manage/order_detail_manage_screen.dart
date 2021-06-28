@@ -19,9 +19,9 @@ import 'widget/dialog_choose_order_status.dart';
 
 // ignore: must_be_immutable
 class OrderDetailScreen extends StatelessWidget {
-  final Order order = new Order();
-  final int indexListOrder = 0;
-  final int indexStateOrder = 0;
+  final Order? order;
+  final int? indexListOrder;
+  final int? indexStateOrder;
 
   var listStatusCode = [
     WAITING_FOR_PROGRESSING,
@@ -36,8 +36,7 @@ class OrderDetailScreen extends StatelessWidget {
     CUSTOMER_HAS_RETURNS,
   ];
 
-  OrderDetailScreen(
-      {required order, required indexListOrder, required indexStateOrder}) {
+  OrderDetailScreen({this.order, this.indexListOrder, this.indexStateOrder}) {
     orderDetailController = OrderDetailController(inputOrder: order);
     orderManageController = Get.find();
     chatController = Get.put(ChatController());
@@ -77,17 +76,24 @@ class OrderDetailScreen extends StatelessWidget {
                                 var check = orderManageController!
                                     .listStatusCode
                                     .indexWhere((element) => element == value);
-                                print(check);
                                 if (check != -1) {
                                   orderManageController!.listAllOrder[check]
-                                      .add(orderDetailController!
-                                          .orderResponse.value);
-                                  orderManageController!
-                                      .listAllOrder[indexStateOrder]
-                                      .removeWhere((element) =>
-                                          element.orderCode ==
+                                      .insert(
+                                          0,
                                           orderDetailController!
-                                              .orderResponse.value.orderCode);
+                                              .orderResponse.value);
+                                  orderManageController!
+                                      .listAllOrder[indexStateOrder!]
+                                      .removeAt(indexListOrder!);
+                                  if (orderManageController!
+                                      .listAllOrder[indexStateOrder!].isEmpty) {
+                                    orderManageController!.listCheckIsEmpty[
+                                        indexStateOrder!] = true;
+                                  }
+                                  orderManageController!
+                                      .listCheckIsEmpty[check] = false;
+                                  orderManageController!.listCheckIsEmpty
+                                      .refresh();
                                   orderManageController!.listAllOrder.refresh();
                                 }
                                 Get.back();
@@ -310,10 +316,9 @@ class OrderDetailScreen extends StatelessWidget {
                                               : "${orderDetailController!.orderResponse.value.lineItemsAtTime![index].imageUrl}",
                                           errorWidget: (context, url, error) =>
                                               SahaEmptyImage(),
-                                          ),
                                         ),
                                       ),
-
+                                    ),
                                     SizedBox(
                                       width: 10,
                                     ),

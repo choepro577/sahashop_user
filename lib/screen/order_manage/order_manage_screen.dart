@@ -15,7 +15,6 @@ import 'package:sahashop_user/screen/order_manage/order_manage_controller.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
 class OrderManageScreen extends StatefulWidget {
-
   OrderManageScreen({Key? key}) : super(key: key);
 
   @override
@@ -164,6 +163,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                 .listAllOrder[indexState].length,
                             (index) => InkWell(
                               onTap: () {
+                                print(indexState);
                                 Get.to(() => OrderDetailScreen(
                                       order: orderManageController!
                                           .listAllOrder[indexState][index],
@@ -370,7 +370,8 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                             Text(
                                               "đ${SahaStringUtils().convertToMoney(orderManageController!.listAllOrder[indexState][index].totalFinal)}",
                                               style: TextStyle(
-                                                  color: SahaColorUtils().colorTextWithPrimaryColor()),
+                                                  color: SahaColorUtils()
+                                                      .colorTextWithPrimaryColor()),
                                             ),
                                           ],
                                         ),

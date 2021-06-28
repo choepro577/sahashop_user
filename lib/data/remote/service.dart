@@ -27,6 +27,7 @@ import 'package:sahashop_user/data/remote/response-request/marketing_chanel_resp
 import 'package:sahashop_user/data/remote/response-request/marketing_chanel_response/voucher/my_voucher_response.dart';
 import 'package:sahashop_user/data/remote/response-request/order/all_order_response.dart';
 import 'package:sahashop_user/data/remote/response-request/order/change_order_status_repose.dart';
+import 'package:sahashop_user/data/remote/response-request/order/change_pay_success_response.dart';
 import 'package:sahashop_user/data/remote/response-request/order/state_history_order_response.dart';
 import 'package:sahashop_user/data/remote/response-request/payment_method/payment_method_response.dart';
 import 'package:sahashop_user/data/remote/response-request/payment_method/update_payment_response.dart';
@@ -331,6 +332,12 @@ abstract class SahaService {
 
   @POST("store/{storeCode}/orders/change_order_status")
   Future<ChangeOrderStatusResponse> changeOrderStatus(
+    @Path("storeCode") String? storeCode,
+    @Body() Map<String, dynamic> body,
+  );
+
+  @POST("store/{storeCode}/orders/change_payment_status")
+  Future<ChangePaySuccessResponse> changePaymentStatus(
     @Path("storeCode") String? storeCode,
     @Body() Map<String, dynamic> body,
   );
