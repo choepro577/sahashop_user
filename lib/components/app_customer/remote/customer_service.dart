@@ -240,8 +240,7 @@ abstract class CustomerService {
   @GET("{storeCode}/favorites")
   Future<AllProductFavorites> getAllFavorite(@Path("storeCode") String storeCode,
       @Path("page") int page);
-  Future<AllProductFavorites> getAllFavorite(
-      @Path("storeCode") String storeCode, @Path("page") int page);
+
 
   @POST("{storeCode}/products/{productId}/favorites")
   Future<FavoriteResponse> favoriteProduct(@Path("storeCode") String storeCode,
