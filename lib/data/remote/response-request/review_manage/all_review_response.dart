@@ -89,8 +89,9 @@ class Data {
   int? total;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        averagedStars:
-            json["averaged_stars"] == null ? null : json["averaged_stars"],
+        averagedStars: json["averaged_stars"] == null
+            ? null
+            : json["averaged_stars"].toDouble(),
         totalReviews:
             json["total_reviews"] == null ? null : json["total_reviews"],
         totalPendingApproval: json["total_pending_approval"] == null
