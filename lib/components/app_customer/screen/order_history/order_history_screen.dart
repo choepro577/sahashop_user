@@ -28,18 +28,20 @@ class OrderHistoryScreen extends StatefulWidget {
 }
 
 class _OrderHistoryScreenState extends State<OrderHistoryScreen>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   @override
   bool get wantKeepAlive => true;
   final PageStorageBucket bucket = PageStorageBucket();
-
+  TabController? tabController;
   @override
   void initState() {
-    // TODO: implement initState
+    tabController = new TabController(
+        length: 10, vsync: this, initialIndex: widget.initPage ?? 0);
     super.initState();
   }
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 10,
@@ -48,6 +50,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
           title: Text('Đơn mua'),
           bottom: TabBar(
             isScrollable: true,
+            controller: tabController,
             tabs: [
               Tab(text: "Chờ xác nhận"),
               Tab(text: "Đang chuẩn bị hàng"),
@@ -64,7 +67,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
         ),
         body: PageStorage(
           bucket: bucket,
-          child: TabBarView(children: [
+          child: TabBarView(controller: tabController, children: [
             OrderStatusPage(
               fieldBy: "order_status_code",
               fieldByValue: WAITING_FOR_PROGRESSING,

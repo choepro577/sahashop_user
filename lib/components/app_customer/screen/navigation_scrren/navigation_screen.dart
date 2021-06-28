@@ -18,8 +18,6 @@ class NavigationScreen extends StatefulWidget {
 class _NavigationScreenState extends State<NavigationScreen> {
   NavigationController navigationController = NavigationController();
 
-
-
   final PageStorageBucket _bucket = PageStorageBucket();
 
   @override
@@ -35,7 +33,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
       child: Obx(
         () => Scaffold(
           body: PageStorage(
-            child:pages[navigationController.selectedIndexBottomBar.value],
+            child: pages[navigationController.selectedIndexBottomBar.value],
             bucket: _bucket,
           ),
           bottomNavigationBar: BottomNavigationBar(
@@ -43,12 +41,10 @@ class _NavigationScreenState extends State<NavigationScreen> {
             unselectedItemColor: Colors.grey,
             showUnselectedLabels: true,
             type: BottomNavigationBarType.fixed,
-            selectedItemColor:  Theme.of(context)
-                .primaryColor
-                .computeLuminance() >
-                0.5
-                ? Colors.black
-                : Theme.of(context).primaryColor,
+            selectedItemColor:
+                Theme.of(context).primaryColor.computeLuminance() > 0.5
+                    ? Colors.black
+                    : Theme.of(context).primaryColor,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.shopping_cart),
