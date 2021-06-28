@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
+import 'package:sahashop_user/const/const_image_logo.dart';
 import 'package:sahashop_user/model/combo.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_combo/create_my_combo/create_combo_screen.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_combo/my_combo_controller.dart';
@@ -76,7 +76,7 @@ class _MyComboScreenState extends State<MyComboScreen>
           child: Column(
             children: [
               SahaButtonFullParent(
-                text: "Tạo Voucher mới",
+                text: "Tạo Combo mới",
                 onPressed: () {
                   Get.to(() => CreateMyComboScreen())!
                       .then((value) => {myComboController.refreshData()});
@@ -96,9 +96,7 @@ class _MyComboScreenState extends State<MyComboScreen>
     return SmartRefresher(
         enablePullDown: true,
         enablePullUp: true,
-        header: WaterDropHeader(
-          complete: Text(""),
-        ),
+        header: MaterialClassicHeader(),
         footer: CustomFooter(
           builder: (
             BuildContext context,
@@ -260,9 +258,14 @@ class _MyComboScreenState extends State<MyComboScreen>
                       height: 55,
                       child: CachedNetworkImage(
                         fit: BoxFit.cover,
-                        imageUrl:
-                            "https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=eb0DhpK_xWQAX_QjNYx&_nc_ht=scontent.fvca1-1.fna&oh=7454a14806922d553bf05b94f929d438&oe=60A6DD4A",
-                        errorWidget: (context, url, error) => SahaEmptyImage(),
+                        imageUrl: logoSahaImage,
+                        errorWidget: (context, url, error) => ClipRRect(
+                          borderRadius: BorderRadius.circular(1),
+                          child: CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl: logoSahaImage,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -346,7 +349,8 @@ class _MyComboScreenState extends State<MyComboScreen>
                                   height: 35,
                                   width: Get.width * 0.45,
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey[600]!),
+                                    border:
+                                        Border.all(color: Colors.grey[600]!),
                                     borderRadius: BorderRadius.circular(2.0),
                                   ),
                                   child: Center(
@@ -363,7 +367,8 @@ class _MyComboScreenState extends State<MyComboScreen>
                                   height: 35,
                                   width: Get.width * 0.45,
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey[600]!),
+                                    border:
+                                        Border.all(color: Colors.grey[600]!),
                                     borderRadius: BorderRadius.circular(2.0),
                                   ),
                                   child: Center(

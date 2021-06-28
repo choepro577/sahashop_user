@@ -4,10 +4,8 @@ import 'package:sahashop_user/components/app_customer/remote/response-request/or
 import 'package:sahashop_user/components/app_customer/repository/repository_customer.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/order_completed_screen/order_completed_screen.dart';
-import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_screen.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
-import 'package:sahashop_user/model/cart.dart';
 import 'package:sahashop_user/model/info_address_customer.dart';
 import 'package:sahashop_user/model/shipment_method.dart';
 
@@ -34,7 +32,7 @@ class ConfirmController extends GetxController {
   ConfirmController() {
     shipmentMethodCurrent.value.fee = 0;
     infoAddressCustomer.value = InfoAddressCustomer(id: 0);
-    //getAllAddressCustomer();
+    getAllAddressCustomer();
   }
 
   Future<void> chargeShipmentFee(int? idAddressCustomer) async {
@@ -87,7 +85,9 @@ class ConfirmController extends GetxController {
         isLoadingOrder.value = false;
         Get.offNamedUntil(
             "customer_home", (route) => route.settings.name == "customer_home");
-        Get.to(() => OrderHistoryScreen());
+        Get.to(() => OrderHistoryScreen(
+              initPage: 0,
+            ));
         Get.to(() => OrderCompletedScreen(
               orderCode: resultOrder!.data!.orderCode!,
             ));

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
+import 'package:sahashop_user/const/const_image_logo.dart';
 import 'package:sahashop_user/model/discount_product_list.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/create_my_program/create_my_program.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_program/my_program_controller.dart';
@@ -263,10 +263,17 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                       width: 80,
                       height: 80,
                       fit: BoxFit.cover,
-                      imageUrl: listProgramState.products![0].images!.length == 0
+                      imageUrl: listProgramState.products![0].images!.length ==
+                              0
                           ? ""
                           : "${listProgramState.products![0].images![0].imageUrl}",
-                      errorWidget: (context, url, error) => SahaEmptyImage(),
+                      errorWidget: (context, url, error) => ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: CachedNetworkImage(
+                          fit: BoxFit.cover,
+                          imageUrl: logoSahaImage,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -340,7 +347,8 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                                   height: 35,
                                   width: Get.width * 0.45,
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey[600]!),
+                                    border:
+                                        Border.all(color: Colors.grey[600]!),
                                     borderRadius: BorderRadius.circular(2.0),
                                   ),
                                   child: Center(
@@ -358,7 +366,8 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
                                   height: 35,
                                   width: Get.width * 0.45,
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey[600]!),
+                                    border:
+                                        Border.all(color: Colors.grey[600]!),
                                     borderRadius: BorderRadius.circular(2.0),
                                   ),
                                   child: Center(

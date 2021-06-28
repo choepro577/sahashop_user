@@ -176,7 +176,8 @@ class ChatCustomerController extends GetxController {
     var newList = <ImageData>[];
 
     for (var asset in listAsset) {
-      var dataPre = listPre.firstWhereOrNull((itemPre) => itemPre.file == asset);
+      var dataPre =
+          listPre.firstWhereOrNull((itemPre) => itemPre.file == asset);
 
       if (dataPre != null) {
         newList.add(dataPre);
@@ -216,11 +217,9 @@ class ChatCustomerController extends GetxController {
     listImageRequest = [];
   }
 
-  Future<void> uploadImageData({required int indexImage, required Function onOK}) async {
+  Future<void> uploadImageData(
+      {required int indexImage, required Function onOK}) async {
     try {
-      //  dataImages[indexImage].uploading = true;
-      //  dataImages.refresh();
-
       var fileUp =
           await ImageUtils.getImageFileFromAsset(dataImages[indexImage].file);
       var fileUpImageCompress = await ImageUtils.getImageCompress(fileUp!);

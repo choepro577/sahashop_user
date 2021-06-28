@@ -19,7 +19,7 @@ class IconBtnWithCounterType2 extends StatelessWidget {
     return InkWell(
       onTap: press,
       child: Stack(
-        overflow: Overflow.visible,
+        clipBehavior: Clip.none,
         children: [
           Container(
             padding: EdgeInsets.all(12),

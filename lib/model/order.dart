@@ -82,6 +82,7 @@ class Order {
     this.customerUsedVoucher,
     this.lineItemsAtTime,
     this.infoCustomer,
+    this.reviewed,
   });
 
   int? id;
@@ -115,6 +116,7 @@ class Order {
   dynamic customerUsedVoucher;
   List<LineItemsAtTime>? lineItemsAtTime;
   InfoCustomer? infoCustomer;
+  bool? reviewed;
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
         id: json["id"],
@@ -139,6 +141,7 @@ class Order {
         paymentStatusName: json["payment_status_name"],
         orderStatusCode: json["order_status_code"],
         orderStatusName: json["order_status_name"],
+        reviewed: json["reviewed"] == null ? false : json["reviewed"],
         lineItems: json["line_items"] == null
             ? null
             : List<LineItem>.from(

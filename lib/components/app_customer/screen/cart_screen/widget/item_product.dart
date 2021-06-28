@@ -96,21 +96,20 @@ class ItemProductInCartWidget extends StatelessWidget {
                               imageUrl: product.images!.length == 0
                                   ? ""
                                   : product.images![0].imageUrl!,
-                              errorWidget: (context, url, error) => SahaEmptyImage(),
-                                ),
-                              ),
+                              errorWidget: (context, url, error) =>
+                                  SahaEmptyImage(),
                             ),
                           ),
                         ),
-
-
+                      ),
+                    ),
                     product.productDiscount == null
                         ? Container()
                         : Positioned(
                             top: -10,
                             left: 2,
                             child: Stack(
-                              overflow: Overflow.visible,
+                              clipBehavior: Clip.none,
                               children: [
                                 Container(
                                   height: 40,
@@ -259,12 +258,12 @@ class ItemProductInCartWidget extends StatelessWidget {
                               ModalBottomOptionBuyProduct.showModelOption(
                                   product: lineItem.product!,
                                   distributesSelectedParam:
-                                  lineItem.distributesSelected,
+                                      lineItem.distributesSelected,
                                   quantity: lineItem.quantity,
                                   onSubmit: (int quantity,
                                       Product product,
                                       List<DistributesSelected>
-                                      distributesSelected) {
+                                          distributesSelected) {
                                     onUpdateProduct!(
                                         quantity, distributesSelected);
                                     Get.back();

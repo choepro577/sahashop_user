@@ -9,6 +9,8 @@ import 'package:sahashop_user/components/app_customer/remote/response-request/ca
 import 'package:sahashop_user/components/app_customer/remote/response-request/chat_customer/all_message_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/chat_customer/send_message_customer_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/config_ui/app_theme_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/favorite/all_product_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/favorite/favorite_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/home/home_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/info_customer/info_customer_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/login/login_response.dart';
@@ -23,15 +25,14 @@ import 'package:sahashop_user/components/app_customer/remote/response-request/pr
 import 'package:sahashop_user/components/app_customer/remote/response-request/product/detail_product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/product/query_product_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/register/register_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/review/review_of_product_response.dart';
+import 'package:sahashop_user/components/app_customer/remote/response-request/review/review_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/shipment/shipment_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/store/all_store_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/store/type_store_respones.dart';
 import 'package:sahashop_user/model/cart.dart';
 
-import 'response-request/favorite/all_product_response.dart';
-import 'response-request/favorite/favorite_response.dart';
-
- part 'customer_service.g.dart';
+part 'customer_service.g.dart';
 
 @RestApi(baseUrl: "http://ashop.sahavi.vn/api/customer/")
 abstract class CustomerService {
@@ -51,7 +52,8 @@ abstract class CustomerService {
   Future<GetAppThemeResponse> getAppTheme(@Path("storeCode") String? storeCode);
 
   @GET("{storeCode}/categories")
-  Future<AllCategoryResponse> getAllCategory(@Path("storeCode") String? storeCode);
+  Future<AllCategoryResponse> getAllCategory(
+      @Path("storeCode") String? storeCode);
 
   @GET("{storeCode}/products")
   Future<QueryProductResponse> getProductWithCategory(
@@ -73,7 +75,8 @@ abstract class CustomerService {
   );
 
   @GET("{storeCode}/post_categories")
-  Future<AllCategoryPostResponse> getAllCategoryPost(@Path("storeCode") String? storeCode);
+  Future<AllCategoryPostResponse> getAllCategoryPost(
+      @Path("storeCode") String? storeCode);
 
   @GET("{storeCode}/posts?=")
   Future<AllPostResponse> searchPost(
@@ -103,15 +106,18 @@ abstract class CustomerService {
       @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   @GET("{storeCode}/profile")
-  Future<InfoCustomerResponse> getInfoCustomer(@Path("storeCode") String? storeCode);
+  Future<InfoCustomerResponse> getInfoCustomer(
+      @Path("storeCode") String? storeCode);
 
   /// marketing chanel
 
   @GET("{storeCode}/combos")
-  Future<CustomerComboResponse> getComboCustomer(@Path("storeCode") String? storeCode);
+  Future<CustomerComboResponse> getComboCustomer(
+      @Path("storeCode") String? storeCode);
 
   @GET("{storeCode}/vouchers")
-  Future<VoucherCustomerResponse> getVoucherCustomer(@Path("storeCode") String? storeCode);
+  Future<VoucherCustomerResponse> getVoucherCustomer(
+      @Path("storeCode") String? storeCode);
 
   /// chat customer
 
@@ -205,16 +211,30 @@ abstract class CustomerService {
       @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   @PUT("{storeCode}/carts/orders/change_payment_method/{orderCode}")
-  Future<CancelOrderResponse> changePaymentMethod(@Path("storeCode") String? storeCode,
-      @Body() Map<String, dynamic> body, @Path() String? orderCode);
+  Future<CancelOrderResponse> changePaymentMethod(
+      @Path("storeCode") String? storeCode,
+      @Body() Map<String, dynamic> body,
+      @Path() String? orderCode);
 
   @GET("{storeCode}/favorites")
-  Future<AllProductFavorites> getAllFavorite(@Path("storeCode") String storeCode, @Path("page") int page);
+  Future<AllProductFavorites> getAllFavorite(
+      @Path("storeCode") String storeCode, @Path("page") int page);
 
   @POST("{storeCode}/products/{productId}/favorites")
   Future<FavoriteResponse> favoriteProduct(@Path("storeCode") String storeCode,
-      @Path("productId") int productId, @Body() Map<String, dynamic> body
-      );
+      @Path("productId") int productId, @Body() Map<String, dynamic> body);
 
+  /// review
+  @POST("{storeCode}/products/{idProduct}/reviews")
+  Future<ReviewResponse> review(@Path("storeCode") String? storeCode,
+      @Path() int? idProduct, @Body() Map<String, dynamic> body);
 
+  @GET("{storeCode}/products/{idProduct}/reviews")
+  Future<ReviewOfProResponse> getReviewProduct(
+    @Path("storeCode") String? storeCode,
+    @Path() int? idProduct,
+    @Query("filter_by") String filterBy,
+    @Query("filter_by_value") String filterByValue,
+    @Query("has_image") bool? hasImage,
+  );
 }

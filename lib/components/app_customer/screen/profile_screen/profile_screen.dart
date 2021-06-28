@@ -22,7 +22,7 @@ class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key}) : super(key: key);
 
   DataAppCustomerController dataAppCustomerController = Get.find();
-  ProfileController? profileController = ProfileController();
+  ProfileController profileController = ProfileController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -364,7 +364,7 @@ class ProfileScreen extends StatelessWidget {
                                         ));
                                   },
                                   child: Stack(
-                                    overflow: Overflow.visible,
+                                    clipBehavior: Clip.none,
                                     children: [
                                       Container(
                                         width: 30,
@@ -375,7 +375,7 @@ class ProfileScreen extends StatelessWidget {
                                               .colorTextWithPrimaryColor(),
                                         ),
                                       ),
-                                      profileController!
+                                      profileController
                                                   .processingAmount.value !=
                                               0
                                           ? Positioned(
@@ -393,7 +393,7 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    "${profileController!.processingAmount.value}+",
+                                                    "${profileController.processingAmount.value}+",
                                                     style: TextStyle(
                                                       fontSize: 8,
                                                       height: 1,
@@ -428,7 +428,7 @@ class ProfileScreen extends StatelessWidget {
                                         ));
                                   },
                                   child: Stack(
-                                    overflow: Overflow.visible,
+                                    clipBehavior: Clip.none,
                                     children: [
                                       Container(
                                         width: 30,
@@ -439,8 +439,7 @@ class ProfileScreen extends StatelessWidget {
                                               .colorTextWithPrimaryColor(),
                                         ),
                                       ),
-                                      profileController!.packingAmount.value !=
-                                              0
+                                      profileController.packingAmount.value != 0
                                           ? Positioned(
                                               top: -3,
                                               right: -5,
@@ -456,7 +455,7 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    "${profileController!.packingAmount.value}+",
+                                                    "${profileController.packingAmount.value}+",
                                                     style: TextStyle(
                                                       fontSize: 8,
                                                       height: 1,
@@ -491,7 +490,7 @@ class ProfileScreen extends StatelessWidget {
                                         ));
                                   },
                                   child: Stack(
-                                    overflow: Overflow.visible,
+                                    clipBehavior: Clip.none,
                                     children: [
                                       Container(
                                         width: 30,
@@ -502,7 +501,7 @@ class ProfileScreen extends StatelessWidget {
                                               .colorTextWithPrimaryColor(),
                                         ),
                                       ),
-                                      profileController!.shippingAmount.value !=
+                                      profileController.shippingAmount.value !=
                                               0
                                           ? Positioned(
                                               top: -3,
@@ -519,7 +518,7 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    "${profileController!.shippingAmount.value}+",
+                                                    "${profileController.shippingAmount.value}+",
                                                     style: TextStyle(
                                                       fontSize: 8,
                                                       height: 1,
@@ -554,7 +553,7 @@ class ProfileScreen extends StatelessWidget {
                                         ));
                                   },
                                   child: Stack(
-                                    overflow: Overflow.visible,
+                                    clipBehavior: Clip.none,
                                     children: [
                                       Container(
                                         width: 25,
@@ -565,7 +564,7 @@ class ProfileScreen extends StatelessWidget {
                                               .colorTextWithPrimaryColor(),
                                         ),
                                       ),
-                                      profileController!.evaluateAmount.value !=
+                                      profileController.evaluateAmount.value !=
                                               0
                                           ? Positioned(
                                               top: -8,
@@ -582,7 +581,7 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    "${profileController!.evaluateAmount.value}+",
+                                                    "${profileController.evaluateAmount.value}+",
                                                     style: TextStyle(
                                                       fontSize: 8,
                                                       height: 1,

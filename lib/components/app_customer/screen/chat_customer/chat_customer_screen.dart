@@ -15,6 +15,7 @@ import 'package:sahashop_user/utils/date_utils.dart';
 
 import 'chat_customer_controller.dart';
 
+// ignore: must_be_immutable
 class ChatCustomerScreen extends StatelessWidget {
   ChatCustomerScreen() {
     chatCustomerController = Get.put(ChatCustomerController());
@@ -232,23 +233,24 @@ class ChatCustomerScreen extends StatelessWidget {
                               : chatCustomerController.listSaveDataImages[index]!.length ==
                                       2
                                   ? 100
-                                  : chatCustomerController.listSaveDataImages[index]!.length == 3 ||
+                                  : chatCustomerController
+                                                  .listSaveDataImages[index]!
+                                                  .length ==
+                                              3 ||
                                           chatCustomerController
                                                   .listSaveDataImages[index]!
                                                   .length ==
                                               4
                                       ? 200
-                                      : chatCustomerController
-                                                      .listSaveDataImages[index]!
-                                                      .length ==
-                                                  5 ||
-                                              chatCustomerController
-                                                      .listSaveDataImages[index]!
-                                                      .length ==
+                                      : chatCustomerController.listSaveDataImages[index]!.length == 5 ||
+                                              chatCustomerController.listSaveDataImages[index]!.length ==
                                                   6
                                           ? 300
                                           : chatCustomerController.listSaveDataImages[index]!.length == 7 ||
-                                                  chatCustomerController.listSaveDataImages[index]!.length ==
+                                                  chatCustomerController
+                                                          .listSaveDataImages[
+                                                              index]!
+                                                          .length ==
                                                       8
                                               ? 400
                                               : chatCustomerController.listSaveDataImages[index]!.length == 9 ||
@@ -324,92 +326,46 @@ class ChatCustomerScreen extends StatelessWidget {
                                       listLinkImages.length,
                                       (index) => InkWell(
                                         onTap: () {
-                                          showModalBottomSheet<void>(
-                                            isScrollControlled: true,
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return Stack(
-                                                children: [
-                                                  Container(
-                                                    child: PhotoViewGallery
-                                                        .builder(
-                                                      scrollPhysics:
-                                                          const BouncingScrollPhysics(),
-                                                      builder:
-                                                          (BuildContext context,
-                                                              int index) {
-                                                        return PhotoViewGalleryPageOptions(
-                                                          imageProvider:
-                                                              NetworkImage(
-                                                                  listLinkImages[
-                                                                      index]),
-                                                          initialScale:
-                                                              PhotoViewComputedScale
-                                                                      .contained *
-                                                                  1,
-                                                          heroAttributes:
-                                                              PhotoViewHeroAttributes(
-                                                                  tag: listLinkImages[
-                                                                      index]),
-                                                        );
-                                                      },
-                                                      itemCount:
-                                                          listLinkImages.length,
-                                                      loadingBuilder:
-                                                          (context, event) =>
-                                                              Center(
-                                                        child: Container(
-                                                          width: 20.0,
-                                                          height: 20.0,
-                                                          child:
-                                                              CupertinoActivityIndicator(),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Positioned(
-                                                    child: IconButton(
-                                                      icon: Icon(Icons.close),
-                                                      onPressed: () {
-                                                        Get.back();
-                                                      },
-                                                      color: Colors.white,
-                                                    ),
-                                                    top: 60,
-                                                    right: 20,
-                                                  )
-                                                ],
-                                              );
-                                            },
-                                          );
+                                          seeImage(
+                                              listImageUrl: listLinkImages,
+                                              index: index);
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.all(4.0),
                                           child: ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(5.0),
-                                            child: CachedNetworkImage(
-                                              height: listLinkImages.length == 1
-                                                  ? Get.height * 0.3
-                                                  : 100,
-                                              width: listLinkImages.length == 1
-                                                  ? Get.width * 0.4
-                                                  : 100,
-                                              fit: BoxFit.cover,
-                                              imageUrl:
-                                                  listLinkImages[index] ?? "",
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      Container(
-                                                child: Icon(
-                                                  Icons.error,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.grey),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              child: CachedNetworkImage(
+                                                height:
+                                                    listLinkImages.length == 1
+                                                        ? Get.height * 0.3
+                                                        : 100,
+                                                width:
+                                                    listLinkImages.length == 1
+                                                        ? Get.width * 0.4
+                                                        : 100,
+                                                fit: BoxFit.cover,
+                                                imageUrl:
+                                                    listLinkImages[index] ?? "",
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        Container(
+                                                  child: Icon(
+                                                    Icons.error,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: Colors.grey),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
                                                 ),
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Colors.grey),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5)),
                                               ),
                                             ),
                                           ),
@@ -556,14 +512,10 @@ class ChatCustomerScreen extends StatelessWidget {
                                     .allImageInMessage[index]!.length ==
                                 1
                             ? Get.height * 0.3
-                            : chatCustomerController
-                                        .allImageInMessage[index]!.length ==
+                            : chatCustomerController.allImageInMessage[index]!.length ==
                                     2
                                 ? 100
-                                : chatCustomerController
-                                                .allImageInMessage[index]!
-                                                .length ==
-                                            3 ||
+                                : chatCustomerController.allImageInMessage[index]!.length == 3 ||
                                         chatCustomerController
                                                 .allImageInMessage[index]!
                                                 .length ==
@@ -604,89 +556,43 @@ class ChatCustomerScreen extends StatelessWidget {
                                   listLinkImages.length,
                                   (index) => InkWell(
                                     onTap: () {
-                                      showModalBottomSheet<void>(
-                                        isScrollControlled: true,
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return Stack(
-                                            children: [
-                                              Container(
-                                                child: PhotoViewGallery.builder(
-                                                  scrollPhysics:
-                                                      const BouncingScrollPhysics(),
-                                                  builder:
-                                                      (BuildContext context,
-                                                          int index) {
-                                                    return PhotoViewGalleryPageOptions(
-                                                      imageProvider:
-                                                          NetworkImage(
-                                                              listLinkImages[
-                                                                  index]),
-                                                      initialScale:
-                                                          PhotoViewComputedScale
-                                                                  .contained *
-                                                              1,
-                                                      heroAttributes:
-                                                          PhotoViewHeroAttributes(
-                                                              tag:
-                                                                  listLinkImages[
-                                                                      index]),
-                                                    );
-                                                  },
-                                                  itemCount:
-                                                      listLinkImages.length,
-                                                  loadingBuilder:
-                                                      (context, event) =>
-                                                          Center(
-                                                    child: Container(
-                                                      width: 20.0,
-                                                      height: 20.0,
-                                                      child:
-                                                          CupertinoActivityIndicator(),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                child: IconButton(
-                                                  icon: Icon(Icons.close),
-                                                  onPressed: () {
-                                                    Get.back();
-                                                  },
-                                                  color: Colors.white,
-                                                ),
-                                                top: 60,
-                                                right: 20,
-                                              )
-                                            ],
-                                          );
-                                        },
-                                      );
+                                      seeImage(
+                                          listImageUrl: listLinkImages,
+                                          index: index);
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(5.0),
-                                        child: CachedNetworkImage(
-                                          height: listLinkImages.length == 1
-                                              ? Get.height * 0.3
-                                              : 100,
-                                          width: listLinkImages.length == 1
-                                              ? Get.width * 0.4
-                                              : 100,
-                                          fit: BoxFit.cover,
-                                          imageUrl: listLinkImages[index] ?? "",
-                                          errorWidget: (context, url, error) =>
-                                              Container(
-                                            child: Icon(
-                                              Icons.error,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.grey),
+                                              borderRadius:
+                                                  BorderRadius.circular(5)),
+                                          child: CachedNetworkImage(
+                                            height: listLinkImages.length == 1
+                                                ? Get.height * 0.3
+                                                : 100,
+                                            width: listLinkImages.length == 1
+                                                ? Get.width * 0.4
+                                                : 100,
+                                            fit: BoxFit.cover,
+                                            imageUrl:
+                                                listLinkImages[index] ?? "",
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Container(
+                                              child: Icon(
+                                                Icons.error,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.grey),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
                                             ),
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: Colors.grey),
-                                                borderRadius:
-                                                    BorderRadius.circular(5)),
                                           ),
                                         ),
                                       ),
@@ -739,93 +645,57 @@ class ChatCustomerScreen extends StatelessWidget {
 
   Widget buildItemImageData(
       List<ImageData> listImageData, BuildContext context) {
+    var listImageUrl = listImageData.map((e) => e.linkImage).toList();
     return Wrap(
       children: [
         ...List.generate(
           listImageData.length,
           (index) => InkWell(
             onTap: () {
-              showModalBottomSheet<void>(
-                isScrollControlled: true,
-                context: context,
-                builder: (BuildContext context) {
-                  return Stack(
-                    children: [
-                      Container(
-                        child: PhotoViewGallery.builder(
-                          scrollPhysics: const BouncingScrollPhysics(),
-                          builder: (BuildContext context, int index) {
-                            return PhotoViewGalleryPageOptions(
-                              imageProvider:
-                                  NetworkImage(listImageData[index].linkImage!),
-                              initialScale:
-                                  PhotoViewComputedScale.contained * 1,
-                              heroAttributes: PhotoViewHeroAttributes(
-                                  tag: listImageData[index].linkImage!),
-                            );
-                          },
-                          itemCount: listImageData.length,
-                          loadingBuilder: (context, event) => Center(
-                            child: Container(
-                              width: 20.0,
-                              height: 20.0,
-                              child: CupertinoActivityIndicator(),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        child: IconButton(
-                          icon: Icon(Icons.close),
-                          onPressed: () {
-                            Get.back();
-                          },
-                          color: Colors.white,
-                        ),
-                        top: 60,
-                        right: 20,
-                      )
-                    ],
-                  );
-                },
-              );
+              seeImage(listImageUrl: listImageUrl, index: index);
             },
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(5.0),
                   child: listImageData[index].linkImage != null
-                      ? CachedNetworkImage(
-                          height: listImageData.length == 1
-                              ? Get.height * 0.3
-                              : 100,
-                          width:
-                              listImageData.length == 1 ? Get.width * 0.4 : 100,
-                          fit: BoxFit.cover,
-                          imageUrl: listImageData[index].linkImage ?? "",
-                          placeholder: (context, url) => Stack(
-                            children: [
-                              listImageData[index].file == null
-                                  ? Container()
-                                  : AssetThumb(
-                                      asset: listImageData[index].file!,
-                                      height: listImageData.length == 1
-                                          ? int.parse((Get.height * 0.3)
-                                              .toStringAsFixed(0))
-                                          : 100,
-                                      width: listImageData.length == 1
-                                          ? int.parse((Get.width * 0.4)
-                                              .toStringAsFixed(0))
-                                          : 100,
-                                      spinner: SahaLoadingWidget(
-                                        size: 50,
+                      ? Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: CachedNetworkImage(
+                            height: listImageData.length == 1
+                                ? Get.height * 0.3
+                                : 100,
+                            width: listImageData.length == 1
+                                ? Get.width * 0.4
+                                : 100,
+                            fit: BoxFit.cover,
+                            imageUrl: listImageData[index].linkImage ?? "",
+                            placeholder: (context, url) => Stack(
+                              children: [
+                                listImageData[index].file == null
+                                    ? Container()
+                                    : AssetThumb(
+                                        asset: listImageData[index].file!,
+                                        height: listImageData.length == 1
+                                            ? int.parse((Get.height * 0.3)
+                                                .toStringAsFixed(0))
+                                            : 100,
+                                        width: listImageData.length == 1
+                                            ? int.parse((Get.width * 0.4)
+                                                .toStringAsFixed(0))
+                                            : 100,
+                                        spinner: SahaLoadingWidget(
+                                          size: 50,
+                                        ),
                                       ),
-                                    ),
-                              SahaLoadingWidget(),
-                            ],
+                                SahaLoadingWidget(),
+                              ],
+                            ),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
                           ),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
                         )
                       : AssetThumb(
                           asset: listImageData[index].file!,
@@ -843,6 +713,63 @@ class ChatCustomerScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  void seeImage({
+    List<dynamic>? listImageUrl,
+    int? index,
+  }) {
+    PageController _pageController = PageController(initialPage: index!);
+    showModalBottomSheet<void>(
+      isScrollControlled: true,
+      context: Get.context!,
+      builder: (BuildContext context) {
+        return Stack(
+          children: [
+            Container(
+              child: PhotoViewGallery.builder(
+                scrollPhysics: const BouncingScrollPhysics(),
+                pageController: _pageController,
+                builder: (BuildContext context, int index) {
+                  return PhotoViewGalleryPageOptions(
+                    minScale: 0.0,
+                    imageProvider: NetworkImage(listImageUrl![index] ?? ""),
+                    initialScale: PhotoViewComputedScale.contained * 1,
+                    heroAttributes: PhotoViewHeroAttributes(
+                        tag: listImageUrl[index] ?? "error$index"),
+                  );
+                },
+                itemCount: listImageUrl!.length,
+                loadingBuilder: (context, event) => Center(
+                  child: Container(
+                    width: 20.0,
+                    height: 20.0,
+                    child: CupertinoActivityIndicator(),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.black.withOpacity(0.5),
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    Get.back();
+                  },
+                  color: Colors.white,
+                ),
+              ),
+              top: 60,
+              right: 20,
+            )
+          ],
+        );
+      },
     );
   }
 }

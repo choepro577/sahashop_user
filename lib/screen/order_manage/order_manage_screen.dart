@@ -25,13 +25,12 @@ class OrderManageScreen extends StatefulWidget {
 class _OrderManageScreenState extends State<OrderManageScreen>
     with TickerProviderStateMixin {
   TabController? tabController;
-  OrderManageController orderManageController =
-      Get.put(OrderManageController());
+  OrderManageController? orderManageController;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    orderManageController = Get.put(OrderManageController());
     tabController = new TabController(length: 10, vsync: this, initialIndex: 0);
   }
 
@@ -63,7 +62,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
           () => TabBarView(
             controller: tabController,
             children: List<Widget>.generate(
-                orderManageController.listAllOrder.length, (int index) {
+                orderManageController!.listAllOrder.length, (int index) {
               return buildStateOrder(index);
             }),
           ),
@@ -74,7 +73,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
 
   Widget buildStateOrder(int indexState) {
     RefreshController _refreshController = RefreshController(
-        initialRefresh: orderManageController.listCheckRefresh[indexState] == 1
+        initialRefresh: orderManageController!.listCheckRefresh[indexState] == 1
             ? true
             : false);
 
@@ -87,19 +86,15 @@ class _OrderManageScreenState extends State<OrderManageScreen>
           BuildContext context,
           LoadStatus? mode,
         ) {
-          Widget body;
+          Widget body = Container();
           if (mode == LoadStatus.idle) {
-            body = Obx(() => !orderManageController.isDoneLoadMore.value
+            body = Obx(() => !orderManageController!.isDoneLoadMore.value
                 ? CupertinoActivityIndicator()
                 : Container());
           } else if (mode == LoadStatus.loading) {
-            body = CupertinoActivityIndicator();
-          } else if (mode == LoadStatus.failed) {
-            body = Container();
-          } else if (mode == LoadStatus.canLoading) {
-            body = Container();
-          } else {
-            body = Container();
+            body = Obx(() => !orderManageController!.isDoneLoadMore.value
+                ? CupertinoActivityIndicator()
+                : Container());
           }
           return Container(
             height: 0,
@@ -109,28 +104,26 @@ class _OrderManageScreenState extends State<OrderManageScreen>
       ),
       controller: _refreshController,
       onRefresh: () async {
-        await Future.delayed(Duration(milliseconds: 300));
-        orderManageController.refreshData(
+        await orderManageController!.refreshData(
           "order_status_code",
-          orderManageController.listStatusCode[indexState],
+          orderManageController!.listStatusCode[indexState],
           indexState,
         );
-        // orderManageController.refreshData();
+        // orderManageController!.refreshData();
         _refreshController.refreshCompleted();
       },
       onLoading: () async {
-        await Future.delayed(Duration(milliseconds: 300));
-        if (orderManageController.isDoneLoadMore.value) {
-          orderManageController.loadMoreOrder(
+        if (orderManageController!.isDoneLoadMore.value) {
+          await orderManageController!.loadMoreOrder(
             "order_status_code",
-            orderManageController.listStatusCode[indexState],
+            orderManageController!.listStatusCode[indexState],
             indexState,
           );
         }
         _refreshController.loadComplete();
       },
       child: Obx(
-        () => orderManageController.isLoadInit.value
+        () => orderManageController!.isLoadInit.value
             ? SahaSimmer(
                 isLoading: true,
                 child: Container(
@@ -139,7 +132,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                   color: Colors.black,
                 ))
             : SingleChildScrollView(
-                child: orderManageController.listCheckIsEmpty[indexState]
+                child: orderManageController!.listCheckIsEmpty[indexState]
                     ? Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -167,12 +160,12 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                     : Column(
                         children: [
                           ...List.generate(
-                            orderManageController
+                            orderManageController!
                                 .listAllOrder[indexState].length,
                             (index) => InkWell(
                               onTap: () {
                                 Get.to(() => OrderDetailScreen(
-                                      order: orderManageController
+                                      order: orderManageController!
                                           .listAllOrder[indexState][index],
                                       indexListOrder: index,
                                       indexStateOrder: indexState,
@@ -200,14 +193,14 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                             width: 25,
                                             height: 25,
                                             fit: BoxFit.cover,
-                                            imageUrl: orderManageController
+                                            imageUrl: orderManageController!
                                                         .listAllOrder[
                                                             indexState][index]
                                                         .lineItemsAtTime!
                                                         .length ==
                                                     0
                                                 ? ""
-                                                : "${orderManageController.listAllOrder[indexState][index].infoCustomer!.avatarImage}",
+                                                : "${orderManageController!.listAllOrder[indexState][index].infoCustomer!.avatarImage}",
                                             errorWidget:
                                                 (context, url, error) =>
                                                     SahaEmptyImage(),
@@ -217,10 +210,10 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                           width: 15,
                                         ),
                                         Text(
-                                            "${orderManageController.listAllOrder[indexState][index].infoCustomer!.name}"),
+                                            "${orderManageController!.listAllOrder[indexState][index].infoCustomer!.name}"),
                                         Spacer(),
                                         Text(
-                                          "${orderManageController.listAllOrder[indexState][index].orderStatusName}",
+                                          "${orderManageController!.listAllOrder[indexState][index].orderStatusName}",
                                           style: TextStyle(
                                               color: Theme.of(context)
                                                   .primaryColor),
@@ -243,14 +236,14 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                             width: 80,
                                             height: 80,
                                             fit: BoxFit.cover,
-                                            imageUrl: orderManageController
+                                            imageUrl: orderManageController!
                                                         .listAllOrder[
                                                             indexState][index]
                                                         .lineItemsAtTime!
                                                         .length ==
                                                     0
                                                 ? ""
-                                                : "${orderManageController.listAllOrder[indexState][index].lineItemsAtTime![0].imageUrl}",
+                                                : "${orderManageController!.listAllOrder[indexState][index].lineItemsAtTime![0].imageUrl}",
                                             errorWidget:
                                                 (context, url, error) =>
                                                     SahaEmptyImage(),
@@ -270,7 +263,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                  "${orderManageController.listAllOrder[indexState][index].lineItemsAtTime![0].name}",
+                                                  "${orderManageController!.listAllOrder[indexState][index].lineItemsAtTime![0].name}",
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.w500),
@@ -281,7 +274,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                                       children: [
                                                         Spacer(),
                                                         Text(
-                                                          " x ${orderManageController.listAllOrder[indexState][index].lineItemsAtTime![0].quantity}",
+                                                          " x ${orderManageController!.listAllOrder[indexState][index].lineItemsAtTime![0].quantity}",
                                                           style: TextStyle(
                                                               fontSize: 13,
                                                               color: Colors
@@ -293,7 +286,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                                       children: [
                                                         Spacer(),
                                                         Text(
-                                                          "đ${SahaStringUtils().convertToMoney(orderManageController.listAllOrder[indexState][index].lineItemsAtTime![0].beforePrice)}",
+                                                          "đ${SahaStringUtils().convertToMoney(orderManageController!.listAllOrder[indexState][index].lineItemsAtTime![0].beforePrice)}",
                                                           style: TextStyle(
                                                               decoration:
                                                                   TextDecoration
@@ -303,7 +296,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                                         ),
                                                         SizedBox(width: 15),
                                                         Text(
-                                                          "đ${SahaStringUtils().convertToMoney(orderManageController.listAllOrder[indexState][index].lineItemsAtTime![0].afterDiscount)}",
+                                                          "đ${SahaStringUtils().convertToMoney(orderManageController!.listAllOrder[indexState][index].lineItemsAtTime![0].afterDiscount)}",
                                                           style: TextStyle(
                                                               color: Theme.of(
                                                                       context)
@@ -323,7 +316,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                   Divider(
                                     height: 1,
                                   ),
-                                  orderManageController
+                                  orderManageController!
                                               .listAllOrder[indexState][index]
                                               .lineItemsAtTime!
                                               .length >
@@ -349,7 +342,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                     child: Row(
                                       children: [
                                         Text(
-                                          "${orderManageController.listAllOrder[indexState][index].lineItemsAtTime!.length} sản phẩm",
+                                          "${orderManageController!.listAllOrder[indexState][index].lineItemsAtTime!.length} sản phẩm",
                                           style: TextStyle(
                                               color: Colors.grey[600]),
                                         ),
@@ -375,7 +368,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                           children: [
                                             Text("Thành tiền: "),
                                             Text(
-                                              "đ${SahaStringUtils().convertToMoney(orderManageController.listAllOrder[indexState][index].totalFinal)}",
+                                              "đ${SahaStringUtils().convertToMoney(orderManageController!.listAllOrder[indexState][index].totalFinal)}",
                                               style: TextStyle(
                                                   color: SahaColorUtils().colorTextWithPrimaryColor()),
                                             ),
@@ -427,7 +420,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                         ),
                                         Spacer(),
                                         Text(
-                                          "${orderManageController.listAllOrder[indexState][index].orderCode}",
+                                          "${orderManageController!.listAllOrder[indexState][index].orderCode}",
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -439,7 +432,7 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                           onTap: () {
                                             Clipboard.setData(ClipboardData(
                                                 text:
-                                                    "${orderManageController.listAllOrder[indexState][index].orderCode}"));
+                                                    "${orderManageController!.listAllOrder[indexState][index].orderCode}"));
                                             SahaAlert.showToastMiddle(
                                               message: "Đã sao chép",
                                               color: Colors.grey[600],

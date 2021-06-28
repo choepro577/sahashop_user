@@ -11,7 +11,7 @@ class OrderCompletedController extends GetxController {
   var isLoadingPayment = false.obs;
   var refreshValue = false.obs;
   RxList<Map<int, String>>? listPaymentMethod = RxList<Map<int, String>>();
-  Map<int, String> paymentMethod = new Map<int, String>();
+  Map<int, String> paymentMethod = {};
 
   OrderCompletedController(this.orderCode) {
     loadOrder(orderCode);

@@ -19,6 +19,7 @@ class MyVoucherController extends GetxController {
   var listCheckHasDiscountState = RxList<bool>([false, false, false]).obs;
   var pageLoadMore = 1;
   var isEndPageVoucher = false;
+  var isLoadMore = false.obs;
   DateTime timeNow = DateTime.now();
 
   Future<void> getAllVoucher() async {
@@ -64,6 +65,7 @@ class MyVoucherController extends GetxController {
   }
 
   Future<void> loadMoreEndVoucher() async {
+    isLoadMore.value = true;
     try {
       var res = await RepositoryManager.marketingChanel
           .getEndVoucherFromPage(pageLoadMore);
@@ -73,6 +75,7 @@ class MyVoucherController extends GetxController {
           listVoucherIsEnd.value.add(element);
         });
       } else {
+        isLoadMore.value = false;
         return;
       }
 
@@ -87,6 +90,7 @@ class MyVoucherController extends GetxController {
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
+    isLoadMore.value = false;
   }
 
   Future<void> endVoucher(int? idVoucher) async {

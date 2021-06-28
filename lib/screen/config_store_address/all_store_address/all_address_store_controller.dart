@@ -5,7 +5,7 @@ import 'package:sahashop_user/model/info_address.dart';
 
 class AllAddressStoreController extends GetxController {
   var isLoadingAddress = false.obs;
-  var listAddressStore = RxList<InfoAddress>().obs;
+  var listAddressStore = RxList<InfoAddress>();
 
   AllAddressStoreController() {
     getAllAddressStore();
@@ -15,7 +15,7 @@ class AllAddressStoreController extends GetxController {
     isLoadingAddress.value = true;
     try {
       var res = await RepositoryManager.addressRepository.getAllAddressStore();
-      listAddressStore.value.addAll(res!.data!);
+      listAddressStore.addAll(res!.data!);
       // SahaAlert.showSuccess(message: "Lưu thành công");
     } catch (err) {
       SahaAlert.showError(message: err.toString());
@@ -24,7 +24,7 @@ class AllAddressStoreController extends GetxController {
   }
 
   void refreshData() async {
-    listAddressStore = new RxList<InfoAddress>().obs;
+    listAddressStore = new RxList<InfoAddress>();
     await getAllAddressStore();
   }
 }

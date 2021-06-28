@@ -6,15 +6,17 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
-import 'package:sahashop_user/screen/maketing_chanel/my_combo/create_my_combo/add_product/add_product_combo_screen.dart';
+import 'package:sahashop_user/const/const_image_logo.dart';
+import 'package:sahashop_user/model/product.dart';
+import 'package:sahashop_user/screen/maketing_chanel/my_combo/add_product/add_product_combo_screen.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_combo/create_my_combo/create_combo_controller.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
 
+// ignore: must_be_immutable
 class CreateMyComboScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  final _formKeyTypeVoucher = GlobalKey<FormState>();
-  CreateMyComboController createMyVoucherController = CreateMyComboController();
+  CreateMyComboController createMyComboController = CreateMyComboController();
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +60,7 @@ class CreateMyComboScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: TextFormField(
-                            controller: createMyVoucherController
+                            controller: createMyComboController
                                 .nameProgramEditingController,
                             validator: (value) {
                               if (value!.length < 1) {
@@ -108,14 +110,14 @@ class CreateMyComboScreen extends StatelessWidget {
                                         doneStyle: TextStyle(
                                             color: Colors.black,
                                             fontSize: 16)), onConfirm: (date) {
-                                  createMyVoucherController
+                                  createMyComboController
                                       .onChangeDateStart(date);
                                 },
                                     currentTime: DateTime.now(),
                                     locale: LocaleType.vi);
                               },
                               child: Text(
-                                '${SahaDateUtils().getDDMMYY(createMyVoucherController.dateStart.value)}',
+                                '${SahaDateUtils().getDDMMYY(createMyComboController.dateStart.value)}',
                                 style: TextStyle(color: Colors.blue),
                               ),
                             ),
@@ -137,7 +139,7 @@ class CreateMyComboScreen extends StatelessWidget {
                                   );
                                 },
                                 child: Text(
-                                  '  ${SahaDateUtils().getHHMM(createMyVoucherController.timeStart.value)}',
+                                  '  ${SahaDateUtils().getHHMM(createMyComboController.timeStart.value)}',
                                   style: TextStyle(color: Colors.blue),
                                 )),
                           ],
@@ -145,7 +147,7 @@ class CreateMyComboScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  createMyVoucherController.checkDayStart.value
+                  createMyComboController.checkDayStart.value
                       ? Container(
                           padding: EdgeInsets.all(8.0),
                           color: Colors.red[50],
@@ -183,14 +185,13 @@ class CreateMyComboScreen extends StatelessWidget {
                                         doneStyle: TextStyle(
                                             color: Colors.black, fontSize: 16)),
                                     onChanged: (date) {}, onConfirm: (date) {
-                                  createMyVoucherController
-                                      .onChangeDateEnd(date);
+                                  createMyComboController.onChangeDateEnd(date);
                                 },
                                     currentTime: DateTime.now(),
                                     locale: LocaleType.vi);
                               },
                               child: Text(
-                                '${SahaDateUtils().getDDMMYY(createMyVoucherController.dateEnd.value)}',
+                                '${SahaDateUtils().getDDMMYY(createMyComboController.dateEnd.value)}',
                                 style: TextStyle(color: Colors.blue),
                               ),
                             ),
@@ -205,7 +206,7 @@ class CreateMyComboScreen extends StatelessWidget {
                                               .toString());
                                     },
                                     onConfirm: (date) {
-                                      createMyVoucherController
+                                      createMyComboController
                                           .onChangeTimeEnd(date);
                                     },
                                     currentTime: DateTime.now(),
@@ -213,7 +214,7 @@ class CreateMyComboScreen extends StatelessWidget {
                                   );
                                 },
                                 child: Text(
-                                  '  ${SahaDateUtils().getHHMM(createMyVoucherController.timeEnd.value)}',
+                                  '  ${SahaDateUtils().getHHMM(createMyComboController.timeEnd.value)}',
                                   style: TextStyle(color: Colors.blue),
                                 )),
                           ],
@@ -221,7 +222,7 @@ class CreateMyComboScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  createMyVoucherController.checkDayEnd.value
+                  createMyComboController.checkDayEnd.value
                       ? Container(
                           padding: EdgeInsets.all(8.0),
                           color: Colors.red[50],
@@ -265,10 +266,10 @@ class CreateMyComboScreen extends StatelessWidget {
                                                   Radio(
                                                     value: DiscountType.k1,
                                                     groupValue:
-                                                        createMyVoucherController
+                                                        createMyComboController
                                                             .discountType.value,
                                                     onChanged: (dynamic v) {
-                                                      createMyVoucherController
+                                                      createMyComboController
                                                           .onChangeRatio(v);
                                                     },
                                                   ),
@@ -279,7 +280,7 @@ class CreateMyComboScreen extends StatelessWidget {
                                                 ],
                                               ),
                                             ),
-                                            createMyVoucherController
+                                            createMyComboController
                                                         .discountType.value ==
                                                     DiscountType.k1
                                                 ? Container(
@@ -303,7 +304,7 @@ class CreateMyComboScreen extends StatelessWidget {
                                                           child: Center(
                                                             child: TextField(
                                                               controller:
-                                                                  createMyVoucherController
+                                                                  createMyComboController
                                                                       .valueEditingController,
                                                               keyboardType:
                                                                   TextInputType
@@ -347,10 +348,10 @@ class CreateMyComboScreen extends StatelessWidget {
                                                   Radio(
                                                     value: DiscountType.k0,
                                                     groupValue:
-                                                        createMyVoucherController
+                                                        createMyComboController
                                                             .discountType.value,
                                                     onChanged: (dynamic v) {
-                                                      createMyVoucherController
+                                                      createMyComboController
                                                           .onChangeRatio(v);
                                                     },
                                                   ),
@@ -361,7 +362,7 @@ class CreateMyComboScreen extends StatelessWidget {
                                                 ],
                                               ),
                                             ),
-                                            createMyVoucherController
+                                            createMyComboController
                                                         .discountType.value ==
                                                     DiscountType.k0
                                                 ? Container(
@@ -387,7 +388,7 @@ class CreateMyComboScreen extends StatelessWidget {
                                                           child: Center(
                                                             child: TextField(
                                                               controller:
-                                                                  createMyVoucherController
+                                                                  createMyComboController
                                                                       .valueEditingController,
                                                               keyboardType:
                                                                   TextInputType
@@ -413,7 +414,7 @@ class CreateMyComboScreen extends StatelessWidget {
                                                     ),
                                                   )
                                                 : Container(),
-                                            createMyVoucherController
+                                            createMyComboController
                                                         .validateComboPercent
                                                         .value ==
                                                     true
@@ -441,20 +442,20 @@ class CreateMyComboScreen extends StatelessWidget {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            if (createMyVoucherController
+                                            if (createMyComboController
                                                 .valueEditingController
                                                 .text
                                                 .isEmpty) {
-                                              createMyVoucherController
+                                              createMyComboController
                                                   .validateComboPercent
                                                   .value = true;
                                             } else {
-                                              createMyVoucherController
+                                              createMyComboController
                                                   .validateComboPercent
                                                   .value = false;
                                               KeyboardUtil.hideKeyboard(
                                                   context);
-                                              createMyVoucherController
+                                              createMyComboController
                                                   .checkTypeDiscount();
                                               Get.back();
                                             }
@@ -485,7 +486,7 @@ class CreateMyComboScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Text(
-                                  createMyVoucherController
+                                  createMyComboController
                                       .typeVoucherDiscount.value,
                                   style: TextStyle(color: Colors.grey[600]),
                                 ),
@@ -497,8 +498,7 @@ class CreateMyComboScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  createMyVoucherController
-                              .isChoosedTypeVoucherDiscount.value ==
+                  createMyComboController.isChoosedTypeVoucherDiscount.value ==
                           false
                       ? Container(
                           padding: EdgeInsets.all(8.0),
@@ -522,7 +522,7 @@ class CreateMyComboScreen extends StatelessWidget {
                         Container(
                           width: Get.width * 0.6,
                           child: TextFormField(
-                            controller: createMyVoucherController
+                            controller: createMyComboController
                                 .amountCodeAvailableEditingController,
                             keyboardType: TextInputType.number,
                             validator: (value) {
@@ -546,7 +546,7 @@ class CreateMyComboScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  createMyVoucherController.isCheckMinimumOrderDiscount.value ==
+                  createMyComboController.isCheckMinimumOrderDiscount.value ==
                           false
                       ? Container(
                           padding: EdgeInsets.all(8.0),
@@ -575,11 +575,8 @@ class CreateMyComboScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Combo sản phẩm"),
-                              createMyVoucherController
-                                          .addProductComboController
-                                          .listSelectedProduct
-                                          .value
-                                          .length ==
+                              createMyComboController
+                                          .listSelectedProduct.length ==
                                       0
                                   ? Container()
                                   : IconButton(
@@ -588,7 +585,19 @@ class CreateMyComboScreen extends StatelessWidget {
                                         color: Theme.of(context).primaryColor,
                                       ),
                                       onPressed: () {
-                                        Get.to(() => AddProductComboScreen());
+                                        Get.to(() => AddProductComboScreen(
+                                              callback:
+                                                  (List<Product>? listProduct) {
+                                                createMyComboController
+                                                    .listSelectedProduct
+                                                    .addAll(listProduct!);
+                                                createMyComboController
+                                                    .listSelectedProductToComboProduct();
+                                              },
+                                              listProductInput:
+                                                  createMyComboController
+                                                      .listSelectedProduct,
+                                            ));
                                       })
                             ],
                           ),
@@ -597,15 +606,24 @@ class CreateMyComboScreen extends StatelessWidget {
                           height: 10,
                         ),
                         Obx(
-                          () => createMyVoucherController
-                                      .addProductComboController
-                                      .listSelectedProduct
-                                      .value
-                                      .length ==
+                          () => createMyComboController
+                                      .listSelectedProduct.length ==
                                   0
                               ? InkWell(
                                   onTap: () {
-                                    Get.to(() => AddProductComboScreen());
+                                    Get.to(() => AddProductComboScreen(
+                                          callback:
+                                              (List<Product>? listProduct) {
+                                            createMyComboController
+                                                .listSelectedProduct
+                                                .addAll(listProduct!);
+                                            createMyComboController
+                                                .listSelectedProductToComboProduct();
+                                          },
+                                          listProductInput:
+                                              createMyComboController
+                                                  .listSelectedProduct,
+                                        ));
                                   },
                                   child: Container(
                                     height: 100,
@@ -637,11 +655,8 @@ class CreateMyComboScreen extends StatelessWidget {
                                   child: StaggeredGridView.countBuilder(
                                     crossAxisCount: 1,
                                     scrollDirection: Axis.vertical,
-                                    itemCount: createMyVoucherController
-                                        .addProductComboController
-                                        .listSelectedProduct
-                                        .value
-                                        .length,
+                                    itemCount: createMyComboController
+                                        .listSelectedProduct.length,
                                     itemBuilder:
                                         (BuildContext context, int index) =>
                                             Stack(
@@ -649,26 +664,25 @@ class CreateMyComboScreen extends StatelessWidget {
                                         Row(
                                           children: [
                                             Container(
-                                              height: 100,
                                               decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: Theme.of(context)
                                                         .primaryColor),
                                               ),
                                               child: CachedNetworkImage(
+                                                height: 100,
+                                                width: Get.width / 4,
                                                 fit: BoxFit.cover,
-                                                imageUrl: createMyVoucherController
-                                                            .addProductComboController
-                                                            .listSelectedProduct
-                                                            .value[index]
+                                                imageUrl: createMyComboController
+                                                            .listSelectedProduct[
+                                                                index]
                                                             .images!
                                                             .length ==
                                                         0
                                                     ? ""
-                                                    : createMyVoucherController
-                                                        .addProductComboController
-                                                        .listSelectedProduct
-                                                        .value[index]
+                                                    : createMyComboController
+                                                        .listSelectedProduct[
+                                                            index]
                                                         .images![0]
                                                         .imageUrl!,
                                                 errorWidget:
@@ -687,8 +701,7 @@ class CreateMyComboScreen extends StatelessWidget {
                                                   IconButton(
                                                       icon: Icon(Icons.remove),
                                                       onPressed: () {
-                                                        createMyVoucherController
-                                                            .addProductComboController
+                                                        createMyComboController
                                                             .decreaseAmountProductCombo(
                                                                 index);
                                                       }),
@@ -697,7 +710,7 @@ class CreateMyComboScreen extends StatelessWidget {
                                                   ),
                                                   Obx(
                                                     () => Text(
-                                                        "${createMyVoucherController.addProductComboController.listSelectedProductParam.value[index].quantity}"),
+                                                        "${createMyComboController.listSelectedProductParam.value[index].quantity}"),
                                                   ),
                                                   SizedBox(
                                                     width: 20,
@@ -705,8 +718,7 @@ class CreateMyComboScreen extends StatelessWidget {
                                                   IconButton(
                                                       icon: Icon(Icons.add),
                                                       onPressed: () {
-                                                        createMyVoucherController
-                                                            .addProductComboController
+                                                        createMyComboController
                                                             .increaseAmountProductCombo(
                                                                 index);
                                                       }),
@@ -725,17 +737,12 @@ class CreateMyComboScreen extends StatelessWidget {
                                                     .primaryColor,
                                               ),
                                               onPressed: () {
-                                                createMyVoucherController
-                                                    .addProductComboController
-                                                    .deleteProductSelected(
-                                                        createMyVoucherController
-                                                            .addProductComboController
-                                                            .listSelectedProduct
-                                                            .value[index]
-                                                            .id);
-                                                createMyVoucherController
-                                                    .addProductComboController
-                                                    .countProductSelected();
+                                                createMyComboController
+                                                    .deleteProduct(
+                                                        createMyComboController
+                                                            .listSelectedProduct[
+                                                                index]
+                                                            .id!);
                                               }),
                                         ),
                                       ],
@@ -761,7 +768,7 @@ class CreateMyComboScreen extends StatelessWidget {
           child: Column(
             children: [
               Obx(
-                () => createMyVoucherController.isLoadingCreate.value == true
+                () => createMyComboController.isLoadingCreate.value == true
                     ? IgnorePointer(
                         child: SahaButtonFullParent(
                           text: "Lưu",
@@ -776,14 +783,14 @@ class CreateMyComboScreen extends StatelessWidget {
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
                             KeyboardUtil.hideKeyboard(context);
-                            if (createMyVoucherController
+                            if (createMyComboController
                                     .typeVoucherDiscount.value ==
                                 "Chọn") {
-                              createMyVoucherController
+                              createMyComboController
                                   .isChoosedTypeVoucherDiscount.value = false;
                             } else {
-                              createMyVoucherController.createCombo();
-                              createMyVoucherController
+                              createMyComboController.createCombo();
+                              createMyComboController
                                   .isChoosedTypeVoucherDiscount.value = true;
                             }
                           }

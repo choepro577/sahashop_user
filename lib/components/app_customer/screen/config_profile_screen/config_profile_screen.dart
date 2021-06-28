@@ -9,6 +9,7 @@ import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/model/info_customer.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 
+// ignore: must_be_immutable
 class ConfigProfileScreen extends StatelessWidget {
   InfoCustomer? infoCustomer;
 
@@ -110,7 +111,9 @@ class ConfigProfileScreen extends StatelessWidget {
                                                 ? Container()
                                                 : Image.file(
                                                     configProfileController
-                                                        .dataImages.value!.file!,
+                                                        .dataImages
+                                                        .value!
+                                                        .file!,
                                                     width: 300,
                                                     height: 300,
                                                   ),

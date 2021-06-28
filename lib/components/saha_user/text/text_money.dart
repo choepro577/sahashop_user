@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
+// ignore: must_be_immutable
 class SahaMoneyText extends StatelessWidget {
   double? price;
   double sizeVND;

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
+import 'package:sahashop_user/const/const_image_logo.dart';
 import 'package:sahashop_user/model/voucher.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_voucher/create_my_voucher/create_my_voucher_screen.dart';
 import 'package:sahashop_user/screen/maketing_chanel/my_voucher/my_voucher_controller.dart';
@@ -125,8 +125,10 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                               onTap: () {
                                 Get.back();
                                 Get.to(() => CreateMyVoucher(
-                                      voucherType: 1,
-                                    ));
+                                          voucherType: 1,
+                                        ))!
+                                    .then((value) =>
+                                        {myVoucherController.refreshData()});
                               },
                               child: Container(
                                 height: 80,
@@ -200,17 +202,15 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
             BuildContext context,
             LoadStatus? mode,
           ) {
-            Widget body;
+            Widget body = Container();
             if (mode == LoadStatus.idle) {
-              body = Text("Xem thêm");
+              body = Obx(() => myVoucherController.isLoadMore.value
+                  ? CupertinoActivityIndicator()
+                  : Container());
             } else if (mode == LoadStatus.loading) {
-              body = CupertinoActivityIndicator();
-            } else if (mode == LoadStatus.failed) {
-              body = Text("Load Failed!Click retry!");
-            } else if (mode == LoadStatus.canLoading) {
-              body = Text("Đã hết Voucher kết thúc");
-            } else {
-              body = Text("Đã xem hết Voucher");
+              body = Obx(() => myVoucherController.isLoadMore.value
+                  ? CupertinoActivityIndicator()
+                  : Container());
             }
             return Container(
               height: 55.0,
@@ -220,9 +220,6 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
         ),
         controller: _refreshController,
         onRefresh: () async {
-          await Future.delayed(Duration(milliseconds: 300));
-
-          // if (mounted) setState(() {});
           if (indexState == 2) {
             myVoucherController.loadInitEndVoucher();
           } else {
@@ -231,10 +228,9 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
           _refreshController.refreshCompleted();
         },
         onLoading: () async {
-          await Future.delayed(Duration(milliseconds: 300));
           if (indexState == 2) {
             if (!myVoucherController.isEndPageVoucher) {
-              myVoucherController.loadMoreEndVoucher();
+              await myVoucherController.loadMoreEndVoucher();
               _refreshController.loadComplete();
             } else {
               _refreshController.loadComplete();
@@ -363,7 +359,13 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                         imageUrl: listVoucherState.imageUrl == null
                             ? ""
                             : "${listVoucherState.imageUrl}",
-                        errorWidget: (context, url, error) => SahaEmptyImage(),
+                        errorWidget: (context, url, error) => ClipRRect(
+                          borderRadius: BorderRadius.circular(1),
+                          child: CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl: logoSahaImage,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -478,7 +480,8 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                                   height: 35,
                                   width: Get.width * 0.45,
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey[600]!),
+                                    border:
+                                        Border.all(color: Colors.grey[600]!),
                                     borderRadius: BorderRadius.circular(2.0),
                                   ),
                                   child: Center(
@@ -495,7 +498,8 @@ class _MyVoucherScreenState extends State<MyVoucherScreen>
                                   height: 35,
                                   width: Get.width * 0.45,
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey[600]!),
+                                    border:
+                                        Border.all(color: Colors.grey[600]!),
                                     borderRadius: BorderRadius.circular(2.0),
                                   ),
                                   child: Center(

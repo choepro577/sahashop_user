@@ -54,6 +54,7 @@ class ConfigStoreAddressController extends GetxController {
 
   void refreshData() async {
     await getAllShipmentStore();
+    await getAllAddressStore();
     listShipmentStore.refresh();
   }
 }

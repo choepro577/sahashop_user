@@ -152,7 +152,7 @@ class ChooseVoucherCustomerScreen extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Stack(
-                                    overflow: Overflow.visible,
+                                    clipBehavior: Clip.none,
                                     children: [
                                       Container(
                                         width: 100,

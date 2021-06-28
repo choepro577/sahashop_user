@@ -11,22 +11,21 @@ import 'package:photo_view/photo_view_gallery.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sahashop_user/components/saha_user/expanded_viewport/expanded_viewport.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
-import 'package:sahashop_user/model/box_chat_customer.dart';
-import 'package:sahashop_user/model/info_customer.dart';
 import 'package:sahashop_user/utils/date_utils.dart';
 import 'package:sahashop_user/utils/string_utils.dart';
 
 import 'chat_controller.dart';
 
+// ignore: must_be_immutable
 class ChatScreen extends StatelessWidget {
   ChatScreen() {
     chatController = Get.find();
     refreshController = RefreshController();
     scrollController = ScrollController();
-    chatController.loadInitMessage();
+    chatController!.loadInitMessage();
   }
 
-  late ChatController chatController;
+  ChatController? chatController;
   ScrollController? scrollController;
   late RefreshController refreshController;
 
@@ -45,10 +44,11 @@ class ChatScreen extends StatelessWidget {
         backgroundColor: Colors.grey[200],
         appBar: AppBar(
           title: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ClipRRect(
                 child: CachedNetworkImage(
-                  imageUrl: chatController
+                  imageUrl: chatController!
                           .boxChatCustomer.value.customer!.avatarImage ??
                       "",
                   width: 45,
@@ -68,18 +68,20 @@ class ChatScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${chatController.boxChatCustomer.value.customer!.name ?? "Chưa đặt tên"}",
+                    "${chatController!.boxChatCustomer.value.customer!.name ?? "Chưa đặt tên"}",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
                     height: 5,
                   ),
-                  Text(
-                    "${SahaStringUtils().displayTimeAgoFromTime(chatController.boxChatCustomer.value.lastMessage!.createdAt!)}",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 12),
-                  ),
+                  chatController!.boxChatCustomer.value.lastMessage == null
+                      ? Container()
+                      : Text(
+                          "${SahaStringUtils().displayTimeAgoFromTime(chatController!.boxChatCustomer.value.lastMessage!.createdAt!)}",
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: 12),
+                        ),
                 ],
               ),
             ],
@@ -108,7 +110,7 @@ class ChatScreen extends StatelessWidget {
                 ),
                 onLoading: () async {
                   await Future.delayed(Duration(milliseconds: 100));
-                  chatController.loadMoreMessage();
+                  chatController!.loadMoreMessage();
                   refreshController.loadComplete();
                 },
                 enablePullDown: false,
@@ -125,7 +127,7 @@ class ChatScreen extends StatelessWidget {
                           () => SliverList(
                             delegate: SliverChildBuilderDelegate(
                                 (c, i) => itemMessage(i, context),
-                                childCount: chatController.listMessage.length),
+                                childCount: chatController!.listMessage.length),
                           ),
                         )
                       ],
@@ -148,9 +150,9 @@ class ChatScreen extends StatelessWidget {
                       Expanded(
                         child: TextFormField(
                           controller:
-                              chatController.messageEditingController.value,
+                              chatController!.messageEditingController.value,
                           onChanged: (v) {
-                            chatController.messageEditingController.refresh();
+                            chatController!.messageEditingController.refresh();
                           },
                           cursorColor: Colors.grey,
                           minLines: 1,
@@ -175,13 +177,13 @@ class ChatScreen extends StatelessWidget {
                             color: Theme.of(context).primaryColor,
                           ),
                           onPressed: () {
-                            chatController.loadAssets();
+                            chatController!.loadAssets();
                           }),
                       SizedBox(
                         width: 5,
                       ),
                       Obx(() =>
-                          chatController.messageEditingController.value.text !=
+                          chatController!.messageEditingController.value.text !=
                                   ""
                               ? IconButton(
                                   icon: Icon(
@@ -190,7 +192,7 @@ class ChatScreen extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     scrollController!.jumpTo(0.0);
-                                    chatController.sendMessageToCustomer();
+                                    chatController!.sendMessageToCustomer();
                                   })
                               : IconButton(
                                   icon: Icon(
@@ -213,9 +215,9 @@ class ChatScreen extends StatelessWidget {
   }
 
   Widget itemMessage(int index, BuildContext context) {
-    return chatController.listMessage[index].isUser!
-        ? chatController.listMessage[index].linkImages != null
-            ? chatController.listMessage[index].linkImages == ""
+    return chatController!.listMessage[index].isUser!
+        ? chatController!.listMessage[index].linkImages != null
+            ? chatController!.listMessage[index].linkImages == ""
                 ? Bubble(
                     /// right is User
                     /// add image device
@@ -228,37 +230,38 @@ class ChatScreen extends StatelessWidget {
                     color: Colors.transparent,
                     child: Obx(
                       () => Container(
-                          height: chatController.listSaveDataImages[index]!.length ==
+                          height: chatController!.listSaveDataImages[index]!.length ==
                                   1
                               ? Get.height * 0.3
-                              : chatController.listSaveDataImages[index]!.length ==
+                              : chatController!.listSaveDataImages[index]!.length ==
                                       2
                                   ? 100
-                                  : chatController.listSaveDataImages[index]!.length == 3 ||
-                                          chatController
+                                  : chatController!.listSaveDataImages[index]!
+                                                  .length ==
+                                              3 ||
+                                          chatController!
                                                   .listSaveDataImages[index]!
                                                   .length ==
                                               4
                                       ? 200
-                                      : chatController.listSaveDataImages[index]!
-                                                      .length ==
-                                                  5 ||
-                                              chatController
-                                                      .listSaveDataImages[index]!
-                                                      .length ==
+                                      : chatController!.listSaveDataImages[index]!.length == 5 ||
+                                              chatController!.listSaveDataImages[index]!.length ==
                                                   6
                                           ? 300
-                                          : chatController.listSaveDataImages[index]!.length == 7 ||
-                                                  chatController.listSaveDataImages[index]!.length ==
+                                          : chatController!.listSaveDataImages[index]!.length == 7 ||
+                                                  chatController!.listSaveDataImages[index]!.length ==
                                                       8
                                               ? 400
-                                              : chatController.listSaveDataImages[index]!.length == 9 ||
-                                                      chatController.listSaveDataImages[index]!.length ==
+                                              : chatController!.listSaveDataImages[index]!.length == 9 ||
+                                                      chatController!
+                                                              .listSaveDataImages[
+                                                                  index]!
+                                                              .length ==
                                                           10
                                                   ? 520
                                                   : 0,
                           child: buildItemImageData(
-                              chatController.listSaveDataImages[index]!, context)),
+                              chatController!.listSaveDataImages[index]!, context)),
                     ),
                   )
                 : Column(
@@ -274,36 +277,36 @@ class ChatScreen extends StatelessWidget {
                         color: Colors.transparent,
                         child: Obx(
                           () => Container(
-                            height: chatController.allImageInMessage[index]!.length ==
+                            height: chatController!
+                                        .allImageInMessage[index]!.length ==
                                     1
                                 ? Get.height * 0.3
-                                : chatController.allImageInMessage[index]!.length ==
+                                : chatController!.allImageInMessage[index]!.length ==
                                         2
                                     ? 100
-                                    : chatController.allImageInMessage[index]!
+                                    : chatController!.allImageInMessage[index]!
                                                     .length ==
                                                 3 ||
-                                            chatController
+                                            chatController!
                                                     .allImageInMessage[index]!
                                                     .length ==
                                                 4
                                         ? 200
-                                        : chatController.allImageInMessage[index]!.length ==
-                                                    5 ||
-                                                chatController.allImageInMessage[index]!.length ==
+                                        : chatController!.allImageInMessage[index]!.length == 5 ||
+                                                chatController!.allImageInMessage[index]!.length ==
                                                     6
                                             ? 300
-                                            : chatController.allImageInMessage[index]!.length ==
+                                            : chatController!.allImageInMessage[index]!.length ==
                                                         7 ||
-                                                    chatController
+                                                    chatController!
                                                             .allImageInMessage[
                                                                 index]!
                                                             .length ==
                                                         8
                                                 ? 400
-                                                : chatController.allImageInMessage[index]!.length ==
+                                                : chatController!.allImageInMessage[index]!.length ==
                                                             9 ||
-                                                        chatController
+                                                        chatController!
                                                                 .allImageInMessage[index]!
                                                                 .length ==
                                                             10
@@ -311,7 +314,7 @@ class ChatScreen extends StatelessWidget {
                                                     : 0,
                             child: Obx(
                               () {
-                                var listLinkImages = chatController
+                                var listLinkImages = chatController!
                                     .allImageInMessage[index]!
                                     .toList();
 
@@ -325,92 +328,46 @@ class ChatScreen extends StatelessWidget {
                                       listLinkImages.length,
                                       (index) => InkWell(
                                         onTap: () {
-                                          showModalBottomSheet<void>(
-                                            isScrollControlled: true,
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return Stack(
-                                                children: [
-                                                  Container(
-                                                    child: PhotoViewGallery
-                                                        .builder(
-                                                      scrollPhysics:
-                                                          const BouncingScrollPhysics(),
-                                                      builder:
-                                                          (BuildContext context,
-                                                              int index) {
-                                                        return PhotoViewGalleryPageOptions(
-                                                          imageProvider:
-                                                              NetworkImage(
-                                                                  listLinkImages[
-                                                                      index]),
-                                                          initialScale:
-                                                              PhotoViewComputedScale
-                                                                      .contained *
-                                                                  1,
-                                                          heroAttributes:
-                                                              PhotoViewHeroAttributes(
-                                                                  tag: listLinkImages[
-                                                                      index]),
-                                                        );
-                                                      },
-                                                      itemCount:
-                                                          listLinkImages.length,
-                                                      loadingBuilder:
-                                                          (context, event) =>
-                                                              Center(
-                                                        child: Container(
-                                                          width: 20.0,
-                                                          height: 20.0,
-                                                          child:
-                                                              CupertinoActivityIndicator(),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Positioned(
-                                                    child: IconButton(
-                                                      icon: Icon(Icons.close),
-                                                      onPressed: () {
-                                                        Get.back();
-                                                      },
-                                                      color: Colors.white,
-                                                    ),
-                                                    top: 60,
-                                                    right: 20,
-                                                  )
-                                                ],
-                                              );
-                                            },
-                                          );
+                                          seeImage(
+                                              listImageUrl: listLinkImages,
+                                              index: index);
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.all(4.0),
                                           child: ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(5.0),
-                                            child: CachedNetworkImage(
-                                              height: listLinkImages.length == 1
-                                                  ? Get.height * 0.3
-                                                  : 100,
-                                              width: listLinkImages.length == 1
-                                                  ? Get.width * 0.4
-                                                  : 100,
-                                              fit: BoxFit.cover,
-                                              imageUrl:
-                                                  listLinkImages[index] ?? "",
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      Container(
-                                                child: Icon(
-                                                  Icons.error,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.grey),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              child: CachedNetworkImage(
+                                                height:
+                                                    listLinkImages.length == 1
+                                                        ? Get.height * 0.3
+                                                        : 100,
+                                                width:
+                                                    listLinkImages.length == 1
+                                                        ? Get.width * 0.4
+                                                        : 100,
+                                                fit: BoxFit.cover,
+                                                imageUrl:
+                                                    listLinkImages[index] ?? "",
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        Container(
+                                                  child: Icon(
+                                                    Icons.error,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: Colors.grey),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
                                                 ),
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Colors.grey),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5)),
                                               ),
                                             ),
                                           ),
@@ -424,7 +381,7 @@ class ChatScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      chatController.listMessage[index].content == null
+                      chatController!.listMessage[index].content == null
                           ? Container()
                           : Bubble(
                               borderUp: true,
@@ -435,7 +392,7 @@ class ChatScreen extends StatelessWidget {
                               nip: BubbleNip.rightTop,
                               color: Color(0xff279f63),
                               child: Text(
-                                  chatController.listMessage[index].content ??
+                                  chatController!.listMessage[index].content ??
                                       "",
                                   style: TextStyle(
                                       fontSize: 16,
@@ -452,24 +409,24 @@ class ChatScreen extends StatelessWidget {
                 padding: BubbleEdges.all(15),
                 nip: BubbleNip.rightTop,
                 color: Color(0xff279f63),
-                child: Text(chatController.listMessage[index].content!,
+                child: Text(chatController!.listMessage[index].content!,
                     style: TextStyle(
                         fontSize: 16,
                         color: Colors.white,
                         fontWeight: FontWeight.w500),
                     textAlign: TextAlign.left),
               )
-        : chatController.listMessage[index].linkImages != null
+        : chatController!.listMessage[index].linkImages != null
 
             /// left is Customer
             ? Column(
                 /// get image from customer
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  chatController.listMessage[index].createdAt!.day -
-                              chatController
+                  chatController!.listMessage[index].createdAt!.day -
+                              chatController!
                                   .listMessage[(index + 1) >=
-                                          chatController.listMessage.length
+                                          chatController!.listMessage.length
                                       ? index
                                       : index + 1]
                                   .createdAt!
@@ -482,10 +439,10 @@ class ChatScreen extends StatelessWidget {
                               SizedBox(
                                 height: 30,
                               ),
-                              chatController.timeNow.value.day -
-                                          chatController
+                              chatController!.timeNow.value.day -
+                                          chatController!
                                               .listMessage[(index + 1) >=
-                                                      chatController
+                                                      chatController!
                                                           .listMessage.length
                                                   ? index
                                                   : index + 1]
@@ -498,7 +455,7 @@ class ChatScreen extends StatelessWidget {
                                       nip: BubbleNip.no,
                                       color: Color.fromRGBO(212, 234, 244, 1.0),
                                       child: Text(
-                                          "${SahaDateUtils().getDDMM(chatController.listMessage[index + 1].createdAt!)}",
+                                          "${SahaDateUtils().getDDMM(chatController!.listMessage[index + 1].createdAt!)}",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontSize: 11.0,
@@ -518,10 +475,10 @@ class ChatScreen extends StatelessWidget {
                             ],
                           ),
                         )
-                      : chatController.listMessage[index].createdAt!.minute -
-                                  chatController
+                      : chatController!.listMessage[index].createdAt!.minute -
+                                  chatController!
                                       .listMessage[(index + 1) >=
-                                              chatController.listMessage.length
+                                              chatController!.listMessage.length
                                           ? index
                                           : index + 1]
                                       .createdAt!
@@ -535,7 +492,7 @@ class ChatScreen extends StatelessWidget {
                                     height: 22,
                                   ),
                                   Text(
-                                      "${SahaDateUtils().getHHMM(chatController.listMessage[index].createdAt!)}"),
+                                      "${SahaDateUtils().getHHMM(chatController!.listMessage[index].createdAt!)}"),
                                 ],
                               ),
                             )
@@ -551,34 +508,36 @@ class ChatScreen extends StatelessWidget {
                     color: Colors.transparent,
                     child: Obx(
                       () => Container(
-                        height: chatController.allImageInMessage[index]!.length ==
+                        height: chatController!.allImageInMessage[index]!.length ==
                                 1
                             ? Get.height * 0.3
-                            : chatController.allImageInMessage[index]!.length ==
+                            : chatController!.allImageInMessage[index]!.length ==
                                     2
                                 ? 100
-                                : chatController.allImageInMessage[index]!.length == 3 ||
-                                        chatController.allImageInMessage[index]!
+                                : chatController!.allImageInMessage[index]!.length == 3 ||
+                                        chatController!
+                                                .allImageInMessage[index]!
                                                 .length ==
                                             4
                                     ? 200
-                                    : chatController.allImageInMessage[index]!
+                                    : chatController!.allImageInMessage[index]!
                                                     .length ==
                                                 5 ||
-                                            chatController
+                                            chatController!
                                                     .allImageInMessage[index]!
                                                     .length ==
                                                 6
                                         ? 300
-                                        : chatController.allImageInMessage[index]!.length == 7 ||
-                                                chatController
+                                        : chatController!.allImageInMessage[index]!.length == 7 ||
+                                                chatController!
                                                         .allImageInMessage[
                                                             index]!
                                                         .length ==
                                                     8
                                             ? 400
-                                            : chatController.allImageInMessage[index]!.length == 9 ||
-                                                    chatController
+                                            : chatController!.allImageInMessage[index]!.length ==
+                                                        9 ||
+                                                    chatController!
                                                             .allImageInMessage[index]!
                                                             .length ==
                                                         10
@@ -586,7 +545,7 @@ class ChatScreen extends StatelessWidget {
                                                 : 0,
                         child: Obx(
                           () {
-                            var listLinkImages = chatController
+                            var listLinkImages = chatController!
                                 .allImageInMessage[index]!
                                 .toList();
 
@@ -599,89 +558,43 @@ class ChatScreen extends StatelessWidget {
                                   listLinkImages.length,
                                   (index) => InkWell(
                                     onTap: () {
-                                      showModalBottomSheet<void>(
-                                        isScrollControlled: true,
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return Stack(
-                                            children: [
-                                              Container(
-                                                child: PhotoViewGallery.builder(
-                                                  scrollPhysics:
-                                                      const BouncingScrollPhysics(),
-                                                  builder:
-                                                      (BuildContext context,
-                                                          int index) {
-                                                    return PhotoViewGalleryPageOptions(
-                                                      imageProvider:
-                                                          NetworkImage(
-                                                              listLinkImages[
-                                                                  index]),
-                                                      initialScale:
-                                                          PhotoViewComputedScale
-                                                                  .contained *
-                                                              1,
-                                                      heroAttributes:
-                                                          PhotoViewHeroAttributes(
-                                                              tag:
-                                                                  listLinkImages[
-                                                                      index]),
-                                                    );
-                                                  },
-                                                  itemCount:
-                                                      listLinkImages.length,
-                                                  loadingBuilder:
-                                                      (context, event) =>
-                                                          Center(
-                                                    child: Container(
-                                                      width: 20.0,
-                                                      height: 20.0,
-                                                      child:
-                                                          CupertinoActivityIndicator(),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                child: IconButton(
-                                                  icon: Icon(Icons.close),
-                                                  onPressed: () {
-                                                    Get.back();
-                                                  },
-                                                  color: Colors.white,
-                                                ),
-                                                top: 60,
-                                                right: 20,
-                                              )
-                                            ],
-                                          );
-                                        },
-                                      );
+                                      seeImage(
+                                          listImageUrl: listLinkImages,
+                                          index: index);
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(5.0),
-                                        child: CachedNetworkImage(
-                                          height: listLinkImages.length == 1
-                                              ? Get.height * 0.3
-                                              : 100,
-                                          width: listLinkImages.length == 1
-                                              ? Get.width * 0.4
-                                              : 100,
-                                          fit: BoxFit.cover,
-                                          imageUrl: listLinkImages[index] ?? "",
-                                          errorWidget: (context, url, error) =>
-                                              Container(
-                                            child: Icon(
-                                              Icons.error,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.grey),
+                                              borderRadius:
+                                                  BorderRadius.circular(5)),
+                                          child: CachedNetworkImage(
+                                            height: listLinkImages.length == 1
+                                                ? Get.height * 0.3
+                                                : 100,
+                                            width: listLinkImages.length == 1
+                                                ? Get.width * 0.4
+                                                : 100,
+                                            fit: BoxFit.cover,
+                                            imageUrl:
+                                                listLinkImages[index] ?? "",
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Container(
+                                              child: Icon(
+                                                Icons.error,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.grey),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
                                             ),
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: Colors.grey),
-                                                borderRadius:
-                                                    BorderRadius.circular(5)),
                                           ),
                                         ),
                                       ),
@@ -695,7 +608,7 @@ class ChatScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  chatController.listMessage[index].content == null
+                  chatController!.listMessage[index].content == null
                       ? Container()
                       : Bubble(
                           borderUp: true,
@@ -705,7 +618,7 @@ class ChatScreen extends StatelessWidget {
                           nip: BubbleNip.leftTop,
                           color: Color(0xff279f63),
                           child: Text(
-                              chatController.listMessage[index].content ?? "",
+                              chatController!.listMessage[index].content ?? "",
                               style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.white,
@@ -721,7 +634,7 @@ class ChatScreen extends StatelessWidget {
                 padding: BubbleEdges.all(15),
                 nip: BubbleNip.leftTop,
                 color: Color(0xff279f63),
-                child: Text(chatController.listMessage[index].content!,
+                child: Text(chatController!.listMessage[index].content!,
                     style: TextStyle(
                         fontSize: 16,
                         color: Colors.white,
@@ -732,93 +645,57 @@ class ChatScreen extends StatelessWidget {
 
   Widget buildItemImageData(
       List<ImageData> listImageData, BuildContext context) {
+    var listImage = listImageData.map((e) => e.linkImage).toList();
     return Wrap(
       children: [
         ...List.generate(
           listImageData.length,
           (index) => InkWell(
             onTap: () {
-              showModalBottomSheet<void>(
-                isScrollControlled: true,
-                context: context,
-                builder: (BuildContext context) {
-                  return Stack(
-                    children: [
-                      Container(
-                        child: PhotoViewGallery.builder(
-                          scrollPhysics: const BouncingScrollPhysics(),
-                          builder: (BuildContext context, int index) {
-                            return PhotoViewGalleryPageOptions(
-                              imageProvider:
-                                  NetworkImage(listImageData[index].linkImage!),
-                              initialScale:
-                                  PhotoViewComputedScale.contained * 1,
-                              heroAttributes: PhotoViewHeroAttributes(
-                                  tag: listImageData[index]),
-                            );
-                          },
-                          itemCount: listImageData.length,
-                          loadingBuilder: (context, event) => Center(
-                            child: Container(
-                              width: 20.0,
-                              height: 20.0,
-                              child: CupertinoActivityIndicator(),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        child: IconButton(
-                          icon: Icon(Icons.close),
-                          onPressed: () {
-                            Get.back();
-                          },
-                          color: Colors.white,
-                        ),
-                        top: 60,
-                        right: 20,
-                      )
-                    ],
-                  );
-                },
-              );
+              seeImage(listImageUrl: listImage, index: index);
             },
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(5.0),
                   child: listImageData[index].linkImage != null
-                      ? CachedNetworkImage(
-                          height: listImageData.length == 1
-                              ? Get.height * 0.3
-                              : 100,
-                          width:
-                              listImageData.length == 1 ? Get.width * 0.4 : 100,
-                          fit: BoxFit.cover,
-                          imageUrl: listImageData[index].linkImage ?? "",
-                          placeholder: (context, url) => Stack(
-                            children: [
-                              listImageData[index].file == null
-                                  ? Container()
-                                  : AssetThumb(
-                                      asset: listImageData[index].file!,
-                                      height: listImageData.length == 1
-                                          ? int.parse((Get.height * 0.3)
-                                              .toStringAsFixed(0))
-                                          : 100,
-                                      width: listImageData.length == 1
-                                          ? int.parse((Get.width * 0.4)
-                                              .toStringAsFixed(0))
-                                          : 100,
-                                      spinner: SahaLoadingWidget(
-                                        size: 50,
+                      ? Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: CachedNetworkImage(
+                            height: listImageData.length == 1
+                                ? Get.height * 0.3
+                                : 100,
+                            width: listImageData.length == 1
+                                ? Get.width * 0.4
+                                : 100,
+                            fit: BoxFit.cover,
+                            imageUrl: listImageData[index].linkImage ?? "",
+                            placeholder: (context, url) => Stack(
+                              children: [
+                                listImageData[index].file == null
+                                    ? Container()
+                                    : AssetThumb(
+                                        asset: listImageData[index].file!,
+                                        height: listImageData.length == 1
+                                            ? int.parse((Get.height * 0.3)
+                                                .toStringAsFixed(0))
+                                            : 100,
+                                        width: listImageData.length == 1
+                                            ? int.parse((Get.width * 0.4)
+                                                .toStringAsFixed(0))
+                                            : 100,
+                                        spinner: SahaLoadingWidget(
+                                          size: 50,
+                                        ),
                                       ),
-                                    ),
-                              SahaLoadingWidget(),
-                            ],
+                                SahaLoadingWidget(),
+                              ],
+                            ),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
                           ),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
                         )
                       : AssetThumb(
                           asset: listImageData[index].file!,
@@ -836,6 +713,63 @@ class ChatScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  void seeImage({
+    List<dynamic>? listImageUrl,
+    int? index,
+  }) {
+    PageController _pageController = PageController(initialPage: index!);
+    showModalBottomSheet<void>(
+      isScrollControlled: true,
+      context: Get.context!,
+      builder: (BuildContext context) {
+        return Stack(
+          children: [
+            Container(
+              child: PhotoViewGallery.builder(
+                scrollPhysics: const BouncingScrollPhysics(),
+                pageController: _pageController,
+                builder: (BuildContext context, int index) {
+                  return PhotoViewGalleryPageOptions(
+                    minScale: 0.0,
+                    imageProvider: NetworkImage(listImageUrl![index] ?? ""),
+                    initialScale: PhotoViewComputedScale.contained * 1,
+                    heroAttributes: PhotoViewHeroAttributes(
+                        tag: listImageUrl[index] ?? "error$index"),
+                  );
+                },
+                itemCount: listImageUrl!.length,
+                loadingBuilder: (context, event) => Center(
+                  child: Container(
+                    width: 20.0,
+                    height: 20.0,
+                    child: CupertinoActivityIndicator(),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.black.withOpacity(0.5),
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    Get.back();
+                  },
+                  color: Colors.white,
+                ),
+              ),
+              top: 60,
+              right: 20,
+            )
+          ],
+        );
+      },
     );
   }
 }

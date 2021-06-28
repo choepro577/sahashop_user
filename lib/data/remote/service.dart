@@ -33,6 +33,9 @@ import 'package:sahashop_user/data/remote/response-request/payment_method/update
 import 'package:sahashop_user/data/remote/response-request/post/all_post_response.dart';
 import 'package:sahashop_user/data/remote/response-request/report/product_report_response.dart';
 import 'package:sahashop_user/data/remote/response-request/report/report_response.dart';
+import 'package:sahashop_user/data/remote/response-request/review_manage/all_review_response.dart';
+import 'package:sahashop_user/data/remote/response-request/review_manage/review_delete_response.dart';
+import 'package:sahashop_user/data/remote/response-request/review_manage/update_review_response.dart';
 
 import 'response-request/auth/register_response.dart';
 import 'response-request/category/all_category_response.dart';
@@ -361,5 +364,25 @@ abstract class SahaService {
     @Path() String storeCode,
     @Query("date_from") String timeFrom,
     @Query("date_to") String timeTo,
+  );
+
+  /// review manage
+
+  @GET("store/{storeCode}/reviews")
+  Future<AllReviewResponse> getReviewManage(
+    @Path() String storeCode,
+    @Query("filter_by") String filterBy,
+    @Query("filter_by_value") String filterByValue,
+  );
+
+  @DELETE("store/{storeCode}/reviews/{idReview}")
+  Future<ReviewDeleteResponse> deleteReview(
+      @Path("storeCode") String? storeCode, @Path() int? idReview);
+
+  @PUT("store/{storeCode}/reviews/{idReview}")
+  Future<UpdateReviewResponse> updateReview(
+    @Path("storeCode") String? storeCode,
+    @Path() int? idReview,
+    @Body() Map<String, dynamic> body,
   );
 }

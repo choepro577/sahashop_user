@@ -377,14 +377,18 @@ class _OptionBuyProductState extends State<OptionBuyProduct> {
               : Container(),
           SahaButtonFullParent(
             text: "Mua ngay",
-            textColor: Theme.of(context).primaryTextTheme.headline6!.color,
-            color:max != 0 && isDoneCheckElement()
+            textColor:
+                isDoneCheckElement() ? Colors.grey[200] : Colors.grey[600],
+            color: isDoneCheckElement()
                 ? Theme.of(context).primaryColor
-                : Colors.grey,
+                : Colors.grey[200],
             onPressed: () {
               onSubmitBuy();
             },
           ),
+          SizedBox(
+            height: 15,
+          )
         ],
       ),
     );

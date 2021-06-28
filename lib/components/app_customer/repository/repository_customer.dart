@@ -10,6 +10,7 @@ import 'package:sahashop_user/components/app_customer/repository/orders/order_re
 import 'package:sahashop_user/components/app_customer/repository/payment/payment_repository.dart';
 import 'package:sahashop_user/components/app_customer/repository/product/product_respository.dart';
 import 'package:sahashop_user/components/app_customer/repository/register/register_repository.dart';
+import 'package:sahashop_user/components/app_customer/repository/review/review_repository.dart';
 import 'package:sahashop_user/components/app_customer/repository/shipment/shipment_repository.dart';
 import 'package:sahashop_user/data/repository/post/post_repository.dart';
 
@@ -43,4 +44,6 @@ class CustomerRepositoryManager {
   static AddressRepository get addressRepository => AddressRepository();
   static ShipmentRepository get shipmentRepository => ShipmentRepository();
   static PaymentRepository get paymentRepository => PaymentRepository();
+  static ReviewCustomerRepository get reviewCustomerRepository =>
+      ReviewCustomerRepository();
 }

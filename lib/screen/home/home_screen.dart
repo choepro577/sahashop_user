@@ -16,6 +16,7 @@ import 'package:sahashop_user/screen/maketing_chanel/marketing_chanel_screen.dar
 import 'package:sahashop_user/screen/order_manage/order_manage_screen.dart';
 import 'package:sahashop_user/screen/posts/screen.dart';
 import 'package:sahashop_user/screen/report/report_screen.dart';
+import 'package:sahashop_user/screen/review_manager/review_page/review_manage_screen.dart';
 
 import 'choose_store/choose_store.dart';
 import 'widget/special_offers.dart';
@@ -194,6 +195,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     text: 'Tin tức - Bài viết',
                     press: () {
                       Get.to(() => PostNaviScreen());
+                    },
+                  ),
+                  ItemStoreView(
+                    icon: 'assets/icons/gift_icon.svg',
+                    text: 'Đánh giá sản phẩm',
+                    press: () {
+                      Get.to(() => ReviewManageScreen());
                     },
                   ),
                 ],

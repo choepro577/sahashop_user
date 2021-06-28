@@ -8,17 +8,18 @@ import 'package:sahashop_user/const/constant.dart';
 
 import 'select_images_controller.dart';
 
+// ignore: must_be_immutable
 class SelectProductImages extends StatelessWidget {
   Function? onUpload;
   Function? doneUpload;
-  final  List<ImageData>? images;
+  final List<ImageData>? images;
 
   late SelectImageController selectImageController;
   SelectProductImages({this.onUpload, this.doneUpload, this.images}) {
     selectImageController =
         new SelectImageController(onUpload: onUpload, doneUpload: doneUpload);
 
-    if(images != null) {
+    if (images != null) {
       selectImageController.dataImages.value = images!;
     }
   }

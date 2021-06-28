@@ -28,7 +28,7 @@ class DetailVoucherScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     Stack(
-                      overflow: Overflow.visible,
+                      clipBehavior: Clip.none,
                       children: [
                         Container(
                           width: 100,
@@ -345,8 +345,8 @@ class DetailVoucherScreen extends StatelessWidget {
                               Text("Chỉ áp dụng cho các sản phẩm sau: "),
                               ...List.generate(
                                   voucher!.products!.length,
-                                  (index) =>
-                                      Text("${voucher!.products![index].name}."))
+                                  (index) => Text(
+                                      "${voucher!.products![index].name}."))
                             ],
                           ),
                         )

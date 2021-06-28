@@ -18,13 +18,12 @@ import 'package:sahashop_user/utils/string_utils.dart';
 
 // ignore: must_be_immutable
 class ConfirmScreen extends StatelessWidget {
-  late ConfirmController confirmController;
+  ConfirmController confirmController = Get.put(ConfirmController());
   final dataKey = new GlobalKey();
   final dataKeyPayment = new GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    confirmController = Get.put(ConfirmController());
     return Scaffold(
         appBar: AppBar(
           title: Text("Xác nhận đơn hàng"),
@@ -279,7 +278,8 @@ class ConfirmScreen extends StatelessWidget {
                                         .product!
                                         .images![0]
                                         .imageUrl!,
-                                errorWidget: (context, url, error) => SahaEmptyImage(),
+                                errorWidget: (context, url, error) =>
+                                    SahaEmptyImage(),
                               ),
                             ),
                           ),

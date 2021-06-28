@@ -5,10 +5,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
+import 'package:sahashop_user/components/app_customer/screen/cart_screen/cart_screen_1.dart';
 import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_detail/order_detail_history_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/pay_screen/pay_screen.dart';
 import 'package:sahashop_user/components/app_customer/utils/color_utils.dart';
+import 'package:sahashop_user/components/app_customer/screen/review/review_screen.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/const/const_image_logo.dart';
 import 'package:sahashop_user/model/order.dart';
@@ -26,12 +28,12 @@ class OrderHistoryScreen extends StatefulWidget {
 class _OrderHistoryScreenState extends State<OrderHistoryScreen>
     with TickerProviderStateMixin {
   TabController? tabController;
-  OrderHistoryController orderHistoryController =
-      Get.put(OrderHistoryController());
+  late OrderHistoryController orderHistoryController;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    orderHistoryController = Get.put(OrderHistoryController());
     tabController = new TabController(
         length: 10, vsync: this, initialIndex: widget.initPage ?? 0);
   }
@@ -177,18 +179,20 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                     order: orderHistoryController
                                         .listAllOrder[indexState][index],
                                   ),
-                                )!.then((value) => {
-                                      if (value == "CANCELLED")
-                                        {
-                                          tabController!.animateTo(6),
-                                          orderHistoryController.refreshData(
-                                            "order_status_code",
-                                            orderHistoryController
-                                                .listStatusCode[indexState],
-                                            indexState,
-                                          )
-                                        },
-                                    });
+                                )!
+                                    .then((value) => {
+                                          if (value == "CANCELLED")
+                                            {
+                                              tabController!.animateTo(6),
+                                              orderHistoryController
+                                                  .refreshData(
+                                                "order_status_code",
+                                                orderHistoryController
+                                                    .listStatusCode[indexState],
+                                                indexState,
+                                              )
+                                            },
+                                        });
                               },
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -233,8 +237,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                         .length ==
                                                     0
                                                 ? ""
-                                                : "${orderHistoryController.
-                                            listAllOrder[indexState][index].lineItemsAtTime![0].imageUrl}",
+                                                : "${orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime![0].imageUrl}",
                                             errorWidget:
                                                 (context, url, error) =>
                                                     SahaEmptyImage(),
@@ -254,11 +257,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                  "${orderHistoryController.
-                                                  listAllOrder[indexState]
-                                                  [index].lineItemsAtTime![0]
-                                                      .name
-                                                  }",
+                                                  "${orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime![0].name}",
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.w500),
@@ -269,9 +268,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                       children: [
                                                         Spacer(),
                                                         Text(
-                                                          " x ${orderHistoryController.
-                                                          listAllOrder
-                                                          [indexState][index].lineItemsAtTime![0].quantity}",
+                                                          " x ${orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime![0].quantity}",
                                                           style: TextStyle(
                                                               fontSize: 13,
                                                               color: Colors
@@ -283,8 +280,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                       children: [
                                                         Spacer(),
                                                         Text(
-                                                          "đ${SahaStringUtils().convertToMoney(
-                                                              orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime![0].beforePrice)}",
+                                                          "đ${SahaStringUtils().convertToMoney(orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime![0].beforePrice)}",
                                                           style: TextStyle(
                                                               decoration:
                                                                   TextDecoration
@@ -294,9 +290,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                         ),
                                                         SizedBox(width: 15),
                                                         Text(
-                                                          "đ${SahaStringUtils().convertToMoney(
-                                                              orderHistoryController.
-                                                              listAllOrder[indexState][index].lineItemsAtTime![0].afterDiscount)}",
+                                                          "đ${SahaStringUtils().convertToMoney(orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime![0].afterDiscount)}",
                                                           style: TextStyle(
                                                               color: Theme.of(
                                                                       context)
@@ -342,9 +336,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                     child: Row(
                                       children: [
                                         Text(
-                                          "${orderHistoryController.
-                                          listAllOrder[indexState][index].
-                                          lineItemsAtTime!.length} sản phẩm",
+                                          "${orderHistoryController.listAllOrder[indexState][index].lineItemsAtTime!.length} sản phẩm",
                                           style: TextStyle(
                                               color: Colors.grey[600]),
                                         ),
@@ -359,8 +351,8 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                           ),
                                           child: SvgPicture.asset(
                                             "assets/icons/money.svg",
-                                            color:
-                                            SahaColorUtils().colorTextWithPrimaryColor(),
+                                            color: SahaColorUtils()
+                                                .colorTextWithPrimaryColor(),
                                           ),
                                         ),
                                         SizedBox(
@@ -462,30 +454,81 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                   ),
                                                 ),
                                               )
-                                            : InkWell(
-                                                onTap: () {},
-                                                child: Container(
-                                                  height: 35,
-                                                  width: 100,
-                                                  decoration: BoxDecoration(
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              4)),
-                                                  child: Center(
-                                                    child: Text(
-                                                      "Đánh giá",
-                                                      style: TextStyle(
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .primaryTextTheme
-                                                              .headline6!
-                                                              .color),
+                                            : orderHistoryController
+                                                        .listAllOrder[
+                                                            indexState][index]
+                                                        .reviewed ==
+                                                    true
+                                                ? InkWell(
+                                                    onTap: () {
+                                                      Get.to(
+                                                          () => CartScreen1());
+                                                    },
+                                                    child: Container(
+                                                      height: 35,
+                                                      width: 100,
+                                                      decoration: BoxDecoration(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(4)),
+                                                      child: Center(
+                                                        child: Text(
+                                                          "Mua lại",
+                                                          style: TextStyle(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryTextTheme
+                                                                  .headline6!
+                                                                  .color),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                : InkWell(
+                                                    onTap: () {
+                                                      Get.to(
+                                                        () => ReviewScreen(
+                                                          lineItemsAtTime:
+                                                              orderHistoryController
+                                                                  .listAllOrder[
+                                                                      indexState]
+                                                                      [index]
+                                                                  .lineItemsAtTime!,
+                                                          orderCode:
+                                                              orderHistoryController
+                                                                  .listAllOrder[
+                                                                      indexState]
+                                                                      [index]
+                                                                  .orderCode,
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      height: 35,
+                                                      width: 100,
+                                                      decoration: BoxDecoration(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(4)),
+                                                      child: Center(
+                                                        child: Text(
+                                                          "Đánh giá",
+                                                          style: TextStyle(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryTextTheme
+                                                                  .headline6!
+                                                                  .color),
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              )
                                       ],
                                     ),
                                   ),

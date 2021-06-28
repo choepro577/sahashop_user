@@ -15,16 +15,17 @@ class AllMessageScreen extends StatelessWidget {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
-  ChatController chatController = Get.put(ChatController());
+  ChatController? chatController;
 
   @override
   Widget build(BuildContext context) {
-    chatController.loadInitChatUser();
+    chatController = Get.put(ChatController());
+    chatController!.loadInitChatUser();
 
     return Scaffold(
       appBar: AppBar(
         title: Obx(
-          () => chatController.isSearch.value
+          () => chatController!.isSearch.value
               ? Container(
                   padding: EdgeInsets.only(left: 10, right: 10),
                   decoration: BoxDecoration(
@@ -48,10 +49,10 @@ class AllMessageScreen extends StatelessWidget {
           IconButton(
               icon: Icon(Icons.search),
               onPressed: () {
-                if (chatController.isSearch.value == false) {
-                  chatController.isSearch.value = true;
+                if (chatController!.isSearch.value == false) {
+                  chatController!.isSearch.value = true;
                 } else {
-                  chatController.isSearch.value = false;
+                  chatController!.isSearch.value = false;
                 }
               }),
         ],
@@ -95,7 +96,7 @@ class AllMessageScreen extends StatelessWidget {
         },
         child: SingleChildScrollView(
           child: Obx(
-            () => chatController.isLoadingBoxChatCustomer.value == true
+            () => chatController!.isLoadingBoxChatCustomer.value == true
                 ? Shimmer.fromColors(
                     baseColor: Colors.grey[300]!,
                     highlightColor: Colors.white,
@@ -119,12 +120,12 @@ class AllMessageScreen extends StatelessWidget {
                       ],
                     ),
                   )
-                : chatController.listBoxChatCustomer.isEmpty
+                : chatController!.listBoxChatCustomer.isEmpty
                     ? Text("khong co user")
                     : Column(
                         children: [
                           ...List.generate(
-                              chatController.listBoxChatCustomer.length,
+                              chatController!.listBoxChatCustomer.length,
                               (index) => itemChatUser(index))
                         ],
                       ),
@@ -137,11 +138,11 @@ class AllMessageScreen extends StatelessWidget {
   Widget itemChatUser(int index) {
     return InkWell(
       onTap: () {
-        chatController.boxChatCustomer.value =
-            chatController.listBoxChatCustomer[index];
+        chatController!.boxChatCustomer.value =
+            chatController!.listBoxChatCustomer[index];
         Get.to(() => ChatScreen())!.then((value) => {
-              chatController.refreshDataMessage(),
-              chatController.refreshDataAllChat()
+              chatController!.refreshDataMessage(),
+              chatController!.refreshDataAllChat()
             });
       },
       child: Column(
@@ -172,9 +173,9 @@ class AllMessageScreen extends StatelessWidget {
                       ClipRRect(
                         child: CachedNetworkImage(
                           imageUrl:
-                              chatController.listBoxChatCustomer.length == 0
+                              chatController!.listBoxChatCustomer.length == 0
                                   ? ""
-                                  : chatController.listBoxChatCustomer[index]
+                                  : chatController!.listBoxChatCustomer[index]
                                           .customer!.avatarImage ??
                                       "",
                           width: 60,
@@ -194,11 +195,11 @@ class AllMessageScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            chatController.listBoxChatCustomer.length == 0
-                                ? chatController.listBoxChatCustomer[index]
+                            chatController!.listBoxChatCustomer.length == 0
+                                ? chatController!.listBoxChatCustomer[index]
                                         .customer!.phoneNumber ??
                                     "Chưa đặt tên"
-                                : chatController.listBoxChatCustomer[index]
+                                : chatController!.listBoxChatCustomer[index]
                                         .customer!.name ??
                                     "Chưa đặt tên",
                             style: TextStyle(
@@ -210,7 +211,7 @@ class AllMessageScreen extends StatelessWidget {
                           SizedBox(
                             width: Get.width * 0.7,
                             child: Text(
-                              chatController.listBoxChatCustomer[index]
+                              chatController!.listBoxChatCustomer[index]
                                       .lastMessage!.content ??
                                   "",
                               maxLines: 2,
@@ -225,7 +226,7 @@ class AllMessageScreen extends StatelessWidget {
                     right: 10,
                     top: 0,
                     child: Text(
-                      SahaStringUtils().displayTimeAgoFromTime(chatController
+                      SahaStringUtils().displayTimeAgoFromTime(chatController!
                           .listBoxChatCustomer[index].lastMessage!.createdAt!),
                       style: TextStyle(fontSize: 12, color: Colors.grey[400]),
                     ),
