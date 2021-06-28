@@ -415,6 +415,56 @@ class _CustomerService implements CustomerService {
   }
 
   @override
+  Future<AddSearchHistoryResponse> addHistorySearch(storeCode, body) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AddSearchHistoryResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/search_histories',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AddSearchHistoryResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<AllHistoryResponse> getAllHistorySearch(storeCode, deviceId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'device_id': deviceId};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AllHistoryResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/search_histories',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AllHistoryResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<DeleteAllSearchHistoryResponse> deleteAllHistorySearch(
+      storeCode, deviceId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'device_id': deviceId};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<DeleteAllSearchHistoryResponse>(Options(
+                method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
+            .compose(_dio.options, '$storeCode/search_histories',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = DeleteAllSearchHistoryResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<AllIAddressCustomerResponse> getAllAddressCustomer(storeCode) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

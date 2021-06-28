@@ -16,21 +16,19 @@ import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart'
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/controller/config_controller.dart';
 import 'package:sahashop_user/model/category.dart';
-import 'controller/category_controller.dart';
+import 'category_controller.dart';
+import 'search_text_field_screen/search_text_field_screen.dart';
 
 class CategoryProductStyle1 extends StatelessWidget {
   final ConfigController configController = Get.find();
   final DataAppCustomerController dataAppCustomerController = Get.find();
-  final CategoryController categoryController = CategoryController();
+  final CategoryController categoryController = CategoryController()..getAllCategory();
 
   CategoryProductStyle1({Key? key}) : super(key: key);
 
-  @override
-  void dispose() {}
 
   @override
   Widget build(BuildContext context) {
-    categoryController.getAllCategory();
 
     ////  ////  ////  ////  ////  ////
     return Scaffold(
@@ -46,6 +44,9 @@ class CategoryProductStyle1 extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: TextField(
+                  onTap: () {
+                    Get.to(SearchTextFiledScreen());
+                  },
                   onChanged: (value) => Get.to(() => SearchScreen(
                         searchText: value,
                       )),

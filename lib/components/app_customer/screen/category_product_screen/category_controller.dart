@@ -4,7 +4,7 @@ import 'package:sahashop_user/components/app_customer/repository/repository_cust
 import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/model/product.dart';
 
-import '../../data_app_controller.dart';
+import '../data_app_controller.dart';
 
 class CategoryController extends GetxController {
   var isLoadingScreen = false.obs;

@@ -15,6 +15,7 @@ import 'package:sahashop_user/components/app_customer/repository/shipment/shipme
 import 'package:sahashop_user/data/repository/post/post_repository.dart';
 
 import 'favorite/favorite_repository.dart';
+import 'history_search/history_search_repository.dart';
 import 'home/home_repository.dart';
 import 'post/post_repository.dart';
 
@@ -44,6 +45,7 @@ class CustomerRepositoryManager {
   static AddressRepository get addressRepository => AddressRepository();
   static ShipmentRepository get shipmentRepository => ShipmentRepository();
   static PaymentRepository get paymentRepository => PaymentRepository();
+  static HistorySearchRepository get historySearchRepository => HistorySearchRepository();
   static ReviewCustomerRepository get reviewCustomerRepository =>
       ReviewCustomerRepository();
 }
