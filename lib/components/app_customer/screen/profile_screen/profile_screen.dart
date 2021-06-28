@@ -439,8 +439,7 @@ class ProfileScreen extends StatelessWidget {
                                               .colorTextWithPrimaryColor(),
                                         ),
                                       ),
-                                      profileController.packingAmount.value !=
-                                              0
+                                      profileController.packingAmount.value != 0
                                           ? Positioned(
                                               top: -3,
                                               right: -5,
