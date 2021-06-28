@@ -30,6 +30,9 @@ import 'package:sahashop_user/model/cart.dart';
 
 import 'response-request/favorite/all_product_response.dart';
 import 'response-request/favorite/favorite_response.dart';
+import 'response-request/search_history/add_history_search_response.dart';
+import 'response-request/search_history/all_search_history_response.dart';
+import 'response-request/search_history/search_history_response.dart';
 
  part 'customer_service.g.dart';
 
@@ -144,6 +147,21 @@ abstract class CustomerService {
   Future<Cart> addItemCart(
       @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
+  //search history
+  @POST("{storeCode}/search_histories")
+  Future<AddSearchHistoryResponse> addHistorySearch(
+      @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
+
+  @GET("{storeCode}/search_histories")
+  Future<AllHistoryResponse> getAllHistorySearch(
+      @Path("storeCode") String? storeCode,
+      @Query("device_id") String? deviceId);
+
+  @DELETE("{storeCode}/search_histories")
+  Future<DeleteAllSearchHistoryResponse> deleteAllHistorySearch(
+      @Path("storeCode") String? storeCode,
+      @Query("device_id") String? deviceId);
+
   /// address customer
 
   @GET("{storeCode}/address")
@@ -209,7 +227,8 @@ abstract class CustomerService {
       @Body() Map<String, dynamic> body, @Path() String? orderCode);
 
   @GET("{storeCode}/favorites")
-  Future<AllProductFavorites> getAllFavorite(@Path("storeCode") String storeCode, @Path("page") int page);
+  Future<AllProductFavorites> getAllFavorite(@Path("storeCode") String storeCode,
+      @Path("page") int page);
 
   @POST("{storeCode}/products/{productId}/favorites")
   Future<FavoriteResponse> favoriteProduct(@Path("storeCode") String storeCode,
