@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/app_customer/screen/address_screen/all_address_customer/all_address_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/choose_voucher/choose_voucher_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/config_profile_screen/config_profile_screen.dart';
@@ -109,7 +110,7 @@ class ProfileScreen extends StatelessWidget {
                                           ),
                                         ),
                                         dataAppCustomerController.infoCustomer
-                                                    .value!.avatarImage ==
+                                                    .value!.avatarImage !=
                                                 null
                                             ? Positioned(
                                                 bottom: 1,
@@ -130,7 +131,7 @@ class ProfileScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                               )
-                                            : Container(),
+                                            : SahaEmptyImage(),
                                       ],
                                     ),
                                     borderRadius: BorderRadius.circular(3000),
