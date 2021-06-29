@@ -16,6 +16,7 @@ class ProductItemLoadingWidget extends StatelessWidget {
     return Container(
       height: 270,
       width: width,
+      color: Colors.white,
       child: Stack(
         children: [
           Container(

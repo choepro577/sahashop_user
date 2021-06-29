@@ -35,7 +35,8 @@ class ProductItemWidget extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                   color: Colors.white,
-                  border: Border.all(color: Colors.grey[400]!)),
+                  // border: Border.all(color: Colors.grey[400]!)
+              ),
               child: Stack(
                 children: [
                   InkWell(

@@ -41,6 +41,7 @@ class SearchController extends GetxController {
 
   var listProduct = RxList<Product>();
   var isLoadingProduct = false.obs;
+
   Future<bool?> searchProduct(
       String search, bool descending, String sortBy) async {
     isLoadingProduct.value = true;

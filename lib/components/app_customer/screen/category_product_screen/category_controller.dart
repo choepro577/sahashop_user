@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/repository/handle_error.dart';
 import 'package:sahashop_user/components/app_customer/repository/repository_customer.dart';
+import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/model/category.dart';
 import 'package:sahashop_user/model/product.dart';
 
@@ -13,37 +16,96 @@ class CategoryController extends GetxController {
   var categories = RxList<Category>();
   var products = RxList<Product>();
   var categoryCurrent = Category().obs;
+  var textSearch = "".obs;
+  var sortByShow = "views".obs;
+  var descendingShow = true.obs;
+  var currentPage = 1;
+  var canLoadMore = true;
+
+  TextEditingController textEditingControllerSearch = TextEditingController();
 
   CategoryController() {
     final DataAppCustomerController dataAppCustomerController = Get.find();
     if (dataAppCustomerController.categoryCurrent != null) {
       categoryCurrent(dataAppCustomerController.categoryCurrent!);
     }
+    init();
   }
 
-  @override
-  void onInit() {
+  void init() {
     super.onInit();
     getAllCategory();
+    searchProduct(search: textSearch.value,
+        sortBy: sortByShow.value,
+        descending: descendingShow.value,
+      idCategory: categoryCurrent.value.id != null ? categoryCurrent.value.id : null
+    );
+  }
+
+  Future<bool?> searchProduct(
+      {String? search, bool? descending, String? sortBy, int? idCategory,bool isLoadMore = false}) async {
+
+    if(isLoadMore == false) {
+      currentPage = 1;
+      canLoadMore = true;
+    }
+
+    if(isLoadMore == true) {
+      if(canLoadMore == false) return true;
+    }
+
+    var categoryId = "";
+    categories.forEach((element) {
+      if(idCategory != null && idCategory == element.id) {
+        categoryCurrent(element);
+        categoryId = idCategory.toString();
+      }
+    });
+    if(search != null) {
+      textSearch(search);
+    }
+
+    if(descending != null) {
+      descendingShow(descending);
+    }
+
+    if(sortBy != null) {
+      sortByShow(sortBy);
+    }
+
+    isLoadingProduct.value = true;
+    try {
+      var list = (await CustomerRepositoryManager.productCustomerRepository
+          .searchProduct(
+              page: currentPage,
+              search: textSearch.value,
+              idCategory:categoryCurrent.value.id.toString(),
+              descending: sortBy == "price" ? descendingShow.value : true,
+              sortBy: sortByShow.value))!;
+   
+      if(isLoadMore == false) {
+        products(list);
+      } else {
+        products.addAll(list);
+      }
+
+      if(list.length < 20) {
+        canLoadMore = false;
+      } else {
+        currentPage++;
+      }
+
+      isLoadingProduct.value = false;
+      return true;
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+    isLoadingProduct.value = false;
   }
 
   void setCategoryCurrent(Category category) {
     isLoadingProduct.value = true;
     categoryCurrent.value = category;
-    getProductWithCategory(category.id);
-  }
-
-  Future<void> getProductWithCategory(int? idCategory) async {
-    try {
-      var res = await CustomerRepositoryManager.productCustomerRepository
-          .searchProduct(
-              idCategory: idCategory == null ? "" : idCategory.toString());
-      products(res!);
-    } catch (err) {
-      print(err);
-      handleErrorCustomer(err);
-    }
-    isLoadingProduct.value = false;
   }
 
   Future<void> getAllCategory() async {
@@ -54,13 +116,8 @@ class CategoryController extends GetxController {
           await CustomerRepositoryManager.categoryRepository.getAllCategory();
 
       categories(res!);
+      categories.insert(0, Category(name: "Tất cả", id: null));
 
-      if (categoryCurrent.value != null) {
-        setCategoryCurrent(categoryCurrent.value);
-      } else if (categories.length > 0) {
-        getProductWithCategory(categories.toList()[0].id);
-        setCategoryCurrent(categories.toList()[0]);
-      }
     } catch (err) {
       print(err);
       handleErrorCustomer(err);

@@ -9,6 +9,7 @@ import 'package:sahashop_user/utils/user_info.dart';
 class ProductCustomerRepository {
   Future<List<Product>?> searchProduct(
       {String search = "",
+        int page = 1,
       String idCategory = "",
       bool descending = false,
       String details = "",
@@ -17,6 +18,7 @@ class ProductCustomerRepository {
       try {
         var res = await CustomerServiceManager().service!.searchProduct(
             UserInfo().getCurrentStoreCode(),
+            page,
             search,
             idCategory,
             descending,

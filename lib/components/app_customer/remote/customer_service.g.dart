@@ -110,9 +110,10 @@ class _CustomerService implements CustomerService {
 
   @override
   Future<QueryProductResponse> searchProduct(
-      storeCode, search, idCategory, descending, details, sortBy) async {
+      storeCode, page, search, idCategory, descending, details, sortBy) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
+      r'page': page,
       r'search': search,
       r'category_ids': idCategory,
       r'descending': descending,

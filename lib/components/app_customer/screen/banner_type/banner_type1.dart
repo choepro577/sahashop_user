@@ -1,8 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
+import 'package:sahashop_user/components/saha_user/loading/loading_container.dart';
 
 import '../data_app_controller.dart';
 
@@ -41,10 +44,13 @@ class _BannerType1State extends State<BannerType1> {
                         borderRadius: BorderRadius.all(Radius.circular(5.0)),
                         child: Stack(
                           children: <Widget>[
-                            AspectRatio(
-                              aspectRatio: 16 / 9,
-                              child: Image.network(item.imageUrl!,
-                                  fit: BoxFit.cover),
+                            CachedNetworkImage(
+                              width: Get.width,
+                              fit: BoxFit.cover,
+                              imageUrl:  item.imageUrl!,
+                              placeholder: (context, url) => SahaLoadingContainer(),
+                              errorWidget: (context, url, error) =>
+                                  SahaEmptyImage(),
                             ),
                             Positioned(
                               bottom: 0.0,

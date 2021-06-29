@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:sahashop_user/components/app_customer/const/env.dart';
 import 'package:sahashop_user/components/app_customer/remote/post/all_category_post_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/post/all_post_response.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/address_customer/all_address_customer_response.dart';
@@ -40,7 +41,7 @@ import 'response-request/search_history/search_history_response.dart';
 
  part 'customer_service.g.dart';
 
-@RestApi(baseUrl: "http://ashop.sahavi.vn/api/customer/")
+@RestApi(baseUrl: "$DOMAIN_API_CUSTOMER/api/customer/")
 abstract class CustomerService {
   /// Retrofit factory
   factory CustomerService(Dio dio) => _CustomerService(dio);
@@ -68,6 +69,7 @@ abstract class CustomerService {
   @GET("{storeCode}/products?=")
   Future<QueryProductResponse> searchProduct(
       @Path("storeCode") String? storeCode,
+      @Query("page") int page,
       @Query("search") String search,
       @Query("category_ids") String idCategory,
       @Query("descending") bool descending,

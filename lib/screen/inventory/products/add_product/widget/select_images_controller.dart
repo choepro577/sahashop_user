@@ -74,7 +74,8 @@ class SelectImageController extends GetxController {
       dataImages.refresh();
 
       var fileUp = await ImageUtils.getImageFileFromAsset(dataImages[indexImage].file);
-      var fileUpImageCompress = await ImageUtils.getImageCompress(fileUp!);
+      var fileUpImageCompress = await ImageUtils.getImageCompress(fileUp!,
+      quality: 50);
 
       var link = await RepositoryManager.imageRepository.uploadImage(
           fileUpImageCompress

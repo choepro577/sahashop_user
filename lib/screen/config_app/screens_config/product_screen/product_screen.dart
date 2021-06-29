@@ -12,7 +12,7 @@ class ProductScreenConfig extends StatelessWidget {
     return Column(
       children: [
         CarouselSelect(
-          listWidget: LIST_WIDGET_PRODUCT_SCREEN,
+          listWidget:  RepositoryWidgetCustomer().LIST_WIDGET_PRODUCT_SCREEN,
           height: Get.height * 0.6,
           indexSelected: controller.configApp.productPageType,
           initPage: controller.configApp.productPageType,

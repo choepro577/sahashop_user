@@ -1,0 +1,1 @@
+const DOMAIN_API_CUSTOMER = "http://ashop.sahavi.vn";
