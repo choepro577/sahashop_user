@@ -20,7 +20,7 @@ class NavigationController extends GetxController {
     configController = Get.find();
     if (configController.configApp.homePageType != null &&
         configController.configApp.homePageType! <
-            LIST_WIDGET_HOME_SCREEN.length) {
+            RepositoryWidgetCustomer().LIST_WIDGET_HOME_SCREEN.length) {
 
       navigationHome = [
         CartScreen1(
@@ -31,7 +31,7 @@ class NavigationController extends GetxController {
         ),
         Container(
             key: PageStorageKey<String>('str2'),
-            child: LIST_WIDGET_HOME_SCREEN[
+            child: RepositoryWidgetCustomer().LIST_WIDGET_HOME_SCREEN[
                 configController.configApp.homePageType!]),
         OrderHistoryScreen(
           key: PageStorageKey<String>('str3'),
@@ -42,7 +42,7 @@ class NavigationController extends GetxController {
       ];
 
     } else {
-      navigationHome = [LIST_WIDGET_HOME_SCREEN[0]];
+      navigationHome = [RepositoryWidgetCustomer().LIST_WIDGET_HOME_SCREEN[0]];
     }
   }
 }
