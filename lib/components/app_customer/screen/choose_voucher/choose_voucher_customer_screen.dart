@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_voucher.dart';
 import 'package:sahashop_user/components/app_customer/screen/choose_voucher/choose_voucher_customer_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/choose_voucher/detail_voucher_screen/detail_voucher_screen.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
@@ -138,331 +139,363 @@ class ChooseVoucherCustomerScreen extends StatelessWidget {
           Expanded(
             child: SingleChildScrollView(
               child: Obx(
-                () => Column(
-                  children: [
-                    ...List.generate(
-                      chooseCustomerController.listVoucher.length,
-                      (index) => Stack(
+                () => chooseCustomerController.listVoucher.isEmpty
+                    ? SahaEmptyVoucher(
+                        width: 50,
+                        height: 50,
+                      )
+                    : Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(13.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey[300]!)),
-                              child: Row(
-                                children: [
-                                  Stack(
-                                    clipBehavior: Clip.none,
-                                    children: [
-                                      Container(
-                                        width: 100,
-                                        height: 100,
-                                        decoration: BoxDecoration(
-                                          color: Theme.of(context).primaryColor,
-                                          border: Border.all(
-                                              color: Colors.grey[500]!),
-                                        ),
-                                        child: Center(
-                                          child: SizedBox(
-                                            width: 80,
-                                            child: chooseCustomerController
-                                                        .listVoucher[index]
-                                                        .voucherType ==
-                                                    1
-                                                ? chooseCustomerController
-                                                            .listVoucher[index]
-                                                            .discountType ==
-                                                        1
-                                                    ? Text(
-                                                        "Mã: ${chooseCustomerController.listVoucher[index].code} giảm ${chooseCustomerController.listVoucher[index].valueDiscount} %",
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .primaryTextTheme
-                                                              .headline6!
-                                                              .color,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
-                                                        maxLines: 4,
-                                                      )
-                                                    : Text(
-                                                        "Mã: ${chooseCustomerController.listVoucher[index].code} giảm ${SahaStringUtils().convertToMoney(chooseCustomerController.listVoucher[index].valueDiscount)}đ",
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .primaryTextTheme
-                                                              .headline6!
-                                                              .color,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
-                                                        maxLines: 4,
-                                                      )
-                                                : chooseCustomerController
-                                                            .listVoucher[index]
-                                                            .discountType ==
-                                                        1
-                                                    ? Text(
-                                                        "Mã: ${chooseCustomerController.listVoucher[index].code} giảm ${chooseCustomerController.listVoucher[index].valueDiscount} %",
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .primaryTextTheme
-                                                              .headline6!
-                                                              .color,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
-                                                        maxLines: 4,
-                                                      )
-                                                    : Text(
-                                                        "Mã: ${chooseCustomerController.listVoucher[index].code} giảm ${SahaStringUtils().convertToMoney(chooseCustomerController.listVoucher[index].valueDiscount)}đ",
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .primaryTextTheme
-                                                              .headline6!
-                                                              .color,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
-                                                        maxLines: 4,
-                                                      ),
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        height: 8,
-                                        width: 8,
-                                        top: 5,
-                                        left: -4,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        height: 8,
-                                        width: 8,
-                                        top: 20,
-                                        left: -4,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        height: 8,
-                                        width: 8,
-                                        top: 35,
-                                        left: -4,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        height: 8,
-                                        width: 8,
-                                        top: 50,
-                                        left: -4,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        height: 8,
-                                        width: 8,
-                                        top: 65,
-                                        left: -4,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        height: 8,
-                                        width: 8,
-                                        top: 80,
-                                        left: -4,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Expanded(
-                                    child: Column(
+                          ...List.generate(
+                            chooseCustomerController.listVoucher.length,
+                            (index) => Stack(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(13.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.grey[300]!)),
+                                    child: Row(
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                        Stack(
+                                          clipBehavior: Clip.none,
                                           children: [
-                                            Expanded(
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  chooseCustomerController
-                                                      .checkChooseVoucher(
-                                                          chooseCustomerController
-                                                                  .listChooseVoucher[
-                                                              index],
-                                                          index);
-                                                },
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      "${chooseCustomerController.listVoucher[index].name}",
-                                                      style: TextStyle(
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                      maxLines: 2,
-                                                    ),
-                                                    chooseCustomerController
-                                                                .listVoucher[
-                                                                    index]
-                                                                .voucherType ==
-                                                            1
-                                                        ? Text(
-                                                            "Giảm giá cho các sản phẩm sau:",
-                                                            style: TextStyle(
-                                                              fontSize: 13,
+                                            Container(
+                                              width: 100,
+                                              height: 100,
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                border: Border.all(
+                                                    color: Colors.grey[500]!),
+                                              ),
+                                              child: Center(
+                                                child: SizedBox(
+                                                  width: 80,
+                                                  child: chooseCustomerController
+                                                              .listVoucher[
+                                                                  index]
+                                                              .voucherType ==
+                                                          1
+                                                      ? chooseCustomerController
+                                                                  .listVoucher[
+                                                                      index]
+                                                                  .discountType ==
+                                                              1
+                                                          ? Text(
+                                                              "Mã: ${chooseCustomerController.listVoucher[index].code} giảm ${chooseCustomerController.listVoucher[index].valueDiscount} %",
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: TextStyle(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .primaryTextTheme
+                                                                    .headline6!
+                                                                    .color,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                              maxLines: 4,
+                                                            )
+                                                          : Text(
+                                                              "Mã: ${chooseCustomerController.listVoucher[index].code} giảm ${SahaStringUtils().convertToMoney(chooseCustomerController.listVoucher[index].valueDiscount)}đ",
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: TextStyle(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .primaryTextTheme
+                                                                    .headline6!
+                                                                    .color,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                              maxLines: 4,
+                                                            )
+                                                      : chooseCustomerController
+                                                                  .listVoucher[
+                                                                      index]
+                                                                  .discountType ==
+                                                              1
+                                                          ? Text(
+                                                              "Mã: ${chooseCustomerController.listVoucher[index].code} giảm ${chooseCustomerController.listVoucher[index].valueDiscount} %",
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: TextStyle(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .primaryTextTheme
+                                                                    .headline6!
+                                                                    .color,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                              maxLines: 4,
+                                                            )
+                                                          : Text(
+                                                              "Mã: ${chooseCustomerController.listVoucher[index].code} giảm ${SahaStringUtils().convertToMoney(chooseCustomerController.listVoucher[index].valueDiscount)}đ",
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: TextStyle(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .primaryTextTheme
+                                                                    .headline6!
+                                                                    .color,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                              maxLines: 4,
                                                             ),
-                                                            maxLines: 2,
-                                                          )
-                                                        : Text(
-                                                            "Giảm giá cho toàn bộ các sản phẩm",
-                                                            style: TextStyle(
-                                                              fontSize: 13,
-                                                            ),
-                                                            maxLines: 2,
-                                                          ),
-                                                    chooseCustomerController
-                                                                .listVoucher[
-                                                                    index]
-                                                                .voucherType ==
-                                                            1
-                                                        ? Text(
-                                                            "${chooseCustomerController.listVoucher[index].products![0].name}, vv...",
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                            ),
-                                                            maxLines: 1,
-                                                          )
-                                                        : Container(),
-                                                    Text(
-                                                      "HSD: ${SahaDateUtils().getDDMMYY(chooseCustomerController.listVoucher[index].endTime!)}",
-                                                      style: TextStyle(
-                                                        fontSize: 11,
-                                                        color: Colors.grey,
-                                                      ),
-                                                    ),
-                                                  ],
                                                 ),
                                               ),
                                             ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                chooseCustomerController
-                                                    .checkChooseVoucher(
-                                                        chooseCustomerController
-                                                                .listChooseVoucher[
-                                                            index],
-                                                        index);
-                                              },
+                                            Positioned(
+                                              height: 8,
+                                              width: 8,
+                                              top: 5,
+                                              left: -4,
                                               child: Container(
-                                                width: 20,
-                                                height: 20,
                                                 decoration: BoxDecoration(
+                                                  color: Colors.white,
                                                   shape: BoxShape.circle,
-                                                  border: Border.all(
-                                                      color: Theme.of(context)
-                                                          .primaryColor),
-                                                  color: chooseCustomerController
-                                                              .listChooseVoucher[
-                                                          index]
-                                                      ? Theme.of(context)
-                                                          .primaryColor
-                                                      : Colors.white,
                                                 ),
-                                                child: chooseCustomerController
-                                                            .listChooseVoucher[
-                                                        index]
-                                                    ? Icon(
-                                                        Icons.check,
-                                                        size: 15.0,
-                                                        color: Theme.of(context)
-                                                            .primaryTextTheme
-                                                            .headline6!
-                                                            .color,
-                                                      )
-                                                    : Container(),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              height: 8,
+                                              width: 8,
+                                              top: 20,
+                                              left: -4,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              height: 8,
+                                              width: 8,
+                                              top: 35,
+                                              left: -4,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              height: 8,
+                                              width: 8,
+                                              top: 50,
+                                              left: -4,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              height: 8,
+                                              width: 8,
+                                              top: 65,
+                                              left: -4,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              height: 8,
+                                              width: 8,
+                                              top: 80,
+                                              left: -4,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  shape: BoxShape.circle,
+                                                ),
                                               ),
                                             ),
                                           ],
-                                        )
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Expanded(
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        chooseCustomerController
+                                                            .checkChooseVoucher(
+                                                                chooseCustomerController
+                                                                        .listChooseVoucher[
+                                                                    index],
+                                                                index);
+                                                      },
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            "${chooseCustomerController.listVoucher[index].name}",
+                                                            style: TextStyle(
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
+                                                            maxLines: 2,
+                                                          ),
+                                                          chooseCustomerController
+                                                                      .listVoucher[
+                                                                          index]
+                                                                      .voucherType ==
+                                                                  1
+                                                              ? Text(
+                                                                  "Giảm giá cho các sản phẩm sau:",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        13,
+                                                                  ),
+                                                                  maxLines: 2,
+                                                                )
+                                                              : Text(
+                                                                  "Giảm giá cho toàn bộ các sản phẩm",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        13,
+                                                                  ),
+                                                                  maxLines: 2,
+                                                                ),
+                                                          chooseCustomerController
+                                                                      .listVoucher[
+                                                                          index]
+                                                                      .voucherType ==
+                                                                  1
+                                                              ? Text(
+                                                                  "${chooseCustomerController.listVoucher[index].products![0].name}, vv...",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        12,
+                                                                  ),
+                                                                  maxLines: 1,
+                                                                )
+                                                              : Container(),
+                                                          Text(
+                                                            "HSD: ${SahaDateUtils().getDDMMYY(chooseCustomerController.listVoucher[index].endTime!)}",
+                                                            style: TextStyle(
+                                                              fontSize: 11,
+                                                              color:
+                                                                  Colors.grey,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      chooseCustomerController
+                                                          .checkChooseVoucher(
+                                                              chooseCustomerController
+                                                                      .listChooseVoucher[
+                                                                  index],
+                                                              index);
+                                                    },
+                                                    child: Container(
+                                                      width: 20,
+                                                      height: 20,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        border: Border.all(
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .primaryColor),
+                                                        color:
+                                                            chooseCustomerController
+                                                                        .listChooseVoucher[
+                                                                    index]
+                                                                ? Theme.of(
+                                                                        context)
+                                                                    .primaryColor
+                                                                : Colors.white,
+                                                      ),
+                                                      child: chooseCustomerController
+                                                                  .listChooseVoucher[
+                                                              index]
+                                                          ? Icon(
+                                                              Icons.check,
+                                                              size: 15.0,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryTextTheme
+                                                                  .headline6!
+                                                                  .color,
+                                                            )
+                                                          : Container(),
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
                                       ],
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 20,
+                                ),
+                                Positioned(
+                                  bottom: 20,
+                                  right: 20,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.to(() => DetailVoucherScreen(
+                                            voucher: chooseCustomerController
+                                                .listVoucher[index],
+                                          ));
+                                    },
+                                    child: Text(
+                                      "Điều kiện",
+                                      style: TextStyle(fontSize: 12),
+                                    ),
                                   ),
-                                ],
-                              ),
+                                )
+                              ],
                             ),
                           ),
-                          Positioned(
-                            bottom: 20,
-                            right: 20,
-                            child: GestureDetector(
-                              onTap: () {
-                                Get.to(() => DetailVoucherScreen(
-                                      voucher: chooseCustomerController
-                                          .listVoucher[index],
-                                    ));
-                              },
-                              child: Text(
-                                "Điều kiện",
-                                style: TextStyle(fontSize: 12),
-                              ),
-                            ),
-                          )
                         ],
                       ),
-                    ),
-                  ],
-                ),
               ),
             ),
           ),

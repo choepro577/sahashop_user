@@ -245,65 +245,49 @@ class _NewAddressCustomerScreenState extends State<NewAddressCustomerScreen> {
                 ],
               ),
             ),
-            Container(
-              height: 12,
-              color: Colors.grey[200],
-            ),
-            InkWell(
-              onTap: () {},
-              child: Container(
-                padding: EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(6),
-                          height: 40,
-                          width: 40,
-                          child: SvgPicture.asset("assets/icons/pin.svg",
-                              color: Theme.of(context).primaryColor),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Chọn vị trí trên bản đồ"),
-                            SizedBox(
-                              height: 3,
-                            ),
-                            Text(
-                              "Giúp đơn hàng được giao nhanh nhất",
-                              style: TextStyle(
-                                color: Colors.grey[700],
-                                fontSize: 12,
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                    Icon(Icons.arrow_forward_ios_rounded),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              height: 12,
-              color: Colors.grey[200],
-            ),
-            Container(
-              padding: EdgeInsets.all(13.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "Xóa Địa chỉ",
-                    style: TextStyle(color: Colors.red),
-                  ),
-                ],
-              ),
-            ),
+            // Container(
+            //   height: 12,
+            //   color: Colors.grey[200],
+            // ),
+            // InkWell(
+            //   onTap: () {},
+            //   child: Container(
+            //     padding: EdgeInsets.all(10),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //         Row(
+            //           children: [
+            //             Container(
+            //               padding: EdgeInsets.all(6),
+            //               height: 40,
+            //               width: 40,
+            //               child: SvgPicture.asset("assets/icons/pin.svg",
+            //                   color: Theme.of(context).primaryColor),
+            //             ),
+            //             Column(
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: [
+            //                 Text("Chọn vị trí trên bản đồ"),
+            //                 SizedBox(
+            //                   height: 3,
+            //                 ),
+            //                 Text(
+            //                   "Giúp đơn hàng được giao nhanh nhất",
+            //                   style: TextStyle(
+            //                     color: Colors.grey[700],
+            //                     fontSize: 12,
+            //                   ),
+            //                 )
+            //               ],
+            //             ),
+            //           ],
+            //         ),
+            //         Icon(Icons.arrow_forward_ios_rounded),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             Container(
               height: 12,
               color: Colors.grey[200],

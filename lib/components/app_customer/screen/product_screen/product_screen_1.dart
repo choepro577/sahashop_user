@@ -628,7 +628,9 @@ class ProductScreen1 extends StatelessWidget {
                               height: 8,
                             ),
                             ReviewProduct(
-                              idProduct: productController.productInput.id,
+                              idProduct: productController.productInput == null
+                                  ? 0
+                                  : productController.productInput!.id,
                               averagedStars:
                                   productController.averagedStars.value,
                               totalReview: productController.totalReview.value,
@@ -824,7 +826,7 @@ class ProductScreen1 extends StatelessWidget {
                         height: 25,
                         width: Get.width / 4 - 1,
                         child: SvgPicture.asset(
-                          "assets/icons/chat.svg",
+                          "assets/icons/chat_empty.svg",
                           color: Theme.of(context)
                               .primaryTextTheme
                               .headline6!

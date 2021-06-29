@@ -44,16 +44,25 @@ class ConfirmScreen extends StatelessWidget {
                             child: InkWell(
                               onTap: () {
                                 Get.to(() => ReceiverAddressCustomerScreen(
-                                      infoAddressCustomers: confirmController
-                                          .infoAddressCustomer.value,
-                                      callback: (InfoAddressCustomer
-                                          infoAddressCustomer) {
-                                        confirmController.infoAddressCustomer
-                                            .value = infoAddressCustomer;
-                                        confirmController.chargeShipmentFee(
-                                            infoAddressCustomer.id);
-                                      },
-                                    ));
+                                          infoAddressCustomers:
+                                              confirmController
+                                                  .infoAddressCustomer.value,
+                                          callback: (InfoAddressCustomer
+                                              infoAddressCustomer) {
+                                            confirmController
+                                                .infoAddressCustomer
+                                                .value = infoAddressCustomer;
+                                          },
+                                        ))!
+                                    .then((value) => {
+                                          confirmController.chargeShipmentFee(
+                                              confirmController
+                                                  .infoAddressCustomer
+                                                  .value!
+                                                  .id),
+                                          // confirmController.infoAddressCustomer
+                                          //     .refresh(),
+                                        });
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(15.0),
@@ -324,92 +333,115 @@ class ConfirmScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  Get.to(() => ShipmentCustomerScreen(
-                        infoAddressCustomer:
-                            confirmController.infoAddressCustomer.value,
-                        callback: (ShipmentMethod shipmentMethod) {
-                          confirmController.shipmentMethodCurrent.value =
-                              shipmentMethod;
-                        },
-                        shipmentMethodCurrent:
-                            confirmController.shipmentMethodCurrent.value,
-                      ));
-                },
-                child: Obx(
-                  () => Container(
-                    padding: const EdgeInsets.all(10.0),
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.green)),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Đơn vị vận chuyển ( Nhấn để chọn )',
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.green),
-                            ),
-                          ],
-                        ),
-                        Divider(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                confirmController.shipmentMethodCurrent.value
-                                            .shipType ==
-                                        0
-                                    ? Text(
-                                        'Vận chuyển nhanh',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                    : Text(
-                                        'Vận chuyển siêu tốc',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+              confirmController.shipmentMethodCurrent.value.fee == 0
+                  ? Container()
+                  : InkWell(
+                      onTap: () {
+                        if (confirmController.infoAddressCustomer.value?.id !=
+                            0) {
+                          Get.to(() => ShipmentCustomerScreen(
+                                infoAddressCustomer:
+                                    confirmController.infoAddressCustomer.value,
+                                callback: (ShipmentMethod shipmentMethod) {
+                                  confirmController.shipmentMethodCurrent
+                                      .value = shipmentMethod;
+                                },
+                                shipmentMethodCurrent: confirmController
+                                    .shipmentMethodCurrent.value,
+                              ));
+                        } else {
+                          Get.to(() => ReceiverAddressCustomerScreen(
+                                    infoAddressCustomers: confirmController
+                                        .infoAddressCustomer.value,
+                                    callback: (InfoAddressCustomer
+                                        infoAddressCustomer) {
+                                      confirmController.infoAddressCustomer
+                                          .value = infoAddressCustomer;
+                                    },
+                                  ))!
+                              .then((value) => {
+                                    confirmController.chargeShipmentFee(
+                                        confirmController
+                                            .infoAddressCustomer.value!.id)
+                                  });
+                        }
+                      },
+                      child: Obx(
+                        () => Container(
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.green)),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Đơn vị vận chuyển ( Nhấn để chọn )',
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.green),
+                                  ),
+                                ],
+                              ),
+                              Divider(
+                                height: 15,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      confirmController.shipmentMethodCurrent
+                                                  .value.shipType ==
+                                              0
+                                          ? Text(
+                                              'Vận chuyển nhanh',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                          : Text(
+                                              'Vận chuyển siêu tốc',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                      SizedBox(
+                                        height: 5,
                                       ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                    "${confirmController.shipmentMethodCurrent.value.name ?? "Chưa chọn đơn vị vẩn chuyển"}"),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "Nhận hàng sau 1 - 2 ngày nội thành",
-                                  style: TextStyle(color: Colors.grey[700]),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                    '${SahaStringUtils().convertToMoney(confirmController.shipmentMethodCurrent.value.fee)}đ'),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(
-                                  Icons.arrow_forward_ios_rounded,
-                                  size: 13,
-                                )
-                              ],
-                            )
-                          ],
-                        )
-                      ],
+                                      Text(
+                                          "${confirmController.shipmentMethodCurrent.value.name ?? "Chưa chọn đơn vị vẩn chuyển"}"),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        "Nhận hàng sau 1 - 2 ngày nội thành",
+                                        style:
+                                            TextStyle(color: Colors.grey[700]),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                          '${SahaStringUtils().convertToMoney(confirmController.shipmentMethodCurrent.value.fee)}đ'),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward_ios_rounded,
+                                        size: 13,
+                                      )
+                                    ],
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
               Container(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(

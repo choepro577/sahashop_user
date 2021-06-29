@@ -30,6 +30,17 @@ class ReceiverAddressCustomerScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Chọn địa chỉ nhận hàng"),
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: () {
+            if (chooseAddressCustomerController
+                .listInfoAddressCustomer.isEmpty) {
+              callback!(InfoAddressCustomer(id: 0));
+            }
+            Get.back();
+          },
+          icon: Icon(Icons.arrow_back_ios),
+        ),
         actions: [
           GestureDetector(
             onTap: () {

@@ -40,8 +40,11 @@ class ConfirmController extends GetxController {
     try {
       var res = await CustomerRepositoryManager.shipmentRepository
           .chargeShipmentFee(idAddressCustomer);
-      shipmentMethodCurrent.value = res!.data!.data![0];
+      shipmentMethodCurrent.value = res!.data!.data!.isEmpty
+          ? ShipmentMethod(fee: 0)
+          : res.data!.data![0];
     } catch (err) {
+      print("sadashgdashdaskldasldas");
       SahaAlert.showError(message: err.toString());
     }
     isLoadingShipmentMethod.value = false;
@@ -52,7 +55,8 @@ class ConfirmController extends GetxController {
     try {
       var res = await CustomerRepositoryManager.addressRepository
           .getAllAddressCustomer();
-      infoAddressCustomer.value = res!.data![0];
+      infoAddressCustomer.value =
+          res!.data!.isEmpty ? InfoAddressCustomer(id: 0) : res.data![0];
       res.data!.forEach((element) {
         if (element.isDefault!) {
           infoAddressCustomer.value = element;

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/const/constant.dart';
@@ -59,8 +60,7 @@ class SelectLogoImage extends StatelessWidget {
                         placeholder: (context, url) => new SahaLoadingWidget(
                           size: 30,
                         ),
-                        errorWidget: (context, url, error) =>
-                            new Icon(Icons.error),
+                        errorWidget: (context, url, error) => SahaEmptyImage(),
                       )
                     : Center(
                         child: Icon(Icons.camera_alt_outlined),

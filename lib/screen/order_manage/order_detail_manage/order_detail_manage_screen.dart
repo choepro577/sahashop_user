@@ -635,7 +635,7 @@ class OrderDetailScreen extends StatelessWidget {
                                   shape: BoxShape.circle,
                                 ),
                                 child: SvgPicture.asset(
-                                  "assets/icons/chat.svg",
+                                  "assets/icons/chat_empty.svg",
                                   color: Theme.of(context).primaryColor,
                                 ),
                               ),

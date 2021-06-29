@@ -25,7 +25,7 @@ class ConfigDetailPaymentScreen extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cai dat thanh toan"),
+        title: Text("Cài đặt thanh toán"),
       ),
       body: SingleChildScrollView(
         child: idPayment == 1

@@ -21,7 +21,7 @@ import 'data_widget_config.dart';
 import 'search_screen/search_screen.dart';
 
 class DataAppCustomerController extends GetxController {
-  Product productCurrent = Product();
+  Product? productCurrent;
   Category? categoryCurrent;
   CategoryPost? categoryPostCurrent;
   Post? postCurrent;
@@ -31,7 +31,7 @@ class DataAppCustomerController extends GetxController {
   Rx<InfoCustomer?> infoCustomer = InfoCustomer().obs;
 
   DataAppCustomerController() {
-    productCurrent = LIST_PRODUCT_EXAMPLE[0];
+    //  productCurrent = LIST_PRODUCT_EXAMPLE[0];
   }
 
   @override
@@ -70,7 +70,8 @@ class DataAppCustomerController extends GetxController {
   void toSearchScreen() {
     Get.to(SearchScreen(
       searchText: "",
-    ))!.then((value) {
+    ))!
+        .then((value) {
       FocusScope.of(Get.context!).requestFocus(FocusNode());
     });
   }
@@ -125,7 +126,8 @@ class DataAppCustomerController extends GetxController {
   Widget getSearchWidget() {
     ConfigController configController = Get.find();
     if (configController.configApp.searchType != null &&
-        configController.configApp.searchType! < LIST_WIDGET_SEARCH_BAR.length) {
+        configController.configApp.searchType! <
+            LIST_WIDGET_SEARCH_BAR.length) {
       return LIST_WIDGET_SEARCH_BAR[configController.configApp.searchType!];
     } else {
       return LIST_WIDGET_SEARCH_BAR[0];
@@ -171,13 +173,15 @@ class DataAppCustomerController extends GetxController {
 
   void increaseItem(index) {
     listQuantityProduct[index] = listQuantityProduct[index] + 1;
-    updateItemCart(listOrder[index].product!.id, listQuantityProduct[index],[]);
+    updateItemCart(
+        listOrder[index].product!.id, listQuantityProduct[index], []);
   }
 
   void decreaseItem(index) {
     if (listQuantityProduct[index] > 1) {
       listQuantityProduct[index] = listQuantityProduct[index] - 1;
-      updateItemCart(listOrder[index].product!.id, listQuantityProduct[index],[]);
+      updateItemCart(
+          listOrder[index].product!.id, listQuantityProduct[index], []);
     } else {
       return;
     }
@@ -274,7 +278,8 @@ class DataAppCustomerController extends GetxController {
     }
   }
 
-  Future<void> updateItemCart(int? idProduct, int quantity, List<DistributesSelected> listDistributes) async {
+  Future<void> updateItemCart(int? idProduct, int quantity,
+      List<DistributesSelected> listDistributes) async {
     List<int> listQuantityProductNew = [];
     try {
       var res = await CustomerRepositoryManager.cartRepository
@@ -298,8 +303,8 @@ class DataAppCustomerController extends GetxController {
   Future<void> addItemCart(int? idProduct) async {
     List<int> listQuantityProductNew = [];
     try {
-      var res =
-          await CustomerRepositoryManager.cartRepository.addItemCart(idProduct,[]);
+      var res = await CustomerRepositoryManager.cartRepository
+          .addItemCart(idProduct, []);
       listOrder(res!.data!.lineItems!);
       listUsedCombo(res.data!.usedCombos!);
       res.data!.lineItems!.forEach((element) {

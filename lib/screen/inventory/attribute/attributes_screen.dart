@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
-import 'package:sahashop_user/components/saha_user/empty/empty_widget.dart';
+import 'package:sahashop_user/components/saha_user/empty_widget/empty_widget.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_full_screen.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/model/attributes.dart';
@@ -56,21 +56,21 @@ class AttributeScreen extends StatelessWidget {
                                       key: ValueKey(e),
                                       elevation: 2,
                                       child: ListTile(
-                                        title: Text(e),
-                                        leading: Icon(
-                                          Icons.list,
-                                          color: Colors.black,
-                                        ),
-                                        trailing: IconButton(
-                                          icon: Icon(
-                                            Icons.delete,
-                                            color: Colors.black54,
+                                          title: Text(e),
+                                          leading: Icon(
+                                            Icons.list,
+                                            color: Colors.black,
                                           ),
-                                          onPressed: () {
-                                            attributeController.removeAttribute(e);
-                                          },
-                                        )
-                                      ),
+                                          trailing: IconButton(
+                                            icon: Icon(
+                                              Icons.delete,
+                                              color: Colors.black54,
+                                            ),
+                                            onPressed: () {
+                                              attributeController
+                                                  .removeAttribute(e);
+                                            },
+                                          )),
                                     ),
                                   )
                                   .toList(),
@@ -102,9 +102,9 @@ class AttributeScreen extends StatelessWidget {
                                       new FlatButton(
                                           child: const Text('Thêm'),
                                           onPressed: () {
-
                                             if (textEditingController
-                                                .text.length == 0) {
+                                                    .text.length ==
+                                                0) {
                                               SahaAlert.showError(
                                                   message: "Không được trống");
                                               return;
@@ -115,13 +115,13 @@ class AttributeScreen extends StatelessWidget {
                                                 .contains(textEditingController
                                                     .text)) {
                                               SahaAlert.showError(
-                                                 message: "Thuộc tính đã tồn tại");
+                                                  message:
+                                                      "Thuộc tính đã tồn tại");
                                             } else {
                                               attributeController.addAttribute(
                                                   textEditingController.text);
                                               Navigator.pop(context);
                                             }
-
                                           })
                                     ],
                                   );

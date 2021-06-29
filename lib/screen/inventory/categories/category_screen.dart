@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/dialog/dialog.dart';
-import 'package:sahashop_user/components/saha_user/empty/empty_widget.dart';
+import 'package:sahashop_user/components/saha_user/empty_widget/empty_widget.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_full_screen.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
@@ -17,7 +17,9 @@ class CategoryScreen extends StatefulWidget {
   final bool isSelect;
   final List<Category>? listCategorySelected;
 
-  const CategoryScreen({Key? key, this.isSelect = false, this.listCategorySelected = const []}) : super(key: key);
+  const CategoryScreen(
+      {Key? key, this.isSelect = false, this.listCategorySelected = const []})
+      : super(key: key);
 
   @override
   _CategoryScreenState createState() => _CategoryScreenState();
@@ -26,11 +28,11 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   CategoryController categoryController = new CategoryController();
 
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    categoryController.listCategorySelected(widget.listCategorySelected!.toList());
+    categoryController
+        .listCategorySelected(widget.listCategorySelected!.toList());
   }
 
   Future<bool> _willPop() async {
@@ -125,7 +127,8 @@ class ItemCategoryWidget extends StatelessWidget {
       this.category,
       this.onTap,
       this.selected,
-      this.isSelect = false, this.categoryController})
+      this.isSelect = false,
+      this.categoryController})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -137,21 +140,21 @@ class ItemCategoryWidget extends StatelessWidget {
             return;
           }
 
-          Get.to(() => AddCategoryScreen(category: category,))!.then((value) {
-            if(value == "added") {
+          Get.to(() => AddCategoryScreen(
+                    category: category,
+                  ))!
+              .then((value) {
+            if (value == "added") {
               categoryController!.getAllCategory();
             }
           });
-
-
         },
         leading: Container(
           height: 50,
           width: 50,
           margin: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(8))
-          ),
+          decoration:
+              BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8))),
           child: CachedNetworkImage(
             height: 50,
             width: 50,
@@ -166,14 +169,15 @@ class ItemCategoryWidget extends StatelessWidget {
         title: Text(category!.name!),
         selected: selected!,
         trailing: !isSelect!
-            ? IconButton(icon: Icon(Icons.delete_rounded),
-            onPressed: () {
-              SahaDialogApp.showDialogYesNo(mess: "Bạn muốn xóa danh mục này?",
-              onOK: () {
-                categoryController!.deleteCategory(category!.id!);
-              }
-              );
-            })
+            ? IconButton(
+                icon: Icon(Icons.delete_rounded),
+                onPressed: () {
+                  SahaDialogApp.showDialogYesNo(
+                      mess: "Bạn muốn xóa danh mục này?",
+                      onOK: () {
+                        categoryController!.deleteCategory(category!.id!);
+                      });
+                })
             : Checkbox(
                 value: selected,
                 onChanged: (bool? value) {

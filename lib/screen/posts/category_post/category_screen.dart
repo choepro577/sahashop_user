@@ -6,7 +6,7 @@ import 'package:sahashop_user/components/app_customer/components/empty/saha_empt
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/dialog/dialog.dart';
-import 'package:sahashop_user/components/saha_user/empty/empty_widget.dart';
+import 'package:sahashop_user/components/saha_user/empty_widget/empty_widget.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_full_screen.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/model/category_post.dart';
@@ -84,10 +84,7 @@ class ItemCategoryPostWidget extends StatelessWidget {
     return Container(
       child: ListTile(
         onTap: () {
-
-          Get.to(AddCategoryPostScreen(
-              category:category
-          ))!.then((value) {
+          Get.to(AddCategoryPostScreen(category: category))!.then((value) {
             if (value == "added") {
               categoryController!.getAllCategoryPost();
             }

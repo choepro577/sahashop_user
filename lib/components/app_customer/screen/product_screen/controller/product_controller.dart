@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/example/product.dart';
 import 'package:sahashop_user/components/app_customer/repository/repository_customer.dart';
 import 'package:sahashop_user/components/app_customer/screen/cart_screen/cart_screen_1.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
@@ -15,7 +16,7 @@ class ProductController extends GetxController {
   var currentImage = 0.obs;
   var isSeeMore = false.obs;
   var animateAddCart = false.obs;
-  var productInput = Product();
+  Product? productInput;
   var productShow = Product().obs;
   var listProductsDiscount = RxList<Product>();
   var isLoadingProduct = false.obs;
@@ -33,15 +34,19 @@ class ProductController extends GetxController {
 
   ProductController() {
     productInput = dataAppCustomerController.productCurrent;
-    productShow.value = dataAppCustomerController.productCurrent;
-    getDetailProduct();
-    getComboCustomer();
-    getReviewProduct();
-    if (dataAppCustomerController.homeData?.discountProducts?.list != null) {
-      dataAppCustomerController.homeData!.discountProducts!.list!
-          .forEach((listDiscount) {
-        listProductsDiscount.addAll(listDiscount.products!);
-      });
+    if (productInput == null) {
+      productShow.value = LIST_PRODUCT_EXAMPLE[0];
+    } else {
+      productShow.value = dataAppCustomerController.productCurrent!;
+      getDetailProduct();
+      getComboCustomer();
+      getReviewProduct();
+      if (dataAppCustomerController.homeData?.discountProducts?.list != null) {
+        dataAppCustomerController.homeData!.discountProducts!.list!
+            .forEach((listDiscount) {
+          listProductsDiscount.addAll(listDiscount.products!);
+        });
+      }
     }
   }
 
@@ -49,8 +54,8 @@ class ProductController extends GetxController {
     isLoadingProduct.value = true;
     try {
       var res = await CustomerRepositoryManager.productCustomerRepository
-          .getDetailProduct(productInput.id);
-      productShow.value = res!.data ?? productInput;
+          .getDetailProduct(productInput!.id ?? 0);
+      productShow.value = res!.data ?? productInput!;
     } catch (err) {
       SahaAlert.showError(message: err.toString());
     }
@@ -60,7 +65,7 @@ class ProductController extends GetxController {
   Future<void> favoriteProduct(bool isFavorite) async {
     try {
       var res = await CustomerRepositoryManager.favoriteRepository
-          .favoriteProduct(productInput.id!, isFavorite);
+          .favoriteProduct(productInput!.id ?? 0, isFavorite);
       if (isFavorite) {
         productShow.value.isFavorite = true;
         productShow.refresh();
@@ -100,7 +105,7 @@ class ProductController extends GetxController {
     try {
       var data = await CustomerRepositoryManager.reviewCustomerRepository
           .getReviewProduct(
-        productInput.id!,
+        productInput!.id ?? 0,
         "",
         "",
         null,

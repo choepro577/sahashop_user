@@ -157,11 +157,18 @@ class ConfigStoreAddressScreen extends StatelessWidget {
               Text(configStoreAddressController.listShipmentStore[index].name!),
               Obx(() => CustomSwitch(
                     value: configStoreAddressController
-                        .listShipmentStore[index].shipperConfig!.use,
+                                .listShipmentStore[index].shipperConfig ==
+                            null
+                        ? false
+                        : configStoreAddressController
+                            .listShipmentStore[index].shipperConfig!.use,
                     onChanged: (bool val) {
                       if (configStoreAddressController
-                              .listShipmentStore[index].shipperConfig!.use ==
-                          true) {
+                                  .listShipmentStore[index].shipperConfig !=
+                              null &&
+                          configStoreAddressController.listShipmentStore[index]
+                                  .shipperConfig!.use ==
+                              true) {
                         configStoreAddressController.addTokenShipment(
                             configStoreAddressController
                                 .listShipmentStore[index].id,

@@ -22,7 +22,9 @@ class Shipment {
   factory Shipment.fromJson(Map<String, dynamic> json) => Shipment(
         id: json["id"],
         name: json["name"],
-        shipperConfig: ShipperConfig.fromJson(json["shipper_config"]),
+        shipperConfig: json["shipper_config"] == null
+            ? null
+            : ShipperConfig.fromJson(json["shipper_config"]),
       );
 
   Map<String, dynamic> toJson() => {

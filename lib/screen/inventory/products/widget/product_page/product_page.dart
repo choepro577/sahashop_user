@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sahashop_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/components/saha_user/dialog/dialog.dart';
-import 'package:sahashop_user/components/saha_user/empty/empty_widget.dart';
+import 'package:sahashop_user/components/saha_user/empty_widget/empty_widget.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_full_screen.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/const/constant.dart';
@@ -24,16 +24,14 @@ class ProductPage extends StatefulWidget {
   final Function? updateTotal;
   final Function? onReturnController;
 
-  ProductPageController productController
-  = new ProductPageController();
+  ProductPageController productController = new ProductPageController();
 
-   ProductPage({Key? key, this.typePage, this.updateTotal, this.onReturnController})
+  ProductPage(
+      {Key? key, this.typePage, this.updateTotal, this.onReturnController})
       : super(key: key) {
-     onReturnController!(
-         productController..typePage = typePage
-             ..updateTotal = updateTotal
-
-     );
+    onReturnController!(productController
+      ..typePage = typePage
+      ..updateTotal = updateTotal);
   }
 
   @override
@@ -56,7 +54,7 @@ class _ProductPageState extends State<ProductPage>
     // productController.updateTotal = widget.updateTotal;
     // productController.typePage = widget.typePage;
 
-   // widget.onReturnController!(productController);
+    // widget.onReturnController!(productController);
     productController.getAllProduct();
   }
 
