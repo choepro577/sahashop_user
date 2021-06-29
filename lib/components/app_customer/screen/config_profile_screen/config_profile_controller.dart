@@ -36,7 +36,6 @@ class ConfigProfileController extends GetxController {
         infoCustomer!.email ?? "contactsahatech@gmail.com";
     passwordEditingController.value.text = infoCustomer!.email ?? "";
     linkAvatar.value = infoCustomer!.avatarImage ?? "";
-    print(linkAvatar.value);
     onChangeSexPicker(infoCustomer!.sex ?? 0);
     birthDate.value =
         DateTime.parse(infoCustomer!.dateOfBirth ?? "1972-05-14T16:00:00.000");
