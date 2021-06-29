@@ -88,8 +88,8 @@ class ConfigController extends GetxController {
               ? data.fontFamily
               : FONT_DATA.keys.toList()[0];
       configApp.searchType = data.searchType ?? 0;
-      if (configApp.searchType! > LIST_WIDGET_SEARCH_BAR.length) {
-        configApp.searchType = LIST_WIDGET_SEARCH_BAR.length - 1;
+      if (configApp.searchType! >  RepositoryWidgetCustomer().LIST_WIDGET_SEARCH_BAR.length) {
+        configApp.searchType =  RepositoryWidgetCustomer().LIST_WIDGET_SEARCH_BAR.length - 1;
       }
       configApp.carouselType = data.carouselType ?? 0;
       configApp.homePageType = data.homePageType ?? 0;

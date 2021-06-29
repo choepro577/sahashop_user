@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:sahashop_user/components/app_customer/const/env.dart';
 import 'package:sahashop_user/utils/user_info.dart';
 
 class PayScreen extends StatelessWidget {
@@ -16,7 +17,7 @@ class PayScreen extends StatelessWidget {
       ),
       body: WebviewScaffold(
         url:
-            "https:sahashop.net/api/customer/${UserInfo().getCurrentStoreCode()}/purchase/pay/$orderCode",
+            "$DOMAIN_API_CUSTOMER/api/customer/${UserInfo().getCurrentStoreCode()}/purchase/pay/$orderCode",
       ),
     );
   }

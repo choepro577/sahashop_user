@@ -13,7 +13,7 @@ class ListCategoryConfig extends StatelessWidget {
       children: [
         CarouselSelect(
           height: 150,
-          listWidget: LIST_WIDGET_LIST_CATEGORY,
+          listWidget:  RepositoryWidgetCustomer().LIST_WIDGET_LIST_CATEGORY,
           indexSelected: controller.configApp.categoryPageType,
           initPage: controller.configApp.categoryPageType,
           onSelected: (index) {

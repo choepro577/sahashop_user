@@ -13,7 +13,7 @@ class SearchBarConfig extends StatelessWidget {
       children: [
         CarouselSelect(
           height: 100,
-          listWidget: LIST_WIDGET_SEARCH_BAR,
+          listWidget:  RepositoryWidgetCustomer().LIST_WIDGET_SEARCH_BAR,
           indexSelected: configController.configApp.searchType,
           initPage: configController.configApp.searchType,
           onSelected: (index) {

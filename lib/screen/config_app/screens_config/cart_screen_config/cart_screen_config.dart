@@ -14,7 +14,7 @@ class CartSceenConfig extends StatelessWidget {
       children: [
         CarouselSelect(
           height: 400,
-          listWidget: LIST_WIDGET_CART_SCREEN,
+          listWidget:  RepositoryWidgetCustomer().LIST_WIDGET_CART_SCREEN,
           indexSelected: controller.configApp.cartPageType,
           initPage: controller.configApp.cartPageType,
           onChange: (index) {

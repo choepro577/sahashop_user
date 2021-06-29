@@ -14,18 +14,18 @@ class SahaLoadingContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Colors.grey[200]!,
+      baseColor: Colors.grey[200]!.withOpacity(gloss!),
       highlightColor: Colors.white,
       enabled: true,
       child: Container(
         height: height,
         width: width,
-        alignment: Alignment.centerLeft,
+        alignment: Alignment.centerRight,
         child: Column(
           children: [],
         ),
         decoration: BoxDecoration(
-            color: Colors.grey[600]!.withOpacity(gloss!),
+            color: Colors.grey[200]!.withOpacity(gloss!),
             borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? 3))),
       ),
     );

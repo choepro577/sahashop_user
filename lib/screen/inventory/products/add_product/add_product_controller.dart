@@ -195,6 +195,10 @@ class AddProductController extends GetxController {
 
       productRequest.price = double.tryParse(textEditingControllerPrice.text);
       productRequest.name = textEditingControllerName.text;
+      if (textEditingControllerQuantityInStock.text.length > 0) {
+        productRequest.quantityInStock =
+            int.tryParse(textEditingControllerQuantityInStock.text);
+      }
 
       if (isEdit.value == false) {
         var data =

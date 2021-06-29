@@ -89,11 +89,11 @@ class DataAppCustomerController extends GetxController {
     ConfigController configController = Get.find();
     categoryCurrent = category;
     if (configController.configApp.categoryPageType! <
-        LIST_WIDGET_CATEGORY_PRODUCT.length) {
-      Get.to(LIST_WIDGET_CATEGORY_PRODUCT[
+        RepositoryWidgetCustomer().LIST_WIDGET_CATEGORY_PRODUCT.length) {
+      Get.to( RepositoryWidgetCustomer().LIST_WIDGET_CATEGORY_PRODUCT[
           configController.configApp.categoryPageType!]);
     } else {
-      Get.to(LIST_WIDGET_CATEGORY_PRODUCT[0]);
+      Get.to( RepositoryWidgetCustomer().LIST_WIDGET_CATEGORY_PRODUCT[0]);
     }
   }
 
@@ -102,11 +102,11 @@ class DataAppCustomerController extends GetxController {
     productCurrent = product;
 
     if (configController.configApp.productPageType! <
-        LIST_WIDGET_PRODUCT_SCREEN.length) {
-      Get.to(() => LIST_WIDGET_PRODUCT_SCREEN[
+        RepositoryWidgetCustomer().LIST_WIDGET_PRODUCT_SCREEN.length) {
+      Get.to(() =>  RepositoryWidgetCustomer().LIST_WIDGET_PRODUCT_SCREEN[
           configController.configApp.productPageType!]);
     } else {
-      Get.to(() => LIST_WIDGET_PRODUCT_SCREEN[0]);
+      Get.to(() =>  RepositoryWidgetCustomer().LIST_WIDGET_PRODUCT_SCREEN[0]);
     }
   }
 
@@ -114,21 +114,21 @@ class DataAppCustomerController extends GetxController {
     ConfigController configController = Get.find();
     if (configController.configApp.homePageType != null &&
         configController.configApp.homePageType! <
-            LIST_WIDGET_HOME_SCREEN.length) {
+            RepositoryWidgetCustomer().LIST_WIDGET_HOME_SCREEN.length) {
       return Get.to(() =>
-          LIST_WIDGET_HOME_SCREEN[configController.configApp.homePageType!]);
+      RepositoryWidgetCustomer().LIST_WIDGET_HOME_SCREEN[configController.configApp.homePageType!]);
     } else {
-      return Get.to(() => LIST_WIDGET_HOME_SCREEN[0]);
+      return Get.to(() =>  RepositoryWidgetCustomer().LIST_WIDGET_HOME_SCREEN[0]);
     }
   }
 
   Widget getSearchWidget() {
     ConfigController configController = Get.find();
     if (configController.configApp.searchType != null &&
-        configController.configApp.searchType! < LIST_WIDGET_SEARCH_BAR.length) {
-      return LIST_WIDGET_SEARCH_BAR[configController.configApp.searchType!];
+        configController.configApp.searchType! <  RepositoryWidgetCustomer().LIST_WIDGET_SEARCH_BAR.length) {
+      return  RepositoryWidgetCustomer().LIST_WIDGET_SEARCH_BAR[configController.configApp.searchType!];
     } else {
-      return LIST_WIDGET_SEARCH_BAR[0];
+      return  RepositoryWidgetCustomer().LIST_WIDGET_SEARCH_BAR[0];
     }
   }
 
@@ -136,10 +136,10 @@ class DataAppCustomerController extends GetxController {
     ConfigController configController = Get.find();
 
     if (configController.configApp.carouselType != null &&
-        configController.configApp.carouselType! < LIST_WIDGET_BANNER.length) {
-      return LIST_WIDGET_BANNER[configController.configApp.carouselType!];
+        configController.configApp.carouselType! <  RepositoryWidgetCustomer().LIST_WIDGET_BANNER.length) {
+      return  RepositoryWidgetCustomer().LIST_WIDGET_BANNER[configController.configApp.carouselType!];
     } else {
-      return LIST_WIDGET_BANNER[0];
+      return  RepositoryWidgetCustomer().LIST_WIDGET_BANNER[0];
     }
   }
 

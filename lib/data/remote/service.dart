@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:sahashop_user/components/app_customer/const/env.dart';
 import 'package:sahashop_user/components/app_customer/remote/response-request/orders/order_response.dart';
 import 'package:sahashop_user/data/remote/response-request/address/add_token_shipment_response.dart';
 import 'package:sahashop_user/data/remote/response-request/address/address_respone.dart';
@@ -57,7 +58,7 @@ import 'response-request/store/type_store_respones.dart';
 
 part 'service.g.dart';
 
-@RestApi(baseUrl: "http://ashop.sahavi.vn/api/")
+@RestApi(baseUrl: "$DOMAIN_API_CUSTOMER/api/")
 abstract class SahaService {
   /// Retrofit factory
   factory SahaService(Dio dio) => _SahaService(dio);

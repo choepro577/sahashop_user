@@ -64,7 +64,7 @@ class SelectCarouselImagesController extends GetxController {
   Future<String?> uploadImage(File file) async {
     try {
       var fileUpImageCompress =
-          await ImageUtils.getImageCompress(file, quality: 20, minWidth: 512);
+          await ImageUtils.getImageCompress(file, quality: 50);
 
       var link = await RepositoryManager.imageRepository
           .uploadImage(fileUpImageCompress);

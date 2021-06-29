@@ -19,19 +19,19 @@ class NavigationController extends GetxController {
     configController = Get.find();
     if (configController.configApp.homePageType != null &&
         configController.configApp.homePageType! <
-            LIST_WIDGET_HOME_SCREEN.length) {
+            RepositoryWidgetCustomer().LIST_WIDGET_HOME_SCREEN.length) {
 
       navigationHome = [
         CartScreen1(key: PageStorageKey<String>('str0'),),
         CategoryPostStyle1(key: PageStorageKey<String>('str1'),),
         Container(key: PageStorageKey<String>('str2'),
-            child: LIST_WIDGET_HOME_SCREEN[configController.configApp.homePageType!]),
+            child:  RepositoryWidgetCustomer().LIST_WIDGET_HOME_SCREEN[configController.configApp.homePageType!]),
         OrderManageScreen(key: PageStorageKey<String>('str3'),),
         ProfileScreen(key: PageStorageKey<String>('str4'),),
       ];
 
     } else {
-      navigationHome = [LIST_WIDGET_HOME_SCREEN[0]];
+      navigationHome = [ RepositoryWidgetCustomer().LIST_WIDGET_HOME_SCREEN[0]];
     }
   }
 }

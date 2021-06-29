@@ -15,32 +15,48 @@ class SearchTextFiledScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: SahaTextFieldSearch(
-          onSubmitted: (va) {
-            if (onSubmit != null) onSubmit!(va, null);
-            searchTextFiledController.addSearchHistory(va);
-            Get.back();
-          },
-          onClose: () {},
-        ),
-      ),
-      body: Column(
-        children: [
-          Obx(
-            () => searchTextFiledController.histories.length == 0
-                ? Container()
-                : Column(
-                    children: searchTextFiledController.histories
-                        .map((element) => ListTile(
-                              title: Text(element.text ?? ""),
-                            ))
-                        .toList(),
-                  ),
+    return WillPopScope(
+      onWillPop: () async {
+        if (onSubmit != null) onSubmit!("", null);
+        Get.back();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: SahaTextFieldSearch(
+
+            onSubmitted: (va) {
+              if (onSubmit != null) onSubmit!(va, null);
+              searchTextFiledController.addSearchHistory(va);
+              Get.back();
+            },
+            onClose: () {},
           ),
-          Expanded(child: Text("dtdf"))
-        ],
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Obx(
+                () => searchTextFiledController.histories.length == 0
+                    ? Container()
+                    : Column(
+                        children: searchTextFiledController.histories
+                            .map((element) => ListTile(
+                                  onTap: () {
+                                    if (onSubmit != null)
+                                      onSubmit!(element.text ?? "", null);
+                                    searchTextFiledController
+                                        .addSearchHistory(element.text ?? "");
+                                    Get.back();
+                                  },
+                                  title: Text(element.text ?? ""),
+                                ))
+                            .toList(),
+                      ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
