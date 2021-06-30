@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/repository/repository_customer.dart';
 import 'package:sahashop_user/components/app_customer/screen/order_history/order_history_controller.dart';
+import 'package:sahashop_user/components/app_customer/utils/customer_info.dart';
 import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/model/order.dart';
@@ -12,7 +14,7 @@ class ProfileController extends GetxController {
   var evaluateAmount = 0.obs;
 
   ProfileController() {
-    //  countOrder();
+    //
   }
 
   Future<void> countOrder() async {

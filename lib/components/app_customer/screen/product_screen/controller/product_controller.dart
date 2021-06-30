@@ -27,7 +27,7 @@ class ProductController extends GetxController {
   var averagedStars = 0.0.obs;
   var totalReview = 0.obs;
   var listReview = RxList<Review>();
-  var listImageReviewOfCustomer = RxList<List<String>>();
+  var listImageReviewOfCustomer = RxList<List<dynamic>>([]);
   var listAllImageReview = RxList<String>();
 
   DataAppCustomerController dataAppCustomerController = Get.find();
@@ -115,9 +115,9 @@ class ProductController extends GetxController {
       listReview(data.data!.data);
       listReview.forEach((review) {
         try {
-          listImageReviewOfCustomer.addAll(jsonDecode(review.images!));
+          listImageReviewOfCustomer.add(jsonDecode(review.images!));
         } catch (err) {
-          listImageReviewOfCustomer.addAll([]);
+          listImageReviewOfCustomer.add([]);
         }
       });
       listImageReviewOfCustomer.forEach((listImage) {
@@ -151,13 +151,23 @@ class ProductController extends GetxController {
     dataAppCustomerController.addItemCart(productShow.value.id);
   }
 
-  void addManyItemOrUpdate(
+  Future<void> addManyItemOrUpdate(
       {int? quantity,
       bool? buyNow,
       List<DistributesSelected>? distributesSelected,
-      int? productId}) {
-    dataAppCustomerController.updateItemCart(
-        productId, quantity!, distributesSelected!.toList());
+      int? productId}) async {
+    var index = dataAppCustomerController.listOrder
+        .indexWhere((element) => element.product!.id == productId);
+
+    if (index != -1) {
+      await dataAppCustomerController.updateItemCart(
+          productId,
+          dataAppCustomerController.listQuantityProduct[index] + quantity!,
+          distributesSelected!.toList());
+    } else {
+      await dataAppCustomerController.updateItemCart(
+          productId, quantity!, distributesSelected!.toList());
+    }
 
     Get.back();
     if (buyNow == true) {

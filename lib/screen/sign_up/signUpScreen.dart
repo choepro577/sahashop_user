@@ -23,7 +23,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController textEditingControllerPhoneShop = new TextEditingController();
+  TextEditingController textEditingControllerPhoneShop =
+      new TextEditingController();
   TextEditingController textEditingControllerPass = new TextEditingController();
 
   LoginController loginController = LoginController();
@@ -37,12 +38,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.didChangeDependencies();
     sub ??= signUpController.stateSignUp.listen((state) {
       if (state != "success") {
-        SahaDialogApp.showDialogError(context: context,errorMess: state);
+        SahaDialogApp.showDialogError(context: context, errorMess: state);
         EasyLoading.dismiss();
       }
 
       if (state == "success") {
-        loginController.onLogin(shopPhone: textEditingControllerPhoneShop.text, password: textEditingControllerPass.text);
+        loginController.onLogin(
+            shopPhone: textEditingControllerPhoneShop.text,
+            password: textEditingControllerPass.text);
         Get.to(SetUpInfoShop());
         EasyLoading.dismiss();
       }
@@ -56,7 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           color: Colors.grey,
-          onPressed: (){
+          onPressed: () {
             Get.back();
           },
         ),
@@ -137,8 +140,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     EasyLoading.show();
                     KeyboardUtil.hideKeyboard(context);
                     signUpController.onSignUp(
-                        shopPhone: textEditingControllerPhoneShop.text,
-                        pass: textEditingControllerPass.text,
+                      shopPhone: textEditingControllerPhoneShop.text,
+                      pass: textEditingControllerPass.text,
                     );
                     phoneShop = textEditingControllerPhoneShop.text;
                   }

@@ -13,11 +13,11 @@ import 'package:sahashop_user/model/category_post.dart';
 
 import 'controller/category_post_controller.dart';
 
-
 class CategoryPostStyle1 extends StatelessWidget {
   final ConfigController configController = Get.find();
   final DataAppCustomerController dataAppCustomerController = Get.find();
-  final CategoryPostController categoryController = CategoryPostController()..getAllCategoryPost();
+  final CategoryPostController categoryController = CategoryPostController()
+    ..getAllCategoryPost();
 
   CategoryPostStyle1({Key? key}) : super(key: key);
 
@@ -26,7 +26,6 @@ class CategoryPostStyle1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     ////  ////  ////  ////  ////  ////
     return Scaffold(
       backgroundColor: Colors.grey[300],
@@ -37,7 +36,7 @@ class CategoryPostStyle1 extends StatelessWidget {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryTextTheme.headline1!.color,
+                  color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: TextField(
@@ -46,7 +45,7 @@ class CategoryPostStyle1 extends StatelessWidget {
                       )),
                   decoration: InputDecoration(
                       contentPadding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 9),
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
                       enabledBorder: InputBorder.none,
@@ -79,15 +78,15 @@ class CategoryPostStyle1 extends StatelessWidget {
               child: categoryController.isLoadingCategoryPost.value
                   ? SahaLoadingWidget()
                   : Container(
-                width: Get.width,
-                child: ListView.builder(
-                    itemCount: categoryController.categories.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return buildItem(
-                          category: categoryController.categories[index]);
-                    }),
-              ),
+                      width: Get.width,
+                      child: ListView.builder(
+                          itemCount: categoryController.categories.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return buildItem(
+                                category: categoryController.categories[index]);
+                          }),
+                    ),
             ),
             Expanded(child: buildList()),
           ],
@@ -121,18 +120,18 @@ class CategoryPostStyle1 extends StatelessWidget {
   }
 
   Widget buildItem({CategoryPost? category}) {
-    return Obx(
-        () => Container(
+    return Obx(() => Container(
           height: 25,
           margin: EdgeInsets.all(10),
-          padding: EdgeInsets.only(left: 13,right: 13,bottom: 8, top: 8),
+          padding: EdgeInsets.only(left: 13, right: 13, bottom: 8, top: 8),
           decoration: BoxDecoration(
-            border: Border.all(color:  categoryController.categoryCurrent.value.id == category!.id
-                ? Colors.black
-                : Colors.grey),
-            borderRadius: BorderRadius.all(Radius.circular(45)),
-            color: Colors.white
-          ),
+              border: Border.all(
+                  color: categoryController.categoryCurrent.value.id ==
+                          category!.id
+                      ? Colors.black
+                      : Colors.grey),
+              borderRadius: BorderRadius.all(Radius.circular(45)),
+              color: Colors.white),
           child: InkWell(
             onTap: () {
               categoryController.setCategoryPostCurrent(category);
@@ -143,19 +142,22 @@ class CategoryPostStyle1 extends StatelessWidget {
                 SizedBox(
                   height: 5,
                 ),
-                category.imageUrl == null || category.imageUrl == "" ? Container()  :    SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(45)),
-                    child: CachedNetworkImage(
-                      imageUrl: category.imageUrl ?? "",
-                      placeholder: (context, url) => CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Container(),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+                category.imageUrl == null || category.imageUrl == ""
+                    ? Container()
+                    : SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(45)),
+                          child: CachedNetworkImage(
+                            imageUrl: category.imageUrl ?? "",
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) => Container(),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
                 SizedBox(
                   height: 5,
                 ),
@@ -164,12 +166,14 @@ class CategoryPostStyle1 extends StatelessWidget {
                   maxLines: 3,
                   style: TextStyle(
                       fontSize: 13,
-                      fontWeight: categoryController.categoryCurrent.value.id == category.id
+                      fontWeight: categoryController.categoryCurrent.value.id ==
+                              category.id
                           ? FontWeight.bold
                           : FontWeight.normal,
-                      color: categoryController.categoryCurrent.value == category
-                          ? Theme.of(Get.context!).primaryColor
-                          : Colors.black54),
+                      color:
+                          categoryController.categoryCurrent.value == category
+                              ? Theme.of(Get.context!).primaryColor
+                              : Colors.black54),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(
@@ -178,7 +182,6 @@ class CategoryPostStyle1 extends StatelessWidget {
               ],
             ),
           ),
-        )
-    );
+        ));
   }
 }

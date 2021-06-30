@@ -35,8 +35,7 @@ class ProductItemWidget extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                   color: Colors.white,
-                  // border: Border.all(color: Colors.grey[400]!)
-              ),
+                  border: Border.all(color: Colors.grey[100]!)),
               child: Stack(
                 children: [
                   InkWell(
@@ -157,7 +156,8 @@ class ProductItemWidget extends StatelessWidget {
                                                 ? "${SahaStringUtils().convertToMoney(product.price)}đ"
                                                 : "${SahaStringUtils().convertToMoney(product.productDiscount!.discountPrice)}đ",
                                             style: TextStyle(
-                                                color: SahaColorUtils().colorTextWithPrimaryColor(),
+                                                color: SahaColorUtils()
+                                                    .colorTextWithPrimaryColor(),
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 14),
                                             maxLines: 1,

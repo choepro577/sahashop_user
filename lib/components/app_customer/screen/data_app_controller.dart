@@ -116,10 +116,11 @@ class DataAppCustomerController extends GetxController {
     if (configController.configApp.homePageType != null &&
         configController.configApp.homePageType! <
             RepositoryWidgetCustomer().LIST_WIDGET_HOME_SCREEN.length) {
-      return Get.to(() =>
-      RepositoryWidgetCustomer().LIST_WIDGET_HOME_SCREEN[configController.configApp.homePageType!]);
+      return Get.to(() => RepositoryWidgetCustomer()
+          .LIST_WIDGET_HOME_SCREEN[configController.configApp.homePageType!]);
     } else {
-      return Get.to(() => RepositoryWidgetCustomer().LIST_WIDGET_HOME_SCREEN[0]);
+      return Get.to(
+          () => RepositoryWidgetCustomer().LIST_WIDGET_HOME_SCREEN[0]);
     }
   }
 
@@ -128,7 +129,8 @@ class DataAppCustomerController extends GetxController {
     if (configController.configApp.searchType != null &&
         configController.configApp.searchType! <
             RepositoryWidgetCustomer().LIST_WIDGET_SEARCH_BAR.length) {
-      return RepositoryWidgetCustomer().LIST_WIDGET_SEARCH_BAR[configController.configApp.searchType!];
+      return RepositoryWidgetCustomer()
+          .LIST_WIDGET_SEARCH_BAR[configController.configApp.searchType!];
     } else {
       return RepositoryWidgetCustomer().LIST_WIDGET_SEARCH_BAR[0];
     }
@@ -138,8 +140,10 @@ class DataAppCustomerController extends GetxController {
     ConfigController configController = Get.find();
 
     if (configController.configApp.carouselType != null &&
-        configController.configApp.carouselType! < RepositoryWidgetCustomer().LIST_WIDGET_BANNER.length) {
-      return RepositoryWidgetCustomer().LIST_WIDGET_BANNER[configController.configApp.carouselType!];
+        configController.configApp.carouselType! <
+            RepositoryWidgetCustomer().LIST_WIDGET_BANNER.length) {
+      return RepositoryWidgetCustomer()
+          .LIST_WIDGET_BANNER[configController.configApp.carouselType!];
     } else {
       return RepositoryWidgetCustomer().LIST_WIDGET_BANNER[0];
     }
@@ -246,6 +250,7 @@ class DataAppCustomerController extends GetxController {
       });
       comboDiscountAmount.value = res.data!.comboDiscountAmount!;
       listQuantityProduct(listQuantityProductNew as List<int>);
+      print(listQuantityProductNew);
       totalMoneyAfterDiscount.value = res.data!.totalAfterDiscount!;
       totalBeforeDiscount.value = res.data!.totalBeforeDiscount!;
       productDiscountAmount.value = res.data!.productDiscountAmount!;

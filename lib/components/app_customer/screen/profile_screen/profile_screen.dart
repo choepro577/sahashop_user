@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/app_customer/screen/address_screen/all_address_customer/all_address_customer_screen.dart';
+import 'package:sahashop_user/components/app_customer/screen/cart_screen/cart_screen_1.dart';
 import 'package:sahashop_user/components/app_customer/screen/choose_voucher/choose_voucher_customer_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/config_profile_screen/config_profile_screen.dart';
 import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
@@ -46,7 +47,7 @@ class ProfileScreen extends StatelessWidget {
                         dataAppCustomerController.isLogin.value == true
                             ? IconButton(
                                 icon: Icon(
-                                  Icons.settings,
+                                  Icons.settings_outlined,
                                   color: Theme.of(context)
                                       .primaryTextTheme
                                       .bodyText1!
@@ -54,18 +55,57 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                                 onPressed: () {})
                             : Container(),
+                        InkWell(
+                          onTap: () {
+                            Get.to(() => CartScreen1());
+                          },
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              IconButton(
+                                  icon: Icon(
+                                    Icons.shopping_cart_outlined,
+                                    color: Theme.of(context)
+                                        .primaryTextTheme
+                                        .bodyText1!
+                                        .color,
+                                  ),
+                                  onPressed: () {
+                                    Get.to(() => CartScreen1());
+                                  }),
+                              if (dataAppCustomerController.listOrder.length !=
+                                  0)
+                                Positioned(
+                                  top: 5,
+                                  right: 2,
+                                  child: Container(
+                                    height: 16,
+                                    width: 16,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFFF4848),
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          width: 1.5, color: Colors.white),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "${dataAppCustomerController.listOrder.length}",
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          height: 1,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                            ],
+                          ),
+                        ),
                         IconButton(
                             icon: Icon(
-                              Icons.shopping_cart,
-                              color: Theme.of(context)
-                                  .primaryTextTheme
-                                  .bodyText1!
-                                  .color,
-                            ),
-                            onPressed: () {}),
-                        IconButton(
-                            icon: Icon(
-                              Icons.chat,
+                              Icons.chat_outlined,
                               color: Theme.of(context)
                                   .primaryTextTheme
                                   .bodyText1!
@@ -83,13 +123,22 @@ class ProfileScreen extends StatelessWidget {
                               InkWell(
                                 onTap: () {
                                   Get.to(() => ConfigProfileScreen(
-                                        infoCustomer: dataAppCustomerController
-                                            .infoCustomer.value,
-                                      ));
+                                            infoCustomer:
+                                                dataAppCustomerController
+                                                    .infoCustomer.value,
+                                          ))!
+                                      .then((value) => {
+                                            dataAppCustomerController
+                                                .getInfoCustomer()
+                                          });
                                 },
                                 child: Container(
                                   height: 70,
                                   width: 70,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border:
+                                          Border.all(color: Colors.grey[200]!)),
                                   child: ClipRRect(
                                     child: Stack(
                                       alignment: AlignmentDirectional.center,
@@ -104,10 +153,7 @@ class ProfileScreen extends StatelessWidget {
                                                   .avatarImage ??
                                               "",
                                           errorWidget: (context, url, error) =>
-                                              Image.asset(
-                                            "assets/saha_loading.png",
-                                            fit: BoxFit.cover,
-                                          ),
+                                              SahaEmptyImage(),
                                         ),
                                         dataAppCustomerController.infoCustomer
                                                     .value!.avatarImage !=
@@ -117,16 +163,14 @@ class ProfileScreen extends StatelessWidget {
                                                 child: Container(
                                                   height: 20,
                                                   width: 100,
-                                                  color: Colors.black45,
+                                                  color: Colors.black45
+                                                      .withOpacity(0.3),
                                                   child: Center(
                                                     child: Text(
                                                       "Sửa",
                                                       style: TextStyle(
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .primaryTextTheme
-                                                              .headline6!
-                                                              .color),
+                                                          color: Colors.white,
+                                                          fontSize: 12),
                                                     ),
                                                   ),
                                                 ),
@@ -793,44 +837,6 @@ class ProfileScreen extends StatelessWidget {
                       )
                     ],
                   ),
-                ),
-              ),
-              Divider(
-                height: 1,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: 25,
-                          width: 25,
-                          child: SvgPicture.asset(
-                            "assets/icons/star.svg",
-                            color: Colors.greenAccent,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          "Đánh giá của tôi",
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      height: 13,
-                      width: 13,
-                      child: SvgPicture.asset(
-                        "assets/icons/right_arrow.svg",
-                        color: Colors.black,
-                      ),
-                    )
-                  ],
                 ),
               ),
               Divider(

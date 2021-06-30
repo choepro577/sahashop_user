@@ -1,14 +1,11 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/app_customer/screen/cart_screen/cart_screen_1.dart';
-import 'package:sahashop_user/components/app_customer/screen/category_post_screen/category_post_screen_1.dart';
+import 'package:sahashop_user/components/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/components/app_customer/screen/navigation_scrren/navigation_controller.dart';
-import 'package:sahashop_user/components/app_customer/screen/profile_screen/profile_screen.dart';
-import 'package:sahashop_user/screen/order_manage/order_manage_screen.dart';
 
 import '../../../../saha_data_controller.dart';
-import '../data_widget_config.dart';
 
 class NavigationScreen extends StatefulWidget {
   @override
@@ -17,7 +14,7 @@ class NavigationScreen extends StatefulWidget {
 
 class _NavigationScreenState extends State<NavigationScreen> {
   NavigationController navigationController = NavigationController();
-
+  DataAppCustomerController dataAppCustomerController = Get.find();
   final PageStorageBucket _bucket = PageStorageBucket();
 
   @override
@@ -45,9 +42,20 @@ class _NavigationScreenState extends State<NavigationScreen> {
                 Theme.of(context).primaryColor.computeLuminance() > 0.5
                     ? Colors.black
                     : Theme.of(context).primaryColor,
-            items: const <BottomNavigationBarItem>[
+            items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart),
+                icon: Badge(
+                  toAnimate: true,
+                  animationType: BadgeAnimationType.slide,
+                  badgeContent: Text(
+                    '${dataAppCustomerController.listOrder.length}',
+                    style: TextStyle(fontSize: 11, color: Colors.white),
+                  ),
+                  showBadge: dataAppCustomerController.listOrder.isEmpty
+                      ? false
+                      : true,
+                  child: Icon(Icons.shopping_cart),
+                ),
                 label: 'Giỏ hàng',
               ),
               BottomNavigationBarItem(

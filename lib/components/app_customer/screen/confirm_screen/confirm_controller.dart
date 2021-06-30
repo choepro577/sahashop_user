@@ -44,8 +44,8 @@ class ConfirmController extends GetxController {
           ? ShipmentMethod(fee: 0)
           : res.data!.data![0];
     } catch (err) {
-      print("sadashgdashdaskldasldas");
-      SahaAlert.showError(message: err.toString());
+      infoAddressCustomer.value = InfoAddressCustomer(id: 0);
+      SahaAlert.showError(message: "Chưa chọn địa chỉ");
     }
     isLoadingShipmentMethod.value = false;
   }

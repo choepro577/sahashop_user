@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_products_widget.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_search.dart';
 import 'package:sahashop_user/components/app_customer/components/product_item/product_item_widget.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/components/saha_user/iconButton/iconbtn_counter.dart';
@@ -74,7 +76,7 @@ class _SearchScreenState extends State<SearchScreen> {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryTextTheme.headline1!.color,
+                  color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: TextField(
@@ -88,14 +90,12 @@ class _SearchScreenState extends State<SearchScreen> {
                   //onChanged: (value) => print(value),
                   decoration: InputDecoration(
                       contentPadding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 9),
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
                       enabledBorder: InputBorder.none,
                       hintText: "Tìm kiếm ",
-                      prefixIcon: Icon(
-                        Icons.search,
-                      )),
+                      prefixIcon: Icon(Icons.search)),
                 ),
               ),
             ),
@@ -157,7 +157,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                                     .listCategorySelected[index]
                                                     .values
                                                     .first);
-
                                       });
                                     },
                                   ),
@@ -558,24 +557,27 @@ class _SearchScreenState extends State<SearchScreen> {
               () => Expanded(
                 child: Container(
                   padding: const EdgeInsets.all(5.0),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                  ),
                   child: SahaSimmer(
                     isLoading: searchController.isLoadingProduct.value,
-                    child: StaggeredGridView.countBuilder(
-                      crossAxisCount: 2,
-                      itemCount: searchController.listProduct.length,
-                      itemBuilder: (BuildContext context, int index) =>
-                          ProductItemWidget(
-                        product: searchController.listProduct[index],
-                        isLoading: searchController.isLoadingProduct.value,
-                      ),
-                      staggeredTileBuilder: (int index) =>
-                          new StaggeredTile.fit(1),
-                      mainAxisSpacing: 0,
-                      crossAxisSpacing: 0,
-                    ),
+                    child: searchController.listProduct.isNotEmpty
+                        ? StaggeredGridView.countBuilder(
+                            crossAxisCount: 2,
+                            itemCount: searchController.listProduct.length,
+                            itemBuilder: (BuildContext context, int index) =>
+                                ProductItemWidget(
+                              product: searchController.listProduct[index],
+                              isLoading:
+                                  searchController.isLoadingProduct.value,
+                            ),
+                            staggeredTileBuilder: (int index) =>
+                                new StaggeredTile.fit(1),
+                            mainAxisSpacing: 0,
+                            crossAxisSpacing: 0,
+                          )
+                        : SahaEmptyProducts(
+                            width: 50,
+                            height: 50,
+                          ),
                   ),
                 ),
               ),

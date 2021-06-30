@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
@@ -55,7 +56,7 @@ class _SignInState extends State<LoginScreen> {
     // TODO: implement build
     return Scaffold(
       appBar: SahaAppBar(
-        titleText:  "Sign In",
+        titleText: "Sign In",
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -146,10 +147,10 @@ class _SignInState extends State<LoginScreen> {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
                     KeyboardUtil.hideKeyboard(context);
-                    EasyLoading.show(status: 'loading...',
-                      maskType: EasyLoadingMaskType.black,
-                      dismissOnTap: true
-                    );
+                    EasyLoading.show(
+                        status: 'loading...',
+                        maskType: EasyLoadingMaskType.black,
+                        dismissOnTap: true);
                     loginController.onLogin(
                         shopPhone: textEditingControllerPhoneShop.text,
                         password: textEditingControllerPass.text);

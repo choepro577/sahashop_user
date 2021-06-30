@@ -1,14 +1,11 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/saha_user/app_bar/saha_appbar.dart';
-import 'package:sahashop_user/components/saha_user/dialog/dialog.dart';
 import 'package:sahashop_user/components/saha_user/text_field/sahashopTextField.dart';
 import 'package:sahashop_user/data/remote/response-request/store/type_store_respones.dart';
 import 'package:sahashop_user/utils/keyboard.dart';
-import 'package:sahashop_user/screen/home/home_screen.dart';
 import 'package:sahashop_user/screen/sign_up/signUpScreen_controller.dart';
 
 import 'add_store_controller.dart';
@@ -47,13 +44,11 @@ class _AddStoreState extends State<AddStore> {
 
   @override
   void didChangeDependencies() {
-
     super.didChangeDependencies();
     sub ??= addStoreController.stateCreate.listen((state) {
-
       if (state == "success") {
         Navigator.pop(context, "added");
-        EasyLoading.dismiss();
+        // EasyLoading.dismiss();
       }
     });
   }
@@ -184,7 +179,7 @@ class _AddStoreState extends State<AddStore> {
                         textEditingControllerAddress.text,
                         _chosenValue,
                         textEditingControllerStoreCode.text);
-                    EasyLoading.show();
+                    //EasyLoading.show();
                   }
                 },
                 style: ButtonStyle(),

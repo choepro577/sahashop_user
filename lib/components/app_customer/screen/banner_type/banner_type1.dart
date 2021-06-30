@@ -47,8 +47,9 @@ class _BannerType1State extends State<BannerType1> {
                             CachedNetworkImage(
                               width: Get.width,
                               fit: BoxFit.cover,
-                              imageUrl:  item.imageUrl!,
-                              placeholder: (context, url) => SahaLoadingContainer(),
+                              imageUrl: item.imageUrl!,
+                              placeholder: (context, url) =>
+                                  SahaLoadingContainer(),
                               errorWidget: (context, url, error) =>
                                   SahaEmptyImage(),
                             ),
@@ -81,9 +82,9 @@ class _BannerType1State extends State<BannerType1> {
                         )))
                     .toList(),
                 options: CarouselOptions(
-                  autoPlay: true,
+                    autoPlay: true,
                     enlargeCenterPage: true,
-                    aspectRatio: 16 / 7,
+                    aspectRatio: 20 / 7,
                     onPageChanged: (index, reason) {
                       setState(() {
                         _current = index;
@@ -97,8 +98,8 @@ class _BannerType1State extends State<BannerType1> {
               mainAxisAlignment: MainAxisAlignment.center,
               children:
                   dataAppCustomerController.homeData!.banner!.list!.map((url) {
-                int index =
-                    dataAppCustomerController.homeData!.banner!.list!.indexOf(url);
+                int index = dataAppCustomerController.homeData!.banner!.list!
+                    .indexOf(url);
                 return Container(
                   width: 8.0,
                   height: 8.0,

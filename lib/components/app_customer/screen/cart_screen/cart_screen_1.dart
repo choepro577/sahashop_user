@@ -15,11 +15,21 @@ import 'package:sahashop_user/utils/string_utils.dart';
 import 'widget/item_product.dart';
 
 // ignore: must_be_immutable
-class CartScreen1 extends StatelessWidget {
+class CartScreen1 extends StatefulWidget {
   CartScreen1({Key? key}) : super(key: key);
 
-  DataAppCustomerController dataAppCustomerController = Get.find()
-    ..checkLoginToCartScreen();
+  @override
+  _CartScreen1State createState() => _CartScreen1State();
+}
+
+class _CartScreen1State extends State<CartScreen1> {
+  DataAppCustomerController dataAppCustomerController = Get.find();
+
+  @override
+  void initState() {
+    dataAppCustomerController.checkLoginToCartScreen();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -466,19 +476,56 @@ class CartScreen1 extends StatelessWidget {
                     SizedBox(
                       width: 20,
                     ),
-                    dataAppCustomerController.listOrder.length != 0
-                        ? InkWell(
-                            onTap: () {
-                              if (dataAppCustomerController.listOrder.length !=
-                                  0) {
-                                Get.to(() => ConfirmScreen());
-                              }
-                            },
-                            child: Container(
+                    Obx(
+                      () => dataAppCustomerController.listOrder.length != 0
+                          ? InkWell(
+                              onTap: () {
+                                if (dataAppCustomerController
+                                        .listOrder.length !=
+                                    0) {
+                                  Get.to(() => ConfirmScreen());
+                                }
+                              },
+                              child: Container(
+                                width: 120,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Đặt hàng ",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Theme.of(context)
+                                              .primaryTextTheme
+                                              .headline6!
+                                              .color,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Obx(
+                                      () => Text(
+                                        "(${dataAppCustomerController.listOrder.length})",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Theme.of(context)
+                                              .primaryTextTheme
+                                              .headline6!
+                                              .color,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : Container(
                               width: 120,
                               height: 50,
                               decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor,
+                                color: Colors.grey[200],
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -487,10 +534,7 @@ class CartScreen1 extends StatelessWidget {
                                     "Đặt hàng ",
                                     style: TextStyle(
                                         fontSize: 16,
-                                        color: Theme.of(context)
-                                            .primaryTextTheme
-                                            .headline6!
-                                            .color,
+                                        color: Colors.grey,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Obx(
@@ -498,45 +542,14 @@ class CartScreen1 extends StatelessWidget {
                                       "(${dataAppCustomerController.listOrder.length})",
                                       style: TextStyle(
                                         fontSize: 14,
-                                        color: Theme.of(context)
-                                            .primaryTextTheme
-                                            .headline6!
-                                            .color,
+                                        color: Colors.grey,
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                          )
-                        : Container(
-                            width: 120,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Đặt hàng ",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Obx(
-                                  () => Text(
-                                    "(${dataAppCustomerController.listOrder.length})",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                    )
                   ],
                 ),
               ),

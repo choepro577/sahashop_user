@@ -1,11 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
-import 'package:sahashop_user/const/const_image_logo.dart';
+import 'package:sahashop_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/model/box_chat_customer.dart';
 import 'package:sahashop_user/model/order.dart';
 import 'package:sahashop_user/screen/chat/chat_screen/chat_controller.dart';
@@ -700,6 +701,26 @@ class OrderDetailScreen extends StatelessWidget {
                         ? Container()
                         : Text(
                             "${orderDetailController!.orderResponse.value.orderCode}"),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Clipboard.setData(ClipboardData(
+                          text:
+                              "${orderDetailController!.orderResponse.value.orderCode}"));
+                      SahaAlert.showToastMiddle(
+                        message: "Đã sao chép",
+                        color: Colors.grey[600],
+                      );
+                    },
+                    child: Text(
+                      "Sao chép",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Theme.of(context).primaryColor),
+                    ),
                   ),
                 ],
               ),

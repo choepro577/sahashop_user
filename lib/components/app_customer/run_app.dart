@@ -11,9 +11,9 @@ void runMainAppCustomer(BuildContext context) {
 
   ConfigController configController = Get.find();
   DataAppCustomerController dataAppCustomerController = Get.find();
-  configController.getAppTheme();
+  // configController.getAppTheme();
   dataAppCustomerController.getHomeData();
-  sahaDataController.changeStatusPreview(false);
+//  sahaDataController.changeStatusPreview(false);
 
   sahaDataController.changeStatusPreview(true);
 
@@ -21,5 +21,6 @@ void runMainAppCustomer(BuildContext context) {
     () => LoadAppScreen(
       logo: configController.configApp.logoUrl,
     ),
-  )!.then((value) {});
+  )!
+      .then((value) {});
 }

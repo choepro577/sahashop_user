@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/components/app_customer/screen/navigation_scrren/navigation_screen.dart';
 import 'package:sahashop_user/controller/config_controller.dart';
 import 'data_app_controller.dart';
 

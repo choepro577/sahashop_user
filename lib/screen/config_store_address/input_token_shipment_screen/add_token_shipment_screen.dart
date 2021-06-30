@@ -46,7 +46,7 @@ class InputTokenShipmentScreen extends StatelessWidget {
                   Expanded(
                     child: TextField(
                       controller: addTokenShipment.tokenEditingController.value,
-                      keyboardType: TextInputType.phone,
+                      keyboardType: TextInputType.name,
                       decoration: InputDecoration(
                         isDense: true,
                         border: InputBorder.none,

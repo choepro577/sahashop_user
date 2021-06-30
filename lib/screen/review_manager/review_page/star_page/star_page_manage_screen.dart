@@ -2,11 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:readmore/readmore.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/components/saha_user/empty_widget/saha_empty_review_widget.dart';
 import 'package:sahashop_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/const/const_image_logo.dart';
@@ -125,14 +127,19 @@ class _StarPageManageState extends State<StarPageManage>
                                         height: 30,
                                         fit: BoxFit.cover,
                                         imageUrl:
-                                            "${starPageManageController.listReview[indexCustomer].product!.images}",
+                                            "${starPageManageController.listReview[indexCustomer].product!.images![0].imageUrl}",
                                         errorWidget: (context, url, error) =>
-                                            ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(2),
-                                          child: CachedNetworkImage(
-                                              fit: BoxFit.cover,
-                                              imageUrl: logoSahaImage),
+                                            Container(
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.grey[350]!)),
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: SvgPicture.asset(
+                                            "assets/svg/photo.svg",
+                                            width: 30,
+                                            height: 30,
+                                            color: Colors.grey,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -142,23 +149,28 @@ class _StarPageManageState extends State<StarPageManage>
                                     Text(
                                         "${starPageManageController.listReview[indexCustomer].product!.name ?? "Loading..."}"),
                                     Spacer(),
-                                    InkWell(
-                                      onTap: () {
-                                        starPageManageController.updateReview(
-                                            starPageManageController
-                                                .listReview[indexCustomer].id!);
-                                      },
-                                      child: Container(
-                                        width: 30,
-                                        height: 30,
-                                        child: Center(
-                                          child: Icon(
-                                            Icons.check,
-                                            color: Colors.green,
+                                    widget.filterBy == "stars"
+                                        ? Container()
+                                        : InkWell(
+                                            onTap: () {
+                                              starPageManageController
+                                                  .updateReview(
+                                                      starPageManageController
+                                                          .listReview[
+                                                              indexCustomer]
+                                                          .id!);
+                                            },
+                                            child: Container(
+                                              width: 30,
+                                              height: 30,
+                                              child: Center(
+                                                child: Icon(
+                                                  Icons.check,
+                                                  color: Colors.green,
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    ),
                                     SizedBox(
                                       width: 5,
                                     ),
@@ -278,7 +290,16 @@ class _StarPageManageState extends State<StarPageManage>
                                                   child: ListView.builder(
                                                     scrollDirection:
                                                         Axis.horizontal,
-                                                    itemCount: 3,
+                                                    itemCount: starPageManageController
+                                                                .listImageReviewOfCustomer[
+                                                                    indexCustomer]
+                                                                .length <=
+                                                            3
+                                                        ? starPageManageController
+                                                            .listImageReviewOfCustomer[
+                                                                indexCustomer]
+                                                            .length
+                                                        : 3,
                                                     itemBuilder:
                                                         (context, index) {
                                                       return Stack(
@@ -366,8 +387,13 @@ class _StarPageManageState extends State<StarPageManage>
                                                                             0.5),
                                                                     child:
                                                                         Center(
-                                                                      child: Text(
-                                                                          "+${starPageManageController.listImageReviewOfCustomer[indexCustomer].length - 3}"),
+                                                                      child:
+                                                                          Text(
+                                                                        "+${starPageManageController.listImageReviewOfCustomer[indexCustomer].length - 3}",
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.white),
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 )
