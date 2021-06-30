@@ -4,15 +4,15 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'components/app_customer/remote/customer_service_manager.dart';
-import 'components/app_customer/screen/navigation_scrren/navigation_screen.dart';
-import 'data/remote/saha_service_manager.dart';
-import 'load_data/load_firebase.dart';
-import 'load_data/load_login.dart';
-import 'model/theme_model.dart';
+import 'app_customer/remote/customer_service_manager.dart';
+import 'app_customer/screen/navigation_scrren/navigation_screen.dart';
+import 'app_user/data/remote/saha_service_manager.dart';
+import 'app_user/load_data/load_firebase.dart';
+import 'app_user/load_data/load_login.dart';
+import 'app_user/model/theme_model.dart';
+import 'app_user/screen/config_app/config_screen.dart';
 import 'saha_data_controller.dart';
 import 'saha_load_app.dart';
-import 'screen/config_app/config_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
