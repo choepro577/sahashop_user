@@ -440,7 +440,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             child: TextFormField(
                               initialValue:
                                   addProductController.attributeData[attribute],
-                              keyboardType: TextInputType.number,
+                              textInputAction: TextInputAction.done,
                               validator: (value) {},
                               onChanged: (text) {
                                 addProductController.addValueToMapAttribute(
