@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/screen/home/home_screen.dart';
-import 'package:sahashop_user/screen/login/loginScreen.dart';
-import 'package:sahashop_user/utils/user_info.dart';
+import 'package:sahashop_user/app_user/screen/home/home_screen.dart';
+import 'package:sahashop_user/app_user/screen/login/loginScreen.dart';
+import 'package:sahashop_user/app_user/utils/user_info.dart';
 
 class SahaMainScreen extends StatefulWidget {
   @override

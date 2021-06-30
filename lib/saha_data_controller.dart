@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
-import 'package:sahashop_user/data/socket/socket.dart';
+import 'package:sahashop_user/app_user/data/socket/socket.dart';
+
+import 'app_customer/utils/thread_data.dart';
+
 
 class SahaDataController extends GetxController {
   var isPreview = false.obs;
@@ -10,6 +13,14 @@ class SahaDataController extends GetxController {
     SocketUser().connect();
     getDataBoxChatUser();
     super.onInit();
+
+    isPreview.stream.listen((event) {
+      if(event == true) {
+        FlowData().setIsOnline(true);
+      } else {
+        FlowData().setIsOnline(false);
+      }
+    });
   }
 
   void getDataBoxChatUser() {
@@ -23,6 +34,11 @@ class SahaDataController extends GetxController {
 
   void changeStatusPreview(bool status) {
     isPreview.value = status;
+    if(status == true) {
+      FlowData().setIsOnline(true);
+    } else {
+      FlowData().setIsOnline(false);
+    }
   }
 }
 
