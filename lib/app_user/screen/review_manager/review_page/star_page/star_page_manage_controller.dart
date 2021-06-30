@@ -4,6 +4,9 @@ import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dar
 import 'package:sahashop_user/app_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/app_user/model/review.dart';
 
+
+import '../review_manage_controller.dart';
+
 class StarPageManageController extends GetxController {
   String? filterBy;
   String? filterByValue;
@@ -17,6 +20,8 @@ class StarPageManageController extends GetxController {
   var isLoading = false.obs;
   var isLoadMore = false.obs;
   int currentPage = 1;
+
+  ReviewManagerController reviewManagerController = Get.find();
 
   Future<void> getReviewProduct({bool? isLoadMoreCondition}) async {
     if (isLoadMoreCondition == true) {
@@ -62,8 +67,9 @@ class StarPageManageController extends GetxController {
     isEndReview = false;
     currentPage = 1;
     listReview([]);
-    listImageReviewOfCustomer([[]]);
+    listImageReviewOfCustomer([]);
     getReviewProduct(isLoadMoreCondition: false);
+    reviewManagerController.getReviewProduct();
   }
 
   Future<void> deleteReview(int idReview) async {

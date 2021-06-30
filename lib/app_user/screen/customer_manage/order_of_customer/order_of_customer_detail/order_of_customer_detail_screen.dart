@@ -6,21 +6,27 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
+import 'package:sahashop_user/app_user/model/box_chat_customer.dart';
 import 'package:sahashop_user/app_user/model/order.dart';
-import 'package:sahashop_user/app_user/screen/customer_manage/order_of_customer/order_of_customer_detail/order_of_customer_detail_controller.dart';
+import 'package:sahashop_user/app_user/screen/chat/chat_screen/chat_controller.dart';
+import 'package:sahashop_user/app_user/screen/chat/chat_screen/chat_screen.dart';
 import 'package:sahashop_user/app_user/utils/date_utils.dart';
 import 'package:sahashop_user/app_user/utils/string_utils.dart';
 
+import 'order_of_customer_detail_controller.dart';
+
+
 // ignore: must_be_immutable
 class OrderOfCustomerDetailScreen extends StatelessWidget {
-  final Order order = Order();
+  final Order? order;
 
-  OrderOfCustomerDetailScreen({required order}) {
+  OrderOfCustomerDetailScreen({this.order}) {
     orderOfCustomerDetailController =
         OrderOfCustomerDetailController(order: order);
+    chatController = Get.put(ChatController());
   }
-  OrderOfCustomerDetailController orderOfCustomerDetailController = OrderOfCustomerDetailController();
-
+  late OrderOfCustomerDetailController orderOfCustomerDetailController;
+  ChatController? chatController;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -41,7 +47,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "Trạng thái đơn hàng: ${order.orderStatusName}",
+                          "Trạng thái đơn hàng: ${order!.orderStatusName}",
                           style: TextStyle(
                               color: Theme.of(context)
                                   .primaryTextTheme
@@ -71,7 +77,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "Trạng thái thanh toán: ${order.paymentStatusName}",
+                          "Trạng thái thanh toán: ${order!.paymentStatusName}",
                           style: TextStyle(
                               color: Theme.of(context)
                                   .primaryTextTheme
@@ -113,17 +119,17 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Đơn vị vận chuyển: ${order.shipperName}"),
+                      Text("Đơn vị vận chuyển: ${order!.shipperName}"),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                          "Kiểu : ${order.shipperType == 0 ? "Giao nhanh" : "Siêu tốc"}"),
+                          "Kiểu : ${order!.shipperType == 0 ? "Giao nhanh" : "Siêu tốc"}"),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                          "Phí giao hàng: đ${SahaStringUtils().convertToMoney(order.totalShippingFee)}"),
+                          "Phí giao hàng: đ${SahaStringUtils().convertToMoney(order!.totalShippingFee ?? 0.0)}"),
                     ],
                   )
                 ],
@@ -163,23 +169,23 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                       Container(
                         width: Get.width * 0.7,
                         child: Text(
-                          "${order.customerAddress!.name ?? "Chưa có tên"}  | ${order.customerAddress!.phone ?? "Chưa có số điện thoại"}",
+                          "${order!.customerAddress!.name ?? "Chưa có tên"}  | ${order!.customerAddress!.phone ?? "Chưa có số điện thoại"}",
                           maxLines: 2,
                         ),
                       ),
                       Container(
                         width: Get.width * 0.7,
                         child: Text(
-                          "${order.customerAddress!.addressDetail ?? "Chưa có địa chỉ chi tiết"}",
+                          "${order!.customerAddress!.addressDetail ?? "Chưa có địa chỉ chi tiết"}",
                           maxLines: 2,
                         ),
                       ),
                       Container(
                         width: Get.width * 0.7,
                         child: Text(
-                          "${order.customerAddress!.districtName ?? "Chưa có Quận/Huyện"}, ${order.customerAddress!.wardsName ?? "Chưa có Phường/Xã"}, ${order.customerAddress!.provinceName ?? "Chưa có Tỉnh/Thành phố"}",
+                          "${order!.customerAddress!.districtName ?? "Chưa có Quận/Huyện"}, ${order!.customerAddress!.wardsName ?? "Chưa có Phường/Xã"}, ${order!.customerAddress!.provinceName ?? "Chưa có Tỉnh/Thành phố"}",
                           style:
-                              TextStyle(color: Colors.grey[700], fontSize: 13),
+                          TextStyle(color: Colors.grey[700], fontSize: 13),
                           maxLines: 2,
                         ),
                       ),
@@ -195,8 +201,8 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
             Column(
               children: [
                 ...List.generate(
-                  order.lineItemsAtTime!.length,
-                  (index) => Column(
+                  order!.lineItemsAtTime!.length,
+                      (index) => Column(
                     children: [
                       Padding(
                         padding: EdgeInsets.all(8),
@@ -207,20 +213,19 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                               child: Container(
                                 decoration: BoxDecoration(
                                     border:
-                                        Border.all(color: Colors.grey[200]!)),
+                                    Border.all(color: Colors.grey[200]!)),
                                 child: CachedNetworkImage(
                                   width: 80,
                                   height: 80,
                                   fit: BoxFit.cover,
-                                  imageUrl: order.lineItemsAtTime!.length == 0
+                                  imageUrl: order!.lineItemsAtTime!.length == 0
                                       ? ""
-                                      : "${order.lineItemsAtTime![index].imageUrl}",
+                                      : "${order!.lineItemsAtTime![index].imageUrl}",
                                   errorWidget: (context, url, error) =>
                                       SahaEmptyImage(),
-                                  ),
                                 ),
                               ),
-
+                            ),
                             SizedBox(
                               width: 10,
                             ),
@@ -230,10 +235,10 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      "${order.lineItemsAtTime![index].name}",
+                                      "${order!.lineItemsAtTime![index].name}",
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500),
                                     ),
@@ -243,7 +248,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                                           children: [
                                             Spacer(),
                                             Text(
-                                              " x ${order.lineItemsAtTime![index].quantity}",
+                                              " x ${order!.lineItemsAtTime![index].quantity}",
                                               style: TextStyle(
                                                   fontSize: 13,
                                                   color: Colors.grey[600]),
@@ -254,7 +259,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                                           children: [
                                             Spacer(),
                                             Text(
-                                              "đ${SahaStringUtils().convertToMoney(order.lineItemsAtTime![index].beforePrice)}",
+                                              "đ${SahaStringUtils().convertToMoney(order!.lineItemsAtTime![index].beforePrice)}",
                                               style: TextStyle(
                                                   decoration: TextDecoration
                                                       .lineThrough,
@@ -262,7 +267,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                                             ),
                                             SizedBox(width: 15),
                                             Text(
-                                              "đ${SahaStringUtils().convertToMoney(order.lineItemsAtTime![index].afterDiscount)}",
+                                              "đ${SahaStringUtils().convertToMoney(order!.lineItemsAtTime![index].afterDiscount)}",
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .primaryColor),
@@ -298,7 +303,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                       ),
                       Spacer(),
                       Text(
-                        "đ${SahaStringUtils().convertToMoney(order.totalBeforeDiscount)}",
+                        "đ${SahaStringUtils().convertToMoney(order!.totalBeforeDiscount)}",
                         style: TextStyle(color: Colors.grey[600]),
                       )
                     ],
@@ -314,7 +319,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                       ),
                       Spacer(),
                       Text(
-                        "+ đ${SahaStringUtils().convertToMoney(order.totalShippingFee)}",
+                        "+ đ${SahaStringUtils().convertToMoney(order!.totalShippingFee)}",
                         style: TextStyle(color: Colors.grey[600]),
                       )
                     ],
@@ -322,57 +327,57 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                   SizedBox(
                     height: 5,
                   ),
-                  order.productDiscountAmount == 0
+                  order!.productDiscountAmount == 0
                       ? Container()
                       : Row(
-                          children: [
-                            Text(
-                              "Giảm giá sản phẩm: ",
-                              style: TextStyle(color: Colors.grey[600]),
-                            ),
-                            Spacer(),
-                            Text(
-                              "- đ${SahaStringUtils().convertToMoney(order.productDiscountAmount)}",
-                              style: TextStyle(color: Colors.grey[600]),
-                            )
-                          ],
-                        ),
+                    children: [
+                      Text(
+                        "Giảm giá sản phẩm: ",
+                        style: TextStyle(color: Colors.grey[600]),
+                      ),
+                      Spacer(),
+                      Text(
+                        "- đ${SahaStringUtils().convertToMoney(order!.productDiscountAmount)}",
+                        style: TextStyle(color: Colors.grey[600]),
+                      )
+                    ],
+                  ),
                   SizedBox(
                     height: 5,
                   ),
-                  order.comboDiscountAmount == 0
+                  order!.comboDiscountAmount == 0
                       ? Container()
                       : Row(
-                          children: [
-                            Text(
-                              "Giảm giá Combo: ",
-                              style: TextStyle(color: Colors.grey[600]),
-                            ),
-                            Spacer(),
-                            Text(
-                              "- đ${SahaStringUtils().convertToMoney(order.comboDiscountAmount)}",
-                              style: TextStyle(color: Colors.grey[600]),
-                            )
-                          ],
-                        ),
+                    children: [
+                      Text(
+                        "Giảm giá Combo: ",
+                        style: TextStyle(color: Colors.grey[600]),
+                      ),
+                      Spacer(),
+                      Text(
+                        "- đ${SahaStringUtils().convertToMoney(order!.comboDiscountAmount)}",
+                        style: TextStyle(color: Colors.grey[600]),
+                      )
+                    ],
+                  ),
                   SizedBox(
                     height: 5,
                   ),
-                  order.voucherDiscountAmount == 0
+                  order!.voucherDiscountAmount == 0
                       ? Container()
                       : Row(
-                          children: [
-                            Text(
-                              "Giảm giá Voucher:",
-                              style: TextStyle(color: Colors.grey[600]),
-                            ),
-                            Spacer(),
-                            Text(
-                              "- đ${SahaStringUtils().convertToMoney(order.voucherDiscountAmount)}",
-                              style: TextStyle(color: Colors.grey[600]),
-                            )
-                          ],
-                        ),
+                    children: [
+                      Text(
+                        "Giảm giá Voucher:",
+                        style: TextStyle(color: Colors.grey[600]),
+                      ),
+                      Spacer(),
+                      Text(
+                        "- đ${SahaStringUtils().convertToMoney(order!.voucherDiscountAmount)}",
+                        style: TextStyle(color: Colors.grey[600]),
+                      )
+                    ],
+                  ),
                   SizedBox(
                     height: 5,
                   ),
@@ -381,7 +386,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                       Text("Thành tiền: "),
                       Spacer(),
                       Text(
-                          "đ${SahaStringUtils().convertToMoney(order.totalFinal)}")
+                          "đ${SahaStringUtils().convertToMoney(order!.totalFinal)}")
                     ],
                   ),
                   SizedBox(
@@ -421,7 +426,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                       SizedBox(
                         height: 5,
                       ),
-                      Text("${order.paymentMethodName}")
+                      Text("${order!.paymentMethodName}")
                     ],
                   )
                 ],
@@ -434,20 +439,20 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(10),
               child: Obx(
-                () => Column(
+                    () => Column(
                   children: [
                     Row(
                       children: [
                         Text("Mã đơn hàng"),
                         Spacer(),
-                        Text("${order.orderCode}"),
+                        Text("${order!.orderCode}"),
                         SizedBox(
                           width: 10,
                         ),
                         InkWell(
                           onTap: () {
                             Clipboard.setData(
-                                ClipboardData(text: "${order.orderCode}"));
+                                ClipboardData(text: "${order!.orderCode}"));
                             SahaAlert.showToastMiddle(
                               message: "Đã sao chép",
                               color: Colors.grey[600],
@@ -473,7 +478,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                         ),
                         Spacer(),
                         Text(
-                          "${SahaDateUtils().getDDMMYY(order.createdAt!)} ${SahaDateUtils().getHHMM(order.createdAt!)}",
+                          "${SahaDateUtils().getDDMMYY(order!.createdAt!)} ${SahaDateUtils().getHHMM(order!.createdAt!)}",
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                       ],
@@ -483,7 +488,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                     ),
                     ...List.generate(
                       orderOfCustomerDetailController.listStateOrder.length,
-                      (index) => Column(
+                          (index) => Column(
                         children: [
                           Row(
                             children: [
@@ -506,7 +511,48 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                    )
+                    ),
+                    InkWell(
+                      onTap: () {
+                        chatController!.boxChatCustomer.value = BoxChatCustomer(
+                          customerId: order!.customerId,
+                          customer: order!.infoCustomer,
+                        );
+                        Get.to(() => ChatScreen())!.then((value) => {
+                          chatController!.refreshDataMessage(),
+                          chatController!.refreshDataAllChat()
+                        });
+                      },
+                      child: Container(
+                        height: 40,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey[500]!)),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(4),
+                                height: 30,
+                                width: 30,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFF5F6F9),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: SvgPicture.asset(
+                                  "assets/icons/chat.svg",
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text("Liên hệ khách hàng")
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -536,7 +582,7 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                   ),
                   Spacer(),
                   Text(
-                    "đ${SahaStringUtils().convertToMoney(order.totalFinal)}",
+                    "đ${SahaStringUtils().convertToMoney(order!.totalFinal)}",
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: Theme.of(context).primaryColor),
@@ -553,14 +599,14 @@ class OrderOfCustomerDetailScreen extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.w500),
                   ),
                   Spacer(),
-                  Text("${order.orderCode}"),
+                  Text("${order!.orderCode}"),
                   SizedBox(
                     width: 10,
                   ),
                   InkWell(
                     onTap: () {
                       Clipboard.setData(
-                          ClipboardData(text: "${order.orderCode}"));
+                          ClipboardData(text: "${order!.orderCode}"));
                       SahaAlert.showToastMiddle(
                         message: "Đã sao chép",
                         color: Colors.grey[600],

@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-
 import 'package:get/get.dart' as get2;
-import '../../screen/login/login_screen.dart';
-import '../../utils/customer_info.dart';
+import 'package:sahashop_user/app_customer/screen/login/login_screen.dart';
+import 'package:sahashop_user/app_customer/utils/customer_info.dart';
 import 'package:sahashop_user/app_user/utils/msg_code.dart';
+
 class AuthInterceptor extends InterceptorsWrapper {
   AuthInterceptor();
 
@@ -25,41 +25,37 @@ class AuthInterceptor extends InterceptorsWrapper {
 
   @override
   void onError(DioError error, ErrorInterceptorHandler handler) {
-    print('Response: ${error.response}');
+    print('On Error${error.response}');
+
     if (error is DioError) {
       var dioError = error;
       switch (dioError.type) {
         case DioErrorType.cancel:
-          return errorMess('Đã hủy kết nối');
-
+          error.error = 'Đã hủy kết nối';
+          break;
         case DioErrorType.connectTimeout:
-          return errorMess('Không thể kết nối đến server');
-
+          error.error = 'Không thể kết nối đến server';
+          break;
         case DioErrorType.receiveTimeout:
-          return errorMess('Không thể nhận dữ liệu từ server');
-
+          error.error = 'Không thể nhận dữ liệu từ server';
+          break;
         case DioErrorType.response:
           if (dioError.response?.statusCode == 429) {
-            return errorMess(
-                'Bạn gửi quá nhiều yêu cầu xin thử lại sau 1 phút');
+            error.error = 'Bạn gửi quá nhiều yêu cầu xin thử lại sau 1 phút';
           }
-
-          return errorMess(
-              '${dioError.response?.data["msg"] != null ? dioError.response?.data["msg"] : "Có lỗi xảy ra"}');
-
+          error.error =
+          '${dioError.response?.data["msg"] != null ? dioError.response?.data["msg"] : "Có lỗi xảy ra"}';
+          break;
         case DioErrorType.sendTimeout:
-          return errorMess('Không thể gửi dữ liệu đến server');
-
+          error.error = 'Không thể gửi dữ liệu đến server';
+          break;
         case DioErrorType.other:
-          return errorMess(error.message);
-
+          error.error = error.message;
+          break;
       }
     }
-    return errorMess("Có lỗi xảy ta");
-  }
 
-  errorMess(String mess) async {
-    return mess;
+    return handler.next(error);
   }
 
   void printWrapped(String text) {

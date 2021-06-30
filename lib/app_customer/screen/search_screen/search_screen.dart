@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
-import '../../components/product_item/product_item_widget.dart';
+import 'package:sahashop_user/app_customer/components/empty/saha_empty_products_widget.dart';
+import 'package:sahashop_user/app_customer/components/product_item/product_item_widget.dart';
 import 'package:sahashop_user/app_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/app_user/components/saha_user/iconButton/iconbtn_counter.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_shimmer.dart';
@@ -74,7 +75,7 @@ class _SearchScreenState extends State<SearchScreen> {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryTextTheme.headline1!.color,
+                  color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: TextField(
@@ -88,14 +89,12 @@ class _SearchScreenState extends State<SearchScreen> {
                   //onChanged: (value) => print(value),
                   decoration: InputDecoration(
                       contentPadding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 9),
+                      EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
                       enabledBorder: InputBorder.none,
                       hintText: "Tìm kiếm ",
-                      prefixIcon: Icon(
-                        Icons.search,
-                      )),
+                      prefixIcon: Icon(Icons.search)),
                 ),
               ),
             ),
@@ -120,356 +119,355 @@ class _SearchScreenState extends State<SearchScreen> {
           child: Drawer(
             child: SingleChildScrollView(
               child: Obx(
-                () => searchController.isLoadingCategory.value
+                    () => searchController.isLoadingCategory.value
                     ? SahaLoadingWidget()
                     : Column(
-                        children: <Widget>[
-                          const SizedBox(height: 7),
-                          Padding(
+                  children: <Widget>[
+                    const SizedBox(height: 7),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Danh mục sản phẩm"),
+                    ),
+                    Wrap(
+                      children: [
+                        ...List.generate(
+                          searchController.listCategory.length,
+                              (index) => Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text("Danh mục sản phẩm"),
+                            child: FilterChip(
+                              label: Text(searchController
+                                  .listCategory[index].name!),
+                              selected: searchController
+                                  .listCategorySelected[index]
+                                  .values
+                                  .first,
+                              backgroundColor: Colors.transparent,
+                              shape: StadiumBorder(side: BorderSide()),
+                              onSelected: (bool value) {
+                                setState(() {
+                                  searchController
+                                      .listCategorySelected[index]
+                                      .update(
+                                      searchController
+                                          .listCategorySelected[index]
+                                          .keys
+                                          .first,
+                                          (value) => !searchController
+                                          .listCategorySelected[index]
+                                          .values
+                                          .first);
+                                });
+                              },
+                            ),
                           ),
-                          Wrap(
-                            children: [
-                              ...List.generate(
-                                searchController.listCategory.length,
-                                (index) => Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: FilterChip(
-                                    label: Text(searchController
-                                        .listCategory[index].name!),
-                                    selected: searchController
-                                        .listCategorySelected[index]
-                                        .values
-                                        .first,
-                                    backgroundColor: Colors.transparent,
-                                    shape: StadiumBorder(side: BorderSide()),
-                                    onSelected: (bool value) {
-                                      setState(() {
-                                        searchController
-                                            .listCategorySelected[index]
-                                            .update(
-                                                searchController
-                                                    .listCategorySelected[index]
-                                                    .keys
-                                                    .first,
-                                                (value) => !searchController
-                                                    .listCategorySelected[index]
-                                                    .values
-                                                    .first);
-
-                                      });
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
+                        ),
+                      ],
+                    ),
+                    const Divider(indent: 20),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Size"),
+                    ),
+                    Wrap(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: FilterChip(
+                            label: Text("XS"),
+                            selected: chooseXS,
+                            backgroundColor: Colors.transparent,
+                            shape: StadiumBorder(side: BorderSide()),
+                            onSelected: (bool value) {
+                              if (chooseXS == false) {
+                                XS = "XS";
+                                setState(() {
+                                  searchController.sizeSearch = "Size:" +
+                                      XS +
+                                      "," +
+                                      S +
+                                      "," +
+                                      M +
+                                      "," +
+                                      L +
+                                      "," +
+                                      XL +
+                                      "," +
+                                      XXL;
+                                  chooseXS = true;
+                                  print(chooseXS);
+                                });
+                              } else {
+                                XS = "";
+                                setState(() {
+                                  searchController.sizeSearch = "Size:" +
+                                      XS +
+                                      "," +
+                                      S +
+                                      "," +
+                                      M +
+                                      "," +
+                                      L +
+                                      "," +
+                                      XL +
+                                      "," +
+                                      XXL;
+                                  chooseXS = false;
+                                  print(chooseXS);
+                                });
+                              }
+                              print(searchController.sizeSearch);
+                            },
                           ),
-                          const Divider(indent: 20),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text("Size"),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: FilterChip(
+                            label: Text("S"),
+                            selected: chooseS,
+                            backgroundColor: Colors.transparent,
+                            shape: StadiumBorder(side: BorderSide()),
+                            onSelected: (bool value) {
+                              if (chooseS == false) {
+                                S = "S";
+                                setState(() {
+                                  searchController.sizeSearch = "Size:" +
+                                      XS +
+                                      "," +
+                                      S +
+                                      "," +
+                                      M +
+                                      "," +
+                                      L +
+                                      "," +
+                                      XL +
+                                      "," +
+                                      XXL;
+                                  chooseS = true;
+                                  print(chooseS);
+                                });
+                              } else {
+                                S = "";
+                                setState(() {
+                                  searchController.sizeSearch = "Size:" +
+                                      XS +
+                                      "," +
+                                      S +
+                                      "," +
+                                      M +
+                                      "," +
+                                      L +
+                                      "," +
+                                      XL +
+                                      "," +
+                                      XXL;
+                                  chooseS = false;
+                                  print(chooseS);
+                                });
+                              }
+                              print(searchController.sizeSearch);
+                            },
                           ),
-                          Wrap(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: FilterChip(
-                                  label: Text("XS"),
-                                  selected: chooseXS,
-                                  backgroundColor: Colors.transparent,
-                                  shape: StadiumBorder(side: BorderSide()),
-                                  onSelected: (bool value) {
-                                    if (chooseXS == false) {
-                                      XS = "XS";
-                                      setState(() {
-                                        searchController.sizeSearch = "Size:" +
-                                            XS +
-                                            "," +
-                                            S +
-                                            "," +
-                                            M +
-                                            "," +
-                                            L +
-                                            "," +
-                                            XL +
-                                            "," +
-                                            XXL;
-                                        chooseXS = true;
-                                        print(chooseXS);
-                                      });
-                                    } else {
-                                      XS = "";
-                                      setState(() {
-                                        searchController.sizeSearch = "Size:" +
-                                            XS +
-                                            "," +
-                                            S +
-                                            "," +
-                                            M +
-                                            "," +
-                                            L +
-                                            "," +
-                                            XL +
-                                            "," +
-                                            XXL;
-                                        chooseXS = false;
-                                        print(chooseXS);
-                                      });
-                                    }
-                                    print(searchController.sizeSearch);
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: FilterChip(
-                                  label: Text("S"),
-                                  selected: chooseS,
-                                  backgroundColor: Colors.transparent,
-                                  shape: StadiumBorder(side: BorderSide()),
-                                  onSelected: (bool value) {
-                                    if (chooseS == false) {
-                                      S = "S";
-                                      setState(() {
-                                        searchController.sizeSearch = "Size:" +
-                                            XS +
-                                            "," +
-                                            S +
-                                            "," +
-                                            M +
-                                            "," +
-                                            L +
-                                            "," +
-                                            XL +
-                                            "," +
-                                            XXL;
-                                        chooseS = true;
-                                        print(chooseS);
-                                      });
-                                    } else {
-                                      S = "";
-                                      setState(() {
-                                        searchController.sizeSearch = "Size:" +
-                                            XS +
-                                            "," +
-                                            S +
-                                            "," +
-                                            M +
-                                            "," +
-                                            L +
-                                            "," +
-                                            XL +
-                                            "," +
-                                            XXL;
-                                        chooseS = false;
-                                        print(chooseS);
-                                      });
-                                    }
-                                    print(searchController.sizeSearch);
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: FilterChip(
-                                  label: Text("M"),
-                                  selected: chooseM,
-                                  backgroundColor: Colors.transparent,
-                                  shape: StadiumBorder(side: BorderSide()),
-                                  onSelected: (bool value) {
-                                    if (chooseM == false) {
-                                      M = "M";
-                                      setState(() {
-                                        searchController.sizeSearch = "Size:" +
-                                            XS +
-                                            "," +
-                                            S +
-                                            "," +
-                                            M +
-                                            "," +
-                                            L +
-                                            "," +
-                                            XL +
-                                            "," +
-                                            XXL;
-                                        chooseM = true;
-                                        print(chooseM);
-                                      });
-                                    } else {
-                                      M = "";
-                                      setState(() {
-                                        searchController.sizeSearch = "Size:" +
-                                            XS +
-                                            "," +
-                                            S +
-                                            "," +
-                                            M +
-                                            "," +
-                                            L +
-                                            "," +
-                                            XL +
-                                            "," +
-                                            XXL;
-                                        chooseM = false;
-                                        print(chooseM);
-                                      });
-                                    }
-                                    print(searchController.sizeSearch);
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: FilterChip(
-                                  label: Text("L"),
-                                  selected: chooseL,
-                                  backgroundColor: Colors.transparent,
-                                  shape: StadiumBorder(side: BorderSide()),
-                                  onSelected: (bool value) {
-                                    if (chooseL == false) {
-                                      L = "L";
-                                      setState(() {
-                                        searchController.sizeSearch = "Size:" +
-                                            XS +
-                                            "," +
-                                            S +
-                                            "," +
-                                            M +
-                                            "," +
-                                            L +
-                                            "," +
-                                            XL +
-                                            "," +
-                                            XXL;
-                                        chooseL = true;
-                                        print(chooseL);
-                                      });
-                                    } else {
-                                      L = "";
-                                      setState(() {
-                                        searchController.sizeSearch = "Size:" +
-                                            XS +
-                                            "," +
-                                            S +
-                                            "," +
-                                            M +
-                                            "," +
-                                            L +
-                                            "," +
-                                            XL +
-                                            "," +
-                                            XXL;
-                                        chooseL = false;
-                                        print(chooseL);
-                                      });
-                                    }
-                                    print(searchController.sizeSearch);
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: FilterChip(
-                                  label: Text("XL"),
-                                  selected: chooseXL,
-                                  backgroundColor: Colors.transparent,
-                                  shape: StadiumBorder(side: BorderSide()),
-                                  onSelected: (bool value) {
-                                    if (chooseXL == false) {
-                                      XL = "XL";
-                                      setState(() {
-                                        searchController.sizeSearch = "Size:" +
-                                            XS +
-                                            "," +
-                                            S +
-                                            "," +
-                                            M +
-                                            "," +
-                                            L +
-                                            "," +
-                                            XL +
-                                            "," +
-                                            XXL;
-                                        chooseXL = true;
-                                        print(chooseXL);
-                                      });
-                                    } else {
-                                      XL = "";
-                                      setState(() {
-                                        searchController.sizeSearch = "Size:" +
-                                            XS +
-                                            "," +
-                                            S +
-                                            "," +
-                                            M +
-                                            "," +
-                                            L +
-                                            "," +
-                                            XL +
-                                            "," +
-                                            XXL;
-                                        chooseXL = false;
-                                        print(chooseXL);
-                                      });
-                                    }
-                                    print(searchController.sizeSearch);
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: FilterChip(
-                                  label: Text("XXL"),
-                                  selected: chooseXXL,
-                                  backgroundColor: Colors.transparent,
-                                  shape: StadiumBorder(side: BorderSide()),
-                                  onSelected: (bool value) {
-                                    if (chooseXXL == false) {
-                                      XXL = "XXL";
-                                      setState(() {
-                                        searchController.sizeSearch = "Size:" +
-                                            XS +
-                                            "," +
-                                            S +
-                                            "," +
-                                            M +
-                                            "," +
-                                            L +
-                                            "," +
-                                            XL +
-                                            "," +
-                                            XXL;
-                                        chooseXXL = true;
-                                        print(chooseXXL);
-                                      });
-                                    } else {
-                                      XXL = "";
-                                      setState(() {
-                                        searchController.sizeSearch = "Size:" +
-                                            XS +
-                                            "," +
-                                            S +
-                                            "," +
-                                            M +
-                                            "," +
-                                            L +
-                                            "," +
-                                            XL +
-                                            "," +
-                                            XXL;
-                                        chooseXXL = false;
-                                        print(chooseXXL);
-                                      });
-                                    }
-                                    print(searchController.sizeSearch);
-                                  },
-                                ),
-                              ),
-                            ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: FilterChip(
+                            label: Text("M"),
+                            selected: chooseM,
+                            backgroundColor: Colors.transparent,
+                            shape: StadiumBorder(side: BorderSide()),
+                            onSelected: (bool value) {
+                              if (chooseM == false) {
+                                M = "M";
+                                setState(() {
+                                  searchController.sizeSearch = "Size:" +
+                                      XS +
+                                      "," +
+                                      S +
+                                      "," +
+                                      M +
+                                      "," +
+                                      L +
+                                      "," +
+                                      XL +
+                                      "," +
+                                      XXL;
+                                  chooseM = true;
+                                  print(chooseM);
+                                });
+                              } else {
+                                M = "";
+                                setState(() {
+                                  searchController.sizeSearch = "Size:" +
+                                      XS +
+                                      "," +
+                                      S +
+                                      "," +
+                                      M +
+                                      "," +
+                                      L +
+                                      "," +
+                                      XL +
+                                      "," +
+                                      XXL;
+                                  chooseM = false;
+                                  print(chooseM);
+                                });
+                              }
+                              print(searchController.sizeSearch);
+                            },
                           ),
-                        ],
-                      ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: FilterChip(
+                            label: Text("L"),
+                            selected: chooseL,
+                            backgroundColor: Colors.transparent,
+                            shape: StadiumBorder(side: BorderSide()),
+                            onSelected: (bool value) {
+                              if (chooseL == false) {
+                                L = "L";
+                                setState(() {
+                                  searchController.sizeSearch = "Size:" +
+                                      XS +
+                                      "," +
+                                      S +
+                                      "," +
+                                      M +
+                                      "," +
+                                      L +
+                                      "," +
+                                      XL +
+                                      "," +
+                                      XXL;
+                                  chooseL = true;
+                                  print(chooseL);
+                                });
+                              } else {
+                                L = "";
+                                setState(() {
+                                  searchController.sizeSearch = "Size:" +
+                                      XS +
+                                      "," +
+                                      S +
+                                      "," +
+                                      M +
+                                      "," +
+                                      L +
+                                      "," +
+                                      XL +
+                                      "," +
+                                      XXL;
+                                  chooseL = false;
+                                  print(chooseL);
+                                });
+                              }
+                              print(searchController.sizeSearch);
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: FilterChip(
+                            label: Text("XL"),
+                            selected: chooseXL,
+                            backgroundColor: Colors.transparent,
+                            shape: StadiumBorder(side: BorderSide()),
+                            onSelected: (bool value) {
+                              if (chooseXL == false) {
+                                XL = "XL";
+                                setState(() {
+                                  searchController.sizeSearch = "Size:" +
+                                      XS +
+                                      "," +
+                                      S +
+                                      "," +
+                                      M +
+                                      "," +
+                                      L +
+                                      "," +
+                                      XL +
+                                      "," +
+                                      XXL;
+                                  chooseXL = true;
+                                  print(chooseXL);
+                                });
+                              } else {
+                                XL = "";
+                                setState(() {
+                                  searchController.sizeSearch = "Size:" +
+                                      XS +
+                                      "," +
+                                      S +
+                                      "," +
+                                      M +
+                                      "," +
+                                      L +
+                                      "," +
+                                      XL +
+                                      "," +
+                                      XXL;
+                                  chooseXL = false;
+                                  print(chooseXL);
+                                });
+                              }
+                              print(searchController.sizeSearch);
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: FilterChip(
+                            label: Text("XXL"),
+                            selected: chooseXXL,
+                            backgroundColor: Colors.transparent,
+                            shape: StadiumBorder(side: BorderSide()),
+                            onSelected: (bool value) {
+                              if (chooseXXL == false) {
+                                XXL = "XXL";
+                                setState(() {
+                                  searchController.sizeSearch = "Size:" +
+                                      XS +
+                                      "," +
+                                      S +
+                                      "," +
+                                      M +
+                                      "," +
+                                      L +
+                                      "," +
+                                      XL +
+                                      "," +
+                                      XXL;
+                                  chooseXXL = true;
+                                  print(chooseXXL);
+                                });
+                              } else {
+                                XXL = "";
+                                setState(() {
+                                  searchController.sizeSearch = "Size:" +
+                                      XS +
+                                      "," +
+                                      S +
+                                      "," +
+                                      M +
+                                      "," +
+                                      L +
+                                      "," +
+                                      XL +
+                                      "," +
+                                      XXL;
+                                  chooseXXL = false;
+                                  print(chooseXXL);
+                                });
+                              }
+                              print(searchController.sizeSearch);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -498,14 +496,14 @@ class _SearchScreenState extends State<SearchScreen> {
                           items: sortFilter
                               .map<DropdownMenuItem<Map<String, String>>>(
                                   (Map<String, String> value) {
-                            return DropdownMenuItem<Map<String, String>>(
-                              value: value,
-                              child: Text(
-                                "${value.keys.first}",
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            );
-                          }).toList(),
+                                return DropdownMenuItem<Map<String, String>>(
+                                  value: value,
+                                  child: Text(
+                                    "${value.keys.first}",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                );
+                              }).toList(),
                           onChanged: (Map<String, String>? value) {
                             setState(() {
                               chooseDropDownSortValue = value;
@@ -526,14 +524,14 @@ class _SearchScreenState extends State<SearchScreen> {
                           items: descendingFilter
                               .map<DropdownMenuItem<Map<String, bool>>>(
                                   (Map<String, bool> value) {
-                            return DropdownMenuItem<Map<String, bool>>(
-                              value: value,
-                              child: Text(
-                                "${value.keys.first}",
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            );
-                          }).toList(),
+                                return DropdownMenuItem<Map<String, bool>>(
+                                  value: value,
+                                  child: Text(
+                                    "${value.keys.first}",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                );
+                              }).toList(),
                           onChanged: (Map<String, bool>? value) {
                             setState(() {
                               chooseDropDownValue = value;
@@ -555,26 +553,29 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ),
             Obx(
-              () => Expanded(
+                  () => Expanded(
                 child: Container(
                   padding: const EdgeInsets.all(5.0),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                  ),
                   child: SahaSimmer(
                     isLoading: searchController.isLoadingProduct.value,
-                    child: StaggeredGridView.countBuilder(
+                    child: searchController.listProduct.isNotEmpty
+                        ? StaggeredGridView.countBuilder(
                       crossAxisCount: 2,
                       itemCount: searchController.listProduct.length,
                       itemBuilder: (BuildContext context, int index) =>
                           ProductItemWidget(
-                        product: searchController.listProduct[index],
-                        isLoading: searchController.isLoadingProduct.value,
-                      ),
+                            product: searchController.listProduct[index],
+                            isLoading:
+                            searchController.isLoadingProduct.value,
+                          ),
                       staggeredTileBuilder: (int index) =>
-                          new StaggeredTile.fit(1),
+                      new StaggeredTile.fit(1),
                       mainAxisSpacing: 0,
                       crossAxisSpacing: 0,
+                    )
+                        : SahaEmptyProducts(
+                      width: 50,
+                      height: 50,
                     ),
                   ),
                 ),
