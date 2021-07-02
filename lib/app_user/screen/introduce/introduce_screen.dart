@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/app_user/screen/login/loginScreen.dart';
+import 'package:sahashop_user/app_user/screen/login/login_screen.dart';
 
 import '../../const/constant.dart';
 

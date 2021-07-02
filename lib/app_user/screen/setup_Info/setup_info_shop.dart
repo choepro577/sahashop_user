@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/app_user/components/saha_user/dialog/dialog.dart';
@@ -9,7 +8,7 @@ import 'package:sahashop_user/app_user/components/saha_user/text_field/sahashopT
 import 'package:sahashop_user/app_user/data/remote/response-request/store/type_store_respones.dart';
 import 'package:sahashop_user/app_user/utils/keyboard.dart';
 import 'package:sahashop_user/app_user/screen/home/home_screen.dart';
-import 'package:sahashop_user/app_user/screen/sign_up/signUpScreen_controller.dart';
+import 'package:sahashop_user/app_user/screen/sign_up/sign_up_screen_controller.dart';
 
 import 'setup_info_shop_controller.dart';
 
@@ -50,12 +49,12 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
     sub ??= setUpInfoShopController.stateCreate.listen((state) {
       if (state != "success") {
         SahaDialogApp.showDialogError(context: context, errorMess: state);
-        EasyLoading.dismiss();
+
       }
 
       if (state == "success") {
         Get.offAll(HomeScreen());
-        EasyLoading.dismiss();
+
       }
     });
   }
@@ -171,7 +170,7 @@ class _SetUpInfoShopState extends State<SetUpInfoShop> {
                         _chosenValue,
                         textEditingControllerNameShop.text +
                             signUpController.shopPhones.toString());
-                    EasyLoading.show();
+
                   }
                 },
                 style: ButtonStyle(),

@@ -1,7 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_user/const/const_database_shared_preferences.dart';
-import 'package:sahashop_user/app_user/screen/login/loginScreen.dart';
+import 'package:sahashop_user/app_user/screen/login/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserInfo {

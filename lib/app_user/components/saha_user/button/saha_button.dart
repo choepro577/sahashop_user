@@ -65,9 +65,11 @@ class SahaButtonSizeChild extends StatelessWidget {
   final String? text;
   final Color? textColor;
   final Color? color;
+  final double? width;
+  final double? height;
 
   const SahaButtonSizeChild(
-      {Key? key, this.onPressed, this.text, this.textColor, this.color})
+      {Key? key, this.onPressed, this.text, this.textColor, this.color, this.width, this.height})
       : super(key: key);
 
   @override
@@ -76,6 +78,8 @@ class SahaButtonSizeChild extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 8),
       child: MaterialButton(
+        minWidth: width,
+        height: height,
         padding: EdgeInsets.only(top: 15, bottom: 15),
         color: onPressed == null ? Colors.grey : (color ?? SahaPrimaryColor),
         onPressed: () {

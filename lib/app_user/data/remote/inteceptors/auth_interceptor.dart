@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 
 import 'package:get/get.dart' as get2;
 import 'package:sahashop_user/app_user/components/saha_user/dialog/dialog.dart';
-import 'package:sahashop_user/app_user/screen/login/loginScreen.dart';
+import 'package:sahashop_user/app_user/screen/login/login_screen.dart';
 import 'package:sahashop_user/app_user/utils/msg_code.dart';
 import 'package:sahashop_user/app_user/utils/user_info.dart';
 
