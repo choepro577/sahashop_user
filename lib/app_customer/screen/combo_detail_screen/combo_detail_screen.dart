@@ -68,9 +68,7 @@ class ComboDetailScreen extends StatelessWidget {
                     Get.to(() => CartScreen1());
                   }),
               Obx(
-                () => comboDetailController
-                            .dataAppCustomerController.listOrder.length !=
-                        0
+                () => comboDetailController.cartController.listOrder.length != 0
                     ? Positioned(
                         top: 5,
                         right: 5,
@@ -84,7 +82,7 @@ class ComboDetailScreen extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              "${comboDetailController.dataAppCustomerController.listOrder.length}",
+                              "${comboDetailController.cartController.listOrder.length}",
                               style: TextStyle(
                                 fontSize: 10,
                                 height: 1,

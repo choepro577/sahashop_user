@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/repository/repository_customer.dart';
+import 'package:sahashop_user/app_customer/screen/cart_screen/cart_controller.dart';
 import 'package:sahashop_user/app_customer/screen/cart_screen/cart_screen_1.dart';
 import 'package:sahashop_user/app_user/data/example/product.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
@@ -27,10 +28,11 @@ class ProductController extends GetxController {
   var averagedStars = 0.0.obs;
   var totalReview = 0.obs;
   var listReview = RxList<Review>();
-  var listImageReviewOfCustomer = RxList<List<String>>();
+  var listImageReviewOfCustomer = RxList<List<dynamic>>([]);
   var listAllImageReview = RxList<String>();
 
   DataAppCustomerController dataAppCustomerController = Get.find();
+  CartController cartController = Get.find();
 
   ProductController() {
     productInput = dataAppCustomerController.productCurrent;
@@ -115,9 +117,9 @@ class ProductController extends GetxController {
       listReview(data.data!.data);
       listReview.forEach((review) {
         try {
-          listImageReviewOfCustomer.addAll(jsonDecode(review.images!));
+          listImageReviewOfCustomer.add(jsonDecode(review.images!));
         } catch (err) {
-          listImageReviewOfCustomer.addAll([]);
+          listImageReviewOfCustomer.add([]);
         }
       });
       listImageReviewOfCustomer.forEach((listImage) {
@@ -148,16 +150,26 @@ class ProductController extends GetxController {
   }
 
   void addItemCart() {
-    dataAppCustomerController.addItemCart(productShow.value.id);
+    cartController.addItemCart(productShow.value.id);
   }
 
-  void addManyItemOrUpdate(
+  Future<void> addManyItemOrUpdate(
       {int? quantity,
       bool? buyNow,
       List<DistributesSelected>? distributesSelected,
-      int? productId}) {
-    dataAppCustomerController.updateItemCart(
-        productId, quantity!, distributesSelected!.toList());
+      int? productId}) async {
+    var index = cartController.listOrder
+        .indexWhere((element) => element.product!.id == productId);
+
+    if (index != -1) {
+      await cartController.updateItemCart(
+          productId,
+          cartController.listQuantityProduct[index] + quantity!,
+          distributesSelected!.toList());
+    } else {
+      await cartController.updateItemCart(
+          productId, quantity!, distributesSelected!.toList());
+    }
 
     Get.back();
     if (buyNow == true) {

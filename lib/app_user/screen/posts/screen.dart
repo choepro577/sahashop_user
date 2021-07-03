@@ -21,7 +21,9 @@ class PostNaviScreen extends StatelessWidget {
           itemList(
               title: "Danh mục bài viết",
               onPress: () {
-                Get.to(() => CategoryPostScreen());
+                Get.to(() => CategoryPostScreen(
+                      isSelect: false,
+                    ));
               }),
         ],
       ),

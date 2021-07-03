@@ -9,7 +9,6 @@ import 'package:sahashop_user/app_user/model/product.dart';
 import 'package:sahashop_user/app_user/utils/image_utils.dart';
 
 class AddCategoryPostController extends GetxController {
-  Product productRequest = new Product();
   var isLoadingAdd = false.obs;
 
   final TextEditingController textEditingControllerTitle =
@@ -28,7 +27,7 @@ class AddCategoryPostController extends GetxController {
     isLoadingAdd.value = true;
     try {
       var imageUp;
-      if(image != null) {
+      if (image != null) {
         imageUp = await ImageUtils.getImageCompress(image!);
       }
 

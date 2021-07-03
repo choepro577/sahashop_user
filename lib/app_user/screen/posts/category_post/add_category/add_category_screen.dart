@@ -75,7 +75,9 @@ class _AddCategoryPostScreenState extends State<AddCategoryPostScreen> {
                         child: Row(
                           children: [
                             SelectCategoryImage(
-                              linkImage: widget.category!.imageUrl,
+                              linkImage: widget.category == null
+                                  ? ""
+                                  : widget.category!.imageUrl,
                               onChange: (image) {
                                 addCategoryPostController.image = image;
                                 imageSelected = image;

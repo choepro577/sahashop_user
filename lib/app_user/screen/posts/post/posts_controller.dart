@@ -24,4 +24,14 @@ class PostController extends GetxController {
     }
     loading.value = false;
   }
+
+  Future<bool?> deletePost(int? postId) async {
+    try {
+      var list = await RepositoryManager.postRepository.deletePost(postId!);
+      SahaAlert.showSuccess(message: "Đã xóa");
+      return true;
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+  }
 }

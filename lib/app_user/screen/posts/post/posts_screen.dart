@@ -2,8 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/app_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/app_user/components/saha_user/button/saha_button.dart';
+import 'package:sahashop_user/app_user/components/saha_user/dialog/dialog.dart';
 import 'package:sahashop_user/app_user/components/saha_user/empty_widget/empty_widget.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_full_screen.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_widget.dart';
@@ -45,6 +47,8 @@ class PostScreen extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 return ItemPostWidget(
                                   post: list[index],
+                                  isFix: true,
+                                  postController: postController,
                                 );
                               });
                         }),
@@ -70,25 +74,48 @@ class PostScreen extends StatelessWidget {
 }
 
 class ItemPostWidget extends StatelessWidget {
+  final Function? onTap;
+  final bool? isFix;
+  final PostController? postController;
   final Post? post;
 
-  const ItemPostWidget({Key? key, this.post}) : super(key: key);
+  const ItemPostWidget(
+      {Key? key, this.post, this.onTap, this.isFix, this.postController})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ListTile(
-        leading: CachedNetworkImage(
-          height: 60,
-          width: 60,
-          fit: BoxFit.cover,
-          imageUrl: post!.imageUrl ?? "",
-          placeholder: (context, url) => new SahaLoadingWidget(
-            size: 30,
+          onTap: () {
+            if (isFix!) {
+              Get.to(AddPostScreen(post: post))!.then((value) {
+                if (value == "added") {
+                  postController!.getAllPost();
+                }
+              });
+            }
+          },
+          leading: CachedNetworkImage(
+            height: 60,
+            width: 60,
+            fit: BoxFit.cover,
+            imageUrl: post!.imageUrl ?? "",
+            placeholder: (context, url) => new SahaLoadingWidget(
+              size: 30,
+            ),
+            errorWidget: (context, url, error) => SahaEmptyImage(),
           ),
-          errorWidget: (context, url, error) => new Icon(Icons.error),
-        ),
-        title: Text(post!.title ?? ""),
-      ),
+          title: Text(post!.title ?? ""),
+          trailing: IconButton(
+              icon: Icon(Icons.delete_rounded),
+              onPressed: () {
+                SahaDialogApp.showDialogYesNo(
+                    mess: "Bạn muốn xóa danh mục này?",
+                    onOK: () {
+                      postController!.deletePost(post!.id!);
+                      postController!.getAllPost();
+                    });
+              })),
     );
   }
 }

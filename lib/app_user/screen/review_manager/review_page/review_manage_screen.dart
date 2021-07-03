@@ -18,7 +18,7 @@ class _ReviewManageScreenState extends State<ReviewManageScreen>
   bool get wantKeepAlive => true;
   final PageStorageBucket bucket = PageStorageBucket();
   ReviewManagerController reviewManagerController =
-      new ReviewManagerController();
+      Get.put(ReviewManagerController());
 
   final List<Widget> pages = <Widget>[
     StarPageManage(
@@ -98,6 +98,12 @@ class _ReviewManageScreenState extends State<ReviewManageScreen>
                             width: Get.width / 2 - 10,
                             decoration: BoxDecoration(
                               color: Colors.grey[200],
+                              border: Border.all(
+                                  color: reviewManagerController
+                                              .currentIndexReview.value ==
+                                          0
+                                      ? Theme.of(context).primaryColor
+                                      : Colors.transparent),
                               borderRadius: BorderRadius.all(
                                 Radius.circular(3),
                               ),
@@ -128,7 +134,18 @@ class _ReviewManageScreenState extends State<ReviewManageScreen>
                           child: Container(
                             height: 35,
                             width: Get.width / 2 - 10,
-                            decoration: BoxDecoration(color: Colors.grey[200]),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              border: Border.all(
+                                  color: reviewManagerController
+                                              .currentIndexReview.value ==
+                                          1
+                                      ? Theme.of(context).primaryColor
+                                      : Colors.transparent),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(3),
+                              ),
+                            ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -192,8 +209,16 @@ class _ReviewManageScreenState extends State<ReviewManageScreen>
         width: Get.width / 5 - 10,
         margin: EdgeInsets.all(5),
         decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.all(Radius.circular(3))),
+          color: Colors.grey[200],
+          border: Border.all(
+              color:
+                  reviewManagerController.currentIndexReview.value == index + 2
+                      ? Theme.of(context).primaryColor
+                      : Colors.transparent),
+          borderRadius: BorderRadius.all(
+            Radius.circular(3),
+          ),
+        ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

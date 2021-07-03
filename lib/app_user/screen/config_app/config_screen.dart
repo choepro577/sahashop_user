@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/run_app.dart';
 import 'package:sahashop_user/app_customer/screen/data_app_controller.dart';
-import 'package:sahashop_user/app_customer/utils/thread_data.dart';
 import 'package:sahashop_user/app_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/app_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_full_screen.dart';
@@ -20,7 +19,6 @@ class ConfigScreen extends StatelessWidget {
   UIDataConfig uiDataConfig = new UIDataConfig();
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: SahaAppBar(
           titleText: 'Chỉnh sửa giao diện',
@@ -84,7 +82,8 @@ class ConfigScreen extends StatelessWidget {
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            uiDataConfig.UIData[configController
+                                            uiDataConfig
+                                                .UIData[configController
                                                     .indexTab.value]
                                                 .name!,
                                             style: TextStyle(
@@ -95,11 +94,13 @@ class ConfigScreen extends StatelessWidget {
                                         ],
                                       ),
                                     ),
-                                    uiDataConfig.UIData[configController
+                                    uiDataConfig
+                                                    .UIData[configController
                                                         .indexTab.value]
                                                     .listChildConfig ==
                                                 null ||
-                                        uiDataConfig.UIData[configController
+                                            uiDataConfig
+                                                    .UIData[configController
                                                         .indexTab.value]
                                                     .listChildConfig!
                                                     .length ==
@@ -110,9 +111,9 @@ class ConfigScreen extends StatelessWidget {
                                         : Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
-                                            children: uiDataConfig.UIData[
-                                                    configController
-                                                        .indexTab.value]
+                                            children: uiDataConfig
+                                                .UIData[configController
+                                                    .indexTab.value]
                                                 .listChildConfig!
                                                 .map(
                                                   (e) => e.editWidget == null

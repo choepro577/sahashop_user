@@ -4,6 +4,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../components/modal/modal_bottom_option_buy_product.dart';
@@ -280,30 +281,28 @@ class ProductScreen1 extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      SvgPicture.asset(
-                                          "assets/icons/star_around.svg"),
-                                      SizedBox(
-                                        width: 4,
+                                      RatingBarIndicator(
+                                        rating: productController
+                                                    .averagedStars.value ==
+                                                0
+                                            ? 5
+                                            : productController
+                                                .averagedStars.value,
+                                        itemBuilder: (context, index) => Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                        ),
+                                        itemCount: 5,
+                                        itemSize: 15.0,
+                                        direction: Axis.horizontal,
                                       ),
-                                      SvgPicture.asset(
-                                          "assets/icons/star_around.svg"),
-                                      SizedBox(
-                                        width: 4,
-                                      ),
-                                      SvgPicture.asset(
-                                          "assets/icons/star_around.svg"),
-                                      SizedBox(
-                                        width: 4,
-                                      ),
-                                      SvgPicture.asset(
-                                          "assets/icons/star_around.svg"),
-                                      SizedBox(width: 4),
-                                      SvgPicture.asset(
-                                          "assets/icons/star_around.svg"),
                                       SizedBox(
                                         width: 10,
                                       ),
-                                      Text("69"),
+                                      if (productController.totalReview.value !=
+                                          0)
+                                        Text(
+                                            "${productController.totalReview.value}"),
                                       SizedBox(
                                         width: 10,
                                       ),
@@ -594,7 +593,7 @@ class ProductScreen1 extends StatelessWidget {
                                               var controller =
                                                   ExpandableController.of(
                                                       context,
-                                                      required: true)!;
+                                                      required: false)!;
                                               return Container(
                                                 width: Get.width * 0.9,
                                                 child: TextButton(
@@ -632,12 +631,15 @@ class ProductScreen1 extends StatelessWidget {
                                   ? 0
                                   : productController.productInput!.id,
                               averagedStars:
-                                  productController.averagedStars.value,
+                                  productController.averagedStars.value == 0
+                                      ? 5
+                                      : productController.averagedStars.value,
                               totalReview: productController.totalReview.value,
                               listAllImage:
                                   productController.listAllImageReview,
                               listReview: productController.listReview,
-                              listImageReviewOfCustomer: [],
+                              listImageReviewOfCustomer:
+                                  productController.listImageReviewOfCustomer,
                             ),
                             Divider(
                               height: 1,
@@ -738,35 +740,34 @@ class ProductScreen1 extends StatelessWidget {
                       ),
                     ),
                     Obx(
-                      () => productController
-                                  .dataAppCustomerController.listOrder.length !=
-                              0
-                          ? Positioned(
-                              top: -3,
-                              right: 0,
-                              child: Container(
-                                height: 16,
-                                width: 16,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFFF4848),
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                      width: 1.5, color: Colors.white),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "${productController.dataAppCustomerController.listOrder.length}",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      height: 1,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white,
+                      () =>
+                          productController.cartController.listOrder.length != 0
+                              ? Positioned(
+                                  top: -3,
+                                  right: 0,
+                                  child: Container(
+                                    height: 16,
+                                    width: 16,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFFF4848),
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          width: 1.5, color: Colors.white),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "${productController.cartController.listOrder.length}",
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          height: 1,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            )
-                          : Container(),
+                                )
+                              : Container(),
                     )
                   ],
                 ),

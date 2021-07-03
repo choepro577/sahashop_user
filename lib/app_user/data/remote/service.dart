@@ -50,6 +50,7 @@ import 'response-request/post/all_category_post_response.dart';
 import 'response-request/post/create_category_post_response.dart';
 import 'response-request/post/create_post_response.dart';
 import 'response-request/post/delete_category_post_response.dart';
+import 'response-request/post/delete_post_response.dart';
 import 'response-request/post/update_category_post_response.dart';
 import 'response-request/product/all_product_response.dart';
 import 'response-request/product/product_delete_response.dart';
@@ -156,6 +157,8 @@ abstract class SahaService {
   Future<UpdateDeviceTokenResponse> updateDeviceTokenUser(
       @Body() Map<String, dynamic> body);
 
+  /// post
+
   @POST("store/{storeCode}/post_categories")
   @FormUrlEncoded()
   Future<CreateCategoryPostResponse> createCategoryPost(
@@ -181,6 +184,16 @@ abstract class SahaService {
   @FormUrlEncoded()
   Future<CreatePostResponse> createPost(
       @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
+
+  @POST("store/{storeCode}/posts/{postId}")
+  Future<CreatePostResponse> updatePost(@Path("storeCode") String? storeCode,
+      @Path("postId") int? postId, @Body() Map<String, dynamic> body);
+
+  @DELETE("store/{storeCode}/posts/{postId}")
+  Future<DeletePostResponse> deletePost(
+    @Path("storeCode") String? storeCode,
+    @Path("postId") int? postId,
+  );
 
   @GET("store/{storeCode}/posts")
   Future<AllPostResponse> getAllPost(@Path("storeCode") String? storeCode);

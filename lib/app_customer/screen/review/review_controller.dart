@@ -61,6 +61,7 @@ class ReviewController extends GetxController {
       var data = await CustomerRepositoryManager.reviewCustomerRepository
           .review(idProduct, orderCode, star, content, images);
     } catch (err) {
+      print("ssss");
       SahaAlert.showError(message: err.toString());
     }
   }

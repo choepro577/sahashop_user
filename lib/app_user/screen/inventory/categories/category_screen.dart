@@ -64,9 +64,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       children: [
                         Expanded(
                           child: Obx(() {
-                            var list = categoryController.listCategory
-                                .toList()
-                                .reversed
+                            var list = categoryController.listCategory.reversed
                                 .toList();
                             if (list == null || list.length == 0) {
                               return SahaEmptyWidget(

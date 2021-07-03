@@ -1,12 +1,12 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_customer/screen/cart_screen/cart_controller.dart';
+import 'package:sahashop_user/app_customer/screen/data_app_controller.dart';
 import '../../screen/choose_voucher/choose_voucher_customer_screen.dart';
 import '../../screen/combo_detail_screen/combo_detail_screen.dart';
 import '../../screen/confirm_screen/confirm_screen.dart';
-import '../../screen/data_app_controller.dart';
 import 'package:sahashop_user/app_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/app_user/components/saha_user/switch_button/switch_button.dart';
 import 'package:sahashop_user/app_user/components/saha_user/text/text_money.dart';
@@ -15,11 +15,22 @@ import 'package:sahashop_user/app_user/utils/string_utils.dart';
 import 'widget/item_product.dart';
 
 // ignore: must_be_immutable
-class CartScreen1 extends StatelessWidget {
+class CartScreen1 extends StatefulWidget {
   CartScreen1({Key? key}) : super(key: key);
 
-  DataAppCustomerController dataAppCustomerController = Get.find()
-    ..checkLoginToCartScreen();
+  @override
+  _CartScreen1State createState() => _CartScreen1State();
+}
+
+class _CartScreen1State extends State<CartScreen1> {
+  CartController cartController = Get.find();
+  DataAppCustomerController dataAppCustomerController = Get.find();
+
+  @override
+  void initState() {
+    cartController.checkLoginToCartScreen();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +44,7 @@ class CartScreen1 extends StatelessWidget {
             ),
             Obx(
               () => Text(
-                "${dataAppCustomerController.listOrder.length} sản phẩm",
+                "${cartController.listOrder.length} sản phẩm",
                 style: TextStyle(fontSize: 12),
               ),
             ),
@@ -44,11 +55,11 @@ class CartScreen1 extends StatelessWidget {
         () => Column(
           children: [
             ...List.generate(
-              dataAppCustomerController.listCombo.length,
+              cartController.listCombo.length,
               (index) => InkWell(
                 onTap: () {
                   Get.to(() => ComboDetailScreen(
-                      idProduct: dataAppCustomerController
+                      idProduct: cartController
                           .listCombo[index].productsCombo![0].product!.id));
                 },
                 child: Padding(
@@ -70,7 +81,7 @@ class CartScreen1 extends StatelessWidget {
                                 width: 3,
                               ),
                               Text(
-                                "Combo ${dataAppCustomerController.listCombo[index].name}",
+                                "Combo ${cartController.listCombo[index].name}",
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontSize: 12,
@@ -86,25 +97,24 @@ class CartScreen1 extends StatelessWidget {
                       SizedBox(
                         width: 5,
                       ),
-                      dataAppCustomerController.enoughCondition[index] == true
+                      cartController.enoughCondition[index] == true
                           ? Row(
                               children: [
                                 Text(
                                   "Đã giảm ",
                                   style: TextStyle(fontSize: 13),
                                 ),
-                                dataAppCustomerController
-                                            .listCombo[index].discountType ==
+                                cartController.listCombo[index].discountType ==
                                         0
                                     ? SahaMoneyText(
-                                        price: dataAppCustomerController
+                                        price: cartController
                                             .listCombo[index].valueDiscount!
                                             .toDouble(),
                                         sizeText: 12,
                                         sizeVND: 10,
                                       )
                                     : Text(
-                                        "${dataAppCustomerController.listCombo[index].valueDiscount!.toDouble()}%",
+                                        "${cartController.listCombo[index].valueDiscount!.toDouble()}%",
                                         style: TextStyle(fontSize: 12),
                                       )
                               ],
@@ -132,31 +142,28 @@ class CartScreen1 extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: ListView.builder(
-                    itemCount: dataAppCustomerController.listOrder.length,
+                    itemCount: cartController.listOrder.length,
                     itemBuilder: (context, index) => ItemProductInCartWidget(
-                          lineItem: dataAppCustomerController.listOrder[index],
+                          lineItem: cartController.listOrder[index],
                           onDismissed: () {
-                            dataAppCustomerController.updateItemCart(
-                                dataAppCustomerController
-                                    .listOrder[index].product!.id,
-                                0,
-                                []);
+                            cartController.updateItemCart(
+                                cartController.listOrder[index].product!.id,
+                                0, []);
+                            dataAppCustomerController.getBadge();
                           },
                           onDecreaseItem: () {
-                            dataAppCustomerController.decreaseItem(index);
+                            cartController.decreaseItem(index);
                           },
                           onIncreaseItem: () {
-                            dataAppCustomerController.increaseItem(index);
+                            cartController.increaseItem(index);
                           },
                           onUpdateProduct: (quantity, distributesSelected) {
-                            dataAppCustomerController.updateItemCart(
-                                dataAppCustomerController
-                                    .listOrder[index].product!.id,
+                            cartController.updateItemCart(
+                                cartController.listOrder[index].product!.id,
                                 quantity,
                                 distributesSelected);
                           },
-                          quantity: dataAppCustomerController
-                              .listQuantityProduct[index],
+                          quantity: cartController.listQuantityProduct[index],
                         )),
               ),
             ),
@@ -202,14 +209,12 @@ class CartScreen1 extends StatelessWidget {
                       Text("Voucher"),
                       Spacer(),
                       Obx(
-                        () =>
-                            dataAppCustomerController.voucherCodeChoose.value ==
-                                    ""
-                                ? Text("Chọn hoặc nhập mã")
-                                : Text(
-                                    "Mã: ${dataAppCustomerController.voucherCodeChoose.value} - đ${SahaStringUtils().convertToMoney(dataAppCustomerController.voucherDiscountAmount.value)}",
-                                    style: TextStyle(fontSize: 13),
-                                  ),
+                        () => cartController.voucherCodeChoose.value == ""
+                            ? Text("Chọn hoặc nhập mã")
+                            : Text(
+                                "Mã: ${cartController.voucherCodeChoose.value} - đ${SahaStringUtils().convertToMoney(cartController.voucherDiscountAmount.value)}",
+                                style: TextStyle(fontSize: 13),
+                              ),
                       ),
                       const SizedBox(width: 10),
                       Icon(
@@ -304,7 +309,7 @@ class CartScreen1 extends StatelessWidget {
                                             children: [
                                               Text("Tạm tính"),
                                               Text(
-                                                  "${SahaStringUtils().convertToMoney(dataAppCustomerController.totalBeforeDiscount.value)} đ"),
+                                                  "${SahaStringUtils().convertToMoney(cartController.totalBeforeDiscount.value)} đ"),
                                             ],
                                           ),
                                         ),
@@ -316,7 +321,7 @@ class CartScreen1 extends StatelessWidget {
                                             children: [
                                               Text("Giảm giá Sản phẩm"),
                                               Text(
-                                                  "- ${SahaStringUtils().convertToMoney(dataAppCustomerController.productDiscountAmount.value)} đ"),
+                                                  "- ${SahaStringUtils().convertToMoney(cartController.productDiscountAmount.value)} đ"),
                                             ],
                                           ),
                                         ),
@@ -328,7 +333,7 @@ class CartScreen1 extends StatelessWidget {
                                             children: [
                                               Text("Giảm giá Voucher"),
                                               Text(
-                                                  "- ${SahaStringUtils().convertToMoney(dataAppCustomerController.voucherDiscountAmount.value)} đ"),
+                                                  "- ${SahaStringUtils().convertToMoney(cartController.voucherDiscountAmount.value)} đ"),
                                             ],
                                           ),
                                         ),
@@ -340,7 +345,7 @@ class CartScreen1 extends StatelessWidget {
                                             children: [
                                               Text("Giảm giá Combo"),
                                               Text(
-                                                  "- ${SahaStringUtils().convertToMoney(dataAppCustomerController.comboDiscountAmount.value)} đ"),
+                                                  "- ${SahaStringUtils().convertToMoney(cartController.comboDiscountAmount.value)} đ"),
                                             ],
                                           ),
                                         ),
@@ -352,7 +357,7 @@ class CartScreen1 extends StatelessWidget {
                                             children: [
                                               Text("Tổng giảm"),
                                               Text(
-                                                  "- ${SahaStringUtils().convertToMoney(dataAppCustomerController.productDiscountAmount.value + dataAppCustomerController.voucherDiscountAmount.value + dataAppCustomerController.comboDiscountAmount.value)} đ"),
+                                                  "- ${SahaStringUtils().convertToMoney(cartController.productDiscountAmount.value + cartController.voucherDiscountAmount.value + cartController.comboDiscountAmount.value)} đ"),
                                             ],
                                           ),
                                         ),
@@ -367,7 +372,7 @@ class CartScreen1 extends StatelessWidget {
                                             children: [
                                               Text("Tổng tiền"),
                                               Text(
-                                                  "${SahaStringUtils().convertToMoney(dataAppCustomerController.totalMoneyAfterDiscount.value)} đ"),
+                                                  "${SahaStringUtils().convertToMoney(cartController.totalMoneyAfterDiscount.value)} đ"),
                                             ],
                                           ),
                                         ),
@@ -426,7 +431,7 @@ class CartScreen1 extends StatelessWidget {
                               ),
                               Obx(
                                 () => Text(
-                                  "${SahaStringUtils().convertToMoney(dataAppCustomerController.totalMoneyAfterDiscount.value)} đ",
+                                  "${SahaStringUtils().convertToMoney(cartController.totalMoneyAfterDiscount.value)} đ",
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.red,
@@ -445,7 +450,7 @@ class CartScreen1 extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Text(
-                                    "Khuyến mãi: ${SahaStringUtils().convertToMoney(dataAppCustomerController.totalBeforeDiscount.value - dataAppCustomerController.totalMoneyAfterDiscount.value)} đ",
+                                    "Khuyến mãi: ${SahaStringUtils().convertToMoney(cartController.totalBeforeDiscount.value - cartController.totalMoneyAfterDiscount.value)} đ",
                                     style: TextStyle(
                                         fontSize: 10,
                                         color: Colors.red,
@@ -466,19 +471,54 @@ class CartScreen1 extends StatelessWidget {
                     SizedBox(
                       width: 20,
                     ),
-                    dataAppCustomerController.listOrder.length != 0
-                        ? InkWell(
-                            onTap: () {
-                              if (dataAppCustomerController.listOrder.length !=
-                                  0) {
-                                Get.to(() => ConfirmScreen());
-                              }
-                            },
-                            child: Container(
+                    Obx(
+                      () => cartController.listOrder.length != 0
+                          ? InkWell(
+                              onTap: () {
+                                if (cartController.listOrder.length != 0) {
+                                  Get.to(() => ConfirmScreen());
+                                }
+                              },
+                              child: Container(
+                                width: 120,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Đặt hàng ",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Theme.of(context)
+                                              .primaryTextTheme
+                                              .headline6!
+                                              .color,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Obx(
+                                      () => Text(
+                                        "(${cartController.listOrder.length})",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Theme.of(context)
+                                              .primaryTextTheme
+                                              .headline6!
+                                              .color,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : Container(
                               width: 120,
                               height: 50,
                               decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor,
+                                color: Colors.grey[200],
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -487,56 +527,22 @@ class CartScreen1 extends StatelessWidget {
                                     "Đặt hàng ",
                                     style: TextStyle(
                                         fontSize: 16,
-                                        color: Theme.of(context)
-                                            .primaryTextTheme
-                                            .headline6!
-                                            .color,
+                                        color: Colors.grey,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Obx(
                                     () => Text(
-                                      "(${dataAppCustomerController.listOrder.length})",
+                                      "(${cartController.listOrder.length})",
                                       style: TextStyle(
                                         fontSize: 14,
-                                        color: Theme.of(context)
-                                            .primaryTextTheme
-                                            .headline6!
-                                            .color,
+                                        color: Colors.grey,
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                          )
-                        : Container(
-                            width: 120,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Đặt hàng ",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Obx(
-                                  () => Text(
-                                    "(${dataAppCustomerController.listOrder.length})",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                    )
                   ],
                 ),
               ),

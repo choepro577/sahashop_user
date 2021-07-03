@@ -20,6 +20,7 @@ class ReviewManagerController extends GetxController {
 
   Future<void> getReviewProduct() async {
     isLoading.value = true;
+    listStarOneToFive([]);
     try {
       var data = await RepositoryManager.reviewRepository.getReviewManage(
         "",

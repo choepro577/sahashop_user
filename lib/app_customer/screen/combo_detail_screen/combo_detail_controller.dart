@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_customer/screen/cart_screen/cart_controller.dart';
 import '../../repository/repository_customer.dart';
-import '../../screen/data_app_controller.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/app_user/model/combo.dart';
 
@@ -12,11 +12,11 @@ class ComboDetailController extends GetxController {
   var hadEnough = false.obs;
   int? idProduct;
 
-  DataAppCustomerController dataAppCustomerController = Get.find();
+  CartController cartController = Get.find();
 
   ComboDetailController({this.idProduct}) {
     getComboCustomer();
-    dataAppCustomerController.listOrder.forEach((e) {
+    cartController.listOrder.forEach((e) {
       var checkHasInCombo = listProductCombo
           .indexWhere((element) => element.product!.id == e.product!.id);
       if (checkHasInCombo != -1) {
@@ -28,20 +28,20 @@ class ComboDetailController extends GetxController {
   }
 
   void checkProductInCombo() {
-    dataAppCustomerController.listOrder.listen(
+    cartController.listOrder.listen(
       (v) {
-        if (dataAppCustomerController.listOrder.length == 0) {
+        if (cartController.listOrder.length == 0) {
           for (int i = 0; i < listProductCombo.length; i++) {
             listQuantityProductNeedBuy[i] = listProductCombo[i].quantity!;
           }
         } else {
-          if (dataAppCustomerController.listOrder.length >=
-              listProductCombo.length) {
-            dataAppCustomerController.listOrder.forEach((e) {
-              var checkHasInCombo = listProductCombo
-                  .indexWhere((element) => element.product!.id == e.product!.id);
+          if (cartController.listOrder.length >= listProductCombo.length) {
+            cartController.listOrder.forEach((e) {
+              var checkHasInCombo = listProductCombo.indexWhere(
+                  (element) => element.product!.id == e.product!.id);
               if (checkHasInCombo != -1) {
-                if (listProductCombo[checkHasInCombo].quantity! >= e.quantity!) {
+                if (listProductCombo[checkHasInCombo].quantity! >=
+                    e.quantity!) {
                   listQuantityProductNeedBuy[checkHasInCombo] =
                       listProductCombo[checkHasInCombo].quantity! - e.quantity!;
                 }
@@ -49,16 +49,15 @@ class ComboDetailController extends GetxController {
             });
           } else {
             for (int i = 0; i < listProductCombo.length; i++) {
-              var checkHasInCombo = dataAppCustomerController.listOrder
-                  .indexWhere((element) =>
+              var checkHasInCombo = cartController.listOrder.indexWhere(
+                  (element) =>
                       element.product!.id == listProductCombo[i].product!.id);
               if (checkHasInCombo != -1) {
                 if (listProductCombo[i].quantity! >=
-                    dataAppCustomerController
-                        .listOrder[checkHasInCombo].quantity!) {
-                  listQuantityProductNeedBuy[i] = listProductCombo[i].quantity! -
-                      dataAppCustomerController
-                          .listOrder[checkHasInCombo].quantity!;
+                    cartController.listOrder[checkHasInCombo].quantity!) {
+                  listQuantityProductNeedBuy[i] =
+                      listProductCombo[i].quantity! -
+                          cartController.listOrder[checkHasInCombo].quantity!;
                 }
               } else {
                 listQuantityProductNeedBuy[i] = listProductCombo[i].quantity!;
@@ -94,7 +93,7 @@ class ComboDetailController extends GetxController {
             listQuantityProductNeedBuy.add(element.quantity!);
           });
 
-          dataAppCustomerController.listOrder.forEach((e) {
+          cartController.listOrder.forEach((e) {
             var checkHasInCombos = listProductCombo
                 .indexWhere((element) => element.product!.id == e.product!.id);
             if (checkHasInCombos != -1) {

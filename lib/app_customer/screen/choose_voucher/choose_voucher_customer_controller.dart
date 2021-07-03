@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_customer/screen/cart_screen/cart_controller.dart';
 import '../../repository/repository_customer.dart';
-import '../../screen/data_app_controller.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/app_user/model/voucher.dart';
 
@@ -11,7 +11,7 @@ class ChooseCustomerController extends GetxController {
   var voucherCodeChoose = "".obs;
   var codeVoucherEditingController = TextEditingController().obs;
 
-  DataAppCustomerController dataAppCustomerController = Get.find();
+  CartController cartController = Get.find();
 
   ChooseCustomerController() {
     getVoucherCustomer();
@@ -31,9 +31,9 @@ class ChooseCustomerController extends GetxController {
   }
 
   void enterCodeVoucher(BuildContext context) async {
-    await dataAppCustomerController
+    await cartController
         .addVoucherCart(codeVoucherEditingController.value.text);
-    if (dataAppCustomerController.voucherDiscountAmount.value == 0.0) {
+    if (cartController.voucherDiscountAmount.value == 0.0) {
       codeVoucherEditingController.value.text = "";
       codeVoucherEditingController.refresh();
       showDialog(
@@ -66,8 +66,8 @@ class ChooseCustomerController extends GetxController {
   }
 
   void checkConditionVoucher(BuildContext context) async {
-    await dataAppCustomerController.addVoucherCart(voucherCodeChoose.value);
-    if (dataAppCustomerController.voucherDiscountAmount.value == 0.0) {
+    await cartController.addVoucherCart(voucherCodeChoose.value);
+    if (cartController.voucherDiscountAmount.value == 0.0) {
       listChooseVoucher([]);
       listVoucher.forEach((element) {
         listChooseVoucher.add(false);
@@ -102,10 +102,9 @@ class ChooseCustomerController extends GetxController {
                   )
                 ],
               ));
-      dataAppCustomerController.voucherCodeChoose.value = "";
+      cartController.voucherCodeChoose.value = "";
     } else {
-      dataAppCustomerController.voucherCodeChoose.value =
-          voucherCodeChoose.value;
+      cartController.voucherCodeChoose.value = voucherCodeChoose.value;
       Get.back();
     }
   }

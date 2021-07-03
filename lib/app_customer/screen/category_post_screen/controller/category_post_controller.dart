@@ -37,7 +37,7 @@ class CategoryPostController extends GetxController {
   Future<void> getPostWithCategoryPost(int? idCategoryPost) async {
     try {
       var res = await CustomerRepositoryManager.postCustomerRepository
-          .searchPost(idCategory: idCategoryPost as String? ?? "");
+          .searchPost(idCategory: "${idCategoryPost ?? ""}");
       posts(res!);
     } catch (err) {
       print(err);
@@ -59,7 +59,7 @@ class CategoryPostController extends GetxController {
       if (categoryCurrent.value != null) {
         getPostWithCategoryPost(categoryCurrent.value.id);
       } else if (categories.length > 0) {
-        setCategoryPostCurrent(categories.value.toList()[0]);
+        setCategoryPostCurrent(categories.toList()[0]);
       }
     } catch (err) {
       print(err);

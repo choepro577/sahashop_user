@@ -14,6 +14,7 @@ class _SahaMainScreenState extends State<SahaMainScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
     loadInit(context);
   }
 

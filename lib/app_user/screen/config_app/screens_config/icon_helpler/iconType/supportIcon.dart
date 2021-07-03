@@ -111,7 +111,7 @@ class _SupportIconState extends State<SupportIcon> {
                 decoration: InputDecoration(
                   hintText: controller.configApp.contactEmail ?? "",
                 ),
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.emailAddress,
                 onChanged: (value) {
                   controller.configApp.contactEmail = value;
                 },
@@ -169,7 +169,7 @@ class _SupportIconState extends State<SupportIcon> {
                 decoration: InputDecoration(
                   hintText: controller.configApp.idFacebook ?? "",
                 ),
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.name,
                 onChanged: (value) {
                   controller.configApp.idFacebook = value;
                 },
@@ -226,7 +226,7 @@ class _SupportIconState extends State<SupportIcon> {
                 decoration: InputDecoration(
                   hintText: controller.configApp.idZalo ?? "",
                 ),
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.name,
                 onChanged: (value) {
                   controller.configApp.idZalo = value;
                 },

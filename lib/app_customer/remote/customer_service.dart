@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+
 import 'package:sahashop_user/app_customer/remote/response-request/login/exists_response.dart';
 import 'package:sahashop_user/app_customer/remote/response-request/success/success_response.dart';
+import 'package:sahashop_user/app_customer/remote/response-request/badge/badge_response.dart';
 import '../../app_customer/const/env.dart';
-
 import '../remote/post/all_category_post_response.dart';
 import '../remote/post/all_post_response.dart';
 import '../remote/response-request/address_customer/all_address_customer_response.dart';
@@ -38,6 +39,9 @@ import 'package:sahashop_user/app_user/model/cart.dart';
 
 import 'response-request/favorite/all_product_response.dart';
 import 'response-request/favorite/favorite_response.dart';
+import 'response-request/score/check_in_response.dart';
+import 'response-request/score/history_score_response.dart';
+import 'response-request/score/roll_call_response.dart';
 import 'response-request/search_history/add_history_search_response.dart';
 import 'response-request/search_history/all_search_history_response.dart';
 import 'response-request/search_history/search_history_response.dart';
@@ -274,5 +278,26 @@ abstract class CustomerService {
     @Query("filter_by") String filterBy,
     @Query("filter_by_value") String filterByValue,
     @Query("has_image") bool? hasImage,
+  );
+
+  /// Badge
+  @GET("{storeCode}/badges")
+  Future<BadgeResponse> getBadge(
+    @Path("storeCode") String? storeCode,
+  );
+
+  /// Score
+
+  @GET("{storeCode}/roll_calls")
+  Future<RollCallsResponse> getRollCall(
+    @Path("storeCode") String? storeCode,
+  );
+
+  @POST("{storeCode}/roll_calls/checkin")
+  Future<CheckInResponse> checkIn(@Path("storeCode") String? storeCode);
+
+  @GET("{storeCode}/score_history")
+  Future<HistoryScoreResponse> getScoreHistory(
+    @Path("storeCode") String? storeCode,
   );
 }
