@@ -12,6 +12,8 @@ import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dar
 import 'package:sahashop_user/app_user/controller/config_controller.dart';
 import 'package:get/get.dart';
 
+import 'reset_password/reset_password.dart';
+
 class LoginScreenCustomer extends StatelessWidget {
   @override
   ConfigController configController = Get.find();
@@ -38,8 +40,7 @@ class LoginScreenCustomer extends StatelessWidget {
                 height: 70,
                 width: 70,
                 child: CachedNetworkImage(
-                  imageUrl: configController.configApp.logoUrl ??
-                      "https://scontent.fhan4-1.fna.fbcdn.net/v/t1.6435-9/125256955_378512906934813_3986478930794925251_n.png?_nc_cat=108&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=uUCcbPvUrGYAX_8i3-1&_nc_ht=scontent.fhan4-1.fna&oh=5e3a391a8ec68f487149d6432595442c&oe=60D25ECA",
+                  imageUrl: configController.configApp.logoUrl ?? "",
                   fit: BoxFit.cover,
                 ),
               ),
@@ -51,7 +52,7 @@ class LoginScreenCustomer extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(
-                      Icons.person,
+                      Icons.phone,
                       color: Colors.grey,
                     ),
                     SizedBox(
@@ -65,7 +66,7 @@ class LoginScreenCustomer extends StatelessWidget {
                         decoration: InputDecoration(
                           isDense: true,
                           border: InputBorder.none,
-                          hintText: "Tài khoản",
+                          hintText: "Số điện thoại",
                         ),
                         style: TextStyle(fontSize: 15),
                         minLines: 1,
@@ -135,10 +136,15 @@ class LoginScreenCustomer extends StatelessWidget {
                         SizedBox(
                           width: 20,
                         ),
-                        Text(
-                          "Quên?",
-                          style:
-                              TextStyle(color: Theme.of(context).primaryColor),
+                        InkWell(
+                          onTap: () {
+                            Get.to(ResetPasswordScreen());
+                          },
+                          child: Text(
+                            "Quên?",
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                          ),
                         ),
                       ],
                     ),

@@ -11,6 +11,7 @@ import 'package:sahashop_user/app_user/screen/sign_up/sign_up_screen.dart';
 import 'package:sahashop_user/app_user/utils/keyboard.dart';
 import 'package:sahashop_user/app_user/screen/login/login_screen_controller.dart';
 import '../../const/constant.dart';
+import 'reset_password/reset_password.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -46,85 +47,89 @@ class _SignInState extends State<LoginScreen> {
           if (loginController.loginInputting.value == true) {
             return buildLoginInputScreen();
           }
-          return  Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Stack(
-                    children: [
-                      Image.asset(
-                        "assets/images/background_login.png",
-                        height: Get.height * 0.7,
-                        fit: BoxFit.fill,
-                        alignment: Alignment.center,
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Stack(
+                  children: [
+                    Image.asset(
+                      "assets/images/background_login.png",
+                      height: Get.height * 0.7,
+                      fit: BoxFit.fill,
+                      alignment: Alignment.center,
+                    ),
+                    PageIndicatorContainer(
+                      child: PageView(
+                        controller: controller,
+                        reverse: true,
+                        scrollDirection: Axis.horizontal,
+                        allowImplicitScrolling: true,
+                        children: <Widget>[
+                          buildPage(
+                              title: "Tạo và quản lý App bán hàng đơn giản",
+                              image: "assets/images/page_login/page1.png"),
+                          buildPage(
+                              title: "Chỉnh sửa giao diện",
+                              sub:
+                                  "Tùy chỉnh giao diện App bán hàng theo sở thích và thẩm mỹ của bạn",
+                              image: "assets/images/page_login/page2.png"),
+                          buildPage(
+                              title: "Tùy biến sản phẩm",
+                              sub: "Tự tay quản lý sản phẩm theo ý muốn",
+                              image: "assets/images/page_login/page3.png"),
+                          buildPage(
+                              title: "Chương trình khuyến mãi",
+                              sub:
+                                  "Thúc đẩy bán hàng với các chương trình khuyến mãi của bạn",
+                              image: "assets/images/page_login/page4.png"),
+                          buildPage(
+                              title: "Báo cáo thống kê",
+                              sub:
+                                  "Quản lý bán hàng thông minh với chức năng báo cáo biểu đồ rõ ràng",
+                              image: "assets/images/page_login/page5.png"),
+                        ],
                       ),
-                      PageIndicatorContainer(
-                        child: PageView(
-                          children: <Widget>[
-                            buildPage(
-                                title: "Tạo và quản lý App bán hàng đơn giản",
-                                image: "assets/images/page_login/page1.png"),
-                            buildPage(
-                                title: "Chỉnh sửa giao diện",
-                                sub:
-                                    "Tùy chỉnh giao diện App bán hàng theo sở thích và thẩm mỹ của bạn",
-                                image: "assets/images/page_login/page2.png"),
-                            buildPage(
-                                title: "Tùy biến sản phẩm",
-                                sub: "Tự tay quản lý sản phẩm theo ý muốn",
-                                image: "assets/images/page_login/page3.png"),
-                            buildPage(
-                                title: "Chương trình khuyến mãi",
-                                sub:
-                                    "Thúc đẩy bán hàng với các chương trình khuyến mãi của bạn",
-                                image: "assets/images/page_login/page4.png"),
-                            buildPage(
-                                title: "Báo cáo thống kê",
-                                sub:
-                                    "Quản lý bán hàng thông minh với chức năng báo cáo biểu đồ rõ ràng",
-                                image: "assets/images/page_login/page5.png"),
-                          ],
-                          controller: controller,
-                          reverse: true,
-                        ),
-                        align: IndicatorAlign.bottom,
-                        length: 5,
-                        indicatorColor: Colors.grey.withOpacity(0.7),
-                        indicatorSelectorColor: SahaPrimaryColor,
-                        indicatorSpace: 10.0,
-                      ),
-                    ],
-                  ),
+                      align: IndicatorAlign.bottom,
+                      length: 5,
+                      indicatorColor: Colors.grey.withOpacity(0.7),
+                      indicatorSelectorColor: SahaPrimaryColor,
+                      indicatorSpace: 5.0,
+                      shape: IndicatorShape.circle(size: 8),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 15),
-                Center(
-                  child: SahaButtonSizeChild(
-                    text: "Đăng nhập",
-                    width: 200,
-                    color: SahaPrimaryColor,
-                    onPressed: () {
-                      loginController.loginInputting.value = true;
-                    },
-                  ),
+              ),
+              SizedBox(height: 15),
+              Center(
+                child: SahaButtonSizeChild(
+                  text: "Đăng nhập",
+                  width: 200,
+                  color: SahaPrimaryColor,
+                  onPressed: () {
+                    loginController.loginInputting.value = true;
+                  },
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                SahaButtonSizeChild(width: 200, text: "Đăng ký",
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              SahaButtonSizeChild(
+                width: 200,
+                text: "Đăng ký",
                 color: Colors.grey[500],
                 onPressed: () {
                   Get.to(SignUpScreen());
                 },
-                ),
-                SizedBox(height: 40),
-                Text(
-                  "© 2021 SAHA TECHNOLOGY JSC",
-                  style: TextStyle(color: Colors.grey, fontSize: 12),
-                ),
-                SizedBox(height: 15),
-              ],
-            )
-          ;
+              ),
+              SizedBox(height: 40),
+              Text(
+                "© 2021 SAHA TECHNOLOGY JSC",
+                style: TextStyle(color: Colors.grey, fontSize: 12),
+              ),
+              SizedBox(height: 15),
+            ],
+          );
         },
       ),
     );
@@ -152,7 +157,6 @@ class _SignInState extends State<LoginScreen> {
               fontWeight: FontWeight.w600,
               fontSize: 20),
         ),
-
         Padding(
           padding: const EdgeInsets.all(20.0),
           child: Text(
@@ -193,11 +197,20 @@ class _SignInState extends State<LoginScreen> {
                     }
                     return null;
                   },
-                  textInputType: TextInputType.emailAddress,
+                  autoFocus: true,
+                  textInputType: TextInputType.number,
                   obscureText: false,
                   labelText: "Số điện thoại",
                   hintText: "Mời nhập số điện thoại",
-                  icon: Icon(Icons.email),
+                  withAsterisk: true,
+
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  child: Divider(
+                    height: 1,
+                    color: Colors.grey,
+                  ),
                 ),
                 SahaTextField(
                   controller: textEditingControllerPass,
@@ -208,14 +221,44 @@ class _SignInState extends State<LoginScreen> {
                     }
                     return null;
                   },
-                  textInputType: TextInputType.emailAddress,
-                  obscureText: false,
+                  textInputType: TextInputType.visiblePassword,
+                  obscureText: true,
+                  withAsterisk: true,
                   labelText: "Mật khẩu",
                   hintText: "Mời nhập mật khẩu",
                   icon: Icon(Icons.lock),
                 ),
-
-
+                Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  child: Divider(
+                    height: 1,
+                    color: Colors.grey,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: InkWell(
+                      onTap: () {
+                        Get.to(ResetPasswordScreen())!.then((mapData) {
+                          if (mapData["success"] != null) {
+                            textEditingControllerPhoneShop.text =
+                                mapData["phone"];
+                            textEditingControllerPass.text = mapData["pass"];
+                            _formKey.currentState!.validate();
+                          }
+                        });
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          "Quên mật khẩu?",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ),
+                    )),
                 SizedBox(
                   height: 30,
                 ),
@@ -233,23 +276,19 @@ class _SignInState extends State<LoginScreen> {
                       }
                     }),
                 Spacer(),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text("Quên mật khẩu?"),
-                    )),
                 SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
               ],
             ),
           ),
-          loginController.logging.value ? Container(
-            width: Get.width,
-            height: Get.height,
-            child: SahaLoadingWidget(),
-          ) : Container()
+          loginController.logging.value
+              ? Container(
+                  width: Get.width,
+                  height: Get.height,
+                  child: SahaLoadingWidget(),
+                )
+              : Container()
         ],
       ),
     );

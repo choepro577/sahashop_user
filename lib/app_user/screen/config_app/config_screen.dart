@@ -25,12 +25,21 @@ class ConfigScreen extends StatelessWidget {
         appBar: SahaAppBar(
           titleText: 'Chỉnh sửa giao diện',
           actions: [
-            IconButton(
-                color: Colors.blueAccent,
-                icon: Icon(Icons.add_to_home_screen_sharp),
-                onPressed: () {
-                  runMainAppCustomer(context);
-                })
+            InkWell(
+              onTap: () {
+                runMainAppCustomer(context);
+              },
+              child: Row(
+                children: [
+                  Icon(Icons.add_to_home_screen_sharp),
+                  Text("Xem trước"),
+                  SizedBox(
+                    width: 5,
+                  )
+
+                ],
+              ),
+            )
           ],
         ),
         body: Obx(
@@ -49,7 +58,7 @@ class ConfigScreen extends StatelessWidget {
                                 Expanded(
                                   child: Container(
                                     width: MediaQuery.of(context).size.width *
-                                        0.15,
+                                        0.2,
                                     color: Colors.grey[200],
                                     child: ListView.builder(
                                         itemCount: uiDataConfig.UIData.length,
