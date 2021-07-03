@@ -45,6 +45,11 @@ class MyApp extends StatelessWidget {
       title: 'SahaShop',
       theme: SahaUserPrimaryTheme,
       themeMode: ThemeMode.light,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       home: SahaMainScreen(),
       getPages: [
         GetPage(name: "ConfigScreen", page: () => ConfigScreen()),
@@ -98,7 +103,6 @@ class MyApp extends StatelessWidget {
           )
         ],
       ),
-      localizationsDelegates: [GlobalMaterialLocalizations.delegate],
       supportedLocales: [
         const Locale('vi', 'VN'),
       ],

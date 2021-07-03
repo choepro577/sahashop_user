@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sahashop_user/app_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/app_user/components/saha_user/dialog/dialog.dart';
 import 'package:sahashop_user/app_user/utils/user_info.dart';
+
+import 'change_password/change_password.dart';
 
 // ignore: must_be_immutable
 class AccountScreen extends StatelessWidget {
@@ -27,7 +30,18 @@ class AccountScreen extends StatelessWidget {
                   })
             ],
           ),
-          body: Container()),
+          body: Container(
+            child: ListView(
+              children: [
+                ListTile(
+                  title: Text("Thay đổi mật khẩu"),
+                  onTap: () {
+                    Get.to(ChangePassword());
+                  },
+                )
+              ],
+            ),
+          )),
     );
   }
 }

@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:sahashop_user/app_user/const/constant.dart';
 
 class SahaAppBar extends PreferredSize {
   final double height;
@@ -26,13 +28,13 @@ class SahaAppBar extends PreferredSize {
         title: titleText != null
             ? Text(
                 titleText!,
-                style: TextStyle(color: Colors.black87),
+
               )
             : titleChild,
-        iconTheme: IconThemeData(color: Colors.black87),
+        iconTheme: IconThemeData(color: Colors.white),
         leading: leading,
         actions: actions,
-        backgroundColor: Colors.white,
+        backgroundColor: SahaPrimaryColor,
         elevation: 0.0,
         centerTitle: true,
         bottom: bottom != null

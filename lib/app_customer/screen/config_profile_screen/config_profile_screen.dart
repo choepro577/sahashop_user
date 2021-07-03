@@ -9,6 +9,8 @@ import 'package:sahashop_user/app_user/components/saha_user/loading/loading_widg
 import 'package:sahashop_user/app_user/model/info_customer.dart';
 import 'package:sahashop_user/app_user/utils/date_utils.dart';
 
+import 'change_password/change_password.dart';
+
 // ignore: must_be_immutable
 class ConfigProfileScreen extends StatelessWidget {
   InfoCustomer? infoCustomer;
@@ -393,30 +395,26 @@ class ConfigProfileScreen extends StatelessWidget {
               Divider(
                 height: 1,
               ),
-              Container(
-                padding:
-                    EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Thay đổi mật khẩu"),
-                    Container(
-                      width: Get.width * 0.55,
-                      child: TextField(
-                        controller: configProfileController
-                            .passwordEditingController.value,
-                        keyboardType: TextInputType.number,
-                        style: TextStyle(fontSize: 14),
-                        textAlign: TextAlign.end,
-                        decoration: InputDecoration(
-                            isDense: true,
-                            border: InputBorder.none,
-                            hintText: "Nhập mật khẩu"),
-                        minLines: 1,
-                        maxLines: 1,
-                      ),
-                    ),
-                  ],
+              InkWell(
+                onTap: () {
+                  Get.to(ChangePassword());
+                },
+                child: Container(
+                  padding:
+                      EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Thay đổi mật khẩu"),
+                      Container(
+                          height: 13,
+                          width: 13,
+                          child: SvgPicture.asset(
+                            "assets/icons/right_arrow.svg",
+                            color: Colors.black,
+                          ))
+                    ],
+                  ),
                 ),
               ),
               Divider(
