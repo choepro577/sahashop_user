@@ -25,7 +25,7 @@ class FavoriteRepository {
     } catch (err) {
       SahaAlert.showError(message: err.toString());
       throw (err.toString());
-      return false;
+
     }
   }
 }

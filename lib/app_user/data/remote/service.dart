@@ -9,6 +9,7 @@ import 'package:sahashop_user/app_user/data/remote/response-request/address/all_
 import 'package:sahashop_user/app_user/data/remote/response-request/address/create_address_store_response.dart';
 import 'package:sahashop_user/app_user/data/remote/response-request/address/delete_address_store_response.dart';
 import 'package:sahashop_user/app_user/data/remote/response-request/attributes/attributes_response.dart';
+import 'package:sahashop_user/app_user/data/remote/response-request/auth/check_exists_response.dart';
 import 'package:sahashop_user/app_user/data/remote/response-request/auth/login_response.dart';
 import 'package:sahashop_user/app_user/data/remote/response-request/chat/all_chat_customer_reponse.dart';
 import 'package:sahashop_user/app_user/data/remote/response-request/chat/all_message_response.dart';
@@ -57,6 +58,7 @@ import 'response-request/product/product_response.dart';
 import 'response-request/store/all_store_response.dart';
 import 'response-request/store/create_store_response.dart';
 import 'response-request/store/type_store_respones.dart';
+import 'response-request/success/success_response.dart';
 
 part 'service.g.dart';
 
@@ -70,6 +72,15 @@ abstract class SahaService {
 
   @POST("login")
   Future<LoginResponse> login(@Body() Map<String, dynamic> body);
+
+  @POST("login/check_exists")
+  Future<ExistsLoginResponse> checkExists(@Body() Map<String, dynamic> body);
+
+  @POST("reset_password")
+  Future<SuccessResponse> resetPassword(@Body() Map<String, dynamic> body);
+
+  @POST("change_password")
+  Future<SuccessResponse> changePassword(@Body() Map<String, dynamic> body);
 
   @GET("store")
   Future<AllStoreResponse> getAllStore();

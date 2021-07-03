@@ -54,7 +54,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
             onRefresh: () async {
               await  favoritesController.getProducts(isRefresh: true);
             },
-            child:  SingleChildScrollView(
+
               child: Container(
                 height: Get.height,
                 child:
@@ -81,7 +81,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                   crossAxisSpacing: 0,
                 ),
               ),
-            ),
+
         ),
       );
     });

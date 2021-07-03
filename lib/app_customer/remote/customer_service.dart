@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+
+import 'package:sahashop_user/app_customer/remote/response-request/login/exists_response.dart';
+import 'package:sahashop_user/app_customer/remote/response-request/success/success_response.dart';
 import 'package:sahashop_user/app_customer/remote/response-request/badge/badge_response.dart';
 import '../../app_customer/const/env.dart';
-
 import '../remote/post/all_category_post_response.dart';
 import '../remote/post/all_post_response.dart';
 import '../remote/response-request/address_customer/all_address_customer_response.dart';
@@ -116,6 +118,18 @@ abstract class CustomerService {
 
   @POST("{storeCode}/login")
   Future<LoginResponse> loginAccount(
+      @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
+
+  @POST("{storeCode}/login/check_exists")
+  Future<ExistsLoginResponse> checkExists(
+      @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
+
+  @POST("{storeCode}/reset_password")
+  Future<SuccessResponse> resetPassword(
+      @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
+
+  @POST("{storeCode}/change_password")
+  Future<SuccessResponse> changePassword(
       @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   @GET("{storeCode}/profile")
@@ -246,6 +260,10 @@ abstract class CustomerService {
 
   @GET("{storeCode}/favorites")
   Future<AllProductFavorites> getAllFavorite(
+      @Path("storeCode") String storeCode, @Path("page") int page);
+
+  @GET("{storeCode}/purchased_products")
+  Future<AllProductFavorites> getPurchasedProducts(
       @Path("storeCode") String storeCode, @Path("page") int page);
 
   @POST("{storeCode}/products/{productId}/favorites")

@@ -4,9 +4,11 @@ import '../../repository/handle_error.dart';
 import 'package:sahashop_user/app_user/utils/user_info.dart';
 
 class RegisterCustomerRepository {
-  Future<RegisterResponse?> registerAccount(
-    String phone,
-    String password,
+  Future<RegisterResponse?> registerAccount({
+    String? phone,
+    String? password,
+      String? email,
+      String? name}
   ) async {
     try {
       var res = await CustomerServiceManager()
@@ -14,6 +16,8 @@ class RegisterCustomerRepository {
           .registerAccount(UserInfo().getCurrentStoreCode(), {
         "phone_number": phone,
         "password": password,
+        "name":name,
+        "email":email
       });
       return res;
     } catch (err) {

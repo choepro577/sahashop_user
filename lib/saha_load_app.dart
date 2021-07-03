@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_user/screen/home/home_screen.dart';
-import 'package:sahashop_user/app_user/screen/login/loginScreen.dart';
+import 'package:sahashop_user/app_user/screen/login/login_screen.dart';
 import 'package:sahashop_user/app_user/utils/user_info.dart';
 
 class SahaMainScreen extends StatefulWidget {
@@ -20,7 +19,6 @@ class _SahaMainScreenState extends State<SahaMainScreen> {
   }
 
   void loadInit(BuildContext context) {
-    EasyLoading.init();
     checkLogin(context);
   }
 

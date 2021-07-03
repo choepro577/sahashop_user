@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/app_customer/screen/address_screen/all_address_customer/all_address_customer_screen.dart';
+import 'package:sahashop_user/app_customer/screen/bought_products/bought_products.dart';
 import 'package:sahashop_user/app_customer/screen/cart_screen/cart_controller.dart';
 import 'package:sahashop_user/app_customer/screen/cart_screen/cart_screen_1.dart';
 import 'package:sahashop_user/app_customer/screen/choose_voucher/choose_voucher_customer_screen.dart';
@@ -695,39 +696,44 @@ class ProfileScreen extends StatelessWidget {
               Divider(
                 height: 1,
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: 25,
-                          width: 25,
-                          child: SvgPicture.asset(
-                            "assets/icons/handbag.svg",
-                            color: Colors.indigo,
+              InkWell(
+                onTap: () {
+                  Get.to(BoughtProductsScreen());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            height: 25,
+                            width: 25,
+                            child: SvgPicture.asset(
+                              "assets/icons/handbag.svg",
+                              color: Colors.indigo,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          "Mua lại",
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      height: 13,
-                      width: 13,
-                      child: SvgPicture.asset(
-                        "assets/icons/right_arrow.svg",
-                        color: Colors.black,
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            "Mua lại",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                      Container(
+                        height: 13,
+                        width: 13,
+                        child: SvgPicture.asset(
+                          "assets/icons/right_arrow.svg",
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Divider(
