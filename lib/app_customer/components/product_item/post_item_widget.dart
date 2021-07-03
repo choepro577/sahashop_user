@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
+import 'package:sahashop_user/app_customer/screen/category_post_screen/read_post_screen/read_post_screen.dart';
 import 'package:sahashop_user/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/app_user/model/post.dart';
 import 'package:sahashop_user/app_user/utils/date_utils.dart';
@@ -29,8 +30,11 @@ class PostItemWidget extends StatelessWidget {
         padding: EdgeInsets.all(8),
         child: InkWell(
           onTap: () {
-            DataAppCustomerController dataAppCustomerController = Get.find();
-            dataAppCustomerController.toPostAllScreen();
+            // DataAppCustomerController dataAppCustomerController = Get.find();
+            // dataAppCustomerController.toPostAllScreen();
+            Get.to(() => ReadPostScreen(
+                  post: post,
+                ));
           },
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,8 +60,7 @@ class PostItemWidget extends StatelessWidget {
                         width: 70,
                         fit: BoxFit.cover,
                         imageUrl: post.imageUrl == null ? "" : post.imageUrl!,
-                        errorWidget: (context, url, error) =>
-                            SahaEmptyImage(),
+                        errorWidget: (context, url, error) => SahaEmptyImage(),
                       ), //post.images[0].imageUrl,
               ),
               SizedBox(width: 5),

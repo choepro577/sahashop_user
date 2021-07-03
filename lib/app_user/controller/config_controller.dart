@@ -3,7 +3,6 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/screen/repository_widget_config.dart';
-import 'package:sahashop_user/app_customer/utils/thread_data.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/app_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/app_user/model/config_app.dart';
@@ -53,8 +52,6 @@ class ConfigController extends GetxController {
       primarySwatch: Colors.cyan,
       visualDensity: VisualDensity.adaptivePlatformDensity,
     );
-
-
   }
 
   void setTab(int va) {
@@ -91,8 +88,10 @@ class ConfigController extends GetxController {
               ? data.fontFamily
               : FONT_DATA.keys.toList()[0];
       configApp.productItemType = data.productItemType ?? 0;
-      if (configApp.productItemType! >  RepositoryWidgetCustomer().LIST_ITEM_PRODUCT_WIDGET.length) {
-        configApp.productItemType =  RepositoryWidgetCustomer().LIST_ITEM_PRODUCT_WIDGET.length - 1;
+      if (configApp.productItemType! >
+          RepositoryWidgetCustomer().LIST_ITEM_PRODUCT_WIDGET.length) {
+        configApp.productItemType =
+            RepositoryWidgetCustomer().LIST_ITEM_PRODUCT_WIDGET.length - 1;
       }
       configApp.carouselType = data.carouselType ?? 0;
       configApp.homePageType = data.homePageType ?? 0;

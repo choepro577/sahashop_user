@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_customer/screen/cart_screen/cart_controller.dart';
 import '../../remote/response-request/orders/order_request.dart';
 import '../../repository/repository_customer.dart';
-import '../../screen/data_app_controller.dart';
 import '../../screen/order_completed_screen/order_completed_screen.dart';
 import '../../screen/order_history/order_history_screen.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
@@ -27,7 +27,7 @@ class ConfirmController extends GetxController {
   int shipperType = 0;
   int totalShippingFee = 0;
 
-  DataAppCustomerController dataAppCustomerController = Get.find();
+  CartController cartController = Get.find();
 
   ConfirmController() {
     shipmentMethodCurrent.value.fee = 0;

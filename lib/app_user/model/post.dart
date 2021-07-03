@@ -1,3 +1,5 @@
+import 'package:sahashop_user/app_user/model/category_post.dart';
+
 import 'category.dart';
 
 class Post {
@@ -11,20 +13,20 @@ class Post {
   int? countView;
   String? createdAt;
   String? updatedAt;
-  List<Category>? category;
+  List<CategoryPost>? category;
 
   Post(
       {this.id,
-        this.storeId,
-        this.title,
-        this.imageUrl,
-        this.summary,
-        this.content,
-        this.published,
-        this.countView,
-        this.createdAt,
-        this.updatedAt,
-        this.category});
+      this.storeId,
+      this.title,
+      this.imageUrl,
+      this.summary,
+      this.content,
+      this.published,
+      this.countView,
+      this.createdAt,
+      this.updatedAt,
+      this.category});
 
   Post.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -37,10 +39,10 @@ class Post {
     countView = json['count_view'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    if (json['category'] != null) {
+    if (json['categories'] != null) {
       category = [];
-      json['category'].forEach((v) {
-        category!.add(new Category.fromJson(v));
+      json['categories'].forEach((v) {
+        category!.add(new CategoryPost.fromJson(v));
       });
     }
   }

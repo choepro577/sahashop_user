@@ -1,10 +1,12 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_customer/screen/cart_screen/cart_controller.dart';
+import 'package:sahashop_user/app_customer/screen/data_app_controller.dart';
 import '../../screen/cart_screen/cart_screen_1.dart';
-import '../../screen/data_app_controller.dart';
-import '../../screen/order_history/order_history_controller.dart';
 import '../../screen/order_history/order_history_detail/order_detail_history_screen.dart';
 import '../../screen/pay_screen/pay_screen.dart';
 import 'package:sahashop_user/app_user/components/saha_user/app_bar/saha_appbar.dart';
@@ -25,7 +27,6 @@ class OrderCompletedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       body: Stack(
         alignment: AlignmentDirectional.center,
@@ -261,63 +262,43 @@ class OrderCompletedScreen extends StatelessWidget {
                       Get.back();
                     }),
                 Spacer(),
-                Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Get.to(() => CartScreen1());
-                      },
+                Obx(
+                  () => InkWell(
+                    onTap: () {
+                      Get.to(() => CartScreen1());
+                    },
+                    child: Badge(
+                      padding: EdgeInsets.all(3),
+                      toAnimate: true,
+                      animationType: BadgeAnimationType.slide,
+                      badgeContent: Text(
+                        '${dataAppCustomerController.badge.value.cartQuantity}',
+                        style: TextStyle(fontSize: 11, color: Colors.white),
+                      ),
+                      showBadge:
+                          dataAppCustomerController.badge.value.cartQuantity ==
+                                  0
+                              ? false
+                              : true,
+                      position: BadgePosition(end: 0, top: -5),
                       child: Container(
-                        padding: const EdgeInsets.all(10),
+                        padding: EdgeInsets.all(12),
+                        height: 44,
+                        width: 44,
                         decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Theme.of(context).primaryColor),
-                        child: Container(
-                          height: 25,
-                          width: 25,
-                          child: SvgPicture.asset(
-                            "assets/icons/cart_icon.svg",
-                            color: true
-                                ? Theme.of(context)
-                                    .primaryTextTheme
-                                    .headline6!
-                                    .color
-                                : Color(0xFFDBDEE4),
-                          ),
+                          color: Theme.of(context).primaryColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: SvgPicture.asset(
+                          "assets/icons/cart_icon.svg",
+                          color: Theme.of(context)
+                              .primaryTextTheme
+                              .headline6!
+                              .color,
                         ),
                       ),
                     ),
-                    Obx(
-                      () => dataAppCustomerController.listOrder.length != 0
-                          ? Positioned(
-                              top: -3,
-                              right: 0,
-                              child: Container(
-                                height: 16,
-                                width: 16,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFFF4848),
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                      width: 1.5, color: Colors.white),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "${dataAppCustomerController.listOrder.length}",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      height: 1,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          : Container(),
-                    )
-                  ],
+                  ),
                 ),
               ],
             ),

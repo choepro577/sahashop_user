@@ -13,11 +13,12 @@ import '../repository/register/register_repository.dart';
 import '../repository/review/review_repository.dart';
 import '../repository/shipment/shipment_repository.dart';
 
-
+import 'badge/badge_repository.dart';
 import 'favorite/favorite_repository.dart';
 import 'history_search/history_search_repository.dart';
 import 'home/home_repository.dart';
 import 'post/post_repository.dart';
+import 'score/score_repository.dart';
 
 class CustomerRepositoryManager {
   static CategoryRepository get categoryRepository => CategoryRepository();
@@ -49,4 +50,6 @@ class CustomerRepositoryManager {
       HistorySearchRepository();
   static ReviewCustomerRepository get reviewCustomerRepository =>
       ReviewCustomerRepository();
+  static BadgeRepository get badgeRepository => BadgeRepository();
+  static ScoreRepository get scoreRepository => ScoreRepository();
 }

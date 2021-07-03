@@ -6,8 +6,6 @@ import '../../screen/repository_widget_config.dart';
 import '../../screen/order_history/order_history_screen.dart';
 import '../../screen/profile_screen/profile_screen.dart';
 import 'package:sahashop_user/app_user/controller/config_controller.dart';
-import 'package:sahashop_user/app_user/screen/order_manage/order_manage_screen.dart';
-import 'package:sahashop_user/app_user/screen/posts/post/posts_screen.dart';
 
 class NavigationController extends GetxController {
   var selectedIndexBottomBar = 2.obs;
@@ -15,13 +13,10 @@ class NavigationController extends GetxController {
   List<Widget> navigationHome = [];
 
   NavigationController() {
-
-
     configController = Get.find();
     if (configController.configApp.homePageType != null &&
         configController.configApp.homePageType! <
             RepositoryWidgetCustomer().LIST_WIDGET_HOME_SCREEN.length) {
-
       navigationHome = [
         CartScreen1(
           key: PageStorageKey<String>('str0'),
@@ -40,7 +35,6 @@ class NavigationController extends GetxController {
           key: PageStorageKey<String>('str4'),
         ),
       ];
-
     } else {
       navigationHome = [RepositoryWidgetCustomer().LIST_WIDGET_HOME_SCREEN[0]];
     }

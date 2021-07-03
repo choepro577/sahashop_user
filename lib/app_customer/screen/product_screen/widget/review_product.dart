@@ -79,10 +79,11 @@ class ReviewProduct extends StatelessWidget {
                         SizedBox(
                           width: 10,
                         ),
-                        Text(
-                          "(${totalReview ?? 0} Đánh giá)",
-                          style: TextStyle(color: Colors.grey[600]),
-                        ),
+                        if (totalReview != 0)
+                          Text(
+                            "(${totalReview ?? 0} Đánh giá)",
+                            style: TextStyle(color: Colors.grey[600]),
+                          ),
                       ],
                     )
                   ],

@@ -29,52 +29,15 @@ class CategoryPostStyle1 extends StatelessWidget {
     ////  ////  ////  ////  ////  ////
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: SahaAppBar(
-        titleChild: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: TextField(
-                  onChanged: (value) => Get.to(() => SearchScreen(
-                        searchText: value,
-                      )),
-                  decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      hintText: "Tìm kiếm ",
-                      prefixIcon: Icon(Icons.search)),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            // Obx(
-            //   () => IconBtnWithCounter(
-            //     svgSrc: "assets/icons/cart_icon.svg",
-            //     numOfitem: postController.listOrder.value.length ?? 0,
-            //     press: () {
-            //       Get.to(() => LIST_WIDGET_CART_SCREEN[
-            //           configController.configApp.cartPageType]);
-            //     },
-            //   ),
-            // ),
-          ],
-        ),
-      ),
+      appBar: AppBar(title: Text("Tin tức")),
       body: Obx(
         () => Column(
           children: [
+            SizedBox(
+              height: 10,
+            ),
             Container(
-              height: 60,
+              height: 40,
               child: categoryController.isLoadingCategoryPost.value
                   ? SahaLoadingWidget()
                   : Container(
@@ -83,8 +46,16 @@ class CategoryPostStyle1 extends StatelessWidget {
                           itemCount: categoryController.categories.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
-                            return buildItem(
-                                category: categoryController.categories[index]);
+                            return Row(
+                              children: [
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                buildItem(
+                                    category:
+                                        categoryController.categories[index]),
+                              ],
+                            );
                           }),
                     ),
             ),
@@ -121,16 +92,15 @@ class CategoryPostStyle1 extends StatelessWidget {
 
   Widget buildItem({CategoryPost? category}) {
     return Obx(() => Container(
-          height: 25,
-          margin: EdgeInsets.all(10),
-          padding: EdgeInsets.only(left: 13, right: 13, bottom: 8, top: 8),
+          height: 40,
+          padding: EdgeInsets.only(left: 10, right: 10, bottom: 3, top: 3),
           decoration: BoxDecoration(
               border: Border.all(
                   color: categoryController.categoryCurrent.value.id ==
                           category!.id
-                      ? Colors.black
+                      ? Theme.of(Get.context!).primaryColor
                       : Colors.grey),
-              borderRadius: BorderRadius.all(Radius.circular(45)),
+              borderRadius: BorderRadius.all(Radius.circular(5)),
               color: Colors.white),
           child: InkWell(
             onTap: () {
@@ -144,25 +114,25 @@ class CategoryPostStyle1 extends StatelessWidget {
                 ),
                 category.imageUrl == null || category.imageUrl == ""
                     ? Container()
-                    : SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(45)),
-                          child: CachedNetworkImage(
-                            imageUrl: category.imageUrl ?? "",
-                            placeholder: (context, url) =>
-                                CircularProgressIndicator(),
-                            errorWidget: (context, url, error) => Container(),
-                            fit: BoxFit.cover,
+                    : Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: SizedBox(
+                          width: 30,
+                          height: 30,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(3)),
+                            child: CachedNetworkImage(
+                              imageUrl: category.imageUrl ?? "",
+                              placeholder: (context, url) =>
+                                  CircularProgressIndicator(),
+                              errorWidget: (context, url, error) => Container(),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
-                SizedBox(
-                  height: 5,
-                ),
                 Text(
-                  category.title ?? "",
+                  "${category.title ?? ""}",
                   maxLines: 3,
                   style: TextStyle(
                       fontSize: 13,

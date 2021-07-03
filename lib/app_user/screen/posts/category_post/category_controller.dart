@@ -6,6 +6,7 @@ import 'package:sahashop_user/app_user/model/category_post.dart';
 class CategoryPostController extends GetxController {
   var loading = false.obs;
   var listCategoryPost = RxList<CategoryPost>();
+  var categoryPostSelected = CategoryPost().obs;
 
   CategoryPost? categoryEd;
 
@@ -27,9 +28,22 @@ class CategoryPostController extends GetxController {
     loading.value = false;
   }
 
+  void selectCategoryPost(CategoryPost categoryPost) {
+    if (categoryPostSelected.value.id == categoryPost.id) {
+      categoryPostSelected.value = CategoryPost(id: null);
+    } else {
+      categoryPostSelected.value = categoryPost;
+    }
+  }
+
+  bool selected(CategoryPost categoryPost, int indexCate) {
+    return listCategoryPost[indexCate].id == categoryPost.id;
+  }
+
   Future<bool?> deleteCategoryPost(int? categoryPostId) async {
     try {
-      var list = await RepositoryManager.postRepository.deleteCategoryPost(categoryPostId!);
+      var list = await RepositoryManager.postRepository
+          .deleteCategoryPost(categoryPostId!);
       listCategoryPost.removeWhere((element) => element.id == categoryPostId);
       SahaAlert.showSuccess(message: "Đã xóa");
       return true;
@@ -37,8 +51,4 @@ class CategoryPostController extends GetxController {
       SahaAlert.showError(message: err.toString());
     }
   }
-
-
-
-
 }

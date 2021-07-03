@@ -44,7 +44,7 @@ class AuthInterceptor extends InterceptorsWrapper {
             error.error = 'Bạn gửi quá nhiều yêu cầu xin thử lại sau 1 phút';
           }
           error.error =
-          '${dioError.response?.data["msg"] != null ? dioError.response?.data["msg"] : "Có lỗi xảy ra"}';
+              '${dioError.response?.data["msg"] != null ? dioError.response?.data["msg"] : "Có lỗi xảy ra"}';
           break;
         case DioErrorType.sendTimeout:
           error.error = 'Không thể gửi dữ liệu đến server';
@@ -69,6 +69,7 @@ class AuthInterceptor extends InterceptorsWrapper {
 
     if (response.data["code"] == 401) {
       get2.Get.to(() => LoginScreenCustomer());
+      throw "Bạn cần đăng nhập";
     }
 
     if (response.data != null && response.data["success"] == false) {

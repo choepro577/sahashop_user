@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,13 +9,15 @@ import 'package:sahashop_user/app_user/const/constant.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:path/path.dart';
 
+// ignore: must_be_immutable
 class SelectPostImage extends StatelessWidget {
   SelectImageController selectImageController = new SelectImageController();
+
   final Function? onChange;
-
   final File? fileSelected;
+  final String? linkImage;
 
-  SelectPostImage({Key? key, this.onChange, this.fileSelected})
+  SelectPostImage({Key? key, this.onChange, this.fileSelected, this.linkImage})
       : super(key: key);
 
   @override
@@ -23,6 +26,28 @@ class SelectPostImage extends StatelessWidget {
       height: 110,
       child: Obx(() {
         var deviceImage = selectImageController.pathImage;
+
+        if (linkImage != null && linkImage != "" && deviceImage.value == null ||
+            deviceImage.value == "")
+          return Container(
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: CachedNetworkImage(
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                      imageUrl: linkImage!,
+                      placeholder: (context, url) => Container(),
+                      errorWidget: (context, url, error) => Container()),
+                ),
+                addImage()
+              ],
+            ),
+          );
+
         if (deviceImage.value == null || deviceImage.value == "")
           return addImage();
         return buildItemAsset(File(deviceImage.value));
@@ -137,6 +162,6 @@ class SelectImageController extends GetxController {
   }
 
   void removeImage() {
-    pathImage(null);
+    pathImage("");
   }
 }

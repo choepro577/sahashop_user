@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:sahashop_user/app_user/data/remote/saha_service_manager.dart';
-import 'package:sahashop_user/app_user/model/category.dart';
 import 'package:sahashop_user/app_user/model/category_post.dart';
 import 'package:sahashop_user/app_user/model/post.dart';
 import 'package:sahashop_user/app_user/utils/user_info.dart';
@@ -64,6 +63,49 @@ class PostRepository {
       return res.data;
     } catch (err) {
       handleError(err);
+    }
+  }
+
+  Future<Post?> updatePost({
+    String? title,
+    String? imageUrl,
+    File? image,
+    String? summary,
+    String? content,
+    bool? published,
+    int? categoryId,
+    int? postId,
+  }) async {
+    try {
+      var res = await SahaServiceManager().service!.updatePost(
+        UserInfo().getCurrentStoreCode(),
+        postId,
+        {
+          "title": title,
+          "image":
+              image == null ? null : await MultipartFile.fromFile(image.path),
+          "image_url": imageUrl == "" ? null : imageUrl,
+          "summary": summary,
+          "content": content,
+          "published": published,
+          "category_id": categoryId
+        },
+      );
+      return res.data;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  Future<bool?> deletePost(int postId) async {
+    try {
+      var res = await SahaServiceManager()
+          .service!
+          .deletePost(UserInfo().getCurrentStoreCode(), postId);
+      return true;
+    } catch (err) {
+      handleError(err);
+      return false;
     }
   }
 

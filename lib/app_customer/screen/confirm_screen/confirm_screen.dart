@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/app_customer/utils/money.dart';
 import '../../components/empty/saha_empty_image.dart';
 import '../../screen/address_screen/choose_address_receiver/receiver_address_screen.dart';
@@ -19,6 +21,7 @@ import 'package:sahashop_user/app_user/utils/string_utils.dart';
 // ignore: must_be_immutable
 class ConfirmScreen extends StatelessWidget {
   ConfirmController confirmController = Get.put(ConfirmController());
+  DataAppCustomerController dataAppCustomerController = Get.find();
   final dataKey = new GlobalKey();
   final dataKeyPayment = new GlobalKey();
 
@@ -249,7 +252,7 @@ class ConfirmScreen extends StatelessWidget {
                 ),
               ),
               ...List.generate(
-                confirmController.dataAppCustomerController.listOrder.length,
+                confirmController.cartController.listOrder.length,
                 (index) => Container(
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
@@ -272,7 +275,7 @@ class ConfirmScreen extends StatelessWidget {
                               child: CachedNetworkImage(
                                 fit: BoxFit.cover,
                                 imageUrl: confirmController
-                                            .dataAppCustomerController
+                                            .cartController
                                             .listOrder[index]
                                             .product!
                                             .images!
@@ -280,7 +283,7 @@ class ConfirmScreen extends StatelessWidget {
                                         0
                                     ? ""
                                     : confirmController
-                                        .dataAppCustomerController
+                                        .cartController
                                         .listOrder[index]
                                         .product!
                                         .images![0]
@@ -299,8 +302,8 @@ class ConfirmScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              confirmController.dataAppCustomerController
-                                      .listOrder[index].product!.name ??
+                              confirmController.cartController.listOrder[index]
+                                      .product!.name ??
                                   "Loi san pham",
                               style:
                                   TextStyle(color: Colors.black, fontSize: 16),
@@ -310,14 +313,14 @@ class ConfirmScreen extends StatelessWidget {
                             Text.rich(
                               TextSpan(
                                 text:
-                                    "\$${FormatMoney.toVND(confirmController.dataAppCustomerController.listOrder[index].product!.price)}",
+                                    "\$${FormatMoney.toVND(confirmController.cartController.listOrder[index].product!.price)}",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     color: SahaPrimaryColor),
                                 children: [
                                   TextSpan(
                                       text:
-                                          " x ${confirmController.dataAppCustomerController.listOrder[index].quantity}",
+                                          " x ${confirmController.cartController.listOrder[index].quantity}",
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1),
@@ -479,12 +482,12 @@ class ConfirmScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Tổng số tiền (${confirmController.dataAppCustomerController.listOrder.length} sản phẩm) : ',
+                      'Tổng số tiền (${confirmController.cartController.listOrder.length} sản phẩm) : ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Obx(
                       () => Text(
-                          "${FormatMoney.toVND(confirmController.dataAppCustomerController.totalMoneyAfterDiscount.value + confirmController.shipmentMethodCurrent.value.fee!)}"),
+                          "${FormatMoney.toVND(confirmController.cartController.totalMoneyAfterDiscount.value + confirmController.shipmentMethodCurrent.value.fee!)}"),
                     )
                   ],
                 ),
@@ -521,12 +524,12 @@ class ConfirmScreen extends StatelessWidget {
                       ),
                       Spacer(),
                       Obx(
-                        () => confirmController.dataAppCustomerController
-                                    .voucherCodeChoose.value ==
+                        () => confirmController
+                                    .cartController.voucherCodeChoose.value ==
                                 ""
                             ? Text("Chọn hoặc nhập mã")
                             : Text(
-                                "Mã: ${confirmController.dataAppCustomerController.voucherCodeChoose.value} - đ${SahaStringUtils().convertToMoney(confirmController.dataAppCustomerController.voucherDiscountAmount.value)}",
+                                "Mã: ${confirmController.cartController.voucherCodeChoose.value} - đ${SahaStringUtils().convertToMoney(confirmController.cartController.voucherDiscountAmount.value)}",
                                 style: TextStyle(fontSize: 13),
                               ),
                       ),
@@ -714,14 +717,14 @@ class ConfirmScreen extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 13, color: Colors.grey[700])),
                             Text(
-                                "${SahaStringUtils().convertToMoney(confirmController.dataAppCustomerController.totalBeforeDiscount.value)} đ",
+                                "${SahaStringUtils().convertToMoney(confirmController.cartController.totalBeforeDiscount.value)} đ",
                                 style: TextStyle(
                                     fontSize: 13, color: Colors.grey[800])),
                           ],
                         ),
                       ),
-                      confirmController.dataAppCustomerController
-                                  .productDiscountAmount.value ==
+                      confirmController
+                                  .cartController.productDiscountAmount.value ==
                               0
                           ? Container()
                           : Padding(
@@ -735,15 +738,15 @@ class ConfirmScreen extends StatelessWidget {
                                           fontSize: 13,
                                           color: Colors.grey[700])),
                                   Text(
-                                      "- ${SahaStringUtils().convertToMoney(confirmController.dataAppCustomerController.productDiscountAmount.value)} đ",
+                                      "- ${SahaStringUtils().convertToMoney(confirmController.cartController.productDiscountAmount.value)} đ",
                                       style: TextStyle(
                                           fontSize: 13,
                                           color: Colors.grey[800])),
                                 ],
                               ),
                             ),
-                      confirmController.dataAppCustomerController
-                                  .comboDiscountAmount.value ==
+                      confirmController
+                                  .cartController.comboDiscountAmount.value ==
                               0
                           ? Container()
                           : Padding(
@@ -757,15 +760,15 @@ class ConfirmScreen extends StatelessWidget {
                                           fontSize: 13,
                                           color: Colors.grey[700])),
                                   Text(
-                                      "- ${SahaStringUtils().convertToMoney(confirmController.dataAppCustomerController.comboDiscountAmount.value)} đ",
+                                      "- ${SahaStringUtils().convertToMoney(confirmController.cartController.comboDiscountAmount.value)} đ",
                                       style: TextStyle(
                                           fontSize: 13,
                                           color: Colors.grey[800])),
                                 ],
                               ),
                             ),
-                      confirmController.dataAppCustomerController
-                                  .voucherDiscountAmount.value ==
+                      confirmController
+                                  .cartController.voucherDiscountAmount.value ==
                               0
                           ? Container()
                           : Padding(
@@ -779,7 +782,7 @@ class ConfirmScreen extends StatelessWidget {
                                           fontSize: 13,
                                           color: Colors.grey[700])),
                                   Text(
-                                      "- ${SahaStringUtils().convertToMoney(confirmController.dataAppCustomerController.voucherDiscountAmount.value)} đ",
+                                      "- ${SahaStringUtils().convertToMoney(confirmController.cartController.voucherDiscountAmount.value)} đ",
                                       style: TextStyle(
                                           fontSize: 13,
                                           color: Colors.grey[800])),
@@ -798,7 +801,7 @@ class ConfirmScreen extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 13, color: Colors.grey[700])),
                             Text(
-                                "${SahaStringUtils().convertToMoney(confirmController.dataAppCustomerController.totalMoneyAfterDiscount.value)} đ",
+                                "${SahaStringUtils().convertToMoney(confirmController.cartController.totalMoneyAfterDiscount.value)} đ",
                                 style: TextStyle(
                                     fontSize: 13, color: Colors.grey[800])),
                           ],
@@ -828,7 +831,7 @@ class ConfirmScreen extends StatelessWidget {
                               'Tổng thanh toán :',
                             ),
                             Text(
-                                "${SahaStringUtils().convertToMoney(confirmController.dataAppCustomerController.totalMoneyAfterDiscount.value + confirmController.shipmentMethodCurrent.value.fee!.toDouble())} đ",
+                                "${SahaStringUtils().convertToMoney(confirmController.cartController.totalMoneyAfterDiscount.value + confirmController.shipmentMethodCurrent.value.fee!.toDouble())} đ",
                                 style: TextStyle(
                                     fontSize: 13, color: Colors.grey[800])),
                           ],
@@ -903,7 +906,7 @@ class ConfirmScreen extends StatelessWidget {
                     ),
                     Text("Tổng thanh toán"),
                     Text(
-                      "${FormatMoney.toVND(confirmController.dataAppCustomerController.totalMoneyAfterDiscount.value + confirmController.shipmentMethodCurrent.value.fee!.toDouble())}",
+                      "${FormatMoney.toVND(confirmController.cartController.totalMoneyAfterDiscount.value + confirmController.shipmentMethodCurrent.value.fee!.toDouble())}",
                       style: TextStyle(
                           fontSize: 16,
                           color: Colors.red,
@@ -915,7 +918,7 @@ class ConfirmScreen extends StatelessWidget {
                   width: 20,
                 ),
                 InkWell(
-                  onTap: () {
+                  onTap: () async {
                     if (confirmController.infoAddressCustomer.value?.id == 0) {
                       Scrollable.ensureVisible(dataKey.currentContext!,
                           duration: Duration(milliseconds: 500));
@@ -950,7 +953,8 @@ class ConfirmScreen extends StatelessWidget {
                           });
                         });
                       } else {
-                        confirmController.createOrders();
+                        await confirmController.createOrders();
+                        dataAppCustomerController.getBadge();
                       }
                     }
                   },

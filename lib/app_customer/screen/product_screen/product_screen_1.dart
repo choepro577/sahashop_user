@@ -631,7 +631,9 @@ class ProductScreen1 extends StatelessWidget {
                                   ? 0
                                   : productController.productInput!.id,
                               averagedStars:
-                                  productController.averagedStars.value,
+                                  productController.averagedStars.value == 0
+                                      ? 5
+                                      : productController.averagedStars.value,
                               totalReview: productController.totalReview.value,
                               listAllImage:
                                   productController.listAllImageReview,
@@ -738,35 +740,34 @@ class ProductScreen1 extends StatelessWidget {
                       ),
                     ),
                     Obx(
-                      () => productController
-                                  .dataAppCustomerController.listOrder.length !=
-                              0
-                          ? Positioned(
-                              top: -3,
-                              right: 0,
-                              child: Container(
-                                height: 16,
-                                width: 16,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFFF4848),
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                      width: 1.5, color: Colors.white),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "${productController.dataAppCustomerController.listOrder.length}",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      height: 1,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white,
+                      () =>
+                          productController.cartController.listOrder.length != 0
+                              ? Positioned(
+                                  top: -3,
+                                  right: 0,
+                                  child: Container(
+                                    height: 16,
+                                    width: 16,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFFF4848),
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          width: 1.5, color: Colors.white),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "${productController.cartController.listOrder.length}",
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          height: 1,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            )
-                          : Container(),
+                                )
+                              : Container(),
                     )
                   ],
                 ),

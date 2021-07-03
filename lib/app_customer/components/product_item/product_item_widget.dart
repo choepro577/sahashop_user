@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_customer/screen/cart_screen/cart_controller.dart';
 import '../../components/empty/saha_empty_image.dart';
 import '../../screen/data_app_controller.dart';
 import '../../utils/color_utils.dart';
@@ -11,7 +12,7 @@ import 'package:sahashop_user/app_user/model/product.dart';
 import 'package:sahashop_user/app_user/utils/string_utils.dart';
 
 class ProductItemWidget extends StatelessWidget {
-  const ProductItemWidget({
+  ProductItemWidget({
     Key? key,
     required this.product,
     this.isLoading = false,
@@ -22,9 +23,11 @@ class ProductItemWidget extends StatelessWidget {
   final bool isLoading;
   final double? width;
 
+  CartController cartController = Get.find();
+  DataAppCustomerController dataAppCustomerController = Get.find();
+
   @override
   Widget build(BuildContext context) {
-    DataAppCustomerController dataAppCustomerController = Get.find();
     return Container(
       height: 270,
       width: width,
@@ -175,8 +178,8 @@ class ProductItemWidget extends StatelessWidget {
                                     color: Theme.of(context).primaryColor),
                                 child: InkWell(
                                   onTap: () {
-                                    dataAppCustomerController
-                                        .addItemCart(product.id);
+                                    cartController.addItemCart(product.id);
+                                    dataAppCustomerController.getBadge();
                                   },
                                   child: Container(
                                     height: 15,

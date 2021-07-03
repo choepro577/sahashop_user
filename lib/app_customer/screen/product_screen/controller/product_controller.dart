@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/repository/repository_customer.dart';
+import 'package:sahashop_user/app_customer/screen/cart_screen/cart_controller.dart';
 import 'package:sahashop_user/app_customer/screen/cart_screen/cart_screen_1.dart';
 import 'package:sahashop_user/app_user/data/example/product.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
@@ -31,6 +32,7 @@ class ProductController extends GetxController {
   var listAllImageReview = RxList<String>();
 
   DataAppCustomerController dataAppCustomerController = Get.find();
+  CartController cartController = Get.find();
 
   ProductController() {
     productInput = dataAppCustomerController.productCurrent;
@@ -148,7 +150,7 @@ class ProductController extends GetxController {
   }
 
   void addItemCart() {
-    dataAppCustomerController.addItemCart(productShow.value.id);
+    cartController.addItemCart(productShow.value.id);
   }
 
   Future<void> addManyItemOrUpdate(
@@ -156,16 +158,16 @@ class ProductController extends GetxController {
       bool? buyNow,
       List<DistributesSelected>? distributesSelected,
       int? productId}) async {
-    var index = dataAppCustomerController.listOrder
+    var index = cartController.listOrder
         .indexWhere((element) => element.product!.id == productId);
 
     if (index != -1) {
-      await dataAppCustomerController.updateItemCart(
+      await cartController.updateItemCart(
           productId,
-          dataAppCustomerController.listQuantityProduct[index] + quantity!,
+          cartController.listQuantityProduct[index] + quantity!,
           distributesSelected!.toList());
     } else {
-      await dataAppCustomerController.updateItemCart(
+      await cartController.updateItemCart(
           productId, quantity!, distributesSelected!.toList());
     }
 

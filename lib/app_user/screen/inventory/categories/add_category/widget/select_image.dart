@@ -9,6 +9,7 @@ import 'package:sahashop_user/app_user/const/constant.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:path/path.dart';
 
+// ignore: must_be_immutable
 class SelectCategoryImage extends StatelessWidget {
   SelectImageController selectImageController = new SelectImageController();
 
@@ -28,21 +29,19 @@ class SelectCategoryImage extends StatelessWidget {
       child: Obx(() {
         var deviceImage = selectImageController.pathImage;
 
-        if (linkImage != null && linkImage !="" && deviceImage.value == null ||
+        if (linkImage != null && linkImage != "" && deviceImage.value == null ||
             deviceImage.value == "")
           return Container(
-
             child: Stack(
               alignment: Alignment.center,
               children: [
                 CachedNetworkImage(
-                  height: 100,
-                  width: 100,
-                  fit: BoxFit.cover,
-                  imageUrl: linkImage!,
-                  placeholder: (context, url) => Container(),
-                  errorWidget: (context, url, error) => Container()
-                ),
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.cover,
+                    imageUrl: linkImage!,
+                    placeholder: (context, url) => Container(),
+                    errorWidget: (context, url, error) => Container()),
                 addImage()
               ],
             ),

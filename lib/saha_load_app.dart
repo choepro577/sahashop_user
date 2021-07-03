@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_user/screen/home/home_screen.dart';
 import 'package:sahashop_user/app_user/screen/login/loginScreen.dart';
@@ -14,10 +15,12 @@ class _SahaMainScreenState extends State<SahaMainScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
     loadInit(context);
   }
 
   void loadInit(BuildContext context) {
+    EasyLoading.init();
     checkLogin(context);
   }
 
