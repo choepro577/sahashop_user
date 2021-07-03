@@ -228,7 +228,9 @@ class ProfileScreen extends StatelessWidget {
                                             "Thành viên Bạch kim",
                                             style: TextStyle(
                                                 color: Theme.of(context)
-                                                    .primaryColor,
+                                                    .primaryTextTheme
+                                                    .headline6!
+                                                    .color,
                                                 fontSize: 13),
                                           ),
                                           Container(
@@ -237,7 +239,9 @@ class ProfileScreen extends StatelessWidget {
                                               child: SvgPicture.asset(
                                                 "assets/icons/right_arrow.svg",
                                                 color: Theme.of(context)
-                                                    .primaryColor,
+                                                    .primaryTextTheme
+                                                    .headline6!
+                                                    .color,
                                               ))
                                         ],
                                       ),
@@ -639,47 +643,54 @@ class ProfileScreen extends StatelessWidget {
                 height: 8,
                 color: Colors.grey[100],
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: 25,
-                          width: 25,
-                          child: SvgPicture.asset(
-                            "assets/icons/wallet.svg",
-                            color: Colors.red,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          "Ví tích điểm",
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          "1000 Point",
-                          style:
-                              TextStyle(fontSize: 13, color: Colors.grey[700]),
-                        ),
-                        Container(
-                            height: 13,
-                            width: 13,
+              InkWell(
+                onTap: () {
+                  Get.to(() => MemberScreen());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            height: 25,
+                            width: 25,
                             child: SvgPicture.asset(
-                              "assets/icons/right_arrow.svg",
-                              color: Colors.black,
-                            ))
-                      ],
-                    )
-                  ],
+                              "assets/icons/wallet.svg",
+                              color: Colors.red,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            "Ví tích điểm",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Obx(
+                            () => Text(
+                              "${dataAppCustomerController.badge.value.customerScore} Point",
+                              style: TextStyle(
+                                  fontSize: 13, color: Colors.grey[700]),
+                            ),
+                          ),
+                          Container(
+                              height: 13,
+                              width: 13,
+                              child: SvgPicture.asset(
+                                "assets/icons/right_arrow.svg",
+                                color: Colors.black,
+                              ))
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
               Divider(
