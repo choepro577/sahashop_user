@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_user/model/roll_call.dart';
 import 'package:sahashop_user/app_user/utils/date_utils.dart';
@@ -21,34 +22,64 @@ class DialogAttendance {
     Widget itemAttendance(RollCall rollCall) {
       return Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Stack(
+          clipBehavior: Clip.none,
           children: [
-            Container(
-              height: 30,
-              width: 30,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                    color: dateNow.day == rollCall.date!.day
-                        ? Theme.of(Get.context!).primaryColor
-                        : rollCall.checked == false
-                            ? Colors.grey[400]!
-                            : Colors.green),
+            Positioned(
+              top: -5,
+              left: -4,
+              child: SvgPicture.asset(
+                "assets/icons/sun.svg",
+                height: 40,
+                width: 40,
+                color: dateNow.isAfter(rollCall.date!)
+                    ? rollCall.checked! == true
+                        ? null
+                        : dateNow.day == rollCall.date!.day
+                            ? Colors.red
+                            : Colors.grey[400]!
+                    : Colors.blue,
               ),
-              child: Center(
-                child: Text(
-                  "${dateNow.day == rollCall.date!.day ? scoreToday : rollCall.score ?? 0}",
-                  style: TextStyle(fontSize: 13),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: dateNow.isAfter(rollCall.date!)
+                          ? rollCall.checked! == true
+                              ? Color(0xffe6b92f)
+                              : Colors.grey[400]!
+                          : Colors.blue,
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "${dateNow.isAfter(rollCall.date!) ? rollCall.score : rollCall.scoreInDay ?? 0}",
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: dateNow.isAfter(rollCall.date!)
+                            ? rollCall.checked! == true
+                                ? Color(0xffe6b92f)
+                                : Colors.grey[400]!
+                            : Colors.blue,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              "${SahaDateUtils().getDDMM(rollCall.date ?? DateTime.now())}",
-              style: TextStyle(fontSize: 12),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "${SahaDateUtils().getDDMM(rollCall.date ?? DateTime.now())}",
+                  style: TextStyle(fontSize: 12),
+                ),
+              ],
             ),
           ],
         ),
@@ -61,14 +92,22 @@ class DialogAttendance {
           return AlertDialog(
             title: Row(
               children: [
-                Text("Điểm danh hôm nay:"),
+                Text(
+                  "Điểm danh hôm nay:",
+                  style: TextStyle(color: Colors.blue),
+                ),
                 Spacer(),
                 InkWell(
                     onTap: () {
                       Get.back();
                     },
                     child: Container(
-                        height: 30, width: 30, child: Icon(Icons.close)))
+                        height: 30,
+                        width: 30,
+                        child: Icon(
+                          Icons.close,
+                          color: Colors.blue,
+                        )))
               ],
             ),
             contentPadding: EdgeInsets.all(0),
@@ -78,6 +117,9 @@ class DialogAttendance {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -100,11 +142,34 @@ class DialogAttendance {
                     height: 40,
                     decoration: BoxDecoration(
                         color: Colors.white,
-                        border:
-                            Border.all(color: Theme.of(context).primaryColor),
+                        // border: Border.all(color: Colors.blue),
                         borderRadius: BorderRadius.circular(20)),
                     child: Center(
-                      child: Text("Nhận ${scoreToday ?? 15} poin"),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            "assets/icons/star_around.svg",
+                            height: 10,
+                            width: 10,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            "Nhận ${scoreToday ?? 15} poin",
+                            style: TextStyle(color: Color(0xffe6b92f)),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          SvgPicture.asset(
+                            "assets/icons/star_around.svg",
+                            height: 10,
+                            width: 10,
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 ],
