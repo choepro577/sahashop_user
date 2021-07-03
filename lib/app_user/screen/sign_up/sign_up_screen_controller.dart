@@ -16,14 +16,14 @@ class SignUpController extends GetxController {
   var checkingHasEmail = false.obs;
   var checkingHasPhone = false.obs;
 
+  var otp = "";
+
   TextEditingController textEditingControllerPhone =
       new TextEditingController();
   TextEditingController textEditingControllerPass = new TextEditingController();
   TextEditingController textEditingControllerEmail =
       new TextEditingController();
   TextEditingController textEditingControllerName = new TextEditingController();
-
-  TextEditingController textEditingControllerOtp = new TextEditingController();
 
   Future<void> onSignUp() async {
     signUpping.value = true;
@@ -32,7 +32,7 @@ class SignUpController extends GetxController {
           phone: textEditingControllerPhone.text,
           pass: textEditingControllerPass.text,
           name: textEditingControllerName.text,
-          otp: textEditingControllerOtp.text,
+          otp: otp,
           email: textEditingControllerEmail.text);
       SahaAlert.showSuccess(
           message: "Đăng ký thành công hãy thực hiện đăng nhập");

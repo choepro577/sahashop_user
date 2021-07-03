@@ -1,3 +1,5 @@
+import 'package:sahashop_user/app_customer/remote/response-request/favorite/all_product_response.dart';
+import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/app_user/data/example/product.dart';
 import '../../remote/customer_service_manager.dart';
 import '../../remote/response-request/product/detail_product_response.dart';
@@ -41,6 +43,17 @@ class ProductCustomerRepository {
       return res;
     } catch (err) {
       // SahaAlert.showError(message: err.toString());
+    }
+  }
+
+  Future<AllProductFavorites?> getAllPurchasedProducts({int? page}) async {
+    try {
+      var res = await CustomerServiceManager()
+          .service!
+          .getPurchasedProducts(UserInfo().getCurrentStoreCode()!,page!);
+      return res;
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
     }
   }
 }

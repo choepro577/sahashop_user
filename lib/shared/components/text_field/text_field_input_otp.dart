@@ -5,12 +5,14 @@ import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dar
 import 'package:sahashop_user/app_user/const/sms_otp.dart';
 
 class TextFieldInputOtp extends StatelessWidget {
-  final TextEditingController? textEditingController;
+
   final String? numberPhone;
   final bool? autoFocus;
+  final Function? onSubmit;
+  final Function? onChanged;
 
   const TextFieldInputOtp(
-      {Key? key, this.textEditingController, this.numberPhone, this.autoFocus = false})
+      {Key? key,  this.numberPhone, this.autoFocus = false, this.onSubmit, this.onChanged})
       : super(key: key);
 
   @override
@@ -28,7 +30,7 @@ class TextFieldInputOtp extends StatelessWidget {
               backgroundColor: Colors.white,
               length: 6,
 //obscureText: true,
-              controller: textEditingController,
+
               obscuringCharacter: '*',
 // obscuringWidget: Container(
 //
@@ -71,9 +73,12 @@ class TextFieldInputOtp extends StatelessWidget {
               ],
               onCompleted: (v) {
                 print("Completed");
+             if( onSubmit!=null) onSubmit!(v);
               },
 
-              onChanged: (value) {},
+              onChanged: (value) {
+                if( onChanged!=null) onChanged!(value);
+              },
               beforeTextPaste: (text) {
                 print("Allowing to paste $text");
 //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.

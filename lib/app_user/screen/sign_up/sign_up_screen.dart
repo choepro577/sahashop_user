@@ -231,7 +231,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget buildInputOtp() {
     final formKey3 = GlobalKey<FormState>();
 
-    signUpController.textEditingControllerOtp = new TextEditingController();
     return Scaffold(
       appBar: SahaAppBar(
         leading: IconButton(
@@ -255,8 +254,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 TextFieldInputOtp(
                   numberPhone: signUpController.textEditingControllerPhone.text,
-                  textEditingController:
-                      signUpController.textEditingControllerOtp,
+                  onChanged: (va) {
+                    signUpController.otp = va;
+                  },
                 ),
                 SizedBox(height: 15),
                 Center(

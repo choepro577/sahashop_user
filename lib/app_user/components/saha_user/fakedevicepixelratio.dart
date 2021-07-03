@@ -8,7 +8,7 @@ class FakeDevicePixelRatio extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ratio = fakeDevicePixelRatio / WidgetsBinding.instance!.window.devicePixelRatio;
+    final ratio = 0.6;
 
     return FractionallySizedBox(
         widthFactor: 1/ratio,

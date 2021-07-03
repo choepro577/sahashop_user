@@ -89,7 +89,13 @@ class _SignInState extends State<ResetPasswordScreen> {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
                         KeyboardUtil.hideKeyboard(context);
-                        resetPasswordController.newPassInputting.value = true;
+
+                        resetPasswordController.checkHasPhoneNumber(
+                          onHas: () {
+                            resetPasswordController.newPassInputting.value = true;
+                          }
+                        );
+
                       }
                     }),
                 Spacer(),
@@ -99,7 +105,7 @@ class _SignInState extends State<ResetPasswordScreen> {
               ],
             ),
           ),
-          resetPasswordController.resting.value
+          resetPasswordController.resting.value || resetPasswordController.checkingHasPhone.value
               ? Container(
                   width: Get.width,
                   height: Get.height,
@@ -112,8 +118,7 @@ class _SignInState extends State<ResetPasswordScreen> {
   }
 
   Widget buildNewPasswordInputScreen() {
-    resetPasswordController.textEditingControllerOtp =
-        new TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Lấy lại mật khẩu"),
@@ -140,9 +145,10 @@ class _SignInState extends State<ResetPasswordScreen> {
                   TextFieldInputOtp(
                     numberPhone: resetPasswordController
                         .textEditingControllerNumberPhone.text,
-                    textEditingController:
-                        resetPasswordController.textEditingControllerOtp,
                     autoFocus: true,
+                    onChanged: (va) {
+                      resetPasswordController.otp = va;
+                    },
                   ),
                   SizedBox(
                     height: 20,

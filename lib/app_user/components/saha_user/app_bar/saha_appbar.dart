@@ -31,10 +31,10 @@ class SahaAppBar extends PreferredSize {
 
               )
             : titleChild,
-        iconTheme: IconThemeData(color: Colors.white),
+
         leading: leading,
         actions: actions,
-        backgroundColor: SahaPrimaryColor,
+
         elevation: 0.0,
         centerTitle: true,
         bottom: bottom != null

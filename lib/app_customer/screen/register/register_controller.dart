@@ -13,6 +13,8 @@ class RegisterController extends GetxController {
   var checkingHasEmail = false.obs;
   var checkingHasPhone = false.obs;
 
+  var otp = "";
+
   TextEditingController textEditingControllerPhone =
       new TextEditingController();
   TextEditingController textEditingControllerPass = new TextEditingController();
@@ -20,7 +22,6 @@ class RegisterController extends GetxController {
       new TextEditingController();
   TextEditingController textEditingControllerName = new TextEditingController();
 
-  TextEditingController textEditingControllerOtp = new TextEditingController();
 
   Future<void> onSignUp() async {
     signUpping.value = true;

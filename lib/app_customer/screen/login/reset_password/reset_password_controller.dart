@@ -9,10 +9,11 @@ import 'package:sahashop_user/app_user/utils/user_info.dart';
 class ResetPasswordController extends GetxController {
   var resting = false.obs;
   var newPassInputting = false.obs;
+  var checkingHasPhone = false.obs;
+  var otp = "";
 
   TextEditingController textEditingControllerNumberPhone =
       new TextEditingController();
-  TextEditingController textEditingControllerOtp = new TextEditingController();
   TextEditingController textEditingControllerNewPass =
       new TextEditingController();
 
@@ -23,7 +24,7 @@ class ResetPasswordController extends GetxController {
           .resetPassword(
               phone: textEditingControllerNumberPhone.text,
               pass: textEditingControllerNewPass.text,
-              otp: textEditingControllerOtp.text))!;
+              otp: otp))!;
 
       SahaAlert.showSuccess(
           message: "Lấy lại mật khẩu thành công, vui lòng đăng nhập lại");
@@ -39,5 +40,28 @@ class ResetPasswordController extends GetxController {
 
     }
     resting.value = false;
+  }
+
+  Future<void> checkHasPhoneNumber({Function? onHas, Function? noHas}) async {
+    checkingHasPhone.value = true;
+    try {
+      var data = await RepositoryManager.loginRepository.checkExists(
+        phoneNumber: textEditingControllerNumberPhone.text,
+      );
+
+      for(var e in data!) {
+        if (e.name == "phone_number" && e.value == true) {
+
+          if (onHas != null) onHas();
+          checkingHasPhone.value = false;
+          return;
+        }
+      }
+      SahaAlert.showError(message: "Số điện thoại không tồn tại");
+      if (noHas != null) noHas();
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+    checkingHasPhone.value = false;
   }
 }

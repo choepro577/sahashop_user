@@ -5,19 +5,18 @@ import '../../components/product_item/product_item_loading_widget.dart';
 import '../../components/product_item/product_item_widget.dart';
 import 'package:sahashop_user/app_user/data/example/product.dart';
 import 'package:sahashop_user/app_user/components/saha_user/app_bar/saha_appbar.dart';
-import 'package:sahashop_user/app_user/components/saha_user/loading/loading_shimmer.dart';
 
-import 'favorites_controller.dart';
+import 'bought_products_controller.dart';
 
-class FavoritesScreen extends StatefulWidget {
-  FavoritesScreen({Key? key}) : super(key: key);
+class BoughtProductsScreen extends StatefulWidget {
+  BoughtProductsScreen({Key? key}) : super(key: key);
 
   @override
-  _FavoritesScreenState createState() => _FavoritesScreenState();
+  _BoughtProductsScreenState createState() => _BoughtProductsScreenState();
 }
 
-class _FavoritesScreenState extends State<FavoritesScreen> {
-  final FavoritesController favoritesController = FavoritesController();
+class _BoughtProductsScreenState extends State<BoughtProductsScreen> {
+  final BoughtProductsController boughtProductsController = BoughtProductsController();
 
   ScrollController _scrollController = new ScrollController();
 
@@ -27,7 +26,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        favoritesController.getProducts(isLoadMore: true);
+        boughtProductsController.getProducts(isLoadMore: true);
       }
     });
   }
@@ -37,7 +36,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: SahaAppBar(
-        titleText: "Sản phẩm yêu thích",
+        titleText: "Sản phẩm vừa mua",
       ),
       body: buildList(),
     );
@@ -45,14 +44,14 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   Widget buildList() {
     return Obx(() {
-      var isLoading = favoritesController.isLoadingProduct.value;
+      var isLoading = boughtProductsController.isLoadingProduct.value;
       var list =
-          isLoading ? EXAMPLE_LIST_PRODUCT : favoritesController.products;
+          isLoading ? EXAMPLE_LIST_PRODUCT : boughtProductsController.products;
       return Padding(
         padding: const EdgeInsets.all(2.5),
         child: RefreshIndicator(
             onRefresh: () async {
-              await  favoritesController.getProducts(isRefresh: true);
+              await  boughtProductsController.getProducts(isRefresh: true);
             },
 
               child: Container(

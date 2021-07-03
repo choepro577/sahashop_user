@@ -730,6 +730,21 @@ class _CustomerService implements CustomerService {
   }
 
   @override
+  Future<AllProductFavorites> getPurchasedProducts(storeCode, page) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AllProductFavorites>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/purchased_products',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AllProductFavorites.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<FavoriteResponse> favoriteProduct(storeCode, productId, body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

@@ -237,7 +237,6 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen> {
   Widget buildInputOtp() {
     final formKey3 = GlobalKey<FormState>();
 
-    registerController.textEditingControllerOtp = new TextEditingController();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -262,8 +261,9 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen> {
                 TextFieldInputOtp(
                   numberPhone:
                       registerController.textEditingControllerPhone.text,
-                  textEditingController:
-                      registerController.textEditingControllerOtp,
+                  onChanged: (va) {
+                    registerController.otp = va;
+                  },
                 ),
                 SizedBox(height: 15),
                 Center(
