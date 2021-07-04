@@ -77,6 +77,17 @@ class DataAppCustomerController extends GetxController {
     }
   }
 
+  Future<void> checkIn() async {
+    try {
+      var data = await CustomerRepositoryManager.scoreRepository.checkIn();
+      SahaAlert.showToastMiddle(message: "Điểm danh thành công");
+      isCheckIn = false;
+      getBadge();
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+  }
+
   Future<void> getInfoCustomer() async {
     if (await CustomerInfo().hasLogged()) {
       try {

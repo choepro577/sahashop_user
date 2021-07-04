@@ -41,10 +41,18 @@ class ReportOrder extends StatelessWidget {
                         color: Theme.of(context).primaryColor, fontSize: 16),
                   ),
                   Spacer(),
-                  Icon(
-                    Icons.keyboard_arrow_down,
-                    size: 21,
-                    color: Theme.of(context).primaryColor,
+                  Row(
+                    children: [
+                      Text(
+                        "Chi tiết",
+                        style: TextStyle(color: Theme.of(context).primaryColor),
+                      ),
+                      Icon(
+                        Icons.keyboard_arrow_down,
+                        size: 21,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ],
                   )
                 ],
               ),

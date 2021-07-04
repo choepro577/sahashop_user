@@ -227,10 +227,7 @@ class ProfileScreen extends StatelessWidget {
                                           Text(
                                             "Thành viên Bạch kim",
                                             style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .primaryTextTheme
-                                                    .headline6!
-                                                    .color,
+                                                color: Color(0xff07abc3),
                                                 fontSize: 13),
                                           ),
                                           Container(
@@ -238,10 +235,7 @@ class ProfileScreen extends StatelessWidget {
                                               width: 10,
                                               child: SvgPicture.asset(
                                                 "assets/icons/right_arrow.svg",
-                                                color: Theme.of(context)
-                                                    .primaryTextTheme
-                                                    .headline6!
-                                                    .color,
+                                                color: Color(0xff07abc3),
                                               ))
                                         ],
                                       ),

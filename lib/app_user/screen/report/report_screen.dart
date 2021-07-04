@@ -133,6 +133,7 @@ class ReportScreen extends StatelessWidget {
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Row(
                                         children: [
@@ -150,7 +151,10 @@ class ReportScreen extends StatelessWidget {
                                         ],
                                       ),
                                       SizedBox(
-                                        height: 10,
+                                        height:
+                                            reportController!.isCompare.value
+                                                ? 10
+                                                : 0,
                                       ),
                                       reportController!.isCompare.value
                                           ? Row(

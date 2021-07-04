@@ -10,7 +10,7 @@ class MemberController extends GetxController {
   var isScoreHistory = false.obs;
   var memberType = "Bạc".obs;
   var memberTypeNext = "Vàng".obs;
-  var scoreTarget = 0.0.obs;
+  var scoreTarget = 2000000.0.obs;
 
   DataAppCustomerController dataAppCustomerController = Get.find();
 
