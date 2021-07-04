@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:sahashop_user/app_customer/screen/data_app_controller.dart';
+import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/app_user/const/const_database_shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';

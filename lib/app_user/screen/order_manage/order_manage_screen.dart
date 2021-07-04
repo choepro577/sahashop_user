@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_order.dart';
-import 'package:sahashop_user/app_customer/screen/order_history/order_status_page/widget/order_loading_item_widget.dart';
+import 'package:sahashop_user/app_customer/screen_default/order_history/order_status_page/widget/order_loading_item_widget.dart';
 import 'package:sahashop_user/app_customer/utils/color_utils.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
