@@ -178,12 +178,10 @@ class ReportController extends GetxController {
       listPricePr(res.data!.totalPrice);
       listViewPr(res.data!.view);
       listNameProductTop([
-        listTotalItemPr.isEmpty ? "nothing" : listTotalItemPr[0].product!.name!,
-        listNumberOrderPr.isEmpty
-            ? "nothing"
-            : listNumberOrderPr[0].product!.name!,
-        listPricePr.isEmpty ? "nothing" : listPricePr[0].product!.name!,
-        listViewPr.isEmpty ? "nothing" : listViewPr[0].product!.name!,
+        listTotalItemPr.isEmpty ? "" : listTotalItemPr[0].product!.name!,
+        listNumberOrderPr.isEmpty ? "" : listNumberOrderPr[0].product!.name!,
+        listPricePr.isEmpty ? "" : listPricePr[0].product!.name!,
+        listViewPr.isEmpty ? "" : listViewPr[0].product!.name!,
       ]);
       listPropertiesTop([
         listTotalItemPr.isEmpty ? 0 : listTotalItemPr[0].totalItems!,
