@@ -15,6 +15,7 @@ class OrderStatusController extends GetxController {
   var isLoadRefresh = true.obs;
   var listOrder = RxList<Order>([]);
   var checkIsEmpty = false.obs;
+  var listCheckReviewed = RxList<bool>();
 
   var listStatusCode = [
     WAITING_FOR_PROGRESSING,
@@ -49,6 +50,7 @@ class OrderStatusController extends GetxController {
 
         res!.data!.data!.forEach((element) {
           listOrder.add(element);
+          listCheckReviewed.add(true);
         });
 
         if (listOrder.isEmpty) {
@@ -65,6 +67,20 @@ class OrderStatusController extends GetxController {
       } else {
         isLoadMore.value = false;
         return;
+      }
+
+      if (fieldByValue == COMPLETED) {
+        for (int i = 0; i < listOrder.length; i++) {
+          var checkReviewed = listOrder[i]
+              .lineItems!
+              .map((e) => e.reviewed)
+              .toList()
+              .contains(false);
+          if (checkReviewed == true) {
+            listCheckReviewed[i] = false;
+          }
+        }
+        print(listCheckReviewed);
       }
     } catch (err) {
       SahaAlert.showError(message: err.toString());

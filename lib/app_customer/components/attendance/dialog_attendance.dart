@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_customer/screen/data_app_controller.dart';
 import 'package:sahashop_user/app_user/model/roll_call.dart';
 import 'package:sahashop_user/app_user/utils/date_utils.dart';
 
@@ -18,6 +19,8 @@ class DialogAttendance {
     List<RollCall>? listRollCall,
   ) {
     var dateNow = DateTime.now();
+
+    DataAppCustomerController dataAppCustomerController = Get.find();
 
     Widget itemAttendance(RollCall rollCall) {
       return Padding(
@@ -60,7 +63,7 @@ class DialogAttendance {
                   ),
                   child: Center(
                     child: Text(
-                      "${dateNow.isAfter(rollCall.date!) ? rollCall.score : rollCall.scoreInDay ?? 0}",
+                      "${dateNow.isAfter(rollCall.date!) ? dateNow.day == rollCall.date!.day ? rollCall.scoreInDay : rollCall.score : rollCall.scoreInDay ?? 0}",
                       style: TextStyle(
                         fontSize: 13,
                         color: dateNow.isAfter(rollCall.date!)
@@ -137,38 +140,43 @@ class DialogAttendance {
                   SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    width: Get.width / 2.5,
-                    height: 40,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        // border: Border.all(color: Colors.blue),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                            "assets/icons/star_around.svg",
-                            height: 10,
-                            width: 10,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "Nhận ${scoreToday ?? 15} poin",
-                            style: TextStyle(color: Color(0xffe6b92f)),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          SvgPicture.asset(
-                            "assets/icons/star_around.svg",
-                            height: 10,
-                            width: 10,
-                          ),
-                        ],
+                  InkWell(
+                    onTap: () {
+                      dataAppCustomerController.checkIn();
+                    },
+                    child: Container(
+                      width: Get.width / 2.5,
+                      height: 40,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          // border: Border.all(color: Colors.blue),
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              "assets/icons/star_around.svg",
+                              height: 10,
+                              width: 10,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Nhận ${scoreToday ?? 15} poin",
+                              style: TextStyle(color: Color(0xffe6b92f)),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            SvgPicture.asset(
+                              "assets/icons/star_around.svg",
+                              height: 10,
+                              width: 10,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   )

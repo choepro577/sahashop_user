@@ -20,12 +20,14 @@ class _NavigationScreenState extends State<NavigationScreen> {
   @override
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      if (dataAppCustomerController.isCheckIn == true) {
-        DialogAttendance.showAttendanceDialog(
-            context,
-            dataAppCustomerController.scoreToday,
-            dataAppCustomerController.listRollCall);
-      }
+      Future.delayed(const Duration(milliseconds: 2000), () {
+        if (dataAppCustomerController.isCheckIn == true) {
+          DialogAttendance.showAttendanceDialog(
+              context,
+              dataAppCustomerController.scoreToday,
+              dataAppCustomerController.listRollCall);
+        }
+      });
     });
     super.initState();
   }

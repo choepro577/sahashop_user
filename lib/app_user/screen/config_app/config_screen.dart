@@ -20,25 +20,33 @@ class ConfigScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: SahaAppBar(
-          titleText: 'Chỉnh sửa giao diện',
-          actions: [
-            InkWell(
-              onTap: () {
-                runMainAppCustomer(context);
-              },
-              child: Row(
-                children: [
-                  Icon(Icons.add_to_home_screen_sharp),
-                  Text("Xem trước"),
-                  SizedBox(
-                    width: 5,
-                  )
-
-                ],
+        appBar: AppBar(
+          title: Row(
+            children: [
+              Text("Chỉnh sửa giao diện"),
+              Spacer(),
+              InkWell(
+                onTap: () {
+                  runMainAppCustomer(context);
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.add_to_home_screen_sharp,
+                      size: 20,
+                    ),
+                    Text(
+                      "Xem trước",
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    )
+                  ],
+                ),
               ),
-            )
-          ],
+            ],
+          ),
         ),
         body: Obx(
           () => configController.isLoadingGet.value
@@ -55,8 +63,8 @@ class ConfigScreen extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.2,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.2,
                                     color: Colors.grey[200],
                                     child: ListView.builder(
                                         itemCount: uiDataConfig.UIData.length,

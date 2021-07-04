@@ -394,38 +394,10 @@ class _OrderStatusPageState extends State<OrderStatusPage>
                                                 ),
                                               )
                                             : orderStatusController
-                                                        .listOrder[index]
-                                                        .reviewed ==
-                                                    true
+                                                            .listCheckReviewed[
+                                                        index] ==
+                                                    false
                                                 ? InkWell(
-                                                    onTap: () {
-                                                      Get.to(
-                                                          () => CartScreen1());
-                                                    },
-                                                    child: Container(
-                                                      height: 35,
-                                                      width: 100,
-                                                      decoration: BoxDecoration(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .primaryColor,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(4)),
-                                                      child: Center(
-                                                        child: Text(
-                                                          "Mua lại",
-                                                          style: TextStyle(
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .primaryTextTheme
-                                                                  .headline6!
-                                                                  .color),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                : InkWell(
                                                     onTap: () {
                                                       Get.to(
                                                         () => ReviewScreen(
@@ -455,6 +427,34 @@ class _OrderStatusPageState extends State<OrderStatusPage>
                                                       child: Center(
                                                         child: Text(
                                                           "Đánh giá",
+                                                          style: TextStyle(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryTextTheme
+                                                                  .headline6!
+                                                                  .color),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                : InkWell(
+                                                    onTap: () {
+                                                      Get.to(
+                                                          () => CartScreen1());
+                                                    },
+                                                    child: Container(
+                                                      height: 35,
+                                                      width: 100,
+                                                      decoration: BoxDecoration(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(4)),
+                                                      child: Center(
+                                                        child: Text(
+                                                          "Mua lại",
                                                           style: TextStyle(
                                                               color: Theme.of(
                                                                       context)
