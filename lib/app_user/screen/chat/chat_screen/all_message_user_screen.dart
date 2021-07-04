@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/app_user/components/saha_user/empty_widget/saha_empty_chat_widget.dart';
+import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
 import 'package:sahashop_user/app_user/screen/chat/chat_screen/chat_controller.dart';
 import 'package:sahashop_user/app_user/utils/string_utils.dart';
 import 'package:shimmer/shimmer.dart';
@@ -185,10 +187,8 @@ class AllMessageScreen extends StatelessWidget {
                           width: 60,
                           height: 60,
                           fit: BoxFit.cover,
-                          errorWidget: (context, url, error) => Image.asset(
-                            "assets/saha_loading.png",
-                            fit: BoxFit.cover,
-                          ),
+                          placeholder: (context,url) => SahaLoadingContainer(),
+                          errorWidget: (context, url, error) => SahaEmptyImage(),
                         ),
                         borderRadius: BorderRadius.circular(3000),
                       ),

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
 import '../../components/product_item/post_item_widget.dart';
 import '../../screen/data_app_controller.dart';
 import '../../screen/search_screen/search_screen.dart';
@@ -33,24 +34,21 @@ class CategoryPostStyle1 extends StatelessWidget {
       body: Obx(
         () => Column(
           children: [
-            SizedBox(
-              height: 10,
-            ),
+
             Container(
-              height: 40,
+              height: 45,
               child: categoryController.isLoadingCategoryPost.value
                   ? SahaLoadingWidget()
                   : Container(
                       width: Get.width,
+                      color: Colors.white,
                       child: ListView.builder(
                           itemCount: categoryController.categories.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             return Row(
                               children: [
-                                SizedBox(
-                                  width: 10,
-                                ),
+
                                 buildItem(
                                     category:
                                         categoryController.categories[index]),
@@ -74,16 +72,19 @@ class CategoryPostStyle1 extends StatelessWidget {
         padding: const EdgeInsets.all(2.5),
         child: SahaSimmer(
           isLoading: isLoading,
-          child: StaggeredGridView.countBuilder(
-            crossAxisCount: 1,
-            itemCount: list.length,
+          child: ListView.separated(
             itemBuilder: (BuildContext context, int index) => PostItemWidget(
               post: list[index],
               isLoading: isLoading,
             ),
-            staggeredTileBuilder: (int index) => new StaggeredTile.fit(1),
-            mainAxisSpacing: 0,
-            crossAxisSpacing: 0,
+            separatorBuilder: (BuildContext context, int index) => Padding(
+              padding: const EdgeInsets.only(left: 5,right: 5),
+              child: Divider(
+                color: Colors.grey[100],
+                height: 2,
+              ),
+            ),
+            itemCount: list.length,
           ),
         ),
       );
@@ -92,15 +93,21 @@ class CategoryPostStyle1 extends StatelessWidget {
 
   Widget buildItem({CategoryPost? category}) {
     return Obx(() => Container(
-          height: 40,
-          padding: EdgeInsets.only(left: 10, right: 10, bottom: 3, top: 3),
+
+          padding: EdgeInsets.only(top: 10,bottom: 10,right: 15,left: 15),
+
           decoration: BoxDecoration(
-              border: Border.all(
-                  color: categoryController.categoryCurrent.value.id ==
-                          category!.id
-                      ? Theme.of(Get.context!).primaryColor
-                      : Colors.grey),
-              borderRadius: BorderRadius.all(Radius.circular(5)),
+              border: Border(
+
+                  bottom: BorderSide(
+                    color: categoryController.categoryCurrent.value.id ==
+                        category!.id
+                        ? Theme.of(Get.context!).primaryColor
+                        : Colors.white,
+                    width: 2,
+                  )),
+
+
               color: Colors.white),
           child: InkWell(
             onTap: () {
@@ -117,16 +124,16 @@ class CategoryPostStyle1 extends StatelessWidget {
                     : Padding(
                         padding: const EdgeInsets.only(right: 8.0),
                         child: SizedBox(
-                          width: 30,
-                          height: 30,
+                          width: 40,
+                          height: 40,
                           child: ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(3)),
+                            borderRadius: BorderRadius.all(Radius.circular(2)),
                             child: CachedNetworkImage(
                               imageUrl: category.imageUrl ?? "",
                               placeholder: (context, url) =>
-                                  CircularProgressIndicator(),
+                                SahaLoadingContainer(),
                               errorWidget: (context, url, error) => Container(),
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fitWidth,
                             ),
                           ),
                         ),

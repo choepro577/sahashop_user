@@ -293,6 +293,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           ),
                         ),
                       ),
+
                       Column(
                             children: [
                               Row(
@@ -335,7 +336,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             ],
                           ),
                       SizedBox(
-                        height: 5,
+                        height: 15,
                       )
                     ],
                   ),

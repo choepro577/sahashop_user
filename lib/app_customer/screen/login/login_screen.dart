@@ -61,7 +61,7 @@ class LoginScreenCustomer extends StatelessWidget {
                     Expanded(
                       child: TextField(
                         controller:
-                            loginController.nameAccountEditingController.value,
+                            loginController.phoneEditingController.value,
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
                           isDense: true,
@@ -72,7 +72,7 @@ class LoginScreenCustomer extends StatelessWidget {
                         minLines: 1,
                         maxLines: 1,
                         onChanged: (v) {
-                          loginController.nameAccountEditingController
+                          loginController.phoneEditingController
                               .refresh();
                         },
                       ),
@@ -138,7 +138,12 @@ class LoginScreenCustomer extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () {
-                            Get.to(ResetPasswordScreen());
+                            Get.to(ResetPasswordScreen())!.then((mapData) {
+                              if(mapData["success"] != null) {
+                                loginController.phoneEditingController.value.text =mapData["phone"];
+                                loginController.passwordEditingController.value.text =mapData["pass"];
+                              }
+                            });
                           },
                           child: Text(
                             "Quên?",
@@ -158,7 +163,7 @@ class LoginScreenCustomer extends StatelessWidget {
                 height: 15,
               ),
               Obx(
-                () => loginController.nameAccountEditingController.value.text
+                () => loginController.phoneEditingController.value.text
                             .isNotEmpty &&
                         loginController
                             .passwordEditingController.value.text.isNotEmpty
@@ -167,7 +172,7 @@ class LoginScreenCustomer extends StatelessWidget {
                         onPressed: () {
                           loginController.loginAccount(
                               loginController
-                                  .nameAccountEditingController.value.text,
+                                  .phoneEditingController.value.text,
                               loginController
                                   .passwordEditingController.value.text);
                           sub ??=

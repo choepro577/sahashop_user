@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
 import '../../screen/config_profile_screen/config_profile_controller.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/app_user/model/info_customer.dart';
@@ -74,10 +75,8 @@ class ConfigProfileScreen extends StatelessWidget {
                           width: 70,
                           imageUrl: configProfileController.linkAvatar.value,
                           fit: BoxFit.cover,
-                          errorWidget: (context, url, error) => Image.asset(
-                            "assets/saha_loading.png",
-                            fit: BoxFit.cover,
-                          ),
+
+                          errorWidget: (context, url, error) => SahaEmptyImage(),
                         ),
                       ),
                     ),
@@ -105,28 +104,9 @@ class ConfigProfileScreen extends StatelessWidget {
                                         imageUrl: configProfileController
                                             .linkAvatar.value,
                                         fit: BoxFit.cover,
-                                        placeholder: (context, url) => Stack(
-                                          children: [
-                                            configProfileController.dataImages
-                                                        .value!.file ==
-                                                    null
-                                                ? Container()
-                                                : Image.file(
-                                                    configProfileController
-                                                        .dataImages
-                                                        .value!
-                                                        .file!,
-                                                    width: 300,
-                                                    height: 300,
-                                                  ),
-                                            SahaLoadingWidget(),
-                                          ],
-                                        ),
+                                        placeholder: (context, url) => SahaLoadingWidget(),
                                         errorWidget: (context, url, error) =>
-                                            Image.asset(
-                                          "assets/saha_loading.png",
-                                          fit: BoxFit.cover,
-                                        ),
+                                            SahaEmptyImage(),
                                       ),
                                 Positioned(
                                   bottom: 1,

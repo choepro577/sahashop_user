@@ -45,7 +45,7 @@ class ResetPasswordController extends GetxController {
   Future<void> checkHasPhoneNumber({Function? onHas, Function? noHas}) async {
     checkingHasPhone.value = true;
     try {
-      var data = await RepositoryManager.loginRepository.checkExists(
+      var data = await CustomerRepositoryManager.loginCustomerRepository.checkExists(
         phoneNumber: textEditingControllerNumberPhone.text,
       );
 

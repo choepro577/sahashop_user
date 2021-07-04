@@ -7,7 +7,7 @@ import '../../utils/customer_info.dart';
 
 class LoginController extends GetxController {
   var isHidePassword = true.obs;
-  var nameAccountEditingController = new TextEditingController().obs;
+  var phoneEditingController = new TextEditingController().obs;
   var passwordEditingController = new TextEditingController().obs;
   var isLoginSuccess = false.obs;
 

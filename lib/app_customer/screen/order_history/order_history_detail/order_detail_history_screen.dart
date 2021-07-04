@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/app_customer/screen/chat_customer/chat_customer_screen.dart';
 import 'package:sahashop_user/app_customer/screen/order_history/order_history_detail/widget/choose_reason_cancel_order.dart';
+import 'package:sahashop_user/app_customer/utils/color_utils.dart';
 import 'package:sahashop_user/app_user/model/order.dart';
 import 'package:sahashop_user/app_user/utils/date_utils.dart';
 import 'package:sahashop_user/app_user/utils/string_utils.dart';
@@ -119,7 +120,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                     height: 25,
                     child: SvgPicture.asset(
                       "assets/icons/delivery_truck.svg",
-                      color: Theme.of(context).primaryColor,
+                      color: SahaColorUtils().colorTextWithPrimaryColor(),
                     ),
                   ),
                   SizedBox(
@@ -162,7 +163,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                     ),
                     child: SvgPicture.asset(
                       "assets/icons/location.svg",
-                      color: Theme.of(context).primaryColor,
+                      color: SahaColorUtils().colorTextWithPrimaryColor(),
                     ),
                   ),
                   SizedBox(
@@ -424,7 +425,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                     ),
                     child: SvgPicture.asset(
                       "assets/icons/money.svg",
-                      color: Theme.of(context).primaryColor,
+                      color: SahaColorUtils().colorTextWithPrimaryColor(),
                     ),
                   ),
                   SizedBox(
@@ -595,7 +596,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                     "đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order!.totalAfterDiscount)}",
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
-                        color: Theme.of(context).primaryColor),
+                        color: SahaColorUtils().colorTextWithPrimaryColor()),
                   )
                 ],
               ),
