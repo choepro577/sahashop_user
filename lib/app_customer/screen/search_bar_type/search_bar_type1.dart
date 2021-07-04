@@ -10,6 +10,7 @@ import 'package:sahashop_user/app_user/components/saha_user/search/seach_field.d
 
 // ignore: must_be_immutable
 class SearchBarType1 extends StatelessWidget {
+
   Function? onSearch;
   DataAppCustomerController dataAppCustomerController = Get.find();
   SearchBarType1({Key? key, this.onSearch}) : super(key: key);
@@ -23,16 +24,24 @@ class SearchBarType1 extends StatelessWidget {
         SizedBox(
           width: 20,
         ),
-        Expanded(
-          child: Container(
-              margin: EdgeInsets.symmetric(vertical: 30),
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-              child: SearchField(
-                onClick: () {
-                  dataAppCustomerController.toSearchScreen();
-                },
-              )),
-        ),
+       Expanded(
+         child: Container(
+           padding: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
+           decoration: BoxDecoration(
+             borderRadius: BorderRadius.all(Radius.circular(2)),
+             color: Colors.grey[100]!
+           ),
+           child: Row(
+             children: [
+               Icon(Icons.search),
+               Text("Tìm kiếm trong cửa hàng",
+               style: TextStyle(
+                 
+               ),),
+             ],
+           ),
+         ),
+       ),
         SizedBox(
           width: 10,
         ),

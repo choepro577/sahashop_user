@@ -4,6 +4,7 @@ import 'package:sahashop_user/app_user/data/example/product.dart';
 import 'banner_type/banner_type1.dart';
 import 'banner_type/banner_type2.dart';
 import 'banner_type/banner_type3.dart';
+import 'banner_type/banner_type4.dart';
 import 'cart_screen/cart_screen_1.dart';
 import 'category_product_screen/category_product_screen_1.dart';
 import 'category_product_screen/category_product_screen_2.dart';
@@ -42,6 +43,7 @@ class RepositoryWidgetCustomer {
     BannerType1(height: 120),
     BannerType2(height: 120),
     BannerType3(height: 130),
+    BannerType4(height: 140),
   ];
 
   List<Widget> LIST_WIDGET_LIST_CATEGORY = [
