@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/app_customer/screen/category_post_screen/read_post_screen/read_post_screen.dart';
 import 'package:sahashop_user/app_customer/screen/data_app_controller.dart';
+import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
 import 'package:sahashop_user/app_user/model/post.dart';
 import 'package:sahashop_user/app_user/utils/date_utils.dart';
 
@@ -23,7 +24,6 @@ class PostItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(8),
       width: width,
       child: Container(
         color: Colors.white,
@@ -41,7 +41,7 @@ class PostItemWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
+                borderRadius: BorderRadius.all(Radius.circular(2)),
                 child: isLoading
                     ? Container(
                         height: 70,
@@ -57,10 +57,11 @@ class PostItemWidget extends StatelessWidget {
                       )
                     : CachedNetworkImage(
                         height: 70,
-                        width: 70,
+                        width: 100,
                         fit: BoxFit.cover,
                         imageUrl: post.imageUrl == null ? "" : post.imageUrl!,
-                        errorWidget: (context, url, error) => SahaEmptyImage(),
+                        placeholder: (context,url) => SahaLoadingContainer(),
+                  errorWidget: (context, url, error) => SahaEmptyImage(),
                       ), //post.images[0].imageUrl,
               ),
               SizedBox(width: 5),
@@ -73,7 +74,7 @@ class PostItemWidget extends StatelessWidget {
                     : Padding(
                         padding: const EdgeInsets.only(left: 5.0, right: 5.0),
                         child: Container(
-                          height: 60,
+                          height: 70,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,20 +84,35 @@ class PostItemWidget extends StatelessWidget {
                                   post.title!,
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: Colors.black,
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold
                                   ),
                                   maxLines: 2,
                                 ),
                               ),
-                              Text(
-                                SahaDateUtils()
-                                    .getDDMMYY(DateTime.parse(post.updatedAt!)),
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: Colors.grey,
-                                ),
-                                maxLines: 2,
+                              Row(
+                                children: [
+                                  Text(post.category != null && post.category!.length > 0
+                                    ? post.category![0].title! : "",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.grey,
+                                    ),
+                                    maxLines: 2,
+                                  ),
+                                  Spacer(),
+                                  Text(
+                                    SahaDateUtils()
+                                        .getDDMMYY(DateTime.parse(post.updatedAt!)),
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.grey,
+                                    ),
+                                    maxLines: 2,
+                                  ),
+                                ],
                               ),
+
                             ],
                           ),
                         ),

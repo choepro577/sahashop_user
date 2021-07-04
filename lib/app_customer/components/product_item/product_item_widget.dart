@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/screen/cart_screen/cart_controller.dart';
+import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
 import '../../components/empty/saha_empty_image.dart';
 import '../../screen/data_app_controller.dart';
 import '../../utils/color_utils.dart';
@@ -70,6 +71,7 @@ class ProductItemWidget extends StatelessWidget {
                                   imageUrl: product.images!.length == 0
                                       ? ""
                                       : product.images![0].imageUrl!,
+                                  placeholder: (context, url) => SahaLoadingContainer(),
                                   errorWidget: (context, url, error) =>
                                       SahaEmptyImage(),
                                 ),

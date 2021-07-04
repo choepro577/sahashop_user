@@ -6,12 +6,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
+import 'package:sahashop_user/app_customer/components/empty/saha_empty_order.dart';
+import 'package:sahashop_user/app_customer/screen/order_history/order_status_page/widget/order_loading_item_widget.dart';
 import 'package:sahashop_user/app_customer/utils/color_utils.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
+import 'package:sahashop_user/app_user/const/constant.dart';
 import 'package:sahashop_user/app_user/screen/order_manage/order_detail_manage/order_detail_manage_screen.dart';
 import 'package:sahashop_user/app_user/screen/order_manage/order_manage_controller.dart';
 import 'package:sahashop_user/app_user/utils/string_utils.dart';
+
+import 'widget/order_item_widget.dart';
 
 class OrderManageScreen extends StatefulWidget {
   OrderManageScreen({Key? key}) : super(key: key);
@@ -122,47 +127,21 @@ class _OrderManageScreenState extends State<OrderManageScreen>
       },
       child: Obx(
         () => orderManageController!.isLoadInit.value
-            ? SahaSimmer(
-                isLoading: true,
-                child: Container(
-                  width: Get.width,
-                  height: Get.height,
-                  color: Colors.black,
-                ))
+            ? ListView.builder(
+                itemCount: 2,
+                itemBuilder: (context, index) => OrderLoadingItemWidget())
             : SingleChildScrollView(
                 child: orderManageController!.listCheckIsEmpty[indexState]
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(4),
-                            height: 80,
-                            width: 80,
-                            decoration: BoxDecoration(
-                              color: Color(0xFFF5F6F9),
-                              shape: BoxShape.circle,
-                            ),
-                            child: SvgPicture.asset(
-                              "assets/icons/check_list_new.svg",
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text("Không có đơn hàng nào !")
-                        ],
-                      )
+                    ? SahaEmptyOrder()
                     : Column(
                         children: [
                           ...List.generate(
                             orderManageController!
                                 .listAllOrder[indexState].length,
-                            (index) => InkWell(
+                            (index) => OrderItemWidget(
+                              order: orderManageController!
+                                  .listAllOrder[indexState][index],
                               onTap: () {
-                                print(indexState);
                                 Get.to(() => OrderDetailScreen(
                                       order: orderManageController!
                                           .listAllOrder[indexState][index],
@@ -170,288 +149,6 @@ class _OrderManageScreenState extends State<OrderManageScreen>
                                       indexStateOrder: indexState,
                                     ));
                               },
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    height: 8,
-                                    color: Colors.grey[200],
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      left: 8,
-                                      right: 8,
-                                      top: 8,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                          child: CachedNetworkImage(
-                                            width: 25,
-                                            height: 25,
-                                            fit: BoxFit.cover,
-                                            imageUrl: orderManageController!
-                                                        .listAllOrder[
-                                                            indexState][index]
-                                                        .lineItemsAtTime!
-                                                        .length ==
-                                                    0
-                                                ? ""
-                                                : "${orderManageController!.listAllOrder[indexState][index].infoCustomer!.avatarImage}",
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    SahaEmptyImage(),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 15,
-                                        ),
-                                        Text(
-                                            "${orderManageController!.listAllOrder[indexState][index].infoCustomer!.name}"),
-                                        Spacer(),
-                                        Text(
-                                          "${orderManageController!.listAllOrder[indexState][index].orderStatusName}",
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryColor),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Divider(height: 1),
-                                  Padding(
-                                    padding: EdgeInsets.all(8),
-                                    child: Row(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(2),
-                                          child: CachedNetworkImage(
-                                            width: 80,
-                                            height: 80,
-                                            fit: BoxFit.cover,
-                                            imageUrl: orderManageController!
-                                                        .listAllOrder[
-                                                            indexState][index]
-                                                        .lineItemsAtTime!
-                                                        .length ==
-                                                    0
-                                                ? ""
-                                                : "${orderManageController!.listAllOrder[indexState][index].lineItemsAtTime![0].imageUrl}",
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    SahaEmptyImage(),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Expanded(
-                                          child: Container(
-                                            height: 80,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  "${orderManageController!.listAllOrder[indexState][index].lineItemsAtTime![0].name}",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Spacer(),
-                                                        Text(
-                                                          " x ${orderManageController!.listAllOrder[indexState][index].lineItemsAtTime![0].quantity}",
-                                                          style: TextStyle(
-                                                              fontSize: 13,
-                                                              color: Colors
-                                                                  .grey[600]),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        Spacer(),
-                                                        Text(
-                                                          "đ${SahaStringUtils().convertToMoney(orderManageController!.listAllOrder[indexState][index].lineItemsAtTime![0].beforePrice)}",
-                                                          style: TextStyle(
-                                                              decoration:
-                                                                  TextDecoration
-                                                                      .lineThrough,
-                                                              color: Colors
-                                                                  .grey[600]),
-                                                        ),
-                                                        SizedBox(width: 15),
-                                                        Text(
-                                                          "đ${SahaStringUtils().convertToMoney(orderManageController!.listAllOrder[indexState][index].lineItemsAtTime![0].afterDiscount)}",
-                                                          style: TextStyle(
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .primaryColor),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1,
-                                  ),
-                                  orderManageController!
-                                              .listAllOrder[indexState][index]
-                                              .lineItemsAtTime!
-                                              .length >
-                                          1
-                                      ? Container(
-                                          width: Get.width,
-                                          padding: EdgeInsets.all(8),
-                                          child: Center(
-                                            child: Text(
-                                              "Xem thêm sản phẩm",
-                                              style: TextStyle(
-                                                  color: Colors.grey[600],
-                                                  fontSize: 13),
-                                            ),
-                                          ),
-                                        )
-                                      : Container(),
-                                  Divider(
-                                    height: 1,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(8),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "${orderManageController!.listAllOrder[indexState][index].lineItemsAtTime!.length} sản phẩm",
-                                          style: TextStyle(
-                                              color: Colors.grey[600]),
-                                        ),
-                                        Spacer(),
-                                        Container(
-                                          padding: EdgeInsets.all(4),
-                                          height: 30,
-                                          width: 30,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFFF5F6F9),
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: SvgPicture.asset(
-                                            "assets/icons/money.svg",
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text("Thành tiền: "),
-                                            Text(
-                                              "đ${SahaStringUtils().convertToMoney(orderManageController!.listAllOrder[indexState][index].totalFinal)}",
-                                              style: TextStyle(
-                                                  color: SahaColorUtils()
-                                                      .colorTextWithPrimaryColor()),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      children: [
-                                        Spacer(),
-                                        Container(
-                                          height: 35,
-                                          width: 100,
-                                          decoration: BoxDecoration(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(4)),
-                                          child: Center(
-                                            child: Text(
-                                              "Xem",
-                                              style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .primaryTextTheme
-                                                      .headline6!
-                                                      .color),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      left: 8,
-                                      right: 8,
-                                      top: 8,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Mã đơn hàng ",
-                                        ),
-                                        Spacer(),
-                                        Text(
-                                          "${orderManageController!.listAllOrder[indexState][index].orderCode}",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            Clipboard.setData(ClipboardData(
-                                                text:
-                                                    "${orderManageController!.listAllOrder[indexState][index].orderCode}"));
-                                            SahaAlert.showToastMiddle(
-                                              message: "Đã sao chép",
-                                              color: Colors.grey[600],
-                                            );
-                                          },
-                                          child: Text(
-                                            "Sao chép",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                color: Theme.of(context)
-                                                    .primaryColor),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(height: 15)
-                                ],
-                              ),
                             ),
                           ),
                         ],

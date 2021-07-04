@@ -26,7 +26,7 @@ class SahaTextField extends StatefulWidget {
       this.onChanged,
       this.onSubmitted,
       this.validator,
-      this.obscureText,
+      this.obscureText = false,
       this.textInputType,
       this.hintText,
       this.maxLength,

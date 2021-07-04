@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/screen/cart_screen/cart_controller.dart';
 import 'package:sahashop_user/app_customer/screen/data_app_controller.dart';
+import 'package:sahashop_user/app_customer/utils/color_utils.dart';
 import '../../screen/choose_voucher/choose_voucher_customer_screen.dart';
 import '../../screen/combo_detail_screen/combo_detail_screen.dart';
 import '../../screen/confirm_screen/confirm_screen.dart';
@@ -200,7 +201,7 @@ class _CartScreen1State extends State<CartScreen1> {
                         width: 30,
                         child: SvgPicture.asset(
                           "assets/icons/receipt.svg",
-                          color: Theme.of(context).primaryColor,
+                          color: SahaColorUtils().colorTextWithPrimaryColor(),
                         ),
                       ),
                       SizedBox(
@@ -220,7 +221,7 @@ class _CartScreen1State extends State<CartScreen1> {
                       Icon(
                         Icons.arrow_forward_ios,
                         size: 12,
-                        color: Theme.of(context).primaryColor,
+                        color: SahaColorUtils().colorTextWithPrimaryColor(),
                       )
                     ],
                   ),
@@ -243,7 +244,7 @@ class _CartScreen1State extends State<CartScreen1> {
                       ),
                       child: SvgPicture.asset(
                         "assets/icons/money.svg",
-                        color: Theme.of(context).primaryColor,
+                        color: SahaColorUtils().colorTextWithPrimaryColor(),
                       ),
                     ),
                     SizedBox(
@@ -262,7 +263,7 @@ class _CartScreen1State extends State<CartScreen1> {
                     Icon(
                       Icons.arrow_forward_ios,
                       size: 12,
-                      color: Theme.of(context).primaryColor,
+                      color: SahaColorUtils().colorTextWithPrimaryColor(),
                     )
                   ],
                 ),

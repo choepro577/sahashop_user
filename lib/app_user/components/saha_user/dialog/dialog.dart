@@ -95,14 +95,18 @@ class SahaDialogApp {
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new TextButton(
-              child: new Text("Hủy"),
+              child: new Text("Hủy", style: TextStyle(
+                color: Colors.black54
+              ),),
               onPressed: () {
                 Navigator.of(context).pop();
                 onClose!();
               },
             ),
             new TextButton(
-              child: new Text("Đồng ý"),
+              child: new Text("Đồng ý", style: TextStyle(
+                color: Colors.black54
+              ),),
               onPressed: () {
                 Navigator.of(context).pop();
                 onOK!();

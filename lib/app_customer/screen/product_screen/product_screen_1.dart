@@ -586,7 +586,7 @@ class ProductScreen1 extends StatelessWidget {
                                       ),
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                            MainAxisAlignment.center,
                                         children: <Widget>[
                                           Builder(
                                             builder: (context) {
@@ -595,7 +595,6 @@ class ProductScreen1 extends StatelessWidget {
                                                       context,
                                                       required: false)!;
                                               return Container(
-                                                width: Get.width * 0.9,
                                                 child: TextButton(
                                                   child: Text(
                                                     controller.expanded
@@ -812,109 +811,125 @@ class ProductScreen1 extends StatelessWidget {
           color: Colors.white,
           child: Row(
             children: [
-              Container(
-                width: Get.width / 2,
-                height: 50,
-                color: Theme.of(context).accentColor,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Get.to(() => ChatCustomerScreen());
-                      },
-                      child: Container(
-                        height: 25,
-                        width: Get.width / 4 - 1,
-                        child: SvgPicture.asset(
-                          "assets/icons/chat.svg",
-                          color: Theme.of(context)
-                              .primaryTextTheme
-                              .headline6!
-                              .color,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      color: Colors.grey[700],
-                      width: 1,
-                      height: 30,
-                    ),
-                    Obx(
-                      () => !productController.animateAddCart.value
-                          ? InkWell(
+              Expanded(
+                flex: 1,
+                child: Container(
+                  color: Theme.of(context).accentColor,
+                  child: IntrinsicHeight(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Container(
+                        height: 50,
+                            child: InkWell(
                               onTap: () {
-                                ModalBottomOptionBuyProduct.showModelOption(
-                                    product:
-                                        productController.productShow.value,
-                                    onSubmit: (int quantity,
-                                        Product product,
-                                        List<DistributesSelected>
-                                            distributesSelected) {
-                                      productController.addManyItemOrUpdate(
-                                          quantity: quantity,
-                                          buyNow: false,
-                                          productId: product.id,
-                                          distributesSelected:
-                                              distributesSelected);
-                                      productController.animatedAddCard();
-                                    });
+                                Get.to(() => ChatCustomerScreen());
                               },
                               child: Container(
-                                height: 25,
-                                width: Get.width / 4 - 1,
-                                child: SvgPicture.asset(
-                                  "assets/icons/add_to_cart.svg",
-                                  color: Theme.of(context)
-                                      .primaryTextTheme
-                                      .headline6!
-                                      .color,
-                                ),
-                              ),
-                            )
-                          : IgnorePointer(
-                              child: Container(
-                                height: 25,
-                                width: Get.width / 4 - 1,
-                                child: SvgPicture.asset(
-                                  "assets/icons/add_to_cart.svg",
-                                  color: Theme.of(Get.context!)
-                                      .primaryTextTheme
-                                      .headline6!
-                                      .color,
+                                height: 20,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: SvgPicture.asset(
+                                    "assets/icons/chat.svg",
+                                    color: Theme.of(context)
+                                        .primaryTextTheme
+                                        .headline6!
+                                        .color,
+                                  ),
                                 ),
                               ),
                             ),
+                          ),
+                        ),
+                        Container(
+                          color: Colors.grey[700],
+                          width: 1,
+                          height: 30,
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Obx(
+                            () => !productController.animateAddCart.value
+                                ? InkWell(
+                                    onTap: () {
+                                      ModalBottomOptionBuyProduct
+                                          .showModelOption(
+                                              product: productController
+                                                  .productShow.value,
+                                              onSubmit: (int quantity,
+                                                  Product product,
+                                                  List<DistributesSelected>
+                                                      distributesSelected) {
+                                                productController
+                                                    .addManyItemOrUpdate(
+                                                        quantity: quantity,
+                                                        buyNow: false,
+                                                        productId: product.id,
+                                                        distributesSelected:
+                                                            distributesSelected);
+                                                productController
+                                                    .animatedAddCard();
+                                              });
+                                    },
+                                    child: Container(
+                                      height: 25,
+                                      child: SvgPicture.asset(
+                                        "assets/icons/add_to_cart.svg",
+                                        color: Theme.of(context)
+                                            .primaryTextTheme
+                                            .headline6!
+                                            .color,
+                                      ),
+                                    ),
+                                  )
+                                : IgnorePointer(
+                                    child: Container(
+                                      height: 25,
+                                      child: SvgPicture.asset(
+                                        "assets/icons/add_to_cart.svg",
+                                        color: Theme.of(Get.context!)
+                                            .primaryTextTheme
+                                            .headline6!
+                                            .color,
+                                      ),
+                                    ),
+                                  ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  ModalBottomOptionBuyProduct.showModelOption(
-                      product: productController.productShow.value,
-                      onSubmit: (int quantity, Product product,
-                          List<DistributesSelected> distributesSelected) {
-                        productController.addManyItemOrUpdate(
-                            quantity: quantity,
-                            buyNow: true,
-                            productId: product.id,
-                            distributesSelected: distributesSelected);
-                      });
-                },
-                child: Container(
-                    width: Get.width / 2,
-                    height: 50,
-                    color: Theme.of(context).primaryColor,
-                    child: Center(
-                        child: Text(
-                      "Mua ngay",
-                      style: TextStyle(
-                          color: Theme.of(context)
-                              .primaryTextTheme
-                              .headline6!
-                              .color),
-                    ))),
+              Expanded(
+                flex: 1,
+                child: InkWell(
+                  onTap: () {
+                    ModalBottomOptionBuyProduct.showModelOption(
+                        product: productController.productShow.value,
+                        onSubmit: (int quantity, Product product,
+                            List<DistributesSelected> distributesSelected) {
+                          productController.addManyItemOrUpdate(
+                              quantity: quantity,
+                              buyNow: true,
+                              productId: product.id,
+                              distributesSelected: distributesSelected);
+                        });
+                  },
+                  child: Container(
+                      height: 50,
+                      color: Theme.of(context).primaryColor,
+                      child: Center(
+                          child: Text(
+                        "Mua ngay",
+                        style: TextStyle(
+                            color: Theme.of(context)
+                                .primaryTextTheme
+                                .headline6!
+                                .color),
+                      ))),
+                ),
               ),
             ],
           )),

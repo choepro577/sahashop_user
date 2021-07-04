@@ -10,11 +10,12 @@ import 'category_product_screen/category_product_screen_2.dart';
 import 'list_category/list_category_type1.dart';
 import 'list_category/list_category_type2.dart';
 import 'product_screen/product_screen_1.dart';
+import 'screen_home/home_screen_1.dart';
 import 'screen_home/home_screen_2.dart';
 
 class RepositoryWidgetCustomer {
   List<Widget> LIST_WIDGET_HOME_SCREEN = [
-    HomeScreenStyle2(),
+    HomeScreenStyle1(),
     HomeScreenStyle2(),
   ];
 

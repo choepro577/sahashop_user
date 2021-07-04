@@ -62,12 +62,14 @@ class ProductRequest {
     List<DistributesRequest> listDistribute = [];
     if (product.distributes != null) {
       listDistribute.addAll(product.distributes!.map((listDistribute) {
-        ElementDistributes? ele = listDistribute.elementDistributes!.firstWhere(
-            (elementDistribute) => elementDistribute.imageUrl != null);
         bool boolHasImage = false;
-        if (ele != null) {
-          boolHasImage = true;
+
+        for (var elementDistribute in listDistribute.elementDistributes!) {
+          if (elementDistribute.imageUrl != null) {
+            boolHasImage = true;
+          }
         }
+
         return DistributesRequest(
             boolHasImage: boolHasImage,
             name: listDistribute.name,
@@ -100,7 +102,7 @@ class ProductRequest {
         "price": price,
         "barcode": barcode,
         "status": status,
-        "quantity_in_stock":quantityInStock,
+        "quantity_in_stock": quantityInStock,
         "images": images!,
         "list_distribute":
             List<dynamic>.from(listDistribute!.map((x) => x.toJson())),

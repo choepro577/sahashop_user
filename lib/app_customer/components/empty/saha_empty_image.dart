@@ -10,8 +10,9 @@ class SahaEmptyImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
+    return Container(
+      padding: const EdgeInsets.all(5.0),
+
       child: SvgPicture.asset(
         "assets/svg/photo.svg",
         width: width,

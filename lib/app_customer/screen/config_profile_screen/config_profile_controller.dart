@@ -84,7 +84,7 @@ class ConfigProfileController extends GetxController {
     isUpdatingImage.value = true;
     try {
       var fileUpImageCompress =
-          await ImageUtils.getImageCompress(file, quality: 80);
+          await ImageUtils.getImageCompress(file, quality: 20);
 
       var link = (await RepositoryManager.imageRepository
           .uploadImage(fileUpImageCompress))!;

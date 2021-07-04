@@ -5,16 +5,20 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
+import 'package:sahashop_user/app_customer/components/empty/saha_empty_order.dart';
 import 'package:sahashop_user/app_customer/screen/cart_screen/cart_screen_1.dart';
 import 'package:sahashop_user/app_customer/screen/order_history/order_history_detail/order_detail_history_screen.dart';
+import 'package:sahashop_user/app_customer/screen/order_history/order_status_page/widget/order_item_widget.dart';
 import 'package:sahashop_user/app_customer/screen/pay_screen/pay_screen.dart';
 import 'package:sahashop_user/app_customer/screen/review/review_screen.dart';
 import 'package:sahashop_user/app_customer/utils/color_utils.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/app_user/model/order.dart';
+import 'package:sahashop_user/app_user/utils/date_utils.dart';
 import 'package:sahashop_user/app_user/utils/string_utils.dart';
 
 import 'order_status_controller.dart';
+import 'widget/order_loading_item_widget.dart';
 
 // ignore: must_be_immutable
 class OrderStatusPage extends StatefulWidget {
@@ -89,44 +93,19 @@ class _OrderStatusPageState extends State<OrderStatusPage>
       },
       child: Obx(
         () => orderStatusController.isLoadRefresh.value
-            ? SahaSimmer(
-                isLoading: true,
-                child: Container(
-                  width: Get.width,
-                  height: Get.height,
-                  color: Colors.black,
-                ))
+            ? ListView.builder(
+                itemBuilder: (context, index) => OrderLoadingItemWidget(),
+                itemCount: 2,
+              )
             : SingleChildScrollView(
                 child: orderStatusController.checkIsEmpty.value
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(4),
-                            height: 80,
-                            width: 80,
-                            decoration: BoxDecoration(
-                              color: Color(0xFFF5F6F9),
-                              shape: BoxShape.circle,
-                            ),
-                            child: SvgPicture.asset(
-                              "assets/icons/check_list_new.svg",
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text("Không có đơn hàng nào !")
-                        ],
-                      )
+                    ? SahaEmptyOrder()
                     : Column(
                         children: [
                           ...List.generate(
                             orderStatusController.listOrder.length,
-                            (index) => InkWell(
+                            (index) => OrderItemWidget(
+                              order: orderStatusController.listOrder[index],
                               onTap: () {
                                 Get.to(
                                   () => OrderHistoryDetailScreen(

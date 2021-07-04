@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
 import '../../components/empty/saha_empty_image.dart';
 import '../../components/product_item/post_item_widget.dart';
 import '../../components/product_item/product_item_widget.dart';
@@ -83,7 +84,7 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
             SizedBox(
               height: 20,
             ),
-        SearchBarType1(),
+            SearchBarType1(),
             SizedBox(
               height: 10,
             ),
@@ -130,14 +131,18 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children:  dataAppCustomerController.homeData!.allCategory == null ?[]
-                         :   dataAppCustomerController.homeData!.allCategory!.list!
-                                .map(
-                                  (category) => CategoryButton(
-                                    category: category,
-                                  ),
-                                )
-                                .toList()),
+                        children:
+                            dataAppCustomerController.homeData!.allCategory ==
+                                    null
+                                ? []
+                                : dataAppCustomerController
+                                    .homeData!.allCategory!.list!
+                                    .map(
+                                      (category) => CategoryButton(
+                                        category: category,
+                                      ),
+                                    )
+                                    .toList()),
                   ),
                 ),
               ],
@@ -256,7 +261,8 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                     ],
                   ),
             dataAppCustomerController.homeData?.newPost?.list == null ||
-                    dataAppCustomerController.homeData!.newPost!.list!.length == 0
+                    dataAppCustomerController.homeData!.newPost!.list!.length ==
+                        0
                 ? Container()
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -277,13 +283,13 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
-                            children:
-                                dataAppCustomerController.homeData!.newPost!.list!
-                                    .map((post) => PostItemWidget(
-                                          width: 220,
-                                          post: post,
-                                        ))
-                                    .toList(),
+                            children: dataAppCustomerController
+                                .homeData!.newPost!.list!
+                                .map((post) => PostItemWidget(
+                                      width: 300,
+                                      post: post,
+                                    ))
+                                .toList(),
                           ),
                         ),
                       )
@@ -330,8 +336,7 @@ class CategoryButton extends StatelessWidget {
                       child: CachedNetworkImage(
                         imageUrl: category!.imageUrl ?? "",
                         fit: BoxFit.cover,
-                        placeholder: (context, url) =>
-                            CircularProgressIndicator(),
+                        placeholder: (context, url) => SahaLoadingContainer(),
                         errorWidget: (context, url, error) => SahaEmptyImage(),
                       ),
                     ),

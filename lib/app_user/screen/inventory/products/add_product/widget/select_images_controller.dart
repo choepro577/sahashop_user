@@ -32,7 +32,7 @@ class SelectImageController extends GetxController {
     onUpload!();
 
     var listPre = dataImages.toList();
-    var newList = <ImageData>[];
+    var newList = dataImages.where((e) => e.file == null && e.linkImage != null).toList();
 
     for (var asset in listAsset) {
       var dataPre = listPre.firstWhereOrNull((itemPre) => itemPre.file == asset);
@@ -113,7 +113,7 @@ class SelectImageController extends GetxController {
       resultList = await MultiImagePicker.pickImages(
         maxImages: MAX_SELECT - resultList.length,
         enableCamera: true,
-        selectedAssets: dataImages.toList().map((e) => e.file!).toList(),
+        selectedAssets: dataImages.toList().where((e) => e.file != null).map((e) => e.file!).toList(),
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: MaterialOptions(
           actionBarColor: "#abcdef",
