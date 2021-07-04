@@ -106,6 +106,8 @@ class _OrderStatusPageState extends State<OrderStatusPage>
                             orderStatusController.listOrder.length,
                             (index) => OrderItemWidget(
                               order: orderStatusController.listOrder[index],
+                              checkReview: orderStatusController
+                                  .listCheckReviewed[index],
                               onTap: () {
                                 Get.to(
                                   () => OrderHistoryDetailScreen(
