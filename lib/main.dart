@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'app_customer/remote/customer_service_manager.dart';
-import 'app_customer/screen/navigation_scrren/navigation_screen.dart';
+import 'app_customer/screen_default/navigation_scrren/navigation_screen.dart';
 import 'app_user/data/remote/saha_service_manager.dart';
 import 'app_user/load_data/load_firebase.dart';
 import 'app_user/load_data/load_login.dart';

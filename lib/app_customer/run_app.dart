@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/app_user/controller/config_controller.dart';
 
 import '../saha_data_controller.dart';
-import 'screen/data_app_controller.dart';
-import 'screen/data_app_screen.dart';
+import 'screen_default/data_app_controller.dart';
+import 'screen_default/data_app_screen.dart';
+
 
 void runMainAppCustomer(BuildContext context) {
   SahaDataController sahaDataController = Get.find();

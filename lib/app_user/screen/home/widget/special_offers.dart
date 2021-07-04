@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/app_customer/screen/data_app_controller.dart';
+import 'package:sahashop_user/app_customer/screen_can_edit/category_product_screen/category_product_screen.dart';
+import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
 
 import 'section_title.dart';
 
@@ -19,10 +20,7 @@ class SpecialOffers extends StatelessWidget {
           child: SectionTitle(
             title: "Ưu đãi cho bạn",
             pressTitleEnd: () {
-              final DataAppCustomerController dataAppCustomerController =
-                  Get.find();
-
-              dataAppCustomerController.toCategoryProductScreen();
+              Get.to(CategoryProductScreen());
             },
           ),
         ),

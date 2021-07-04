@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/app_customer/screen/repository_widget_config.dart';
+import 'package:sahashop_user/app_customer/screen_can_edit/repository_widget_config.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/app_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/app_user/model/config_app.dart';
