@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sahashop_user/app_customer/utils/color_utils.dart';
 import 'package:sahashop_user/app_user/const/constant.dart';
 
 class SahaBoxButton extends StatelessWidget {
@@ -36,11 +37,11 @@ class SahaBoxButton extends StatelessWidget {
                     width: 50,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Theme.of(context).primaryColor,
+                      color: Colors.grey[200],
                     ),
                     child: SvgPicture.asset(
                       icon!,
-                      color: Theme.of(context).primaryTextTheme.headline1!.color,
+                      color: SahaColorUtils().colorTextWithPrimaryColor(),
                     ),
                   ),
                   SizedBox(height: 5),
