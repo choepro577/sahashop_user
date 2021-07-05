@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/app_customer/components/product_item/post_item_widget.dart';
@@ -8,6 +9,7 @@ import 'package:sahashop_user/app_customer/screen_can_edit/banner/banner_widget.
 import 'package:sahashop_user/app_customer/screen_can_edit/category_product_screen/category_product_screen.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/product_item_widget/product_item_widget.dart';
 import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
+import 'package:sahashop_user/app_customer/screen_default/search_bar_type/seach_bar_type4.dart';
 import 'package:sahashop_user/app_customer/screen_default/search_bar_type/search_bar_type1.dart';
 import 'package:sahashop_user/app_user/components/saha_user/button/saha_box_button.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
@@ -79,69 +81,68 @@ class _HomeScreenStyle3State extends State<HomeScreenStyle3> {
           physics: const ClampingScrollPhysics(),
           child: Column(
             children: [
-              Container(
+              AnimatedContainer(
+                duration: const Duration(microseconds: 250),
+                height: 145,
                 width: double.infinity,
-                height: 270,
-                child: BannerWidget(),
+                color: Colors.white,
+                padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
+                child: Column(
+                  children: [
+                    Spacer(),
+                    SearchBarType4(),
+                  ],
+                ),
               ),
-              Column(
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
+              Align(
+                alignment: Alignment.topLeft,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: List.generate(
-                        option.length,
-                        (index) => SahaBoxButton(
-                          icon: option[index]["icon"],
-                          text: option[index]["text"],
-                          numOfitem: option[index]["numOfitem"],
-                          press: () {},
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                      children:
+                          dataAppCustomerController.homeData!.allCategory ==
+                                  null
+                              ? []
+                              : dataAppCustomerController
+                                  .homeData!.allCategory!.list!
+                                  .map(
+                                    (category) => CategoryButton(
+                                      category: category,
+                                    ),
+                                  )
+                                  .toList()),
+                ),
               ),
-              Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(20),
-                    child: SectionTitle(
-                      title: "Danh mục cửa hàng",
-                      titleEnd: "Tất cả",
-                      pressTitleEnd: () {
-                        Get.to(CategoryProductScreen());
-                      },
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children:
-                              dataAppCustomerController.homeData!.allCategory ==
-                                      null
-                                  ? []
-                                  : dataAppCustomerController
-                                      .homeData!.allCategory!.list!
-                                      .map(
-                                        (category) => CategoryButton(
-                                          category: category,
-                                        ),
-                                      )
-                                      .toList()),
-                    ),
-                  ),
-                ],
+              Container(
+                width: double.infinity,
+                height: 250,
+                child: BannerWidget(),
               ),
+              // Column(
+              //   children: [
+              //     SizedBox(
+              //       height: 20,
+              //     ),
+              //     SingleChildScrollView(
+              //       scrollDirection: Axis.horizontal,
+              //       child: Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: List.generate(
+              //           option.length,
+              //           (index) => SahaBoxButton(
+              //             icon: option[index]["icon"],
+              //             text: option[index]["text"],
+              //             numOfitem: option[index]["numOfitem"],
+              //             press: () {},
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               discountProducts.length == 0
                   ? Container()
                   : Column(
@@ -186,7 +187,6 @@ class _HomeScreenStyle3State extends State<HomeScreenStyle3> {
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 20),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: SectionTitle(
@@ -196,7 +196,6 @@ class _HomeScreenStyle3State extends State<HomeScreenStyle3> {
                                 Get.to(CategoryProductScreen());
                               }),
                         ),
-                        SizedBox(height: 10),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
@@ -294,11 +293,65 @@ class _HomeScreenStyle3State extends State<HomeScreenStyle3> {
         ),
         AnimatedContainer(
           duration: const Duration(microseconds: 250),
-          height: 100,
+          height: 145,
           width: double.infinity,
           color: Colors.white.withOpacity(_opacity),
           padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
-          child: SearchBarType1(),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 5,
+              ),
+              AnimatedContainer(
+                duration: const Duration(microseconds: 250),
+                height: 35,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 5,
+                    ),
+                    SvgPicture.asset(
+                      "assets/icons/wallet_outline.svg",
+                      height: 20,
+                      width: 20,
+                    ),
+                    Spacer(),
+                    Column(
+                      children: [
+                        Text(
+                          "xin chào!",
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        Text(
+                          "Nguyễn Đức Hiếu",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 15),
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                    SvgPicture.asset(
+                      "assets/icons/chat.svg",
+                      height: 25,
+                      width: 25,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              SearchBarType4(),
+            ],
+          ),
         )
       ],
     ));
@@ -316,7 +369,9 @@ class CategoryButton extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
-          Get.to(CategoryProductScreen(category: category,));
+          Get.to(CategoryProductScreen(
+            category: category,
+          ));
         },
         child: Stack(
           children: [
