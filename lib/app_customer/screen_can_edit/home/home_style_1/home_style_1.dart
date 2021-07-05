@@ -38,14 +38,12 @@ class _HomeScreenStyle1State extends State<HomeScreenStyle1> {
     super.didChangeDependencies();
 
     _scrollController.addListener(() {
-      setState(() {
-        if (_scrollController.offset > 100) {
-          homeStyle1Controller.changeOpacitySearch(1);
-        } else {
-          homeStyle1Controller
-              .changeOpacitySearch(_scrollController.offset / 100);
-        }
-      });
+      if (_scrollController.offset > 100) {
+        homeStyle1Controller.changeOpacitySearch(1);
+      } else {
+        homeStyle1Controller
+            .changeOpacitySearch(_scrollController.offset / 100);
+      }
     });
   }
 
@@ -381,18 +379,22 @@ class _HomeScreenStyle1State extends State<HomeScreenStyle1> {
             ],
           ),
         ),
-        AnimatedContainer(
-          duration: const Duration(microseconds: 250),
-          height: 100,
-          width: double.infinity,
-          color: Theme.of(context).primaryColor.withOpacity(homeStyle1Controller.opacity.value),
-          padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
-          child: SearchBarType1(
-            onSearch: () {
-              Get.to(CategoryProductScreen(
-                autoSearch: true,
-              ));
-            },
+        Obx(
+        ()=> AnimatedContainer(
+            duration: const Duration(microseconds: 250),
+            height: 100,
+            width: double.infinity,
+            color: Theme.of(context)
+                .primaryColor
+                .withOpacity(homeStyle1Controller.opacity.value),
+            padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
+            child: SearchBarType1(
+              onSearch: () {
+                Get.to(CategoryProductScreen(
+                  autoSearch: true,
+                ));
+              },
+            ),
           ),
         )
       ],
