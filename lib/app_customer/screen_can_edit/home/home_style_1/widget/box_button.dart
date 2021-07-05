@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,6 +16,7 @@ class SahaBoxButton extends StatelessWidget {
   final String? icon, text;
   final GestureTapCallback press;
   final int? numOfitem;
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +44,13 @@ class SahaBoxButton extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        text!,
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                  AutoSizeText(
+                    text!,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                    maxLines: 2,
                   ),
+
                 ],
               ),
             ),

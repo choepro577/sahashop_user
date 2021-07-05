@@ -1,19 +1,26 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/app_customer/components/product_item/post_item_widget.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/banner/banner_widget.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/category_product_screen/category_product_screen.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/product_item_widget/product_item_widget.dart';
+import 'package:sahashop_user/app_customer/screen_default/chat_customer/chat_customer_screen.dart';
+import 'package:sahashop_user/app_customer/screen_default/choose_voucher/choose_voucher_customer_screen.dart';
 import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
+import 'package:sahashop_user/app_customer/screen_default/member/member_screen.dart';
+import 'package:sahashop_user/app_customer/screen_default/qr_screen/qr_screen.dart';
 import 'package:sahashop_user/app_customer/screen_default/search_bar_type/search_bar_type1.dart';
-import 'package:sahashop_user/app_user/components/saha_user/button/saha_box_button.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
 import 'package:sahashop_user/app_user/controller/config_controller.dart';
 import 'package:sahashop_user/app_user/model/category.dart';
 import 'package:sahashop_user/app_user/screen/home/widget/section_title.dart';
+
+import 'home_style_1_controller.dart';
+import 'widget/box_button.dart';
 
 class HomeScreenStyle1 extends StatefulWidget {
   const HomeScreenStyle1({Key? key}) : super(key: key);
@@ -23,8 +30,9 @@ class HomeScreenStyle1 extends StatefulWidget {
 }
 
 class _HomeScreenStyle1State extends State<HomeScreenStyle1> {
+  HomeStyle1Controller homeStyle1Controller = HomeStyle1Controller();
   final ScrollController _scrollController = ScrollController();
-  double _opacity = 0;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -32,11 +40,10 @@ class _HomeScreenStyle1State extends State<HomeScreenStyle1> {
     _scrollController.addListener(() {
       setState(() {
         if (_scrollController.offset > 100) {
-          setState(() {
-            _opacity = 1;
-          });
+          homeStyle1Controller.changeOpacitySearch(1);
         } else {
-          _opacity = _scrollController.offset / 100;
+          homeStyle1Controller
+              .changeOpacitySearch(_scrollController.offset / 100);
         }
       });
     });
@@ -44,13 +51,6 @@ class _HomeScreenStyle1State extends State<HomeScreenStyle1> {
 
   ConfigController configController = Get.find();
   DataAppCustomerController dataAppCustomerController = Get.find();
-
-  final List<Map<String, dynamic>> option = [
-    {"icon": "assets/icons/bill_icon.svg", "text": "Ví"},
-    {"icon": "assets/icons/gift_icon.svg", "text": "My Voucher"},
-    {"icon": "assets/icons/gift_icon.svg", "text": "Quét QR"},
-    {"icon": "assets/icons/discover.svg", "text": "Tin Tức"},
-  ];
 
   @override
   void dispose() {
@@ -79,74 +79,163 @@ class _HomeScreenStyle1State extends State<HomeScreenStyle1> {
           physics: const ClampingScrollPhysics(),
           child: Column(
             children: [
-              Container(
-                width: double.infinity,
-                height: 270,
-                child: BannerWidget(),
-              ),
-              Column(
+              Stack(
+                alignment: Alignment.bottomCenter,
                 children: [
-                  SizedBox(
-                    height: 20,
+                  Container(
+                    width: double.infinity,
+                    height: 270,
+                    child: BannerWidget(),
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: List.generate(
-                        option.length,
-                        (index) => SahaBoxButton(
-                          icon: option[index]["icon"],
-                          text: option[index]["text"],
-                          numOfitem: option[index]["numOfitem"],
-                          press: () {},
+                  Container(
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Get.to(QRScreen());
+                              },
+                              child: SvgPicture.asset(
+                                "assets/svg/qr-code-scan.svg",
+                                height: 30,
+                                width: 30,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            VerticalDivider(
+                              color: Colors.grey,
+                              width: 10,
+                            ),
+                            dataAppCustomerController.infoCustomer.value == null
+                                ? Container()
+                                : Container(
+                                    child: Text(
+                                      "${dataAppCustomerController.infoCustomer.value!.name ?? "Xin chào"}",
+                                      style: TextStyle(color: Colors.black87),
+                                    ),
+                                  ),
+                            Spacer(),
+                            VerticalDivider(
+                              color: Colors.grey,
+                              width: 2,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Get.to(() => MemberScreen());
+                              },
+                              child: dataAppCustomerController
+                                          .infoCustomer.value !=
+                                      null
+                                  ? Container(
+                                      width: 100,
+                                      child: Row(
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Image.asset(
+                                                    "assets/style1/money.png",
+                                                    height: 13,
+                                                    width: 13,
+                                                    color: Colors.amber,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Text(
+                                                    "${dataAppCustomerController.badge.value.customerScore} điểm",
+                                                    style:
+                                                        TextStyle(fontSize: 12),
+                                                  )
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 2,
+                                              ),
+                                              Text(
+                                                "Săn điểm ngay",
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 12),
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Icon(
+                                            Icons.arrow_forward_ios_rounded,
+                                            color: Colors.grey,
+                                            size: 12,
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  : Row(children: [
+                                      Text(
+                                        "Tích điểm",
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward_ios_rounded,
+                                        color: Colors.grey,
+                                        size: 12,
+                                      )
+                                    ]),
+                            )
+                          ],
                         ),
                       ),
                     ),
-                  ),
+                  )
                 ],
               ),
-              Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(20),
-                    child: SectionTitle(
-                      title: "Danh mục cửa hàng",
-                      titleEnd: "Tất cả",
-                      pressTitleEnd: () {
-                        Get.to(CategoryProductScreen());
-                      },
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children:
-                              dataAppCustomerController.homeData!.allCategory ==
-                                      null
-                                  ? []
-                                  : dataAppCustomerController
-                                      .homeData!.allCategory!.list!
-                                      .map(
-                                        (category) => CategoryButton(
-                                          category: category,
-                                        ),
-                                      )
-                                      .toList()),
-                    ),
-                  ),
-                ],
-              ),
+              Wrap(
+                  children: dataAppCustomerController.homeData!.allCategory ==
+                          null
+                      ? []
+                      : [
+                          SahaBoxButton(
+                            icon: "assets/icons/gift_icon.svg",
+                            text: "Voucher",
+                            numOfitem: dataAppCustomerController
+                                .badge.value.voucherTotal,
+                            press: () {
+                              Get.to(ChooseVoucherCustomerScreen());
+                            },
+                          ),
+                          SahaBoxButton(
+                            icon: "assets/icons/chat.svg",
+                            text: "Chat với shop",
+                            numOfitem: dataAppCustomerController
+                                .badge.value.chatsUnread,
+                            press: () {
+                              Get.to(() => ChatCustomerScreen())!
+                                  .then((value) => {
+                                        {dataAppCustomerController.getBadge()}
+                                      });
+                            },
+                          ),
+                          ...dataAppCustomerController
+                              .homeData!.allCategory!.list!
+                              .map(
+                                (category) => CategoryButton(
+                                  category: category,
+                                ),
+                              )
+                              .toList()
+                        ]),
               discountProducts.length == 0
                   ? Container()
                   : Column(
                       children: [
-                        SizedBox(height: 20),
+                        SizedBox(height: 10),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: SectionTitle(
@@ -296,9 +385,15 @@ class _HomeScreenStyle1State extends State<HomeScreenStyle1> {
           duration: const Duration(microseconds: 250),
           height: 100,
           width: double.infinity,
-          color: Colors.white.withOpacity(_opacity),
+          color: Theme.of(context).primaryColor.withOpacity(homeStyle1Controller.opacity.value),
           padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
-          child: SearchBarType1(),
+          child: SearchBarType1(
+            onSearch: () {
+              Get.to(CategoryProductScreen(
+                autoSearch: true,
+              ));
+            },
+          ),
         )
       ],
     ));
@@ -316,7 +411,9 @@ class CategoryButton extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
-          Get.to(CategoryProductScreen(category: category,));
+          Get.to(CategoryProductScreen(
+            category: category,
+          ));
         },
         child: Stack(
           children: [
@@ -324,20 +421,27 @@ class CategoryButton extends StatelessWidget {
               width: 80,
               child: Column(
                 children: [
-                  Container(
-                    height: 55,
-                    width: 55,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Theme.of(context).primaryColor,
+                  ConstrainedBox(
+                    constraints: new BoxConstraints(
+                      minWidth: 35.0,
+                      maxWidth: 60.0,
                     ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      child: CachedNetworkImage(
-                        imageUrl: category!.imageUrl ?? "",
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) => SahaLoadingContainer(),
-                        errorWidget: (context, url, error) => SahaEmptyImage(),
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        child: CachedNetworkImage(
+                          imageUrl: category!.imageUrl ?? "",
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => SahaLoadingContainer(),
+                          errorWidget: (context, url, error) =>
+                              SahaEmptyImage(),
+                        ),
                       ),
                     ),
                   ),
@@ -345,7 +449,7 @@ class CategoryButton extends StatelessWidget {
                   AutoSizeText(
                     category!.name!,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                    style: TextStyle(fontWeight: FontWeight.w500),
                     maxLines: 2,
                   )
                 ],

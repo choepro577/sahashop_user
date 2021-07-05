@@ -45,7 +45,7 @@ class _ProductPageState extends State<ProductPage>
   bool get wantKeepAlive => true;
 
   late ProductPageController productController;
-
+  RefreshController _refreshController = RefreshController();
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -56,12 +56,14 @@ class _ProductPageState extends State<ProductPage>
 
     // widget.onReturnController!(productController);
     productController.getAllProduct();
+    _refreshController.loadComplete();
+    _refreshController.refreshCompleted();
   }
 
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    RefreshController _refreshController = RefreshController();
+
     widget.onReturnController!(productController);
     return Obx(
       () => productController.loading.value
@@ -94,9 +96,7 @@ class _ProductPageState extends State<ProductPage>
                           ) {
                             Widget body = Container();
                             if (mode == LoadStatus.idle) {
-                              body = !productController.isEndLoadMore
-                                  ? CupertinoActivityIndicator()
-                                  : Container();
+                             return Container();
                             } else if (mode == LoadStatus.loading) {
                               body = CupertinoActivityIndicator();
                             }

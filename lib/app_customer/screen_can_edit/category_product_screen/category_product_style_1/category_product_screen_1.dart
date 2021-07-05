@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,9 @@ import 'search_text_field_screen/search_text_field_screen.dart';
 
 class CategoryProductStyle1 extends StatefulWidget {
 
-  CategoryProductStyle1({Key? key}) : super(key: key);
+   bool autoSearch;
+
+  CategoryProductStyle1({Key? key, this.autoSearch = false}) : super(key: key);
 
   @override
   _CategoryProductStyle1State createState() => _CategoryProductStyle1State();
@@ -46,6 +49,24 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
       }
     });
     categoryController.init();
+
+    SchedulerBinding.instance!.addPostFrameCallback((_) {
+      if(widget.autoSearch) {
+        onSearch();
+      }
+    });
+
+
+  }
+
+  void onSearch() {
+    Get.to(SearchTextFiledScreen(
+      onSubmit: (text, categoryId) {
+        categoryController.textEditingControllerSearch.text =
+        text!;
+        categoryController.searchProduct(search: text);
+      },
+    ));
   }
 
   @override
@@ -71,13 +92,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                 ),
                 child: InkWell(
                     onTap: () {
-                      Get.to(SearchTextFiledScreen(
-                        onSubmit: (text, categoryId) {
-                          categoryController.textEditingControllerSearch.text =
-                              text!;
-                          categoryController.searchProduct(search: text);
-                        },
-                      ));
+                      onSearch();
                     },
                     child: SahaTextFieldSearch(
                       textEditingController:
