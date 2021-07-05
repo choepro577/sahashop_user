@@ -17,9 +17,9 @@ class CarouselSelect extends StatefulWidget {
       this.listWidget,
       this.onChange,
       this.indexSelected,
-      this.initPage=0,
+      this.initPage = 0,
       this.height,
-        this.width,
+      this.width,
       this.onSelected})
       : super(key: key);
 
@@ -49,9 +49,9 @@ class _CarouselSelectState extends State<CarouselSelect> {
         CarouselSlider(
             items: widget.listWidget!
                 .map((e) => Container(
-              width: width,
-                  child: Center(
-                    child: Card(
+                      width: width,
+                      child: Center(
+                        child: Card(
                           child: IgnorePointer(
                             child: FakeDevicePixelRatio(
                               child: e,
@@ -59,12 +59,11 @@ class _CarouselSelectState extends State<CarouselSelect> {
                             ),
                           ),
                         ),
-                  ),
-                ))
+                      ),
+                    ))
                 .toList(),
             options: CarouselOptions(
               height: height,
-
               aspectRatio: 16 / 9,
               viewportFraction: 0.8,
               initialPage: widget.initPage!,
@@ -103,14 +102,17 @@ class _CarouselSelectState extends State<CarouselSelect> {
         Container(
           height: 40,
           child: FilterChip(
-            label: Text(indexSelected == page ? "Đã chọn" : "Chọn", style: TextStyle(fontSize: 13),),
+            label: Text(
+              indexSelected == page ? "Đã chọn" : "Chọn",
+              style: TextStyle(fontSize: 13),
+            ),
             selected: indexSelected == page,
             backgroundColor: Colors.transparent,
             shape: StadiumBorder(side: BorderSide()),
             onSelected: (bool value) {
               indexSelected = page;
               setState(() {});
-              widget.onSelected!(indexSelected);
+              //  widget.onSelected!(indexSelected);
             },
           ),
         ),

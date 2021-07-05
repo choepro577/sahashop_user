@@ -22,7 +22,7 @@ class OrderItemWidget extends StatelessWidget {
     // TODO: implement build
     return InkWell(
       onTap: () {
-        if (onTap != null) onTap!()!;
+        onTap!();
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
