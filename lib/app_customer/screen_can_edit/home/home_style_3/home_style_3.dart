@@ -1,16 +1,22 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/app_customer/components/product_item/post_item_widget.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/banner/banner_widget.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/category_product_screen/category_product_screen.dart';
+import 'package:sahashop_user/app_customer/screen_can_edit/home/home_style_3/home_style_3_controller.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/product_item_widget/product_item_widget.dart';
+import 'package:sahashop_user/app_customer/screen_default/chat_customer/chat_customer_screen.dart';
 import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
+import 'package:sahashop_user/app_customer/screen_default/member/member_screen.dart';
+import 'package:sahashop_user/app_customer/screen_default/qr_screen/qr_screen.dart';
 import 'package:sahashop_user/app_customer/screen_default/search_bar_type/seach_bar_type4.dart';
 import 'package:sahashop_user/app_customer/screen_default/search_bar_type/search_bar_type1.dart';
+import 'package:sahashop_user/app_customer/screen_default/search_screen/search_screen.dart';
 import 'package:sahashop_user/app_user/components/saha_user/button/saha_box_button.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
 import 'package:sahashop_user/app_user/controller/config_controller.dart';
@@ -25,22 +31,31 @@ class HomeScreenStyle3 extends StatefulWidget {
 }
 
 class _HomeScreenStyle3State extends State<HomeScreenStyle3> {
+  HomeStyle3Controller homeStyle3Controller = HomeStyle3Controller();
   final ScrollController _scrollController = ScrollController();
-  double _opacity = 0;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     _scrollController.addListener(() {
-      setState(() {
-        if (_scrollController.offset > 100) {
-          setState(() {
-            _opacity = 1;
-          });
-        } else {
-          _opacity = _scrollController.offset / 100;
-        }
-      });
+      if (_scrollController.offset > 100) {
+        homeStyle3Controller.changeOpacitySearch(1);
+      } else {
+        homeStyle3Controller
+            .changeOpacitySearch(_scrollController.offset / 100);
+      }
+
+      if (_scrollController.offset > 315 &&
+          _scrollController.position.userScrollDirection ==
+              ScrollDirection.reverse) {
+        homeStyle3Controller.checkTouch.value = true;
+        homeStyle3Controller.changeHeightAppbar(0);
+      } else if (_scrollController.offset < 315 &&
+          _scrollController.position.userScrollDirection ==
+              ScrollDirection.forward) {
+        homeStyle3Controller.changeHeightAppbar(35.0);
+      }
     });
   }
 
@@ -117,7 +132,7 @@ class _HomeScreenStyle3State extends State<HomeScreenStyle3> {
               ),
               Container(
                 width: double.infinity,
-                height: 250,
+                height: 240,
                 child: BannerWidget(),
               ),
               // Column(
@@ -147,7 +162,7 @@ class _HomeScreenStyle3State extends State<HomeScreenStyle3> {
                   ? Container()
                   : Column(
                       children: [
-                        SizedBox(height: 20),
+                        SizedBox(height: 10),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: SectionTitle(
@@ -291,66 +306,96 @@ class _HomeScreenStyle3State extends State<HomeScreenStyle3> {
             ],
           ),
         ),
-        AnimatedContainer(
-          duration: const Duration(microseconds: 250),
-          height: 145,
-          width: double.infinity,
-          color: Colors.white.withOpacity(_opacity),
-          padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 5,
-              ),
-              AnimatedContainer(
-                duration: const Duration(microseconds: 250),
-                height: 35,
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 5,
-                    ),
-                    SvgPicture.asset(
-                      "assets/icons/wallet_outline.svg",
-                      height: 20,
-                      width: 20,
-                    ),
-                    Spacer(),
-                    Column(
-                      children: [
-                        Text(
-                          "xin chào!",
-                          style: TextStyle(
-                            fontSize: 12,
+        Obx(
+          () => AnimatedContainer(
+            duration: const Duration(milliseconds: 110),
+            height: 115 + homeStyle3Controller.changeHeight.value,
+            width: double.infinity,
+            color: Colors.white.withOpacity(homeStyle3Controller.opacity.value),
+            padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Obx(
+                    () => AnimatedContainer(
+                      duration: const Duration(milliseconds: 100),
+                      height: homeStyle3Controller.changeHeight.value < 0
+                          ? 0
+                          : homeStyle3Controller.changeHeight.value,
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 5,
                           ),
-                        ),
-                        SizedBox(
-                          height: 3,
-                        ),
-                        Text(
-                          "Nguyễn Đức Hiếu",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 15),
-                        ),
-                      ],
+                          InkWell(
+                            onTap: () {
+                              Get.to(QRScreen());
+                            },
+                            child: SvgPicture.asset(
+                              "assets/svg/qr-code-scan.svg",
+                              height: 25,
+                              width: 25,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Spacer(),
+                          if (homeStyle3Controller.changeHeight.value == 35.0)
+                            InkWell(
+                              onTap: () {
+                                Get.to(() => MemberScreen());
+                              },
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "xin chào!",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    Text(
+                                      "${dataAppCustomerController.infoCustomer.value!.name ?? "Khách"}",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          Spacer(),
+                          InkWell(
+                            onTap: () {
+                              Get.to(ChatCustomerScreen());
+                            },
+                            child: SvgPicture.asset(
+                              "assets/icons/chat.svg",
+                              height: 28,
+                              width: 28,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                        ],
+                      ),
                     ),
-                    Spacer(),
-                    SvgPicture.asset(
-                      "assets/icons/chat.svg",
-                      height: 25,
-                      width: 25,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  SearchBarType4(
+                    onSearch: () {
+                      Get.to(() => SearchScreen());
+                    },
+                  ),
+                ],
               ),
-              SizedBox(
-                height: 15,
-              ),
-              SearchBarType4(),
-            ],
+            ),
           ),
         )
       ],
@@ -385,10 +430,16 @@ class CategoryButton extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Theme.of(context).primaryColor,
+                      border: Border.all(
+                        color: Theme.of(context).primaryColor,
+                        width: 0.5,
+                      ),
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
                       child: CachedNetworkImage(
+                        height: 55,
+                        width: 55,
                         imageUrl: category!.imageUrl ?? "",
                         fit: BoxFit.cover,
                         placeholder: (context, url) => SahaLoadingContainer(),

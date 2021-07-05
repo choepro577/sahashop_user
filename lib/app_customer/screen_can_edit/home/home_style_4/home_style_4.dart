@@ -1,14 +1,19 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/app_customer/components/product_item/post_item_widget.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/banner/banner_widget.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/category_product_screen/category_product_screen.dart';
+import 'package:sahashop_user/app_customer/screen_can_edit/home/home_style_4/home_style_4_controller.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/product_item_widget/product_item_widget.dart';
+import 'package:sahashop_user/app_customer/screen_default/chat_customer/chat_customer_screen.dart';
 import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
-import 'package:sahashop_user/app_customer/screen_default/search_bar_type/search_bar_type1.dart';
+import 'package:sahashop_user/app_customer/screen_default/qr_screen/qr_screen.dart';
+import 'package:sahashop_user/app_customer/screen_default/search_bar_type/search_bar_type5.dart';
 import 'package:sahashop_user/app_user/components/saha_user/button/saha_box_button.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
 import 'package:sahashop_user/app_user/controller/config_controller.dart';
@@ -24,21 +29,21 @@ class HomeScreenStyle4 extends StatefulWidget {
 
 class _HomeScreenStyle4State extends State<HomeScreenStyle4> {
   final ScrollController _scrollController = ScrollController();
-  double _opacity = 0;
+  final HomeStyle4Controller homeStyle4Controller = HomeStyle4Controller();
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     _scrollController.addListener(() {
-      setState(() {
-        if (_scrollController.offset > 100) {
-          setState(() {
-            _opacity = 1;
-          });
-        } else {
-          _opacity = _scrollController.offset / 100;
-        }
-      });
+      if (_scrollController.offset > 1 &&
+          _scrollController.position.userScrollDirection ==
+              ScrollDirection.reverse) {
+        homeStyle4Controller.isTouch.value = true;
+      } else if (_scrollController.offset < 1 &&
+          _scrollController.position.userScrollDirection ==
+              ScrollDirection.forward) {
+        homeStyle4Controller.isTouch.value = false;
+      }
     });
   }
 
@@ -73,61 +78,74 @@ class _HomeScreenStyle4State extends State<HomeScreenStyle4> {
 
     return Scaffold(
         body: Stack(
+      clipBehavior: Clip.none,
       children: [
         SingleChildScrollView(
           controller: _scrollController,
           physics: const ClampingScrollPhysics(),
-          child: Column(
+          child: Stack(
             children: [
-              Container(
-                width: double.infinity,
-                height: 270,
-                child: BannerWidget(),
+              Positioned(
+                top: -200,
+                left: 0,
+                right: 0,
+                child: Container(
+                  height: 880,
+                  width: 880,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    gradient: LinearGradient(
+                        colors: [
+                          Theme.of(context).primaryColor.withOpacity(0.85),
+                          Theme.of(context).primaryColor.withOpacity(0.5),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        stops: [0.5, 0.5],
+                        tileMode: TileMode.clamp),
+                  ),
+                ),
               ),
               Column(
                 children: [
                   SizedBox(
-                    height: 20,
+                    height: 120,
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: List.generate(
-                        option.length,
-                        (index) => SahaBoxButton(
-                          icon: option[index]["icon"],
-                          text: option[index]["text"],
-                          numOfitem: option[index]["numOfitem"],
-                          press: () {},
+                  Container(
+                    width: double.infinity,
+                    height: 250,
+                    child: BannerWidget(),
+                  ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20.0, right: 20.0, bottom: 10),
+                        child: SectionTitle(
+                          title: "Danh mục cửa hàng",
+                          titleEnd: "Tất cả",
+                          colorTextTitle: Theme.of(context)
+                              .primaryTextTheme
+                              .headline6!
+                              .color,
+                          colorTextMore: Theme.of(context)
+                              .primaryTextTheme
+                              .headline6!
+                              .color,
+                          pressTitleEnd: () {
+                            Get.to(CategoryProductScreen());
+                          },
                         ),
                       ),
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(20),
-                    child: SectionTitle(
-                      title: "Danh mục cửa hàng",
-                      titleEnd: "Tất cả",
-                      pressTitleEnd: () {
-                        Get.to(CategoryProductScreen());
-                      },
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children:
-                              dataAppCustomerController.homeData!.allCategory ==
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: dataAppCustomerController
+                                          .homeData!.allCategory ==
                                       null
                                   ? []
                                   : dataAppCustomerController
@@ -138,168 +156,232 @@ class _HomeScreenStyle4State extends State<HomeScreenStyle4> {
                                         ),
                                       )
                                       .toList()),
-                    ),
+                        ),
+                      ),
+                    ],
                   ),
+                  discountProducts.length == 0
+                      ? Container()
+                      : Column(
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: SectionTitle(
+                                  title: "Sản phẩm khuyến mãi",
+                                  titleEnd: "Xem thêm",
+                                  colorTextTitle: Theme.of(context)
+                                      .primaryTextTheme
+                                      .headline6!
+                                      .color,
+                                  colorTextMore: Theme.of(context)
+                                      .primaryTextTheme
+                                      .headline6!
+                                      .color,
+                                  pressTitleEnd: () {
+                                    Get.to(CategoryProductScreen());
+                                  }),
+                            ),
+                            SizedBox(height: 10),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 251,
+                                alignment: Alignment.topLeft,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: discountProducts
+                                        .map((product) => ProductItemWidget(
+                                              width: 180,
+                                              product: product,
+                                            ))
+                                        .toList(),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                  dataAppCustomerController.homeData?.bestSellProduct?.list ==
+                              null ||
+                          dataAppCustomerController
+                                  .homeData?.bestSellProduct?.list?.length ==
+                              0
+                      ? Container()
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 20),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: SectionTitle(
+                                  title: "Sản phẩm bán chạy",
+                                  titleEnd: "Tất cả",
+                                  pressTitleEnd: () {
+                                    Get.to(CategoryProductScreen());
+                                  }),
+                            ),
+                            SizedBox(height: 10),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 251,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: dataAppCustomerController
+                                        .homeData!.bestSellProduct!.list!
+                                        .map((product) => ProductItemWidget(
+                                              width: 180,
+                                              product: product,
+                                            ))
+                                        .toList(),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                  dataAppCustomerController.homeData?.newProduct?.list == null
+                      ? Container()
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 10),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: SectionTitle(
+                                  title: "Sản phẩm mới",
+                                  titleEnd: "Tất cả",
+                                  pressTitleEnd: () {
+                                    Get.to(CategoryProductScreen());
+                                  }),
+                            ),
+                            SizedBox(height: 10),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 251,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: dataAppCustomerController
+                                        .homeData!.newProduct!.list!
+                                        .map((product) => ProductItemWidget(
+                                              width: 180,
+                                              product: product,
+                                            ))
+                                        .toList(),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                  dataAppCustomerController.homeData?.newPost?.list == null ||
+                          dataAppCustomerController
+                                  .homeData!.newPost!.list!.length ==
+                              0
+                      ? Container()
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 10),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: SectionTitle(
+                                  title: "Tin tức - bài viết",
+                                  titleEnd: "Tất cả",
+                                  pressTitleEnd: () {
+                                    dataAppCustomerController.toPostAllScreen();
+                                  }),
+                            ),
+                            SizedBox(height: 10),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: dataAppCustomerController
+                                      .homeData!.newPost!.list!
+                                      .map((post) => PostItemWidget(
+                                            width: 300,
+                                            post: post,
+                                          ))
+                                      .toList(),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                 ],
               ),
-              discountProducts.length == 0
-                  ? Container()
-                  : Column(
-                      children: [
-                        SizedBox(height: 20),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: SectionTitle(
-                              title: "Sản phẩm khuyến mãi",
-                              titleEnd: "Xem thêm",
-                              pressTitleEnd: () {
-                                Get.to(CategoryProductScreen());
-                              }),
-                        ),
-                        SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            height: 251,
-                            alignment: Alignment.topLeft,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: discountProducts
-                                    .map((product) => ProductItemWidget(
-                                          width: 180,
-                                          product: product,
-                                        ))
-                                    .toList(),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-              dataAppCustomerController.homeData?.bestSellProduct?.list ==
-                          null ||
-                      dataAppCustomerController
-                              .homeData?.bestSellProduct?.list?.length ==
-                          0
-                  ? Container()
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 20),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: SectionTitle(
-                              title: "Sản phẩm bán chạy",
-                              titleEnd: "Tất cả",
-                              pressTitleEnd: () {
-                                Get.to(CategoryProductScreen());
-                              }),
-                        ),
-                        SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            height: 251,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: dataAppCustomerController
-                                    .homeData!.bestSellProduct!.list!
-                                    .map((product) => ProductItemWidget(
-                                          width: 180,
-                                          product: product,
-                                        ))
-                                    .toList(),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-              dataAppCustomerController.homeData?.newProduct?.list == null
-                  ? Container()
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 20),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: SectionTitle(
-                              title: "Sản phẩm mới",
-                              titleEnd: "Tất cả",
-                              pressTitleEnd: () {
-                                Get.to(CategoryProductScreen());
-                              }),
-                        ),
-                        SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            height: 251,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: dataAppCustomerController
-                                    .homeData!.newProduct!.list!
-                                    .map((product) => ProductItemWidget(
-                                          width: 180,
-                                          product: product,
-                                        ))
-                                    .toList(),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-              dataAppCustomerController.homeData?.newPost?.list == null ||
-                      dataAppCustomerController
-                              .homeData!.newPost!.list!.length ==
-                          0
-                  ? Container()
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 20),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: SectionTitle(
-                              title: "Tin tức - bài viết",
-                              titleEnd: "Tất cả",
-                              pressTitleEnd: () {
-                                dataAppCustomerController.toPostAllScreen();
-                              }),
-                        ),
-                        SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: dataAppCustomerController
-                                  .homeData!.newPost!.list!
-                                  .map((post) => PostItemWidget(
-                                        width: 300,
-                                        post: post,
-                                      ))
-                                  .toList(),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
             ],
           ),
         ),
-        AnimatedContainer(
-          duration: const Duration(microseconds: 250),
-          height: 100,
+        Container(
+          height: 90,
           width: double.infinity,
-          color: Colors.white.withOpacity(_opacity),
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+          ),
           padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
-          child: SearchBarType1(),
-        )
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                "Chào bạn Nguyễn Đức Hiếu !",
+                style: TextStyle(
+                    color: Theme.of(context).primaryTextTheme.headline6!.color,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 15),
+              ),
+              Spacer(),
+              InkWell(
+                onTap: () {
+                  Get.to(QRScreen());
+                },
+                child: SvgPicture.asset(
+                  "assets/svg/qr-code-scan.svg",
+                  height: 25,
+                  width: 25,
+                  color: Theme.of(context).primaryTextTheme.headline6!.color,
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              InkWell(
+                onTap: () {
+                  Get.to(ChatCustomerScreen());
+                },
+                child: SvgPicture.asset(
+                  "assets/icons/chat_appbar.svg",
+                  height: 25,
+                  width: 25,
+                  color: Theme.of(context).primaryTextTheme.headline6!.color,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Obx(
+          () => AnimatedPositioned(
+            duration: const Duration(milliseconds: 100),
+            top: homeStyle4Controller.isTouch.value ? 40 : 80,
+            height: 40,
+            right: homeStyle4Controller.isTouch.value ? 80 : 10,
+            left: 10,
+            //width: Get.width,
+            child: SearchBarType5(),
+          ),
+        ),
       ],
     ));
   }
@@ -316,7 +398,9 @@ class CategoryButton extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
-          Get.to(CategoryProductScreen(category: category,));
+          Get.to(CategoryProductScreen(
+            category: category,
+          ));
         },
         child: Stack(
           children: [
@@ -345,7 +429,12 @@ class CategoryButton extends StatelessWidget {
                   AutoSizeText(
                     category!.name!,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context)
+                            .primaryTextTheme
+                            .headline6!
+                            .color),
                     maxLines: 2,
                   )
                 ],

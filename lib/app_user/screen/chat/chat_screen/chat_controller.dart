@@ -272,7 +272,7 @@ class ChatController extends GetxController {
     try {
       var fileUp =
           await ImageUtils.getImageFileFromAsset(dataImages[indexImage].file);
-      var fileUpImageCompress = await ImageUtils.getImageCompress(fileUp!);
+      var fileUpImageCompress = await ImageUtils.getImageCompress(fileUp!, minWidth: 700,minHeight: 512, quality: 15);
 
       var link = await RepositoryManager.imageRepository
           .uploadImage(fileUpImageCompress);

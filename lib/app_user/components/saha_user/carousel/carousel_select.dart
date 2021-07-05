@@ -112,7 +112,7 @@ class _CarouselSelectState extends State<CarouselSelect> {
             onSelected: (bool value) {
               indexSelected = page;
               setState(() {});
-              //  widget.onSelected!(indexSelected);
+              widget.onSelected!(indexSelected);
             },
           ),
         ),

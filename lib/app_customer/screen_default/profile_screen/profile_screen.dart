@@ -158,7 +158,7 @@ class ProfileScreen extends StatelessWidget {
                                                   .avatarImage ??
                                               "",
                                           errorWidget: (context, url, error) =>
-                                              SahaEmptyImage(),
+                                              Container(),
                                         ),
                                         dataAppCustomerController.infoCustomer
                                                     .value!.avatarImage !=
@@ -180,7 +180,10 @@ class ProfileScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                               )
-                                            : SahaEmptyImage(),
+                                            : SahaEmptyImage(
+                                                height: 30,
+                                                width: 30,
+                                              ),
                                       ],
                                     ),
                                     borderRadius: BorderRadius.circular(3000),

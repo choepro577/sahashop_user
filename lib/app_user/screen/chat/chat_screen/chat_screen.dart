@@ -9,7 +9,9 @@ import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/app_user/components/saha_user/expanded_viewport/expanded_viewport.dart';
+import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/app_user/utils/date_utils.dart';
 import 'package:sahashop_user/app_user/utils/string_utils.dart';
@@ -54,10 +56,12 @@ class ChatScreen extends StatelessWidget {
                   width: 45,
                   height: 45,
                   fit: BoxFit.cover,
-                  errorWidget: (context, url, error) => Image.asset(
-                    "assets/saha_loading.png",
-                    fit: BoxFit.cover,
+                  placeholder: (context,url)=>SahaLoadingContainer(
+                    height: 45,
+                    width: 45,
                   ),
+                  errorWidget: (context, url , error) =>
+                      SahaEmptyImage(),
                 ),
                 borderRadius: BorderRadius.circular(3000),
               ),
@@ -353,14 +357,22 @@ class ChatScreen extends StatelessWidget {
                                                         ? Get.width * 0.4
                                                         : 100,
                                                 fit: BoxFit.cover,
+                                                placeholder: (context, url) => SahaLoadingContainer(
+                                                  height:
+                                                  listLinkImages.length == 1
+                                                      ? Get.height * 0.3
+                                                      : 100,
+                                                  width:
+                                                  listLinkImages.length == 1
+                                                      ? Get.width * 0.4
+                                                      : 100,
+                                                ),
                                                 imageUrl:
                                                     listLinkImages[index] ?? "",
                                                 errorWidget:
                                                     (context, url, error) =>
                                                         Container(
-                                                  child: Icon(
-                                                    Icons.error,
-                                                  ),
+                                                  child: SahaEmptyImage(),
                                                   decoration: BoxDecoration(
                                                       border: Border.all(
                                                           color: Colors.grey),
@@ -583,12 +595,20 @@ class ChatScreen extends StatelessWidget {
                                             fit: BoxFit.cover,
                                             imageUrl:
                                                 listLinkImages[index] ?? "",
+                                            placeholder: (context, url) => SahaLoadingContainer(
+                                              height:
+                                              listLinkImages.length == 1
+                                                  ? Get.height * 0.3
+                                                  : 100,
+                                              width:
+                                              listLinkImages.length == 1
+                                                  ? Get.width * 0.4
+                                                  : 100,
+                                            ),
                                             errorWidget:
                                                 (context, url, error) =>
                                                     Container(
-                                              child: Icon(
-                                                Icons.error,
-                                              ),
+                                              child: SahaEmptyImage(),
                                               decoration: BoxDecoration(
                                                   border: Border.all(
                                                       color: Colors.grey),
@@ -672,29 +692,9 @@ class ChatScreen extends StatelessWidget {
                                 : 100,
                             fit: BoxFit.cover,
                             imageUrl: listImageData[index].linkImage ?? "",
-                            placeholder: (context, url) => Stack(
-                              children: [
-                                listImageData[index].file == null
-                                    ? Container()
-                                    : AssetThumb(
-                                        asset: listImageData[index].file!,
-                                        height: listImageData.length == 1
-                                            ? int.parse((Get.height * 0.3)
-                                                .toStringAsFixed(0))
-                                            : 100,
-                                        width: listImageData.length == 1
-                                            ? int.parse((Get.width * 0.4)
-                                                .toStringAsFixed(0))
-                                            : 100,
-                                        spinner: SahaLoadingWidget(
-                                          size: 50,
-                                        ),
-                                      ),
-                                SahaLoadingWidget(),
-                              ],
-                            ),
+
                             errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                                SahaEmptyImage(),
                           ),
                         )
                       : AssetThumb(

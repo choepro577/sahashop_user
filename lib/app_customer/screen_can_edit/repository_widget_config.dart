@@ -27,8 +27,8 @@ import 'product_screen/product_style_5/product_screen_5.dart';
 class RepositoryWidgetCustomer {
   List<Widget> LIST_HOME_SCREEN = [
     HomeScreenStyle1(),
-    HomeScreenStyle2(),
     HomeScreenStyle3(),
+    HomeScreenStyle2(),
     HomeScreenStyle4(),
     HomeScreenStyle5(),
   ];

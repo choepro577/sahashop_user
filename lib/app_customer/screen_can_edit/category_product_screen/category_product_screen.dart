@@ -8,20 +8,27 @@ import '../repository_widget_config.dart';
 
 class CategoryProductScreen extends StatelessWidget {
   final Category? category;
+  final bool autoSearch;
 
-  CategoryProductScreen({Key? key, this.category}) : super(key: key);
+  CategoryProductScreen({Key? key, this.category, this.autoSearch = false})
+      : super(key: key);
   ConfigController configController = Get.find();
   DataAppCustomerController dataAppCustomerController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     dataAppCustomerController.categoryCurrent = category;
+
+    var productsScreen;
     if (configController.configApp.categoryPageType! <
         RepositoryWidgetCustomer().LIST_CATEGORY_PRODUCT_SCREEN.length) {
-      return RepositoryWidgetCustomer().LIST_CATEGORY_PRODUCT_SCREEN[
+      productsScreen = RepositoryWidgetCustomer().LIST_CATEGORY_PRODUCT_SCREEN[
           configController.configApp.categoryPageType!];
     } else {
-      return RepositoryWidgetCustomer().LIST_CATEGORY_PRODUCT_SCREEN[0];
+      productsScreen =
+          RepositoryWidgetCustomer().LIST_CATEGORY_PRODUCT_SCREEN[0];
     }
+    productsScreen.autoSearch = autoSearch;
+    return productsScreen;
   }
 }

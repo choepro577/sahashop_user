@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 
-
 class SectionTitle extends StatelessWidget {
   const SectionTitle({
     Key? key,
     required this.title,
-  this.titleEnd, this.pressTitleEnd,
+    this.titleEnd,
+    this.pressTitleEnd,
+    this.colorTextTitle,
+    this.colorTextMore,
   }) : super(key: key);
 
   final String title;
   final String? titleEnd;
+  final Color? colorTextTitle;
+  final Color? colorTextMore;
 
   final GestureTapCallback? pressTitleEnd;
 
@@ -22,16 +26,20 @@ class SectionTitle extends StatelessWidget {
           title,
           style: TextStyle(
             fontSize: 18,
-            color: Colors.black,
+            color: colorTextTitle ?? Colors.black,
           ),
         ),
-        pressTitleEnd == null ?Container() :  GestureDetector(
-          onTap: pressTitleEnd,
-          child: Text(
-            "${titleEnd==null?"":titleEnd}",
-            style: TextStyle(color: Color(0xFFBBBBBB)),
-          ),
-        ),
+        pressTitleEnd == null
+            ? Container()
+            : GestureDetector(
+                onTap: pressTitleEnd,
+                child: Text(
+                  "${titleEnd == null ? "" : titleEnd}",
+                  style: TextStyle(
+                    color: colorTextMore ?? Colors.grey[500],
+                  ),
+                ),
+              ),
       ],
     );
   }
