@@ -84,7 +84,7 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
         child: Column(
           children: [
             SizedBox(
-              height: 20,
+              height: 50,
             ),
             SearchBarType1(),
             SizedBox(

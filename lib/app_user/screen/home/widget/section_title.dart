@@ -6,10 +6,14 @@ class SectionTitle extends StatelessWidget {
     required this.title,
     this.titleEnd,
     this.pressTitleEnd,
+    this.colorTextTitle,
+    this.colorTextMore,
   }) : super(key: key);
 
   final String title;
   final String? titleEnd;
+  final Color? colorTextTitle;
+  final Color? colorTextMore;
 
   final GestureTapCallback? pressTitleEnd;
 
@@ -18,18 +22,23 @@ class SectionTitle extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title,
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 13,
-                fontWeight: FontWeight.w600)),
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: colorTextTitle ?? Colors.black,
+          ),
+        ),
         pressTitleEnd == null
             ? Container()
             : GestureDetector(
                 onTap: pressTitleEnd,
                 child: Text(
                   "${titleEnd == null ? "" : titleEnd}",
-                  style: TextStyle(color: Color(0xFFBBBBBB)),
+                  style: TextStyle(
+                    color: colorTextMore ?? Colors.grey[500],
+                  ),
                 ),
               ),
       ],

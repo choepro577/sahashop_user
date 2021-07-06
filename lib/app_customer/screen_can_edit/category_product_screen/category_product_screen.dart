@@ -22,10 +22,11 @@ class CategoryProductScreen extends StatelessWidget {
     var productsScreen;
     if (configController.configApp.categoryPageType! <
         RepositoryWidgetCustomer().LIST_CATEGORY_PRODUCT_SCREEN.length) {
-      productsScreen =  RepositoryWidgetCustomer().LIST_CATEGORY_PRODUCT_SCREEN[
+      productsScreen = RepositoryWidgetCustomer().LIST_CATEGORY_PRODUCT_SCREEN[
           configController.configApp.categoryPageType!];
     } else {
-      productsScreen = RepositoryWidgetCustomer().LIST_CATEGORY_PRODUCT_SCREEN[0];
+      productsScreen =
+          RepositoryWidgetCustomer().LIST_CATEGORY_PRODUCT_SCREEN[0];
     }
     productsScreen.autoSearch = autoSearch;
     return productsScreen;

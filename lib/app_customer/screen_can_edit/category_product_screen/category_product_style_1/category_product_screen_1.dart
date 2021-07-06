@@ -5,6 +5,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_customer/screen_can_edit/category_product_screen/category_product_style_2/search_text_field_screen/search_text_field_screen.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/product_item_widget/product_item_widget.dart';
 import 'package:sahashop_user/app_customer/utils/color_utils.dart';
 import '../../../components/empty/saha_empty_image.dart';
@@ -17,11 +18,10 @@ import 'package:sahashop_user/app_user/components/saha_user/text_field/saha_text
 import 'package:sahashop_user/app_user/controller/config_controller.dart';
 import 'package:sahashop_user/app_user/model/category.dart';
 import 'category_controller.dart';
-import 'search_text_field_screen/search_text_field_screen.dart';
 
+// ignore: must_be_immutable
 class CategoryProductStyle1 extends StatefulWidget {
-
-   bool autoSearch;
+  bool autoSearch;
 
   CategoryProductStyle1({Key? key, this.autoSearch = false}) : super(key: key);
 
@@ -43,7 +43,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
     super.initState();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
-          _scrollController.position.maxScrollExtent &&
+              _scrollController.position.maxScrollExtent &&
           categoryController.isLoadingProductMore.value != true) {
         categoryController.searchProduct(isLoadMore: true);
       }
@@ -51,19 +51,16 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
     categoryController.init();
 
     SchedulerBinding.instance!.addPostFrameCallback((_) {
-      if(widget.autoSearch) {
+      if (widget.autoSearch) {
         onSearch();
       }
     });
-
-
   }
 
   void onSearch() {
     Get.to(SearchTextFiledScreen(
       onSubmit: (text, categoryId) {
-        categoryController.textEditingControllerSearch.text =
-        text!;
+        categoryController.textEditingControllerSearch.text = text!;
         categoryController.searchProduct(search: text);
       },
     ));
@@ -259,8 +256,8 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
             : list.length == 0
                 ? SahaEmptyProducts()
                 : Stack(
-                  children: [
-                    StaggeredGridView.countBuilder(
+                    children: [
+                      StaggeredGridView.countBuilder(
                         crossAxisCount: 2,
                         itemCount: list.length,
                         controller: _scrollController,
@@ -273,12 +270,14 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                         mainAxisSpacing: 0,
                         crossAxisSpacing: 0,
                       ),
-                    categoryController.isLoadingProductMore.value ?   Align(
-                      alignment: Alignment.bottomCenter,
-                      child: CupertinoActivityIndicator(),
-                    ) : Container()
-                  ],
-                ),
+                      categoryController.isLoadingProductMore.value
+                          ? Align(
+                              alignment: Alignment.bottomCenter,
+                              child: CupertinoActivityIndicator(),
+                            )
+                          : Container()
+                    ],
+                  ),
       );
     });
   }

@@ -9,11 +9,13 @@ class SahaBoxButton extends StatelessWidget {
     required this.icon,
     required this.text,
     required this.press,
+    this.colorText,
     this.numOfitem,
   }) : super(key: key);
 
   final String? icon, text;
   final GestureTapCallback press;
+  final Color? colorText;
   final int? numOfitem;
 
   @override
@@ -38,7 +40,8 @@ class SahaBoxButton extends StatelessWidget {
                     ),
                     child: SvgPicture.asset(
                       icon!,
-                      color: Theme.of(context).primaryTextTheme.headline1!.color,
+                      color:
+                          Theme.of(context).primaryTextTheme.headline6!.color,
                     ),
                   ),
                   SizedBox(height: 5),
@@ -48,6 +51,12 @@ class SahaBoxButton extends StatelessWidget {
                       Text(
                         text!,
                         textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: colorText ??
+                                Theme.of(context)
+                                    .primaryTextTheme
+                                    .headline6!
+                                    .color),
                       ),
                     ],
                   ),
