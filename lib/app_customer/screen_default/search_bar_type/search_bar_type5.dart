@@ -24,7 +24,7 @@ class SearchBarType5 extends StatelessWidget {
         Expanded(
           child: InkWell(
             onTap: () {
-              onSearch!();
+              onSearch == null ? null : onSearch!();
             },
             child: Container(
               padding: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
