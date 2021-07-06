@@ -216,7 +216,7 @@ class _HomeScreenStyle4State extends State<HomeScreenStyle4> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
-                                    height: 251,
+                                    height: 260,
                                     alignment: Alignment.topLeft,
                                     child: SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,
@@ -257,7 +257,7 @@ class _HomeScreenStyle4State extends State<HomeScreenStyle4> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
-                                    height: 251,
+                                    height: 260,
                                     child: SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,
                                       child: Row(

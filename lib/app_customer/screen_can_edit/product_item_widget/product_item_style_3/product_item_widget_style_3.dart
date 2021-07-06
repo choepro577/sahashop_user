@@ -232,7 +232,7 @@ class ProductItemWidgetStyle3 extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(right: 10),
                                   child: Container(
-                                    padding: const EdgeInsets.all(5),
+                                    padding: const EdgeInsets.all(7),
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: Theme.of(context).primaryColor),

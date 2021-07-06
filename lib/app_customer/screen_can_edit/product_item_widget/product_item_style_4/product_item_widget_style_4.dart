@@ -38,7 +38,6 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
             padding: EdgeInsets.only(left: 4, right: 4, top: 4, bottom: 4),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
@@ -48,142 +47,206 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
                     offset: Offset(0, 1), // changes position of shadow
                   ),
                 ],
+                gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).primaryColor.withOpacity(0.2),
+                      Theme.of(context).primaryColor.withOpacity(0.1),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: [0.0, 0.5],
+                    tileMode: TileMode.clamp),
               ),
-              child: InkWell(
-                onTap: () {
-                  Get.to(ProductScreen(
-                    product: product,
-                  ));
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CachedNetworkImage(
-                            height: 180,
-                            width: Get.width,
-                            fit: BoxFit.cover,
-                            imageUrl: product.images!.length == 0
-                                ? ""
-                                : product.images![0].imageUrl!,
-                            placeholder: (context, url) =>
-                                SahaLoadingContainer(),
-                            errorWidget: (context, url, error) =>
-                                SahaEmptyImage(),
+              child: Stack(
+                children: [
+                  Stack(
+                    children: [
+                      Positioned(
+                        bottom: 0,
+                        right: -80,
+                        child: Container(
+                          height: 200,
+                          width: 200,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Theme.of(context)
+                                .primaryColor
+                                .withOpacity(0.08),
                           ),
                         ),
                       ),
-                    ), //product.images[0].imageUrl
-                    SizedBox(height: 5),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              height: 35,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    product.name!,
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                    ),
-                                    maxLines: 2,
-                                  ),
-                                ],
+                      Positioned(
+                        bottom: 50,
+                        right: 0,
+                        child: Container(
+                          height: 300,
+                          width: 300,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Theme.of(context)
+                                .primaryColor
+                                .withOpacity(0.05),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 60,
+                        right: 10,
+                        child: Container(
+                          height: 15,
+                          width: 15,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Theme.of(context)
+                                .primaryColor
+                                .withOpacity(0.06),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.to(ProductScreen(
+                        product: product,
+                      ));
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: CachedNetworkImage(
+                                height: 180,
+                                width: Get.width,
+                                fit: BoxFit.cover,
+                                imageUrl: product.images!.length == 0
+                                    ? ""
+                                    : product.images![0].imageUrl!,
+                                placeholder: (context, url) =>
+                                    SahaLoadingContainer(),
+                                errorWidget: (context, url, error) =>
+                                    SahaEmptyImage(),
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: 35,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        ), //product.images[0].imageUrl
+                        SizedBox(height: 5),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              product.productDiscount == null
-                                  ? Container()
-                                  : Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 5.0, right: 5.0),
-                                      child: Text(
-                                        "${SahaStringUtils().convertToMoney(product.price)}đ",
+                              Expanded(
+                                child: Container(
+                                  height: 35,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        product.name!,
                                         style: TextStyle(
-                                            decoration:
-                                                TextDecoration.lineThrough,
-                                            color: product.productDiscount ==
-                                                    null
-                                                ? Theme.of(context).primaryColor
-                                                : Colors.grey,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize:
-                                                product.productDiscount == null
-                                                    ? 14
-                                                    : 10),
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black,
+                                        ),
+                                        maxLines: 2,
                                       ),
-                                    ),
-                              Container(
-                                padding: const EdgeInsets.only(
-                                    left: 5.0, right: 5.0),
-                                child: Text(
-                                  product.productDiscount == null
-                                      ? "${SahaStringUtils().convertToMoney(product.price)}đ"
-                                      : "${SahaStringUtils().convertToMoney(product.productDiscount!.discountPrice)}đ",
-                                  style: TextStyle(
-                                      color: SahaColorUtils()
-                                          .colorTextWithPrimaryColor(),
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14),
-                                  maxLines: 1,
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Container(
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Theme.of(context).primaryColor),
-                            child: InkWell(
-                              onTap: () {
-                                cartController.addItemCart(product.id);
-                                dataAppCustomerController.getBadge();
-                              },
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: 35,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  product.productDiscount == null
+                                      ? Container()
+                                      : Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 5.0, right: 5.0),
+                                          child: Text(
+                                            "${SahaStringUtils().convertToMoney(product.price)}đ",
+                                            style: TextStyle(
+                                                decoration:
+                                                    TextDecoration.lineThrough,
+                                                color:
+                                                    product.productDiscount ==
+                                                            null
+                                                        ? Theme.of(context)
+                                                            .primaryColor
+                                                        : Colors.grey,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize:
+                                                    product.productDiscount ==
+                                                            null
+                                                        ? 14
+                                                        : 10),
+                                          ),
+                                        ),
+                                  Container(
+                                    padding: const EdgeInsets.only(
+                                        left: 5.0, right: 5.0),
+                                    child: Text(
+                                      product.productDiscount == null
+                                          ? "${SahaStringUtils().convertToMoney(product.price)}đ"
+                                          : "${SahaStringUtils().convertToMoney(product.productDiscount!.discountPrice)}đ",
+                                      style: TextStyle(
+                                          color: SahaColorUtils()
+                                              .colorTextWithPrimaryColor(),
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14),
+                                      maxLines: 1,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 5, bottom: 5),
                               child: Container(
-                                height: 15,
-                                width: 15,
-                                child: SvgPicture.asset(
-                                  "assets/icons/cart_icon.svg",
-                                  color: Theme.of(context)
-                                      .primaryTextTheme
-                                      .headline6!
-                                      .color,
+                                padding: const EdgeInsets.all(7),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Theme.of(context).primaryColor),
+                                child: InkWell(
+                                  onTap: () {
+                                    cartController.addItemCart(product.id);
+                                    dataAppCustomerController.getBadge();
+                                  },
+                                  child: Container(
+                                    height: 17,
+                                    width: 17,
+                                    child: SvgPicture.asset(
+                                      "assets/icons/shopping_bag.svg",
+                                      color: Theme.of(context)
+                                          .primaryTextTheme
+                                          .headline6!
+                                          .color,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
+                          ],
+                        )
                       ],
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -238,8 +301,8 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
               : Container(),
           product.isTopSale == true
               ? Positioned(
-                  bottom: 80,
-                  right: 10,
+                  bottom: 90,
+                  right: 16,
                   child: Stack(
                     children: [
                       Container(

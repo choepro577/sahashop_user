@@ -125,7 +125,7 @@ class ProductItemWidgetStyle2 extends StatelessWidget {
                                                     null
                                                 ? Theme.of(context).primaryColor
                                                 : Colors.grey,
-                                            fontWeight: FontWeight.w500,
+                                            fontWeight: FontWeight.w600,
                                             fontSize:
                                                 product.productDiscount == null
                                                     ? 14
@@ -142,7 +142,7 @@ class ProductItemWidgetStyle2 extends StatelessWidget {
                                   style: TextStyle(
                                       color: SahaColorUtils()
                                           .colorTextWithPrimaryColor(),
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                       fontSize: 14),
                                   maxLines: 1,
                                 ),
@@ -151,9 +151,9 @@ class ProductItemWidgetStyle2 extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right: 10),
+                          padding: const EdgeInsets.only(right: 5, bottom: 5),
                           child: Container(
-                            padding: const EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(7),
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Theme.of(context).primaryColor),
@@ -163,10 +163,10 @@ class ProductItemWidgetStyle2 extends StatelessWidget {
                                 dataAppCustomerController.getBadge();
                               },
                               child: Container(
-                                height: 15,
-                                width: 15,
+                                height: 17,
+                                width: 17,
                                 child: SvgPicture.asset(
-                                  "assets/icons/cart_icon.svg",
+                                  "assets/icons/shopping_bag.svg",
                                   color: Theme.of(context)
                                       .primaryTextTheme
                                       .headline6!

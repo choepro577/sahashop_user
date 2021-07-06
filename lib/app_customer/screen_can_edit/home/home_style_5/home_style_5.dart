@@ -81,14 +81,46 @@ class _HomeScreenStyle5State extends State<HomeScreenStyle5> {
             children: [
               Container(
                 width: double.infinity,
-                height: 270,
+                height: 248,
                 child: BannerWidget(),
               ),
               Column(
                 children: [
-                  SizedBox(
-                    height: 20,
-                  ),
+                  discountProducts.length == 0
+                      ? Container()
+                      : Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: SectionTitle(
+                                  title: "Sản phẩm khuyến mãi",
+                                  titleEnd: "Xem thêm",
+                                  pressTitleEnd: () {
+                                    Get.to(CategoryProductScreen());
+                                  }),
+                            ),
+                            SizedBox(height: 10),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 251,
+                                alignment: Alignment.topLeft,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: discountProducts
+                                        .map((product) => ProductItemWidget(
+                                              width: 180,
+                                              product: product,
+                                            ))
+                                        .toList(),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                  SizedBox(height: 10),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -99,6 +131,7 @@ class _HomeScreenStyle5State extends State<HomeScreenStyle5> {
                         (index) => SahaBoxButton(
                           icon: option[index]["icon"],
                           text: option[index]["text"],
+                          colorText: Colors.black,
                           numOfitem: option[index]["numOfitem"],
                           press: () {},
                         ),
@@ -110,7 +143,8 @@ class _HomeScreenStyle5State extends State<HomeScreenStyle5> {
               Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(20),
+                    padding: EdgeInsets.only(
+                        left: 20, right: 20, top: 10, bottom: 10),
                     child: SectionTitle(
                       title: "Danh mục cửa hàng",
                       titleEnd: "Tất cả",
@@ -142,41 +176,6 @@ class _HomeScreenStyle5State extends State<HomeScreenStyle5> {
                   ),
                 ],
               ),
-              discountProducts.length == 0
-                  ? Container()
-                  : Column(
-                      children: [
-                        SizedBox(height: 20),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: SectionTitle(
-                              title: "Sản phẩm khuyến mãi",
-                              titleEnd: "Xem thêm",
-                              pressTitleEnd: () {
-                                Get.to(CategoryProductScreen());
-                              }),
-                        ),
-                        SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            height: 251,
-                            alignment: Alignment.topLeft,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: discountProducts
-                                    .map((product) => ProductItemWidget(
-                                          width: 180,
-                                          product: product,
-                                        ))
-                                    .toList(),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
               dataAppCustomerController.homeData?.bestSellProduct?.list ==
                           null ||
                       dataAppCustomerController
@@ -186,8 +185,8 @@ class _HomeScreenStyle5State extends State<HomeScreenStyle5> {
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 20),
-                        Padding(
+                        SizedBox(height: 10),
+                        Container(
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: SectionTitle(
                               title: "Sản phẩm bán chạy",
@@ -316,7 +315,9 @@ class CategoryButton extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
-          Get.to(CategoryProductScreen(category: category,));
+          Get.to(CategoryProductScreen(
+            category: category,
+          ));
         },
         child: Stack(
           children: [
@@ -329,10 +330,11 @@ class CategoryButton extends StatelessWidget {
                     width: 55,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Theme.of(context).primaryColor,
+                      border: Border.all(
+                          color: Theme.of(context).primaryColor, width: 0.5),
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
                       child: CachedNetworkImage(
                         imageUrl: category!.imageUrl ?? "",
                         fit: BoxFit.cover,

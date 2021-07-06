@@ -9,11 +9,13 @@ class SahaBoxButton extends StatelessWidget {
     required this.icon,
     required this.text,
     required this.press,
+    this.colorText,
     this.numOfitem,
   }) : super(key: key);
 
   final String? icon, text;
   final GestureTapCallback press;
+  final Color? colorText;
   final int? numOfitem;
 
   @override
@@ -50,10 +52,11 @@ class SahaBoxButton extends StatelessWidget {
                         text!,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            color: Theme.of(context)
-                                .primaryTextTheme
-                                .headline6!
-                                .color),
+                            color: colorText ??
+                                Theme.of(context)
+                                    .primaryTextTheme
+                                    .headline6!
+                                    .color),
                       ),
                     ],
                   ),

@@ -81,9 +81,9 @@ class ProductItemWidgetStyle1 extends StatelessWidget {
                                       Text(
                                         product.name!,
                                         style: TextStyle(
-                                          fontSize: 13,
-                                          color: Colors.black,
-                                        ),
+                                            fontSize: 13,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600),
                                         maxLines: 2,
                                       ),
                                     ],
@@ -117,7 +117,7 @@ class ProductItemWidgetStyle1 extends StatelessWidget {
                                                         ? Theme.of(context)
                                                             .primaryColor
                                                         : Colors.grey,
-                                                fontWeight: FontWeight.w500,
+                                                fontWeight: FontWeight.w600,
                                                 fontSize:
                                                     product.productDiscount ==
                                                             null
@@ -135,7 +135,7 @@ class ProductItemWidgetStyle1 extends StatelessWidget {
                                       style: TextStyle(
                                           color: SahaColorUtils()
                                               .colorTextWithPrimaryColor(),
-                                          fontWeight: FontWeight.w500,
+                                          fontWeight: FontWeight.w600,
                                           fontSize: 14),
                                       maxLines: 1,
                                     ),
@@ -146,7 +146,7 @@ class ProductItemWidgetStyle1 extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(right: 10),
                               child: Container(
-                                padding: const EdgeInsets.all(5),
+                                padding: const EdgeInsets.all(7),
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: Theme.of(context).primaryColor),
