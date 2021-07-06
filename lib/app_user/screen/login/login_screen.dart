@@ -112,7 +112,7 @@ class _SignInState extends State<LoginScreen> {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               SahaButtonSizeChild(
                 width: 200,

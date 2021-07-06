@@ -16,7 +16,7 @@ class SpecialOffers extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 8),
           child: SectionTitle(
             title: "Ưu đãi cho bạn",
             pressTitleEnd: () {
@@ -73,7 +73,7 @@ class SpecialOfferCard extends StatelessWidget {
           width: 242,
           height: 100,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(5),
             child: Stack(
               children: [
                 Image.asset(

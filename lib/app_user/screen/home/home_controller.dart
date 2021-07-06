@@ -9,12 +9,18 @@ class HomeController extends GetxController {
     loadStoreCurrent();
   }
 
+  var preIsPortrait = false;
   var isExpansion = false.obs;
+  var opacity = 1.0.obs;
   Rx<Store>? storeCurrent = Store().obs;
   var isLoadingStore = false.obs;
   var errMsg = "".obs;
   void onChangeExpansion(bool value) {
     isExpansion.value = value;
+  }
+
+  void changeOpacityText(double va) {
+    opacity.value = va;
   }
 
   void loadStoreCurrent() async {

@@ -149,7 +149,7 @@ flutter:
     - assets/svg/
     - assets/saha_loading.png
     - assets/style1/
-
+    - assets/app_user/svg/home/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

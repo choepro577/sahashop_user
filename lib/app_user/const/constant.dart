@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-const bmColors = Color(0xFFFF7643);
-const SahaPrimaryColor = Color(0xFFEC5520);
-const SahaPrimaryLightColor = Color(0xFFF15A23);
+const bmColors = Color(0xFF3BBCA6);
+const SahaPrimaryColor = Colors.teal;
+const SahaPrimaryLightColor = Color(0xFF3BBCA6);
 const SahaBorderColor = Color(0xFFF2F2F2);
 const SahaSecondaryColor = Color(0xFF979797);
 const SahaTextColor = Color(0xFF757575);
