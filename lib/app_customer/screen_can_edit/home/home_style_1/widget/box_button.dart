@@ -28,7 +28,7 @@ class SahaBoxButton extends StatelessWidget {
         child: Stack(
           children: [
             SizedBox(
-              width: 80,
+              width: 70,
               child: Column(
                 children: [
                   Container(
