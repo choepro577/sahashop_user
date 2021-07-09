@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:sahashop_user/app_user/components/saha_user/text/text_money.dart';
 import 'package:sahashop_user/app_user/screen/report/report_controller.dart';
 import 'package:sahashop_user/app_user/utils/date_utils.dart';
@@ -19,7 +20,7 @@ class _BusinessChartState extends State<BusinessChart> {
 
   @override
   void initState() {
-    _tooltipBehavior = TooltipBehavior(enable: true);
+    _tooltipBehavior = TooltipBehavior(enable: true, header: 'Default');
     reportController = Get.find();
     super.initState();
   }
@@ -169,21 +170,42 @@ class _BusinessChartState extends State<BusinessChart> {
             child: SfCartesianChart(
               primaryXAxis: CategoryAxis(),
               // Chart title
+              onTrackballPositionChanging: (TrackballArgs args) {
+                args.chartPointInfo.header = DateFormat('H:m')
+                    .format(args.chartPointInfo.chartDataPoint!.x);
+              },
               title: ChartTitle(
                   text:
                       '${reportController!.isCompare.value ? reportController!.isTotalChart.value ? "So sánh chênh lệch doanh thu" : "So sánh chênh lệch đơn" : reportController!.isTotalChart.value ? "Doanh thu" : "Đơn hàng"}'),
               // Enable legend
               legend: Legend(
-                isVisible: true,
-                position: LegendPosition.bottom,
-              ),
+                  isVisible: true,
+                  position: LegendPosition.bottom,
+                  toggleSeriesVisibility: true),
               // Enable tooltip
-              tooltipBehavior: _tooltipBehavior,
+              tooltipBehavior: TooltipBehavior(
+                enable: true,
+              ),
+              onTooltipRender: (TooltipArgs args) {
+                var pointIndex = args.seriesIndex;
+                if (pointIndex == 0) {
+                  args.header =
+                      '${SahaDateUtils().getDDMM(reportController!.fromDayCP.value)} Đến ${SahaDateUtils().getDDMM(reportController!.toDayCP.value)}';
+                } else {
+                  args.header =
+                      '${SahaDateUtils().getDDMM(reportController!.fromDay.value)} Đến ${SahaDateUtils().getDDMM(reportController!.toDay.value)}';
+                }
+                // args.text = args.da taPoints[pointIndex].x.toString() +
+                //     ' has value of: ' +
+                //     args.dataPoints[pointIndex].y.toString();
+              },
               series: reportController!.isCompare.value
                   ? <LineSeries<SalesData, String>>[
                       LineSeries<SalesData, String>(
                         legendItemText:
                             "${SahaDateUtils().getDDMM(reportController!.fromDayCP.value)} Đến ${SahaDateUtils().getDDMM(reportController!.toDayCP.value)}",
+                        enableTooltip: true,
+
                         color: Colors.red,
                         markerSettings: MarkerSettings(
                             isVisible: true,
@@ -217,6 +239,7 @@ class _BusinessChartState extends State<BusinessChart> {
                       ),
                       LineSeries<SalesData, String>(
                         color: Colors.blue,
+                        enableTooltip: true,
                         legendItemText:
                             "${SahaDateUtils().getDDMM(reportController!.fromDay.value)} Đến ${SahaDateUtils().getDDMM(reportController!.toDay.value)}",
                         markerSettings: MarkerSettings(

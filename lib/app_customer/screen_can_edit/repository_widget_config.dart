@@ -27,8 +27,8 @@ import 'product_screen/product_style_5/product_screen_5.dart';
 class RepositoryWidgetCustomer {
   List<Widget> LIST_HOME_SCREEN = [
     HomeScreenStyle1(),
-    HomeScreenStyle2(),
     HomeScreenStyle3(),
+    HomeScreenStyle2(),
     HomeScreenStyle4(),
     HomeScreenStyle5(),
   ];
@@ -55,11 +55,10 @@ class RepositoryWidgetCustomer {
   ];
 
   List<Widget> LIST_WIDGET_BANNER = [
-    BannerType1(height: 120),
-    BannerType2(height: 120),
-    BannerType3(height: 130),
-    BannerType4(height: 140),
-    BannerType5(height: 140),
+    BannerType1(height: 220),
+    BannerType2(height: 220),
+    BannerType3(height: 220),
+    BannerType4(height: 220),
+    BannerType5(height: 220),
   ];
-
 }

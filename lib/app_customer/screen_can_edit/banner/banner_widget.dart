@@ -4,6 +4,7 @@ import 'package:sahashop_user/app_user/controller/config_controller.dart';
 
 import '../repository_widget_config.dart';
 
+// ignore: must_be_immutable
 class BannerWidget extends StatelessWidget {
   ConfigController configController = Get.find();
   @override

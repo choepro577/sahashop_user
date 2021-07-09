@@ -96,7 +96,9 @@ class OrderDetailScreen extends StatelessWidget {
                                   orderManageController!.listAllOrder.refresh();
                                 }
                                 Get.back();
-                              });
+                              },
+                                  orderDetailController!
+                                      .orderResponse.value.orderStatusCode!);
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -146,7 +148,9 @@ class OrderDetailScreen extends StatelessWidget {
                                 //     .paymentStatusCode = value;
                                 // orderManageController!.listOrder.refresh();
                                 Get.back();
-                              });
+                              },
+                                  orderDetailController!
+                                      .orderResponse.value.paymentStatusCode!);
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),

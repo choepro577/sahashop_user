@@ -20,8 +20,8 @@ class ProductItemWidgetStyle1 extends StatelessWidget {
     this.width,
   }) : super(key: key);
 
-   Product product;
-   double? width;
+  Product product;
+  double? width;
 
   CartController cartController = Get.find();
   DataAppCustomerController dataAppCustomerController = Get.find();
@@ -43,9 +43,9 @@ class ProductItemWidgetStyle1 extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                     Get.to(ProductScreen(
-                       product: product,
-                     ));
+                      Get.to(ProductScreen(
+                        product: product,
+                      ));
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -58,15 +58,15 @@ class ProductItemWidgetStyle1 extends StatelessWidget {
                             imageUrl: product.images!.length == 0
                                 ? ""
                                 : product.images![0].imageUrl!,
-                            placeholder: (context, url) => SahaLoadingContainer(),
+                            placeholder: (context, url) =>
+                                SahaLoadingContainer(),
                             errorWidget: (context, url, error) =>
                                 SahaEmptyImage(),
                           ),
                         ), //product.images[0].imageUrl
                         SizedBox(height: 5),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 5.0, right: 5.0),
+                          padding: const EdgeInsets.only(left: 5.0, right: 5.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -74,17 +74,16 @@ class ProductItemWidgetStyle1 extends StatelessWidget {
                                 child: Container(
                                   height: 35,
                                   child: Column(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         product.name!,
                                         style: TextStyle(
-                                          fontSize: 13,
-                                          color: Colors.black,
-                                        ),
+                                            fontSize: 13,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600),
                                         maxLines: 2,
                                       ),
                                     ],
@@ -100,35 +99,32 @@ class ProductItemWidgetStyle1 extends StatelessWidget {
                             Container(
                               height: 35,
                               child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   product.productDiscount == null
                                       ? Container()
                                       : Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 5.0, right: 5.0),
-                                    child: Text(
-                                      "${SahaStringUtils().convertToMoney(product.price)}đ",
-                                      style: TextStyle(
-                                          decoration: TextDecoration
-                                              .lineThrough,
-                                          color:
-                                          product.productDiscount ==
-                                              null
-                                              ? Theme.of(
-                                              context)
-                                              .primaryColor
-                                              : Colors.grey,
-                                          fontWeight:
-                                          FontWeight.w500,
-                                          fontSize:
-                                          product.productDiscount ==
-                                              null
-                                              ? 14
-                                              : 10),
-                                    ),
-                                  ),
+                                          padding: const EdgeInsets.only(
+                                              left: 5.0, right: 5.0),
+                                          child: Text(
+                                            "${SahaStringUtils().convertToMoney(product.price)}đ",
+                                            style: TextStyle(
+                                                decoration:
+                                                    TextDecoration.lineThrough,
+                                                color:
+                                                    product.productDiscount ==
+                                                            null
+                                                        ? Theme.of(context)
+                                                            .primaryColor
+                                                        : Colors.grey,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize:
+                                                    product.productDiscount ==
+                                                            null
+                                                        ? 14
+                                                        : 10),
+                                          ),
+                                        ),
                                   Container(
                                     padding: const EdgeInsets.only(
                                         left: 5.0, right: 5.0),
@@ -139,7 +135,7 @@ class ProductItemWidgetStyle1 extends StatelessWidget {
                                       style: TextStyle(
                                           color: SahaColorUtils()
                                               .colorTextWithPrimaryColor(),
-                                          fontWeight: FontWeight.w500,
+                                          fontWeight: FontWeight.w600,
                                           fontSize: 14),
                                       maxLines: 1,
                                     ),
@@ -150,7 +146,7 @@ class ProductItemWidgetStyle1 extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(right: 10),
                               child: Container(
-                                padding: const EdgeInsets.all(5),
+                                padding: const EdgeInsets.all(7),
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: Theme.of(context).primaryColor),
@@ -224,68 +220,55 @@ class ProductItemWidgetStyle1 extends StatelessWidget {
             ),
           ),
           product.isNew == true
-              ? Positioned(
-                  top: -5,
-                  left: -13,
-                  child: Stack(
-                    children: [
-                      Container(
-                        height: 45,
-                        width: 45,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(50),
-                          child: SvgPicture.asset(
-                            "assets/icons/rectangle.svg",
-                            color: Color(0xffd70c10),
+              ? Stack(
+                  children: [
+                    Positioned(
+                      top: -5,
+                      left: -13,
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Container(
+                            height: 45,
+                            width: 45,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: SvgPicture.asset(
+                                "assets/icons/rectangle.svg",
+                                color: Color(0xffd70c10),
+                              ),
+                            ),
                           ),
+                          Positioned(
+                            top: 16,
+                            right: 5,
+                            child: Text(
+                              "New",
+                              style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "nunito_bold",
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      top: 25,
+                      left: 0,
+                      child: Container(
+                        height: 5,
+                        width: 4,
+                        child: SvgPicture.asset(
+                          "assets/icons/levels.svg",
+                          color: Color(0xffd70c10),
                         ),
                       ),
-                      Positioned(
-                        top: 16,
-                        right: 5,
-                        child: Text(
-                          "New",
-                          style: TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "nunito_bold",
-                              color: Colors.white),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 )
               : Container(),
-          Positioned(
-            top: 25,
-            left: 0,
-            child: Stack(
-              children: [
-                Container(
-                  height: 5,
-                  width: 4,
-                  child: SvgPicture.asset(
-                    "assets/icons/levels.svg",
-                    color: Color(0xffd70c10),
-                  ),
-                ),
-                Positioned(
-                  top: 18,
-                  right: 9,
-                  child: Text(
-                    "Mall",
-                    style: TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context)
-                            .primaryTextTheme
-                            .headline6!
-                            .color),
-                  ),
-                ),
-              ],
-            ),
-          ),
           product.isTopSale == true
               ? Positioned(
                   bottom: 80,

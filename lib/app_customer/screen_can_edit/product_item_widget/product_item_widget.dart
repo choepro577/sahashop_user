@@ -5,6 +5,7 @@ import 'package:sahashop_user/app_user/model/product.dart';
 
 import '../repository_widget_config.dart';
 
+// ignore: must_be_immutable
 class ProductItemWidget extends StatelessWidget {
   ConfigController configController = Get.find();
 
@@ -20,8 +21,8 @@ class ProductItemWidget extends StatelessWidget {
     if (configController.configApp.productItemType != null &&
         configController.configApp.productItemType! <
             RepositoryWidgetCustomer().LIST_ITEM_PRODUCT_WIDGET.length) {
-      productWidget = RepositoryWidgetCustomer()
-          .LIST_ITEM_PRODUCT_WIDGET[configController.configApp.carouselType!];
+      productWidget = RepositoryWidgetCustomer().LIST_ITEM_PRODUCT_WIDGET[
+          configController.configApp.productItemType!];
     } else {
       productWidget = RepositoryWidgetCustomer().LIST_ITEM_PRODUCT_WIDGET[0];
     }

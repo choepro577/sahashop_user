@@ -4,7 +4,6 @@ import 'package:sahashop_user/app_customer/repository/repository_customer.dart';
 import 'package:sahashop_user/app_customer/screen_default/cart_screen/cart_controller.dart';
 import 'package:sahashop_user/app_customer/utils/customer_info.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
-import 'package:sahashop_user/app_user/controller/config_controller.dart';
 import 'package:sahashop_user/app_user/model/badge.dart';
 import 'package:sahashop_user/app_user/model/category.dart';
 import 'package:sahashop_user/app_user/model/category_post.dart';
@@ -14,7 +13,6 @@ import 'package:sahashop_user/app_user/model/post.dart';
 import 'package:sahashop_user/app_user/model/product.dart';
 import 'package:sahashop_user/app_user/model/roll_call.dart';
 import 'category_post_screen/category_post_screen_1.dart';
-import '../screen_can_edit/repository_widget_config.dart';
 import 'search_screen/search_screen.dart';
 
 class DataAppCustomerController extends GetxController {
@@ -116,8 +114,6 @@ class DataAppCustomerController extends GetxController {
     categoryPostCurrent = categoryPost;
     Get.to(CategoryPostStyle1());
   }
-
-
 
   Future<bool?> getHomeData() async {
     try {
