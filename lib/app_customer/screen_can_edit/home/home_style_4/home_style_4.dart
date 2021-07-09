@@ -6,6 +6,7 @@ import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dar
 import 'package:sahashop_user/app_customer/components/product_item/post_item_widget.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/banner/banner_widget.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/category_product_screen/category_product_screen.dart';
+import 'package:sahashop_user/app_customer/screen_can_edit/home_buttons/list_home_button.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/product_item_widget/product_item_widget.dart';
 import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
 import 'package:sahashop_user/app_customer/screen_default/search_bar_type/search_bar_type1.dart';
@@ -89,6 +90,7 @@ class _HomeScreenStyle4State extends State<HomeScreenStyle4> {
                   SizedBox(
                     height: 20,
                   ),
+                  ListHomeButtonWidget(),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -316,7 +318,9 @@ class CategoryButton extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
-          Get.to(CategoryProductScreen(category: category,));
+          Get.to(CategoryProductScreen(
+            category: category,
+          ));
         },
         child: Stack(
           children: [

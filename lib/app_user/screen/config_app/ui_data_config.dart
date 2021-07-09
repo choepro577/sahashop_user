@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sahashop_user/app_customer/screen_default/theme_color/theme_color.dart';
+import 'package:sahashop_user/app_user/model/button.dart';
 import 'package:sahashop_user/app_user/screen/config_app/screens_config/font_type/font.dart';
 import 'package:sahashop_user/app_user/screen/config_app/screens_config/logo_type/logo.dart';
 import 'package:sahashop_user/app_user/screen/config_app/screens_config/product_screen/product_screen.dart';
 import 'screens_config/category_product/category_product.dart';
+import 'screens_config/home_buttons/button_config.dart';
+import 'screens_config/home_buttons/home_button_screen.dart';
 import 'screens_config/home_screen/home_screen.dart';
 import 'screens_config/icon_helpler/iconType/supportIcon.dart';
 import 'screens_config/main_component_config/banner_config.dart';
@@ -26,6 +29,8 @@ class UIDataConfig {
         listChildConfig: [
           ChildConfig(
               name: "Mời chọn kiểu giao diện", editWidget: HomeScreenConfig()),
+          ChildConfig(
+              name: "Nút điều hướng chính", editWidget: ButtonHomeConfig()),
         ]),
     ParentConfig(
         name: "Thành phần chính",

@@ -19,7 +19,7 @@ class SahaLoadingContainer extends StatelessWidget {
       enabled: true,
       child: Container(
         height: height,
-        width: width,
+        width: (width ?? 0)+2,
         alignment: Alignment.centerRight,
         child: Column(
           children: [],

@@ -196,7 +196,8 @@ abstract class SahaService {
   );
 
   @GET("store/{storeCode}/posts")
-  Future<AllPostResponse> getAllPost(@Path("storeCode") String? storeCode);
+  Future<AllPostResponse> getAllPost(@Path("storeCode") String? storeCode,
+      @Query("page") int page, @Query("search") String search);
 
   @GET("store/{storeCode}/discounts")
   Future<MyProgramResponse> getAllDisCount(

@@ -23,8 +23,8 @@ import 'choose_store/choose_store.dart';
 import 'widget/sliver_peristent.dart';
 import 'widget/special_offers.dart';
 
-const ITEM_HEIGHT = 100.0;
-const ITEM_WIDTH = 100.0;
+const BUTTON_HEIGHT = 85.0;
+const BUTTON_WIDTH = 100.0;
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -59,14 +59,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var widthButton = 65.0;
     final maxChildCount =
-        (MediaQuery.of(context).size.width - 8 * 2) / widthButton;
-    var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
-    var childAspectRatio = !isPortrait ? 100 / 40 : 90 / 110;
+        (MediaQuery.of(context).size.width - 8 * 2) / BUTTON_WIDTH;
 
-    final maxChildCount2 = (MediaQuery.of(context).size.width - 8 * 2) / 80;
-    var childAspectRatio2 = !isPortrait ? 100 / 40 : 100 / 80;
+    final maxChildCount2 =
+        (MediaQuery.of(context).size.width - (8 * 2)) / BUTTON_WIDTH;
+
 
     return Scaffold(
         appBar: PreferredSize(
@@ -83,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Expanded(
                   child: Container(
-                    height: 90,
+                    height: 100,
                     color: SahaPrimaryColor,
                     child: SingleChildScrollView(
                       child: Padding(
@@ -182,25 +180,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       margin: EdgeInsets.only(
                           bottom: 0, top: 4, left: 15, right: 15),
                       child: Container(
-                        height: 110,
+                        height: 90,
                         padding: EdgeInsets.only(top: 8),
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.all(Radius.circular(8))),
                         child: SingleChildScrollView(
-                          child: GridView.builder(
-                            padding: EdgeInsets.all(8),
-                            physics: NeverScrollableScrollPhysics(),
+                          child: new StaggeredGridView.countBuilder(
                             shrinkWrap: true,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 4,
-                                    childAspectRatio: childAspectRatio),
-                            itemCount: 4,
+                            primary: false,
+                            staggeredTileBuilder: (index) => StaggeredTile.fit(1),
                             itemBuilder: (context, pos) {
                               return [
                                 Obx(
-                                  () => ItemStoreView(
+                                      () => ItemStoreView(
                                     icon: 'assets/app_user/svg/home/order.svg',
                                     text: 'Đơn hàng',
                                     opacityText: homeController.opacity.value,
@@ -210,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 Obx(
-                                  () => ItemStoreView(
+                                      () => ItemStoreView(
                                     icon: 'assets/app_user/svg/home/report.svg',
                                     text: 'Báo cáo',
                                     opacityText: homeController.opacity.value,
@@ -220,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 Obx(
-                                  () => ItemStoreView(
+                                      () => ItemStoreView(
                                     icon: 'assets/app_user/svg/home/chat.svg',
                                     text: 'Chat',
                                     opacityText: homeController.opacity.value,
@@ -230,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 Obx(
-                                  () => ItemStoreView(
+                                      () => ItemStoreView(
                                     icon: 'assets/app_user/svg/home/review.svg',
                                     text: 'Đánh giá từ khách',
                                     opacityText: homeController.opacity.value,
@@ -241,7 +234,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ][pos];
                             },
+                            itemCount: 4,
+                            crossAxisCount: 4,
+                            mainAxisSpacing: 4,
+                            padding: EdgeInsets.zero,
+                            physics: NeverScrollableScrollPhysics(),
                           ),
+
+
+
                         ),
                       ),
                     ),
@@ -317,7 +318,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.only(top: 15,
+                         bottom: 15, left: 8),
                       child: Text(
                         "Cửa hàng",
                         style: TextStyle(
@@ -327,14 +329,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  GridView.builder(
-                    padding: EdgeInsets.all(8),
-                    physics: NeverScrollableScrollPhysics(),
+                  new StaggeredGridView.countBuilder(
                     shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: maxChildCount2.floor(),
-                        childAspectRatio: childAspectRatio2),
-                    itemCount: 4,
+                    primary: false,
+                    staggeredTileBuilder: (index) => StaggeredTile.fit(1),
                     itemBuilder: (context, pos) {
                       return [
                         ItemStoreView(
@@ -365,16 +363,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             Get.to(() => PostNaviScreen());
                           },
                         ),
+
                       ][pos];
                     },
+                    itemCount: 4,
+                    crossAxisCount: maxChildCount2.floor(),
+                    mainAxisSpacing: 4,
+                    padding: EdgeInsets.zero,
+                    physics: NeverScrollableScrollPhysics(),
                   ),
-                  Divider(
-                    height: 20,
-                  ),
+                 
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.only(top: 15,
+                          bottom: 15, left: 8),
                       child: Text(
                         "Cài đặt",
                         style: TextStyle(
@@ -384,14 +387,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  GridView.builder(
-                    padding: EdgeInsets.all(8),
-                    physics: NeverScrollableScrollPhysics(),
+
+                  new StaggeredGridView.countBuilder(
                     shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: maxChildCount2.floor(),
-                        childAspectRatio: childAspectRatio2),
-                    itemCount: 4,
+                    primary: false,
+                    staggeredTileBuilder: (index) => StaggeredTile.fit(1),
                     itemBuilder: (context, pos) {
                       return [
                         ItemStoreView(
@@ -424,7 +424,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ][pos];
                     },
+                    itemCount: 4,
+                    crossAxisCount: maxChildCount2.floor(),
+                    mainAxisSpacing: 4,
+                    padding: EdgeInsets.zero,
+                    physics: NeverScrollableScrollPhysics(),
                   ),
+
+
                   Divider(
                     height: 20,
                   ),
@@ -460,7 +467,8 @@ class ItemStoreView extends StatelessWidget {
       padding: EdgeInsets.zero,
       onPressed: press,
       child: Container(
-
+        height: BUTTON_HEIGHT,
+        width: BUTTON_WIDTH,
         child: Column(
           children: [
             SvgPicture.asset(
@@ -471,12 +479,15 @@ class ItemStoreView extends StatelessWidget {
               height: 5,
             ),
             Expanded(
-              child: AutoSizeText(
-                text,
-                textAlign: TextAlign.center,
-                maxFontSize: 13,
-                style:
-                    TextStyle(color: Colors.black87.withOpacity(opacityText)),
+              child: Align(
+                alignment: Alignment.center,
+                child: AutoSizeText(
+                  text,
+                  textAlign: TextAlign.center,
+                  maxFontSize: 13,
+                  style:
+                      TextStyle(color: Colors.black87.withOpacity(opacityText)),
+                ),
               ),
             ),
           ],

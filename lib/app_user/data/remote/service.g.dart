@@ -511,9 +511,9 @@ class _SahaService implements SahaService {
   }
 
   @override
-  Future<AllPostResponse> getAllPost(storeCode) async {
+  Future<AllPostResponse> getAllPost(storeCode, page, search) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'page': page, r'search': search};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(

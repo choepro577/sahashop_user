@@ -109,11 +109,10 @@ class PostRepository {
     }
   }
 
-  Future<List<Post>?> getAllPost() async {
+  Future<List<Post>?> getAllPost({int? page, String? search}) async {
     try {
-      var res = await SahaServiceManager()
-          .service!
-          .getAllPost(UserInfo().getCurrentStoreCode());
+      var res = await SahaServiceManager().service!.getAllPost(
+          UserInfo().getCurrentStoreCode(), page ?? 0, search ?? "");
       return res.data!.data;
     } catch (err) {
       handleError(err);
