@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/app_user/data/remote/response-request/store/type_store_respones.dart';
 import 'package:sahashop_user/app_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/app_user/utils/user_info.dart';
 
 class AddStoreController extends GetxController {
-  var stateCreate = "".obs;
   var creating = false.obs;
   var listNameShop = RxList<String?>();
   var mapTypeShop = RxList<Map<String, String>>();
@@ -12,21 +12,18 @@ class AddStoreController extends GetxController {
   Future<List<DataTypeShop>?> getAllShopType() async {
     try {
       var listDataTypeShop =
-      (await RepositoryManager.typeOfShopRepository.getAll())!;
+          (await RepositoryManager.typeOfShopRepository.getAll())!;
 
       for (var i in listDataTypeShop) {
         listNameShop.add(i.name);
         mapTypeShop.add({i.id.toString(): i.name!});
       }
       print(listNameShop);
-      stateCreate.refresh();
       mapTypeShop.refresh();
-    } catch (err) {
-
-    }
+    } catch (err) {}
   }
 
-  Future<bool> createShop(
+  Future<void> createShop(
       String nameShop, String address, String? idType, String code) async {
     creating.value = true;
     try {
@@ -38,14 +35,12 @@ class AddStoreController extends GetxController {
           code: code);
 
       creating.value = false;
-      stateCreate.value = "success";
-      stateCreate.refresh();
-      return true;
+      Get.back(result: "create_success");
+      return;
     } catch (e) {
       creating.value = false;
-      stateCreate.value = e.toString();
-      stateCreate.refresh();
-      return false;
+      SahaAlert.showError(message: e.toString());
+      return;
     }
   }
 }

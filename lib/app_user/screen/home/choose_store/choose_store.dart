@@ -6,6 +6,7 @@ import 'package:sahashop_user/app_user/components/saha_user/loading/loading_widg
 import 'package:sahashop_user/app_user/const/constant.dart';
 import 'package:sahashop_user/app_user/data/remote/response-request/store/all_store_response.dart';
 import 'package:sahashop_user/app_user/utils/user_info.dart';
+import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_store.dart';
 
 import '../home_controller.dart';
 import 'add_store/add_store.dart';
@@ -29,38 +30,70 @@ class ChooseStoreScreen extends StatelessWidget {
             : Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Cửa hàng đã chọn"),
-                    Expanded(child: Obx(() {
-                      var listStore = chooseStoreController.listStore;
-
-                      var idSelected =
-                          homeController.storeCurrent?.value.id ?? null;
-
-                      return ListView.builder(
-                          itemCount: listStore.length,
-                          itemBuilder: (context, index) => Column(
-                                children: [
-                                  ItemStore(
-                                    store: listStore[index],
-                                    selected: listStore[index].id == idSelected,
-                                    index: index + 1,
-                                    onChange: (store) {
-                                      homeController.setNewStoreCurrent(store);
-                                    },
+                    chooseStoreController.checkNoStore.value
+                        ? Expanded(
+                            child: SahaEmptyStore(
+                              width: Get.width,
+                              height: 100,
+                            ),
+                          )
+                        : Expanded(
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Text(
+                                    "Cửa hàng đã chọn",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600),
                                   ),
-                                ],
-                              ));
-                    })),
+                                ),
+                                Expanded(child: Obx(() {
+                                  var listStore =
+                                      chooseStoreController.listStore;
+
+                                  var idSelected =
+                                      homeController.storeCurrent?.value.id ??
+                                          null;
+
+                                  return ListView.builder(
+                                      itemCount: listStore.length,
+                                      itemBuilder: (context, index) => Column(
+                                            children: [
+                                              ItemStore(
+                                                store: listStore[index],
+                                                selected: listStore[index].id ==
+                                                    idSelected,
+                                                index: index + 1,
+                                                onChange: (store) {
+                                                  homeController
+                                                      .setNewStoreCurrent(
+                                                          store);
+                                                },
+                                              ),
+                                            ],
+                                          ));
+                                })),
+                              ],
+                            ),
+                          ),
                     SahaButtonFullParent(
                       text: "Thêm cửa hàng",
                       onPressed: () {
                         Get.to(() => AddStore())!.then((value) => {
-                              if (value == "added")
-                                {chooseStoreController.getListStore()}
+                              if (value == "create_success")
+                                {
+                                  chooseStoreController.getListStore(),
+                                  // homeController.checkNoStore.value = false,
+                                }
                             });
                       },
+                    ),
+                    SizedBox(
+                      height: 10,
                     )
                   ],
                 ),

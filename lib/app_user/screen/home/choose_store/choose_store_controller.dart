@@ -5,6 +5,7 @@ import 'package:sahashop_user/app_user/data/repository/repository_manager.dart';
 class ChooseStoreController extends GetxController {
   var isLoading = false.obs;
   var errMsg = "".obs;
+  var checkNoStore = false.obs;
   RxList<Store> listStore = RxList<Store>();
 
   ChooseStoreController() {
@@ -16,6 +17,11 @@ class ChooseStoreController extends GetxController {
     errMsg.refresh();
     try {
       listStore(await (RepositoryManager.storeRepository.getAll()));
+      if (listStore.isEmpty) {
+        checkNoStore.value = true;
+      } else {
+        checkNoStore.value = false;
+      }
       isLoading.value = false;
     } catch (err) {
       errMsg(err.toString());

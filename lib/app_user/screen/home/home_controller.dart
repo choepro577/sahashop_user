@@ -2,11 +2,13 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/app_user/data/remote/response-request/store/all_store_response.dart';
 import 'package:sahashop_user/app_user/data/repository/repository_manager.dart';
+import 'package:sahashop_user/app_user/utils/showcase.dart';
 import 'package:sahashop_user/app_user/utils/user_info.dart';
 
 class HomeController extends GetxController {
   HomeController() {
     loadStoreCurrent();
+    checkIsFirstTimeLogin();
   }
 
   var preIsPortrait = false;
@@ -15,6 +17,18 @@ class HomeController extends GetxController {
   Rx<Store>? storeCurrent = Store().obs;
   var isLoadingStore = false.obs;
   var errMsg = "".obs;
+  var checkNoStore = false.obs;
+  var isFirstTimeLogin = false.obs;
+  var requiredProduct = false.obs;
+
+  Future<void> checkIsFirstTimeLogin() async {
+    bool? check = ShowCase().getState();
+    if (check == null || check == true) {
+      isFirstTimeLogin.value = true;
+      print("--------$isFirstTimeLogin");
+    }
+  }
+
   void onChangeExpansion(bool value) {
     isExpansion.value = value;
   }
@@ -32,8 +46,8 @@ class HomeController extends GetxController {
       if (list.length > 0) {
         var indexStoreSelected;
         if (UserInfo().getCurrentStoreCode() != null) {
-          indexStoreSelected = list.indexWhere((storeE) =>
-              storeE.storeCode == UserInfo().getCurrentStoreCode());
+          indexStoreSelected = list.indexWhere(
+              (storeE) => storeE.storeCode == UserInfo().getCurrentStoreCode());
         }
 
         if (indexStoreSelected != null && indexStoreSelected >= 0) {
@@ -47,7 +61,8 @@ class HomeController extends GetxController {
         setNewStoreCurrent(store);
         setUserIdCurrent(store);
       } else {
-        storeCurrent = null;
+        checkNoStore.value = true;
+        // storeCurrent = null;
         UserInfo().setCurrentStoreCode(null);
       }
 
@@ -60,6 +75,7 @@ class HomeController extends GetxController {
   }
 
   void setNewStoreCurrent(Store store) {
+    checkNoStore.value = false;
     UserInfo().setCurrentStoreCode(store.storeCode);
     storeCurrent!.value = store;
   }

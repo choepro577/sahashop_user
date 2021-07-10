@@ -142,6 +142,9 @@ class _ProductPageState extends State<ProductPage>
                       text: "Thêm sản phẩm mới",
                     ),
                   ),
+                  SizedBox(
+                    height: 10,
+                  )
                 ],
               ),
             ),

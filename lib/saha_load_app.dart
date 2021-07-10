@@ -5,6 +5,8 @@ import 'package:sahashop_user/app_user/screen/home/home_screen.dart';
 import 'package:sahashop_user/app_user/screen/login/login_screen.dart';
 import 'package:sahashop_user/app_user/utils/user_info.dart';
 
+import 'app_user/utils/showcase.dart';
+
 class SahaMainScreen extends StatefulWidget {
   @override
   _SahaMainScreenState createState() => _SahaMainScreenState();
@@ -14,8 +16,8 @@ class _SahaMainScreenState extends State<SahaMainScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
     loadInit(context);
+    ShowCase().getStateShowCase();
   }
 
   void loadInit(BuildContext context) {

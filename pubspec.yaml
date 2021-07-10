@@ -71,6 +71,7 @@ dependencies:
   sticky_headers: ^0.2.0
   syncfusion_flutter_charts: ^19.1.69+1
   syncfusion_flutter_datepicker: ^19.1.69-beta
+  showcaseview: ^1.1.0
   page_indicator: ^0.4.1
   image_picker: ^0.7.3
   intl: ^0.17.0

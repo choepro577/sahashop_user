@@ -104,6 +104,9 @@ class AddCategoryScreen extends StatelessWidget {
                     }
                   },
                 ),
+                SizedBox(
+                  height: 20,
+                )
               ],
             ),
           ),

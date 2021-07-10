@@ -8,7 +8,6 @@ import 'package:sahashop_user/app_user/data/remote/response-request/store/type_s
 import 'package:sahashop_user/app_user/screen/sign_up/sign_up_screen_controller.dart';
 import 'package:sahashop_user/app_user/utils/keyboard.dart';
 
-
 import 'add_store_controller.dart';
 
 class AddStore extends StatefulWidget {
@@ -32,8 +31,7 @@ class _AddStoreState extends State<AddStore> {
   List<DataTypeShop>? listTypeShop;
   List<String> nameTypeShop = [];
   Map<String, String?>? chooseDropDownValue;
-  // ignore: cancel_subscriptions
-  StreamSubscription? sub;
+
   final signUpController = Get.put(SignUpController());
 
   @override
@@ -44,25 +42,11 @@ class _AddStoreState extends State<AddStore> {
   }
 
   @override
-  void didChangeDependencies() {
-
-    super.didChangeDependencies();
-    sub ??= addStoreController.stateCreate.listen((state) {
-
-      if (state == "success") {
-        Navigator.pop(context, "added");
-
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SahaAppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
-          color: Colors.grey,
           onPressed: () {
             Get.back();
           },
@@ -87,10 +71,16 @@ class _AddStoreState extends State<AddStore> {
                   color: Colors.black,
                 ),
               ),
+              SizedBox(
+                height: 10,
+              ),
               Text(
                 "Xin quý khách nhập thông tin cửa hàng \nđể khởi tạo",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.grey[600]),
+              ),
+              SizedBox(
+                height: 10,
               ),
               SahaTextField(
                 controller: textEditingControllerNameShop,
@@ -182,7 +172,6 @@ class _AddStoreState extends State<AddStore> {
                         textEditingControllerAddress.text,
                         _chosenValue,
                         textEditingControllerStoreCode.text);
-
                   }
                 },
                 style: ButtonStyle(),
