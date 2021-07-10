@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sahashop_user/app_user/data/example/home_button.dart';
 import 'package:sahashop_user/app_user/data/example/product.dart';
 import 'banner/banner_style_2/banner_type_2.dart';
 import 'banner/banner_style_4/banner_type_4.dart';
@@ -13,6 +14,11 @@ import 'home/home_style_2/home_style_2.dart';
 import 'home/home_style_3/home_style_3.dart';
 import 'home/home_style_4/home_style_4.dart';
 import 'home/home_style_5/home_style_5.dart';
+import 'home_buttons/home_buttons_style_1/home_button_style_1.dart';
+import 'home_buttons/home_buttons_style_2/home_button_style_2.dart';
+import 'home_buttons/home_buttons_style_3/home_button_style_3.dart';
+import 'home_buttons/home_buttons_style_4/home_button_style_4.dart';
+import 'home_buttons/home_buttons_style_5/home_button_style_5.dart';
 import 'product_item_widget/product_item_style_1/product_item_widget_style_1.dart';
 import 'product_item_widget/product_item_style_2/product_item_widget_style_2.dart';
 import 'product_item_widget/product_item_style_3/product_item_widget_style_3.dart';
@@ -44,6 +50,14 @@ class RepositoryWidgetCustomer {
     ProductScreen3(),
     ProductScreen4(),
     ProductScreen5(),
+  ];
+
+  List<Widget> LIST_BUTTON_WIDGET = [
+    HomeButtonStyle1Widget(homeButton: LIST_HOME_BUTTON_EXAMPLE[0],),
+    HomeButtonStyle2Widget(homeButton: LIST_HOME_BUTTON_EXAMPLE[0],),
+    HomeButtonStyle3Widget(homeButton: LIST_HOME_BUTTON_EXAMPLE[0],),
+    HomeButtonStyle4Widget(homeButton: LIST_HOME_BUTTON_EXAMPLE[0],),
+    HomeButtonStyle5Widget(homeButton: LIST_HOME_BUTTON_EXAMPLE[0],),
   ];
 
   List<Widget> LIST_ITEM_PRODUCT_WIDGET = [

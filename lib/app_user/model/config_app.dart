@@ -39,6 +39,8 @@ class ConfigApp {
     this.noteIconZalo,
     this.idZalo,
     this.headerType,
+    this.typeButton,
+    this.isScrollButton,
     this.colorBackgroundHeader,
     this.colorTextHeader,
     this.typeOfMenu,
@@ -98,6 +100,8 @@ class ConfigApp {
   String? noteIconZalo;
   String? idZalo;
   int? headerType;
+  bool? isScrollButton;
+  int? typeButton;
   String? colorBackgroundHeader;
   String? colorTextHeader;
   int? typeOfMenu;
@@ -125,13 +129,13 @@ class ConfigApp {
   String? contactTimeWork;
   String? contactInfoBank;
 
-
   factory ConfigApp.fromJson(Map<String, dynamic> json) => ConfigApp(
         logoUrl: json["logo_url"],
         isShowLogo: json["is_show_logo"],
-        carouselAppImages: json["carousel_app_images"] == null ? [] :
-        List<BannerItem>.from(
-            json["carousel_app_images"].map((x) => BannerItem.fromJson(x))),
+        carouselAppImages: json["carousel_app_images"] == null
+            ? []
+            : List<BannerItem>.from(
+                json["carousel_app_images"].map((x) => BannerItem.fromJson(x))),
         colorMain1: json["color_main_1"],
         colorMain2: json["color_main_2"],
         fontFamily: json["font_family"],
@@ -160,6 +164,8 @@ class ConfigApp {
         noteIconZalo: json["note_icon_zalo"],
         idZalo: json["id_zalo"],
         headerType: json["header_type"],
+        isScrollButton: json["is_scroll_button"],
+        typeButton: json["type_button"],
         colorBackgroundHeader: json["color_background_header"],
         colorTextHeader: json["color_text_header"],
         typeOfMenu: json["type_of_menu"],
@@ -186,13 +192,13 @@ class ConfigApp {
         contactPhoneNumber: json["contact_phone_number"],
         contactTimeWork: json["contact_time_work"],
         contactInfoBank: json["contact_info_bank"],
-
       );
 
   Map<String, dynamic> toJson() => {
         "logo_url": logoUrl,
         "is_show_logo": isShowLogo,
-        "carousel_app_images": carouselAppImages!.map((e) => e.toJson()).toList(),
+        "carousel_app_images":
+            carouselAppImages!.map((e) => e.toJson()).toList(),
         "color_main_1": colorMain1,
         "color_main_2": colorMain2,
         "font_family": fontFamily,
@@ -221,6 +227,8 @@ class ConfigApp {
         "note_icon_zalo": noteIconZalo,
         "id_zalo": idZalo,
         "header_type": headerType,
+        "is_scroll_button": isScrollButton,
+        "type_button": typeButton,
         "color_background_header": colorBackgroundHeader,
         "color_text_header": colorTextHeader,
         "type_of_menu": typeOfMenu,
@@ -247,6 +255,5 @@ class ConfigApp {
         "contact_phone_number": contactPhoneNumber,
         "contact_time_work": contactTimeWork,
         "contact_info_bank": contactInfoBank,
-
       };
 }

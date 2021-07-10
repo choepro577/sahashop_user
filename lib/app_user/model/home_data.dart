@@ -1,3 +1,4 @@
+import 'package:sahashop_user/app_user/model/button_home.dart';
 import 'package:sahashop_user/app_user/model/post.dart';
 import 'package:sahashop_user/app_user/model/product.dart';
 
@@ -7,6 +8,7 @@ import 'discount_product_list.dart';
 
 class HomeData {
   HomeData({
+    this.buttons,
     this.banner,
     this.allCategory,
     this.discountProducts,
@@ -15,6 +17,7 @@ class HomeData {
     this.newPost,
   });
 
+  ListButtons? buttons;
   BannerList? banner;
   AllCategory? allCategory;
   DiscountProducts? discountProducts;
@@ -23,6 +26,7 @@ class HomeData {
   NewPost? newPost;
 
   factory HomeData.fromJson(Map<String, dynamic> json) => HomeData(
+        buttons: ListButtons.fromJson(json["buttons"]),
         banner: BannerList.fromJson(json["banner"]),
         allCategory: AllCategory.fromJson(json["allCategory"]),
         discountProducts: DiscountProducts.fromJson(json["discountProducts"]),
@@ -32,6 +36,7 @@ class HomeData {
       );
 
   Map<String, dynamic> toJson() => {
+        "buttons": buttons!.toJson(),
         "banner": banner!.toJson(),
         "allCategory": allCategory!.toJson(),
         "discountProducts": discountProducts!.toJson(),
@@ -91,7 +96,30 @@ class BannerList {
       };
 }
 
+class ListButtons {
+  ListButtons({
+    this.name,
+    this.type,
+    this.list,
+  });
 
+  String? name;
+  String? type;
+  List<HomeButton>? list;
+
+  factory ListButtons.fromJson(Map<String, dynamic> json) => ListButtons(
+        name: json["name"],
+        type: json["type"],
+        list: List<HomeButton>.from(
+            json["list"].map((x) => HomeButton.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "type": type,
+        "list": List<dynamic>.from(list!.map((x) => x.toJson())),
+      };
+}
 
 class NewProduct {
   NewProduct({

@@ -26,8 +26,8 @@ import 'choose_store/choose_store.dart';
 import 'widget/sliver_peristent.dart';
 import 'widget/special_offers.dart';
 
-const ITEM_HEIGHT = 100.0;
-const ITEM_WIDTH = 100.0;
+const BUTTON_HEIGHT = 85.0;
+const BUTTON_WIDTH = 100.0;
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -83,14 +83,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var widthButton = 65.0;
     final maxChildCount =
-        (MediaQuery.of(context).size.width - 8 * 2) / widthButton;
-    var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
-    var childAspectRatio = !isPortrait ? 100 / 40 : 90 / 110;
+        (MediaQuery.of(context).size.width - 8 * 2) / BUTTON_WIDTH;
 
-    final maxChildCount2 = (MediaQuery.of(context).size.width - 8 * 2) / 80;
-    var childAspectRatio2 = !isPortrait ? 100 / 40 : 100 / 80;
+    final maxChildCount2 =
+        (MediaQuery.of(context).size.width - (8 * 2)) / BUTTON_WIDTH;
+
 
     return Scaffold(
       appBar: PreferredSize(
@@ -937,6 +935,8 @@ class ItemStoreView extends StatelessWidget {
       padding: EdgeInsets.zero,
       onPressed: press,
       child: Container(
+        height: BUTTON_HEIGHT,
+        width: BUTTON_WIDTH,
         child: Column(
           children: [
             SvgPicture.asset(
@@ -947,12 +947,15 @@ class ItemStoreView extends StatelessWidget {
               height: 5,
             ),
             Expanded(
-              child: AutoSizeText(
-                text,
-                textAlign: TextAlign.center,
-                maxFontSize: 13,
-                style:
-                    TextStyle(color: Colors.black87.withOpacity(opacityText)),
+              child: Align(
+                alignment: Alignment.center,
+                child: AutoSizeText(
+                  text,
+                  textAlign: TextAlign.center,
+                  maxFontSize: 13,
+                  style:
+                      TextStyle(color: Colors.black87.withOpacity(opacityText)),
+                ),
               ),
             ),
           ],
