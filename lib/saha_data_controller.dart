@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_user/data/socket/socket.dart';
 
@@ -7,6 +8,7 @@ import 'app_customer/utils/thread_data.dart';
 class SahaDataController extends GetxController {
   var isPreview = false.obs;
   var unread = 0.obs;
+  ScrollController scrollController = new ScrollController();
 
   @override
   void onInit() {

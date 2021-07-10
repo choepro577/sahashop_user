@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reorderables/reorderables.dart';
-import 'package:sahashop_user/app_customer/screen_can_edit/home_buttons/home_button_widget.dart';
+import 'package:sahashop_user/app_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/app_user/const/constant.dart';
 
 import 'button_config.dart';
@@ -54,9 +54,39 @@ class _ButtonHomeConfigScreenState extends State<ButtonHomeConfigScreen> {
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(
-          "Đang hiển thị",
-          style: TextStyle(fontWeight: FontWeight.bold),
+        child: Row(
+          children: [
+            Text(
+              "Đang hiển thị",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Spacer(),
+            InkWell(
+              onTap: () {
+                homeButtonConfigController.onSave();
+              },
+              child: Container(
+                padding:
+                    EdgeInsets.only(left: 10, right: 10, bottom: 5, top: 5),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    color: SahaPrimaryColor),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.save,
+                      size: 15,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      "Lưu",
+                      style: TextStyle(color: Colors.white),
+                    )
+                  ],
+                ),
+              ),
+            )
+          ],
         ),
       ),
       wrap,
@@ -136,9 +166,20 @@ class _ButtonHomeConfigScreenState extends State<ButtonHomeConfigScreen> {
       appBar: AppBar(
         title: Text("Tùy chỉnh nút điều hướng"),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          child: column,
+      body: Obx(
+        () => Stack(
+          children: [
+            SingleChildScrollView(
+              child: Container(
+                child: column,
+              ),
+            ),
+            homeButtonConfigController.waitingSave.value
+                ? Center(
+                    child: SahaLoadingWidget(),
+                  )
+                : Container()
+          ],
         ),
       ),
     );

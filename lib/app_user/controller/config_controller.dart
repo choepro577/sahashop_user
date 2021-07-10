@@ -107,6 +107,8 @@ class ConfigController extends GetxController {
       configApp.isShowIconFacebook = data.isShowIconFacebook ?? false;
       configApp.isShowIconZalo = data.isShowIconZalo ?? false;
       configApp.carouselAppImages = data.carouselAppImages;
+      configApp.typeButton = data.typeButton ?? 0;
+      configApp.isScrollButton = data.isScrollButton ?? false;
       updateTheme();
       isLoadingGet.value = false;
       return true;

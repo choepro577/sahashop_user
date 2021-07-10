@@ -7,8 +7,8 @@ import 'package:sahashop_user/app_user/model/button_home.dart';
 
 import '../list_home_button.dart';
 
-class HomeButtonStyle1Widget extends StatelessWidget {
-   HomeButtonStyle1Widget({Key? key, this.homeButton})
+class HomeButtonStyle3Widget extends StatelessWidget {
+   HomeButtonStyle3Widget({Key? key, this.homeButton})
       : super(key: key);
    HomeButton? homeButton;
 
@@ -28,7 +28,7 @@ class HomeButtonStyle1Widget extends StatelessWidget {
                       height: 50,
                       width: 50,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        borderRadius: BorderRadius.all(Radius.circular(45)),
                         child: buildImageButton(
                             imageUrl: homeButton!.imageUrl,
                             typeAction: homeButton!.typeAction),

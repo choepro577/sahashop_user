@@ -117,24 +117,10 @@ class _HomeScreenStyle4State extends State<HomeScreenStyle4> {
                   SizedBox(
                     height: 20,
                   ),
-                  ListHomeButtonWidget(),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: List.generate(
-                        option.length,
-                        (index) => SahaBoxButton(
-                          icon: option[index]["icon"],
-                          text: option[index]["text"],
-                          numOfitem: option[index]["numOfitem"],
-                          press: () {},
-                        ),
 
-                      ),
-                    ),
-                  ),
+
+
+
                   Column(
                     children: [
                       SizedBox(
@@ -145,6 +131,9 @@ class _HomeScreenStyle4State extends State<HomeScreenStyle4> {
                         height: 250,
                         child: BannerWidget(),
                       ),
+
+          ListHomeButtonWidget(),
+
                       Column(
                         children: [
                           Padding(

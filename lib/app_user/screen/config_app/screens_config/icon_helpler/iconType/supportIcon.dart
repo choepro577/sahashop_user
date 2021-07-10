@@ -48,7 +48,7 @@ class _SupportIconState extends State<SupportIcon> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "- Số điện thoại :",
+              "Số điện thoại :",
               style: TextStyle(fontSize: 15),
             ),
             SizedBox(
@@ -100,7 +100,7 @@ class _SupportIconState extends State<SupportIcon> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "- Email :",
+              "Email :",
               style: TextStyle(fontSize: 15),
             ),
             SizedBox(
@@ -158,7 +158,7 @@ class _SupportIconState extends State<SupportIcon> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "- Link Facebook :",
+              "Link Facebook :",
               style: TextStyle(fontSize: 15),
             ),
             SizedBox(
@@ -215,7 +215,7 @@ class _SupportIconState extends State<SupportIcon> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "- Link zalo :",
+              "Link zalo :",
               style: TextStyle(fontSize: 15),
             ),
             SizedBox(

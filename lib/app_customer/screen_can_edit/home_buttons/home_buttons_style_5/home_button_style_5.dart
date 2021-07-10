@@ -2,13 +2,14 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
+import 'package:sahashop_user/app_customer/utils/color_utils.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
 import 'package:sahashop_user/app_user/model/button_home.dart';
 
 import '../list_home_button.dart';
 
-class HomeButtonStyle1Widget extends StatelessWidget {
-   HomeButtonStyle1Widget({Key? key, this.homeButton})
+class HomeButtonStyle5Widget extends StatelessWidget {
+   HomeButtonStyle5Widget({Key? key, this.homeButton})
       : super(key: key);
    HomeButton? homeButton;
 
@@ -27,8 +28,12 @@ class HomeButtonStyle1Widget extends StatelessWidget {
                     Container(
                       height: 50,
                       width: 50,
+                      decoration: BoxDecoration(
+
+                          border: Border.all(color: SahaColorUtils().colorTextWithPrimaryColor())
+                      ),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
+
                         child: buildImageButton(
                             imageUrl: homeButton!.imageUrl,
                             typeAction: homeButton!.typeAction),

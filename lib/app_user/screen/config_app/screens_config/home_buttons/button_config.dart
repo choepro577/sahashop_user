@@ -4,44 +4,104 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
+import 'package:sahashop_user/app_customer/screen_can_edit/home_buttons/list_home_button.dart';
+import 'package:sahashop_user/app_customer/screen_can_edit/repository_widget_config.dart';
+import 'package:sahashop_user/app_user/components/saha_user/carousel/carousel_select.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
+import 'package:sahashop_user/app_user/const/constant.dart';
+import 'package:sahashop_user/app_user/controller/config_controller.dart';
 import 'package:sahashop_user/app_user/model/home_button_config.dart';
+import 'package:switcher_button/switcher_button.dart';
 
+import '../../../../../saha_data_controller.dart';
 import 'home_button_screen.dart';
 
-class ButtonHomeConfig extends StatelessWidget {
+class ButtonHomeConfig extends StatefulWidget {
+  @override
+  _ButtonHomeConfigState createState() => _ButtonHomeConfigState();
+}
+
+class _ButtonHomeConfigState extends State<ButtonHomeConfig> {
+  ConfigController controller = Get.find();
+
+  void autoScroll(value) async {
+    if (value == false) {
+      final SahaDataController sahaDataController = Get.find();
+      await Future.delayed(Duration(microseconds: 200));
+      sahaDataController.scrollController.animateTo(
+          sahaDataController.scrollController.position.maxScrollExtent + 100,
+          duration: Duration(milliseconds: 500),
+          curve: Curves.easeIn);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Align(
-          alignment: Alignment.centerRight,
-          child: InkWell(
-            onTap: () {
-              Get.to(ButtonHomeConfigScreen());
-            },
-            child: Container(
-              padding: EdgeInsets.only(left: 8, right: 8, bottom: 2, top: 2),
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.all(Radius.circular(8))),
+        Row(
+          children: [
+            Container(
+              height: 20,
               child: Row(
-                mainAxisSize: MainAxisSize.min,
                 children: [
-                  SvgPicture.asset(
-                    "assets/svg/change.svg",
-                    width: 15,
-                    height: 15,
-                  ),
+                  controller.configApp.isScrollButton == true
+                      ? Text("Dạng cuộn")
+                      : Text("Tất cả"),
                   SizedBox(
-                    width: 5,
+                    width: 2,
                   ),
-                  Text("Tùy chỉnh"),
+                  SwitcherButton(
+                    value: true,
+                    offColor: SahaPrimaryColor,
+                    onColor: Colors.greenAccent,
+                    onChange: (value) {
+                      controller.configApp.isScrollButton = value;
+
+                      setState(() {});
+                      autoScroll(value);
+                    },
+                  ),
                 ],
               ),
             ),
-          ),
-        )
+            Spacer(),
+            Align(
+              alignment: Alignment.centerRight,
+              child: InkWell(
+                onTap: () {
+                  Get.to(ButtonHomeConfigScreen());
+                },
+                child: Container(
+                  padding:
+                      EdgeInsets.only(left: 8, right: 8, bottom: 2, top: 2),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.all(Radius.circular(8))),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SvgPicture.asset(
+                        "assets/svg/change.svg",
+                        width: 15,
+                        height: 15,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text("Tùy chỉnh"),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        controller.configApp.isScrollButton == true
+            ? SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: IgnorePointer(child: ListHomeButtonWidget()))
+            : IgnorePointer(child: ListHomeButtonWidget()),
       ],
     );
   }

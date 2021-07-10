@@ -46,6 +46,7 @@ class _BannerType1State extends State<BannerType5> {
                 children: <Widget>[
                   CachedNetworkImage(
                     width: Get.width,
+
                     fit: BoxFit.cover,
                     imageUrl: item.imageUrl!,
                     placeholder: (context, url) =>

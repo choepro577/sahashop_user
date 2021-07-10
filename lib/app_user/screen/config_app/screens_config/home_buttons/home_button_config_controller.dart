@@ -6,6 +6,7 @@ import 'package:sahashop_user/app_user/components/saha_user/picker/image/image_d
 import 'package:sahashop_user/app_user/components/saha_user/picker/post/post_picker.dart';
 import 'package:sahashop_user/app_user/components/saha_user/picker/product/product_picker.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
+import 'package:sahashop_user/app_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/app_user/model/button_home.dart';
 import 'package:sahashop_user/app_user/model/category.dart';
 import 'package:sahashop_user/app_user/model/category_post.dart';
@@ -13,40 +14,7 @@ import 'package:sahashop_user/app_user/model/home_button_config.dart';
 import 'package:sahashop_user/app_user/model/post.dart';
 import 'package:sahashop_user/app_user/model/product.dart';
 import 'package:sahashop_user/app_user/screen/inventory/categories/category_screen.dart';
-
-enum TYPE_ACTION {
-  QR,
-  SCORE,
-  CALL,
-  MESSAGE_TO_SHOP,
-  VOUCHER,
-  PRODUCTS_TOP_SALES,
-  PRODUCTS_DISCOUNT,
-  PRODUCTS_NEW,
-  //////
-  LINK,
-  PRODUCT,
-  CATEGORY_PRODUCT,
-  CATEGORY_POST,
-  POST,
-}
-
-Map mapTypeAction = {
-  TYPE_ACTION.QR: "QR",
-  TYPE_ACTION.SCORE: "SCORE",
-  TYPE_ACTION.CALL: "CALL",
-  TYPE_ACTION.MESSAGE_TO_SHOP: "MESSAGE_TO_SHOP",
-  TYPE_ACTION.VOUCHER: "VOUCHER",
-  TYPE_ACTION.PRODUCTS_TOP_SALES: "PRODUCTS_TOP_SALES",
-  TYPE_ACTION.PRODUCTS_DISCOUNT: "PRODUCTS_DISCOUNT",
-  TYPE_ACTION.PRODUCTS_NEW: "PRODUCTS_NEW",
-  ////
-  TYPE_ACTION.LINK: "LINK",
-  TYPE_ACTION.PRODUCT: "PRODUCT",
-  TYPE_ACTION.CATEGORY_PRODUCT: "CATEGORY_PRODUCT",
-  TYPE_ACTION.CATEGORY_POST: "CATEGORY_POST",
-  TYPE_ACTION.POST: "POST",
-};
+import 'package:sahashop_user/app_customer/screen_can_edit/home_buttons/list_home_button_controller.dart';
 
 class HomeButtonConfigController extends GetxController {
   var checkTypeDefault = [
@@ -104,6 +72,7 @@ class HomeButtonConfigController extends GetxController {
   var currentButtons = RxList<HomeButton>();
   var currentButtonCfs = RxList<HomeButtonCf>();
   var pageType = 0.obs;
+  var waitingSave = false.obs;
 
   HomeButtonConfigController() {
     if (dataAppCustomerController.homeData?.buttons != null &&
@@ -122,6 +91,30 @@ class HomeButtonConfigController extends GetxController {
     }
 
     return false;
+  }
+
+  void onSave()  async {
+     waitingSave.value = true;
+    try {
+      var listButton = currentButtonCfs.map((element) => HomeButton(
+        typeAction: element.typeAction,
+        title: element.title,
+        value: element.value,
+        imageUrl: element.imageUrl
+      )).toList();
+      await RepositoryManager.configUiRepository.updateAppButton(listButton);
+      await dataAppCustomerController.getHomeData();
+
+      if (dataAppCustomerController.homeData?.buttons != null &&
+          dataAppCustomerController.homeData!.buttons!.list!.length > 0)
+        buttonToButtonCf(
+            currentButtons(dataAppCustomerController.homeData!.buttons!.list));
+
+    } catch (err) {
+      SahaAlert.showError(message: "Có lỗi khi cập nhật nút");
+    }
+     waitingSave.value = false;
+     SahaAlert.showSuccess(message: "Cập nhật thành công");
   }
 
   void addButton(HomeButtonCf homeButtonCf) async {
@@ -160,8 +153,11 @@ class HomeButtonConfigController extends GetxController {
                 currentButtonCfs.add(newButton);
               }
             });
+      } else {
+        currentButtonCfs.add(newButton);
       }
       return;
+
     }
 
     if (newButton.typeAction == mapTypeAction[TYPE_ACTION.LINK]) {
@@ -219,6 +215,7 @@ class HomeButtonConfigController extends GetxController {
             currentButtonCfs.add(HomeButtonCf(
                 title: element.name,
                 value: element.id.toString(),
+                typeAction: newButton.typeAction,
                 imageUrl: element.images != null && element.images!.length > 0
                     ? element.images![0].imageUrl
                     : ""));
@@ -244,6 +241,7 @@ class HomeButtonConfigController extends GetxController {
         for (var element in categories2) {
           currentButtonCfs.add(HomeButtonCf(
               title: element.name,
+              typeAction: newButton.typeAction,
               value: element.id.toString(),
               imageUrl: element.imageUrl != null ? element.imageUrl : ""));
 
@@ -262,6 +260,7 @@ class HomeButtonConfigController extends GetxController {
           for (var element in products) {
             currentButtonCfs.add(HomeButtonCf(
                 title: element.title,
+                typeAction: newButton.typeAction,
                 value: element.id.toString(),
                 imageUrl: element.imageUrl != null ? element.imageUrl : ""));
 
@@ -286,6 +285,7 @@ class HomeButtonConfigController extends GetxController {
         for (var element in categories2) {
           currentButtonCfs.add(HomeButtonCf(
               title: element.title,
+              typeAction: newButton.typeAction,
               value: element.id.toString(),
               imageUrl: element.imageUrl != null ? element.imageUrl : ""));
 

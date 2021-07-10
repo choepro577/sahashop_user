@@ -4,6 +4,7 @@ import 'package:sahashop_user/app_user/model/button.dart';
 import 'package:sahashop_user/app_user/screen/config_app/screens_config/font_type/font.dart';
 import 'package:sahashop_user/app_user/screen/config_app/screens_config/logo_type/logo.dart';
 import 'package:sahashop_user/app_user/screen/config_app/screens_config/product_screen/product_screen.dart';
+import 'screens_config/button_style/button_style.dart';
 import 'screens_config/category_product/category_product.dart';
 import 'screens_config/home_buttons/button_config.dart';
 import 'screens_config/home_buttons/home_button_screen.dart';
@@ -31,6 +32,8 @@ class UIDataConfig {
               name: "Mời chọn kiểu giao diện", editWidget: HomeScreenConfig()),
           ChildConfig(
               name: "Nút điều hướng chính", editWidget: ButtonHomeConfig()),
+          ChildConfig(
+              name: "Kiểu nút", editWidget: ButtonTypeConfig()),
         ]),
     ParentConfig(
         name: "Thành phần chính",

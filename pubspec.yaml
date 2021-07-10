@@ -68,6 +68,7 @@ dependencies:
   shared_preferences: ^2.0.5
   socket_io_client: ^1.0.1
   shimmer: ^2.0.0
+  switcher_button: ^0.0.3
   sticky_headers: ^0.2.0
   syncfusion_flutter_charts: ^19.1.69+1
   syncfusion_flutter_datepicker: ^19.1.69-beta
@@ -151,6 +152,7 @@ flutter:
     - assets/saha_loading.png
     - assets/style1/
     - assets/app_user/svg/home/
+    - assets/app_customer/home_button/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

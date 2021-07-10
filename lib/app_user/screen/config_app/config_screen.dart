@@ -9,12 +9,14 @@ import 'package:sahashop_user/app_user/components/saha_user/button/saha_button.d
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_full_screen.dart';
 import 'package:sahashop_user/app_user/const/constant.dart';
 import 'package:sahashop_user/app_user/controller/config_controller.dart';
+import '../../../saha_data_controller.dart';
 import 'ui_data_config.dart';
 
 class ConfigScreen extends StatelessWidget {
   final ConfigController configController = Get.put(ConfigController());
   final DataAppCustomerController dataAppController =
-      Get.put(DataAppCustomerController()); // create DataAppController
+      Get.put(DataAppCustomerController()); // cre
+  final SahaDataController sahaDataController = Get.find();// ate DataAppController
 
   UIDataConfig uiDataConfig = new UIDataConfig();
   @override
@@ -64,7 +66,7 @@ class ConfigScreen extends StatelessWidget {
                                 Expanded(
                                   child: Container(
                                     width:
-                                        MediaQuery.of(context).size.width * 0.2,
+                                        MediaQuery.of(context).size.width * 0.15,
                                     color: Colors.grey[200],
                                     child: ListView.builder(
                                         itemCount: uiDataConfig.UIData.length,
@@ -77,12 +79,13 @@ class ConfigScreen extends StatelessWidget {
                             ),
                             Expanded(
                               child: SingleChildScrollView(
+                                controller: sahaDataController.scrollController,
                                 child: Column(
                                   children: [
                                     Container(
                                       height: 30,
                                       width: MediaQuery.of(context).size.width *
-                                          0.78,
+                                          0.84,
                                       decoration:
                                           BoxDecoration(color: Colors.black12),
                                       child: Column(
@@ -221,8 +224,8 @@ class ConfigScreen extends StatelessWidget {
               height: 20,
             ),
             SizedBox(
-              width: 30,
-              height: 30,
+              width: 20,
+              height: 20,
               child: SvgPicture.asset(
                 "assets/icons/${parentConfig.icon}",
               ),
@@ -233,7 +236,7 @@ class ConfigScreen extends StatelessWidget {
             Text(
               parentConfig.name!,
               style: TextStyle(
-                  fontSize: 13,
+                  fontSize: 12,
                   color: configController.indexTab.value == index
                       ? bmColors
                       : Colors.black54),
