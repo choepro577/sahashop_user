@@ -1,73 +1,99 @@
 import 'package:sahashop_user/app_user/model/button_home.dart';
 import 'package:sahashop_user/app_user/model/post.dart';
 import 'package:sahashop_user/app_user/model/product.dart';
-
 import 'banner.dart';
 import 'category.dart';
 import 'discount_product_list.dart';
 
+enum HomeLayoutEnum {
+  BUTTONS,
+  CATEGORY,
+  PRODUCTS_DISCOUNT,
+  PRODUCTS_TOP_SALES,
+  PRODUCTS_NEW,
+  POSTS_NEW,
+}
+
+Map homeLayoutMap = {
+  HomeLayoutEnum.BUTTONS: "HOME_BUTTON",
+  HomeLayoutEnum.CATEGORY: "CATEGORY",
+  HomeLayoutEnum.PRODUCTS_DISCOUNT: "PRODUCTS_DISCOUNT",
+  HomeLayoutEnum.PRODUCTS_TOP_SALES: "PRODUCTS_TOP_SALES",
+  HomeLayoutEnum.PRODUCTS_NEW: "PRODUCTS_NEW",
+  HomeLayoutEnum.POSTS_NEW: "POSTS_NEW",
+};
+
 class HomeData {
   HomeData({
-    this.buttons,
+    this.listLayout,
     this.banner,
-    this.allCategory,
-    this.discountProducts,
-    this.newProduct,
-    this.bestSellProduct,
-    this.newPost,
   });
 
-  ListButtons? buttons;
+  List<LayoutHome>? listLayout;
   BannerList? banner;
-  AllCategory? allCategory;
-  DiscountProducts? discountProducts;
-  NewProduct? newProduct;
-  BestSellProduct? bestSellProduct;
-  NewPost? newPost;
 
   factory HomeData.fromJson(Map<String, dynamic> json) => HomeData(
-        buttons: ListButtons.fromJson(json["buttons"]),
-        banner: BannerList.fromJson(json["banner"]),
-        allCategory: AllCategory.fromJson(json["allCategory"]),
-        discountProducts: DiscountProducts.fromJson(json["discountProducts"]),
-        newProduct: NewProduct.fromJson(json["newProduct"]),
-        bestSellProduct: BestSellProduct.fromJson(json["bestSellProduct"]),
-        newPost: NewPost.fromJson(json["newPost"]),
-      );
+      banner: BannerList.fromJson(json["banner"]),
+      listLayout: List<LayoutHome>.from(
+          json["layouts"].map((x) => LayoutHome.fromJson(x))));
 
   Map<String, dynamic> toJson() => {
-        "buttons": buttons!.toJson(),
         "banner": banner!.toJson(),
-        "allCategory": allCategory!.toJson(),
-        "discountProducts": discountProducts!.toJson(),
-        "newProduct": newProduct!.toJson(),
-        "bestSellProduct": bestSellProduct!.toJson(),
-        "newPost": newPost!.toJson(),
+        "layouts": List<dynamic>.from(listLayout!.map((x) => x.toJson())),
       };
 }
 
-class AllCategory {
-  AllCategory({
-    this.name,
-    this.type,
-    this.list,
-  });
+class LayoutHome {
+  String? title;
+  String? model;
+  String? typeLayout;
+  String? typeActionMore;
+  bool? hide;
+  List<dynamic>? list;
 
-  String? name;
-  String? type;
-  List<Category>? list;
+  LayoutHome(
+      {this.title,
+      this.model,
+      this.typeLayout,
+      this.typeActionMore,
+      this.hide,
+      this.list});
 
-  factory AllCategory.fromJson(Map<String, dynamic> json) => AllCategory(
-        name: json["name"],
-        type: json["type"],
-        list:
-            List<Category>.from(json["list"].map((x) => Category.fromJson(x))),
-      );
+  factory LayoutHome.fromJson(Map<String, dynamic> json) {
+    var list = [];
+
+    if (json["list"] != null && json["list"] is List) {
+      if (json["model"] == "HomeButton")
+        list = List<HomeButton>.from(
+            json["list"].map((x) => HomeButton.fromJson(x)));
+
+      if (json["model"] == "Product")
+        list = List<Product>.from(json["list"].map((x) => Product.fromJson(x)));
+
+      if (json["model"] == "Category")
+        list =
+            List<Category>.from(json["list"].map((x) => Category.fromJson(x)));
+
+      if (json["model"] == "Post")
+        list = List<Post>.from(json["list"].map((x) => Post.fromJson(x)));
+
+    }
+
+    return LayoutHome(
+      title: json["title"],
+      typeLayout: json["type_layout"],
+      model: json["model"],
+      typeActionMore: json["type_action_more"],
+      hide: json["hide"],
+      list: list,
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "type": type,
-        "list": List<dynamic>.from(list!.map((x) => x.toJson())),
+        "title": title,
+        "type_layout": typeLayout,
+        "type_action_more": typeActionMore,
+        "hide": hide
       };
 }
 
@@ -87,130 +113,6 @@ class BannerList {
         type: json["type"],
         list: List<BannerItem>.from(
             json["list"].map((x) => BannerItem.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "name": name,
-        "type": type,
-        "list": List<dynamic>.from(list!.map((x) => x.toJson())),
-      };
-}
-
-class ListButtons {
-  ListButtons({
-    this.name,
-    this.type,
-    this.list,
-  });
-
-  String? name;
-  String? type;
-  List<HomeButton>? list;
-
-  factory ListButtons.fromJson(Map<String, dynamic> json) => ListButtons(
-        name: json["name"],
-        type: json["type"],
-        list: List<HomeButton>.from(
-            json["list"].map((x) => HomeButton.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "name": name,
-        "type": type,
-        "list": List<dynamic>.from(list!.map((x) => x.toJson())),
-      };
-}
-
-class NewProduct {
-  NewProduct({
-    this.name,
-    this.type,
-    this.list,
-  });
-
-  String? name;
-  String? type;
-  List<Product>? list;
-
-  factory NewProduct.fromJson(Map<String, dynamic> json) => NewProduct(
-        name: json["name"],
-        type: json["type"],
-        list: List<Product>.from(json["list"].map((x) => Product.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "name": name,
-        "type": type,
-        "list": List<dynamic>.from(list!.map((x) => x.toJson())),
-      };
-}
-
-class BestSellProduct {
-  BestSellProduct({
-    this.name,
-    this.type,
-    this.list,
-  });
-
-  String? name;
-  String? type;
-  List<Product>? list;
-
-  factory BestSellProduct.fromJson(Map<String, dynamic> json) =>
-      BestSellProduct(
-        name: json["name"],
-        type: json["type"],
-        list: List<Product>.from(json["list"].map((x) => Product.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "name": name,
-        "type": type,
-        "list": List<dynamic>.from(list!.map((x) => x.toJson())),
-      };
-}
-
-class DiscountProducts {
-  DiscountProducts({
-    this.name,
-    this.type,
-    this.list,
-  });
-
-  String? name;
-  String? type;
-  List<DiscountProductsList>? list;
-
-  factory DiscountProducts.fromJson(Map<String, dynamic> json) =>
-      DiscountProducts(
-        name: json["name"],
-        type: json["type"],
-        list: List<DiscountProductsList>.from(
-            json["list"].map((x) => DiscountProductsList.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "name": name,
-        "type": type,
-        "list": List<dynamic>.from(list!.map((x) => x.toJson())),
-      };
-}
-
-class NewPost {
-  NewPost({
-    this.name,
-    this.type,
-    this.list,
-  });
-
-  String? name;
-  String? type;
-  List<Post>? list;
-
-  factory NewPost.fromJson(Map<String, dynamic> json) => NewPost(
-        name: json["name"],
-        type: json["type"],
-        list: List<Post>.from(json["list"].map((x) => Post.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

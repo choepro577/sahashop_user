@@ -39,7 +39,7 @@ class _MainConfigThemeColorState extends State<MainConfigThemeColor> {
         ),
         PickerColorButton(
             currentColor:
-                HexColor(controller.configApp.colorMain1!),
+                HexColor(controller.configApp.colorMain1 ?? "FFFFFF"),
             onChange: changeColor)
       ],
     );

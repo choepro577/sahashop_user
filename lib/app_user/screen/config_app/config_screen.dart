@@ -227,7 +227,7 @@ class ConfigScreen extends StatelessWidget {
               width: 20,
               height: 20,
               child: SvgPicture.asset(
-                "assets/icons/${parentConfig.icon}",
+                "assets/app_user/svg/config/${parentConfig.icon}",
               ),
             ),
             SizedBox(

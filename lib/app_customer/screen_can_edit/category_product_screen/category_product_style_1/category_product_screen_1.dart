@@ -290,13 +290,13 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
             left: BorderSide(
                 color: SahaColorUtils().colorTextWithPrimaryColor(),
                 width:
-                    categoryController.categoryCurrent.value.id == category!.id
+                    categoryController.categoryCurrent.value == category!.id
                         ? 4
                         : 0),
             right: BorderSide(color: Colors.grey, width: 0.5),
             bottom: BorderSide(color: Colors.grey, width: 0.5),
           ),
-          color: categoryController.categoryCurrent.value.id == category.id
+          color: categoryController.categoryCurrent.value == category.id
               ? Colors.white
               : null,
         ),

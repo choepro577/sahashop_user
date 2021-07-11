@@ -149,6 +149,22 @@ class _CustomerService implements CustomerService {
   }
 
   @override
+  Future<PostResponse> getDetailPost(storeCode, idPost) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<PostResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/posts/$idPost',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = PostResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<AllCategoryPostResponse> getAllCategoryPost(storeCode) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

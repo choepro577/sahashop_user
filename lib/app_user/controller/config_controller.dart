@@ -78,9 +78,9 @@ class ConfigController extends GetxController {
     Get.changeTheme(currentTheme.value);
   }
 
-  Future<bool?> getAppTheme() async {
+  Future<bool?> getAppTheme({bool refresh = false}) async {
     try {
-      isLoadingGet.value = true;
+     if(refresh=false) isLoadingGet.value = true;
       var data = (await RepositoryManager.configUiRepository.getAppTheme())!;
       configApp.colorMain1 = data.colorMain1 ?? "#ff93b9b4";
       configApp.fontFamily =

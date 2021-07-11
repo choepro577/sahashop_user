@@ -38,4 +38,15 @@ class PostCustomerRepository {
       //return EXAMPLE_LIST_PRODUCT;
     }
   }
+
+  Future<Post?> getDetailPost(int? idPost) async {
+    try {
+      var res = await CustomerServiceManager()
+          .service!
+          .getDetailPost(UserInfo().getCurrentStoreCode(), idPost);
+      return res.data;
+    } catch (err) {
+      // SahaAlert.showError(message: err.toString());
+    }
+  }
 }

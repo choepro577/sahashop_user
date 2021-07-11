@@ -20,8 +20,11 @@ class NavigationController extends GetxController {
         CartScreen1(
           key: PageStorageKey<String>('str0'),
         ),
-        CategoryPostStyle1(
+        Container(
           key: PageStorageKey<String>('str1'),
+          child: CategoryPostScreen(
+
+          ),
         ),
         Container(
             key: PageStorageKey<String>('str2'),

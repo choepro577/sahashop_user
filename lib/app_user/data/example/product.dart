@@ -24,7 +24,7 @@ List<Product> EXAMPLE_LIST_PRODUCT = [
     hasInDiscount: true,
     hasInCombo: true,
     images: [
-      ImageProduct(imageUrl: "https://i.imgur.com/G4GrO0j.png"),
+      ImageProduct(imageUrl: "https://i.imgur.com/hESDRss.jpeg"),
       ImageProduct(imageUrl: "https://i.imgur.com/G4GrO0j.png"),
     ],
   ),
@@ -32,7 +32,7 @@ List<Product> EXAMPLE_LIST_PRODUCT = [
     name: "Sản phẩm 1",
     description: "Mô tả 1",
     images: [
-      ImageProduct(imageUrl: "https://i.imgur.com/G4GrO0j.png"),
+      ImageProduct(imageUrl: "https://i.imgur.com/hESDRss.jpeg"),
       ImageProduct(imageUrl: "https://i.imgur.com/G4GrO0j.png"),
     ],
     price: 200,
@@ -41,7 +41,7 @@ List<Product> EXAMPLE_LIST_PRODUCT = [
     name: "Sản phẩm 1",
     description: "Mô tả 1",
     images: [
-      ImageProduct(imageUrl: "https://i.imgur.com/G4GrO0j.png"),
+      ImageProduct(imageUrl: "https://i.imgur.com/hESDRss.jpeg"),
       ImageProduct(imageUrl: "https://i.imgur.com/G4GrO0j.png"),
     ],
     price: 200,

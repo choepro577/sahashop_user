@@ -10,6 +10,7 @@ import 'package:sahashop_user/app_user/components/saha_user/carousel/carousel_se
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
 import 'package:sahashop_user/app_user/const/constant.dart';
 import 'package:sahashop_user/app_user/controller/config_controller.dart';
+import 'package:sahashop_user/app_user/model/button_home.dart';
 import 'package:sahashop_user/app_user/model/home_button_config.dart';
 import 'package:switcher_button/switcher_button.dart';
 
@@ -52,7 +53,7 @@ class _ButtonHomeConfigState extends State<ButtonHomeConfig> {
                     width: 2,
                   ),
                   SwitcherButton(
-                    value: true,
+                    value: controller.configApp.isScrollButton!,
                     offColor: SahaPrimaryColor,
                     onColor: Colors.greenAccent,
                     onChange: (value) {
@@ -65,12 +66,15 @@ class _ButtonHomeConfigState extends State<ButtonHomeConfig> {
                 ],
               ),
             ),
+
             Spacer(),
             Align(
               alignment: Alignment.centerRight,
               child: InkWell(
                 onTap: () {
-                  Get.to(ButtonHomeConfigScreen());
+                  Get.to(ButtonHomeConfigScreen())!.then((value) {
+                    controller.getAppTheme(refresh: true);
+                  });
                 },
                 child: Container(
                   padding:
@@ -96,6 +100,9 @@ class _ButtonHomeConfigState extends State<ButtonHomeConfig> {
               ),
             ),
           ],
+        ),
+        SizedBox(
+          height: 20,
         ),
         controller.configApp.isScrollButton == true
             ? SingleChildScrollView(
@@ -129,44 +136,25 @@ class ButtonEditWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(2.0),
       child: GestureDetector(
         onTap: () {
           if (onTap != null) onTap!();
         },
         child: SizedBox(
-          width: 55,
+          width: 60,
           child: Stack(
             alignment: Alignment.bottomLeft,
             children: [
-              Column(
-                children: [
-                  Container(
-                    height: 35,
-                    width: 35,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      child: CachedNetworkImage(
-                        imageUrl: homeButton!.imageUrl ?? "",
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) => SahaLoadingContainer(),
-                        errorWidget: (context, url, error) => SahaEmptyImage(),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  AutoSizeText(
-                    homeButton!.title!,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
-                    maxLines: 3,
-                  ),
-                ],
-              ),
+             HomeButtonWidget(
+                  HomeButton(
+                    title: homeButton!.title,
+                    value: homeButton!.value,
+                    typeAction: homeButton!.typeAction,
+                    imageUrl: homeButton!.imageUrl
+                  )
+                ),
+
               Positioned(
                 top: 0,
                 right: 2,

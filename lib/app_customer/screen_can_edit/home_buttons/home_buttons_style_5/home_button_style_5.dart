@@ -16,13 +16,13 @@ class HomeButtonStyle5Widget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(0.0),
       child:  Container(
           child: Stack(
             children: [
               SizedBox(
                 width: 70,
-                height: 90,
+                height: 100,
                 child: Column(
                   children: [
                     Container(

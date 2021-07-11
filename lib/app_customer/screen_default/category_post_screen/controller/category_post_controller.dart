@@ -13,12 +13,14 @@ class CategoryPostController extends GetxController {
   var isLoadingPost = true.obs;
   var categories = RxList<CategoryPost>();
   var posts = RxList<Post>();
-  var categoryCurrent = CategoryPost().obs;
+  var categoryCurrent = (-1).obs;
 
   CategoryPostController() {
     final DataAppCustomerController dataAppCustomerController = Get.find();
-    if (dataAppCustomerController.categoryCurrent != null) {
-      categoryCurrent(dataAppCustomerController.categoryPostCurrent!);
+    if (dataAppCustomerController.inputModelPosts != null &&
+        dataAppCustomerController.inputModelPosts!.categoryPostId != -1) {
+      categoryCurrent(
+          dataAppCustomerController.inputModelPosts!.categoryPostId);
     }
   }
 
@@ -30,7 +32,7 @@ class CategoryPostController extends GetxController {
 
   void setCategoryPostCurrent(CategoryPost category) {
     isLoadingPost.value = true;
-    categoryCurrent.value = category;
+    categoryCurrent.value = category.id ?? -1;
     getPostWithCategoryPost(category.id);
   }
 
@@ -56,11 +58,8 @@ class CategoryPostController extends GetxController {
       categories(res!);
       categories.insert(0, CategoryPost(id: null, title: "Tất cả"));
 
-      if (categoryCurrent.value != null) {
-        getPostWithCategoryPost(categoryCurrent.value.id);
-      } else if (categories.length > 0) {
-        setCategoryPostCurrent(categories.toList()[0]);
-      }
+      getPostWithCategoryPost(
+          categoryCurrent.value == -1 ? null : categoryCurrent.value);
     } catch (err) {
       print(err);
       handleErrorCustomer(err);

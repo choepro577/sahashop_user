@@ -15,6 +15,7 @@ import 'package:sahashop_user/app_user/model/post.dart';
 import 'package:sahashop_user/app_user/model/product.dart';
 import 'package:sahashop_user/app_user/screen/inventory/categories/category_screen.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/home_buttons/list_home_button_controller.dart';
+import 'package:collection/collection.dart';
 
 class HomeButtonConfigController extends GetxController {
   var checkTypeDefault = [
@@ -75,10 +76,15 @@ class HomeButtonConfigController extends GetxController {
   var waitingSave = false.obs;
 
   HomeButtonConfigController() {
-    if (dataAppCustomerController.homeData?.buttons != null &&
-        dataAppCustomerController.homeData!.buttons!.list!.length > 0)
-      buttonToButtonCf(
-          currentButtons(dataAppCustomerController.homeData!.buttons!.list));
+    if (dataAppCustomerController.homeData?.listLayout != null) {
+      var button = dataAppCustomerController.homeData?.listLayout
+          ?.firstWhereOrNull((element) => element.model == 'HomeButton');
+
+      if (button != null) {
+        buttonToButtonCf(
+            currentButtons(button.list!.cast<HomeButton>()));
+      }
+    }
   }
 
   bool hasInListShow(HomeButtonCf cf) {
@@ -93,28 +99,59 @@ class HomeButtonConfigController extends GetxController {
     return false;
   }
 
-  void onSave()  async {
-     waitingSave.value = true;
+  void onReset() async {
+    waitingSave.value = true;
     try {
-      var listButton = currentButtonCfs.map((element) => HomeButton(
-        typeAction: element.typeAction,
-        title: element.title,
-        value: element.value,
-        imageUrl: element.imageUrl
-      )).toList();
+      List<HomeButton> listButton = [];
       await RepositoryManager.configUiRepository.updateAppButton(listButton);
       await dataAppCustomerController.getHomeData();
 
-      if (dataAppCustomerController.homeData?.buttons != null &&
-          dataAppCustomerController.homeData!.buttons!.list!.length > 0)
-        buttonToButtonCf(
-            currentButtons(dataAppCustomerController.homeData!.buttons!.list));
+      if (dataAppCustomerController.homeData?.listLayout != null) {
+        var button = dataAppCustomerController.homeData?.listLayout
+            ?.firstWhereOrNull((element) => element.model == 'HomeButton');
+
+        if (button != null) {
+          buttonToButtonCf(
+              currentButtons(button.list!.cast<HomeButton>()));
+        }
+      }
 
     } catch (err) {
       SahaAlert.showError(message: "Có lỗi khi cập nhật nút");
     }
-     waitingSave.value = false;
-     SahaAlert.showSuccess(message: "Cập nhật thành công");
+    waitingSave.value = false;
+    SahaAlert.showSuccess(message: "Cập nhật thành công");
+  }
+
+  void onSave() async {
+    waitingSave.value = true;
+    try {
+      var listButton = currentButtonCfs
+          .map((element) => HomeButton(
+              typeAction: element.typeAction,
+              title: element.title,
+              value: element.value,
+              imageUrl: element.imageUrl))
+          .toList();
+      await RepositoryManager.configUiRepository.updateAppButton(listButton);
+      await dataAppCustomerController.getHomeData();
+
+
+      if (dataAppCustomerController.homeData?.listLayout != null) {
+        var button = dataAppCustomerController.homeData?.listLayout
+            ?.firstWhereOrNull((element) => element.model == 'HomeButton');
+
+        if (button != null) {
+          buttonToButtonCf(
+              currentButtons(button.list!.cast<HomeButton>()));
+        }
+      }
+
+    } catch (err) {
+      SahaAlert.showError(message: "Có lỗi khi cập nhật nút");
+    }
+    waitingSave.value = false;
+    SahaAlert.showSuccess(message: "Cập nhật thành công");
   }
 
   void addButton(HomeButtonCf homeButtonCf) async {
@@ -157,7 +194,6 @@ class HomeButtonConfigController extends GetxController {
         currentButtonCfs.add(newButton);
       }
       return;
-
     }
 
     if (newButton.typeAction == mapTypeAction[TYPE_ACTION.LINK]) {

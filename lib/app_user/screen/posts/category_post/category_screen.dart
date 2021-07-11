@@ -75,7 +75,7 @@ class _CategoryPostScreenState extends State<CategoryPostScreen> {
 
                                   return ItemCategoryPostWidget(
                                     category: list[index],
-                                    isSelect: widget.isSelect,
+                                    isSelect: widget.isSelect ?? false,
                                     selected: selected,
                                     categoryController: categoryController,
                                     onTap: () {
@@ -112,7 +112,7 @@ class ItemCategoryPostWidget extends StatelessWidget {
   final CategoryPost? category;
   final Function? onTap;
   final bool? selected;
-  final bool? isSelect;
+  final bool isSelect;
   final CategoryPostController? categoryController;
 
   const ItemCategoryPostWidget(
@@ -120,7 +120,7 @@ class ItemCategoryPostWidget extends StatelessWidget {
       this.category,
       this.onTap,
       this.selected,
-      this.isSelect,
+      this.isSelect = false,
       this.categoryController})
       : super(key: key);
 
@@ -129,7 +129,7 @@ class ItemCategoryPostWidget extends StatelessWidget {
     return Container(
       child: ListTile(
         onTap: () {
-          if (isSelect!) {
+          if (isSelect) {
             onTap!();
             return;
           }
@@ -151,7 +151,7 @@ class ItemCategoryPostWidget extends StatelessWidget {
         ),
         title: Text(category!.title ?? ""),
         selected: selected!,
-        trailing: !isSelect!
+        trailing: !isSelect
             ? IconButton(
                 icon: Icon(Icons.delete_rounded),
                 onPressed: () {

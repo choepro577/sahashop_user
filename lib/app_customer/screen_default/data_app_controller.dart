@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/repository/repository_customer.dart';
+import 'package:sahashop_user/app_customer/screen_can_edit/category_product_screen/input_model_products.dart';
+import 'package:sahashop_user/app_customer/screen_can_edit/product_screen/input_model.dart';
 import 'package:sahashop_user/app_customer/screen_default/cart_screen/cart_controller.dart';
 import 'package:sahashop_user/app_customer/utils/customer_info.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
@@ -10,15 +12,15 @@ import 'package:sahashop_user/app_user/model/category_post.dart';
 import 'package:sahashop_user/app_user/model/home_data.dart';
 import 'package:sahashop_user/app_user/model/info_customer.dart';
 import 'package:sahashop_user/app_user/model/post.dart';
-import 'package:sahashop_user/app_user/model/product.dart';
 import 'package:sahashop_user/app_user/model/roll_call.dart';
-import 'category_post_screen/category_post_screen_1.dart';
-import 'search_screen/search_screen.dart';
+import 'category_post_screen/input_model_posts.dart';
+
 
 class DataAppCustomerController extends GetxController {
-  Product? productCurrent;
-  Category? categoryCurrent;
-  CategoryPost? categoryPostCurrent;
+  InputModelProduct? inputModelProduct;
+  InputModelProducts? inputModelProducts;
+  InputModelPosts? inputModelPosts;
+
   Post? postCurrent;
   var badge = Badge().obs;
   HomeData? homeData = HomeData();
@@ -101,19 +103,7 @@ class DataAppCustomerController extends GetxController {
     }
   }
 
-  void toSearchScreen() {
-    Get.to(SearchScreen(
-      searchText: "",
-    ))!
-        .then((value) {
-      FocusScope.of(Get.context!).requestFocus(FocusNode());
-    });
-  }
 
-  void toPostAllScreen({CategoryPost? categoryPost}) {
-    categoryPostCurrent = categoryPost;
-    Get.to(CategoryPostStyle1());
-  }
 
   Future<bool?> getHomeData() async {
     try {

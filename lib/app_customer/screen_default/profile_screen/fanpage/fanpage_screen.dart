@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class FanPageScreen extends StatelessWidget {
   @override
@@ -10,9 +10,12 @@ class FanPageScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("FanPage FaceBook"),
       ),
-      body: WebviewScaffold(
-        url: "https://www.facebook.com/thietkewebapp",
-      ),
+      body:  InAppWebView(
+        initialUrlRequest: URLRequest(
+          url: Uri.parse(
+              "https://www.facebook.com/thietkewebapp"),
+        ),
+      )
     );
   }
 }

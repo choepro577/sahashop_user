@@ -10,6 +10,7 @@ import 'package:sahashop_user/app_user/model/combo.dart';
 import 'package:sahashop_user/app_user/model/order.dart';
 import 'package:sahashop_user/app_user/model/product.dart';
 import 'package:sahashop_user/app_user/model/review.dart';
+import '../input_model.dart';
 
 
 class ProductController extends GetxController {
@@ -18,6 +19,7 @@ class ProductController extends GetxController {
   var isSeeMore = false.obs;
   var animateAddCart = false.obs;
   Product? productInput;
+  InputModelProduct? inputModelProduct;
   var productShow = Product().obs;
   var listProductsDiscount = RxList<Product>();
   var isLoadingProduct = false.obs;
@@ -35,20 +37,22 @@ class ProductController extends GetxController {
   CartController cartController = Get.find();
 
   ProductController() {
-    productInput = dataAppCustomerController.productCurrent;
-    if (productInput == null) {
+    inputModelProduct = dataAppCustomerController.inputModelProduct;
+    if (inputModelProduct == null || (inputModelProduct!.product == null && inputModelProduct!.productId == null)) {
       productShow.value = EXAMPLE_LIST_PRODUCT[0];
     } else {
-      productShow.value = dataAppCustomerController.productCurrent!;
+      if (inputModelProduct!.product != null) {
+        productInput= dataAppCustomerController.inputModelProduct!.product!;
+      } else {
+        productInput = Product(
+            id:  inputModelProduct!.productId
+        );
+      }
+
       getDetailProduct();
       getComboCustomer();
       getReviewProduct();
-      if (dataAppCustomerController.homeData?.discountProducts?.list != null) {
-        dataAppCustomerController.homeData!.discountProducts!.list!
-            .forEach((listDiscount) {
-          listProductsDiscount.addAll(listDiscount.products!);
-        });
-      }
+
     }
   }
 

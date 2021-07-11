@@ -39,6 +39,7 @@ import 'package:sahashop_user/app_user/model/cart.dart';
 
 import 'response-request/favorite/all_product_response.dart';
 import 'response-request/favorite/favorite_response.dart';
+import 'response-request/post/post_response.dart';
 import 'response-request/score/check_in_response.dart';
 import 'response-request/score/history_score_response.dart';
 import 'response-request/score/roll_call_response.dart';
@@ -88,6 +89,12 @@ abstract class CustomerService {
     @Path("storeCode") String? storeCode,
     @Path() int? idProduct,
   );
+
+  @GET("{storeCode}/posts/{idPost}")
+  Future<PostResponse> getDetailPost(
+      @Path("storeCode") String? storeCode,
+      @Path() int? idPost,
+      );
 
   @GET("{storeCode}/post_categories")
   Future<AllCategoryPostResponse> getAllCategoryPost(

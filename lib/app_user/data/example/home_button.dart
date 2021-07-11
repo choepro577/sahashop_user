@@ -10,6 +10,6 @@ List<HomeButton> LIST_HOME_BUTTON_EXAMPLE = [
   HomeButton(
       title: "Sản phẩm",
       typeAction: mapTypeAction[TYPE_ACTION.PRODUCT],
-    imageUrl: "https://i.imgur.com/NK1ZyTZ.png"
+    imageUrl: "https://i.imgur.com/hESDRss.jpeg"
   ),
 ];
