@@ -10,6 +10,7 @@ import 'package:sahashop_user/app_user/data/repository/review/review_repository.
 import 'package:sahashop_user/app_user/data/repository/type_of_shop/type_of_shop_repository.dart';
 
 import 'attributes/attributes_repository.dart';
+import 'badge/badge_repository.dart';
 import 'category/category_repository.dart';
 import 'config_ui/config_ui_repository.dart';
 import 'device_token/device_token_repository.dart';
@@ -45,4 +46,5 @@ class RepositoryManager {
   static AttributesRepository get attributesRepository =>
       AttributesRepository();
   static ReviewRepository get reviewRepository => ReviewRepository();
+  static BadgeRepository get badgeRepository => BadgeRepository();
 }

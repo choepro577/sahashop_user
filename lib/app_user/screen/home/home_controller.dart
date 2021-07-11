@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/app_user/data/remote/response-request/store/all_store_response.dart';
 import 'package:sahashop_user/app_user/data/repository/repository_manager.dart';
+import 'package:sahashop_user/app_user/model/badge.dart';
+import 'package:sahashop_user/app_user/model/badge_user.dart';
 import 'package:sahashop_user/app_user/utils/showcase.dart';
 import 'package:sahashop_user/app_user/utils/user_info.dart';
 
@@ -20,6 +22,8 @@ class HomeController extends GetxController {
   var checkNoStore = false.obs;
   var isFirstTimeLogin = false.obs;
   var requiredProduct = false.obs;
+
+  var badgeUser = BadgeUser().obs;
 
   Future<void> checkIsFirstTimeLogin() async {
     bool? check = ShowCase().getState();
@@ -60,6 +64,7 @@ class HomeController extends GetxController {
 
         setNewStoreCurrent(store);
         setUserIdCurrent(store);
+        getBadge();
       } else {
         checkNoStore.value = true;
         // storeCurrent = null;
@@ -71,6 +76,15 @@ class HomeController extends GetxController {
       SahaAlert.showError(message: err.toString());
       errMsg.value = err.toString();
       isLoadingStore.value = false;
+    }
+  }
+
+  Future<void> getBadge() async {
+    try {
+      var data = await RepositoryManager.badgeRepository.getBadgeUser();
+      badgeUser.value = data!.data!;
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
     }
   }
 

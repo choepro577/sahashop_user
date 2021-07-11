@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -61,19 +62,28 @@ class ConfigController extends GetxController {
   void updateTheme() {
     currentTheme.value = ThemeData(
         fontFamily: configApp.fontFamily,
-        primarySwatch:
-            MaterialColor(HexColor.getColorFromHex(configApp.colorMain1!), {
-          50: HexColor(configApp.colorMain1!).withOpacity(0.1),
-          100: HexColor(configApp.colorMain1!).withOpacity(0.2),
-          200: HexColor(configApp.colorMain1!).withOpacity(0.3),
-          300: HexColor(configApp.colorMain1!).withOpacity(0.4),
-          400: HexColor(configApp.colorMain1!).withOpacity(0.5),
-          500: HexColor(configApp.colorMain1!).withOpacity(0.6),
-          600: HexColor(configApp.colorMain1!).withOpacity(0.7),
-          700: HexColor(configApp.colorMain1!).withOpacity(0.8),
-          800: HexColor(configApp.colorMain1!).withOpacity(0.9),
-          900: HexColor(configApp.colorMain1!).withOpacity(1),
-        }));
+        appBarTheme: AppBarTheme(
+          brightness: Color(HexColor.getColorFromHex(configApp.colorMain1!))
+                      .computeLuminance() <
+                  0.5
+              ? Brightness.dark
+              : Brightness.light,
+        ),
+        primarySwatch: MaterialColor(
+          HexColor.getColorFromHex(configApp.colorMain1!),
+          {
+            50: HexColor(configApp.colorMain1!).withOpacity(0.1),
+            100: HexColor(configApp.colorMain1!).withOpacity(0.2),
+            200: HexColor(configApp.colorMain1!).withOpacity(0.3),
+            300: HexColor(configApp.colorMain1!).withOpacity(0.4),
+            400: HexColor(configApp.colorMain1!).withOpacity(0.5),
+            500: HexColor(configApp.colorMain1!).withOpacity(0.6),
+            600: HexColor(configApp.colorMain1!).withOpacity(0.7),
+            700: HexColor(configApp.colorMain1!).withOpacity(0.8),
+            800: HexColor(configApp.colorMain1!).withOpacity(0.9),
+            900: HexColor(configApp.colorMain1!).withOpacity(1),
+          },
+        ));
 
     Get.changeTheme(currentTheme.value);
   }

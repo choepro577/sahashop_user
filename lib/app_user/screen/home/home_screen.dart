@@ -1,9 +1,11 @@
 import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_user/const/constant.dart';
@@ -17,11 +19,15 @@ import 'package:sahashop_user/app_user/screen/inventory/inventory_screen.dart';
 import 'package:sahashop_user/app_user/screen/maketing_chanel/marketing_chanel_screen.dart';
 import 'package:sahashop_user/app_user/screen/order_manage/order_manage_screen.dart';
 import 'package:sahashop_user/app_user/screen/posts/screen.dart';
+import 'package:sahashop_user/app_user/screen/register_app/register_app.dart';
+import 'package:sahashop_user/app_user/screen/register_app/service_app/service_app.dart';
 import 'package:sahashop_user/app_user/screen/report/report_screen.dart';
 import 'package:sahashop_user/app_user/screen/review_manager/review_page/review_manage_screen.dart';
 import 'package:sahashop_user/app_user/utils/init/get_position_widget.dart';
+import 'package:sahashop_user/app_user/utils/rules_app.dart';
 import 'package:sahashop_user/app_user/utils/showcase.dart';
 import 'package:showcaseview/showcaseview.dart';
+import '../../../saha_data_controller.dart';
 import 'choose_store/choose_store.dart';
 import 'widget/sliver_peristent.dart';
 import 'widget/special_offers.dart';
@@ -38,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var selectedItem = 0;
 
   final HomeController homeController = Get.put(HomeController());
+  final SahaDataController sahaDataController = Get.find();
   var controllerScroll = new ScrollController();
 
   GlobalKey editProduct = GlobalKey();
@@ -88,7 +95,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final maxChildCount2 =
         (MediaQuery.of(context).size.width - (8 * 2)) / BUTTON_WIDTH;
-
 
     return Scaffold(
       appBar: PreferredSize(
@@ -160,12 +166,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         .value ==
                                                     true)
                                                   {
-                                                    if(homeController.isFirstTimeLogin.value == true) {
-                                                      ShowCaseWidget.of(context)!
-                                                          .startShowCase(
-                                                          [editProduct]),
-                                                    }
-                                                  }
+                                                    if (homeController
+                                                            .isFirstTimeLogin
+                                                            .value ==
+                                                        true)
+                                                      {
+                                                        ShowCaseWidget.of(
+                                                                context)!
+                                                            .startShowCase(
+                                                                [editProduct]),
+                                                      }
+                                                  },
+                                                homeController.getBadge(),
                                               });
                                     },
                                     child: Row(
@@ -247,15 +259,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(8))),
                               child: SingleChildScrollView(
-                                child: GridView.builder(
-                                  padding: EdgeInsets.all(8),
-                                  physics: NeverScrollableScrollPhysics(),
+                                child: new StaggeredGridView.countBuilder(
                                   shrinkWrap: true,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 4,
-                                          childAspectRatio: childAspectRatio),
-                                  itemCount: 4,
+                                  primary: false,
+                                  staggeredTileBuilder: (index) =>
+                                      StaggeredTile.fit(1),
                                   itemBuilder: (context, pos) {
                                     return [
                                       Obx(
@@ -267,29 +275,56 @@ class _HomeScreenState extends State<HomeScreen> {
                                           onTargetClick: () {
                                             Get.to(() => OrderManageScreen())!
                                                 .then((value) => {
-
-                                              ShowCaseWidget.of(context)!
-                                                  .startShowCase([
-                                                report,
-                                                chat,
-                                                review,
-                                                customer,
-                                                editSale,
-                                                post,
-                                                shipment,
-                                                payment,
-                                              ])
-                                            });
+                                                      ShowCaseWidget.of(
+                                                              context)!
+                                                          .startShowCase([
+                                                        report,
+                                                        chat,
+                                                        review,
+                                                        customer,
+                                                        editSale,
+                                                        post,
+                                                        shipment,
+                                                        payment,
+                                                      ])
+                                                    });
                                           },
-                                          child: ItemStoreView(
-                                            icon:
-                                                'assets/app_user/svg/home/order.svg',
-                                            text: 'Đơn hàng',
-                                            opacityText:
-                                                homeController.opacity.value,
-                                            press: () {
-                                              Get.to(() => OrderManageScreen());
-                                            },
+                                          child: Badge(
+                                            position:
+                                                BadgePosition(end: 9, top: 0),
+                                            padding: EdgeInsets.all(5),
+                                            toAnimate: true,
+                                            animationType:
+                                                BadgeAnimationType.slide,
+                                            badgeContent: Text(
+                                              '${homeController.badgeUser.value.ordersWaitingForProgressing}',
+                                              style: TextStyle(
+                                                  fontSize: 11,
+                                                  color: Colors.white),
+                                            ),
+                                            showBadge: homeController
+                                                            .badgeUser
+                                                            .value
+                                                            .ordersWaitingForProgressing ==
+                                                        0 ||
+                                                    homeController
+                                                            .badgeUser
+                                                            .value
+                                                            .ordersWaitingForProgressing ==
+                                                        null
+                                                ? false
+                                                : true,
+                                            child: ItemStoreView(
+                                              icon:
+                                                  'assets/app_user/svg/home/order.svg',
+                                              text: 'Đơn hàng',
+                                              opacityText:
+                                                  homeController.opacity.value,
+                                              press: () {
+                                                Get.to(
+                                                    () => OrderManageScreen());
+                                              },
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -300,19 +335,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                           description:
                                               'Báo cáo doanh thu, lượt xem, top sản phẩm,\nvv ...Theo thời gian chi tiết',
                                           onTargetClick: () {
-                                            Get.to(() => ReportScreen())!.then((value) =>
-                                            {
-                                              ShowCaseWidget.of(context)!
-                                                  .startShowCase([
-                                                chat,
-                                                review,
-                                                customer,
-                                                editSale,
-                                                post,
-                                                shipment,
-                                                payment,
-                                              ])
-                                            });
+                                            Get.to(() => ReportScreen())!
+                                                .then((value) => {
+                                                      ShowCaseWidget.of(
+                                                              context)!
+                                                          .startShowCase([
+                                                        chat,
+                                                        review,
+                                                        customer,
+                                                        editSale,
+                                                        post,
+                                                        shipment,
+                                                        payment,
+                                                      ])
+                                                    });
                                           },
                                           child: ItemStoreView(
                                             icon:
@@ -333,28 +369,53 @@ class _HomeScreenState extends State<HomeScreen> {
                                           description:
                                               'Nơi giao tiếp với khách hàng trao đổi các vấn đề liên quan',
                                           onTargetClick: () {
-                                            Get.to(() => AllMessageScreen())!.then((value) =>
-                                            {
-                                              ShowCaseWidget.of(context)!
-                                                  .startShowCase([
-                                                review,
-                                                customer,
-                                                editSale,
-                                                post,
-                                                shipment,
-                                                payment,
-                                              ])
-                                            });
+                                            Get.to(() => AllMessageScreen())!
+                                                .then((value) => {
+                                                      ShowCaseWidget.of(
+                                                              context)!
+                                                          .startShowCase([
+                                                        review,
+                                                        customer,
+                                                        editSale,
+                                                        post,
+                                                        shipment,
+                                                        payment,
+                                                      ])
+                                                    });
                                           },
-                                          child: ItemStoreView(
-                                            icon:
-                                                'assets/app_user/svg/home/chat.svg',
-                                            text: 'Chat',
-                                            opacityText:
-                                                homeController.opacity.value,
-                                            press: () {
-                                              Get.to(() => AllMessageScreen());
-                                            },
+                                          child: Badge(
+                                            position:
+                                                BadgePosition(end: 9, top: 0),
+                                            padding: EdgeInsets.all(5),
+                                            toAnimate: true,
+                                            animationType:
+                                                BadgeAnimationType.slide,
+                                            badgeContent: Text(
+                                              '${sahaDataController.unread.value}',
+                                              style: TextStyle(
+                                                  fontSize: 11,
+                                                  color: Colors.white),
+                                            ),
+                                            showBadge: sahaDataController
+                                                        .unread.value ==
+                                                    0
+                                                ? false
+                                                : true,
+                                            child: ItemStoreView(
+                                              icon:
+                                                  'assets/app_user/svg/home/chat.svg',
+                                              text: 'Chat',
+                                              opacityText:
+                                                  homeController.opacity.value,
+                                              press: () {
+                                                Get.to(() =>
+                                                        AllMessageScreen())!
+                                                    .then((value) => {
+                                                          sahaDataController
+                                                              .unread.value = 0
+                                                        });
+                                              },
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -365,33 +426,65 @@ class _HomeScreenState extends State<HomeScreen> {
                                           description:
                                               'Phê duyệt đánh giá của khách hàng về sản phẩm',
                                           onTargetClick: () {
-                                            Get.to(() => ReviewManageScreen())!.then((value) =>
-                                            {
-                                              ShowCaseWidget.of(context)!
-                                                  .startShowCase([
-                                                customer,
-                                                editSale,
-                                                post,
-                                                shipment,
-                                                payment,
-                                              ])
-                                            });
+                                            Get.to(() => ReviewManageScreen())!
+                                                .then((value) => {
+                                                      ShowCaseWidget.of(
+                                                              context)!
+                                                          .startShowCase([
+                                                        customer,
+                                                        editSale,
+                                                        post,
+                                                        shipment,
+                                                        payment,
+                                                      ])
+                                                    });
                                           },
-                                          child: ItemStoreView(
-                                            icon:
-                                                'assets/app_user/svg/home/review.svg',
-                                            text: 'Đánh giá từ khách',
-                                            opacityText:
-                                                homeController.opacity.value,
-                                            press: () {
-                                              Get.to(
-                                                  () => ReviewManageScreen());
-                                            },
+                                          child: Badge(
+                                            position:
+                                                BadgePosition(end: 9, top: 0),
+                                            padding: EdgeInsets.all(5),
+                                            toAnimate: true,
+                                            animationType:
+                                                BadgeAnimationType.slide,
+                                            badgeContent: Text(
+                                              '${homeController.badgeUser.value.reviewsNoProcess}',
+                                              style: TextStyle(
+                                                  fontSize: 11,
+                                                  color: Colors.white),
+                                            ),
+                                            showBadge: homeController
+                                                            .badgeUser
+                                                            .value
+                                                            .reviewsNoProcess ==
+                                                        0 ||
+                                                    homeController
+                                                            .badgeUser
+                                                            .value
+                                                            .reviewsNoProcess ==
+                                                        null
+                                                ? false
+                                                : true,
+                                            child: ItemStoreView(
+                                              icon:
+                                                  'assets/app_user/svg/home/review.svg',
+                                              text: 'Đánh giá từ khách',
+                                              opacityText:
+                                                  homeController.opacity.value,
+                                              press: () {
+                                                Get.to(
+                                                    () => ReviewManageScreen());
+                                              },
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ][pos];
                                   },
+                                  itemCount: 4,
+                                  crossAxisCount: 4,
+                                  mainAxisSpacing: 4,
+                                  padding: EdgeInsets.zero,
+                                  physics: NeverScrollableScrollPhysics(),
                                 ),
                               ),
                             ),
@@ -440,7 +533,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Align(
                                           alignment: Alignment.centerRight,
                                           child: InkWell(
-                                            onTap: () {},
+                                            onTap: () async {
+                                              await RulesApp().getAgreedRules();
+                                              if (RulesApp().getAgreed() ==
+                                                  false) {
+                                                Get.to(() => RegisterApp());
+                                              } else {
+                                                Get.to(() => ServiceApp());
+                                              }
+                                            },
                                             child: Row(
                                               children: [
                                                 Text(
@@ -481,15 +582,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
-                        GridView.builder(
-                          padding: EdgeInsets.all(8),
-                          physics: NeverScrollableScrollPhysics(),
+                        StaggeredGridView.countBuilder(
                           shrinkWrap: true,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: maxChildCount2.floor(),
-                                  childAspectRatio: childAspectRatio2),
-                          itemCount: 4,
+                          primary: false,
+                          staggeredTileBuilder: (index) => StaggeredTile.fit(1),
                           itemBuilder: (context, pos) {
                             return [
                               showCase(
@@ -530,16 +626,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                 description:
                                     'Quản lý tích điểm, Xem đầy đủ thông tin \n của khác hàng: tên, tuổi, các đơn hàng',
                                 onTargetClick: () {
-                                  Get.to(() => CustomerManageScreen())!.then((value) =>
-                                  {
-                                    ShowCaseWidget.of(context)!
-                                        .startShowCase([
-                                      editSale,
-                                      post,
-                                      shipment,
-                                      payment,
-                                    ])
-                                  });
+                                  Get.to(() => CustomerManageScreen())!
+                                      .then((value) => {
+                                            ShowCaseWidget.of(context)!
+                                                .startShowCase([
+                                              editSale,
+                                              post,
+                                              shipment,
+                                              payment,
+                                            ])
+                                          });
                                 },
                                 child: ItemStoreView(
                                   icon: 'assets/app_user/svg/home/customer.svg',
@@ -555,15 +651,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 description:
                                     'Tạo các chương trình khuyến mãi: Giảm giá sản phẩm, thêm, xoá, sửa các Voucher, Combo sản phẩm',
                                 onTargetClick: () {
-                                  Get.to(() => MarketingChanelScreen())!.then((value) =>
-                                  {
-                                    ShowCaseWidget.of(context)!
-                                        .startShowCase([
-                                      post,
-                                      shipment,
-                                      payment,
-                                    ])
-                                  });
+                                  Get.to(() => MarketingChanelScreen())!
+                                      .then((value) => {
+                                            ShowCaseWidget.of(context)!
+                                                .startShowCase([
+                                              post,
+                                              shipment,
+                                              payment,
+                                            ])
+                                          });
                                 },
                                 child: ItemStoreView(
                                   icon:
@@ -580,14 +676,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 description:
                                     'Đưa các thông báo, tin tức bài viết lên app của khách hàng',
                                 onTargetClick: () {
-                                  Get.to(() => PostNaviScreen())!.then((value) =>
-                                  {
-                                    ShowCaseWidget.of(context)!
-                                        .startShowCase([
-                                      shipment,
-                                      payment,
-                                    ])
-                                  });
+                                  Get.to(() => PostNaviScreen())!
+                                      .then((value) => {
+                                            ShowCaseWidget.of(context)!
+                                                .startShowCase([
+                                              shipment,
+                                              payment,
+                                            ])
+                                          });
                                 },
                                 child: ItemStoreView(
                                   icon: 'assets/app_user/svg/home/news.svg',
@@ -597,8 +693,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                 ),
                               ),
+                              ItemStoreView(
+                                icon: 'assets/app_user/svg/home/news.svg',
+                                text: 'Tin tức - Bài viết',
+                                press: () {
+                                  Get.to(() => PostNaviScreen());
+                                },
+                              ),
                             ][pos];
                           },
+                          itemCount: 5,
+                          crossAxisCount: maxChildCount2.floor(),
+                          mainAxisSpacing: 4,
+                          padding: EdgeInsets.zero,
+                          physics: NeverScrollableScrollPhysics(),
                         ),
                         Divider(
                           height: 20,
@@ -616,15 +724,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
-                        GridView.builder(
-                          padding: EdgeInsets.all(8),
-                          physics: NeverScrollableScrollPhysics(),
+                        new StaggeredGridView.countBuilder(
                           shrinkWrap: true,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: maxChildCount2.floor(),
-                                  childAspectRatio: childAspectRatio2),
-                          itemCount: 4,
+                          primary: false,
+                          staggeredTileBuilder: (index) => StaggeredTile.fit(1),
                           itemBuilder: (context, pos) {
                             return [
                               showCase(
@@ -660,15 +763,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 key: shipment,
                                 title: 'Cài đặt vận chuyển !',
                                 description:
-                                    'Tại đây Bạn cần có tài khoản của các nhà vận\nchuyển, sau đó lấy mã token thêm vào\nlà có thể sử dụng dịch vụ',
+                                    'Bạn cần có tài khoản của nhà vận chuyển, lấy mã token thêm vào là có thể sử dụng dịch vụ',
                                 onTargetClick: () {
-                                  Get.to(() => ConfigStoreAddressScreen())!.then((value) =>
-                                  {
-                                    ShowCaseWidget.of(context)!
-                                        .startShowCase([
-                                      payment,
-                                    ])
-                                  });
+                                  Get.to(() => ConfigStoreAddressScreen())!
+                                      .then((value) => {
+                                            ShowCaseWidget.of(context)!
+                                                .startShowCase([
+                                              payment,
+                                            ])
+                                          });
                                 },
                                 child: ItemStoreView(
                                   icon: 'assets/app_user/svg/home/ship.svg',
@@ -703,6 +806,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ][pos];
                           },
+                          itemCount: 4,
+                          crossAxisCount: maxChildCount2.floor(),
+                          mainAxisSpacing: 4,
+                          padding: EdgeInsets.zero,
+                          physics: NeverScrollableScrollPhysics(),
                         ),
                         Divider(
                           height: 20,
@@ -744,12 +852,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Get.to(ChooseStoreScreen())!
                                         .then((value) => {
                                               if (homeController
-                                                      .isFirstTimeLogin.value ==
-                                                  true)
+                                                          .isFirstTimeLogin
+                                                          .value ==
+                                                      true &&
+                                                  homeController
+                                                          .checkNoStore.value ==
+                                                      false)
                                                 {
                                                   ShowCaseWidget.of(context)!
                                                       .startShowCase(
-                                                          [editProduct])
+                                                          [editProduct]),
                                                 }
                                             });
                                   },
@@ -811,7 +923,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Positioned(
                             top: positionEditProduct!.getTop() -
                                 MediaQuery.of(Get.context!).padding.top,
-                            left: positionEditProduct!.getLeft(),
+                            left: positionEditProduct!.getLeft() + 10,
                             child: Container(
                               height: 90,
                               width: 110,
@@ -895,7 +1007,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Showcase(
       overlayPadding: EdgeInsets.all(5),
       key: key,
-      title: title,
+      //title: title,
       description: description,
       titleTextStyle: TextStyle(
           fontSize: 18,

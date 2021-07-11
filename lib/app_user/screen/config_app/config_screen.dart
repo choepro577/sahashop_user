@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/run_app.dart';
 import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
-import 'package:sahashop_user/app_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/app_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_full_screen.dart';
 import 'package:sahashop_user/app_user/const/constant.dart';
@@ -16,7 +15,8 @@ class ConfigScreen extends StatelessWidget {
   final ConfigController configController = Get.put(ConfigController());
   final DataAppCustomerController dataAppController =
       Get.put(DataAppCustomerController()); // cre
-  final SahaDataController sahaDataController = Get.find();// ate DataAppController
+  final SahaDataController sahaDataController =
+      Get.find(); // ate DataAppController
 
   UIDataConfig uiDataConfig = new UIDataConfig();
   @override
@@ -65,8 +65,8 @@ class ConfigScreen extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.15,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.15,
                                     color: Colors.grey[200],
                                     child: ListView.builder(
                                         itemCount: uiDataConfig.UIData.length,

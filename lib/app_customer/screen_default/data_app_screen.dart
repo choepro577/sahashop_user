@@ -26,7 +26,6 @@ class _LoadAppScreenState extends State<LoadAppScreen> {
   Future<void> loadInit(BuildContext context) async {
     await Future.delayed(Duration(seconds: 1));
     isInit = true;
-    dataAppCustomerController.getBadge();
     Get.offNamed('customer_home')!.then((value) {
       //Get.back();
     });
@@ -44,9 +43,7 @@ class _LoadAppScreenState extends State<LoadAppScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image.network(
-                widget.logo == null
-                    ? ""
-                    : configController.configApp.logoUrl!,
+                widget.logo == null ? "" : configController.configApp.logoUrl!,
                 height: 150,
                 width: 150,
               ),

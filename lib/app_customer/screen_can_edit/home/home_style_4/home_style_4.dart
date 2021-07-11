@@ -113,14 +113,27 @@ class _HomeScreenStyle4State extends State<HomeScreenStyle4> {
               physics: const ClampingScrollPhysics(),
               child: Stack(
                 children: [
-
-                  SizedBox(
-                    height: 20,
+                  Positioned(
+                    top: -200,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: 800,
+                      width: 800,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        gradient: LinearGradient(
+                            colors: [
+                              Theme.of(context).primaryColor.withOpacity(0.85),
+                              Theme.of(context).primaryColor.withOpacity(0.4),
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            stops: [0.0, 0.5],
+                            tileMode: TileMode.clamp),
+                      ),
+                    ),
                   ),
-
-
-
-
                   Column(
                     children: [
                       SizedBox(
@@ -131,9 +144,7 @@ class _HomeScreenStyle4State extends State<HomeScreenStyle4> {
                         height: 250,
                         child: BannerWidget(),
                       ),
-
-          ListHomeButtonWidget(),
-
+                      ListHomeButtonWidget(),
                       Column(
                         children: [
                           Padding(

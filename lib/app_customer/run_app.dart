@@ -6,7 +6,6 @@ import '../saha_data_controller.dart';
 import 'screen_default/data_app_controller.dart';
 import 'screen_default/data_app_screen.dart';
 
-
 void runMainAppCustomer(BuildContext context) {
   SahaDataController sahaDataController = Get.find();
 

@@ -5,56 +5,17 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/app_user/const/constant.dart';
 
 class SahaAlert {
-  static void showError({
-    String? message = "",
-    String? title = "Saha",
-  }) {
-    FLToast.Fluttertoast.showToast(msg: message!);
-    // showFlash(
-    //   duration: Duration(milliseconds: 3500),
-    //   context: Get.context!,
-    //   builder: (_, controller) {
-    //     return Flash(
-    //       controller: controller,
-    //       borderRadius: BorderRadius.circular(8.0),
-    //       borderColor: Colors.red,
-    //       behavior: FlashBehavior.fixed,
-    //       position: FlashPosition.bottom,
-    //       boxShadows: kElevationToShadow[8],
-    //       backgroundGradient: RadialGradient(
-    //         colors: [Colors.white, Colors.white],
-    //         center: Alignment.topLeft,
-    //         radius: 2,
-    //       ),
-    //       onTap: () => controller.dismiss(),
-    //       forwardAnimationCurve: Curves.easeInCirc,
-    //       reverseAnimationCurve: Curves.bounceIn,
-    //       child: DefaultTextStyle(
-    //         style: TextStyle(color: Colors.white),
-    //         child: FlashBar(
-    //           title: Text(
-    //             '$title',
-    //             style: TextStyle(color: Colors.black87),
-    //           ),
-    //           content: Text(
-    //             '$message',
-    //             style:
-    //                 TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-    //           ),
-    //           indicatorColor: Colors.red,
-    //           icon: Icon(
-    //             Icons.error,
-    //             color: Colors.red,
-    //           ),
-    //           primaryAction: TextButton(
-    //             onPressed: () => controller.dismiss(),
-    //             child: Text('Đóng'),
-    //           ),
-    //         ),
-    //       ),
-    //     );
-    //   },
-    // );
+  static void showError(
+      {String? message, Color? color, Color? textColor}) async {
+    FLToast.Fluttertoast.showToast(
+      msg: message!,
+      toastLength: FLToast.Toast.LENGTH_SHORT,
+      gravity: FLToast.ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: color ?? Colors.red,
+      textColor: textColor ?? Colors.white,
+      fontSize: 16.0,
+    );
   }
 
   static void showWarning({
@@ -103,39 +64,6 @@ class SahaAlert {
     String title = "Saha",
   }) {
     FLToast.Fluttertoast.showToast(msg: message);
-    // showFlash(
-    //   duration: Duration(milliseconds: 1000),
-    //   context: Get.context!,
-    //   builder: (_, controller) {
-    //     return Flash(
-    //       controller: controller,
-    //       position: FlashPosition.bottom,
-    //       borderRadius: BorderRadius.circular(8.0),
-    //       borderColor: Colors.blue,
-    //       boxShadows: kElevationToShadow[8],
-    //       backgroundGradient: RadialGradient(
-    //         colors: [Colors.black87, Colors.black87],
-    //         center: Alignment.topLeft,
-    //         radius: 2,
-    //       ),
-    //       onTap: () => controller.dismiss(),
-    //       forwardAnimationCurve: Curves.easeInCirc,
-    //       reverseAnimationCurve: Curves.bounceIn,
-    //       child: DefaultTextStyle(
-    //         style: TextStyle(color: Colors.white),
-    //         child: FlashBar(
-    //           title: Text('$title'),
-    //           content: Text('$message'),
-    //           indicatorColor: Colors.green,
-    //           icon: Icon(Icons.check),
-    //         ),
-    //       ),
-    //     );
-    //   },
-    // );
-
-    FLToast.Fluttertoast.showToast(msg: message);
-
     // showFlash(
     //   duration: Duration(milliseconds: 1000),
     //   context: Get.context!,
@@ -408,7 +336,8 @@ class SahaAlert {
         });
   }
 
-  static void showToastMiddle({String? message, Color? color, Color? textColor}) {
+  static void showToastMiddle(
+      {String? message, Color? color, Color? textColor}) {
     FLToast.Fluttertoast.showToast(
         msg: message!,
         toastLength: FLToast.Toast.LENGTH_SHORT,

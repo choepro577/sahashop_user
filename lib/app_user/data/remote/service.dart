@@ -41,6 +41,7 @@ import 'package:sahashop_user/app_user/data/remote/response-request/review_manag
 import 'package:sahashop_user/app_user/data/remote/response-request/review_manage/update_review_response.dart';
 
 import 'response-request/auth/register_response.dart';
+import 'response-request/badge/badge_user_response.dart';
 import 'response-request/category/all_category_response.dart';
 import 'response-request/category/create_category_response.dart';
 import 'response-request/category/delete_category_response.dart';
@@ -422,5 +423,12 @@ abstract class SahaService {
     @Path("storeCode") String? storeCode,
     @Path() int? idReview,
     @Body() Map<String, dynamic> body,
+  );
+
+  /// badge user
+
+  @GET("store/{storeCode}/badges")
+  Future<BadgeUserResponse> getBadgeUser(
+    @Path() String storeCode,
   );
 }
