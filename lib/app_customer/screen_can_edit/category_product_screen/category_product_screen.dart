@@ -5,19 +5,25 @@ import 'package:sahashop_user/app_user/controller/config_controller.dart';
 import 'package:sahashop_user/app_user/model/category.dart';
 
 import '../repository_widget_config.dart';
+import 'input_model_products.dart';
 
 class CategoryProductScreen extends StatelessWidget {
-  final Category? category;
   final bool autoSearch;
+  final int? categoryId;
+  final FILTER_PRODUCTS? filterProducts;
 
-  CategoryProductScreen({Key? key, this.category, this.autoSearch = false})
+  CategoryProductScreen(
+      {Key? key, this.filterProducts, this.categoryId, this.autoSearch = false})
       : super(key: key);
   ConfigController configController = Get.find();
   DataAppCustomerController dataAppCustomerController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    dataAppCustomerController.categoryCurrent = category;
+    dataAppCustomerController.inputModelProducts = InputModelProducts(
+      categoryId: categoryId,
+      filterProducts: filterProducts,
+    );
 
     var productsScreen;
     if (configController.configApp.categoryPageType! <

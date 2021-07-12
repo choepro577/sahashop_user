@@ -15,13 +15,13 @@ class HomeButtonStyle1Widget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(0.0),
       child:  Container(
           child: Stack(
             children: [
               SizedBox(
                 width: 70,
-                height: 90,
+                height: 100,
                 child: Column(
                   children: [
                     Container(
@@ -34,13 +34,15 @@ class HomeButtonStyle1Widget extends StatelessWidget {
                             typeAction: homeButton!.typeAction),
                       ),
                     ),
-                    SizedBox(height: 5),
+                    SizedBox(
+                      height: 5,
+                    ),
                     Expanded(
                       child: AutoSizeText(
                         homeButton!.title!,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 13),
+                            fontWeight: FontWeight.w500, fontSize: 12),
                         maxLines: 2,
                       ),
                     )

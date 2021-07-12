@@ -1,12 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_customer/screen_default/category_post_screen/input_model_posts.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
 import '../../components/product_item/post_item_widget.dart';
 import '../../screen_default/data_app_controller.dart';
-import '../../screen_default/search_screen/search_screen.dart';
-import 'package:sahashop_user/app_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_shimmer.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/app_user/controller/config_controller.dart';
@@ -14,13 +12,20 @@ import 'package:sahashop_user/app_user/model/category_post.dart';
 
 import 'controller/category_post_controller.dart';
 
-class CategoryPostStyle1 extends StatelessWidget {
+class CategoryPostScreen extends StatelessWidget {
   final ConfigController configController = Get.find();
   final DataAppCustomerController dataAppCustomerController = Get.find();
-  final CategoryPostController categoryController = CategoryPostController()
-    ..getAllCategoryPost();
+  late final CategoryPostController categoryController;
 
-  CategoryPostStyle1({Key? key}) : super(key: key);
+  final int? categoryId;
+  
+  CategoryPostScreen({this.categoryId}) {
+    dataAppCustomerController.inputModelPosts = InputModelPosts(
+      categoryPostId: categoryId
+    );
+    categoryController = CategoryPostController()
+      ..getAllCategoryPost();
+  }
 
   @override
   void dispose() {}
@@ -100,7 +105,7 @@ class CategoryPostStyle1 extends StatelessWidget {
               border: Border(
 
                   bottom: BorderSide(
-                    color: categoryController.categoryCurrent.value.id ==
+                    color: categoryController.categoryCurrent.value ==
                         category!.id
                         ? Theme.of(Get.context!).primaryColor
                         : Colors.white,
@@ -143,12 +148,12 @@ class CategoryPostStyle1 extends StatelessWidget {
                   maxLines: 3,
                   style: TextStyle(
                       fontSize: 13,
-                      fontWeight: categoryController.categoryCurrent.value.id ==
+                      fontWeight: categoryController.categoryCurrent.value ==
                               category.id
                           ? FontWeight.bold
                           : FontWeight.normal,
                       color:
-                          categoryController.categoryCurrent.value == category
+                          categoryController.categoryCurrent.value == category.id
                               ? Theme.of(Get.context!).primaryColor
                               : Colors.black54),
                   textAlign: TextAlign.center,

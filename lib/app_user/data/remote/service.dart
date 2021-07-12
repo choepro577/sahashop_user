@@ -46,6 +46,7 @@ import 'response-request/category/all_category_response.dart';
 import 'response-request/category/create_category_response.dart';
 import 'response-request/category/delete_category_response.dart';
 import 'response-request/config_ui/button_home_response.dart';
+import 'response-request/config_ui/layout_sort_response.dart';
 import 'response-request/device_token/device_token_user_response.dart';
 import 'response-request/image/upload_image_response.dart';
 import 'response-request/post/all_category_post_response.dart';
@@ -141,6 +142,10 @@ abstract class SahaService {
 
   @POST("app-theme/{storeCode}/home_buttons")
   Future<ButtonHomeResponse> updateAppButton(
+      @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
+
+  @POST("app-theme/{storeCode}/layout_sort")
+  Future<LayoutSortResponse> updateLayoutSort(
       @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);
 
   @GET("store/{storeCode}/categories")

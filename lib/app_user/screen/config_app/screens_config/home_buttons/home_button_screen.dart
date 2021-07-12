@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reorderables/reorderables.dart';
+import 'package:sahashop_user/app_user/components/saha_user/dialog/dialog.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/app_user/const/constant.dart';
 
@@ -35,9 +36,10 @@ class _ButtonHomeConfigScreenState extends State<ButtonHomeConfigScreen> {
 
     var wrap = Obx(() => Center(
           child: ReorderableWrap(
-              spacing: 8.0,
-              runSpacing: 4.0,
-              padding: const EdgeInsets.all(8),
+              spacing: 0.0,
+              runSpacing: 0.0,
+
+              padding: const EdgeInsets.all(0),
               children: homeButtonConfigController.currentButtonCfs
                   .map((button) => ButtonEditWidget(
                         isShow: true,
@@ -61,6 +63,19 @@ class _ButtonHomeConfigScreenState extends State<ButtonHomeConfigScreen> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             Spacer(),
+            InkWell(
+              onTap: () {
+                SahaDialogApp.showDialogYesNo(mess: "Bạn muốn khôi phục các nút về danh sách mặc định?",
+                onOK: () {
+                homeButtonConfigController.onReset();
+                });
+              },
+              child: Text("Khôi phục mặc định", style: TextStyle(
+                color: Colors.grey,
+                fontSize: 10
+              ),),
+            ),
+            SizedBox(width: 10,),
             InkWell(
               onTap: () {
                 homeButtonConfigController.onSave();

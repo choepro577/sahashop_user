@@ -10,18 +10,19 @@ import 'screens_config/home_buttons/button_config.dart';
 import 'screens_config/home_buttons/home_button_screen.dart';
 import 'screens_config/home_screen/home_screen.dart';
 import 'screens_config/icon_helpler/iconType/supportIcon.dart';
+import 'screens_config/layout_sort/layout_config.dart';
 import 'screens_config/main_component_config/banner_config.dart';
 import 'screens_config/main_component_config/image_carousel/select_image_carousel.dart';
 import 'screens_config/main_component_config/product_item.dart';
 
 class UIDataConfig {
   final UIData = [
-    ParentConfig(name: "Cấu hình chính", icon: "config.svg", listChildConfig: [
+    ParentConfig(name: "Cấu hình chính", icon: "main_config.svg", listChildConfig: [
       ChildConfig(name: "Theme", editWidget: MainConfigThemeColor()),
       ChildConfig(name: "Logo", editWidget: MainConfigLogo()),
       ChildConfig(name: "Kiểu chữ", editWidget: FontConfig()),
     ]),
-    ParentConfig(name: "Nút hỗ trợ", icon: "support.svg", listChildConfig: [
+    ParentConfig(name: "Nút hỗ trợ", icon: "contact.svg", listChildConfig: [
       ChildConfig(name: "Contact", editWidget: SupportIcon()),
     ]),
     ParentConfig(
@@ -34,10 +35,13 @@ class UIDataConfig {
               name: "Nút điều hướng chính", editWidget: ButtonHomeConfig()),
           ChildConfig(
               name: "Kiểu nút", editWidget: ButtonTypeConfig()),
+          ChildConfig(
+              name: "Sắp xếp bố cục", editWidget: LayoutConfig()),
+
         ]),
     ParentConfig(
         name: "Thành phần chính",
-        icon: "home.svg",
+        icon: "main_component.svg",
         listChildConfig: [
           ChildConfig(name: "Item sản phẩm", editWidget: ProductItemConfig()),
           ChildConfig(name: "Ảnh banner", editWidget: SelectCarouselImages()),
@@ -45,7 +49,7 @@ class UIDataConfig {
         ]),
     ParentConfig(
         name: "Màn hình Danh mục sản phẩm",
-        icon: "categories.svg",
+        icon: "category.svg",
         listChildConfig: [
           ChildConfig(
               name: "Mời chọn kiểu giao diện",
@@ -53,12 +57,12 @@ class UIDataConfig {
         ]),
     ParentConfig(
         name: "Màn hình sản phẩm",
-        icon: "product_screen.svg",
+        icon: "product.svg",
         listChildConfig: [
           ChildConfig(name: "", editWidget: ProductScreenConfig())
         ]),
 
-    ParentConfig(name: "Màn hình Liên hệ", icon: "bell.svg", listChildConfig: [
+    ParentConfig(name: "Màn hình Liên hệ", icon: "call.svg", listChildConfig: [
       ChildConfig(
         name: "Logo",
       )

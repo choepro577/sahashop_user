@@ -61,7 +61,7 @@ dependencies:
   fluttertoast: ^8.0.7
   flutter_rating_bar: ^4.0.0
   html_editor_enhanced: ^2.1.0
-  flutter_webview_plugin: ^0.4.0
+  flutter_inappwebview: ^5.3.2
   flutter_sms: ^2.3.1
   http_parser: ^4.0.0
   get: ^4.1.4
@@ -154,6 +154,8 @@ flutter:
     - assets/style1/
     - assets/app_user/svg/home/
     - assets/app_customer/home_button/
+    - assets/app_user/svg/config/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -180,3 +182,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+assets/app_user/svg/config/main_component:
+  svg:

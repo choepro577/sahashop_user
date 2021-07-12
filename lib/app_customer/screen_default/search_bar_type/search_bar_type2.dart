@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_customer/screen_can_edit/category_product_screen/category_product_style_1/search_text_field_screen/search_text_field_screen.dart';
 import 'package:sahashop_user/app_user/components/saha_user/iconButton/iconbtn_counter.dart';
 import 'package:sahashop_user/app_user/components/saha_user/search/seach_field.dart';
 
@@ -25,7 +26,11 @@ class SearchBarType2 extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
               child: SearchField(
                 onClick: () {
-                  dataAppCustomerController.toSearchScreen();
+                  Get.to(SearchTextFiledScreen(
+                    onSubmit: (text, categoryId) {
+
+                    },
+                  ));
                 },
               )),
         ),

@@ -9,20 +9,19 @@ import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dar
 import 'package:sahashop_user/app_customer/components/product_item/post_item_widget.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/banner/banner_widget.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/category_product_screen/category_product_screen.dart';
+import 'package:sahashop_user/app_customer/screen_can_edit/category_product_screen/category_product_style_1/search_text_field_screen/search_text_field_screen.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/home_buttons/list_home_button.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/home/home_style_4/home_style_4_controller.dart';
-import 'package:sahashop_user/app_customer/screen_can_edit/product_item_widget/product_item_widget.dart';
 import 'package:sahashop_user/app_customer/screen_default/chat_customer/chat_customer_screen.dart';
 import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
 import 'package:sahashop_user/app_customer/screen_default/member/member_screen.dart';
 import 'package:sahashop_user/app_customer/screen_default/qr_screen/qr_screen.dart';
 import 'package:sahashop_user/app_customer/screen_default/search_bar_type/search_bar_type5.dart';
-import 'package:sahashop_user/app_customer/screen_default/search_screen/search_screen.dart';
-import 'package:sahashop_user/app_user/components/saha_user/button/saha_box_button.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
 import 'package:sahashop_user/app_user/controller/config_controller.dart';
 import 'package:sahashop_user/app_user/model/category.dart';
-import 'package:sahashop_user/app_user/screen/home/widget/section_title.dart';
+
+import '../home_body.dart';
 
 class HomeScreenStyle4 extends StatefulWidget {
   const HomeScreenStyle4({Key? key}) : super(key: key);
@@ -49,17 +48,12 @@ class _HomeScreenStyle4State extends State<HomeScreenStyle4> {
         homeStyle4Controller.isTouch.value = false;
       }
     });
+
+    configController.addButton(context);
   }
 
   ConfigController configController = Get.find();
   DataAppCustomerController dataAppCustomerController = Get.find();
-
-  final List<Map<String, dynamic>> option = [
-    {"icon": "assets/icons/bill_icon.svg", "text": "Ví"},
-    {"icon": "assets/icons/gift_icon.svg", "text": "My Voucher"},
-    {"icon": "assets/icons/gift_icon.svg", "text": "Quét QR"},
-    {"icon": "assets/icons/discover.svg", "text": "Tin Tức"},
-  ];
 
   @override
   void dispose() {
@@ -69,17 +63,6 @@ class _HomeScreenStyle4State extends State<HomeScreenStyle4> {
 
   @override
   Widget build(BuildContext context) {
-    var discountProducts = [];
-
-    if (dataAppCustomerController.homeData?.discountProducts?.list != null) {
-      dataAppCustomerController.homeData!.discountProducts!.list!
-          .forEach((listDiscount) {
-        discountProducts.addAll(listDiscount.products!);
-      });
-    }
-
-    configController.addButton(context);
-
     return Scaffold(
         floatingActionButton: configController.contactButton.isNotEmpty
             ? SpeedDial(
@@ -141,216 +124,9 @@ class _HomeScreenStyle4State extends State<HomeScreenStyle4> {
                       ),
                       Container(
                         width: double.infinity,
-                        height: 250,
                         child: BannerWidget(),
                       ),
-                      ListHomeButtonWidget(),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 20.0, right: 20.0, bottom: 10),
-                            child: SectionTitle(
-                              title: "Danh mục cửa hàng",
-                              titleEnd: "Tất cả",
-                              colorTextTitle: Theme.of(context)
-                                  .primaryTextTheme
-                                  .headline6!
-                                  .color,
-                              colorTextMore: Theme.of(context)
-                                  .primaryTextTheme
-                                  .headline6!
-                                  .color,
-                              pressTitleEnd: () {
-                                Get.to(CategoryProductScreen());
-                              },
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: dataAppCustomerController
-                                              .homeData!.allCategory ==
-                                          null
-                                      ? []
-                                      : dataAppCustomerController
-                                          .homeData!.allCategory!.list!
-                                          .map(
-                                            (category) => CategoryButton(
-                                              category: category,
-                                            ),
-                                          )
-                                          .toList()),
-                            ),
-                          ),
-                        ],
-                      ),
-                      discountProducts.length == 0
-                          ? Container()
-                          : Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 20),
-                                  child: SectionTitle(
-                                      title: "Sản phẩm khuyến mãi",
-                                      titleEnd: "Xem thêm",
-                                      colorTextTitle: Theme.of(context)
-                                          .primaryTextTheme
-                                          .headline6!
-                                          .color,
-                                      colorTextMore: Theme.of(context)
-                                          .primaryTextTheme
-                                          .headline6!
-                                          .color,
-                                      pressTitleEnd: () {
-                                        Get.to(CategoryProductScreen());
-                                      }),
-                                ),
-                                SizedBox(height: 10),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    height: 260,
-                                    alignment: Alignment.topLeft,
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: discountProducts
-                                            .map((product) => ProductItemWidget(
-                                                  width: 180,
-                                                  product: product,
-                                                ))
-                                            .toList(),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                      dataAppCustomerController
-                                      .homeData?.bestSellProduct?.list ==
-                                  null ||
-                              dataAppCustomerController.homeData
-                                      ?.bestSellProduct?.list?.length ==
-                                  0
-                          ? Container()
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: 20),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 20),
-                                  child: SectionTitle(
-                                      title: "Sản phẩm bán chạy",
-                                      titleEnd: "Tất cả",
-                                      pressTitleEnd: () {
-                                        Get.to(CategoryProductScreen());
-                                      }),
-                                ),
-                                SizedBox(height: 10),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    height: 260,
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: dataAppCustomerController
-                                            .homeData!.bestSellProduct!.list!
-                                            .map((product) => ProductItemWidget(
-                                                  width: 180,
-                                                  product: product,
-                                                ))
-                                            .toList(),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                      dataAppCustomerController.homeData?.newProduct?.list ==
-                              null
-                          ? Container()
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: 10),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 20),
-                                  child: SectionTitle(
-                                      title: "Sản phẩm mới",
-                                      titleEnd: "Tất cả",
-                                      pressTitleEnd: () {
-                                        Get.to(CategoryProductScreen());
-                                      }),
-                                ),
-                                SizedBox(height: 10),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    height: 251,
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: dataAppCustomerController
-                                            .homeData!.newProduct!.list!
-                                            .map((product) => ProductItemWidget(
-                                                  width: 180,
-                                                  product: product,
-                                                ))
-                                            .toList(),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                      dataAppCustomerController.homeData?.newPost?.list ==
-                                  null ||
-                              dataAppCustomerController
-                                      .homeData!.newPost!.list!.length ==
-                                  0
-                          ? Container()
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: 10),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 20),
-                                  child: SectionTitle(
-                                      title: "Tin tức - bài viết",
-                                      titleEnd: "Tất cả",
-                                      pressTitleEnd: () {
-                                        dataAppCustomerController
-                                            .toPostAllScreen();
-                                      }),
-                                ),
-                                SizedBox(height: 10),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: Row(
-                                      children: dataAppCustomerController
-                                          .homeData!.newPost!.list!
-                                          .map((post) => PostItemWidget(
-                                                width: 300,
-                                                post: post,
-                                              ))
-                                          .toList(),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
+                      HomeBodyWidget()
                     ],
                   ),
                 ],
@@ -427,7 +203,11 @@ class _HomeScreenStyle4State extends State<HomeScreenStyle4> {
                 //width: Get.width,
                 child: SearchBarType5(
                   onSearch: () {
-                    Get.to(() => SearchScreen());
+                    Get.to(SearchTextFiledScreen(
+                      onSubmit: (text, categoryId) {
+
+                      },
+                    ));
                   },
                 ),
               ),
@@ -449,7 +229,7 @@ class CategoryButton extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           Get.to(CategoryProductScreen(
-            category: category,
+            categoryId: category!.id,
           ));
         },
         child: Stack(
@@ -480,11 +260,8 @@ class CategoryButton extends StatelessWidget {
                     category!.name!,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context)
-                            .primaryTextTheme
-                            .headline6!
-                            .color),
+                      fontWeight: FontWeight.w500,
+                    ),
                     maxLines: 2,
                   )
                 ],

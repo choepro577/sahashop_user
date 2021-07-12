@@ -15,7 +15,7 @@ class CategoryController extends GetxController {
   var isLoadingProductMore = false.obs;
   var categories = RxList<Category>();
   var products = RxList<Product>();
-  var categoryCurrent = Category().obs;
+  var categoryCurrent = (-1).obs;
   var textSearch = "".obs;
   var sortByShow = "views".obs;
   var descendingShow = true.obs;
@@ -26,8 +26,8 @@ class CategoryController extends GetxController {
 
   CategoryController() {
     final DataAppCustomerController dataAppCustomerController = Get.find();
-    if (dataAppCustomerController.categoryCurrent != null) {
-      categoryCurrent(dataAppCustomerController.categoryCurrent!);
+    if (dataAppCustomerController.inputModelProducts != null && dataAppCustomerController.inputModelProducts!.categoryId != null) {
+      categoryCurrent.value = dataAppCustomerController.inputModelProducts!.categoryId!;
     }
 
   }
@@ -38,7 +38,7 @@ class CategoryController extends GetxController {
     searchProduct(search: textSearch.value,
         sortBy: sortByShow.value,
         descending: descendingShow.value,
-      idCategory: categoryCurrent.value.id != null ? categoryCurrent.value.id : null
+      idCategory: categoryCurrent.value != -1 ? categoryCurrent.value : null
     );
   }
 
@@ -59,7 +59,7 @@ class CategoryController extends GetxController {
     var categoryId = "";
     categories.forEach((element) {
       if(idCategory != null && idCategory == element.id) {
-        categoryCurrent(element);
+        categoryCurrent(element.id);
         categoryId = idCategory.toString();
       }
     });
@@ -81,7 +81,7 @@ class CategoryController extends GetxController {
           .searchProduct(
               page: currentPage,
               search: textSearch.value,
-              idCategory:categoryCurrent.value.id == null ? "": categoryCurrent.value.id.toString(),
+              idCategory:categoryCurrent.value == -1 ? "": categoryCurrent.value.toString(),
               descending: sortBy == "price" ? descendingShow.value : true,
               sortBy: sortByShow.value))!;
    
@@ -110,7 +110,7 @@ class CategoryController extends GetxController {
 
   void setCategoryCurrent(Category category) {
     isLoadingProduct.value = true;
-    categoryCurrent.value = category;
+    categoryCurrent.value = category.id ?? -1;
   }
 
   Future<void> getAllCategory() async {

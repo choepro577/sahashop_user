@@ -69,7 +69,7 @@ class Product {
             : ProductDiscount.fromJson(json["product_discount"]),
         hasInDiscount: json["has_in_discount"],
         hasInCombo: json["has_in_combo"],
-        price: double.parse(json["price"].toString()),
+        price: double.tryParse(json["price"].toString()) ?? 0 ,
         barcode: json["barcode"],
         status: json["status"],
         quantityInStock: json["quantity_in_stock"],
@@ -81,14 +81,14 @@ class Product {
         isTopSale: json['is_top_sale'] ?? false,
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        distributes: json['distributes'] != null
+        distributes: json['distributes'] != null && json['distributes'] is List
             ? List<Distributes>.from(
                 json["distributes"].map((x) => Distributes.fromJson(x)))
-            : [],
-        attributes: json['attributes'] != null
+            : <Distributes>[],
+        attributes: json['attributes']! != null && json['attributes'] is List
             ? List<Attributes>.from(
                 json["attributes"].map((x) => Attributes.fromJson(x)))
-            : [],
+            : <Attributes>[],
         images: List<ImageProduct>.from(
             json["images"].map((x) => ImageProduct.fromJson(x))),
         categories: List<Category>.from(
