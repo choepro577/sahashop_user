@@ -59,6 +59,7 @@ import 'response-request/post/update_category_post_response.dart';
 import 'response-request/product/all_product_response.dart';
 import 'response-request/product/product_delete_response.dart';
 import 'response-request/product/product_response.dart';
+import 'response-request/profile/profile_response.dart';
 import 'response-request/store/all_store_response.dart';
 import 'response-request/store/create_store_response.dart';
 import 'response-request/store/type_store_respones.dart';
@@ -438,7 +439,17 @@ abstract class SahaService {
     @Path() String storeCode,
   );
 
-  //banner
+  ///banner
   @GET("store/home_app")
   Future<HomeHomeDataUserUserResponse> getHomeDataUser();
+
+  /// Profile User
+
+  @GET("profile")
+  Future<ProfileResponse> getProfile();
+
+  @PUT("profile")
+  Future<ProfileResponse> updateProfile(
+    @Body() Map<String, dynamic> body,
+  );
 }

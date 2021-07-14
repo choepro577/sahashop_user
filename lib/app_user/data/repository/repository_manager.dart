@@ -22,6 +22,7 @@ import 'order/order_repository.dart';
 import 'payment_method/payment_repository.dart';
 import 'post/post_repository.dart';
 import 'store/store_repository.dart';
+import 'user/user_repository.dart';
 
 class RepositoryManager {
   static ProductRepository get productRepository => ProductRepository();
@@ -49,4 +50,5 @@ class RepositoryManager {
   static ReviewRepository get reviewRepository => ReviewRepository();
   static BadgeRepository get badgeRepository => BadgeRepository();
   static HomeDataRepository get homeDataRepository => HomeDataRepository();
+  static ProfileRepository get profileRepository => ProfileRepository();
 }

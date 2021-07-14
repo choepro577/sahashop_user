@@ -8,7 +8,7 @@
         <true/>
          <key>NSAllowsArbitraryLoadsInWebContent</key>
         <true/>
-        </dict>
+    </dict>
     <key>LSApplicationQueriesSchemes</key>
     <array>
       <string>https</string>
