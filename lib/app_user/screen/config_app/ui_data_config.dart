@@ -18,8 +18,8 @@ import 'screens_config/main_component_config/product_item.dart';
 class UIDataConfig {
   final UIData = [
     ParentConfig(name: "Cấu hình chính", icon: "main_config.svg", listChildConfig: [
-      ChildConfig(name: "Theme", editWidget: MainConfigThemeColor()),
-      ChildConfig(name: "Logo", editWidget: MainConfigLogo()),
+      ChildConfig(name: "Màu sắc đặc trưng", editWidget: MainConfigThemeColor()),
+      ChildConfig(name: "Logo App của bạn", editWidget: MainConfigLogo()),
       ChildConfig(name: "Kiểu chữ", editWidget: FontConfig()),
     ]),
     ParentConfig(name: "Nút hỗ trợ", icon: "contact.svg", listChildConfig: [
@@ -30,7 +30,7 @@ class UIDataConfig {
         icon: "home.svg",
         listChildConfig: [
           ChildConfig(
-              name: "Mời chọn kiểu giao diện", editWidget: HomeScreenConfig()),
+              name: "Kiểu giao diện", editWidget: HomeScreenConfig()),
           ChildConfig(
               name: "Nút điều hướng chính", editWidget: ButtonHomeConfig()),
           ChildConfig(
@@ -43,7 +43,7 @@ class UIDataConfig {
         name: "Thành phần chính",
         icon: "main_component.svg",
         listChildConfig: [
-          ChildConfig(name: "Item sản phẩm", editWidget: ProductItemConfig()),
+          ChildConfig(name: "Sản phẩm", editWidget: ProductItemConfig()),
           ChildConfig(name: "Ảnh banner", editWidget: SelectCarouselImages()),
           ChildConfig(name: "Kiểu banner ", editWidget: BoxPionConfig()),
         ]),

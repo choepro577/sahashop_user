@@ -48,6 +48,7 @@ import 'response-request/category/delete_category_response.dart';
 import 'response-request/config_ui/button_home_response.dart';
 import 'response-request/config_ui/layout_sort_response.dart';
 import 'response-request/device_token/device_token_user_response.dart';
+import 'response-request/home_data/home_data_response.dart';
 import 'response-request/image/upload_image_response.dart';
 import 'response-request/post/all_category_post_response.dart';
 import 'response-request/post/create_category_post_response.dart';
@@ -436,4 +437,8 @@ abstract class SahaService {
   Future<BadgeUserResponse> getBadgeUser(
     @Path() String storeCode,
   );
+
+  //banner
+  @GET("store/home_app")
+  Future<HomeHomeDataUserUserResponse> getHomeDataUser();
 }

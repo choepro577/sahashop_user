@@ -57,7 +57,11 @@ class _SupportIconState extends State<SupportIcon> {
             Expanded(
               child: TextField(
                 decoration: InputDecoration(
-                  hintText: controller.configApp.phoneNumberHotline ?? "",
+                  hintText:
+                      controller.configApp.phoneNumberHotline!.toString() ==
+                              "null"
+                          ? ""
+                          : controller.configApp.phoneNumberHotline!.toString(),
                 ),
                 keyboardType: TextInputType.number,
                 onChanged: (value) {
@@ -109,7 +113,7 @@ class _SupportIconState extends State<SupportIcon> {
             Expanded(
               child: TextField(
                 decoration: InputDecoration(
-                  hintText: controller.configApp.contactEmail ?? "",
+                  hintText: controller.configApp.contactEmail!.toString() == "null" ? "" : controller.configApp.contactEmail!.toString() ,
                 ),
                 keyboardType: TextInputType.emailAddress,
                 onChanged: (value) {
@@ -167,7 +171,7 @@ class _SupportIconState extends State<SupportIcon> {
             Expanded(
               child: TextField(
                 decoration: InputDecoration(
-                  hintText: controller.configApp.idFacebook ?? "",
+                  hintText: controller.configApp.idFacebook !.toString() == "null" ? "" : controller.configApp.idFacebook!.toString() ,
                 ),
                 keyboardType: TextInputType.name,
                 onChanged: (value) {
@@ -224,7 +228,7 @@ class _SupportIconState extends State<SupportIcon> {
             Expanded(
               child: TextField(
                 decoration: InputDecoration(
-                  hintText: controller.configApp.idZalo ?? "",
+                  hintText: controller.configApp.idZalo !.toString() == "null" ? "" : controller.configApp.idZalo!.toString() ,
                 ),
                 keyboardType: TextInputType.name,
                 onChanged: (value) {

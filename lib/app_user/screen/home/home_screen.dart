@@ -19,16 +19,19 @@ import 'package:sahashop_user/app_user/screen/inventory/inventory_screen.dart';
 import 'package:sahashop_user/app_user/screen/maketing_chanel/marketing_chanel_screen.dart';
 import 'package:sahashop_user/app_user/screen/order_manage/order_manage_screen.dart';
 import 'package:sahashop_user/app_user/screen/posts/screen.dart';
+import 'package:sahashop_user/app_user/screen/register_app/expired/expired_screen.dart';
 import 'package:sahashop_user/app_user/screen/register_app/register_app.dart';
 import 'package:sahashop_user/app_user/screen/register_app/service_app/service_app.dart';
 import 'package:sahashop_user/app_user/screen/report/report_screen.dart';
 import 'package:sahashop_user/app_user/screen/review_manager/review_page/review_manage_screen.dart';
+import 'package:sahashop_user/app_user/screen/store_info/store_info.dart';
 import 'package:sahashop_user/app_user/utils/init/get_position_widget.dart';
 import 'package:sahashop_user/app_user/utils/rules_app.dart';
 import 'package:sahashop_user/app_user/utils/showcase.dart';
 import 'package:showcaseview/showcaseview.dart';
 import '../../../saha_data_controller.dart';
 import 'choose_store/choose_store.dart';
+import 'widget/section_title.dart';
 import 'widget/sliver_peristent.dart';
 import 'widget/special_offers.dart';
 
@@ -52,11 +55,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   GlobalKey order = GlobalKey();
   GlobalKey report = GlobalKey();
-  GlobalKey chat = GlobalKey();
   GlobalKey review = GlobalKey();
-  GlobalKey customer = GlobalKey();
   GlobalKey editSale = GlobalKey();
-  GlobalKey post = GlobalKey();
   GlobalKey shipment = GlobalKey();
   GlobalKey payment = GlobalKey();
 
@@ -90,9 +90,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final maxChildCount =
-        (MediaQuery.of(context).size.width - 8 * 2) / BUTTON_WIDTH;
-
     final maxChildCount2 =
         (MediaQuery.of(context).size.width - (8 * 2)) / BUTTON_WIDTH;
 
@@ -161,21 +158,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                       //onTap();
                                       Get.to(ChooseStoreScreen())!
                                           .then((value) => {
-                                                if (homeController
-                                                        .isFirstTimeLogin
-                                                        .value ==
+                                                if (ShowCase().getState()! ==
                                                     true)
                                                   {
-                                                    if (homeController
-                                                            .isFirstTimeLogin
-                                                            .value ==
-                                                        true)
-                                                      {
-                                                        ShowCaseWidget.of(
-                                                                context)!
-                                                            .startShowCase(
-                                                                [editProduct]),
-                                                      }
+                                                    ShowCaseWidget.of(context)!
+                                                        .startShowCase(
+                                                            [editProduct]),
                                                   },
                                                 homeController.getBadge(),
                                               });
@@ -224,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
 
                   // Make the initial height of the SliverAppBar larger than normal.
-                  expandedHeight: 80,
+                  expandedHeight: 95,
                 ),
                 SliverPersistentHeader(
                   pinned: true,
@@ -279,11 +267,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               context)!
                                                           .startShowCase([
                                                         report,
-                                                        chat,
                                                         review,
-                                                        customer,
                                                         editSale,
-                                                        post,
                                                         shipment,
                                                         payment,
                                                       ])
@@ -340,11 +325,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       ShowCaseWidget.of(
                                                               context)!
                                                           .startShowCase([
-                                                        chat,
                                                         review,
-                                                        customer,
                                                         editSale,
-                                                        post,
                                                         shipment,
                                                         payment,
                                                       ])
@@ -363,25 +345,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       ),
                                       Obx(
-                                        () => showCase(
-                                          key: chat,
-                                          title: 'Chat với khác hàng !',
-                                          description:
-                                              'Nơi giao tiếp với khách hàng trao đổi các vấn đề liên quan',
-                                          onTargetClick: () {
-                                            Get.to(() => AllMessageScreen())!
-                                                .then((value) => {
-                                                      ShowCaseWidget.of(
-                                                              context)!
-                                                          .startShowCase([
-                                                        review,
-                                                        customer,
-                                                        editSale,
-                                                        post,
-                                                        shipment,
-                                                        payment,
-                                                      ])
-                                                    });
+                                        () => InkWell(
+                                          onTap: () {
+                                            Get.to(() => AllMessageScreen());
                                           },
                                           child: Badge(
                                             position:
@@ -431,9 +397,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       ShowCaseWidget.of(
                                                               context)!
                                                           .startShowCase([
-                                                        customer,
                                                         editSale,
-                                                        post,
                                                         shipment,
                                                         payment,
                                                       ])
@@ -509,7 +473,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Row(
                             children: [
                               SvgPicture.asset(
-                                  'assets/app_user/svg/home/inventory.svg',
+                                  'assets/app_user/svg/home/up_store.svg',
                                   height: 30,
                                   width: 30),
                               SizedBox(
@@ -544,6 +508,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                             },
                                             child: Row(
                                               children: [
+                                                Image.asset(
+                                                  "assets/app_user/svg/home/google_play.png",
+                                                  height: 20,
+                                                  width: 20,
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Image.asset(
+                                                  "assets/app_user/svg/home/apple_store.png",
+                                                  height: 20,
+                                                  width: 20,
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
                                                 Text(
                                                   "Đăng ký ngay",
                                                   style: TextStyle(
@@ -572,15 +552,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Cửa hàng",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
+                              padding: const EdgeInsets.all(8.0),
+                              child: SectionTitle(
+                                title: "Cửa hàng",
+                              )),
                         ),
                         StaggeredGridView.countBuilder(
                           shrinkWrap: true,
@@ -601,11 +576,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               configUI,
                                               order,
                                               report,
-                                              chat,
                                               review,
-                                              customer,
                                               editSale,
-                                              post,
                                               shipment,
                                               payment,
                                             ])
@@ -620,22 +592,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                 ),
                               ),
-                              showCase(
-                                key: customer,
-                                title: 'Quản lí khách hàng !',
-                                description:
-                                    'Quản lý tích điểm, Xem đầy đủ thông tin \n của khác hàng: tên, tuổi, các đơn hàng',
-                                onTargetClick: () {
-                                  Get.to(() => CustomerManageScreen())!
-                                      .then((value) => {
-                                            ShowCaseWidget.of(context)!
-                                                .startShowCase([
-                                              editSale,
-                                              post,
-                                              shipment,
-                                              payment,
-                                            ])
-                                          });
+                              InkWell(
+                                onTap: () {
+                                  Get.to(() => CustomerManageScreen());
                                 },
                                 child: ItemStoreView(
                                   icon: 'assets/app_user/svg/home/customer.svg',
@@ -649,13 +608,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 key: editSale,
                                 title: 'Chương trình khuyến mãi !',
                                 description:
-                                    'Tạo các chương trình khuyến mãi: Giảm giá sản phẩm, thêm, xoá, sửa các Voucher, Combo sản phẩm',
+                                    'Tạo các chương trình khuyến mãi giảm giá sản phẩm, Voucher, Combo để tăng doanh số bán hàng của bạn',
                                 onTargetClick: () {
                                   Get.to(() => MarketingChanelScreen())!
                                       .then((value) => {
                                             ShowCaseWidget.of(context)!
                                                 .startShowCase([
-                                              post,
                                               shipment,
                                               payment,
                                             ])
@@ -670,20 +628,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                 ),
                               ),
-                              showCase(
-                                key: post,
-                                title: 'Tin tức - Bài viết !',
-                                description:
-                                    'Đưa các thông báo, tin tức bài viết lên app của khách hàng',
-                                onTargetClick: () {
-                                  Get.to(() => PostNaviScreen())!
-                                      .then((value) => {
-                                            ShowCaseWidget.of(context)!
-                                                .startShowCase([
-                                              shipment,
-                                              payment,
-                                            ])
-                                          });
+                              InkWell(
+                                onTap: () {
+                                  Get.to(() => PostNaviScreen());
                                 },
                                 child: ItemStoreView(
                                   icon: 'assets/app_user/svg/home/news.svg',
@@ -693,16 +640,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                 ),
                               ),
-                              ItemStoreView(
-                                icon: 'assets/app_user/svg/home/news.svg',
-                                text: 'Tin tức - Bài viết',
-                                press: () {
-                                  Get.to(() => PostNaviScreen());
-                                },
-                              ),
                             ][pos];
                           },
-                          itemCount: 5,
+                          itemCount: 4,
                           crossAxisCount: maxChildCount2.floor(),
                           mainAxisSpacing: 4,
                           padding: EdgeInsets.zero,
@@ -714,15 +654,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Cài đặt",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
+                              padding: const EdgeInsets.all(8.0),
+                              child: SectionTitle(
+                                title: "Cài đặt",
+                              )),
                         ),
                         new StaggeredGridView.countBuilder(
                           shrinkWrap: true,
@@ -734,18 +669,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 key: configUI,
                                 title: 'Chỉnh sửa giao diện !',
                                 description:
-                                    'Bây giờ bạn có thể vào chỉnh sửa giao diện app khách hàng tuỳ ý',
+                                    'Bây giờ bạn có thể vào chỉnh sửa giao diện app bán hàng của bạn tuỳ ý',
                                 onTargetClick: () {
                                   Get.toNamed("ConfigScreen")!.then((value) => {
                                         ShowCaseWidget.of(context)!
                                             .startShowCase([
                                           order,
                                           report,
-                                          chat,
                                           review,
-                                          customer,
                                           editSale,
-                                          post,
                                           shipment,
                                           payment,
                                         ])
@@ -798,6 +730,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               ItemStoreView(
+                                icon: 'assets/app_user/svg/home/expired.svg',
+                                text: 'Gia hạn sử dụng',
+                                press: () {
+                                  Get.to(() => ExpiredScreen());
+                                },
+                              ),
+                              ItemStoreView(
+                                icon: 'assets/app_user/svg/home/expired.svg',
+                                text: 'Thông tin cửa hàng',
+                                press: () {
+                                  Get.to(() => StoreInfoScreen());
+                                },
+                              ),
+                              ItemStoreView(
                                 icon: 'assets/app_user/svg/home/account.svg',
                                 text: 'Tài khoản',
                                 press: () {
@@ -806,20 +752,26 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ][pos];
                           },
-                          itemCount: 4,
+                          itemCount: 6,
                           crossAxisCount: maxChildCount2.floor(),
                           mainAxisSpacing: 4,
                           padding: EdgeInsets.zero,
                           physics: NeverScrollableScrollPhysics(),
                         ),
-                        Divider(
-                          height: 20,
+                        SizedBox(
+                          height: 15,
                         ),
-                        SpecialOffers(),
-                        Divider(
-                          height: 10,
-                        ),
-                        SpecialOffers(),
+                        Obx(() => homeController.homeData.value.banner !=
+                                    null &&
+                                homeController.homeData.value.banner!.length > 0
+                            ? SpecialOffers(
+                                listBanner:
+                                    homeController.homeData.value.banner!,
+                              )
+                            : Container()),
+                        SizedBox(
+                          height: 50,
+                        )
                       ],
                     )
                   ]),
@@ -945,11 +897,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 configUI,
                                                 order,
                                                 report,
-                                                chat,
                                                 review,
-                                                customer,
                                                 editSale,
-                                                post,
                                                 shipment,
                                                 payment,
                                               ]),

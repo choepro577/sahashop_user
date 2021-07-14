@@ -1,16 +1,15 @@
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
+import 'package:sahashop_user/app_user/data/remote/response-request/home_data/home_data_response.dart';
 import 'package:sahashop_user/app_user/data/remote/response-request/store/all_store_response.dart';
 import 'package:sahashop_user/app_user/data/repository/repository_manager.dart';
-import 'package:sahashop_user/app_user/model/badge.dart';
 import 'package:sahashop_user/app_user/model/badge_user.dart';
-import 'package:sahashop_user/app_user/utils/showcase.dart';
 import 'package:sahashop_user/app_user/utils/user_info.dart';
 
 class HomeController extends GetxController {
   HomeController() {
     loadStoreCurrent();
-    checkIsFirstTimeLogin();
+    getHomeData();
   }
 
   var preIsPortrait = false;
@@ -24,13 +23,13 @@ class HomeController extends GetxController {
   var requiredProduct = false.obs;
 
   var badgeUser = BadgeUser().obs;
+  var homeData = HomeDataUser().obs;
 
-  Future<void> checkIsFirstTimeLogin() async {
-    bool? check = ShowCase().getState();
-    if (check == null || check == true) {
-      isFirstTimeLogin.value = true;
-      print("--------$isFirstTimeLogin");
-    }
+  void getHomeData() async {
+    try {
+      var data = await RepositoryManager.homeDataRepository.getHomeData();
+      homeData(data);
+    } catch (err) {}
   }
 
   void onChangeExpansion(bool value) {

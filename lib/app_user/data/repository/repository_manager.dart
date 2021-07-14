@@ -14,6 +14,7 @@ import 'badge/badge_repository.dart';
 import 'category/category_repository.dart';
 import 'config_ui/config_ui_repository.dart';
 import 'device_token/device_token_repository.dart';
+import 'home_data/home_data_reponsitory.dart';
 import 'image/image_repository.dart';
 import 'login/login_repository.dart';
 import 'marketing_chanel/marketing_chanel_repository.dart';
@@ -47,4 +48,5 @@ class RepositoryManager {
       AttributesRepository();
   static ReviewRepository get reviewRepository => ReviewRepository();
   static BadgeRepository get badgeRepository => BadgeRepository();
+  static HomeDataRepository get homeDataRepository => HomeDataRepository();
 }

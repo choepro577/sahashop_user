@@ -25,8 +25,8 @@ class _MainConfigLogoState extends State<MainConfigLogo> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Thêm Logo",
-              style: TextStyle(fontSize: 16),
+              "Logo",
+
             ),
             SelectLogoImage(
               linkLogo: controller.configApp.logoUrl,

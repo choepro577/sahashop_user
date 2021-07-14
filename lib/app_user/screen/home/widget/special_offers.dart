@@ -1,19 +1,26 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/category_product_screen/category_product_screen.dart';
 import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
+import 'package:sahashop_user/app_user/data/remote/response-request/home_data/home_data_response.dart';
 
 import 'section_title.dart';
 
 class SpecialOffers extends StatelessWidget {
+
+  final List<BannerUser> listBanner;
+
   const SpecialOffers({
-    Key? key,
+    Key? key, required this.listBanner,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 8),
@@ -24,27 +31,27 @@ class SpecialOffers extends StatelessWidget {
             },
           ),
         ),
-        SizedBox(height: 20),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              SpecialOfferCard(
-                image: "assets/images/Image Banner 2.png",
-                category: "Smartphone",
-                numOfBrands: 18,
-                press: () {},
-              ),
-              SpecialOfferCard(
-                image: "assets/images/Image Banner 3.png",
-                category: "Fashion",
-                numOfBrands: 24,
-                press: () {},
-              ),
-              SizedBox(width: 20),
-            ],
+        SizedBox(height: 5),
+        CarouselSlider(
+          options: CarouselOptions(
+            viewportFraction: 0.99,
+            autoPlay: true,
+            autoPlayInterval: Duration(seconds: 8)
           ),
+          items: listBanner.map((i) {
+            return Builder(
+              builder: (BuildContext context) {
+                return SpecialOfferCard(
+                  image: i.imageUrl!,
+                  category: "Smartphone",
+                  numOfBrands: 18,
+                  press: () {},
+                );
+              },
+            );
+          }).toList(),
         ),
+
       ],
     );
   }
@@ -66,55 +73,19 @@ class SpecialOfferCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 20),
+      padding: EdgeInsets.only(left: 3),
       child: GestureDetector(
         onTap: press,
         child: SizedBox(
-          width: 242,
-          height: 100,
+          width: Get.width*0.99,
+
           child: ClipRRect(
             borderRadius: BorderRadius.circular(5),
-            child: Stack(
-              children: [
-                Image.asset(
-                  image,
-                  fit: BoxFit.cover,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color(0xFF343434).withOpacity(0.4),
-                        Color(0xFF343434).withOpacity(0.15),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 15.0,
-                    vertical: 10,
-                  ),
-                  child: Text.rich(
-                    TextSpan(
-                      style: TextStyle(color: Colors.white),
-                      children: [
-                        TextSpan(
-                          text: "$category\n",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        TextSpan(text: "$numOfBrands Brands")
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+            child:  CachedNetworkImage(
+              fit: BoxFit.cover,
+              imageUrl: image,
             ),
+
           ),
         ),
       ),

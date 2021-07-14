@@ -33,7 +33,6 @@ class _FontConfigState extends State<FontConfig> {
           children: [
             Text(
               "Cỡ chữ tiêu đề",
-              style: TextStyle(fontSize: 16),
             ),
             DropDownButtonCustom(
               value: fontTitle,

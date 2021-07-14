@@ -22,7 +22,7 @@ class HomeButtonStyle5Widget extends StatelessWidget {
             children: [
               SizedBox(
                 width: 70,
-                height: 100,
+                height: 90,
                 child: Column(
                   children: [
                     Container(

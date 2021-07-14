@@ -167,7 +167,7 @@ class ListHomeButtonWidget extends StatelessWidget {
                 itemCount: listButtons.length,
                 crossAxisCount:
                     (MediaQuery.of(context).size.width / WIDTH_BUTTON).floor(),
-                mainAxisSpacing: 4,
+                mainAxisSpacing: 0,
                 padding: EdgeInsets.zero,
                 physics: NeverScrollableScrollPhysics(),
               );

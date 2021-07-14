@@ -32,6 +32,7 @@ class LayoutSortChangeController extends GetxController {
     try {
       var list = await RepositoryManager.configUiRepository
           .updateLayoutSort(listLayout.toList());
+      await dataAppCustomerController.getHomeData();
       listLayout(list!);
 
       SahaAlert.showError(message: "Đã cập nhật");

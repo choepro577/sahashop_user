@@ -6,10 +6,13 @@ import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dar
 import 'package:sahashop_user/app_customer/components/product_item/post_item_widget.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/category_product_screen/category_product_screen.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/home_buttons/list_home_button.dart';
+import 'package:sahashop_user/app_customer/screen_can_edit/home_buttons/list_home_button_controller.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/product_item_widget/product_item_widget.dart';
 import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
+import 'package:sahashop_user/app_customer/utils/action_tap.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
 import 'package:sahashop_user/app_user/controller/config_controller.dart';
+import 'package:sahashop_user/app_user/model/button_home.dart';
 import 'package:sahashop_user/app_user/model/category.dart';
 import 'package:sahashop_user/app_user/model/discount_product_list.dart';
 import 'package:sahashop_user/app_user/model/post.dart';
@@ -23,9 +26,18 @@ class HomeBodyWidget extends StatelessWidget {
     List<Widget> list = [];
     if (dataAppCustomerController.homeData!.listLayout != null) {
       for (var layout in dataAppCustomerController.homeData!.listLayout!) {
-        list.add(layout.model == "HomeButton"&& layout.hide == false
-            ? ListHomeButtonWidget()
-            : Column(
+
+        if(layout.hide == true || layout.list!.length == 0) {
+          list.add( Container());
+          continue;
+        }
+
+        list.add(layout.model == "HomeButton"
+            ? Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: ListHomeButtonWidget(),
+            )
+            :Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 10),
@@ -39,7 +51,7 @@ class HomeBodyWidget extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 10),
-                  if (layout.model == "Product"&& layout.hide == false)
+                  if (layout.model == "Product")
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
@@ -58,7 +70,7 @@ class HomeBodyWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                  if (layout.model == "Category" && layout.hide == false)
+                  if (layout.model == "Category")
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
@@ -75,7 +87,7 @@ class HomeBodyWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                  if (layout.model == "Post" && layout.hide == false)
+                  if (layout.model == "Post")
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: SingleChildScrollView(
@@ -90,7 +102,8 @@ class HomeBodyWidget extends StatelessWidget {
                               .toList(),
                         ),
                       ),
-                    )
+                    ),
+
                 ],
               ));
       }
@@ -132,7 +145,7 @@ class SectionTitle extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 15,
             fontWeight: FontWeight.w600,
             color: colorTextTitle ?? Colors.black,
           ),
@@ -160,56 +173,21 @@ class CategoryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: GestureDetector(
-        onTap: () {
-          Get.to(CategoryProductScreen(
-            categoryId: category!.id,
-          ));
-        },
-        child: Stack(
-          children: [
-            SizedBox(
-              width: 80,
-              child: Column(
-                children: [
-                  Container(
-                    height: 55,
-                    width: 55,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Theme.of(context).primaryColor,
-                      border: Border.all(
-                        color: Theme.of(context).primaryColor,
-                        width: 0.5,
-                      ),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      child: CachedNetworkImage(
-                        height: 55,
-                        width: 55,
-                        imageUrl: category!.imageUrl ?? "",
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) => SahaLoadingContainer(),
-                        errorWidget: (context, url, error) => SahaEmptyImage(),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  AutoSizeText(
-                    category!.name!,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                    maxLines: 2,
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
+
+    return  InkWell(
+      onTap: () {
+        ActionTap.onTap(mapTypeAction[TYPE_ACTION.CATEGORY_PRODUCT], category!.id.toString(),);
+      },
+      child: HomeButtonWidget(
+          HomeButton(
+              title: category!.name!,
+              value: category!.id.toString(),
+              typeAction:  mapTypeAction[TYPE_ACTION.CATEGORY_PRODUCT],
+              imageUrl: category!.imageUrl
+          )
       ),
     );
+
+
   }
 }

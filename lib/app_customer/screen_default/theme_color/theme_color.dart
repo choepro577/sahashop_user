@@ -34,8 +34,8 @@ class _MainConfigThemeColorState extends State<MainConfigThemeColor> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          "Theme Color",
-          style: TextStyle(fontSize: 17),
+          "Màu",
+
         ),
         PickerColorButton(
             currentColor:

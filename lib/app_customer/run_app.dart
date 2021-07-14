@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_user/controller/config_controller.dart';
 
@@ -16,6 +17,11 @@ void runMainAppCustomer(BuildContext context) {
 //  sahaDataController.changeStatusPreview(false);
 
   sahaDataController.changeStatusPreview(true);
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
 
   Get.to(
     () => LoadAppScreen(
