@@ -21,13 +21,10 @@ class ShowCase {
 
   Future<bool?> getStateShowCase() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool? isFirstTimeShowCase =  prefs.getBool(SHOW_CASE);
-    if (isFirstTimeShowCase == null || isFirstTimeShowCase == true) {
-      this.isFirstTime = true;
-    } else {
-      this.isFirstTime = false;
-    }
-    print("Check  load $isFirstTime");
+    bool? isFirstTimeShowCase =  prefs.getBool(SHOW_CASE) ?? false;
+
+    this.isFirstTime = isFirstTimeShowCase;
+
     return isFirstTimeShowCase;
   }
 

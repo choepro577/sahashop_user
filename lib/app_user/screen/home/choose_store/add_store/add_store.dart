@@ -53,135 +53,253 @@ class _AddStoreState extends State<AddStore> {
         ),
         titleText: "Thêm cửa hàng",
       ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 50,
-                width: MediaQuery.of(context).size.width,
-              ),
-              Text(
-                "Thông tin cửa hàng",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            Theme.of(context).primaryColor,
+            Theme.of(context).primaryColor.withOpacity(0.4),
+          ],
+        )),
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 50,
+                  width: MediaQuery.of(context).size.width,
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Xin quý khách nhập thông tin cửa hàng \nđể khởi tạo",
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey[600]),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              SahaTextField(
-                controller: textEditingControllerNameShop,
-                onChanged: (value) {},
-                validator: (value) {
-                  if (value!.length < 6) {
-                    return 'Tên cửa hàng chứa 6 kí tự trở lên';
-                  }
-                  return null;
-                },
-                textInputType: TextInputType.name,
-                obscureText: false,
-                labelText: "Tên cửa hàng",
-                hintText: "Nhập tên cửa hàng",
-                icon: Icon(Icons.lock),
-              ),
-              SahaTextField(
-                controller: textEditingControllerAddress,
-                onChanged: (value) {},
-                validator: (value) {
-                  if (value!.length < 6) {
-                    return 'mật khẩu chứa hơn 6 kí tự';
-                  }
-                  return null;
-                },
-                textInputType: TextInputType.emailAddress,
-                obscureText: false,
-                labelText: "Địa chỉ cửa hàng",
-                hintText: "Nhập địa chỉ cửa hàng",
-                icon: Icon(Icons.lock),
-              ),
-              SahaTextField(
-                controller: textEditingControllerStoreCode,
-                onChanged: (value) {},
-                validator: (value) {
-                  if (value!.length < 2) {
-                    return 'Địa chỉ online chứa 2 kí tự trở lên';
-                  }
-                  return null;
-                },
-                textInputType: TextInputType.emailAddress,
-                obscureText: false,
-                suffix: "sahashop.net",
-                labelText: "Địa chỉ cửa hàng Online",
-                hintText: "Nhập địa chỉ cửa hàng Online",
-                icon: Icon(Icons.lock),
-              ),
-              Obx(
-                () => DropdownButton<Map<String, String?>>(
-                  focusColor: Colors.white,
-                  value: chooseDropDownValue,
-                  //elevation: 5,
-                  style: TextStyle(color: Colors.white),
-                  iconEnabledColor: Colors.black,
-                  items: addStoreController.mapTypeShop
-                      .map<DropdownMenuItem<Map<String, String?>>>(
-                          (Map<String, String?> value) {
-                    return DropdownMenuItem<Map<String, String?>>(
-                      value: value,
-                      child: Text(
-                        "${value.values.first}",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    );
-                  }).toList(),
-                  hint: Text(
-                    "Chọn loại cửa hàng kinh doanh",
+                Center(
+                  child: Text(
+                    "Thông tin cửa hàng",
                     style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500),
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
-                  onChanged: (Map<String, String?>? value) {
-                    setState(() {
-                      chooseDropDownValue = value;
-                      _chosenValue = value!.keys.first;
-                    });
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: Text(
+                    "Xin quý khách nhập thông tin cửa hàng \nđể khởi tạo",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Text("Tên cửa hàng"),
+                    )),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: TextFormField(
+                    autofocus: false,
+                    controller: textEditingControllerNameShop,
+                    textCapitalization: TextCapitalization.sentences,
+                    style: TextStyle(fontSize: 15.0, color: Colors.black),
+                    validator: (value) {
+                      if (value!.length == 0) {
+                        return 'Tên cửa hàng chứa không được để trống';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Mời nhập tên cửa hàng',
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: const EdgeInsets.only(
+                          left: 14.0, bottom: 6.0, top: 8.0),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.teal),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                  ),
+                ),
+                Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Text("Địa chỉ"),
+                    )),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: TextFormField(
+                    autofocus: false,
+                    controller: textEditingControllerAddress,
+                    textCapitalization: TextCapitalization.sentences,
+                    style: TextStyle(fontSize: 15.0, color: Colors.black),
+                    validator: (value) {
+                      if (value!.length == 0) {
+                        return 'Địa chỉ cửa hàng không được để trống';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Mời nhập địa chỉ cửa hàng',
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: const EdgeInsets.only(
+                          left: 14.0, bottom: 6.0, top: 8.0),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.teal),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                  ),
+                ),
+                Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Text("Mã cửa hàng"),
+                    )),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: TextFormField(
+                    autofocus: false,
+                    controller: textEditingControllerStoreCode,
+                    textCapitalization: TextCapitalization.none,
+                    style: TextStyle(fontSize: 15.0, color: Colors.black),
+                    validator: (value) {
+                      if (value!.length < 2) {
+                        return 'Mã cửa hàng chứa 2 kí tự trở lên';
+                      }
+                      if (GetUtils.isAlphabetOnly(value.substring(0,1)) == false) {
+                        return 'Phải bắt đầu bằng chữ';
+                      }
+
+                      if (RegExp(r'[!@#<>?":_`~;[\]\\|=+)(*&^%-]').hasMatch(value)) {
+                        return 'Không được chứa ký tự đặc biệt';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      suffix: Text(".sahashop.net        "),
+                      border: InputBorder.none,
+                      hintText: 'Mời nhập địa chỉ cửa hàng',
+                      filled: true,
+                      fillColor: Colors.white,
+                      helperText: "Mã này là tên miền truy cập trang web bán hàng",
+                      contentPadding: const EdgeInsets.only(
+                          left: 14.0, bottom: 6.0, top: 8.0),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.teal),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                  ),
+                ),
+                Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Text("Lĩnh vực"),
+                    )),
+                Obx(
+                  () => addStoreController.mapTypeShop.length ==0 ?
+                  Container() :
+                  Container(
+                    width: Get.width,
+                    color: Colors.white,
+                    margin: EdgeInsets.all(10),
+                    padding: EdgeInsets.only(left: 10),
+                    child: DropdownButton<Map<String, String?>>(
+                      focusColor: Colors.white,
+                      value: chooseDropDownValue,
+                      //elevation: 5,
+                      style: TextStyle(color: Colors.white),
+                      iconEnabledColor: Colors.black,
+                      items: addStoreController.mapTypeShop
+                          .map<DropdownMenuItem<Map<String, String?>>>(
+                              (Map<String, String?> value) {
+                        return DropdownMenuItem<Map<String, String?>>(
+                          value: value,
+                          child: Text(
+                            "${value.values.first}",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        );
+                      }).toList(),
+                      hint: Text(
+                        "Chọn loại cửa hàng kinh doanh",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      onChanged: (Map<String, String?>? value) {
+                        setState(() {
+                          FocusScope.of(context).requestFocus(new FocusNode());
+                          chooseDropDownValue = value;
+                          _chosenValue = value!.keys.first;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                ElevatedButton(
+
+                  style:ButtonStyle(
+                    backgroundColor:MaterialStateProperty.all(Colors.white)
+                  ),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      KeyboardUtil.hideKeyboard(context);
+                      addStoreController.createShop(
+                          textEditingControllerNameShop.text,
+                          textEditingControllerAddress.text,
+                          _chosenValue,
+                          textEditingControllerStoreCode.text);
+                    }
                   },
+                  child: Container(
+                    width: 150,
+                    height: 40,
+                    child: Center(
+                      child: Text(
+                        "Tạo",
+                        style: TextStyle(fontSize: 15,
+                        color: Colors.black),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              TextButton(
-                // signUpController.shopPhones.toString()
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    KeyboardUtil.hideKeyboard(context);
-                    addStoreController.createShop(
-                        textEditingControllerNameShop.text,
-                        textEditingControllerAddress.text,
-                        _chosenValue,
-                        textEditingControllerStoreCode.text);
-                  }
-                },
-                style: ButtonStyle(),
-                child: Text(
-                  "Continue",
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              SizedBox(height: 40)
-            ],
+                SizedBox(height: 40)
+              ],
+            ),
           ),
         ),
       ),

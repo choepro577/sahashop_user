@@ -57,40 +57,41 @@ class MarketingChanelScreen extends StatelessWidget {
           Divider(
             height: 1,
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: InkWell(
+          InkWell(
               onTap: () {
                 Get.to(() => MyVoucherScreen());
               },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        height: 30,
-                        width: 30,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFF5F6F9),
-                          shape: BoxShape.circle,
+              child:  Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          height: 30,
+                          width: 30,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFF5F6F9),
+                            shape: BoxShape.circle,
+                          ),
+                          child: SvgPicture.asset(
+                            "assets/icons/coupon.svg",
+                            color: Theme.of(context).primaryColor,
+                          ),
                         ),
-                        child: SvgPicture.asset(
-                          "assets/icons/coupon.svg",
-                          color: Theme.of(context).primaryColor,
+                        SizedBox(
+                          width: 10,
                         ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text("Mã giảm giá của tôi")
-                    ],
-                  ),
-                  Icon(Icons.arrow_forward_ios_rounded)
-                ],
+                        Text("Mã giảm giá của tôi")
+                      ],
+                    ),
+                    Icon(Icons.arrow_forward_ios_rounded)
+                  ],
+                ),
               ),
             ),
-          ),
+
           Divider(
             height: 1,
           ),

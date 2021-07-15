@@ -5,7 +5,7 @@ import 'package:sahashop_user/app_user/data/remote/saha_service_manager.dart';
 import '../handle_error.dart';
 
 class StoreRepository {
-  Future<DataCreateShop?> create(String? storeCode,
+  Future<Store?> create(String? storeCode,
       {String? nameShop, String? address, String? idTypeShop, String? code}) async {
     try {
       var res = await SahaServiceManager().service!.createStore({
@@ -14,6 +14,31 @@ class StoreRepository {
         "address": address,
         "id_type_of_store": idTypeShop
       });
+      return res.data;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  Future<Store?> update(String? storeCode,
+      {String? nameShop, String? address, int? idTypeShop, String? logoUrl}) async {
+    try {
+      var res = await SahaServiceManager().service!.updateStore(storeCode, {
+        "name": nameShop,
+        "logo_url": logoUrl,
+        "address": address,
+        "id_type_of_store": idTypeShop
+      });
+      return res.data;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  Future<Store?> getOne(String? storeCode,
+      {String? nameShop, String? address, int? idTypeShop, String? logoUrl}) async {
+    try {
+      var res = await SahaServiceManager().service!.getStore(storeCode);
       return res.data;
     } catch (err) {
       handleError(err);

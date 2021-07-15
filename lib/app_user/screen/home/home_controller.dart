@@ -4,7 +4,10 @@ import 'package:sahashop_user/app_user/data/remote/response-request/home_data/ho
 import 'package:sahashop_user/app_user/data/remote/response-request/store/all_store_response.dart';
 import 'package:sahashop_user/app_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/app_user/model/badge_user.dart';
+import 'package:sahashop_user/app_user/utils/date_utils.dart';
 import 'package:sahashop_user/app_user/utils/user_info.dart';
+
+enum ExpiredEnum { OutOfDate, ExpiryDate }
 
 class HomeController extends GetxController {
   HomeController() {
@@ -24,6 +27,37 @@ class HomeController extends GetxController {
 
   var badgeUser = BadgeUser().obs;
   var homeData = HomeDataUser().obs;
+
+  void onHandleAfterChangeStore() {
+    getBadge();
+  }
+
+  ExpiredEnum checkExpired() {
+    if (getDayExpired() > 0) {
+      return ExpiredEnum.ExpiryDate;
+    } else {
+      return ExpiredEnum.OutOfDate;
+    }
+  }
+
+  DateTime getDateTimeExpired() {
+    var dateExpired = SahaDateUtils()
+        .getUtcDateTimeFormString(storeCurrent!.value.dateExpried ?? DateTime.now().toUtc().toString());
+    return dateExpired;
+  }
+
+  int getDayExpired() {
+    var now = DateTime.now()..hour;
+    now = DateTime(now.year, now.month, now.day);
+
+    var days = Duration.zero;
+    if (storeCurrent!.value.dateExpried != null) {
+      var dateExpired = SahaDateUtils()
+          .getUtcDateTimeFormString(storeCurrent!.value.dateExpried!);
+      days = dateExpired.difference(now);
+    }
+    return days.inDays;
+  }
 
   void getHomeData() async {
     try {
@@ -63,7 +97,7 @@ class HomeController extends GetxController {
 
         setNewStoreCurrent(store);
         setUserIdCurrent(store);
-        getBadge();
+        onHandleAfterChangeStore();
       } else {
         checkNoStore.value = true;
         // storeCurrent = null;

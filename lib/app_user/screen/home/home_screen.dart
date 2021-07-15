@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/app_user/const/constant.dart';
 import 'package:sahashop_user/app_user/screen/account/account.dart';
 import 'package:sahashop_user/app_user/screen/chat/chat_screen/all_message_user_screen.dart';
@@ -155,23 +156,30 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      //onTap();
-                                      Get.to(ChooseStoreScreen())!
-                                          .then((value) => {
-                                                if (ShowCase().getState()! ==
-                                                    true)
-                                                  {
-                                                    ShowCaseWidget.of(context)!
-                                                        .startShowCase(
-                                                            [editProduct]),
-                                                  },
-                                                homeController.getBadge(),
-                                              });
+                                      if (homeController
+                                              .storeCurrent?.value.name ==
+                                          null) {
+                                        Get.to(ChooseStoreScreen())!
+                                            .then((value) => {
+                                                  if (ShowCase().getState()! ==
+                                                      true)
+                                                    {
+                                                      ShowCaseWidget.of(
+                                                              context)!
+                                                          .startShowCase(
+                                                              [editProduct]),
+                                                    },
+                                                  homeController
+                                                      .onHandleAfterChangeStore(),
+                                                });
+                                      } else {
+                                        Get.to(StoreInfoScreen());
+                                      }
                                     },
-                                    child: Row(
-                                      children: [
-                                        Obx(
-                                          () => Text(
+                                    child: Obx(
+                                      () => Row(
+                                        children: [
+                                          Text(
                                             homeController.storeCurrent?.value
                                                         .name ==
                                                     null
@@ -182,24 +190,35 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 color: Colors.white,
                                                 fontSize: 17),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          width: 15,
-                                        ),
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(50.0),
-                                          child: CachedNetworkImage(
-                                              height: 40,
-                                              width: 40,
-                                              fit: BoxFit.cover,
-                                              imageUrl:
-                                                  "https://pdp.edu.vn/wp-content/uploads/2021/01/hinh-anh-girl-xinh-toc-ngan-de-thuong.jpg",
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      Icon(Icons.error)),
-                                        ),
-                                      ],
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          Container(
+                                            height: 50,
+                                            width: 50,
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                border: Border.all(
+                                                    color: Colors.grey[200]!)),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(50.0),
+                                              child: CachedNetworkImage(
+                                                  height: 40,
+                                                  width: 40,
+                                                  fit: BoxFit.cover,
+                                                  imageUrl: homeController
+                                                          .storeCurrent!
+                                                          .value
+                                                          .logoUrl ??
+                                                      "",
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          SahaEmptyImage()),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -460,319 +479,411 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SliverList(
                   delegate: SliverChildListDelegate([
-                    Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(
-                              left: 15, right: 15, bottom: 8, top: 8),
-                          margin: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                              color: Colors.deepOrange.withOpacity(0.2),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5))),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                  'assets/app_user/svg/home/up_store.svg',
-                                  height: 30,
-                                  width: 30),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Shop của bạn chưa có trên Google Play và Apple Store? Hãy đăng ký để đưa ứng dụng lên ",
-                                      style: TextStyle(
-                                          color: Colors.grey[800],
-                                          fontSize: 12),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.centerRight,
-                                          child: InkWell(
-                                            onTap: () async {
-                                              await RulesApp().getAgreedRules();
-                                              if (RulesApp().getAgreed() ==
-                                                  false) {
-                                                Get.to(() => RegisterApp());
-                                              } else {
-                                                Get.to(() => ServiceApp());
-                                              }
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Image.asset(
-                                                  "assets/app_user/svg/home/google_play.png",
-                                                  height: 20,
-                                                  width: 20,
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Image.asset(
-                                                  "assets/app_user/svg/home/apple_store.png",
-                                                  height: 20,
-                                                  width: 20,
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Text(
-                                                  "Đăng ký ngay",
-                                                  style: TextStyle(
-                                                      color: Colors.red,
-                                                      fontSize: 13,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Icon(
-                                                  Icons.arrow_forward_ios_sharp,
-                                                  size: 10,
-                                                  color: Colors.red,
-                                                )
-                                              ],
-                                            ),
+                    Obx(
+                      () => Column(
+                        children: [
+                          if (homeController.storeCurrent?.value.name != null &&
+                              homeController.storeCurrent?.value.name != "")
+                            Column(
+                              children: [
+                                homeController.checkExpired() ==
+                                        ExpiredEnum.ExpiryDate
+                                    ? Container()
+                                    : Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 15, right: 15),
+                                        child: Container(
+                                          padding: EdgeInsets.only(
+                                              left: 15,
+                                              right: 15,
+                                              bottom: 8,
+                                              top: 8),
+                                          margin: EdgeInsets.only(top: 20),
+                                          decoration: BoxDecoration(
+                                              color: Colors.deepOrange
+                                                  .withOpacity(0.2),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5))),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  SvgPicture.asset(
+                                                      'assets/app_user/svg/home/up_store.svg',
+                                                      height: 30,
+                                                      width: 30),
+                                                  SizedBox(
+                                                    width: 15,
+                                                  ),
+                                                  Expanded(
+                                                    child: Text(
+                                                      "Cửa hàng của bạn đã hết hạn sử dụng hãy gia hạn để dùng đầy đủ chức năng",
+                                                      textAlign: TextAlign.left,
+                                                      style: TextStyle(
+                                                          color: Colors.red),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 15,
+                                              ),
+                                              Align(
+                                                alignment:
+                                                    Alignment.bottomRight,
+                                                child: SizedBox(
+                                                    height: 30,
+                                                    child: ElevatedButton(
+                                                        onPressed: () {
+                                                          Get.to(() =>
+                                                              ExpiredScreen());
+                                                        },
+                                                        child:
+                                                            Text("Gia hạn"))),
+                                              )
+                                            ],
                                           ),
                                         ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
+                                      ),
+                                (homeController.storeCurrent!.value
+                                            .hasUploadStore ==
+                                        true)
+                                    ? Container()
+                                    : Container(
+                                        padding: EdgeInsets.only(
+                                            left: 15,
+                                            right: 15,
+                                            bottom: 8,
+                                            top: 8),
+                                        margin: EdgeInsets.all(20),
+                                        decoration: BoxDecoration(
+                                            color: Colors.deepOrange
+                                                .withOpacity(0.2),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(5))),
+                                        child: Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                                'assets/app_user/svg/home/up_store.svg',
+                                                height: 30,
+                                                width: 30),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Expanded(
+                                              child: Column(
+                                                children: [
+                                                  Text(
+                                                    "Shop của bạn chưa có trên Google Play và Apple Store? Hãy đăng ký để đưa ứng dụng lên ",
+                                                    style: TextStyle(
+                                                        color: Colors.grey[800],
+                                                        fontSize: 12),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .centerRight,
+                                                        child: InkWell(
+                                                          onTap: () async {
+                                                            await RulesApp()
+                                                                .getAgreedRules();
+                                                            if (RulesApp()
+                                                                    .getAgreed() ==
+                                                                false) {
+                                                              Get.to(() =>
+                                                                  RegisterApp());
+                                                            } else {
+                                                              Get.to(() =>
+                                                                  ServiceApp());
+                                                            }
+                                                          },
+                                                          child: Row(
+                                                            children: [
+                                                              Image.asset(
+                                                                "assets/app_user/svg/home/google_play.png",
+                                                                height: 20,
+                                                                width: 20,
+                                                              ),
+                                                              SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                              Image.asset(
+                                                                "assets/app_user/svg/home/apple_store.png",
+                                                                height: 20,
+                                                                width: 20,
+                                                              ),
+                                                              SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                              Text(
+                                                                "Đăng ký ngay",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .red,
+                                                                    fontSize:
+                                                                        13,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              Icon(
+                                                                Icons
+                                                                    .arrow_forward_ios_sharp,
+                                                                size: 10,
+                                                                color:
+                                                                    Colors.red,
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                              ],
+                            ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SectionTitle(
+                                  title: "Cửa hàng",
+                                )),
                           ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: SectionTitle(
-                                title: "Cửa hàng",
-                              )),
-                        ),
-                        StaggeredGridView.countBuilder(
-                          shrinkWrap: true,
-                          primary: false,
-                          staggeredTileBuilder: (index) => StaggeredTile.fit(1),
-                          itemBuilder: (context, pos) {
-                            return [
-                              showCase(
-                                key: editProduct,
-                                title: 'Chỉnh sửa mặt hàng !',
-                                description:
-                                    'Đầu tiên bạn cần thêm các sản phẩm bày bán trên app muốn tạo',
-                                onTargetClick: () {
-                                  Get.to(() => InventoryScreen())!
-                                      .then((value) => {
-                                            ShowCaseWidget.of(context)!
-                                                .startShowCase([
-                                              configUI,
-                                              order,
-                                              report,
-                                              review,
-                                              editSale,
-                                              shipment,
-                                              payment,
-                                            ])
-                                          });
-                                },
-                                child: ItemStoreView(
-                                  icon:
-                                      'assets/app_user/svg/home/inventory.svg',
-                                  text: 'Chỉnh sửa mặt hàng',
-                                  press: () {
-                                    Get.to(() => InventoryScreen());
+                          StaggeredGridView.countBuilder(
+                            shrinkWrap: true,
+                            primary: false,
+                            staggeredTileBuilder: (index) =>
+                                StaggeredTile.fit(1),
+                            itemBuilder: (context, pos) {
+                              return [
+                                showCase(
+                                  key: editProduct,
+                                  title: 'Chỉnh sửa mặt hàng !',
+                                  description:
+                                      'Đầu tiên bạn cần thêm các sản phẩm bày bán trên app muốn tạo',
+                                  onTargetClick: () {
+                                    Get.to(() => InventoryScreen())!
+                                        .then((value) => {
+                                              ShowCaseWidget.of(context)!
+                                                  .startShowCase([
+                                                configUI,
+                                                order,
+                                                report,
+                                                review,
+                                                editSale,
+                                                shipment,
+                                                payment,
+                                              ])
+                                            });
                                   },
+                                  child: ItemStoreView(
+                                    icon:
+                                        'assets/app_user/svg/home/inventory.svg',
+                                    text: 'Chỉnh sửa mặt hàng',
+                                    press: () {
+                                      Get.to(() => InventoryScreen());
+                                    },
+                                  ),
                                 ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Get.to(() => CustomerManageScreen());
-                                },
-                                child: ItemStoreView(
-                                  icon: 'assets/app_user/svg/home/customer.svg',
-                                  text: 'Khách hàng',
-                                  press: () {
+                                InkWell(
+                                  onTap: () {
                                     Get.to(() => CustomerManageScreen());
                                   },
+                                  child: ItemStoreView(
+                                    icon:
+                                        'assets/app_user/svg/home/customer.svg',
+                                    text: 'Khách hàng',
+                                    press: () {
+                                      Get.to(() => CustomerManageScreen());
+                                    },
+                                  ),
                                 ),
-                              ),
-                              showCase(
-                                key: editSale,
-                                title: 'Chương trình khuyến mãi !',
-                                description:
-                                    'Tạo các chương trình khuyến mãi giảm giá sản phẩm, Voucher, Combo để tăng doanh số bán hàng của bạn',
-                                onTargetClick: () {
-                                  Get.to(() => MarketingChanelScreen())!
-                                      .then((value) => {
-                                            ShowCaseWidget.of(context)!
-                                                .startShowCase([
-                                              shipment,
-                                              payment,
-                                            ])
-                                          });
-                                },
-                                child: ItemStoreView(
-                                  icon:
-                                      'assets/app_user/svg/home/promotions.svg',
-                                  text: 'Chương trình khuyến mãi',
-                                  press: () {
-                                    Get.to(() => MarketingChanelScreen());
+                                showCase(
+                                  key: editSale,
+                                  title: 'Chương trình khuyến mãi !',
+                                  description:
+                                      'Tạo các chương trình khuyến mãi giảm giá sản phẩm, Voucher, Combo để tăng doanh số bán hàng của bạn',
+                                  onTargetClick: () {
+                                    Get.to(() => MarketingChanelScreen())!
+                                        .then((value) => {
+                                              ShowCaseWidget.of(context)!
+                                                  .startShowCase([
+                                                shipment,
+                                                payment,
+                                              ])
+                                            });
                                   },
+                                  child: ItemStoreView(
+                                    icon:
+                                        'assets/app_user/svg/home/promotions.svg',
+                                    text: 'Chương trình khuyến mãi',
+                                    press: () {
+                                      Get.to(() => MarketingChanelScreen());
+                                    },
+                                  ),
                                 ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Get.to(() => PostNaviScreen());
-                                },
-                                child: ItemStoreView(
-                                  icon: 'assets/app_user/svg/home/news.svg',
-                                  text: 'Tin tức - Bài viết',
-                                  press: () {
+                                InkWell(
+                                  onTap: () {
                                     Get.to(() => PostNaviScreen());
                                   },
+                                  child: ItemStoreView(
+                                    icon: 'assets/app_user/svg/home/news.svg',
+                                    text: 'Tin tức - Bài viết',
+                                    press: () {
+                                      Get.to(() => PostNaviScreen());
+                                    },
+                                  ),
                                 ),
-                              ),
-                            ][pos];
-                          },
-                          itemCount: 4,
-                          crossAxisCount: maxChildCount2.floor(),
-                          mainAxisSpacing: 4,
-                          padding: EdgeInsets.zero,
-                          physics: NeverScrollableScrollPhysics(),
-                        ),
-                        Divider(
-                          height: 20,
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: SectionTitle(
-                                title: "Cài đặt",
-                              )),
-                        ),
-                        new StaggeredGridView.countBuilder(
-                          shrinkWrap: true,
-                          primary: false,
-                          staggeredTileBuilder: (index) => StaggeredTile.fit(1),
-                          itemBuilder: (context, pos) {
-                            return [
-                              showCase(
-                                key: configUI,
-                                title: 'Chỉnh sửa giao diện !',
-                                description:
-                                    'Bây giờ bạn có thể vào chỉnh sửa giao diện app bán hàng của bạn tuỳ ý',
-                                onTargetClick: () {
-                                  Get.toNamed("ConfigScreen")!.then((value) => {
-                                        ShowCaseWidget.of(context)!
-                                            .startShowCase([
-                                          order,
-                                          report,
-                                          review,
-                                          editSale,
-                                          shipment,
-                                          payment,
-                                        ])
-                                      });
-                                },
-                                child: ItemStoreView(
-                                  icon: 'assets/app_user/svg/home/ui.svg',
-                                  text: 'Chỉnh sửa giao diện',
-                                  press: () {
-                                    Get.toNamed("ConfigScreen");
+                              ][pos];
+                            },
+                            itemCount: 4,
+                            crossAxisCount: maxChildCount2.floor(),
+                            mainAxisSpacing: 4,
+                            padding: EdgeInsets.zero,
+                            physics: NeverScrollableScrollPhysics(),
+                          ),
+                          Divider(
+                            height: 20,
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SectionTitle(
+                                  title: "Cài đặt",
+                                )),
+                          ),
+                          new StaggeredGridView.countBuilder(
+                            shrinkWrap: true,
+                            primary: false,
+                            staggeredTileBuilder: (index) =>
+                                StaggeredTile.fit(1),
+                            itemBuilder: (context, pos) {
+                              return [
+                                showCase(
+                                  key: configUI,
+                                  title: 'Chỉnh sửa giao diện !',
+                                  description:
+                                      'Bây giờ bạn có thể vào chỉnh sửa giao diện app bán hàng của bạn tuỳ ý',
+                                  onTargetClick: () {
+                                    Get.toNamed("ConfigScreen")!
+                                        .then((value) => {
+                                              ShowCaseWidget.of(context)!
+                                                  .startShowCase([
+                                                order,
+                                                report,
+                                                review,
+                                                editSale,
+                                                shipment,
+                                                payment,
+                                              ])
+                                            });
                                   },
+                                  child: ItemStoreView(
+                                    icon: 'assets/app_user/svg/home/ui.svg',
+                                    text: 'Chỉnh sửa giao diện',
+                                    press: () {
+                                      Get.toNamed("ConfigScreen");
+                                    },
+                                  ),
                                 ),
-                              ),
-                              showCase(
-                                key: shipment,
-                                title: 'Cài đặt vận chuyển !',
-                                description:
-                                    'Bạn cần có tài khoản của nhà vận chuyển, lấy mã token thêm vào là có thể sử dụng dịch vụ',
-                                onTargetClick: () {
-                                  Get.to(() => ConfigStoreAddressScreen())!
-                                      .then((value) => {
-                                            ShowCaseWidget.of(context)!
-                                                .startShowCase([
-                                              payment,
-                                            ])
-                                          });
-                                },
-                                child: ItemStoreView(
-                                  icon: 'assets/app_user/svg/home/ship.svg',
-                                  text: 'Cài đặt vận chuyển',
-                                  press: () {
-                                    Get.to(() => ConfigStoreAddressScreen());
+                                showCase(
+                                  key: shipment,
+                                  title: 'Cài đặt vận chuyển !',
+                                  description:
+                                      'Bạn cần có tài khoản của nhà vận chuyển, lấy mã token thêm vào là có thể sử dụng dịch vụ',
+                                  onTargetClick: () {
+                                    Get.to(() => ConfigStoreAddressScreen())!
+                                        .then((value) => {
+                                              ShowCaseWidget.of(context)!
+                                                  .startShowCase([
+                                                payment,
+                                              ])
+                                            });
                                   },
+                                  child: ItemStoreView(
+                                    icon: 'assets/app_user/svg/home/ship.svg',
+                                    text: 'Cài đặt vận chuyển',
+                                    press: () {
+                                      Get.to(() => ConfigStoreAddressScreen());
+                                    },
+                                  ),
                                 ),
-                              ),
-                              showCase(
-                                key: payment,
-                                title: 'Cài đặt thanh toán !',
-                                description:
-                                    'Thêm một số phương thức thanh toán online, VNPay, MoMo, vv...',
-                                onTargetClick: () {
-                                  Get.to(() => ConfigPayment());
-                                },
-                                child: ItemStoreView(
-                                  icon: 'assets/app_user/svg/home/pay.svg',
-                                  text: 'Cài đặt thanh toán',
-                                  press: () {
+                                showCase(
+                                  key: payment,
+                                  title: 'Cài đặt thanh toán !',
+                                  description:
+                                      'Thêm một số phương thức thanh toán online, VNPay, MoMo, vv...',
+                                  onTargetClick: () {
                                     Get.to(() => ConfigPayment());
                                   },
+                                  child: ItemStoreView(
+                                    icon: 'assets/app_user/svg/home/pay.svg',
+                                    text: 'Cài đặt thanh toán',
+                                    press: () {
+                                      Get.to(() => ConfigPayment());
+                                    },
+                                  ),
                                 ),
-                              ),
-                              ItemStoreView(
-                                icon: 'assets/app_user/svg/home/expired.svg',
-                                text: 'Gia hạn sử dụng',
-                                press: () {
-                                  Get.to(() => ExpiredScreen());
-                                },
-                              ),
-                              ItemStoreView(
-                                icon: 'assets/app_user/svg/home/expired.svg',
-                                text: 'Thông tin cửa hàng',
-                                press: () {
-                                  Get.to(() => StoreInfoScreen());
-                                },
-                              ),
-                              ItemStoreView(
-                                icon: 'assets/app_user/svg/home/account.svg',
-                                text: 'Tài khoản',
-                                press: () {
-                                  Get.to(() => AccountScreen());
-                                },
-                              ),
-                            ][pos];
-                          },
-                          itemCount: 6,
-                          crossAxisCount: maxChildCount2.floor(),
-                          mainAxisSpacing: 4,
-                          padding: EdgeInsets.zero,
-                          physics: NeverScrollableScrollPhysics(),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Obx(() => homeController.homeData.value.banner !=
-                                    null &&
-                                homeController.homeData.value.banner!.length > 0
-                            ? SpecialOffers(
-                                listBanner:
-                                    homeController.homeData.value.banner!,
-                              )
-                            : Container()),
-                        SizedBox(
-                          height: 50,
-                        )
-                      ],
+                                ItemStoreView(
+                                  icon: 'assets/app_user/svg/home/expired.svg',
+                                  text: 'Gia hạn sử dụng',
+                                  press: () {
+                                    Get.to(() => ExpiredScreen());
+                                  },
+                                ),
+                                ItemStoreView(
+                                  icon: 'assets/app_user/svg/home/expired.svg',
+                                  text: 'Thông tin cửa hàng',
+                                  press: () {
+                                    Get.to(() => StoreInfoScreen());
+                                  },
+                                ),
+                                ItemStoreView(
+                                  icon: 'assets/app_user/svg/home/account.svg',
+                                  text: 'Tài khoản',
+                                  press: () {
+                                    Get.to(() => AccountScreen());
+                                  },
+                                ),
+                              ][pos];
+                            },
+                            itemCount: 6,
+                            crossAxisCount: maxChildCount2.floor(),
+                            mainAxisSpacing: 4,
+                            padding: EdgeInsets.zero,
+                            physics: NeverScrollableScrollPhysics(),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Obx(() => homeController.homeData.value.banner !=
+                                      null &&
+                                  homeController.homeData.value.banner!.length >
+                                      0
+                              ? SpecialOffers(
+                                  listBanner:
+                                      homeController.homeData.value.banner!,
+                                )
+                              : Container()),
+                          SizedBox(
+                            height: 50,
+                          )
+                        ],
+                      ),
                     )
                   ]),
                 ),

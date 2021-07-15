@@ -11,7 +11,8 @@ class SahaAlert {
       msg: message!,
       toastLength: FLToast.Toast.LENGTH_SHORT,
       gravity: FLToast.ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 1,
+      timeInSecForIosWeb: 3,
+
       backgroundColor: color ?? Colors.red,
       textColor: textColor ?? Colors.white,
       fontSize: 16.0,
@@ -63,7 +64,15 @@ class SahaAlert {
     String message = "",
     String title = "Saha",
   }) {
-    FLToast.Fluttertoast.showToast(msg: message);
+    FLToast.Fluttertoast.showToast(msg: message,
+      toastLength: FLToast.Toast.LENGTH_SHORT,
+      gravity: FLToast.ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 2,
+
+      backgroundColor:Colors.green,
+      textColor:  Colors.white,
+      fontSize: 16.0,
+    );
     // showFlash(
     //   duration: Duration(milliseconds: 1000),
     //   context: Get.context!,

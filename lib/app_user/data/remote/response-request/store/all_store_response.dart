@@ -39,6 +39,7 @@ class Store {
   int? id;
   String? name;
   String? storeCode;
+  String? nameType;
   String? dateExpried;
   String? address;
   int? userId;
@@ -63,6 +64,7 @@ class Store {
         this.dateExpried,
         this.address,
         this.userId,
+        this.nameType,
         this.idTypeOfStore,
         this.createdAt,
         this.updatedAt,
@@ -84,6 +86,7 @@ class Store {
     dateExpried = json['date_expried'];
     address = json['address'];
     userId = json['user_id'];
+    nameType = json['name_type'];
     idTypeOfStore = json['id_type_of_store'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -107,6 +110,7 @@ class Store {
     data['date_expried'] = this.dateExpried;
     data['address'] = this.address;
     data['user_id'] = this.userId;
+    data['name_type'] = this.nameType;
     data['id_type_of_store'] = this.idTypeOfStore;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;

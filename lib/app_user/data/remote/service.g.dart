@@ -127,6 +127,39 @@ class _SahaService implements SahaService {
   }
 
   @override
+  Future<CreateShopResponse> updateStore(storeCode, body) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<CreateShopResponse>(
+            Options(method: 'PUT', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'store/$storeCode',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = CreateShopResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<CreateShopResponse> getStore(storeCode) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<CreateShopResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'store/$storeCode',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = CreateShopResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<ProductResponse> createProduct(storeCode, body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
