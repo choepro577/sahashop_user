@@ -117,7 +117,7 @@ class HomeController extends GetxController {
       var data = await RepositoryManager.badgeRepository.getBadgeUser();
       badgeUser.value = data!.data!;
     } catch (err) {
-      SahaAlert.showError(message: err.toString());
+
     }
   }
 

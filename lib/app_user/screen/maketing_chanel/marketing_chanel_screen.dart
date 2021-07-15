@@ -46,7 +46,7 @@ class MarketingChanelScreen extends StatelessWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      Text("Chương trình của tôi")
+                      Text("Giảm giá sản phẩm")
                     ],
                   ),
                   Icon(Icons.arrow_forward_ios_rounded)
@@ -83,7 +83,7 @@ class MarketingChanelScreen extends StatelessWidget {
                         SizedBox(
                           width: 10,
                         ),
-                        Text("Mã giảm giá của tôi")
+                        Text("Mã voucher giảm giá")
                       ],
                     ),
                     Icon(Icons.arrow_forward_ios_rounded)
@@ -121,7 +121,7 @@ class MarketingChanelScreen extends StatelessWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      Text("Combo khuyến mãi")
+                      Text("Combo sản phẩm khuyến mãi")
                     ],
                   ),
                   Icon(Icons.arrow_forward_ios_rounded)
