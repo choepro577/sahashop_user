@@ -7,6 +7,9 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
+import 'package:sahashop_user/app_customer/screen_default/product_watch_more/product_watch_more_screen.dart';
+import 'package:sahashop_user/app_user/utils/string_utils.dart';
 import '../../../components/modal/modal_bottom_option_buy_product.dart';
 import '../../product_item_widget/product_item_widget.dart';
 import '../../../screen_default/cart_screen/cart_screen_1.dart';
@@ -24,6 +27,7 @@ import 'widget/review_product.dart';
 // ignore: must_be_immutable
 class ProductScreen2 extends StatelessWidget {
   late ProductController productController;
+  DataAppCustomerController dataAppCustomerController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -120,6 +124,264 @@ class ProductScreen2 extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "${productController.productShow.value.name}",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500),
+                                      maxLines: 2,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        height: 25,
+                                        width: 25,
+                                        child: !productController
+                                                .productShow.value.isFavorite!
+                                            ? InkWell(
+                                                onTap: () {
+                                                  productController
+                                                      .favoriteProduct(true);
+                                                },
+                                                child: SvgPicture.asset(
+                                                  "assets/icons/heart.svg",
+                                                  color: Colors.red,
+                                                ),
+                                              )
+                                            : InkWell(
+                                                onTap: () {
+                                                  productController
+                                                      .favoriteProduct(false);
+                                                },
+                                                child: SvgPicture.asset(
+                                                  "assets/icons/heart_fill.svg",
+                                                  color: Colors.red,
+                                                ),
+                                              ),
+                                      ),
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          Get.to(() => ChatCustomerScreen());
+                                        },
+                                        child: Icon(
+                                          Icons.chat_outlined,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, right: 10.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      RatingBarIndicator(
+                                        rating: productController
+                                                    .averagedStars.value ==
+                                                0
+                                            ? 5
+                                            : productController
+                                                .averagedStars.value,
+                                        itemBuilder: (context, index) => Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                        ),
+                                        itemCount: 5,
+                                        itemSize: 15.0,
+                                        direction: Axis.horizontal,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      if (productController.totalReview.value !=
+                                          0)
+                                        Text(
+                                          "(Xem ${productController.totalReview.value} đánh giá)",
+                                          style: TextStyle(
+                                              fontSize: 13, color: Colors.grey),
+                                        ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Container(
+                                        width: 1,
+                                        height: 13,
+                                        decoration:
+                                            BoxDecoration(color: Colors.grey),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "Top phổ biến",
+                                        style: TextStyle(
+                                            fontSize: 13, color: Colors.grey),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Row(children: [
+                                SahaMoneyText(
+                                  price: productController.productShow.value
+                                              .productDiscount ==
+                                          null
+                                      ? productController
+                                          .productShow.value.price
+                                      : productController.productShow.value
+                                          .productDiscount!.discountPrice,
+                                  color: Theme.of(context)
+                                              .primaryColor
+                                              .computeLuminance() >
+                                          0.5
+                                      ? Colors.black
+                                      : Theme.of(context).primaryColor,
+                                ),
+                                if (productController
+                                        .productShow.value.productDiscount !=
+                                    null)
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "${SahaStringUtils().convertToMoney(productController.productShow.value.price)}đ",
+                                        style: TextStyle(
+                                            decoration:
+                                                TextDecoration.lineThrough,
+                                            fontSize: 12),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "-${productController.productShow.value.productDiscount!.value}%",
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
+                              ]),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, right: 10.0),
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/icons/payment.svg",
+                                    height: 15,
+                                    width: 15,
+                                    color: Colors.red,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "RẺ HƠN HOÀN TIỀN",
+                                    style: TextStyle(
+                                        color: Colors.red,
+                                        fontFamily: "nunito_bold",
+                                        fontSize: 11),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  productController.hasInCombo.value
+                                      ? InkWell(
+                                          onTap: () {
+                                            Get.to(() => ComboDetailScreen(
+                                                  idProduct: productController
+                                                      .productShow.value.id,
+                                                ));
+                                          },
+                                          child: Container(
+                                            height: 20,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(2)),
+                                            child: Center(
+                                              child: Row(
+                                                children: [
+                                                  SizedBox(
+                                                    width: 3,
+                                                  ),
+                                                  productController
+                                                              .discountComboType
+                                                              .value ==
+                                                          1
+                                                      ? Text(
+                                                          "Combo giảm ${productController.valueComboType.value}%",
+                                                          style: TextStyle(
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                            fontSize: 12,
+                                                          ),
+                                                        )
+                                                      : Row(
+                                                          children: [
+                                                            Text(
+                                                              "Combo giảm ",
+                                                              style: TextStyle(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .primaryColor,
+                                                                fontSize: 12,
+                                                              ),
+                                                            ),
+                                                            SahaMoneyText(
+                                                              sizeText: 12,
+                                                              sizeVND: 10,
+                                                              price: productController
+                                                                  .valueComboType
+                                                                  .value
+                                                                  .toDouble(),
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                  SizedBox(
+                                                    width: 3,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : Container(),
+                                ],
+                              ),
+                            ),
                             Row(
                               children: [
                                 Padding(
@@ -183,189 +445,6 @@ class ProductScreen2 extends StatelessWidget {
                                       )
                                     : Container(),
                               ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                "${productController.productShow.value.name}",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500),
-                                maxLines: 2,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Row(
-                                children: [
-                                  SahaMoneyText(
-                                    price: productController
-                                        .productShow.value.price,
-                                    color: Theme.of(context)
-                                                .primaryColor
-                                                .computeLuminance() >
-                                            0.5
-                                        ? Colors.black
-                                        : Theme.of(context).primaryColor,
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  productController.hasInCombo.value
-                                      ? Container(
-                                          height: 20,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(2)),
-                                          child: Center(
-                                            child: Row(
-                                              children: [
-                                                SizedBox(
-                                                  width: 3,
-                                                ),
-                                                productController
-                                                            .discountComboType
-                                                            .value ==
-                                                        1
-                                                    ? Text(
-                                                        "Combo giảm ${productController.valueComboType.value}%",
-                                                        style: TextStyle(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .primaryColor,
-                                                          fontSize: 12,
-                                                        ),
-                                                      )
-                                                    : Row(
-                                                        children: [
-                                                          Text(
-                                                            "Combo giảm ",
-                                                            style: TextStyle(
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .primaryColor,
-                                                              fontSize: 12,
-                                                            ),
-                                                          ),
-                                                          SahaMoneyText(
-                                                            sizeText: 12,
-                                                            sizeVND: 10,
-                                                            price: productController
-                                                                .valueComboType
-                                                                .value
-                                                                .toDouble(),
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .primaryColor,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                SizedBox(
-                                                  width: 3,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        )
-                                      : Container(),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      RatingBarIndicator(
-                                        rating: productController
-                                                    .averagedStars.value ==
-                                                0
-                                            ? 5
-                                            : productController
-                                                .averagedStars.value,
-                                        itemBuilder: (context, index) => Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                        ),
-                                        itemCount: 5,
-                                        itemSize: 15.0,
-                                        direction: Axis.horizontal,
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      if (productController.totalReview.value !=
-                                          0)
-                                        Text(
-                                            "${productController.totalReview.value}"),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Container(
-                                        width: 1,
-                                        height: 13,
-                                        decoration:
-                                            BoxDecoration(color: Colors.grey),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text("Top phổ biến"),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Container(
-                                        height: 25,
-                                        width: 25,
-                                        child: !productController
-                                                .productShow.value.isFavorite!
-                                            ? InkWell(
-                                                onTap: () {
-                                                  productController
-                                                      .favoriteProduct(true);
-                                                },
-                                                child: SvgPicture.asset(
-                                                  "assets/icons/heart.svg",
-                                                  color: Colors.grey,
-                                                ),
-                                              )
-                                            : InkWell(
-                                                onTap: () {
-                                                  productController
-                                                      .favoriteProduct(false);
-                                                },
-                                                child: SvgPicture.asset(
-                                                  "assets/icons/heart_fill.svg",
-                                                  color: Colors.red,
-                                                ),
-                                              ),
-                                      ),
-                                      SizedBox(
-                                        width: 15,
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          Get.to(() => ChatCustomerScreen());
-                                        },
-                                        icon: Icon(
-                                          Icons.chat_outlined,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 15,
                             ),
                             Container(
                               height: 8,
@@ -485,6 +564,47 @@ class ProductScreen2 extends StatelessWidget {
                                     color: Colors.grey[200],
                                   )
                                 : Container(),
+                            Column(
+                              children: [
+                                SizedBox(height: 20),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: SectionTitle(
+                                      title: "Sản phẩm tương tự",
+                                      titleEnd: "Xem tất cả",
+                                      pressTitleEnd: () {
+                                        Get.to(() => ProductWatchMoreScreen(
+                                              title: "Sản phẩm tương tự",
+                                              listProduct: productController
+                                                  .listProductSimilar,
+                                            ));
+                                      }),
+                                ),
+                                SizedBox(height: 10),
+                                Container(
+                                  height: 251,
+                                  alignment: Alignment.topLeft,
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      children: productController
+                                          .listProductSimilar
+                                          .map((product) => ProductItemWidget(
+                                                width: 180,
+                                                product: product,
+                                              ))
+                                          .toList(),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              color: Colors.grey[200],
+                              height: 8,
+                            ),
                             Container(
                               padding: EdgeInsets.only(
                                   top: 10, bottom: 10, left: 10),
@@ -655,11 +775,14 @@ class ProductScreen2 extends StatelessWidget {
                                   padding: const EdgeInsets.only(
                                       left: 10, right: 10),
                                   child: SectionTitle(
-                                      title: "Sản phẩm tương tự",
+                                      title: "Sản phẩm vừa xem",
                                       titleEnd: "Xem tất cả",
                                       pressTitleEnd: () {
-                                        // dataAppCustomerController
-                                        //     .toCategoryProductScreen();
+                                        Get.to(() => ProductWatchMoreScreen(
+                                              title: "Sản phẩm vừa xem",
+                                              listProduct: productController
+                                                  .listProductWatched,
+                                            ));
                                       }),
                                 ),
                                 SizedBox(height: 10),
@@ -670,7 +793,7 @@ class ProductScreen2 extends StatelessWidget {
                                     scrollDirection: Axis.horizontal,
                                     child: Row(
                                       children: productController
-                                          .listProductsDiscount
+                                          .listProductWatched
                                           .map((product) => ProductItemWidget(
                                                 width: 180,
                                                 product: product,
@@ -815,87 +938,37 @@ class ProductScreen2 extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Container(
-                  color: Theme.of(context).accentColor,
+                  margin: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    //color: Theme.of(context).accentColor,
+                    border: Border.all(color: Theme.of(context).primaryColor),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                   child: IntrinsicHeight(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Flexible(
                           child: Container(
-                        height: 50,
+                            height: 50,
                             child: InkWell(
                               onTap: () {
                                 Get.to(() => ChatCustomerScreen());
                               },
                               child: Container(
                                 height: 20,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: SvgPicture.asset(
-                                    "assets/icons/chat.svg",
-                                    color: Theme.of(context)
-                                        .primaryTextTheme
-                                        .headline6!
-                                        .color,
-                                  ),
+                                padding: const EdgeInsets.all(5.0),
+                                child: SvgPicture.asset(
+                                  "assets/icons/chat.svg",
+                                  color: Theme.of(context)
+                                              .primaryColor
+                                              .computeLuminance() >
+                                          0.5
+                                      ? Colors.black
+                                      : Theme.of(context).primaryColor,
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                        Container(
-                          color: Colors.grey[700],
-                          width: 1,
-                          height: 30,
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Obx(
-                            () => !productController.animateAddCart.value
-                                ? InkWell(
-                                    onTap: () {
-                                      ModalBottomOptionBuyProduct
-                                          .showModelOption(
-                                              product: productController
-                                                  .productShow.value,
-                                              onSubmit: (int quantity,
-                                                  Product product,
-                                                  List<DistributesSelected>
-                                                      distributesSelected) {
-                                                productController
-                                                    .addManyItemOrUpdate(
-                                                        quantity: quantity,
-                                                        buyNow: false,
-                                                        productId: product.id,
-                                                        distributesSelected:
-                                                            distributesSelected);
-                                                productController
-                                                    .animatedAddCard();
-                                              });
-                                    },
-                                    child: Container(
-                                      height: 25,
-                                      child: SvgPicture.asset(
-                                        "assets/icons/add_to_cart.svg",
-                                        color: Theme.of(context)
-                                            .primaryTextTheme
-                                            .headline6!
-                                            .color,
-                                      ),
-                                    ),
-                                  )
-                                : IgnorePointer(
-                                    child: Container(
-                                      height: 25,
-                                      child: SvgPicture.asset(
-                                        "assets/icons/add_to_cart.svg",
-                                        color: Theme.of(Get.context!)
-                                            .primaryTextTheme
-                                            .headline6!
-                                            .color,
-                                      ),
-                                    ),
-                                  ),
                           ),
                         ),
                       ],
@@ -904,7 +977,7 @@ class ProductScreen2 extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: 1,
+                flex: 4,
                 child: InkWell(
                   onTap: () {
                     ModalBottomOptionBuyProduct.showModelOption(
@@ -920,7 +993,11 @@ class ProductScreen2 extends StatelessWidget {
                   },
                   child: Container(
                       height: 50,
-                      color: Theme.of(context).primaryColor,
+                      margin: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
                       child: Center(
                           child: Text(
                         "Mua ngay",

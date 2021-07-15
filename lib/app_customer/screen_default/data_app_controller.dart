@@ -15,7 +15,6 @@ import 'package:sahashop_user/app_user/model/post.dart';
 import 'package:sahashop_user/app_user/model/roll_call.dart';
 import 'category_post_screen/input_model_posts.dart';
 
-
 class DataAppCustomerController extends GetxController {
   InputModelProduct? inputModelProduct;
   InputModelProducts? inputModelProducts;
@@ -102,8 +101,6 @@ class DataAppCustomerController extends GetxController {
       isLogin.value = false;
     }
   }
-
-
 
   Future<bool?> getHomeData() async {
     try {

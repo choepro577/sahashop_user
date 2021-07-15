@@ -4,6 +4,7 @@ import 'package:sahashop_user/app_customer/repository/repository_customer.dart';
 import 'package:sahashop_user/app_customer/screen_default/cart_screen/cart_controller.dart';
 import 'package:sahashop_user/app_customer/screen_default/cart_screen/cart_screen_1.dart';
 import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
+import 'package:sahashop_user/app_customer/utils/customer_info.dart';
 import 'package:sahashop_user/app_user/data/example/product.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/app_user/model/combo.dart';
@@ -13,7 +14,6 @@ import 'package:sahashop_user/app_user/model/review.dart';
 
 import '../input_model.dart';
 
-
 class ProductController extends GetxController {
   var currentIndexListOrder = 0.obs;
   var currentImage = 0.obs;
@@ -22,7 +22,8 @@ class ProductController extends GetxController {
   Product? productInput;
   InputModelProduct? inputModelProduct;
   var productShow = Product().obs;
-  var listProductsDiscount = RxList<Product>();
+  var listProductSimilar = RxList<Product>();
+  var listProductWatched = RxList<Product>();
   var isLoadingProduct = false.obs;
   var listProductCombo = RxList<ProductsCombo>();
   var hasInCombo = false.obs;
@@ -39,21 +40,50 @@ class ProductController extends GetxController {
 
   ProductController() {
     inputModelProduct = dataAppCustomerController.inputModelProduct;
-    if (inputModelProduct == null || (inputModelProduct!.product == null && inputModelProduct!.productId == null)) {
+    if (inputModelProduct == null ||
+        (inputModelProduct!.product == null &&
+            inputModelProduct!.productId == null)) {
       productShow.value = EXAMPLE_LIST_PRODUCT[0];
     } else {
       if (inputModelProduct!.product != null) {
-        productInput= dataAppCustomerController.inputModelProduct!.product!;
+        productInput = dataAppCustomerController.inputModelProduct!.product!;
       } else {
-        productInput = Product(
-            id:  inputModelProduct!.productId
-        );
+        productInput = Product(id: inputModelProduct!.productId);
       }
 
       getDetailProduct();
       getComboCustomer();
       getReviewProduct();
+      getSimilarProduct();
+      checkLogin();
+    }
+  }
 
+  Future<void> checkLogin() async {
+    if (await CustomerInfo().hasLogged()) {
+      getWatchedProduct();
+    } else {
+      return;
+    }
+  }
+
+  Future<void> getWatchedProduct() async {
+    try {
+      var data = await CustomerRepositoryManager.productCustomerRepository
+          .getWatchedProduct();
+      listProductWatched(data!.data!.data);
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+  }
+
+  Future<void> getSimilarProduct() async {
+    try {
+      var data = await CustomerRepositoryManager.productCustomerRepository
+          .getSimilarProduct(productInput!.id ?? 0);
+      listProductSimilar(data!.data);
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
     }
   }
 

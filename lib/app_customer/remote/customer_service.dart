@@ -40,6 +40,7 @@ import 'package:sahashop_user/app_user/model/cart.dart';
 import 'response-request/favorite/all_product_response.dart';
 import 'response-request/favorite/favorite_response.dart';
 import 'response-request/post/post_response.dart';
+import 'response-request/product/product_watched_response.dart';
 import 'response-request/score/check_in_response.dart';
 import 'response-request/score/history_score_response.dart';
 import 'response-request/score/roll_call_response.dart';
@@ -57,8 +58,19 @@ abstract class CustomerService {
   @GET("store")
   Future<AllStoreResponse> getAllStore();
 
+  /// Product
+
   @GET("store/{storeCode}/products")
   Future<AllProductResponse> getAllProduct(@Path("storeCode") String storeCode);
+
+  @GET("{storeCode}/products/{idProduct}/similar_products")
+  Future<AllProductResponse> getSimilarProduct(
+      @Path("storeCode") String storeCode, @Path("idProduct") int idProduct);
+
+  @GET("{storeCode}/watched_products")
+  Future<ProductWatchedResponse> getWatchedProduct(
+    @Path("storeCode") String storeCode,
+  );
 
   @GET("type_of_store")
   Future<TypeShopResponse> getAllTypeOfStore();
@@ -92,9 +104,9 @@ abstract class CustomerService {
 
   @GET("{storeCode}/posts/{idPost}")
   Future<PostResponse> getDetailPost(
-      @Path("storeCode") String? storeCode,
-      @Path() int? idPost,
-      );
+    @Path("storeCode") String? storeCode,
+    @Path() int? idPost,
+  );
 
   @GET("{storeCode}/post_categories")
   Future<AllCategoryPostResponse> getAllCategoryPost(
