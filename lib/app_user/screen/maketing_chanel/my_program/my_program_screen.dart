@@ -127,21 +127,18 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
         ),
         controller: _refreshController,
         onRefresh: () async {
-          await Future.delayed(Duration(milliseconds: 300));
-
           // if (mounted) setState(() {});
           if (indexState == 2) {
             myProgramController.loadInitEndDiscount();
           } else {
-            myProgramController.refreshData();
+            await myProgramController.refreshData();
           }
           _refreshController.refreshCompleted();
         },
         onLoading: () async {
-          await Future.delayed(Duration(milliseconds: 300));
           if (indexState == 2) {
             if (!myProgramController.isEndPageDiscount) {
-              myProgramController.loadMoreEndDiscount();
+              await myProgramController.loadMoreEndDiscount();
               _refreshController.loadComplete();
             } else {
               _refreshController.loadComplete();
