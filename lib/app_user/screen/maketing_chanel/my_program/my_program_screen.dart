@@ -80,7 +80,7 @@ class _MyProgramState extends State<MyProgram> with TickerProviderStateMixin {
           child: Column(
             children: [
               SahaButtonFullParent(
-                text: "Tạo chương trình khuyến mãi",
+                text: "Thêm sản phẩm giảm giá",
                 onPressed: () {
                   Get.to(() => CreateMyProgram())!.then((value) => {
                         myProgramController.refreshData(),

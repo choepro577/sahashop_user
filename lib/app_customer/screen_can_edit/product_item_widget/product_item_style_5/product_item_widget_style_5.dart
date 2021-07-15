@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/product_screen/product_screen.dart';
 import 'package:sahashop_user/app_customer/screen_default/cart_screen/cart_controller.dart';
@@ -80,22 +81,7 @@ class ProductItemWidgetStyle5 extends StatelessWidget {
                           height: 75,
                           width: width,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(10),
-                                bottomRight: Radius.circular(10)),
-                            gradient: LinearGradient(
-                                colors: [
-                                  Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(0.2),
-                                  Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(0.1),
-                                ],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                stops: [0.0, 0.5],
-                                tileMode: TileMode.clamp),
+
                           ),
                           child: Stack(
                             children: [
@@ -187,30 +173,7 @@ class ProductItemWidgetStyle5 extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      product.productDiscount == null
-                                          ? Container()
-                                          : Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 5.0, right: 5.0),
-                                              child: Text(
-                                                "${SahaStringUtils().convertToMoney(product.price)}đ",
-                                                style: TextStyle(
-                                                    decoration: TextDecoration
-                                                        .lineThrough,
-                                                    color:
-                                                        product.productDiscount ==
-                                                                null
-                                                            ? Theme.of(context)
-                                                                .primaryColor
-                                                            : Colors.grey,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize:
-                                                        product.productDiscount ==
-                                                                null
-                                                            ? 14
-                                                            : 10),
-                                              ),
-                                            ),
+
                                       Container(
                                         padding: const EdgeInsets.only(
                                             left: 5.0, right: 5.0),
@@ -226,35 +189,37 @@ class ProductItemWidgetStyle5 extends StatelessWidget {
                                           maxLines: 1,
                                         ),
                                       ),
+                                      product.productDiscount == null
+                                          ? Container()
+                                          : Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 5.0, right: 5.0),
+                                        child: Text(
+                                          "${SahaStringUtils().convertToMoney(product.price)}đ",
+                                          style: TextStyle(
+                                              decoration: TextDecoration
+                                                  .lineThrough,
+                                              color:
+                                              product.productDiscount ==
+                                                  null
+                                                  ? Theme.of(context)
+                                                  .primaryColor
+                                                  : Colors.grey,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize:
+                                              product.productDiscount ==
+                                                  null
+                                                  ? 14
+                                                  : 10),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(right: 10),
-                                  child: Container(
-                                    padding: const EdgeInsets.all(7),
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Theme.of(context).primaryColor),
-                                    child: InkWell(
-                                      onTap: () {
-                                        cartController.addItemCart(product.id);
-                                        dataAppCustomerController.getBadge();
-                                      },
-                                      child: Container(
-                                        height: 15,
-                                        width: 15,
-                                        child: SvgPicture.asset(
-                                          "assets/icons/cart_icon.svg",
-                                          color: Theme.of(context)
-                                              .primaryTextTheme
-                                              .headline6!
-                                              .color,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                  child: Icon(Ionicons.cart_outline, color: Theme.of(context).primaryColor,),
+                                )
                               ],
                             ),
                           ],
@@ -266,7 +231,7 @@ class ProductItemWidgetStyle5 extends StatelessWidget {
               ),
             ),
           ),
-          product.isNew == true
+          product.productDiscount != null
               ? Stack(
                   children: [
                     Positioned(
@@ -289,7 +254,7 @@ class ProductItemWidgetStyle5 extends StatelessWidget {
                             top: 16,
                             right: 5,
                             child: Text(
-                              "New",
+    "-${product.productDiscount!.value}%",
                               style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.bold,
@@ -349,41 +314,16 @@ class ProductItemWidgetStyle5 extends StatelessWidget {
               : Positioned(
                   top: 0,
                   right: -2.75,
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Container(
-                        height: 40,
-                        width: 40,
-                        child: SvgPicture.asset(
-                          "assets/icons/ribbon3.svg",
-                          color: Color(0xfffdd100),
-                        ),
-                      ),
-                      Positioned(
-                        top: 19,
-                        right: 7,
-                        child: Text(
-                          "GIẢM",
-                          style: TextStyle(
-                              fontSize: 9,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                      ),
-                      Positioned(
-                        top: 7,
-                        right: 7.5,
-                        child: Text(
-                          "${product.productDiscount!.value}%",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xfffd5800)),
-                        ),
-                      )
-                    ],
+                  child: Container(
+                    padding: EdgeInsets.only(left: 2,right: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(3),
+                      color: Colors.lightBlue
+                    ),
+                    child: Text("MỚI RA MẮT",style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12
+                    ),),
                   ),
                 ),
         ],

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/app_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/app_user/components/saha_user/button/saha_button.dart';
+import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/app_user/const/constant.dart';
 import 'package:sahashop_user/app_user/data/remote/response-request/store/all_store_response.dart';
@@ -137,6 +138,7 @@ class ItemStore extends StatelessWidget {
                     width: 40,
                     fit: BoxFit.cover,
                     imageUrl:store?.logoUrl ?? "",
+                    placeholder: (context,u) => SahaLoadingContainer(),
                     errorWidget:
                         (context, url, error) =>
                         SahaEmptyImage()),
