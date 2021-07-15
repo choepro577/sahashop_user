@@ -92,6 +92,15 @@ abstract class SahaService {
   @POST("store")
   Future<CreateShopResponse> createStore(@Body() Map<String, dynamic> body);
 
+  @PUT("store/{storeCode}")
+  Future<CreateShopResponse> updateStore(
+      @Path("storeCode") String? storeCode,
+      @Body() Map<String, dynamic> body);
+
+  @GET("store/{storeCode}")
+  Future<CreateShopResponse> getStore(
+      @Path("storeCode") String? storeCode);
+
   @POST("store/{storeCode}/products")
   Future<ProductResponse> createProduct(
       @Path("storeCode") String? storeCode, @Body() Map<String, dynamic> body);

@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/app_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/app_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_widget.dart';
@@ -72,6 +74,8 @@ class ChooseStoreScreen extends StatelessWidget {
                                                   homeController
                                                       .setNewStoreCurrent(
                                                           store);
+
+                                                  Get.back();
                                                 },
                                               ),
                                             ],
@@ -125,9 +129,19 @@ class ItemStore extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
-              CircleAvatar(
-                child: Text("$index"),
+              ClipRRect(
+                borderRadius:
+                BorderRadius.circular(50.0),
+                child: CachedNetworkImage(
+                    height: 40,
+                    width: 40,
+                    fit: BoxFit.cover,
+                    imageUrl:store?.logoUrl ?? "",
+                    errorWidget:
+                        (context, url, error) =>
+                        SahaEmptyImage()),
               ),
+
               SizedBox(
                 width: 20,
               ),
