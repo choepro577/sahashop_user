@@ -46,6 +46,37 @@ class _CustomerService implements CustomerService {
   }
 
   @override
+  Future<AllProductResponse> getSimilarProduct(storeCode, idProduct) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AllProductResponse>(Options(
+                method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+            .compose(
+                _dio.options, '$storeCode/products/$idProduct/similar_products',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AllProductResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ProductWatchedResponse> getWatchedProduct(storeCode) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ProductWatchedResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '$storeCode/watched_products',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ProductWatchedResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<TypeShopResponse> getAllTypeOfStore() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

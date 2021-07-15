@@ -107,9 +107,17 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      Get.to(ProductScreen(
-                        product: product,
-                      ));
+                      print("ssss");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProductScreen(
+                                  product: product,
+                                )),
+                      );
+                      // Get.to(() => ProductScreen(
+                      //       product: product,
+                      //     ));
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,

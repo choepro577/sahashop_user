@@ -1,4 +1,6 @@
 import 'package:sahashop_user/app_customer/remote/response-request/favorite/all_product_response.dart';
+import 'package:sahashop_user/app_customer/remote/response-request/product/all_product_response.dart';
+import 'package:sahashop_user/app_customer/remote/response-request/product/product_watched_response.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/app_user/data/example/product.dart';
 import '../../remote/customer_service_manager.dart';
@@ -11,7 +13,7 @@ import 'package:sahashop_user/app_user/utils/user_info.dart';
 class ProductCustomerRepository {
   Future<List<Product>?> searchProduct(
       {String search = "",
-        int page = 1,
+      int page = 1,
       String idCategory = "",
       bool descending = false,
       String details = "",
@@ -50,7 +52,29 @@ class ProductCustomerRepository {
     try {
       var res = await CustomerServiceManager()
           .service!
-          .getPurchasedProducts(UserInfo().getCurrentStoreCode()!,page!);
+          .getPurchasedProducts(UserInfo().getCurrentStoreCode()!, page!);
+      return res;
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+  }
+
+  Future<AllProductResponse?> getSimilarProduct(int idProduct) async {
+    try {
+      var res = await CustomerServiceManager()
+          .service!
+          .getSimilarProduct(UserInfo().getCurrentStoreCode()!, idProduct);
+      return res;
+    } catch (err) {
+      SahaAlert.showError(message: err.toString());
+    }
+  }
+
+  Future<ProductWatchedResponse?> getWatchedProduct() async {
+    try {
+      var res = await CustomerServiceManager()
+          .service!
+          .getWatchedProduct(UserInfo().getCurrentStoreCode()!);
       return res;
     } catch (err) {
       SahaAlert.showError(message: err.toString());
