@@ -35,76 +35,14 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           Container(
-            padding: EdgeInsets.only(left: 4, right: 4, top: 4, bottom: 4),
+            padding: EdgeInsets.only(right: 5, bottom: 5),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 2,
-                    blurRadius: 2,
-                    offset: Offset(0, 1), // changes position of shadow
-                  ),
-                ],
-                gradient: LinearGradient(
-                    colors: [
-                      Theme.of(context).primaryColor.withOpacity(0.2),
-                      Theme.of(context).primaryColor.withOpacity(0.1),
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    stops: [0.0, 0.5],
-                    tileMode: TileMode.clamp),
-              ),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  border: Border.all(color: Colors.grey.withOpacity(0.3))),
               child: Stack(
                 children: [
-                  Stack(
-                    children: [
-                      Positioned(
-                        bottom: 0,
-                        right: -80,
-                        child: Container(
-                          height: 200,
-                          width: 200,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Theme.of(context)
-                                .primaryColor
-                                .withOpacity(0.08),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 50,
-                        right: 0,
-                        child: Container(
-                          height: 300,
-                          width: 300,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Theme.of(context)
-                                .primaryColor
-                                .withOpacity(0.05),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 60,
-                        right: 10,
-                        child: Container(
-                          height: 15,
-                          width: 15,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Theme.of(context)
-                                .primaryColor
-                                .withOpacity(0.06),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                   InkWell(
                     onTap: () {
                       Get.to(ProductScreen(
@@ -116,9 +54,9 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.all(5.0),
+                            padding: const EdgeInsets.all(0.0),
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(0),
                               child: CachedNetworkImage(
                                 height: 180,
                                 width: Get.width,
@@ -136,12 +74,18 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
                         ), //product.images[0].imageUrl
                         SizedBox(height: 5),
                         Padding(
-                          padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                          padding: const EdgeInsets.only(left: 5.0, right: 0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Expanded(
                                 child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(30.0),
+                                      bottomLeft: Radius.circular(30.0),
+                                    ),
+                                  ),
                                   height: 35,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -151,8 +95,7 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
                                       Text(
                                         product.name!,
                                         style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14,
                                           color: Colors.black,
                                         ),
                                         maxLines: 2,
@@ -161,6 +104,36 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                              product.productDiscount == null
+                                  ? Container()
+                                  : Container(
+                                      padding: EdgeInsets.only(
+                                          left: 5, right: 5, top: 2, bottom: 2),
+                                      decoration: new BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        gradient: new LinearGradient(
+                                            colors: [
+                                              Theme.of(context).primaryColor,
+                                              Theme.of(context)
+                                                  .primaryColor
+                                                  .withOpacity(0.5)
+                                            ],
+                                            begin: const FractionalOffset(
+                                                0.0, 0.0),
+                                            end: const FractionalOffset(
+                                                1.0, 0.0),
+                                            stops: [0.0, 1.0],
+                                            tileMode: TileMode.clamp),
+                                      ),
+                                      child: Text(
+                                        "-${product.productDiscount!.value}%",
+                                        style: TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "nunito_bold",
+                                            color: Colors.white),
+                                      ),
+                                    ),
                             ],
                           ),
                         ),
@@ -172,6 +145,21 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  Container(
+                                    padding: const EdgeInsets.only(
+                                        left: 5.0, right: 5.0),
+                                    child: Text(
+                                      product.productDiscount == null
+                                          ? "${SahaStringUtils().convertToMoney(product.price)} ₫"
+                                          : "${SahaStringUtils().convertToMoney(product.productDiscount!.discountPrice)} ₫",
+                                      style: TextStyle(
+                                          color: SahaColorUtils()
+                                              .colorTextWithPrimaryColor(),
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14),
+                                      maxLines: 1,
+                                    ),
+                                  ),
                                   product.productDiscount == null
                                       ? Container()
                                       : Padding(
@@ -196,49 +184,7 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
                                                         : 10),
                                           ),
                                         ),
-                                  Container(
-                                    padding: const EdgeInsets.only(
-                                        left: 5.0, right: 5.0),
-                                    child: Text(
-                                      product.productDiscount == null
-                                          ? "${SahaStringUtils().convertToMoney(product.price)}đ"
-                                          : "${SahaStringUtils().convertToMoney(product.productDiscount!.discountPrice)}đ",
-                                      style: TextStyle(
-                                          color: SahaColorUtils()
-                                              .colorTextWithPrimaryColor(),
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 14),
-                                      maxLines: 1,
-                                    ),
-                                  ),
                                 ],
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 5, bottom: 5),
-                              child: Container(
-                                padding: const EdgeInsets.all(7),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Theme.of(context).primaryColor),
-                                child: InkWell(
-                                  onTap: () {
-                                    cartController.addItemCart(product.id);
-                                    dataAppCustomerController.getBadge();
-                                  },
-                                  child: Container(
-                                    height: 17,
-                                    width: 17,
-                                    child: SvgPicture.asset(
-                                      "assets/icons/shopping_bag.svg",
-                                      color: Theme.of(context)
-                                          .primaryTextTheme
-                                          .headline6!
-                                          .color,
-                                    ),
-                                  ),
-                                ),
                               ),
                             ),
                           ],
@@ -250,126 +196,60 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
               ),
             ),
           ),
-          product.isNew == true
-              ? Stack(
+          Positioned(
+            bottom: 90,
+            right: 16,
+            child: Stack(
+              children: [
+                Row(
                   children: [
-                    Positioned(
-                      top: -5,
-                      left: -13,
-                      child: Stack(
-                        children: [
-                          Container(
-                            height: 45,
+                    product.isNew != true
+                        ? Container()
+                        : Container(
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                            height: 15,
                             width: 45,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(50),
-                              child: SvgPicture.asset(
-                                "assets/icons/rectangle.svg",
-                                color: Color(0xffd70c10),
+                            child: Center(
+                              child: Text(
+                                "Mới",
+                                style:
+                                    TextStyle(fontSize: 9, color: Colors.white),
                               ),
                             ),
                           ),
-                          Positioned(
-                            top: 16,
-                            right: 5,
-                            child: Text(
-                              "New",
-                              style: TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "nunito_bold",
-                                  color: Colors.white),
+                    SizedBox(
+                      width: 2,
+                    ),
+                    product.isTopSale == true
+                        ? Container(
+                            decoration: BoxDecoration(
+
+                              color: Colors.lightBlue,
+                              borderRadius: BorderRadius.circular(3),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      top: 25,
-                      left: 0,
-                      child: Container(
-                        height: 5,
-                        width: 4,
-                        child: SvgPicture.asset(
-                          "assets/icons/levels.svg",
-                          color: Color(0xffd70c10),
-                        ),
-                      ),
-                    ),
+                            height: 15,
+                            width: 45,
+                            child: Center(
+                              child: Text(
+                                "Bán chạy",
+                                style: TextStyle(
+                                    fontSize: 9,
+                                    color: Theme.of(context)
+                                        .primaryTextTheme
+                                        .headline6!
+                                        .color),
+                              ),
+                            ),
+                          )
+                        : Container(),
                   ],
-                )
-              : Container(),
-          product.isTopSale == true
-              ? Positioned(
-                  bottom: 90,
-                  right: 16,
-                  child: Stack(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey[600]!.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                        height: 15,
-                        width: 45,
-                        child: Center(
-                          child: Text(
-                            "Bán chạy",
-                            style: TextStyle(
-                                fontSize: 9,
-                                color: Theme.of(context)
-                                    .primaryTextTheme
-                                    .headline6!
-                                    .color),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              : Container(),
-          product.productDiscount == null
-              ? Container()
-              : Positioned(
-                  top: 0,
-                  right: -2.75,
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Container(
-                        height: 40,
-                        width: 40,
-                        child: SvgPicture.asset(
-                          "assets/icons/ribbon2.svg",
-                          color: Color(0xfffdd100),
-                        ),
-                      ),
-                      Positioned(
-                        top: 19,
-                        right: 7,
-                        child: Text(
-                          "GIẢM",
-                          style: TextStyle(
-                              fontSize: 9,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                      ),
-                      Positioned(
-                        top: 7,
-                        right: 7.5,
-                        child: Text(
-                          "${product.productDiscount!.value}%",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xfffd5800)),
-                        ),
-                      )
-                    ],
-                  ),
                 ),
+              ],
+            ),
+          )
         ],
       ),
     );
