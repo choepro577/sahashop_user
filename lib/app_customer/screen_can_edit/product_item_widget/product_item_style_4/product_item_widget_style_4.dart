@@ -53,16 +53,13 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
                                   product: product,
                                 )),
                       );
-                      // Get.to(() => ProductScreen(
-                      //       product: product,
-                      //     ));
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.all(0.0),
+                            padding: const EdgeInsets.all(2.0),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(0),
                               child: CachedNetworkImage(
@@ -234,7 +231,6 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
                     product.isTopSale == true
                         ? Container(
                             decoration: BoxDecoration(
-
                               color: Colors.lightBlue,
                               borderRadius: BorderRadius.circular(3),
                             ),

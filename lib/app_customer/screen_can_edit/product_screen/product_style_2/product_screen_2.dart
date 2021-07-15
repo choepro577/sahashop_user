@@ -768,42 +768,50 @@ class ProductScreen2 extends StatelessWidget {
                               color: Colors.grey[200],
                               height: 8,
                             ),
-                            Column(
-                              children: [
-                                SizedBox(height: 20),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, right: 10),
-                                  child: SectionTitle(
-                                      title: "Sản phẩm vừa xem",
-                                      titleEnd: "Xem tất cả",
-                                      pressTitleEnd: () {
-                                        Get.to(() => ProductWatchMoreScreen(
-                                              title: "Sản phẩm vừa xem",
-                                              listProduct: productController
-                                                  .listProductWatched,
-                                            ));
-                                      }),
-                                ),
-                                SizedBox(height: 10),
-                                Container(
-                                  height: 251,
-                                  alignment: Alignment.topLeft,
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: Row(
-                                      children: productController
-                                          .listProductWatched
-                                          .map((product) => ProductItemWidget(
-                                                width: 180,
-                                                product: product,
-                                              ))
-                                          .toList(),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                            productController.listProductWatched.isEmpty ||
+                                    productController
+                                            .listProductWatched.length ==
+                                        0
+                                ? Column(
+                                    children: [
+                                      SizedBox(height: 20),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: SectionTitle(
+                                            title: "Sản phẩm vừa xem",
+                                            titleEnd: "Xem tất cả",
+                                            pressTitleEnd: () {
+                                              Get.to(() =>
+                                                  ProductWatchMoreScreen(
+                                                    title: "Sản phẩm vừa xem",
+                                                    listProduct:
+                                                        productController
+                                                            .listProductWatched,
+                                                  ));
+                                            }),
+                                      ),
+                                      SizedBox(height: 10),
+                                      Container(
+                                        height: 251,
+                                        alignment: Alignment.topLeft,
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Row(
+                                            children: productController
+                                                .listProductWatched
+                                                .map((product) =>
+                                                    ProductItemWidget(
+                                                      width: 180,
+                                                      product: product,
+                                                    ))
+                                                .toList(),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : Container(),
                           ],
                         )
                       ],

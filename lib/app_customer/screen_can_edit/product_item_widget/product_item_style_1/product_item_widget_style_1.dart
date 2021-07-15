@@ -43,9 +43,13 @@ class ProductItemWidgetStyle1 extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      Get.to(ProductScreen(
-                        product: product,
-                      ));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProductScreen(
+                                  product: product,
+                                )),
+                      );
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,

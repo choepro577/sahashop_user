@@ -52,9 +52,13 @@ class ProductItemWidgetStyle5 extends StatelessWidget {
               ),
               child: InkWell(
                 onTap: () {
-                  Get.to(ProductScreen(
-                    product: product,
-                  ));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ProductScreen(
+                              product: product,
+                            )),
+                  );
                 },
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -80,9 +84,7 @@ class ProductItemWidgetStyle5 extends StatelessWidget {
                         Container(
                           height: 75,
                           width: width,
-                          decoration: BoxDecoration(
-
-                          ),
+                          decoration: BoxDecoration(),
                           child: Stack(
                             children: [
                               Positioned(
@@ -173,7 +175,6 @@ class ProductItemWidgetStyle5 extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-
                                       Container(
                                         padding: const EdgeInsets.only(
                                             left: 5.0, right: 5.0),
@@ -192,33 +193,36 @@ class ProductItemWidgetStyle5 extends StatelessWidget {
                                       product.productDiscount == null
                                           ? Container()
                                           : Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 5.0, right: 5.0),
-                                        child: Text(
-                                          "${SahaStringUtils().convertToMoney(product.price)}đ",
-                                          style: TextStyle(
-                                              decoration: TextDecoration
-                                                  .lineThrough,
-                                              color:
-                                              product.productDiscount ==
-                                                  null
-                                                  ? Theme.of(context)
-                                                  .primaryColor
-                                                  : Colors.grey,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize:
-                                              product.productDiscount ==
-                                                  null
-                                                  ? 14
-                                                  : 10),
-                                        ),
-                                      ),
+                                              padding: const EdgeInsets.only(
+                                                  left: 5.0, right: 5.0),
+                                              child: Text(
+                                                "${SahaStringUtils().convertToMoney(product.price)}đ",
+                                                style: TextStyle(
+                                                    decoration: TextDecoration
+                                                        .lineThrough,
+                                                    color:
+                                                        product.productDiscount ==
+                                                                null
+                                                            ? Theme.of(context)
+                                                                .primaryColor
+                                                            : Colors.grey,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize:
+                                                        product.productDiscount ==
+                                                                null
+                                                            ? 14
+                                                            : 10),
+                                              ),
+                                            ),
                                     ],
                                   ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(right: 10),
-                                  child: Icon(Ionicons.cart_outline, color: Theme.of(context).primaryColor,),
+                                  child: Icon(
+                                    Ionicons.cart_outline,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
                                 )
                               ],
                             ),
@@ -254,7 +258,7 @@ class ProductItemWidgetStyle5 extends StatelessWidget {
                             top: 16,
                             right: 5,
                             child: Text(
-    "-${product.productDiscount!.value}%",
+                              "-${product.productDiscount!.value}%",
                               style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.bold,
@@ -315,15 +319,14 @@ class ProductItemWidgetStyle5 extends StatelessWidget {
                   top: 0,
                   right: -2.75,
                   child: Container(
-                    padding: EdgeInsets.only(left: 2,right: 2),
+                    padding: EdgeInsets.only(left: 2, right: 2),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(3),
-                      color: Colors.lightBlue
+                        borderRadius: BorderRadius.circular(3),
+                        color: Colors.lightBlue),
+                    child: Text(
+                      "MỚI RA MẮT",
+                      style: TextStyle(color: Colors.white, fontSize: 12),
                     ),
-                    child: Text("MỚI RA MẮT",style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12
-                    ),),
                   ),
                 ),
         ],

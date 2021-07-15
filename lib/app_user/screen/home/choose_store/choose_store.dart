@@ -131,19 +131,15 @@ class ItemStore extends StatelessWidget {
           child: Row(
             children: [
               ClipRRect(
-                borderRadius:
-                BorderRadius.circular(50.0),
+                borderRadius: BorderRadius.circular(50.0),
                 child: CachedNetworkImage(
                     height: 40,
                     width: 40,
                     fit: BoxFit.cover,
-                    imageUrl:store?.logoUrl ?? "",
-                    placeholder: (context,u) => SahaLoadingContainer(),
-                    errorWidget:
-                        (context, url, error) =>
-                        SahaEmptyImage()),
+                    imageUrl: store?.logoUrl ?? "",
+                    placeholder: (context, u) => SahaLoadingContainer(),
+                    errorWidget: (context, url, error) => SahaEmptyImage()),
               ),
-
               SizedBox(
                 width: 20,
               ),
