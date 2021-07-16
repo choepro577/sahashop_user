@@ -1,16 +1,16 @@
-import '../../remote/customer_service_manager.dart';
+import 'package:sahashop_user/app_customer/utils/store_info.dart';
 
+import '../../remote/customer_service_manager.dart';
 import 'package:sahashop_user/app_user/data/repository/handle_error.dart';
 import 'package:sahashop_user/app_user/model/cart.dart';
 import 'package:sahashop_user/app_user/model/order.dart';
-import 'package:sahashop_user/app_user/utils/user_info.dart';
 
 class CartRepository {
   Future<Cart?> getItemCart() async {
     try {
       var res = await CustomerServiceManager()
           .service!
-          .getItemCart(UserInfo().getCurrentStoreCode());
+          .getItemCart(StoreInfo().getCustomerStoreCode());
       return res;
     } catch (err) {
       handleError(err);
@@ -20,7 +20,7 @@ class CartRepository {
   Future<Cart?> addVoucherCart(String codeVoucher) async {
     try {
       var res = await CustomerServiceManager().service!.addVoucherCart(
-          UserInfo().getCurrentStoreCode(), {"code_voucher": codeVoucher});
+          StoreInfo().getCustomerStoreCode(), {"code_voucher": codeVoucher});
       return res;
     } catch (err) {
       //SahaAlert.showError(message: err.toString());
@@ -32,7 +32,7 @@ class CartRepository {
     try {
       var res = await CustomerServiceManager()
           .service!
-          .updateItemCart(UserInfo().getCurrentStoreCode(), {
+          .updateItemCart(StoreInfo().getCustomerStoreCode(), {
         "product_id": idProduct,
         "quantity": quantity,
         "distributes":
@@ -49,7 +49,7 @@ class CartRepository {
     try {
       var res = await CustomerServiceManager()
           .service!
-          .addItemCart(UserInfo().getCurrentStoreCode(), {
+          .addItemCart(StoreInfo().getCustomerStoreCode(), {
         "product_id": idProduct,
         "distributes":
             List<dynamic>.from(listDistributes.map((x) => x.toJson())),

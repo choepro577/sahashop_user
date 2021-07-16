@@ -18,13 +18,18 @@ class UserInfo {
   UserInfo._internal();
 
   Future<void> setCurrentStoreCode(String? code) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (code == null) {
-      await prefs.remove(CURRENT_STORE_CODE);
-    } else {
-      await prefs.setString(CURRENT_STORE_CODE, code);
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      if (code == null) {
+        await prefs.remove(CURRENT_STORE_CODE);
+      } else {
+        await prefs.setString(CURRENT_STORE_CODE, code);
+      }
+      this._currentStoreCode = code;
+    } catch (err) {
+      print(err.toString());
     }
-    this._currentStoreCode = code;
   }
 
   Future<void> setCurrentIdUser(int? idUser) async {

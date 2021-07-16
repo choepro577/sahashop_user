@@ -80,142 +80,201 @@ class AccountScreen extends StatelessWidget {
 
   Widget itemUser(ProfileUser user) {
     return Container(
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(10),
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+          Stack(
+            alignment: AlignmentDirectional.bottomCenter,
             children: [
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Container(
-                    margin: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                            color: Theme.of(Get.context!).primaryColor)),
+              Container(
+                height: 200,
+                width: Get.width,
+                child: Opacity(
+                  opacity: 0.8,
+                  child: CachedNetworkImage(
+                    height: 70,
+                    width: 70,
+                    imageUrl: user.avatarImage ?? "",
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => SahaLoadingContainer(),
+                    errorWidget: (context, url, error) => SahaEmptyImage(),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 30,
+                child: Container(
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                          color: Theme.of(Get.context!).primaryColor)),
+                  padding: EdgeInsets.all(5),
+                  child: ClipRRect(
+                    child: CachedNetworkImage(
+                      imageUrl: user.avatarImage ?? "",
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => SahaLoadingContainer(),
+                      errorWidget: (context, url, error) => SahaEmptyImage(),
+                    ),
+                    borderRadius: BorderRadius.circular(3000),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 10,
+                right: 10,
+                child: InkWell(
+                  onTap: () {
+                    Get.to(() => EditProfileUser(
+                              user: user,
+                            ))!
+                        .then((value) => {accountController.getUser()});
+                  },
+                  child: Container(
                     padding: EdgeInsets.all(5),
-                    child: ClipRRect(
-                      child: CachedNetworkImage(
-                        imageUrl: user.avatarImage ?? "",
-                        width: 60,
-                        height: 60,
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) => SahaLoadingContainer(),
-                        errorWidget: (context, url, error) => SahaEmptyImage(),
-                      ),
-                      borderRadius: BorderRadius.circular(3000),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Icon(
+                      Icons.edit_road_outlined,
+                      color: Colors.grey,
                     ),
                   ),
-                  Positioned(
-                    top: 0,
-                    right: -5,
-                    child: InkWell(
-                      onTap: () {
-                        Get.to(() => EditProfileUser(
-                                  user: user,
-                                ))!
-                            .then((value) => {accountController.getUser()});
-                      },
-                      child: Icon(
-                        Icons.edit_road_outlined,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ],
           ),
           SizedBox(
             height: 20,
           ),
-          Row(
-            children: [
-              Text(
-                'Họ và Tên:',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-              ),
-              Spacer(),
-              Text(
-                  '${user.name == null || user.name == "" ? "Chưa có tên" : user.name}'),
-            ],
+          Divider(
+            height: 1,
           ),
-          SizedBox(
-            height: 10,
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              children: [
+                Text(
+                  'Họ và Tên:',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                ),
+                Spacer(),
+                Text(
+                    '${user.name == null || user.name == "" ? "Chưa có tên" : user.name}'),
+              ],
+            ),
           ),
-          Row(
-            children: [
-              Text(
-                'Ngày sinh:',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-              ),
-              Spacer(),
-              Text(
-                  '${user.dateOfBirth == null ? "Chưa có ngày sinh" : SahaDateUtils().getDDMMYY(user.dateOfBirth!)}'),
-            ],
+          Divider(
+            height: 1,
           ),
-          SizedBox(
-            height: 10,
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              children: [
+                Text(
+                  'Giới tính:',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                ),
+                Spacer(),
+                Text(
+                    '${user.sex == 0 ? "Khác" : user.sex == 1 ? "Nam" : "Nữ"} '),
+              ],
+            ),
           ),
-          Row(
-            children: [
-              Text(
-                'Số điện thoại:',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-              ),
-              Spacer(),
-              Text(
-                '${user.phoneNumber ?? "Chưa có user Code"}',
-              ),
-            ],
+          Divider(
+            height: 1,
           ),
-          SizedBox(
-            height: 10,
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              children: [
+                Text(
+                  'Ngày sinh:',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                ),
+                Spacer(),
+                Text(
+                    '${user.dateOfBirth == null ? "Chưa có ngày sinh" : SahaDateUtils().getDDMMYY(user.dateOfBirth!)}'),
+              ],
+            ),
           ),
-          Row(
-            children: [
-              Text(
-                'Số cửa hàng:',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-              ),
-              Spacer(),
-              Text(
-                  "${(user.createMaximumStore == null) ? "Chưa có Cửa hàng" : user.createMaximumStore}"),
-            ],
+          Divider(
+            height: 1,
           ),
-          SizedBox(
-            height: 10,
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              children: [
+                Text(
+                  'Số điện thoại:',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                ),
+                Spacer(),
+                Text(
+                  '${user.phoneNumber ?? "Chưa có user Code"}',
+                ),
+              ],
+            ),
           ),
-          Row(
-            children: [
-              Text(
-                'Email:',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-              ),
-              Spacer(),
-              Text(
-                  "${(user.email == null || user.email == "") ? "Chưa có Email" : user.email}"),
-            ],
+          Divider(
+            height: 1,
           ),
-          SizedBox(
-            height: 10,
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              children: [
+                Text(
+                  'Số cửa hàng:',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                ),
+                Spacer(),
+                Text(
+                    "${(user.createMaximumStore == null) ? "Chưa có Cửa hàng" : user.createMaximumStore}"),
+              ],
+            ),
           ),
-          Row(
-            children: [
-              Text(
-                'Ngày tạo:',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-              ),
-              Spacer(),
-              Text(
-                  '${SahaDateUtils().getDDMMYY(user.createdAt ?? DateTime.now())}'),
-            ],
+          Divider(
+            height: 1,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              children: [
+                Text(
+                  'Email:',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                ),
+                Spacer(),
+                Text(
+                    "${(user.email == null || user.email == "") ? "Chưa có Email" : user.email}"),
+              ],
+            ),
+          ),
+          Divider(
+            height: 1,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              children: [
+                Text(
+                  'Ngày tạo:',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                ),
+                Spacer(),
+                Text(
+                    '${SahaDateUtils().getDDMMYY(user.createdAt ?? DateTime.now())}'),
+              ],
+            ),
+          ),
+          Divider(
+            height: 1,
           ),
           SizedBox(
             height: 20,

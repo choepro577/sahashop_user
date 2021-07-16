@@ -5,19 +5,20 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/app_customer/screen_can_edit/category_product_screen/category_product_style_2/search_text_field_screen/search_text_field_screen.dart';
+import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
+import 'package:sahashop_user/app_customer/components/empty/saha_empty_products_widget.dart';
+import 'package:sahashop_user/app_customer/components/product_item/product_item_loading_widget.dart';
+import 'package:sahashop_user/app_customer/screen_can_edit/category_product_screen/category_product_style_1/search_text_field_screen/search_text_field_screen.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/product_item_widget/product_item_widget.dart';
+import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
 import 'package:sahashop_user/app_customer/utils/color_utils.dart';
-import '../../../components/empty/saha_empty_image.dart';
-import '../../../components/empty/saha_empty_products_widget.dart';
-import '../../../components/product_item/product_item_loading_widget.dart';
-import '../../../screen_default/data_app_controller.dart';
-import 'dart:math' as math;
+import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/app_user/components/saha_user/text_field/saha_text_field_search.dart';
 import 'package:sahashop_user/app_user/controller/config_controller.dart';
 import 'package:sahashop_user/app_user/model/category.dart';
-import 'category_controller.dart';
+import 'dart:math' as math;
+import '../category_controller.dart';
 
 // ignore: must_be_immutable
 class CategoryProductStyle1 extends StatefulWidget {
@@ -34,7 +35,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
 
   final DataAppCustomerController dataAppCustomerController = Get.find();
 
-  final CategoryController categoryController = CategoryController();
+  CategoryController categoryController1 = new CategoryController();
 
   ScrollController _scrollController = new ScrollController();
 
@@ -44,12 +45,12 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
               _scrollController.position.maxScrollExtent &&
-          categoryController.isLoadingProductMore.value != true) {
-        categoryController.searchProduct(isLoadMore: true);
+          categoryController1.isLoadingProductMore.value != true) {
+        categoryController1.searchProduct(isLoadMore: true);
       }
     });
-    categoryController.init();
-
+    categoryController1.init();
+    print(categoryController1.categories.hashCode);
     SchedulerBinding.instance!.addPostFrameCallback((_) {
       if (widget.autoSearch) {
         onSearch();
@@ -60,8 +61,8 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
   void onSearch() {
     Get.to(SearchTextFiledScreen(
       onSubmit: (text, categoryId) {
-        categoryController.textEditingControllerSearch.text = text!;
-        categoryController.searchProduct(search: text);
+        categoryController1.textEditingControllerSearch.text = text!;
+        categoryController1.searchProduct(search: text);
       },
     ));
   }
@@ -93,7 +94,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                     },
                     child: SahaTextFieldSearch(
                       textEditingController:
-                          categoryController.textEditingControllerSearch,
+                          categoryController1.textEditingControllerSearch,
                       enabled: false,
                     )),
               ),
@@ -134,17 +135,17 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
             Expanded(
               child: Row(
                 children: [
-                  categoryController.isLoadingCategory.value
+                  categoryController1.isLoadingCategory.value
                       ? SahaLoadingWidget()
                       : Container(
                           width: 70,
                           color: Colors.white.withOpacity(0.8),
                           child: ListView.builder(
-                              itemCount: categoryController.categories.length,
+                              itemCount: categoryController1.categories.length,
                               itemBuilder: (context, index) {
                                 return buildItem(
                                     category:
-                                        categoryController.categories[index]);
+                                        categoryController1.categories[index]);
                               }),
                         ),
                   Expanded(child: buildList()),
@@ -160,18 +161,18 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
   Widget buildItemOrderBy({String? title, String? key, Function? onTap}) {
     return Obx(
       () {
-        bool? selected = key == categoryController.sortByShow.value;
+        bool? selected = key == categoryController1.sortByShow.value;
 
         return InkWell(
           onTap: () {
-            if (categoryController.sortByShow.value == "price" &&
+            if (categoryController1.sortByShow.value == "price" &&
                 key == "price") {
-              categoryController.searchProduct(
+              categoryController1.searchProduct(
                   sortBy: key,
-                  descending: !categoryController.descendingShow.value);
+                  descending: !categoryController1.descendingShow.value);
               return;
             }
-            categoryController.searchProduct(sortBy: key);
+            categoryController1.searchProduct(sortBy: key);
           },
           child: Row(
             children: [
@@ -196,7 +197,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                           key == "price" && selected
                               ? (Transform.rotate(
                                   angle:
-                                      (!categoryController.descendingShow.value
+                                      (!categoryController1.descendingShow.value
                                               ? -90
                                               : 90) *
                                           math.pi /
@@ -239,8 +240,8 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
 
   Widget buildList() {
     return Obx(() {
-      var isLoading = categoryController.isLoadingProduct.value;
-      var list = categoryController.products;
+      var isLoading = categoryController1.isLoadingProduct.value;
+      var list = categoryController1.products;
       return Padding(
         padding: const EdgeInsets.all(2.5),
         child: isLoading
@@ -270,7 +271,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                         mainAxisSpacing: 0,
                         crossAxisSpacing: 0,
                       ),
-                      categoryController.isLoadingProductMore.value
+                      categoryController1.isLoadingProductMore.value
                           ? Align(
                               alignment: Alignment.bottomCenter,
                               child: CupertinoActivityIndicator(),
@@ -289,22 +290,21 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
           border: Border(
             left: BorderSide(
                 color: SahaColorUtils().colorTextWithPrimaryColor(),
-                width:
-                    categoryController.categoryCurrent.value == category!.id
-                        ? 4
-                        : 0),
+                width: categoryController1.categoryCurrent.value == category!.id
+                    ? 4
+                    : 0),
             right: BorderSide(color: Colors.grey, width: 0.5),
             bottom: BorderSide(color: Colors.grey, width: 0.5),
           ),
-          color: categoryController.categoryCurrent.value == category.id
+          color: categoryController1.categoryCurrent.value == category.id
               ? Colors.white
               : null,
         ),
         child: InkWell(
           onTap: () {
-            categoryController.setCategoryCurrent(category);
+            categoryController1.setCategoryCurrent(category);
 
-            categoryController.searchProduct(idCategory: category.id);
+            categoryController1.searchProduct(idCategory: category.id);
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -332,8 +332,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                                 image: imageProvider, fit: BoxFit.cover),
                           ),
                         ),
-                        placeholder: (context, url) =>
-                            CircularProgressIndicator(),
+                        placeholder: (context, url) => SahaLoadingContainer(),
                         errorWidget: (context, url, error) => SahaEmptyImage(),
                         fit: BoxFit.cover,
                       ),
@@ -346,7 +345,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                 maxLines: 3,
                 style: TextStyle(
                     fontSize: 13,
-                    color: categoryController.categoryCurrent.value == category
+                    color: categoryController1.categoryCurrent.value == category
                         ? SahaColorUtils().colorTextWithPrimaryColor()
                         : Colors.black54),
                 textAlign: TextAlign.center,

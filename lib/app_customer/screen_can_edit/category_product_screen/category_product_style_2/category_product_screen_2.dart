@@ -16,7 +16,7 @@ import 'package:sahashop_user/app_user/components/saha_user/loading/loading_widg
 import 'package:sahashop_user/app_user/components/saha_user/text_field/saha_text_field_search.dart';
 import 'package:sahashop_user/app_user/controller/config_controller.dart';
 import 'package:sahashop_user/app_user/model/category.dart';
-import 'category_controller.dart';
+import '../category_controller.dart';
 import 'search_text_field_screen/search_text_field_screen.dart';
 
 class CategoryProductStyle2 extends StatefulWidget {
@@ -33,7 +33,7 @@ class _CategoryProductStyle2State extends State<CategoryProductStyle2> {
 
   final DataAppCustomerController dataAppCustomerController = Get.find();
 
-  final CategoryController categoryController = CategoryController();
+  CategoryController categoryController2 = new CategoryController();
 
   ScrollController _scrollController = new ScrollController();
 
@@ -43,12 +43,12 @@ class _CategoryProductStyle2State extends State<CategoryProductStyle2> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
               _scrollController.position.maxScrollExtent &&
-          categoryController.isLoadingProductMore.value != true) {
-        categoryController.searchProduct(isLoadMore: true);
+          categoryController2.isLoadingProductMore.value != true) {
+        categoryController2.searchProduct(isLoadMore: true);
       }
     });
-    categoryController.init();
-
+    categoryController2.init();
+    print(categoryController2.categories.hashCode);
     SchedulerBinding.instance!.addPostFrameCallback((_) {
       if (widget.autoSearch) {
         onSearch();
@@ -59,8 +59,8 @@ class _CategoryProductStyle2State extends State<CategoryProductStyle2> {
   void onSearch() {
     Get.to(SearchTextFiledScreen(
       onSubmit: (text, categoryId) {
-        categoryController.textEditingControllerSearch.text = text!;
-        categoryController.searchProduct(search: text);
+        categoryController2.textEditingControllerSearch.text = text!;
+        categoryController2.searchProduct(search: text);
       },
     ));
   }
@@ -92,7 +92,7 @@ class _CategoryProductStyle2State extends State<CategoryProductStyle2> {
                     },
                     child: SahaTextFieldSearch(
                       textEditingController:
-                          categoryController.textEditingControllerSearch,
+                          categoryController2.textEditingControllerSearch,
                       enabled: false,
                     )),
               ),
@@ -119,7 +119,7 @@ class _CategoryProductStyle2State extends State<CategoryProductStyle2> {
           children: [
             Row(
               children: [
-                categoryController.isLoadingCategory.value
+                categoryController2.isLoadingCategory.value
                     ? Container(
                         height: 60, child: Center(child: SahaLoadingWidget()))
                     : Expanded(
@@ -129,11 +129,11 @@ class _CategoryProductStyle2State extends State<CategoryProductStyle2> {
                           color: Colors.white.withOpacity(0.8),
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
-                              itemCount: categoryController.categories.length,
+                              itemCount: categoryController2.categories.length,
                               itemBuilder: (context, index) {
                                 return buildItem(
                                     category:
-                                        categoryController.categories[index]);
+                                        categoryController2.categories[index]);
                               }),
                         ),
                       ),
@@ -187,18 +187,18 @@ class _CategoryProductStyle2State extends State<CategoryProductStyle2> {
   Widget buildItemOrderBy({String? title, String? key, Function? onTap}) {
     return Obx(
       () {
-        bool? selected = key == categoryController.sortByShow.value;
+        bool? selected = key == categoryController2.sortByShow.value;
 
         return InkWell(
           onTap: () {
-            if (categoryController.sortByShow.value == "price" &&
+            if (categoryController2.sortByShow.value == "price" &&
                 key == "price") {
-              categoryController.searchProduct(
+              categoryController2.searchProduct(
                   sortBy: key,
-                  descending: !categoryController.descendingShow.value);
+                  descending: !categoryController2.descendingShow.value);
               return;
             }
-            categoryController.searchProduct(sortBy: key);
+            categoryController2.searchProduct(sortBy: key);
           },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -227,7 +227,7 @@ class _CategoryProductStyle2State extends State<CategoryProductStyle2> {
                             ),
                             key == "price" && selected
                                 ? (Transform.rotate(
-                                    angle: (!categoryController
+                                    angle: (!categoryController2
                                                 .descendingShow.value
                                             ? -90
                                             : 90) *
@@ -273,8 +273,8 @@ class _CategoryProductStyle2State extends State<CategoryProductStyle2> {
 
   Widget buildList() {
     return Obx(() {
-      var isLoading = categoryController.isLoadingProduct.value;
-      var list = categoryController.products;
+      var isLoading = categoryController2.isLoadingProduct.value;
+      var list = categoryController2.products;
       return Padding(
         padding: const EdgeInsets.all(2.5),
         child: isLoading
@@ -304,7 +304,7 @@ class _CategoryProductStyle2State extends State<CategoryProductStyle2> {
                         mainAxisSpacing: 0,
                         crossAxisSpacing: 0,
                       ),
-                      categoryController.isLoadingProductMore.value
+                      categoryController2.isLoadingProductMore.value
                           ? Align(
                               alignment: Alignment.bottomCenter,
                               child: CupertinoActivityIndicator(),
@@ -324,22 +324,21 @@ class _CategoryProductStyle2State extends State<CategoryProductStyle2> {
           border: Border(
             left: BorderSide(
                 color: SahaColorUtils().colorTextWithPrimaryColor(),
-                width:
-                    categoryController.categoryCurrent.value == category!.id
-                        ? 4
-                        : 0),
+                width: categoryController2.categoryCurrent.value == category!.id
+                    ? 4
+                    : 0),
             right: BorderSide(color: Colors.grey, width: 0.5),
             bottom: BorderSide(color: Colors.grey, width: 0.5),
           ),
-          color: categoryController.categoryCurrent.value == category.id
+          color: categoryController2.categoryCurrent.value == category.id
               ? Colors.white
               : null,
         ),
         child: InkWell(
           onTap: () {
-            categoryController.setCategoryCurrent(category);
+            categoryController2.setCategoryCurrent(category);
 
-            categoryController.searchProduct(idCategory: category.id);
+            categoryController2.searchProduct(idCategory: category.id);
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -378,7 +377,7 @@ class _CategoryProductStyle2State extends State<CategoryProductStyle2> {
                 overflow: TextOverflow.fade,
                 style: TextStyle(
                     fontSize: 13,
-                    color: categoryController.categoryCurrent.value == category
+                    color: categoryController2.categoryCurrent.value == category
                         ? SahaColorUtils().colorTextWithPrimaryColor()
                         : Colors.black54),
                 textAlign: TextAlign.center,

@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class FlowData {
   static final FlowData _singleton = FlowData._internal();
 
-  bool _isOnline = true;
+  bool _isOnline = false;
 
   factory FlowData() {
     return _singleton;

@@ -1,9 +1,7 @@
-import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_user/components/saha_user/app_bar/saha_appbar.dart';
-import 'package:sahashop_user/app_user/components/saha_user/text_field/sahashopTextField.dart';
 import 'package:sahashop_user/app_user/data/remote/response-request/store/type_store_respones.dart';
 import 'package:sahashop_user/app_user/screen/sign_up/sign_up_screen_controller.dart';
 import 'package:sahashop_user/app_user/utils/keyboard.dart';
@@ -189,11 +187,13 @@ class _AddStoreState extends State<AddStore> {
                       if (value!.length < 2) {
                         return 'Mã cửa hàng chứa 2 kí tự trở lên';
                       }
-                      if (GetUtils.isAlphabetOnly(value.substring(0,1)) == false) {
+                      if (GetUtils.isAlphabetOnly(value.substring(0, 1)) ==
+                          false) {
                         return 'Phải bắt đầu bằng chữ';
                       }
 
-                      if (RegExp(r'[!@#<>?":_`~;[\]\\|=+)(*&^%-]').hasMatch(value)) {
+                      if (RegExp(r'[!@#<>?":_`~;[\]\\|=+)(*&^%-]')
+                          .hasMatch(value)) {
                         return 'Không được chứa ký tự đặc biệt';
                       }
                       return null;
@@ -204,7 +204,8 @@ class _AddStoreState extends State<AddStore> {
                       hintText: 'Mời nhập địa chỉ cửa hàng',
                       filled: true,
                       fillColor: Colors.white,
-                      helperText: "Mã này là tên miền truy cập trang web bán hàng",
+                      helperText:
+                          "Mã này là tên miền truy cập trang web bán hàng",
                       contentPadding: const EdgeInsets.only(
                           left: 14.0, bottom: 6.0, top: 8.0),
                       focusedBorder: OutlineInputBorder(
@@ -225,55 +226,54 @@ class _AddStoreState extends State<AddStore> {
                       child: Text("Lĩnh vực"),
                     )),
                 Obx(
-                  () => addStoreController.mapTypeShop.length ==0 ?
-                  Container() :
-                  Container(
-                    width: Get.width,
-                    color: Colors.white,
-                    margin: EdgeInsets.all(10),
-                    padding: EdgeInsets.only(left: 10),
-                    child: DropdownButton<Map<String, String?>>(
-                      focusColor: Colors.white,
-                      value: chooseDropDownValue,
-                      //elevation: 5,
-                      style: TextStyle(color: Colors.white),
-                      iconEnabledColor: Colors.black,
-                      items: addStoreController.mapTypeShop
-                          .map<DropdownMenuItem<Map<String, String?>>>(
-                              (Map<String, String?> value) {
-                        return DropdownMenuItem<Map<String, String?>>(
-                          value: value,
-                          child: Text(
-                            "${value.values.first}",
-                            style: TextStyle(color: Colors.black),
+                  () => addStoreController.mapTypeShop.length == 0
+                      ? Container()
+                      : Container(
+                          width: Get.width,
+                          color: Colors.white,
+                          margin: EdgeInsets.all(10),
+                          padding: EdgeInsets.only(left: 10),
+                          child: DropdownButton<Map<String, String?>>(
+                            focusColor: Colors.white,
+                            value: chooseDropDownValue,
+                            //elevation: 5,
+                            style: TextStyle(color: Colors.white),
+                            iconEnabledColor: Colors.black,
+                            items: addStoreController.mapTypeShop
+                                .map<DropdownMenuItem<Map<String, String?>>>(
+                                    (Map<String, String?> value) {
+                              return DropdownMenuItem<Map<String, String?>>(
+                                value: value,
+                                child: Text(
+                                  "${value.values.first}",
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              );
+                            }).toList(),
+                            hint: Text(
+                              "Chọn loại cửa hàng kinh doanh",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            onChanged: (Map<String, String?>? value) {
+                              setState(() {
+                                FocusScope.of(context)
+                                    .requestFocus(new FocusNode());
+                                chooseDropDownValue = value;
+                                _chosenValue = value!.keys.first;
+                              });
+                            },
                           ),
-                        );
-                      }).toList(),
-                      hint: Text(
-                        "Chọn loại cửa hàng kinh doanh",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      onChanged: (Map<String, String?>? value) {
-                        setState(() {
-                          FocusScope.of(context).requestFocus(new FocusNode());
-                          chooseDropDownValue = value;
-                          _chosenValue = value!.keys.first;
-                        });
-                      },
-                    ),
-                  ),
+                        ),
                 ),
                 SizedBox(
                   height: 15,
                 ),
                 ElevatedButton(
-
-                  style:ButtonStyle(
-                    backgroundColor:MaterialStateProperty.all(Colors.white)
-                  ),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.white)),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
@@ -291,8 +291,7 @@ class _AddStoreState extends State<AddStore> {
                     child: Center(
                       child: Text(
                         "Tạo",
-                        style: TextStyle(fontSize: 15,
-                        color: Colors.black),
+                        style: TextStyle(fontSize: 15, color: Colors.black),
                       ),
                     ),
                   ),

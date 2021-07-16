@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
 import 'package:sahashop_user/app_user/controller/config_controller.dart';
-import 'package:sahashop_user/app_user/model/category.dart';
 
 import '../repository_widget_config.dart';
 import 'input_model_products.dart';

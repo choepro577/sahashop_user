@@ -2,13 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
+import 'package:sahashop_user/app_customer/utils/customer_info.dart';
 import 'package:sahashop_user/app_user/components/saha_user/app_bar/saha_appbar.dart';
 import 'package:sahashop_user/app_user/components/saha_user/button/saha_button.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_widget.dart';
 import 'package:sahashop_user/app_user/const/constant.dart';
 import 'package:sahashop_user/app_user/data/remote/response-request/store/all_store_response.dart';
-import 'package:sahashop_user/app_user/utils/user_info.dart';
 import 'package:sahashop_user/components/app_customer/components/empty/saha_empty_store.dart';
 
 import '../home_controller.dart';
@@ -71,11 +71,14 @@ class ChooseStoreScreen extends StatelessWidget {
                                                 selected: listStore[index].id ==
                                                     idSelected,
                                                 index: index + 1,
-                                                onChange: (store) {
+                                                onChange: (Store store) {
                                                   homeController
                                                       .setNewStoreCurrent(
                                                           store);
-
+                                                  if (store.id != idSelected) {
+                                                    CustomerInfo()
+                                                        .logoutWhenSwitchStore();
+                                                  }
                                                   Get.back();
                                                 },
                                               ),

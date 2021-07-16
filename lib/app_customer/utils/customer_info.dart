@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_customer/const/const_database_shared_preferences.dart';
 import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/app_user/const/const_database_shared_preferences.dart';
@@ -17,7 +18,7 @@ class CustomerInfo {
 
   CustomerInfo._internal();
 
-  Future<void> setCurrentStoreCode(String code) async {
+  Future<void> setCurrentStoreCode(String? code) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (code == null) {
       await prefs.remove(CURRENT_STORE_CODE);
@@ -27,7 +28,7 @@ class CustomerInfo {
     this._currentStoreCode = code;
   }
 
-  Future<void> setCurrentIdUser(int idUser) async {
+  Future<void> setCurrentIdUser(int? idUser) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (idUser == null) {
       await prefs.remove(CURRENT_USER_ID);
@@ -75,10 +76,17 @@ class CustomerInfo {
     this._currentStoreCode = prefs.getString(CURRENT_STORE_CODE) ?? null;
   }
 
+  Future<void> logoutWhenSwitchStore() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove(CUSTOMER_TOKEN);
+    //prefs.remove(CURRENT_STORE_CODE);
+  }
+
   Future<void> logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove(CUSTOMER_TOKEN);
-    prefs.remove(CURRENT_STORE_CODE);
+    //prefs.remove(CURRENT_STORE_CODE);
+
     DataAppCustomerController dataAppCustomerController = Get.find();
     dataAppCustomerController.checkLogin();
     dataAppCustomerController.getInfoCustomer();
@@ -87,6 +95,4 @@ class CustomerInfo {
 
     SahaAlert.showSuccess(message: "Đã đăng xuất");
   }
-
-
 }

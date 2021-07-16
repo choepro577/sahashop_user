@@ -22,8 +22,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
 
   final DataAppCustomerController dataAppController =
       Get.put(DataAppCustomerController());
-  final SahaDataController sahaDataController =
-      Get.find();
+  final SahaDataController sahaDataController = Get.find();
   GlobalKey configShowCase = GlobalKey();
 
   UIDataConfig uiDataConfig = new UIDataConfig();
@@ -41,26 +40,25 @@ class _ConfigScreenState extends State<ConfigScreen> {
               Spacer(),
               InkWell(
                 onTap: () {
-                  runMainAppCustomer(context);
+                  runMainAppCustomer();
                 },
                 child: Container(
-                    child: Row(
-                      children: [
-                        SvgPicture.asset('assets/app_user/svg/config/preview.svg',
-                            height: 30, width: 30),
-                        SizedBox(
-                          width: 6,
-                        ),
-                        Text(
-                          "Xem trước",
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        )
-                      ],
-                    ),
-
+                  child: Row(
+                    children: [
+                      SvgPicture.asset('assets/app_user/svg/config/preview.svg',
+                          height: 30, width: 30),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        "Xem trước",
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -76,28 +74,25 @@ class _ConfigScreenState extends State<ConfigScreen> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                             Container(
-                                child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                            width: MediaQuery.of(context).size.width *
-                                                0.15,
-                                            color: Colors.grey[200],
-                                            child: ListView.builder(
-                                                itemCount: uiDataConfig.UIData.length,
-                                                itemBuilder: (context, index) {
-                                                  return buildItem(index: index);
-                                                }),
-
-                                        ),
-                                      ),
-                                    ],
-
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.15,
+                                      color: Colors.grey[200],
+                                      child: ListView.builder(
+                                          itemCount: uiDataConfig.UIData.length,
+                                          itemBuilder: (context, index) {
+                                            return buildItem(index: index);
+                                          }),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-
-                             ),
                             Expanded(
                               child: SingleChildScrollView(
                                 controller: sahaDataController.scrollController,
@@ -208,24 +203,23 @@ class _ConfigScreenState extends State<ConfigScreen> {
                       children: [
                         Obx(
                           () => SahaButtonFullParent(
-                              color: Theme.of(context).primaryColor,
-                              textColor: Theme.of(context)
-                                  .primaryTextTheme
-                                  .bodyText1!
-                                  .color,
-                              onPressed:
-                                  configController.isLoadingCreate.value == true
-                                      ? null
-                                      : () {
-                                          configController.createAppTheme();
-                                          configController.updateTheme();
-                                        },
-                              text: configController.isLoadingCreate.value == true
-                                  ? "..."
-                                  : "Cập nhật giao diện",
-                            ),
+                            color: Theme.of(context).primaryColor,
+                            textColor: Theme.of(context)
+                                .primaryTextTheme
+                                .bodyText1!
+                                .color,
+                            onPressed:
+                                configController.isLoadingCreate.value == true
+                                    ? null
+                                    : () {
+                                        configController.createAppTheme();
+                                        configController.updateTheme();
+                                      },
+                            text: configController.isLoadingCreate.value == true
+                                ? "..."
+                                : "Cập nhật giao diện",
                           ),
-
+                        ),
                         SizedBox(
                           height: 10,
                         )
@@ -240,7 +234,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
       {GlobalKey<State<StatefulWidget>>? key,
       String? title,
       String? description,
-        BuildContext? context,
+      BuildContext? context,
       Function? onTargetClick,
       required Widget child}) {
     return Showcase(
@@ -249,9 +243,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
       //title: title,
       description: description,
       titleTextStyle: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
-          color: Colors.teal),
+          fontSize: 18, fontWeight: FontWeight.w600, color: Colors.teal),
       contentPadding: EdgeInsets.all(10.0),
       showcaseBackgroundColor: Colors.teal,
       textColor: Colors.white,
