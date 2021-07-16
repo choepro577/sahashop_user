@@ -84,7 +84,7 @@ class SearchBarType1 extends StatelessWidget {
                     ),
                     child: SvgPicture.asset(
                       "assets/icons/cart_icon.svg",
-                      color: SahaColorUtils().colorTextWithPrimaryColor(),
+                      color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
                     ),
                   ),
                 ),
@@ -122,7 +122,7 @@ class SearchBarType1 extends StatelessWidget {
                   ),
                   child: SvgPicture.asset(
                     "assets/icons/chat.svg",
-                    color: SahaColorUtils().colorTextWithPrimaryColor(),
+                    color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
                   ),
                 ),
               ),

@@ -10,9 +10,14 @@ class SahaColorUtils {
     return _singleton;
   }
 
-  Color colorTextWithPrimaryColor() {
+  Color colorPrimaryTextWithWhiteBackground() {
    return Theme.of(Get.context!).primaryColor.computeLuminance()
         > 0.5 ? Colors.black : Theme.of(Get.context!).primaryColor;
+  }
+
+  Color colorTextWithPrimaryColor() {
+    return Theme.of(Get.context!).primaryColor.computeLuminance()
+        > 0.5 ? Colors.black : Colors.white;
   }
 
 }

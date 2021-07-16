@@ -204,7 +204,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                                   child: Icon(
                                     Icons.arrow_right_alt_outlined,
                                     color: SahaColorUtils()
-                                        .colorTextWithPrimaryColor(),
+                                        .colorPrimaryTextWithWhiteBackground(),
                                   ),
                                 ))
                               : Container()
@@ -213,7 +213,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                       Container(
                         height: 2,
                         color: selected
-                            ? SahaColorUtils().colorTextWithPrimaryColor()
+                            ? SahaColorUtils().colorPrimaryTextWithWhiteBackground()
                             : null,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -288,7 +288,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
         decoration: BoxDecoration(
           border: Border(
             left: BorderSide(
-                color: SahaColorUtils().colorTextWithPrimaryColor(),
+                color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
                 width:
                     categoryController.categoryCurrent.value == category!.id
                         ? 4
@@ -316,7 +316,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                 child: category.id == null
                     ? SvgPicture.asset(
                         "assets/svg/all.svg",
-                        color: SahaColorUtils().colorTextWithPrimaryColor(),
+                        color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
                         width: 25.0,
                         height: 25.0,
                       )
@@ -347,7 +347,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                 style: TextStyle(
                     fontSize: 13,
                     color: categoryController.categoryCurrent.value == category
-                        ? SahaColorUtils().colorTextWithPrimaryColor()
+                        ? SahaColorUtils().colorPrimaryTextWithWhiteBackground()
                         : Colors.black54),
                 textAlign: TextAlign.center,
               ),

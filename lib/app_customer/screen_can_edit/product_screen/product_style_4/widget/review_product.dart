@@ -50,7 +50,7 @@ class ReviewProduct extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "ĐÁNH GIÁ SẢN PHẨM",
+                      "Đánh giá & Nhận xét",
                       style:
                           TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                     ),

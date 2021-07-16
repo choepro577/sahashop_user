@@ -236,7 +236,7 @@ class _CategoryProductStyle2State extends State<CategoryProductStyle2> {
                                     child: Icon(
                                       Icons.arrow_right_alt_outlined,
                                       color: SahaColorUtils()
-                                          .colorTextWithPrimaryColor(),
+                                          .colorPrimaryTextWithWhiteBackground(),
                                     ),
                                   ))
                                 : Container()
@@ -247,7 +247,7 @@ class _CategoryProductStyle2State extends State<CategoryProductStyle2> {
                         width: 2,
                         height: double.infinity,
                         color: selected
-                            ? SahaColorUtils().colorTextWithPrimaryColor()
+                            ? SahaColorUtils().colorPrimaryTextWithWhiteBackground()
                             : null,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -323,7 +323,7 @@ class _CategoryProductStyle2State extends State<CategoryProductStyle2> {
         decoration: BoxDecoration(
           border: Border(
             left: BorderSide(
-                color: SahaColorUtils().colorTextWithPrimaryColor(),
+                color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
                 width:
                     categoryController.categoryCurrent.value == category!.id
                         ? 4
@@ -350,7 +350,7 @@ class _CategoryProductStyle2State extends State<CategoryProductStyle2> {
                     ? Center(
                         child: SvgPicture.asset(
                           "assets/svg/all.svg",
-                          color: SahaColorUtils().colorTextWithPrimaryColor(),
+                          color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
                           width: 20.0,
                           height: 20.0,
                         ),
@@ -379,7 +379,7 @@ class _CategoryProductStyle2State extends State<CategoryProductStyle2> {
                 style: TextStyle(
                     fontSize: 13,
                     color: categoryController.categoryCurrent.value == category
-                        ? SahaColorUtils().colorTextWithPrimaryColor()
+                        ? SahaColorUtils().colorPrimaryTextWithWhiteBackground()
                         : Colors.black54),
                 textAlign: TextAlign.center,
               ),

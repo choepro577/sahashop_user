@@ -23,7 +23,7 @@ Widget buildImageButton({String? imageUrl, String? typeAction}) {
         "assets/app_customer/home_button/phone_call.svg",
         width: 35,
         height: 35,
-        color: SahaColorUtils().colorTextWithPrimaryColor(),
+        color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
       ),
     );
   } else if (typeAction == mapTypeAction[TYPE_ACTION.MESSAGE_TO_SHOP]) {
@@ -31,56 +31,56 @@ Widget buildImageButton({String? imageUrl, String? typeAction}) {
       child: SvgPicture.asset("assets/app_customer/home_button/chat.svg",
           width: 35,
           height: 35,
-          color: SahaColorUtils().colorTextWithPrimaryColor()),
+          color: SahaColorUtils().colorPrimaryTextWithWhiteBackground()),
     );
   } else if (typeAction == mapTypeAction[TYPE_ACTION.CALL]) {
     svgImage = Center(
       child: SvgPicture.asset("assets/app_customer/home_button/phone_call.svg",
           width: 35,
           height: 35,
-          color: SahaColorUtils().colorTextWithPrimaryColor()),
+          color: SahaColorUtils().colorPrimaryTextWithWhiteBackground()),
     );
   } else if (typeAction == mapTypeAction[TYPE_ACTION.VOUCHER]) {
     svgImage = Center(
       child: SvgPicture.asset("assets/app_customer/home_button/voucher.svg",
           width: 35,
           height: 35,
-          color: SahaColorUtils().colorTextWithPrimaryColor()),
+          color: SahaColorUtils().colorPrimaryTextWithWhiteBackground()),
     );
   } else if (typeAction == mapTypeAction[TYPE_ACTION.QR]) {
     svgImage = Center(
       child: SvgPicture.asset("assets/svg/qr-code.svg",
           width: 35,
           height: 35,
-          color: SahaColorUtils().colorTextWithPrimaryColor()),
+          color: SahaColorUtils().colorPrimaryTextWithWhiteBackground()),
     );
   } else if (typeAction == mapTypeAction[TYPE_ACTION.PRODUCTS_TOP_SALES]) {
     svgImage = Center(
       child: SvgPicture.asset("assets/app_customer/home_button/top_three.svg",
           width: 35,
           height: 35,
-          color: SahaColorUtils().colorTextWithPrimaryColor()),
+          color: SahaColorUtils().colorPrimaryTextWithWhiteBackground()),
     );
   } else if (typeAction == mapTypeAction[TYPE_ACTION.PRODUCTS_NEW]) {
     svgImage = Center(
       child: SvgPicture.asset("assets/app_customer/home_button/new.svg",
           width: 30,
           height: 30,
-          color: SahaColorUtils().colorTextWithPrimaryColor()),
+          color: SahaColorUtils().colorPrimaryTextWithWhiteBackground()),
     );
   } else if (typeAction == mapTypeAction[TYPE_ACTION.PRODUCTS_DISCOUNT]) {
     svgImage = Center(
       child: SvgPicture.asset("assets/app_customer/home_button/coupon.svg",
           width: 35,
           height: 35,
-          color: SahaColorUtils().colorTextWithPrimaryColor()),
+          color: SahaColorUtils().colorPrimaryTextWithWhiteBackground()),
     );
   } else if (typeAction == mapTypeAction[TYPE_ACTION.SCORE]) {
     svgImage = Center(
       child: SvgPicture.asset("assets/app_customer/home_button/score.svg",
           width: 35,
           height: 35,
-          color: SahaColorUtils().colorTextWithPrimaryColor()),
+          color: SahaColorUtils().colorPrimaryTextWithWhiteBackground()),
     );
   } else {
     if (imageUrl != null) {

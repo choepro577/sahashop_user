@@ -49,13 +49,7 @@ class ProductItemWidgetStyle2 extends StatelessWidget {
                   ),
                 ],
               ),
-              child: InkWell(
-                onTap: () {
-                  Get.to(ProductScreen(
-                    product: product,
-                  ));
-                },
-                child: Column(
+              child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Expanded(
@@ -141,7 +135,7 @@ class ProductItemWidgetStyle2 extends StatelessWidget {
                                       : "${SahaStringUtils().convertToMoney(product.productDiscount!.discountPrice)}đ",
                                   style: TextStyle(
                                       color: SahaColorUtils()
-                                          .colorTextWithPrimaryColor(),
+                                          .colorPrimaryTextWithWhiteBackground(),
                                       fontWeight: FontWeight.w600,
                                       fontSize: 14),
                                   maxLines: 1,
@@ -179,7 +173,6 @@ class ProductItemWidgetStyle2 extends StatelessWidget {
                       ],
                     )
                   ],
-                ),
               ),
             ),
           ),

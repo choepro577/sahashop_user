@@ -7,6 +7,12 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:sahashop_user/app_customer/screen_can_edit/product_screen/product_style_2/product_controller.dart';
+import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
+import 'package:sahashop_user/app_customer/screen_default/product_watch_more/product_watch_more_screen.dart';
+import 'package:sahashop_user/app_customer/utils/color_utils.dart';
+import 'package:sahashop_user/app_user/utils/string_utils.dart';
 import '../../../components/modal/modal_bottom_option_buy_product.dart';
 import '../../product_item_widget/product_item_widget.dart';
 import '../../../screen_default/cart_screen/cart_screen_1.dart';
@@ -18,12 +24,12 @@ import 'package:sahashop_user/app_user/model/order.dart';
 import 'package:sahashop_user/app_user/model/product.dart';
 import 'package:sahashop_user/app_user/screen/home/widget/section_title.dart';
 
-import 'product_controller.dart';
 import 'widget/review_product.dart';
 
 // ignore: must_be_immutable
 class ProductScreen5 extends StatelessWidget {
   late ProductController productController;
+  DataAppCustomerController dataAppCustomerController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -86,187 +92,66 @@ class ProductScreen5 extends StatelessWidget {
                                         ))
                                     .toList()),
                             Positioned(
-                              width: Get.width,
-                              bottom: 10,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: productController
-                                    .productShow.value.images!
-                                    .map((url) {
-                                  int index = productController
-                                      .productShow.value.images!
-                                      .indexOf(url);
-                                  return Obx(
-                                    () => Container(
-                                      width: 8.0,
-                                      height: 8.0,
-                                      margin: EdgeInsets.symmetric(
-                                          vertical: 10.0, horizontal: 2.0),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: productController
-                                                    .currentImage.value ==
-                                                index
-                                            ? Color.fromRGBO(0, 0, 0, 0.9)
-                                            : Color.fromRGBO(0, 0, 0, 0.4),
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Container(
-                                    padding: EdgeInsets.all(3),
-                                    decoration: BoxDecoration(
-                                      color: Colors.deepOrange,
-                                      borderRadius: BorderRadius.circular(2),
-                                    ),
-                                    child: Text(
-                                      "Yêu thích",
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                ),
-                                productController.productShow.value.isNew! ==
-                                        true
-                                    ? Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Container(
-                                          padding: EdgeInsets.all(3),
-                                          decoration: BoxDecoration(
-                                            color: Colors.redAccent,
-                                            borderRadius:
-                                                BorderRadius.circular(2),
-                                          ),
-                                          child: Text(
-                                            "Sản phẩm mới",
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                        ),
-                                      )
-                                    : Container(),
-                                productController
-                                            .productShow.value.isTopSale! ==
-                                        true
-                                    ? Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Container(
-                                          padding: EdgeInsets.all(3),
-                                          decoration: BoxDecoration(
-                                            color: Colors.blueAccent,
-                                            borderRadius:
-                                                BorderRadius.circular(2),
-                                          ),
-                                          child: Text(
-                                            "Bán chạy",
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                        ),
-                                      )
-                                    : Container(),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                "${productController.productShow.value.name}",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500),
-                                maxLines: 2,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
+                              bottom: 0,
+                              right: 0,
                               child: Row(
                                 children: [
-                                  SahaMoneyText(
-                                    price: productController
-                                        .productShow.value.price,
-                                    color: Theme.of(context)
-                                                .primaryColor
-                                                .computeLuminance() >
-                                            0.5
-                                        ? Colors.black
-                                        : Theme.of(context).primaryColor,
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Container(
+                                      padding: EdgeInsets.all(3),
+                                      decoration: BoxDecoration(
+                                        color: Colors.deepOrange,
+                                        borderRadius: BorderRadius.circular(2),
+                                      ),
+                                      child: Text(
+                                        "Yêu thích",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
                                   ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  productController.hasInCombo.value
-                                      ? Container(
-                                          height: 20,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              ),
+                                  productController.productShow.value.isNew! ==
+                                          true
+                                      ? Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Container(
+                                            padding: EdgeInsets.all(3),
+                                            decoration: BoxDecoration(
+                                              color: Colors.redAccent,
                                               borderRadius:
-                                                  BorderRadius.circular(2)),
-                                          child: Center(
-                                            child: Row(
-                                              children: [
-                                                SizedBox(
-                                                  width: 3,
-                                                ),
-                                                productController
-                                                            .discountComboType
-                                                            .value ==
-                                                        1
-                                                    ? Text(
-                                                        "Combo giảm ${productController.valueComboType.value}%",
-                                                        style: TextStyle(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .primaryColor,
-                                                          fontSize: 12,
-                                                        ),
-                                                      )
-                                                    : Row(
-                                                        children: [
-                                                          Text(
-                                                            "Combo giảm ",
-                                                            style: TextStyle(
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .primaryColor,
-                                                              fontSize: 12,
-                                                            ),
-                                                          ),
-                                                          SahaMoneyText(
-                                                            sizeText: 12,
-                                                            sizeVND: 10,
-                                                            price: productController
-                                                                .valueComboType
-                                                                .value
-                                                                .toDouble(),
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .primaryColor,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                SizedBox(
-                                                  width: 3,
-                                                ),
-                                              ],
+                                                  BorderRadius.circular(2),
+                                            ),
+                                            child: Text(
+                                              "Sản phẩm mới",
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          ),
+                                        )
+                                      : Container(),
+                                  productController
+                                              .productShow.value.isTopSale! ==
+                                          true
+                                      ? Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Container(
+                                            padding: EdgeInsets.all(3),
+                                            decoration: BoxDecoration(
+                                              color: Colors.blueAccent,
+                                              borderRadius:
+                                                  BorderRadius.circular(2),
+                                            ),
+                                            child: Text(
+                                              "Bán chạy",
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w600),
                                             ),
                                           ),
                                         )
@@ -274,50 +159,50 @@ class ProductScreen5 extends StatelessWidget {
                                 ],
                               ),
                             ),
+                            if (productController.productShow.value.images !=
+                                null)
+                              Positioned(
+                                bottom: 0,
+                                child: Obx(
+                                  () => Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      padding: EdgeInsets.only(
+                                          left: 5, right: 5, top: 2, bottom: 2),
+                                      decoration: BoxDecoration(
+                                          color: Colors.black.withOpacity(0.5),
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                      child: Text(
+                                        "${productController.currentImage.value + 1}/${productController.productShow.value.images!.length}",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 10),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                             Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
-                                    children: [
-                                      RatingBarIndicator(
-                                        rating: productController
-                                                    .averagedStars.value ==
-                                                0
-                                            ? 5
-                                            : productController
-                                                .averagedStars.value,
-                                        itemBuilder: (context, index) => Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                        ),
-                                        itemCount: 5,
-                                        itemSize: 15.0,
-                                        direction: Axis.horizontal,
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      if (productController.totalReview.value !=
-                                          0)
-                                        Text(
-                                            "${productController.totalReview.value}"),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Container(
-                                        width: 1,
-                                        height: 13,
-                                        decoration:
-                                            BoxDecoration(color: Colors.grey),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text("Top phổ biến"),
-                                    ],
+                                  Expanded(
+                                    child: Text(
+                                      "${productController.productShow.value.name}",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500),
+                                      maxLines: 2,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
                                   ),
                                   Row(
                                     children: [
@@ -333,7 +218,7 @@ class ProductScreen5 extends StatelessWidget {
                                                 },
                                                 child: SvgPicture.asset(
                                                   "assets/icons/heart.svg",
-                                                  color: Colors.grey,
+                                                  color: Colors.black87,
                                                 ),
                                               )
                                             : InkWell(
@@ -350,26 +235,260 @@ class ProductScreen5 extends StatelessWidget {
                                       SizedBox(
                                         width: 15,
                                       ),
-                                      IconButton(
-                                        onPressed: () {
+                                      InkWell(
+                                        onTap: () {
                                           Get.to(() => ChatCustomerScreen());
                                         },
-                                        icon: Icon(
-                                          Icons.chat_outlined,
-                                          color: Theme.of(context).primaryColor,
+                                        child: Icon(
+                                          Ionicons.chatbox_outline,
+                                          color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
                                         ),
                                       ),
                                     ],
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Row(children: [
+                                SahaMoneyText(
+                                  price: productController.productShow.value
+                                              .productDiscount ==
+                                          null
+                                      ? productController
+                                          .productShow.value.price
+                                      : productController.productShow.value
+                                          .productDiscount!.discountPrice,
+                                  color: Theme.of(context)
+                                              .primaryColor
+                                              .computeLuminance() >
+                                          0.5
+                                      ? Colors.black
+                                      : Theme.of(context).primaryColor,
+                                ),
+                                if (productController
+                                        .productShow.value.productDiscount !=
+                                    null)
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "${SahaStringUtils().convertToMoney(productController.productShow.value.price)}đ",
+                                        style: TextStyle(
+                                            decoration:
+                                                TextDecoration.lineThrough,
+                                            fontSize: 12),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "-${productController.productShow.value.productDiscount!.value}%",
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
+                              ]),
+                            ),
+                            Container(
+                                height: 50,
+                                color: Colors.white,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 4,
+                                      child: InkWell(
+                                        onTap: () {
+                                          ModalBottomOptionBuyProduct
+                                              .showModelOption(
+                                                  product: productController
+                                                      .productShow.value,
+                                                  onSubmit: (int quantity,
+                                                      Product product,
+                                                      List<DistributesSelected>
+                                                          distributesSelected) {
+                                                    productController
+                                                        .addManyItemOrUpdate(
+                                                            quantity: quantity,
+                                                            buyNow: true,
+                                                            productId:
+                                                                product.id,
+                                                            distributesSelected:
+                                                                distributesSelected);
+                                                  });
+                                        },
+                                        child: Container(
+                                            height: 50,
+                                            margin: EdgeInsets.all(5),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Theme.of(context)
+                                                      .primaryColor),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                            child: Center(
+                                                child: Text(
+                                              "Mua ngay",
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: SahaColorUtils()
+                                                      .colorPrimaryTextWithWhiteBackground()),
+                                            ))),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 4,
+                                      child: InkWell(
+                                        onTap: () {
+                                          ModalBottomOptionBuyProduct
+                                              .showModelOption(
+                                                  product: productController
+                                                      .productShow.value,
+                                                  onSubmit: (int quantity,
+                                                      Product product,
+                                                      List<DistributesSelected>
+                                                          distributesSelected) {
+                                                    productController
+                                                        .addManyItemOrUpdate(
+                                                            quantity: quantity,
+                                                            buyNow: false,
+                                                            productId:
+                                                                product.id,
+                                                            distributesSelected:
+                                                                distributesSelected);
+                                                    productController
+                                                        .animatedAddCard();
+                                                  });
+                                        },
+                                        child: Container(
+                                            height: 50,
+                                            margin: EdgeInsets.all(5),
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                begin: Alignment.topRight,
+                                                end: Alignment.bottomLeft,
+                                                colors: [
+                                                  Theme.of(context)
+                                                      .primaryColor,
+                                                  Theme.of(context)
+                                                      .primaryColor,
+                                                ],
+                                              ),
+                                              border: Border.all(
+                                                  color: Colors.grey
+                                                      .withOpacity(0.6)),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                            child: Center(
+                                                child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(Ionicons.cart_outline,
+                                                    size: 20,
+                                                    color: SahaColorUtils()
+                                                        .colorTextWithPrimaryColor()),
+                                                SizedBox(
+                                                  width: 15,
+                                                ),
+                                                Text(
+                                                  "Thêm vào \ngiỏ hàng",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: SahaColorUtils()
+                                                          .colorTextWithPrimaryColor()),
+                                                ),
+                                              ],
+                                            ))),
+                                      ),
+                                    ),
+                                  ],
+                                )),
                             SizedBox(
                               height: 15,
                             ),
-                            Container(
-                              height: 8,
-                              color: Colors.grey[200],
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, right: 10.0),
+                              child: Row(
+                                children: [
+                                  productController.hasInCombo.value
+                                      ? InkWell(
+                                          onTap: () {
+                                            Get.to(() => ComboDetailScreen(
+                                                  idProduct: productController
+                                                      .productShow.value.id,
+                                                ));
+                                          },
+                                          child: Container(
+                                            height: 20,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(2)),
+                                            child: Center(
+                                              child: Row(
+                                                children: [
+                                                  SizedBox(
+                                                    width: 3,
+                                                  ),
+                                                  productController
+                                                              .discountComboType
+                                                              .value ==
+                                                          1
+                                                      ? Text(
+                                                          "Combo giảm ${productController.valueComboType.value}%",
+                                                          style: TextStyle(
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                            fontSize: 12,
+                                                          ),
+                                                        )
+                                                      : Row(
+                                                          children: [
+                                                            Text(
+                                                              "Combo giảm ",
+                                                              style: TextStyle(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .primaryColor,
+                                                                fontSize: 12,
+                                                              ),
+                                                            ),
+                                                            SahaMoneyText(
+                                                              sizeText: 12,
+                                                              sizeVND: 10,
+                                                              price: productController
+                                                                  .valueComboType
+                                                                  .value
+                                                                  .toDouble(),
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                  SizedBox(
+                                                    width: 3,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : Container(),
+                                ],
+                              ),
                             ),
                             productController.hasInCombo.value
                                 ? Padding(
@@ -479,12 +598,48 @@ class ProductScreen5 extends StatelessWidget {
                                     ),
                                   )
                                 : Container(),
-                            productController.hasInCombo.value
-                                ? Container(
-                                    height: 8,
-                                    color: Colors.grey[200],
-                                  )
-                                : Container(),
+                            productController.listProductSimilar.length == 0
+                                ? Container()
+                                : Column(
+                                    children: [
+                                      SizedBox(height: 20),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: SectionTitle(
+                                            title: "Sản phẩm tương tự",
+                                            titleEnd: "Xem tất cả",
+                                            pressTitleEnd: () {
+                                              Get.to(() =>
+                                                  ProductWatchMoreScreen(
+                                                    title: "Sản phẩm tương tự",
+                                                    listProduct:
+                                                        productController
+                                                            .listProductSimilar,
+                                                  ));
+                                            }),
+                                      ),
+                                      SizedBox(height: 10),
+                                      Container(
+                                        height: 251,
+                                        alignment: Alignment.topLeft,
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Row(
+                                            children: productController
+                                                .listProductSimilar
+                                                .map((product) =>
+                                                    ProductItemWidget(
+                                                      width: 180,
+                                                      product: product,
+                                                    ))
+                                                .toList(),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                            SizedBox(height: 10),
                             Container(
                               padding: EdgeInsets.only(
                                   top: 10, bottom: 10, left: 10),
@@ -622,10 +777,6 @@ class ProductScreen5 extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Container(
-                              color: Colors.grey[200],
-                              height: 8,
-                            ),
                             ReviewProduct(
                               idProduct: productController.productInput == null
                                   ? 0
@@ -644,43 +795,47 @@ class ProductScreen5 extends StatelessWidget {
                             Divider(
                               height: 1,
                             ),
-                            Container(
-                              color: Colors.grey[200],
-                              height: 8,
-                            ),
-                            Column(
-                              children: [
-                                SizedBox(height: 20),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, right: 10),
-                                  child: SectionTitle(
-                                      title: "Sản phẩm tương tự",
-                                      titleEnd: "Xem tất cả",
-                                      pressTitleEnd: () {
-                                        // dataAppCustomerController
-                                        //     .toCategoryProductScreen();
-                                      }),
-                                ),
-                                SizedBox(height: 10),
-                                Container(
-                                  height: 251,
-                                  alignment: Alignment.topLeft,
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: Row(
-                                      children: productController
-                                          .listProductsDiscount
-                                          .map((product) => ProductItemWidget(
-                                                width: 180,
-                                                product: product,
-                                              ))
-                                          .toList(),
-                                    ),
+                            productController.listProductWatched.length == 0
+                                ? Container()
+                                : Column(
+                                    children: [
+                                      SizedBox(height: 20),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: SectionTitle(
+                                            title: "Sản phẩm vừa xem",
+                                            titleEnd: "Xem tất cả",
+                                            pressTitleEnd: () {
+                                              Get.to(() =>
+                                                  ProductWatchMoreScreen(
+                                                    title: "Sản phẩm vừa xem",
+                                                    listProduct:
+                                                        productController
+                                                            .listProductWatched,
+                                                  ));
+                                            }),
+                                      ),
+                                      SizedBox(height: 10),
+                                      Container(
+                                        height: 251,
+                                        alignment: Alignment.topLeft,
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Row(
+                                            children: productController
+                                                .listProductWatched
+                                                .map((product) =>
+                                                    ProductItemWidget(
+                                                      width: 180,
+                                                      product: product,
+                                                    ))
+                                                .toList(),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
                           ],
                         )
                       ],
@@ -704,13 +859,21 @@ class ProductScreen5 extends StatelessWidget {
             right: 20,
             child: Row(
               children: [
-                IconButton(
-                    color: Colors.grey,
-                    icon: Icon(Icons.arrow_back_ios,
-                        color: Theme.of(context).primaryColor),
-                    onPressed: () {
-                      Get.back();
-                    }),
+                InkWell(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Container(
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.black.withOpacity(0.5),
+                    ),
+                    child: Icon(Icons.arrow_back_ios_outlined,
+                        size: 15, color: Colors.white),
+                  ),
+                ),
                 Spacer(),
                 Stack(
                   clipBehavior: Clip.none,
@@ -720,21 +883,19 @@ class ProductScreen5 extends StatelessWidget {
                         Get.to(() => CartScreen1());
                       },
                       child: Container(
+                        height: 30,
+                        width: 30,
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Theme.of(context).primaryColor),
+                          shape: BoxShape.circle,
+                          color: Colors.black.withOpacity(0.5),
+                        ),
                         child: Container(
                           height: 25,
                           width: 25,
                           child: SvgPicture.asset(
                             "assets/icons/cart_icon.svg",
-                            color: true
-                                ? Theme.of(context)
-                                    .primaryTextTheme
-                                    .headline6!
-                                    .color
-                                : Color(0xFFDBDEE4),
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -807,133 +968,6 @@ class ProductScreen5 extends StatelessWidget {
           )
         ],
       ),
-      bottomNavigationBar: Container(
-          height: 50,
-          color: Colors.white,
-          child: Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Container(
-                  color: Theme.of(context).accentColor,
-                  child: IntrinsicHeight(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Flexible(
-                          child: Container(
-                        height: 50,
-                            child: InkWell(
-                              onTap: () {
-                                Get.to(() => ChatCustomerScreen());
-                              },
-                              child: Container(
-                                height: 20,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: SvgPicture.asset(
-                                    "assets/icons/chat.svg",
-                                    color: Theme.of(context)
-                                        .primaryTextTheme
-                                        .headline6!
-                                        .color,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          color: Colors.grey[700],
-                          width: 1,
-                          height: 30,
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Obx(
-                            () => !productController.animateAddCart.value
-                                ? InkWell(
-                                    onTap: () {
-                                      ModalBottomOptionBuyProduct
-                                          .showModelOption(
-                                              product: productController
-                                                  .productShow.value,
-                                              onSubmit: (int quantity,
-                                                  Product product,
-                                                  List<DistributesSelected>
-                                                      distributesSelected) {
-                                                productController
-                                                    .addManyItemOrUpdate(
-                                                        quantity: quantity,
-                                                        buyNow: false,
-                                                        productId: product.id,
-                                                        distributesSelected:
-                                                            distributesSelected);
-                                                productController
-                                                    .animatedAddCard();
-                                              });
-                                    },
-                                    child: Container(
-                                      height: 25,
-                                      child: SvgPicture.asset(
-                                        "assets/icons/add_to_cart.svg",
-                                        color: Theme.of(context)
-                                            .primaryTextTheme
-                                            .headline6!
-                                            .color,
-                                      ),
-                                    ),
-                                  )
-                                : IgnorePointer(
-                                    child: Container(
-                                      height: 25,
-                                      child: SvgPicture.asset(
-                                        "assets/icons/add_to_cart.svg",
-                                        color: Theme.of(Get.context!)
-                                            .primaryTextTheme
-                                            .headline6!
-                                            .color,
-                                      ),
-                                    ),
-                                  ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: InkWell(
-                  onTap: () {
-                    ModalBottomOptionBuyProduct.showModelOption(
-                        product: productController.productShow.value,
-                        onSubmit: (int quantity, Product product,
-                            List<DistributesSelected> distributesSelected) {
-                          productController.addManyItemOrUpdate(
-                              quantity: quantity,
-                              buyNow: true,
-                              productId: product.id,
-                              distributesSelected: distributesSelected);
-                        });
-                  },
-                  child: Container(
-                      height: 50,
-                      color: Theme.of(context).primaryColor,
-                      child: Center(
-                          child: Text(
-                        "Mua ngay",
-                        style: TextStyle(
-                            color: Theme.of(context)
-                                .primaryTextTheme
-                                .headline6!
-                                .color),
-                      ))),
-                ),
-              ),
-            ],
-          )),
     );
   }
 }

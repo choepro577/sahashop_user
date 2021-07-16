@@ -30,7 +30,7 @@ class HomeButtonStyle2Widget extends StatelessWidget {
                       width: 50,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
-                        border: Border.all(color: SahaColorUtils().colorTextWithPrimaryColor())
+                        border: Border.all(color: SahaColorUtils().colorPrimaryTextWithWhiteBackground())
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(8)),

@@ -50,7 +50,7 @@ class _QRScreenState extends State<QRScreen> {
                         color: Colors.white, shape: BoxShape.circle),
                     child: Icon(
                       Icons.arrow_back_ios_rounded,
-                      color: SahaColorUtils().colorTextWithPrimaryColor(),
+                      color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
                     ),
                   ),
                 ),
