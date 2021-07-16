@@ -1,3 +1,4 @@
+import 'package:sahashop_user/app_customer/repository/handle_error.dart';
 import 'package:sahashop_user/app_customer/utils/store_info.dart';
 
 import '../../remote/customer_service_manager.dart';
@@ -12,7 +13,7 @@ class FavoriteRepository {
           .getAllFavorite(StoreInfo().getCustomerStoreCode()!, page!);
       return res;
     } catch (err) {
-      SahaAlert.showError(message: err.toString());
+      handleErrorCustomer(err);
     }
   }
 
@@ -24,8 +25,7 @@ class FavoriteRepository {
           {"is_favorite": isFavorite});
       return true;
     } catch (err) {
-      SahaAlert.showError(message: err.toString());
-      throw (err.toString());
+      handleErrorCustomer(err);
     }
   }
 }

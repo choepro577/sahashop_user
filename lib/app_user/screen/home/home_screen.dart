@@ -9,6 +9,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
+import 'package:sahashop_user/app_customer/utils/store_info.dart';
 import 'package:sahashop_user/app_user/const/constant.dart';
 import 'package:sahashop_user/app_user/screen/account/account.dart';
 import 'package:sahashop_user/app_user/screen/chat/chat_screen/all_message_user_screen.dart';
@@ -29,6 +30,7 @@ import 'package:sahashop_user/app_user/screen/store_info/store_info.dart';
 import 'package:sahashop_user/app_user/utils/init/get_position_widget.dart';
 import 'package:sahashop_user/app_user/utils/rules_app.dart';
 import 'package:sahashop_user/app_user/utils/showcase.dart';
+import 'package:sahashop_user/app_user/utils/user_info.dart';
 import 'package:showcaseview/showcaseview.dart';
 import '../../../saha_data_controller.dart';
 import 'choose_store/choose_store.dart';
@@ -800,7 +802,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: ItemStoreView(
                                     icon: 'assets/app_user/svg/home/ui.svg',
                                     text: 'Chỉnh sửa giao diện',
-                                    press: () {
+                                    press: () async {
+                                      await StoreInfo().setCustomerStoreCode(
+                                          UserInfo().getCurrentStoreCode());
                                       Get.toNamed("ConfigScreen");
                                     },
                                   ),
