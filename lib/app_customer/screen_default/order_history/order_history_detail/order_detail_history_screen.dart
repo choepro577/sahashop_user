@@ -120,7 +120,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                     height: 25,
                     child: SvgPicture.asset(
                       "assets/icons/delivery_truck.svg",
-                      color: SahaColorUtils().colorTextWithPrimaryColor(),
+                      color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
                     ),
                   ),
                   SizedBox(
@@ -163,7 +163,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                     ),
                     child: SvgPicture.asset(
                       "assets/icons/location.svg",
-                      color: SahaColorUtils().colorTextWithPrimaryColor(),
+                      color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
                     ),
                   ),
                   SizedBox(
@@ -425,7 +425,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                     ),
                     child: SvgPicture.asset(
                       "assets/icons/money.svg",
-                      color: SahaColorUtils().colorTextWithPrimaryColor(),
+                      color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
                     ),
                   ),
                   SizedBox(
@@ -596,7 +596,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                     "đ${SahaStringUtils().convertToMoney(orderHistoryDetailController.order!.totalAfterDiscount)}",
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
-                        color: SahaColorUtils().colorTextWithPrimaryColor()),
+                        color: SahaColorUtils().colorPrimaryTextWithWhiteBackground()),
                   )
                 ],
               ),

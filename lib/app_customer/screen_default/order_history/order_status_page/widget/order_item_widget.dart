@@ -154,7 +154,7 @@ class OrderItemWidget extends StatelessWidget {
                   ),
                   child: SvgPicture.asset(
                     "assets/icons/money.svg",
-                    color: SahaColorUtils().colorTextWithPrimaryColor(),
+                    color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
                   ),
                 ),
                 SizedBox(

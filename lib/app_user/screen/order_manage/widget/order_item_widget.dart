@@ -184,7 +184,7 @@ class OrderItemWidget extends StatelessWidget {
                     Text(
                       "đ${SahaStringUtils().convertToMoney(order.totalFinal)}",
                       style: TextStyle(
-                          color: SahaColorUtils().colorTextWithPrimaryColor()),
+                          color: SahaColorUtils().colorPrimaryTextWithWhiteBackground()),
                     ),
                   ],
                 ),

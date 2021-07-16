@@ -8,6 +8,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:readmore/readmore.dart';
 import 'package:sahashop_user/app_customer/screen_default/review/see_review/see_review_screen.dart';
+import 'package:sahashop_user/app_customer/utils/color_utils.dart';
 import 'package:sahashop_user/app_user/const/const_image_logo.dart';
 import 'package:sahashop_user/app_user/model/review.dart';
 import 'package:sahashop_user/app_user/utils/date_utils.dart';
@@ -50,7 +51,7 @@ class ReviewProduct extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "ĐÁNH GIÁ SẢN PHẨM",
+                      "Đánh giá",
                       style:
                           TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                     ),
@@ -59,6 +60,14 @@ class ReviewProduct extends StatelessWidget {
                     ),
                     Row(
                       children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+
+                        Text(
+                          "${averagedStars ?? 5}/5",
+                          style: TextStyle(color: SahaColorUtils().colorPrimaryTextWithWhiteBackground()),
+                        ),
                         RatingBarIndicator(
                           rating: averagedStars!,
                           itemBuilder: (context, index) => Icon(
@@ -69,13 +78,7 @@ class ReviewProduct extends StatelessWidget {
                           itemSize: 15.0,
                           direction: Axis.horizontal,
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          "${averagedStars ?? 5}/5",
-                          style: TextStyle(color: Colors.red),
-                        ),
+
                         SizedBox(
                           width: 10,
                         ),

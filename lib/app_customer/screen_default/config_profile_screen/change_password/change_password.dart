@@ -65,7 +65,7 @@ class ChangePassword extends StatelessWidget {
             SahaButtonSizeChild(
                 width: 200,
                 text: "Thay đổi",
-                color: SahaColorUtils().colorTextWithPrimaryColor(),
+                color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
 
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {

@@ -41,7 +41,7 @@ class SahaBoxButton extends StatelessWidget {
                     ),
                     child: SvgPicture.asset(
                       icon!,
-                      color: SahaColorUtils().colorTextWithPrimaryColor(),
+                      color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
                     ),
                   ),
                   SizedBox(height: 5),

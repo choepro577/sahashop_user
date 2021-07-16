@@ -369,7 +369,7 @@ class ProfileScreen extends StatelessWidget {
                             child: SvgPicture.asset(
                               "assets/icons/check_list.svg",
                               color:
-                                  SahaColorUtils().colorTextWithPrimaryColor(),
+                                  SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
                             ),
                           ),
                           SizedBox(
@@ -440,7 +440,7 @@ class ProfileScreen extends StatelessWidget {
                                       height: 30,
                                       width: 30,
                                       color: SahaColorUtils()
-                                          .colorTextWithPrimaryColor(),
+                                          .colorPrimaryTextWithWhiteBackground(),
                                     ),
                                   ),
                                 ),
@@ -481,7 +481,7 @@ class ProfileScreen extends StatelessWidget {
                                       height: 30,
                                       width: 30,
                                       color: SahaColorUtils()
-                                          .colorTextWithPrimaryColor(),
+                                          .colorPrimaryTextWithWhiteBackground(),
                                     ),
                                   ),
                                 ),
@@ -522,7 +522,7 @@ class ProfileScreen extends StatelessWidget {
                                       height: 30,
                                       width: 30,
                                       color: SahaColorUtils()
-                                          .colorTextWithPrimaryColor(),
+                                          .colorPrimaryTextWithWhiteBackground(),
                                     ),
                                   ),
                                 ),
@@ -563,7 +563,7 @@ class ProfileScreen extends StatelessWidget {
                                       height: 25,
                                       width: 25,
                                       color: SahaColorUtils()
-                                          .colorTextWithPrimaryColor(),
+                                          .colorPrimaryTextWithWhiteBackground(),
                                     ),
                                   ),
                                 ),

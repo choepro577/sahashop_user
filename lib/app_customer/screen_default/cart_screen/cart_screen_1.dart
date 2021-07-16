@@ -201,7 +201,7 @@ class _CartScreen1State extends State<CartScreen1> {
                         width: 30,
                         child: SvgPicture.asset(
                           "assets/icons/receipt.svg",
-                          color: SahaColorUtils().colorTextWithPrimaryColor(),
+                          color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
                         ),
                       ),
                       SizedBox(
@@ -221,7 +221,7 @@ class _CartScreen1State extends State<CartScreen1> {
                       Icon(
                         Icons.arrow_forward_ios,
                         size: 12,
-                        color: SahaColorUtils().colorTextWithPrimaryColor(),
+                        color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
                       )
                     ],
                   ),
@@ -244,7 +244,7 @@ class _CartScreen1State extends State<CartScreen1> {
                       ),
                       child: SvgPicture.asset(
                         "assets/icons/money.svg",
-                        color: SahaColorUtils().colorTextWithPrimaryColor(),
+                        color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
                       ),
                     ),
                     SizedBox(
@@ -263,7 +263,7 @@ class _CartScreen1State extends State<CartScreen1> {
                     Icon(
                       Icons.arrow_forward_ios,
                       size: 12,
-                      color: SahaColorUtils().colorTextWithPrimaryColor(),
+                      color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
                     )
                   ],
                 ),
