@@ -12,12 +12,7 @@ import 'package:showcaseview/showcaseview.dart';
 import '../../../saha_data_controller.dart';
 import 'ui_data_config.dart';
 
-class ConfigScreen extends StatefulWidget {
-  @override
-  _ConfigScreenState createState() => _ConfigScreenState();
-}
-
-class _ConfigScreenState extends State<ConfigScreen> {
+class ConfigScreen extends StatelessWidget {
   final ConfigController configController = Get.put(ConfigController());
 
   final DataAppCustomerController dataAppController =

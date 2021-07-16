@@ -113,7 +113,7 @@ class ProductController extends GetxController {
         SahaAlert.showSuccess(message: "Đã bỏ thích");
       }
     } catch (err) {
-      SahaAlert.showError(message: err.toString());
+      // SahaAlert.showError(message: err.toString());
     }
   }
 

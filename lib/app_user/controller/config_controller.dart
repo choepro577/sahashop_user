@@ -4,12 +4,14 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/repository_widget_config.dart';
+import 'package:sahashop_user/app_customer/utils/store_info.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/app_user/data/repository/repository_manager.dart';
 import 'package:sahashop_user/app_user/model/config_app.dart';
 import 'package:sahashop_user/app_user/model/theme_model.dart';
 import 'package:sahashop_user/app_user/screen/config_app/screens_config/font_type/font_data.dart';
 import 'package:sahashop_user/app_user/utils/color.dart';
+import 'package:sahashop_user/app_user/utils/user_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ConfigController extends GetxController {
@@ -21,7 +23,7 @@ class ConfigController extends GetxController {
   var contactButton = RxList<SpeedDialChild>();
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     getAppTheme();
   }
@@ -45,7 +47,7 @@ class ConfigController extends GetxController {
 
   @override
   void update([List<Object>? ids, bool condition = true]) {
-    print("upddate");
+    print("update");
   }
 
   ConfigController() {
@@ -90,7 +92,7 @@ class ConfigController extends GetxController {
 
   Future<bool?> getAppTheme({bool refresh = false}) async {
     try {
-     if(refresh==false) isLoadingGet.value = true;
+      if (refresh == false) isLoadingGet.value = true;
       var data = (await RepositoryManager.configUiRepository.getAppTheme())!;
       configApp.colorMain1 = data.colorMain1 ?? "#ff93b9b4";
       configApp.fontFamily =
