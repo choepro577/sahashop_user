@@ -5,8 +5,8 @@ import 'package:sahashop_user/app_customer/remote/response-request/login/exists_
 import 'package:sahashop_user/app_customer/remote/response-request/success/success_response.dart';
 import 'package:sahashop_user/app_customer/remote/response-request/badge/badge_response.dart';
 import '../../app_customer/const/env.dart';
-import '../remote/post/all_category_post_response.dart';
-import '../remote/post/all_post_response.dart';
+import 'response-request/post/all_category_post_response.dart';
+import 'response-request/post/all_post_response.dart';
 import '../remote/response-request/address_customer/all_address_customer_response.dart';
 import '../remote/response-request/address_customer/create_update_address_customer_response.dart';
 import '../remote/response-request/address_customer/delete_address_customer_response.dart';

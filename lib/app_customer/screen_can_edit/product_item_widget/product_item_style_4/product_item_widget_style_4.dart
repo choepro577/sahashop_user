@@ -43,12 +43,23 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
                   border: Border.all(color: Colors.grey.withOpacity(0.3))),
               child: Stack(
                 children: [
-                 Column(
+                  InkWell(
+                    onTap: () {
+                      print("ssss");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProductScreen(
+                                  product: product,
+                                )),
+                      );
+                    },
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.all(0.0),
+                            padding: const EdgeInsets.all(2.0),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(0),
                               child: CachedNetworkImage(
@@ -148,7 +159,7 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
                                           : "${SahaStringUtils().convertToMoney(product.productDiscount!.discountPrice)} ₫",
                                       style: TextStyle(
                                           color: SahaColorUtils()
-                                              .colorPrimaryTextWithWhiteBackground(),
+                                              .colorTextWithPrimaryColor(),
                                           fontWeight: FontWeight.w600,
                                           fontSize: 14),
                                       maxLines: 1,
@@ -184,6 +195,7 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
                           ],
                         )
                       ],
+                    ),
                   ),
                 ],
               ),
@@ -219,7 +231,6 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
                     product.isTopSale == true
                         ? Container(
                             decoration: BoxDecoration(
-
                               color: Colors.lightBlue,
                               borderRadius: BorderRadius.circular(3),
                             ),

@@ -50,10 +50,11 @@ class StoreInfoScreen extends StatelessWidget {
                                 width: 70,
                                 fit: BoxFit.cover,
                                 imageUrl: store.logoUrl ?? "",
-                                errorWidget: (context, url, error) =>
-                                    SahaEmptyImage(),
+                                errorWidget: (context, url, error) => Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SahaEmptyImage(),
+                                ),
                               ),
-
                             ],
                           ),
                           borderRadius: BorderRadius.circular(3000),
@@ -71,9 +72,6 @@ class StoreInfoScreen extends StatelessWidget {
                                 color: Colors.teal,
                                 fontWeight: FontWeight.bold),
                           ),
-
-
-
                           InkWell(
                               onTap: () {
                                 Get.to(ChangeStoreInfoScreen())!.then((value) {
@@ -81,10 +79,12 @@ class StoreInfoScreen extends StatelessWidget {
                                 });
                               },
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 5,bottom: 5,right: 5),
+                                padding: const EdgeInsets.only(
+                                    top: 5, bottom: 5, right: 5),
                                 child: Container(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "Mã cửa hàng: ${store.storeCode}",
@@ -95,8 +95,8 @@ class StoreInfoScreen extends StatelessWidget {
                                       ),
                                       Text(
                                         "Chỉnh sửa",
-                                        style:
-                                            TextStyle(color: Colors.blue, fontSize: 12),
+                                        style: TextStyle(
+                                            color: Colors.blue, fontSize: 12),
                                       ),
                                     ],
                                   ),
@@ -181,21 +181,15 @@ class StoreInfoScreen extends StatelessWidget {
               Container(
                 color: Colors.white,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 10,bottom: 10, right: 10, left: 5),
+                  padding: const EdgeInsets.only(
+                      top: 10, bottom: 10, right: 10, left: 5),
                   child: Column(
                     children: [
                       buildListItem(
-                          "Tổng sản phẩm", "${store.totalProducts ?? ""}",
-                       Icon(Ionicons.layers_outline,
-                          color: SahaPrimaryColor,
-                        ),
-                      ),
-                      Divider(
-                        height: 1,
-                      ),
-                      buildListItem("Tổng danh mục sản phẩm",
-                          "${store.totalProductCategories ?? ""}",
-                        Icon(Ionicons.grid_outline,
+                        "Tổng sản phẩm",
+                        "${store.totalProducts ?? ""}",
+                        Icon(
+                          Ionicons.layers_outline,
                           color: SahaPrimaryColor,
                         ),
                       ),
@@ -203,17 +197,10 @@ class StoreInfoScreen extends StatelessWidget {
                         height: 1,
                       ),
                       buildListItem(
-                          "Tổng bài viết", "${store.totalPosts ?? ""}",
-                        Icon(Ionicons.newspaper_outline,
-                          color: SahaPrimaryColor,
-                        ),
-                      ),
-                      Divider(
-                        height: 1,
-                      ),
-                      buildListItem("Tổng danh mục bài viết",
-                          "${store.totalPostCategories ?? ""}",
-                        Icon(Ionicons.library_outline,
+                        "Tổng danh mục sản phẩm",
+                        "${store.totalProductCategories ?? ""}",
+                        Icon(
+                          Ionicons.grid_outline,
                           color: SahaPrimaryColor,
                         ),
                       ),
@@ -221,8 +208,10 @@ class StoreInfoScreen extends StatelessWidget {
                         height: 1,
                       ),
                       buildListItem(
-                          "Tổng khách hàng", "${store.totalCustomers ?? ""}",
-                        Icon(Ionicons.person_outline,
+                        "Tổng bài viết",
+                        "${store.totalPosts ?? ""}",
+                        Icon(
+                          Ionicons.newspaper_outline,
                           color: SahaPrimaryColor,
                         ),
                       ),
@@ -230,8 +219,32 @@ class StoreInfoScreen extends StatelessWidget {
                         height: 1,
                       ),
                       buildListItem(
-                          "Tổng số đơn hàng", "${store.totalOrders ?? ""}",
-                        Icon(Ionicons.reader_outline,
+                        "Tổng danh mục bài viết",
+                        "${store.totalPostCategories ?? ""}",
+                        Icon(
+                          Ionicons.library_outline,
+                          color: SahaPrimaryColor,
+                        ),
+                      ),
+                      Divider(
+                        height: 1,
+                      ),
+                      buildListItem(
+                        "Tổng khách hàng",
+                        "${store.totalCustomers ?? ""}",
+                        Icon(
+                          Ionicons.person_outline,
+                          color: SahaPrimaryColor,
+                        ),
+                      ),
+                      Divider(
+                        height: 1,
+                      ),
+                      buildListItem(
+                        "Tổng số đơn hàng",
+                        "${store.totalOrders ?? ""}",
+                        Icon(
+                          Ionicons.reader_outline,
                           color: SahaPrimaryColor,
                         ),
                       ),

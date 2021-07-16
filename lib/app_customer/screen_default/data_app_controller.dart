@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_customer/components/attendance/dialog_attendance.dart';
 import 'package:sahashop_user/app_customer/repository/repository_customer.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/category_product_screen/input_model_products.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/product_screen/input_model.dart';
@@ -41,7 +42,6 @@ class DataAppCustomerController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     getHomeData();
-    checkLogin();
   }
 
   Future<void> checkLogin() async {

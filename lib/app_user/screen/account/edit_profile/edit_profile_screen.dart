@@ -16,17 +16,13 @@ class EditProfileUser extends StatelessWidget {
 
   EditProfileUser({required this.user}) {
     textEditingControllerName.text = user.name ?? "";
-    textEditingControllerPhone.text = user.phoneNumber ?? "";
-    textEditingControllerEmail.text = user.email ?? "";
     editProfileController = EditProfileController(
-        dateOfBirthInput: user.dateOfBirth, linkAvatarInput: user.avatarImage);
+        dateOfBirthInput: user.dateOfBirth,
+        linkAvatarInput: user.avatarImage,
+        sexIndexInput: user.sex);
   }
 
   TextEditingController textEditingControllerName = new TextEditingController();
-  TextEditingController textEditingControllerPhone =
-      new TextEditingController();
-  TextEditingController textEditingControllerEmail =
-      new TextEditingController();
 
   late EditProfileController editProfileController;
 

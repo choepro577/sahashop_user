@@ -41,8 +41,8 @@ class HomeController extends GetxController {
   }
 
   DateTime getDateTimeExpired() {
-    var dateExpired = SahaDateUtils()
-        .getUtcDateTimeFormString(storeCurrent!.value.dateExpried ?? DateTime.now().toUtc().toString());
+    var dateExpired = SahaDateUtils().getUtcDateTimeFormString(
+        storeCurrent!.value.dateExpried ?? DateTime.now().toUtc().toString());
     return dateExpired;
   }
 
@@ -116,9 +116,7 @@ class HomeController extends GetxController {
     try {
       var data = await RepositoryManager.badgeRepository.getBadgeUser();
       badgeUser.value = data!.data!;
-    } catch (err) {
-
-    }
+    } catch (err) {}
   }
 
   void setNewStoreCurrent(Store store) {

@@ -1,9 +1,9 @@
+import 'package:sahashop_user/app_customer/utils/store_info.dart';
 import 'package:sahashop_user/app_user/data/example/category.dart';
 import '../../remote/customer_service_manager.dart';
 import '../../repository/handle_error.dart';
 import '../../utils/thread_data.dart';
 import 'package:sahashop_user/app_user/model/category.dart';
-import 'package:sahashop_user/app_user/utils/user_info.dart';
 
 class CategoryRepository {
   Future<List<Category>?> getAllCategory() async {
@@ -11,7 +11,7 @@ class CategoryRepository {
       try {
         var res = await CustomerServiceManager()
             .service!
-            .getAllCategory(UserInfo().getCurrentStoreCode());
+            .getAllCategory(StoreInfo().getCustomerStoreCode());
         return res.data;
       } catch (err) {
         handleErrorCustomer(err);

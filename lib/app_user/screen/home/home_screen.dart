@@ -212,9 +212,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           .value
                                                           .logoUrl ??
                                                       "",
-                                                  errorWidget:
-                                                      (context, url, error) =>
-                                                          SahaEmptyImage()),
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(5.0),
+                                                        child: SahaEmptyImage(),
+                                                      )),
                                             ),
                                           ),
                                         ],

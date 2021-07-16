@@ -41,7 +41,17 @@ class ProductItemWidgetStyle1 extends StatelessWidget {
                   border: Border.all(color: Colors.grey[100]!)),
               child: Stack(
                 children: [
-                  Column(
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProductScreen(
+                                  product: product,
+                                )),
+                      );
+                    },
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
@@ -128,7 +138,7 @@ class ProductItemWidgetStyle1 extends StatelessWidget {
                                           : "${SahaStringUtils().convertToMoney(product.productDiscount!.discountPrice)}đ",
                                       style: TextStyle(
                                           color: SahaColorUtils()
-                                              .colorPrimaryTextWithWhiteBackground(),
+                                              .colorTextWithPrimaryColor(),
                                           fontWeight: FontWeight.w600,
                                           fontSize: 14),
                                       maxLines: 1,
@@ -166,6 +176,7 @@ class ProductItemWidgetStyle1 extends StatelessWidget {
                           ],
                         )
                       ],
+                    ),
                   ),
                   product.productDiscount == null
                       ? Container()

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/components/attendance/dialog_attendance.dart';
 import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
+import 'package:sahashop_user/app_customer/utils/color_utils.dart';
 import '../../../saha_data_controller.dart';
 import 'navigation_controller.dart';
 
@@ -53,10 +54,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
             unselectedItemColor: Colors.grey,
             showUnselectedLabels: true,
             type: BottomNavigationBarType.fixed,
-            selectedItemColor:
-                Theme.of(context).primaryColor.computeLuminance() > 0.5
-                    ? Colors.black
-                    : Theme.of(context).primaryColor,
+            selectedItemColor: SahaColorUtils().colorTextWithPrimaryColor(),
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Badge(

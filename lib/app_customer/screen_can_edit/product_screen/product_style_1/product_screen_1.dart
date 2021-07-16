@@ -7,6 +7,8 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sahashop_user/app_customer/screen_default/product_watch_more/product_watch_more_screen.dart';
+import 'package:sahashop_user/app_user/utils/string_utils.dart';
 import '../../../components/modal/modal_bottom_option_buy_product.dart';
 import '../../product_item_widget/product_item_widget.dart';
 import '../../../screen_default/cart_screen/cart_screen_1.dart';
@@ -123,7 +125,8 @@ class ProductScreen1 extends StatelessWidget {
                             Row(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.all(10.0),
+                                  padding: const EdgeInsets.only(
+                                      top: 10.0, left: 10),
                                   child: Container(
                                     padding: EdgeInsets.all(3),
                                     decoration: BoxDecoration(
@@ -142,7 +145,8 @@ class ProductScreen1 extends StatelessWidget {
                                 productController.productShow.value.isNew! ==
                                         true
                                     ? Padding(
-                                        padding: const EdgeInsets.all(10.0),
+                                        padding: const EdgeInsets.only(
+                                            top: 10.0, left: 10),
                                         child: Container(
                                           padding: EdgeInsets.all(3),
                                           decoration: BoxDecoration(
@@ -164,7 +168,8 @@ class ProductScreen1 extends StatelessWidget {
                                             .productShow.value.isTopSale! ==
                                         true
                                     ? Padding(
-                                        padding: const EdgeInsets.all(10.0),
+                                        padding: const EdgeInsets.only(
+                                            top: 10.0, left: 10),
                                         child: Container(
                                           padding: EdgeInsets.all(3),
                                           decoration: BoxDecoration(
@@ -182,6 +187,69 @@ class ProductScreen1 extends StatelessWidget {
                                         ),
                                       )
                                     : Container(),
+                                productController.hasInCombo.value
+                                    ? Container(
+                                        height: 20,
+                                        margin: const EdgeInsets.only(
+                                            top: 10.0, left: 10),
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(2)),
+                                        child: Center(
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                width: 3,
+                                              ),
+                                              productController
+                                                          .discountComboType
+                                                          .value ==
+                                                      1
+                                                  ? Text(
+                                                      "Combo giảm ${productController.valueComboType.value}%",
+                                                      style: TextStyle(
+                                                        color: Theme.of(context)
+                                                            .primaryColor,
+                                                        fontSize: 12,
+                                                      ),
+                                                    )
+                                                  : Row(
+                                                      children: [
+                                                        Text(
+                                                          "Combo giảm ",
+                                                          style: TextStyle(
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                            fontSize: 12,
+                                                          ),
+                                                        ),
+                                                        SahaMoneyText(
+                                                          sizeText: 12,
+                                                          sizeVND: 10,
+                                                          price:
+                                                              productController
+                                                                  .valueComboType
+                                                                  .value
+                                                                  .toDouble(),
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
+                                                        ),
+                                                      ],
+                                                    ),
+                                              SizedBox(
+                                                width: 3,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    : Container(),
                               ],
                             ),
                             Padding(
@@ -194,88 +262,53 @@ class ProductScreen1 extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Row(
-                                children: [
-                                  SahaMoneyText(
-                                    price: productController
-                                        .productShow.value.price,
-                                    color: Theme.of(context)
-                                                .primaryColor
-                                                .computeLuminance() >
-                                            0.5
-                                        ? Colors.black
-                                        : Theme.of(context).primaryColor,
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, right: 10.0),
+                              child: Row(children: [
+                                SahaMoneyText(
+                                  price: productController.productShow.value
+                                              .productDiscount ==
+                                          null
+                                      ? productController
+                                          .productShow.value.price
+                                      : productController.productShow.value
+                                          .productDiscount!.discountPrice,
+                                  color: Theme.of(context)
+                                              .primaryColor
+                                              .computeLuminance() >
+                                          0.5
+                                      ? Colors.black
+                                      : Theme.of(context).primaryColor,
+                                ),
+                                if (productController
+                                        .productShow.value.productDiscount !=
+                                    null)
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "${SahaStringUtils().convertToMoney(productController.productShow.value.price)}đ",
+                                        style: TextStyle(
+                                            decoration:
+                                                TextDecoration.lineThrough,
+                                            fontSize: 12),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "-${productController.productShow.value.productDiscount!.value}%",
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  productController.hasInCombo.value
-                                      ? Container(
-                                          height: 20,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(2)),
-                                          child: Center(
-                                            child: Row(
-                                              children: [
-                                                SizedBox(
-                                                  width: 3,
-                                                ),
-                                                productController
-                                                            .discountComboType
-                                                            .value ==
-                                                        1
-                                                    ? Text(
-                                                        "Combo giảm ${productController.valueComboType.value}%",
-                                                        style: TextStyle(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .primaryColor,
-                                                          fontSize: 12,
-                                                        ),
-                                                      )
-                                                    : Row(
-                                                        children: [
-                                                          Text(
-                                                            "Combo giảm ",
-                                                            style: TextStyle(
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .primaryColor,
-                                                              fontSize: 12,
-                                                            ),
-                                                          ),
-                                                          SahaMoneyText(
-                                                            sizeText: 12,
-                                                            sizeVND: 10,
-                                                            price: productController
-                                                                .valueComboType
-                                                                .value
-                                                                .toDouble(),
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .primaryColor,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                SizedBox(
-                                                  width: 3,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        )
-                                      : Container(),
-                                ],
-                              ),
+                              ]),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, right: 10.0),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -363,9 +396,6 @@ class ProductScreen1 extends StatelessWidget {
                                   )
                                 ],
                               ),
-                            ),
-                            SizedBox(
-                              height: 15,
                             ),
                             Container(
                               height: 8,
@@ -658,8 +688,11 @@ class ProductScreen1 extends StatelessWidget {
                                       title: "Sản phẩm tương tự",
                                       titleEnd: "Xem tất cả",
                                       pressTitleEnd: () {
-                                        // dataAppCustomerController
-                                        //     .toCategoryProductScreen();
+                                        Get.to(() => ProductWatchMoreScreen(
+                                              title: "Sản phẩm tương tự",
+                                              listProduct: productController
+                                                  .listProductSimilar,
+                                            ));
                                       }),
                                 ),
                                 SizedBox(height: 10),
@@ -670,7 +703,7 @@ class ProductScreen1 extends StatelessWidget {
                                     scrollDirection: Axis.horizontal,
                                     child: Row(
                                       children: productController
-                                          .listProductsDiscount
+                                          .listProductSimilar
                                           .map((product) => ProductItemWidget(
                                                 width: 180,
                                                 product: product,
@@ -681,6 +714,50 @@ class ProductScreen1 extends StatelessWidget {
                                 ),
                               ],
                             ),
+                            productController.listProductWatched.isEmpty ||
+                                    productController
+                                            .listProductWatched.length ==
+                                        0
+                                ? Column(
+                                    children: [
+                                      SizedBox(height: 20),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: SectionTitle(
+                                            title: "Sản phẩm vừa xem",
+                                            titleEnd: "Xem tất cả",
+                                            pressTitleEnd: () {
+                                              Get.to(() =>
+                                                  ProductWatchMoreScreen(
+                                                    title: "Sản phẩm vừa xem",
+                                                    listProduct:
+                                                        productController
+                                                            .listProductWatched,
+                                                  ));
+                                            }),
+                                      ),
+                                      SizedBox(height: 10),
+                                      Container(
+                                        height: 251,
+                                        alignment: Alignment.topLeft,
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Row(
+                                            children: productController
+                                                .listProductWatched
+                                                .map((product) =>
+                                                    ProductItemWidget(
+                                                      width: 180,
+                                                      product: product,
+                                                    ))
+                                                .toList(),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : Container(),
                           ],
                         )
                       ],
@@ -822,7 +899,7 @@ class ProductScreen1 extends StatelessWidget {
                       children: [
                         Flexible(
                           child: Container(
-                        height: 50,
+                            height: 50,
                             child: InkWell(
                               onTap: () {
                                 Get.to(() => ChatCustomerScreen());

@@ -26,6 +26,7 @@ class _LoadAppScreenState extends State<LoadAppScreen> {
   Future<void> loadInit(BuildContext context) async {
     await Future.delayed(Duration(seconds: 1));
     isInit = true;
+    dataAppCustomerController.checkLogin();
     Get.offNamed('customer_home')!.then((value) {
       //Get.back();
     });

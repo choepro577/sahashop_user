@@ -58,40 +58,39 @@ class MarketingChanelScreen extends StatelessWidget {
             height: 1,
           ),
           InkWell(
-              onTap: () {
-                Get.to(() => MyVoucherScreen());
-              },
-              child:  Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: 30,
-                          width: 30,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFF5F6F9),
-                            shape: BoxShape.circle,
-                          ),
-                          child: SvgPicture.asset(
-                            "assets/icons/coupon.svg",
-                            color: Theme.of(context).primaryColor,
-                          ),
+            onTap: () {
+              Get.to(() => MyVoucherScreen());
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF5F6F9),
+                          shape: BoxShape.circle,
                         ),
-                        SizedBox(
-                          width: 10,
+                        child: SvgPicture.asset(
+                          "assets/icons/coupon.svg",
+                          color: Theme.of(context).primaryColor,
                         ),
-                        Text("Mã voucher giảm giá")
-                      ],
-                    ),
-                    Icon(Icons.arrow_forward_ios_rounded)
-                  ],
-                ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text("Mã voucher giảm giá")
+                    ],
+                  ),
+                  Icon(Icons.arrow_forward_ios_rounded)
+                ],
               ),
             ),
-
+          ),
           Divider(
             height: 1,
           ),

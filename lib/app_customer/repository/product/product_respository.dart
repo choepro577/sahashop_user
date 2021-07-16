@@ -1,6 +1,7 @@
 import 'package:sahashop_user/app_customer/remote/response-request/favorite/all_product_response.dart';
 import 'package:sahashop_user/app_customer/remote/response-request/product/all_product_response.dart';
 import 'package:sahashop_user/app_customer/remote/response-request/product/product_watched_response.dart';
+import 'package:sahashop_user/app_customer/utils/store_info.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
 import 'package:sahashop_user/app_user/data/example/product.dart';
 import '../../remote/customer_service_manager.dart';
@@ -8,7 +9,6 @@ import '../../remote/response-request/product/detail_product_response.dart';
 import '../../repository/handle_error.dart';
 import '../../utils/thread_data.dart';
 import 'package:sahashop_user/app_user/model/product.dart';
-import 'package:sahashop_user/app_user/utils/user_info.dart';
 
 class ProductCustomerRepository {
   Future<List<Product>?> searchProduct(
@@ -21,7 +21,7 @@ class ProductCustomerRepository {
     if (FlowData().isOnline()) {
       try {
         var res = await CustomerServiceManager().service!.searchProduct(
-            UserInfo().getCurrentStoreCode(),
+            StoreInfo().getCustomerStoreCode(),
             page,
             search,
             idCategory,
@@ -41,7 +41,7 @@ class ProductCustomerRepository {
     try {
       var res = await CustomerServiceManager()
           .service!
-          .getDetailProduct(UserInfo().getCurrentStoreCode(), idProduct);
+          .getDetailProduct(StoreInfo().getCustomerStoreCode(), idProduct);
       return res;
     } catch (err) {
       // SahaAlert.showError(message: err.toString());
@@ -52,7 +52,7 @@ class ProductCustomerRepository {
     try {
       var res = await CustomerServiceManager()
           .service!
-          .getPurchasedProducts(UserInfo().getCurrentStoreCode()!, page!);
+          .getPurchasedProducts(StoreInfo().getCustomerStoreCode()!, page!);
       return res;
     } catch (err) {
       SahaAlert.showError(message: err.toString());
@@ -63,7 +63,7 @@ class ProductCustomerRepository {
     try {
       var res = await CustomerServiceManager()
           .service!
-          .getSimilarProduct(UserInfo().getCurrentStoreCode()!, idProduct);
+          .getSimilarProduct(StoreInfo().getCustomerStoreCode()!, idProduct);
       return res;
     } catch (err) {
       SahaAlert.showError(message: err.toString());
@@ -74,7 +74,7 @@ class ProductCustomerRepository {
     try {
       var res = await CustomerServiceManager()
           .service!
-          .getWatchedProduct(UserInfo().getCurrentStoreCode()!);
+          .getWatchedProduct(StoreInfo().getCustomerStoreCode()!);
       return res;
     } catch (err) {
       SahaAlert.showError(message: err.toString());

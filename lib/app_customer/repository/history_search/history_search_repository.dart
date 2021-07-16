@@ -1,12 +1,9 @@
 import 'dart:io';
-
 import 'package:device_info/device_info.dart';
+import 'package:sahashop_user/app_customer/utils/store_info.dart';
 import '../../remote/customer_service_manager.dart';
-import '../../remote/response-request/register/register_response.dart';
 import '../../remote/response-request/search_history/all_search_history_response.dart';
-import '../../repository/handle_error.dart';
 import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dart';
-import 'package:sahashop_user/app_user/utils/user_info.dart';
 
 class HistorySearchRepository {
   Future<bool?> addHistorySearch(
@@ -25,7 +22,7 @@ class HistorySearchRepository {
 
       var res = await CustomerServiceManager()
           .service!
-          .addHistorySearch(UserInfo().getCurrentStoreCode(), {
+          .addHistorySearch(StoreInfo().getCustomerStoreCode(), {
         "text": text,
         "device_id": deviceId,
       });
@@ -48,7 +45,7 @@ class HistorySearchRepository {
       }
 
       var res = await CustomerServiceManager().service!.getAllHistorySearch(
-            UserInfo().getCurrentStoreCode(),
+            StoreInfo().getCustomerStoreCode(),
             deviceId,
           );
       return res.data;
@@ -57,8 +54,7 @@ class HistorySearchRepository {
     }
   }
 
-  Future<bool?> deleteHistorySearch(
-  ) async {
+  Future<bool?> deleteHistorySearch() async {
     try {
       var deviceId;
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
@@ -72,7 +68,7 @@ class HistorySearchRepository {
 
       var res = await CustomerServiceManager()
           .service!
-          .deleteAllHistorySearch(UserInfo().getCurrentStoreCode(), deviceId);
+          .deleteAllHistorySearch(StoreInfo().getCustomerStoreCode(), deviceId);
       return true;
     } catch (err) {
       SahaAlert.showError(message: err.toString());

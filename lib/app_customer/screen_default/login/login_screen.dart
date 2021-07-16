@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/instance_manager.dart';
+import 'package:sahashop_user/app_customer/components/attendance/dialog_attendance.dart';
 import '../../screen_default/login/login_controller.dart';
 import '../../screen_default/register/register_customer_screen.dart';
 import 'package:sahashop_user/app_user/components/saha_user/button/saha_button.dart';
@@ -12,12 +13,14 @@ import 'package:sahashop_user/app_user/components/saha_user/toast/saha_alert.dar
 import 'package:sahashop_user/app_user/controller/config_controller.dart';
 import 'package:get/get.dart';
 
+import '../data_app_controller.dart';
 import 'reset_password/reset_password.dart';
 
 class LoginScreenCustomer extends StatelessWidget {
   @override
   ConfigController configController = Get.find();
   LoginController loginController = LoginController();
+  DataAppCustomerController dataAppCustomerController = Get.find();
   StreamSubscription? sub;
 
   Widget build(BuildContext context) {
@@ -72,8 +75,7 @@ class LoginScreenCustomer extends StatelessWidget {
                         minLines: 1,
                         maxLines: 1,
                         onChanged: (v) {
-                          loginController.phoneEditingController
-                              .refresh();
+                          loginController.phoneEditingController.refresh();
                         },
                       ),
                     ),
@@ -139,9 +141,11 @@ class LoginScreenCustomer extends StatelessWidget {
                         InkWell(
                           onTap: () {
                             Get.to(ResetPasswordScreen())!.then((mapData) {
-                              if(mapData["success"] != null) {
-                                loginController.phoneEditingController.value.text =mapData["phone"];
-                                loginController.passwordEditingController.value.text =mapData["pass"];
+                              if (mapData["success"] != null) {
+                                loginController.phoneEditingController.value
+                                    .text = mapData["phone"];
+                                loginController.passwordEditingController.value
+                                    .text = mapData["pass"];
                               }
                             });
                           },
@@ -163,24 +167,34 @@ class LoginScreenCustomer extends StatelessWidget {
                 height: 15,
               ),
               Obx(
-                () => loginController.phoneEditingController.value.text
-                            .isNotEmpty &&
+                () => loginController
+                            .phoneEditingController.value.text.isNotEmpty &&
                         loginController
                             .passwordEditingController.value.text.isNotEmpty
                     ? SahaButtonFullParent(
                         text: "Đăng nhập",
                         onPressed: () {
                           loginController.loginAccount(
-                              loginController
-                                  .phoneEditingController.value.text,
+                              loginController.phoneEditingController.value.text,
                               loginController
                                   .passwordEditingController.value.text);
                           sub ??=
                               loginController.isLoginSuccess.listen((state) {
                             if (state == true) {
+                              dataAppCustomerController.checkLogin();
                               Get.back();
                               SahaAlert.showError(
                                   message: "Đăng nhập thành công");
+                              Future.delayed(const Duration(milliseconds: 3000),
+                                  () {
+                                if (dataAppCustomerController.isCheckIn ==
+                                    true) {
+                                  DialogAttendance.showAttendanceDialog(
+                                      Get.context!,
+                                      dataAppCustomerController.scoreToday,
+                                      dataAppCustomerController.listRollCall);
+                                }
+                              });
                             }
                           });
                         },
