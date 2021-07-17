@@ -75,8 +75,8 @@ class ConfigProfileScreen extends StatelessWidget {
                           width: 70,
                           imageUrl: configProfileController.linkAvatar.value,
                           fit: BoxFit.cover,
-
-                          errorWidget: (context, url, error) => SahaEmptyImage(),
+                          errorWidget: (context, url, error) =>
+                              SahaEmptyImage(),
                         ),
                       ),
                     ),
@@ -104,7 +104,8 @@ class ConfigProfileScreen extends StatelessWidget {
                                         imageUrl: configProfileController
                                             .linkAvatar.value,
                                         fit: BoxFit.cover,
-                                        placeholder: (context, url) => SahaLoadingWidget(),
+                                        placeholder: (context, url) =>
+                                            SahaLoadingWidget(),
                                         errorWidget: (context, url, error) =>
                                             SahaEmptyImage(),
                                       ),
@@ -358,7 +359,7 @@ class ConfigProfileScreen extends StatelessWidget {
                       child: TextField(
                         controller: configProfileController
                             .emailEditingController.value,
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.emailAddress,
                         style: TextStyle(fontSize: 14),
                         textAlign: TextAlign.end,
                         decoration: InputDecoration(

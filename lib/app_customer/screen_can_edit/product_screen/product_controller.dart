@@ -12,7 +12,7 @@ import 'package:sahashop_user/app_user/model/order.dart';
 import 'package:sahashop_user/app_user/model/product.dart';
 import 'package:sahashop_user/app_user/model/review.dart';
 
-import '../input_model.dart';
+import 'input_model.dart';
 
 class ProductController extends GetxController {
   var currentIndexListOrder = 0.obs;

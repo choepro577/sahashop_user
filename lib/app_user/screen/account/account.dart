@@ -39,40 +39,47 @@ class AccountScreen extends StatelessWidget {
                   })
             ],
           ),
-          body: Container(
-            child: Column(
-              children: [
-                Obx(() => itemUser(accountController.user.value)),
-                Spacer(),
-                TextButton(
-                  onPressed: () {
-                    SahaDialogApp.showDialogYesNo(
-                        mess: "Bạn muốn đăng xuất",
-                        onOK: () {
-                          UserInfo().logout();
-                        });
-                  },
-                  child: Text(
-                    "Đăng xuất",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15,
-                        color: Colors.grey[500]),
+          body: SingleChildScrollView(
+            child: Container(
+              height: Get.height -
+                  kToolbarHeight -
+                  MediaQuery.of(Get.context!).padding.top,
+              width: Get.width,
+              child: Column(
+                children: [
+                  Obx(() => itemUser(accountController.user.value)),
+                  Spacer(),
+                  TextButton(
+                    onPressed: () {
+                      SahaDialogApp.showDialogYesNo(
+                          mess: "Bạn muốn đăng xuất",
+                          onOK: () {
+                            UserInfo().logout();
+                          });
+                    },
+                    child: Text(
+                      "Đăng xuất",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                          color: Colors.grey[500]),
+                    ),
                   ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Get.to(ChangePassword());
-                  },
-                  child: Text(
-                    "Thay đổi mật khẩu",
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                  TextButton(
+                    onPressed: () {
+                      Get.to(ChangePassword());
+                    },
+                    child: Text(
+                      "Thay đổi mật khẩu",
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-              ],
+                  SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
             ),
           )),
     );

@@ -21,7 +21,7 @@ import 'package:sahashop_user/app_user/model/order.dart';
 import 'package:sahashop_user/app_user/model/product.dart';
 import 'package:sahashop_user/app_user/screen/home/widget/section_title.dart';
 
-import 'product_controller.dart';
+import '../product_controller.dart';
 import 'widget/review_product.dart';
 
 // ignore: must_be_immutable
@@ -805,7 +805,8 @@ class ProductScreen3 extends StatelessWidget {
                                     productController
                                             .listProductWatched.length ==
                                         0
-                                ? Column(
+                                ? Container()
+                                : Column(
                                     children: [
                                       SizedBox(height: 20),
                                       Padding(
@@ -843,8 +844,7 @@ class ProductScreen3 extends StatelessWidget {
                                         ),
                                       ),
                                     ],
-                                  )
-                                : Container(),
+                                  ),
                           ],
                         )
                       ],

@@ -32,8 +32,7 @@ class ConfigProfileController extends GetxController {
   ConfigProfileController({this.infoCustomer}) {
     nameEditingController.value.text = infoCustomer!.name ?? "";
     phoneEditingController.value.text = infoCustomer!.phoneNumber ?? "";
-    emailEditingController.value.text =
-        infoCustomer!.email ?? "contactsahatech@gmail.com";
+    emailEditingController.value.text = infoCustomer!.email ?? "";
     passwordEditingController.value.text = infoCustomer!.email ?? "";
     linkAvatar.value = infoCustomer!.avatarImage ?? "";
     onChangeSexPicker(infoCustomer!.sex ?? 0);
@@ -67,6 +66,7 @@ class ConfigProfileController extends GetxController {
         name: nameEditingController.value.text,
         sex: sexIndex,
         avatarImage: linkAvatar.value,
+        email: emailEditingController.value.text,
         dateOfBirth: birthDate.value,
       ));
       Get.back();

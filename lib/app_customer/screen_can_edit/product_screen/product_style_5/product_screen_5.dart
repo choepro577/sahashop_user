@@ -8,7 +8,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:sahashop_user/app_customer/screen_can_edit/product_screen/product_style_2/product_controller.dart';
+import 'package:sahashop_user/app_customer/screen_can_edit/product_screen/product_controller.dart';
 import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
 import 'package:sahashop_user/app_customer/screen_default/product_watch_more/product_watch_more_screen.dart';
 import 'package:sahashop_user/app_customer/utils/color_utils.dart';
@@ -241,7 +241,8 @@ class ProductScreen5 extends StatelessWidget {
                                         },
                                         child: Icon(
                                           Ionicons.chatbox_outline,
-                                          color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
+                                          color: SahaColorUtils()
+                                              .colorPrimaryTextWithWhiteBackground(),
                                         ),
                                       ),
                                     ],

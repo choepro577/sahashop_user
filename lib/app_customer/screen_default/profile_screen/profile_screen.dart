@@ -22,7 +22,6 @@ import 'package:sahashop_user/app_user/components/saha_user/dialog/dialog.dart';
 
 import '../data_app_controller.dart';
 import 'fanpage/fanpage_screen.dart';
-import 'profile_controller.dart';
 
 // ignore: must_be_immutable
 class ProfileScreen extends StatelessWidget {
@@ -30,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
 
   DataAppCustomerController dataAppCustomerController = Get.find();
   CartController cartController = Get.find();
-  ProfileController profileController = ProfileController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -368,8 +367,8 @@ class ProfileScreen extends StatelessWidget {
                             width: 25,
                             child: SvgPicture.asset(
                               "assets/icons/check_list.svg",
-                              color:
-                                  SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
+                              color: SahaColorUtils()
+                                  .colorPrimaryTextWithWhiteBackground(),
                             ),
                           ),
                           SizedBox(

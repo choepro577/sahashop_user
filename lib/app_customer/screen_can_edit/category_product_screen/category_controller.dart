@@ -20,7 +20,9 @@ class CategoryController extends GetxController {
   var sortByShow = "views".obs;
   var descendingShow = true.obs;
   var currentPage = 1;
+  var isChooseDiscountSort = false.obs;
   var canLoadMore = true;
+  String? sortByCurrent;
 
   TextEditingController textEditingControllerSearch = TextEditingController();
 
@@ -43,12 +45,25 @@ class CategoryController extends GetxController {
         idCategory: categoryCurrent.value != -1 ? categoryCurrent.value : null);
   }
 
+  void sortDiscount() async {
+    if (isChooseDiscountSort.value) {
+      List<Product> listProductDiscount = [];
+      products.forEach((element) {
+        if (element.productDiscount != null) {
+          listProductDiscount.add(element);
+        }
+      });
+      products(listProductDiscount);
+    }
+  }
+
   Future<bool?> searchProduct(
       {String? search,
       bool? descending,
       String? sortBy,
       int? idCategory,
       bool isLoadMore = false}) async {
+    sortByCurrent = sortBy;
     if (isLoadMore == false) {
       currentPage = 1;
       canLoadMore = true;
@@ -101,6 +116,10 @@ class CategoryController extends GetxController {
         canLoadMore = false;
       } else {
         currentPage++;
+      }
+
+      if (isChooseDiscountSort.value == true) {
+        sortDiscount();
       }
 
       isLoadingProduct.value = false;

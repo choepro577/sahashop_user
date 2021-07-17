@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/product_screen/product_screen.dart';
 import 'package:sahashop_user/app_customer/screen_default/cart_screen/cart_controller.dart';
@@ -61,7 +62,10 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(2.0),
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(0),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(3),
+                                topRight: Radius.circular(3),
+                              ),
                               child: CachedNetworkImage(
                                 height: 180,
                                 width: Get.width,
@@ -91,7 +95,7 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
                                       bottomLeft: Radius.circular(30.0),
                                     ),
                                   ),
-                                  height: 35,
+                                  height: 40,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
@@ -159,7 +163,7 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
                                           : "${SahaStringUtils().convertToMoney(product.productDiscount!.discountPrice)} ₫",
                                       style: TextStyle(
                                           color: SahaColorUtils()
-                                              .colorTextWithPrimaryColor(),
+                                              .colorPrimaryTextWithWhiteBackground(),
                                           fontWeight: FontWeight.w600,
                                           fontSize: 14),
                                       maxLines: 1,
@@ -192,6 +196,19 @@ class ProductItemWidgetStyle4 extends StatelessWidget {
                                 ],
                               ),
                             ),
+                            InkWell(
+                              onTap: () {
+                                cartController.addItemCart(product.id);
+                                dataAppCustomerController.getBadge();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: Icon(
+                                  Ionicons.cart_outline,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            )
                           ],
                         )
                       ],

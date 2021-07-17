@@ -184,7 +184,7 @@ class ProductItemWidgetStyle5 extends StatelessWidget {
                                               : "${SahaStringUtils().convertToMoney(product.productDiscount!.discountPrice)}đ",
                                           style: TextStyle(
                                               color: SahaColorUtils()
-                                                  .colorTextWithPrimaryColor(),
+                                                  .colorPrimaryTextWithWhiteBackground(),
                                               fontWeight: FontWeight.w600,
                                               fontSize: 14),
                                           maxLines: 1,
@@ -217,11 +217,17 @@ class ProductItemWidgetStyle5 extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: Icon(
-                                    Ionicons.cart_outline,
-                                    color: Theme.of(context).primaryColor,
+                                InkWell(
+                                  onTap: () {
+                                    cartController.addItemCart(product.id);
+                                    dataAppCustomerController.getBadge();
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: Icon(
+                                      Ionicons.cart_outline,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
                                   ),
                                 )
                               ],
@@ -317,15 +323,15 @@ class ProductItemWidgetStyle5 extends StatelessWidget {
               ? Container()
               : Positioned(
                   top: 0,
-                  right: -2.75,
+                  right: 1,
                   child: Container(
-                    padding: EdgeInsets.only(left: 2, right: 2),
+                    padding: EdgeInsets.all(2),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(3),
                         color: Colors.lightBlue),
                     child: Text(
                       "MỚI RA MẮT",
-                      style: TextStyle(color: Colors.white, fontSize: 12),
+                      style: TextStyle(color: Colors.white, fontSize: 11),
                     ),
                   ),
                 ),

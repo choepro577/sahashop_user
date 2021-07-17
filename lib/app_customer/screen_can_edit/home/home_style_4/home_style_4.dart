@@ -203,8 +203,8 @@ class _HomeScreenStyle4State extends State<HomeScreenStyle4> {
                 //width: Get.width,
                 child: SearchBarType5(
                   onSearch: () {
-                    Get.to(SearchTextFiledScreen(
-                      onSubmit: (text, categoryId) {},
+                    Get.to(CategoryProductScreen(
+                      autoSearch: true,
                     ));
                   },
                 ),

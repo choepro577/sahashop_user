@@ -24,7 +24,6 @@ class SearchTextFiledScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: SahaTextFieldSearch(
-
             onSubmitted: (va) {
               if (onSubmit != null) onSubmit!(va, null);
               searchTextFiledController.addSearchHistory(va);

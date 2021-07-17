@@ -138,7 +138,7 @@ class ProductItemWidgetStyle1 extends StatelessWidget {
                                           : "${SahaStringUtils().convertToMoney(product.productDiscount!.discountPrice)}đ",
                                       style: TextStyle(
                                           color: SahaColorUtils()
-                                              .colorTextWithPrimaryColor(),
+                                              .colorPrimaryTextWithWhiteBackground(),
                                           fontWeight: FontWeight.w600,
                                           fontSize: 14),
                                       maxLines: 1,

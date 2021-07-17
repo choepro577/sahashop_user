@@ -28,7 +28,7 @@ class InfoCustomer {
   dynamic username;
   String? phoneNumber;
   dynamic phoneVerifiedAt;
-  dynamic email;
+  String? email;
   dynamic emailVerifiedAt;
   dynamic name;
   dynamic dateOfBirth;

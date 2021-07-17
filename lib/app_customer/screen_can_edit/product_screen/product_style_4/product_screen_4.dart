@@ -7,7 +7,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:sahashop_user/app_customer/screen_can_edit/product_screen/product_style_2/product_controller.dart';
+import 'package:sahashop_user/app_customer/screen_can_edit/product_screen/product_controller.dart';
 import 'package:sahashop_user/app_customer/screen_default/data_app_controller.dart';
 import 'package:sahashop_user/app_customer/screen_default/product_watch_more/product_watch_more_screen.dart';
 import 'package:sahashop_user/app_customer/utils/color_utils.dart';
@@ -560,7 +560,6 @@ class ProductScreen4 extends StatelessWidget {
                                     ],
                                   ),
                             SizedBox(height: 10),
-
                             Container(
                               padding: EdgeInsets.only(
                                   top: 10, bottom: 10, left: 10),
@@ -698,7 +697,6 @@ class ProductScreen4 extends StatelessWidget {
                                 ),
                               ),
                             ),
-
                             ReviewProduct(
                               idProduct: productController.productInput == null
                                   ? 0
@@ -717,8 +715,7 @@ class ProductScreen4 extends StatelessWidget {
                             Divider(
                               height: 1,
                             ),
-
-                            (productController.listProductWatched.length == 0)
+                            productController.listProductWatched.length == 0
                                 ? Container()
                                 : Column(
                                     children: [

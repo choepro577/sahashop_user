@@ -26,31 +26,33 @@ class HomeBodyWidget extends StatelessWidget {
     List<Widget> list = [];
     if (dataAppCustomerController.homeData!.listLayout != null) {
       for (var layout in dataAppCustomerController.homeData!.listLayout!) {
-
-        if(layout.hide == true || layout.list!.length == 0) {
-          list.add( Container());
+        if (layout.hide == true || layout.list!.length == 0) {
+          list.add(Container());
           continue;
         }
 
         list.add(layout.model == "HomeButton"
             ? Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: ListHomeButtonWidget(),
-            )
-            :Column(
+                padding: const EdgeInsets.only(top: 10),
+                child: ListHomeButtonWidget(),
+              )
+            : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 10),
                   Padding(
                     padding: EdgeInsets.only(
                         left: 20, right: 20, top: 10, bottom: 10),
                     child: SectionTitle(
                       title: layout.title ?? "",
                       titleEnd: "Tất cả",
-                      pressTitleEnd: () {},
+                      pressTitleEnd: () {
+                        ActionTap.onTap(
+                          mapTypeAction[TYPE_ACTION.PRODUCTS_DISCOUNT],
+                          "",
+                        );
+                      },
                     ),
                   ),
-                  SizedBox(height: 10),
                   if (layout.model == "Product")
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -103,7 +105,6 @@ class HomeBodyWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-
                 ],
               ));
       }
@@ -173,21 +174,18 @@ class CategoryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return  InkWell(
+    return InkWell(
       onTap: () {
-        ActionTap.onTap(mapTypeAction[TYPE_ACTION.CATEGORY_PRODUCT], category!.id.toString(),);
+        ActionTap.onTap(
+          mapTypeAction[TYPE_ACTION.CATEGORY_PRODUCT],
+          category!.id.toString(),
+        );
       },
-      child: HomeButtonWidget(
-          HomeButton(
-              title: category!.name!,
-              value: category!.id.toString(),
-              typeAction:  mapTypeAction[TYPE_ACTION.CATEGORY_PRODUCT],
-              imageUrl: category!.imageUrl
-          )
-      ),
+      child: HomeButtonWidget(HomeButton(
+          title: category!.name!,
+          value: category!.id.toString(),
+          typeAction: mapTypeAction[TYPE_ACTION.CATEGORY_PRODUCT],
+          imageUrl: category!.imageUrl)),
     );
-
-
   }
 }

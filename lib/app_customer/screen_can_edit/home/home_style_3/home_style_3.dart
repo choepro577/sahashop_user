@@ -6,6 +6,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sahashop_user/app_customer/components/empty/saha_empty_image.dart';
+import 'package:sahashop_user/app_customer/screen_can_edit/banner/banner_widget.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/category_product_screen/category_product_screen.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/category_product_screen/category_product_style_1/search_text_field_screen/search_text_field_screen.dart';
 import 'package:sahashop_user/app_customer/screen_can_edit/home/home_style_3/home_style_3_controller.dart';
@@ -17,7 +18,6 @@ import 'package:sahashop_user/app_customer/screen_default/search_bar_type/seach_
 import 'package:sahashop_user/app_user/components/saha_user/loading/loading_container.dart';
 import 'package:sahashop_user/app_user/controller/config_controller.dart';
 import 'package:sahashop_user/app_user/model/category.dart';
-
 
 import '../home_body.dart';
 
@@ -75,7 +75,6 @@ class _HomeScreenStyle3State extends State<HomeScreenStyle3> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,6 +122,7 @@ class _HomeScreenStyle3State extends State<HomeScreenStyle3> {
                       ],
                     ),
                   ),
+                  BannerWidget(),
                   HomeBodyWidget()
                 ],
               ),
@@ -192,7 +192,7 @@ class _HomeScreenStyle3State extends State<HomeScreenStyle3> {
                               Spacer(),
                               InkWell(
                                 onTap: () {
-                                  Get.to(ChatCustomerScreen());
+                                  Get.to(() => ChatCustomerScreen());
                                 },
                                 child: SvgPicture.asset(
                                   "assets/icons/chat.svg",
@@ -213,8 +213,8 @@ class _HomeScreenStyle3State extends State<HomeScreenStyle3> {
                       ),
                       SearchBarType4(
                         onSearch: () {
-                          Get.to(SearchTextFiledScreen(
-                            onSubmit: (text, categoryId) {},
+                          Get.to(CategoryProductScreen(
+                            autoSearch: true,
                           ));
                         },
                       ),

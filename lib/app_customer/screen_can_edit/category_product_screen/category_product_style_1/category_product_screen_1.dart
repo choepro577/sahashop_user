@@ -39,6 +39,8 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
 
   ScrollController _scrollController = new ScrollController();
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -50,7 +52,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
       }
     });
     categoryController1.init();
-    print(categoryController1.categories.hashCode);
+
     SchedulerBinding.instance!.addPostFrameCallback((_) {
       if (widget.autoSearch) {
         onSearch();
@@ -67,11 +69,78 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
     ));
   }
 
+  double height = AppBar().preferredSize.height;
+  var index = 1;
   @override
   Widget build(BuildContext context) {
     ////  ////  ////  ////  ////  ////
     return Scaffold(
       backgroundColor: Colors.grey[300],
+      key: _scaffoldKey,
+      onEndDrawerChanged: (v) {
+        if (v == false && index == 1) {
+          categoryController1.searchProduct(
+              sortBy: categoryController1.sortByCurrent);
+          index++;
+        }
+      },
+      endDrawer: Drawer(
+        child: Container(
+          width: Get.width / 2,
+          height: Get.height,
+          color: Colors.white,
+          child: Column(
+            children: [
+              SizedBox(
+                height: height,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  "Bộ lọc tìm kiếm",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                ),
+              ),
+              Divider(
+                height: 1,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                    ),
+                    Text("Sản phẩm"),
+                    Container(
+                      height: 40,
+                      margin: EdgeInsets.all(10),
+                      child: Obx(
+                        () => FilterChip(
+                          label: Text(
+                            "Giảm giá",
+                            style: TextStyle(fontSize: 13),
+                          ),
+                          selected:
+                              categoryController1.isChooseDiscountSort.value,
+                          backgroundColor: Colors.transparent,
+                          shape: StadiumBorder(
+                              side: BorderSide(color: Colors.grey[300]!)),
+                          onSelected: (bool value) {
+                            categoryController1.isChooseDiscountSort.value =
+                                !categoryController1.isChooseDiscountSort.value;
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -99,21 +168,20 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                     )),
               ),
             ),
-            SizedBox(
-              width: 20,
-            ),
-            // Obx(
-            //   () => IconBtnWithCounter(
-            //     svgSrc: "assets/icons/cart_icon.svg",
-            //     numOfitem: productController.listOrder.value.length ?? 0,
-            //     press: () {
-            //       Get.to(() => LIST_WIDGET_CART_SCREEN[
-            //           configController.configApp.cartPageType]);
-            //     },
-            //   ),
-            // ),
           ],
         ),
+        actions: [
+          GestureDetector(
+            onTap: () {
+              _scaffoldKey.currentState!.openEndDrawer();
+              index = 1;
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 5, right: 10.0),
+              child: Icon(Icons.filter_alt_rounded),
+            ),
+          ),
+        ],
         automaticallyImplyLeading: true,
       ),
       body: Obx(
@@ -191,7 +259,8 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding:
+                                const EdgeInsets.only(top: 8.0, bottom: 8.0),
                             child: Text(title ?? ""),
                           ),
                           key == "price" && selected
@@ -205,7 +274,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                                   child: Icon(
                                     Icons.arrow_right_alt_outlined,
                                     color: SahaColorUtils()
-                                        .colorTextWithPrimaryColor(),
+                                        .colorPrimaryTextWithWhiteBackground(),
                                   ),
                                 ))
                               : Container()
@@ -214,7 +283,8 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                       Container(
                         height: 2,
                         color: selected
-                            ? SahaColorUtils().colorTextWithPrimaryColor()
+                            ? SahaColorUtils()
+                                .colorPrimaryTextWithWhiteBackground()
                             : null,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -247,7 +317,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
         child: isLoading
             ? StaggeredGridView.countBuilder(
                 crossAxisCount: 2,
-                itemCount: 3,
+                itemCount: 4,
                 itemBuilder: (BuildContext context, int index) =>
                     ProductItemLoadingWidget(),
                 staggeredTileBuilder: (int index) => new StaggeredTile.fit(1),
@@ -258,18 +328,57 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                 ? SahaEmptyProducts()
                 : Stack(
                     children: [
-                      StaggeredGridView.countBuilder(
-                        crossAxisCount: 2,
-                        itemCount: list.length,
-                        controller: _scrollController,
-                        itemBuilder: (BuildContext context, int index) =>
-                            ProductItemWidget(
-                          product: list[index],
-                        ),
-                        staggeredTileBuilder: (int index) =>
-                            new StaggeredTile.fit(1),
-                        mainAxisSpacing: 0,
-                        crossAxisSpacing: 0,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (categoryController1.isChooseDiscountSort.value)
+                            Container(
+                              height: 40,
+                              margin: EdgeInsets.only(left: 10, right: 10),
+                              child: Obx(
+                                () => FilterChip(
+                                  label: Text(
+                                    "Giảm giá",
+                                    style: TextStyle(fontSize: 13),
+                                  ),
+                                  selected: categoryController1
+                                      .isChooseDiscountSort.value,
+                                  backgroundColor: Colors.transparent,
+                                  shape: StadiumBorder(
+                                      side:
+                                          BorderSide(color: Colors.grey[300]!)),
+                                  onSelected: (bool value) {
+                                    categoryController1
+                                            .isChooseDiscountSort.value =
+                                        !categoryController1
+                                            .isChooseDiscountSort.value;
+                                    if (categoryController1
+                                            .isChooseDiscountSort.value ==
+                                        false) {
+                                      categoryController1.searchProduct(
+                                          sortBy: categoryController1
+                                              .sortByCurrent);
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          Expanded(
+                            child: StaggeredGridView.countBuilder(
+                              crossAxisCount: 2,
+                              itemCount: list.length,
+                              controller: _scrollController,
+                              itemBuilder: (BuildContext context, int index) =>
+                                  ProductItemWidget(
+                                product: list[index],
+                              ),
+                              staggeredTileBuilder: (int index) =>
+                                  new StaggeredTile.fit(1),
+                              mainAxisSpacing: 0,
+                              crossAxisSpacing: 0,
+                            ),
+                          ),
+                        ],
                       ),
                       categoryController1.isLoadingProductMore.value
                           ? Align(
@@ -289,7 +398,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
         decoration: BoxDecoration(
           border: Border(
             left: BorderSide(
-                color: SahaColorUtils().colorTextWithPrimaryColor(),
+                color: SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
                 width: categoryController1.categoryCurrent.value == category!.id
                     ? 4
                     : 0),
@@ -297,7 +406,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
             bottom: BorderSide(color: Colors.grey, width: 0.5),
           ),
           color: categoryController1.categoryCurrent.value == category.id
-              ? Colors.white
+              ? SahaColorUtils().colorTextWithPrimaryColor()
               : null,
         ),
         child: InkWell(
@@ -316,7 +425,8 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                 child: category.id == null
                     ? SvgPicture.asset(
                         "assets/svg/all.svg",
-                        color: SahaColorUtils().colorTextWithPrimaryColor(),
+                        color: SahaColorUtils()
+                            .colorPrimaryTextWithWhiteBackground(),
                         width: 25.0,
                         height: 25.0,
                       )
@@ -346,7 +456,7 @@ class _CategoryProductStyle1State extends State<CategoryProductStyle1> {
                 style: TextStyle(
                     fontSize: 13,
                     color: categoryController1.categoryCurrent.value == category
-                        ? SahaColorUtils().colorTextWithPrimaryColor()
+                        ? SahaColorUtils().colorPrimaryTextWithWhiteBackground()
                         : Colors.black54),
                 textAlign: TextAlign.center,
               ),

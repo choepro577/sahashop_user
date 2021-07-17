@@ -14,7 +14,8 @@ class SahaTextFieldSearch extends StatefulWidget {
       this.onSubmitted,
       this.onChanged,
       this.onClose,
-      this.initText, this.textEditingController})
+      this.initText,
+      this.textEditingController})
       : super(key: key);
 
   @override
@@ -23,11 +24,20 @@ class SahaTextFieldSearch extends StatefulWidget {
 
 class _SahaTextFieldSearchState extends State<SahaTextFieldSearch> {
   late TextEditingController textEditingController;
+  late FocusNode myFocusNode;
+
   @override
   void initState() {
     super.initState();
-    textEditingController = widget.textEditingController ?? TextEditingController();
+    myFocusNode = FocusNode();
+    textEditingController =
+        widget.textEditingController ?? TextEditingController();
     textEditingController.text = widget.initText ?? "";
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        myFocusNode.requestFocus();
+      });
+    });
   }
 
   @override
@@ -36,7 +46,8 @@ class _SahaTextFieldSearchState extends State<SahaTextFieldSearch> {
       height: 40,
       child: TextField(
         enabled: widget.enabled!,
-        autofocus: true,
+        autofocus: false,
+        focusNode: myFocusNode,
         onChanged: (va) {},
         onSubmitted: widget.onSubmitted,
         textInputAction: TextInputAction.search,

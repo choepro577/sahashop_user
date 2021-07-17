@@ -29,10 +29,8 @@ class HomeScreenStyle2 extends StatefulWidget {
 }
 
 class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
-
   ConfigController configController = Get.find();
   DataAppCustomerController dataAppCustomerController = Get.find();
-
 
   @override
   void didChangeDependencies() {
@@ -42,7 +40,6 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       floatingActionButton: configController.contactButton.isNotEmpty
           ? SpeedDial(
@@ -74,12 +71,17 @@ class _HomeScreenStyle2State extends State<HomeScreenStyle2> {
             SizedBox(
               height: 50,
             ),
-            SearchBarType1(),
+            SearchBarType1(
+              onSearch: () {
+                Get.to(CategoryProductScreen(
+                  autoSearch: true,
+                ));
+              },
+            ),
             SizedBox(
               height: 10,
             ),
             BannerWidget(),
-
             HomeBodyWidget()
           ],
         ),

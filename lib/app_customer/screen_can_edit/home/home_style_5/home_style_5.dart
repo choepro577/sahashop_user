@@ -49,7 +49,6 @@ class _HomeScreenStyle5State extends State<HomeScreenStyle5> {
   ConfigController configController = Get.find();
   DataAppCustomerController dataAppCustomerController = Get.find();
 
-
   @override
   void dispose() {
     _scrollController.dispose();
@@ -71,7 +70,6 @@ class _HomeScreenStyle5State extends State<HomeScreenStyle5> {
                 height: 248,
                 child: BannerWidget(),
               ),
-
               HomeBodyWidget()
             ],
           ),
@@ -82,7 +80,13 @@ class _HomeScreenStyle5State extends State<HomeScreenStyle5> {
           width: double.infinity,
           color: Colors.white.withOpacity(_opacity),
           padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
-          child: SearchBarType1(),
+          child: SearchBarType1(
+            onSearch: () {
+              Get.to(CategoryProductScreen(
+                autoSearch: true,
+              ));
+            },
+          ),
         )
       ],
     ));

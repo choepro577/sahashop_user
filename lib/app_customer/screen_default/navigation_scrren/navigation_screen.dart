@@ -54,7 +54,8 @@ class _NavigationScreenState extends State<NavigationScreen> {
             unselectedItemColor: Colors.grey,
             showUnselectedLabels: true,
             type: BottomNavigationBarType.fixed,
-            selectedItemColor: SahaColorUtils().colorTextWithPrimaryColor(),
+            selectedItemColor:
+                SahaColorUtils().colorPrimaryTextWithWhiteBackground(),
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Badge(
